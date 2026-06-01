@@ -46,3 +46,15 @@
 - **영향**: 미매핑 행은 제외하지 않고 `기타 중요 계정` + `unmapped_extension_account`로
   보존한다. MVP1 밖 계정까지 확장할 때 매핑률이 부족하면 alias 보강 또는 Arelle 투입을
   재검토한다. 상세 수치는 [NORMALIZE_REPORT.md](NORMALIZE_REPORT.md).
+
+## D6. 첫 수치 분석가 LLM → Gemini 3.5 Flash 단일 + OpenAI 미사용
+
+- **결정**: 첫 Finding 수치 분석가는 PydanticAI + `google-genai` + `gemini-3.5-flash`만
+  사용한다. OpenAI 모델은 사용하지 않는다.
+- **이유**: 이번 단계의 산술·판정은 이미 L2 결정론 코드가 수행한다. LLM은 계산 능력이 아니라
+  구조화된 설명, 반대 가능성, 정상일 수 있는 일반적 설명, 확인 질문 생성에만 쓴다.
+- **환각 방어**: 입력은 L2 신호와 EvidenceRef로 제한한다. 외부 뉴스·업황·특정 사건을
+  단정하지 못하게 system prompt와 result validator를 둔다. 빈 근거 또는 confirm_question
+  누락은 재시도한다.
+- **재검토**: 더 무거운 회계 추론이 필요해질 때 Gemini 3.1 Pro 승급을 검토한다. 단, 숫자
+  계산은 계속 코드가 담당한다.

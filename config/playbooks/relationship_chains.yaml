@@ -46,3 +46,19 @@ l2_mvp1:
       reason: MVP1에 유동자산총계가 없어 유동부채와 나눌 수 없다.
     - name: 영업CF / 순이익
       reason: MVP1에 순이익이 없어 이익의 질 비율을 계산할 수 없다.
+  signal_thresholds:
+    divergence_pp_abs: 15
+    yoy_pct_abs: 50
+    direction_red_flags:
+      - id: revenue-down-receivable-up
+        name: 매출 감소 + 매출채권 증가
+        account_a: 매출
+        direction_a: decrease
+        account_b: 매출채권
+        direction_b: increase
+      - id: receivable-up-operating-cf-down
+        name: 매출채권 증가 + 영업활동현금흐름 감소
+        account_a: 매출채권
+        direction_a: increase
+        account_b: 영업활동현금흐름
+        direction_b: decrease

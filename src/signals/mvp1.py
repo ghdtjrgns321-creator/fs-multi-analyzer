@@ -86,6 +86,7 @@ def build_mvp1_signal_report(
         "primary_yoy": account_yoy_table(frame, config["yoy_accounts"], years, primary),
         "reference_yoy": account_yoy_table(frame, config["yoy_accounts"], years, reference),
         "deferred_ratios": config.get("deferred_ratios", []),
+        "signal_thresholds": config.get("signal_thresholds", {}),
     }
 
 

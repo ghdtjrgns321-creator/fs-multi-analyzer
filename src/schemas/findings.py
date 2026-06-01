@@ -54,6 +54,7 @@ class AccountFinding(BaseModel):
     normal_explanation: list[str] = Field(
         default_factory=list, description="정상일 수 있는 사업적 설명"
     )
+    confirm_question: list[str] = Field(default_factory=list, description="사용자 확인 질문")
     next_procedure: list[str] = Field(default_factory=list, description="다음 감사 절차")
     risk_level: RiskLevel
 

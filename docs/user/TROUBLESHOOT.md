@@ -17,5 +17,14 @@
 
 ## 기록
 
-아직 없음. 첫 실데이터 스파이크에서 XBRL 정규화가 깨지는 지점을 만나면 여기부터 기록한다
-(L1 정규화가 최대 난관으로 예상됨 — PLAN §13).
+### [2026-06-02] Gemini 3.5 Flash live Finding 생성 503
+
+- 증상: `uv run python -m src.agents.first_finding` 실행 시 두 번 모두 Google API가
+  `503 UNAVAILABLE`을 반환했고 실제 `AccountFinding`이 생성되지 않았다.
+- 원인: API 키와 PydanticAI 연결은 동작했지만, `gemini-3.5-flash` 모델이 high demand
+  상태였다. 프로젝트 제약상 OpenAI 또는 다른 Gemini 모델로 우회할 수 없었다.
+- 해결: L2 threshold 판정, PydanticAI 수치 분석가, EvidenceRef/confirm_question guardrail,
+  fake LLM 테스트는 완료했다. live Finding 생성은 [../agent/FINDING_REPORT.md](../agent/FINDING_REPORT.md)에
+  보류로 기록했다.
+- 교훈: 모델 고정 요구가 있는 단계에서는 실패 원인을 모델 가용성으로 분리 기록하고,
+  대체 모델을 임의로 쓰지 않는다. 모델이 회복되면 같은 명령을 재실행한다.
