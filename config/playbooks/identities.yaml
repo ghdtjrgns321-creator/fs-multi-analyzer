@@ -1,0 +1,13 @@
+# 회계 항등식 (PLAN §7). 결정론 검사 — 위반 시 신호엔진(L2)이 이상 신호 생성.
+# 유한·보편 요소만. 계정별 신호 전수 열거 아님(정답지가 아니라 출발점).
+
+identities:
+  - id: BS-BALANCE
+    name: 자산 = 부채 + 자본
+    expr: "assets_total == liabilities_total + equity_total"
+  - id: ROLLFORWARD
+    name: 기초잔액 + 증감 = 기말잔액
+    expr: "opening + period_delta == closing"
+  - id: CF-RECON
+    name: 영업CF ≈ 당기순이익 + 비현금조정
+    expr: "operating_cf ~= net_income + noncash_adjustments"

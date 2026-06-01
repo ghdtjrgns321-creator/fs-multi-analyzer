@@ -1,0 +1,13 @@
+# 계정 관계 사슬 (PLAN §6.2). 신호엔진이 사슬을 따라 정합성을 점검한다.
+# pairwise 비교를 넘어 "사슬 추적"이 핵심. 계정명은 canonical_accounts.yaml 기준.
+
+relationship_chains:
+  - id: revenue-receivable-cf
+    name: 수익의 질·회수가능성
+    chain: [매출, 매출채권, 대손충당금, 영업활동현금흐름]
+  - id: inventory-cogs
+    name: 재고 진부화·원가
+    chain: [재고자산, 매출원가, 재고평가손실]
+  - id: debt-interest-cf
+    name: 유동성·계속기업
+    chain: [차입금, 이자비용, 현금흐름, 차입금만기주석]

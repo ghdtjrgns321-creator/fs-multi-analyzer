@@ -1,0 +1,123 @@
+{
+  "version": "1.0",
+  "description": "Project-scoped skill triggers for multi-BS (Disclosure Review Agent). Adds to (does not replace) the global ~/.claude/skills/skill-rules.json.",
+  "skills": {
+    "disclosure-review": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Disclosure analysis review checklist (positioning/language, calc-vs-LLM split, XBRL normalization, signal engine, tool DSL grounding, DuckDB isolation)",
+      "promptTriggers": {
+        "keywords": [
+          "code review",
+          "코드 리뷰",
+          "리뷰",
+          "Finding",
+          "공시",
+          "주석",
+          "XBRL",
+          "정규화",
+          "canonical account",
+          "materiality",
+          "signal engine",
+          "신호엔진",
+          "tool DSL",
+          "disclosure change",
+          "공시 변동",
+          "분식",
+          "fraud language"
+        ],
+        "intentPatterns": [
+          "(review|리뷰).*?(collect|normalize|signal|agent|finding|dashboard)",
+          "(공시|disclosure).*?(language|문구|언어|positioning|포지셔닝)",
+          "(XBRL|정규화|normalization).*?(review|리뷰|점검|매핑)",
+          "(materiality|signal|신호).*?(review|점검|검증)",
+          "(LLM|에이전트|agent).*?(grounding|환각|근거)"
+        ]
+      },
+      "fileTriggers": {
+        "pathPatterns": [
+          "src/collect/**/*.py",
+          "src/normalize/**/*.py",
+          "src/notes/**/*.py",
+          "src/signals/**/*.py",
+          "src/analysis_tools/**/*.py",
+          "src/agents/**/*.py",
+          "src/report/**/*.py",
+          "src/schemas/**/*.py",
+          "dashboard/**/*.py",
+          "config/canonical_accounts.yaml",
+          "config/playbooks/**/*.yaml",
+          "docs/agent/PLAN.md",
+          "docs/agent/DECISION.md",
+          "docs/agent/STATE.md",
+          "docs/agent/ROADMAP.md",
+          "docs/agent/CODEX.md"
+        ],
+        "contentPatterns": [
+          "mapping_status",
+          "EvidenceRef",
+          "AccountFinding",
+          "DisclosureChangeFinding",
+          "materiality",
+          "canonical",
+          "tool DSL",
+          "note_section_type"
+        ]
+      }
+    },
+    "disclosure-testing": {
+      "type": "domain",
+      "enforcement": "suggest",
+      "priority": "high",
+      "description": "Disclosure analysis test selection (uv run pytest, deterministic calc golden values, XBRL normalization fixtures, LLM mock, dashboard smoke, completion evidence)",
+      "promptTriggers": {
+        "keywords": [
+          "uv run pytest",
+          "pytest tests",
+          "signal test",
+          "normalization test",
+          "정규화 테스트",
+          "tool DSL test",
+          "agent test",
+          "에이전트 테스트",
+          "dashboard import smoke",
+          "검증 완료",
+          "disclosure test"
+        ],
+        "intentPatterns": [
+          "(run|execute|실행).*?(pytest|tests?)",
+          "(test|검증).*?(signal|normalize|tool|agent|finding)",
+          "(streamlit|dashboard).*?(smoke|import|verify|검증)",
+          "(verification|검증|증거).*?(complete|완료)"
+        ]
+      },
+      "fileTriggers": {
+        "pathPatterns": [
+          "tests/**/*.py",
+          "src/signals/**/*.py",
+          "src/analysis_tools/**/*.py",
+          "src/normalize/**/*.py",
+          "dashboard/app.py",
+          "pyproject.toml"
+        ],
+        "contentPatterns": [
+          "uv run pytest",
+          "uv run ruff",
+          "uv run mypy",
+          "import dashboard\\.app",
+          "def test_",
+          "materiality",
+          "EvidenceRef"
+        ]
+      }
+    }
+  },
+  "notes": {
+    "scope": "Project-scoped. Loaded when working under multi-BS/. Global ~/.claude/skills/skill-rules.json remains active.",
+    "differentiation": {
+      "disclosure-review": "Adds disclosure-domain semantics layer on top of global code-reviewer agent.",
+      "disclosure-testing": "More specific than global pytest-backend-testing (deterministic calc golden values, XBRL fixtures, LLM mock, no live API)."
+    }
+  }
+}

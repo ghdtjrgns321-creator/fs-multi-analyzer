@@ -1,0 +1,57 @@
+# L1 canonical account mapping.
+# 1순위: account_id 표준 ID(ifrs-full_*, dart_*). 2순위: aliases.
+# Python 코드에 계정 코드·라벨을 하드코딩하지 않는다.
+
+canonical_accounts:
+  현금및현금성자산:
+    statement: BS
+    account_ids:
+      - ifrs-full_CashAndCashEquivalents
+    aliases: [현금및현금성자산]
+  단기금융상품:
+    statement: BS
+    account_ids:
+      - dart_ShortTermDepositsNotClassifiedAsCashEquivalents
+      - ifrs-full_ShorttermDepositsNotClassifiedAsCashEquivalents
+    aliases: [단기금융상품]
+  매출채권:
+    statement: BS
+    account_ids:
+      - dart_ShortTermTradeReceivable
+      - ifrs-full_CurrentTradeReceivables
+    aliases: [매출채권]
+  재고자산:
+    statement: BS
+    account_ids:
+      - ifrs-full_Inventories
+    aliases: [재고자산]
+  유동부채:
+    statement: BS
+    account_ids:
+      - ifrs-full_CurrentLiabilities
+    aliases: [유동부채, 유동부채계]
+  매입채무:
+    statement: BS
+    account_ids:
+      - ifrs-full_TradeAndOtherCurrentPayablesToTradeSuppliers
+    aliases: [매입채무]
+  단기차입금:
+    statement: BS
+    account_ids:
+      - ifrs-full_ShorttermBorrowings
+    aliases: [단기차입금, 단기차입부채]
+  매출:
+    statement: IS
+    account_ids:
+      - ifrs-full_Revenue
+    aliases: [매출, 매출액, 수익(매출액), 영업수익]
+  매출원가:
+    statement: IS
+    account_ids:
+      - ifrs-full_CostOfSales
+    aliases: [매출원가]
+  영업활동현금흐름:
+    statement: CF
+    account_ids:
+      - ifrs-full_CashFlowsFromUsedInOperatingActivities
+    aliases: [영업활동현금흐름, 영업활동 현금흐름]
