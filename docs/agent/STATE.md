@@ -6,11 +6,12 @@
 
 ## 현재 위치
 
-- 단계: 설계 확정 → 프로젝트 뼈대 구축 → L0 수집 → **L1 정규화 스파이크 완료**
-- 최근 작업 (2026-06-01): 삼성전자(`00126380`) 2022~2024 CFS/OFS raw 재무제표를
-  Pandera schema로 검증하고, `account_id` 1순위 + label alias 보조 방식으로 MVP1
-  10개 계정을 canonical long format으로 정규화했다. 회사/연도별 DuckDB
-  `normalized_financials` 적재와 측정 결과 기록까지 완료했다.
+- 단계: 설계 확정 → 프로젝트 뼈대 구축 → L0 수집 → L1 정규화 → **L2 신호엔진 스파이크 완료**
+- 최근 작업 (2026-06-01): L1 `normalized_financials`를 입력으로 tool DSL
+  `compare_growth`, `compute_ratio`를 구현하고, MVP1 관계 사슬을 결정론으로 계산했다.
+  CFS 우선, OFS 참고 기준으로 삼성전자 2022~2024 YoY·괴리 수치를
+  [SIGNAL_REPORT.md](SIGNAL_REPORT.md)에 기록했다. threshold 판정, LLM, 에이전트,
+  주석 인덱싱은 수행하지 않았다.
 
 ## 완료
 
@@ -27,12 +28,16 @@
 - L1 정규화 결과 `data/companies/00126380/{2022,2023,2024}/analysis.duckdb`
 - L1 측정 보고서 [NORMALIZE_REPORT.md](NORMALIZE_REPORT.md)
 - 결정 D5 ([DECISION.md](DECISION.md))
+- L2 tool DSL [../../src/analysis_tools](../../src/analysis_tools)
+- L2 MVP1 관계 사슬 계산 [../../src/signals](../../src/signals)
+- L2 계산 보고서 [SIGNAL_REPORT.md](SIGNAL_REPORT.md)
 
 ## 다음 할 일 (우선순위)
 
 1. **L1.5 주석 인덱서 설계**: HTML 표 구조와 문장영역을 분리 보존하는 입력 contract 정의
-2. L2 신호엔진 입력 설계: MVP1 canonical long format에서 관계 사슬 분석 입력 생성
-3. MVP1 밖 계정 확장 시 alias 보강 또는 Arelle 투입 필요성 재측정
+2. L2 threshold 기준선 결정: [SIGNAL_REPORT.md](SIGNAL_REPORT.md)의 실제 수치로
+   "신호" 판정 기준을 별도 확정
+3. 차입금/유동성 분석 확장: MVP1에 없는 유동자산총계·순이익 등 필요 계정 보강 여부 결정
 
 ## 열린 이슈 / 주의
 
@@ -42,6 +47,8 @@
 - 전체 raw 행 기준 미매핑 비율은 높다. 현재 `canonical_accounts.yaml`이 MVP1 10개 계정만
   담기 때문이며, 미매핑 계정을 숨기지 않는다.
 - 주석은 표와 텍스트가 섞인 HTML이다. 단순 TXT만으로는 행/열 구조가 손실된다.
+- L2는 아직 threshold 판정을 하지 않는다. 현재 산출물은 계산표이며 Finding이 아니다.
+- 유동비율, 영업CF/순이익 비율은 MVP1 계정 부족으로 보류했다.
 
 ## 진입 포인트
 
@@ -49,4 +56,5 @@
 - Codex 작업 지침 → [../../AGENTS.md](../../AGENTS.md) → [CODEX.md](CODEX.md)
 - 할 일 → [ROADMAP.md](ROADMAP.md) · 결정·이유 → [DECISION.md](DECISION.md)
 - L1 측정 → [NORMALIZE_REPORT.md](NORMALIZE_REPORT.md)
+- L2 계산 → [SIGNAL_REPORT.md](SIGNAL_REPORT.md)
 - 문제 기록(사람용) → [../user/TROUBLESHOOT.md](../user/TROUBLESHOOT.md)

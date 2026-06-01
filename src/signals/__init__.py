@@ -1,1 +1,5 @@
-"""L2 신호엔진: materiality / relationship graph / QoE / 변화 신호 (결정론)."""
+"""L2 deterministic signal engine."""
+
+from src.signals.mvp1 import build_mvp1_signal_report
+
+__all__ = ["build_mvp1_signal_report"]

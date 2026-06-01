@@ -11,3 +11,38 @@ relationship_chains:
   - id: debt-interest-cf
     name: 유동성·계속기업
     chain: [차입금, 이자비용, 현금흐름, 차입금만기주석]
+
+l2_mvp1:
+  primary_fs_div: CFS
+  reference_fs_div: OFS
+  years: [2022, 2023, 2024]
+  yoy_accounts:
+    - 현금및현금성자산
+    - 단기금융상품
+    - 매출채권
+    - 재고자산
+    - 유동부채
+    - 매입채무
+    - 단기차입금
+    - 매출
+    - 매출원가
+    - 영업활동현금흐름
+  growth_divergences:
+    - id: revenue-vs-receivable
+      name: 매출 vs 매출채권 증가율 괴리
+      account_a: 매출
+      account_b: 매출채권
+    - id: revenue-vs-inventory
+      name: 매출 vs 재고자산 증가율 괴리
+      account_a: 매출
+      account_b: 재고자산
+  direction_checks:
+    - id: receivable-growth-vs-operating-cf
+      name: 매출채권 증가율과 영업활동현금흐름 방향 비교
+      growth_account: 매출채권
+      flow_account: 영업활동현금흐름
+  deferred_ratios:
+    - name: 유동비율
+      reason: MVP1에 유동자산총계가 없어 유동부채와 나눌 수 없다.
+    - name: 영업CF / 순이익
+      reason: MVP1에 순이익이 없어 이익의 질 비율을 계산할 수 없다.

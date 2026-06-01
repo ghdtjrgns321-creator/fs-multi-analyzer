@@ -31,5 +31,6 @@ Codex 또는 비-Claude 에이전트는 루트 [../AGENTS.md](../AGENTS.md)를 �
 | [agent/PLAN.md](agent/PLAN.md) | 설계 단일 출처 (상세) | 설계 변경 시 |
 | [agent/DATA_CONTRACT.md](agent/DATA_CONTRACT.md) | OpenDART raw 구조·규모·정규화 입력 관찰 | 수집/스키마 변경 시 |
 | [agent/NORMALIZE_REPORT.md](agent/NORMALIZE_REPORT.md) | L1 canonical 매핑 측정 결과 | 정규화 변경 시 |
+| [agent/SIGNAL_REPORT.md](agent/SIGNAL_REPORT.md) | L2 결정론 신호 계산 결과 | 신호엔진 변경 시 |
 | [agent/SETUP.md](agent/SETUP.md) | 스킬·구조 자산 정리 | 셋업 변경 시 |
 | [agent/CODEX.md](agent/CODEX.md) | Codex 에이전트 작업 지침 | — |
