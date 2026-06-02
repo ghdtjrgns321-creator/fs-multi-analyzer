@@ -12,6 +12,7 @@
 | [user/TECH_STACK.md](user/TECH_STACK.md) | 사용 기술과 이유 (비전문가용 풀이 포함) |
 | [user/UI.md](user/UI.md) | 화면 구성 (설계안) |
 | [user/UX.md](user/UX.md) | 사용자 경험 흐름 (설계안) |
+| [user/METHODOLOGY.md](user/METHODOLOGY.md) | 분석 기준(인과관계·지표)을 정하는 2단계 방법론 + 왜 |
 | [user/TROUBLESHOOT.md](user/TROUBLESHOOT.md) | 문제 해결 과정 (증상→원인→해결→교훈, 시간순 누적) |
 
 ## 🤖 `agent/` — AI가 작업 중 확인하는 문서 (새 세션 진입점)
