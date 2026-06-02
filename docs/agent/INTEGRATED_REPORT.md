@@ -9,8 +9,8 @@
 - 관계사슬 신호: [SIGNAL_REPORT.md](SIGNAL_REPORT.md), `src.signals.red_flags`
 - 실무 재무지표: [RATIO_REPORT.md](RATIO_REPORT.md), `config/playbooks/financial_ratios.yaml`
 - 근거 체계: [AUDIT_BASIS.md](AUDIT_BASIS.md)
-- 독립 관점: 수치 관점, 주석 관점
-- 교차 판정: 독립 관점의 `risk_area` 일치/충돌을 결정론으로 판정
+- 독립 관점: 수치 관점, 주석 관점, 흐름 관점, 변동 관점
+- 교차 판정: 독립 관점의 `risk_area`와 요약 내 계정 언급을 정규화해 일치/충돌을 결정론으로 판정
 
 정렬은 `risk_level` 순서(`High > Medium > Low`)와 `materiality_score`로 수행한다.
 severity 텍스트를 직접 합산하지 않는다.
@@ -39,24 +39,31 @@ severity 텍스트를 직접 합산하지 않는다.
 
 ## 4. 관점별 독립 평가
 
-2026-06-02 live 실행에서 `gemini-3.5-flash`가 두 관점 모두 503 `UNAVAILABLE`을 반환했다.
-따라서 관점별 LLM 평가는 보류했다. 각 관점은 서로의 출력을 보지 않도록 별도 material board를
-받는다.
+2026-06-02 live 실행에서 `gemini-2.5-flash`로 4관점 모두 completed가 나왔다. 각 관점은 서로의
+출력을 보지 않고 별도 material board만 받았다.
 
 | 관점 | 상태 | risk | 평가 |
 |---|---|---|---|
-| numeric | deferred | Low | Gemini temporary error after 1 attempts for gemini-3.5-flash: 503 UNAVAILABLE |
-| note | deferred | Low | Gemini temporary error after 1 attempts for gemini-3.5-flash: 503 UNAVAILABLE |
+| numeric | completed | Medium | 단기금융상품, 단기차입금, 영업활동현금흐름에서 전년 대비 유의미한 변동이 관찰됐다. 매출채권 품질 저하 가능성 및 매출액 대비 매출채권·재고자산 증가율 괴리가 확인됐다. |
+| note | completed | Medium | 매출채권 손실충당금 변동내역과 재고자산 평가손실 키워드가 확인되어, 발췌 범위 안에서 추가 검토가 필요한 주석 근거로 보았다. |
+| flow | completed | Medium | 매출채권 YoY -14.33%, 매출액 대비 매출채권 괴리 -16.92, 영업활동현금흐름 YoY 65.35, 재고자산 괴리 15.95가 흐름 관점 검토 후보로 묶였다. |
+| change | completed | Medium | 단기금융상품, 단기차입금, 영업활동현금흐름의 전기 대비 기준 초과 변동과 매출 대비 매출채권·재고자산 증가율 괴리를 변동 리스크로 보았다. |
 
 ## 5. 일치/충돌
 
-| verdict | risk_area | comment |
-|---|---|---|
-| insufficient | 관점 평가 | 완료된 독립 관점이 2개 미만이라 일치/충돌 판정은 보류한다. |
+| verdict | risk_area | perspectives | comment |
+|---|---|---|---|
+| agreement | 매출채권/수익 | numeric, note, flow, change | 매출채권/수익에 대해 독립 관점이 같은 방향을 가리켜 신호 강화로 본다. |
 
 ## 6. 한 단락 종합
 
-LLM 종합 문단은 보류했다. 결정론 검토 큐와 지표 요약은 완료 상태다.
+금번 공시 검토 결과, 주요 재무 지표 및 계정에서 일부 유의적인 변동 및 특이 사항이 관찰됐다.
+단기금융상품과 단기차입금에서 높은 수준의 변동성이 확인되어 단기 자금 운용 및 조달 구조에
+대한 추가 검토가 필요할 수 있다. 매출채권은 전년 대비 -14.33% 변동했고 매출액 대비 매출채권
+증가율 괴리(-16.92)가 확인되어 채권 회수 및 수익 인식의 적정성 검토가 필요할 수 있다.
+재고자산은 매출액 대비 증가율 괴리(15.95), DIO 101.13일, 재고회전율 3.61회가 함께 관찰되어
+재고 관리 효율성 및 평가 위험을 확인할 필요가 있다. 영업활동현금흐름은 전년 대비 65.35%의
+유의적인 변동이 관찰됐다.
 
 ## 7. 실행
 

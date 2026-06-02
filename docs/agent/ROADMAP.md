@@ -22,7 +22,7 @@
 - [x] L2 신호엔진 (`src/signals`) — MVP1 관계 사슬 결정론 계산
 - [x] tool DSL (`src/analysis_tools`) — compare_growth / compute_ratio
 - [ ] L3 에이전트 5 (`src/agents`) — 매출채권 live 완료, 재고 mock 완료/live 보류
-- [ ] L4 리포트 (`src/report`) — 외부 ContextBrief 코드 완료, 리포트 통합 보류
+- [x] L4 리포트 (`src/report`) — 4관점 독립 평가 + 교차 + 종합 live 완료
 - [ ] L5 대시보드 (`dashboard`)
   - [ ] (필수) 못 맞춘 계정 → 사전 보강 인터랙션: 사용자가 계정 지정 시
     `config/canonical_accounts.yaml` 자동 확장 (Human-in-the-Loop). 상세: [../user/UX.md](../user/UX.md)
@@ -40,6 +40,7 @@
 - [x] 기본 합계 계정 추가 + 삼성 3개년 실무 재무지표 계산
 - [x] L4 통합 리포트 결정론 큐 + 지표 요약
 - [x] L4 멀티에이전트 독립 평가 + 교차 판정 구조
+- [x] L4 수치·주석·흐름·변동 4관점 live 평가 (`gemini-2.5-flash`)
 - [ ] 차입금 / 유동성 기본 분석
 - [ ] 공시 변동 (watchlist 키워드 신규 등장)
 - [x] 첫 Finding 리포트 + 감사인 확인 질문 — Gemini 3.5 Flash 재시도 후 생성 완료
@@ -54,7 +55,7 @@
 2. [x] **재고 줄기 추가** (매출채권 패턴 복제 + 일반화 점검 — 복제 비용 측정)
 3. [ ] 차입금 줄기 추가
 4. [x] **통합 리포트(L4)** — 여러 Finding → "이 회사 종합 리스크 한 장" ← 통합 테스트 지점
-5. [ ] 깊이 보강 (통합 작동 확인 후): 외부 맥락 live, 공시 변동 ④, 흐름 ③
+5. [ ] 깊이 보강 (통합 작동 확인 후): 외부 맥락 live, note diff 정밀화
 
 ### 계정 추가 비용 측정
 

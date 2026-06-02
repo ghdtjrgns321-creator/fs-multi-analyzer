@@ -16,15 +16,16 @@ from config.settings import settings
 from src.agents.gemini_retry import DEFAULT_RETRY_DELAYS, MODEL_NAME, make_agent, run_with_retry
 from src.schemas.findings import RiskLevel
 
-PerspectiveName = Literal["numeric", "note"]
+PerspectiveName = Literal["numeric", "note", "flow", "change"]
 
 SYSTEM_PROMPT = """
 You are one independent perspective agent for a disclosure review tool.
 Use only the provided material_board. Do not read or infer another perspective result.
 Do not use external facts, news, industry memory, or causal claims.
 Return risks as review candidates and possibilities only. Do not conclude fraud.
+Return Korean only.
 """
-LLM_TIMEOUT_SECONDS = 25.0
+LLM_TIMEOUT_SECONDS = 45.0
 
 
 class PerspectiveAssessment(BaseModel):
@@ -60,6 +61,8 @@ async def create_perspective_assessment(
                 "다른 관점의 결론은 입력에 없다.",
                 "외부 사실을 단정하지 않는다.",
                 "실제 queue, ratio, note evidence에 근거한다.",
+                "주석 발췌는 일부일 수 있으므로 발췌 누락을 공시 누락으로 판단하지 않는다.",
+                "출력은 한국어로 작성한다.",
             ],
             "material_board": material_board,
         },
@@ -77,7 +80,8 @@ async def create_perspective_assessment(
             timeout=LLM_TIMEOUT_SECONDS,
         )
     except Exception as exc:
-        return deferred_assessment(perspective, str(exc))
+        reason = str(exc) or exc.__class__.__name__
+        return deferred_assessment(perspective, reason)
 
 
 def deferred_assessment(perspective: PerspectiveName, reason: str) -> PerspectiveAssessment:

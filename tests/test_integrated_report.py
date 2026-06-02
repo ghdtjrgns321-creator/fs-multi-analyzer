@@ -5,6 +5,7 @@ import pandas as pd
 
 from src.report.crosscheck import cross_check_assessments
 from src.report.integrated import build_review_queue, summarize_ratio_categories
+from src.report.multi_agent import build_multi_agent_report
 from src.report.perspectives import PerspectiveAssessment, create_perspective_assessment
 from src.report.synthesis import create_integrated_summary
 from src.schemas.findings import AccountFinding, EvidenceRef, IssueType
@@ -140,6 +141,30 @@ def test_cross_check_marks_conflict_when_numeric_risk_note_quiet() -> None:
     assert "주석 잠잠" in result[0].comment
 
 
+def test_cross_check_normalizes_korean_english_risk_area() -> None:
+    numeric = PerspectiveAssessment(
+        perspective="numeric",
+        status="completed",
+        risk_areas=["Revenue Recognition", "Inventory Management"],
+        risk_level="Medium",
+        summary="numeric",
+        evidence=[],
+    )
+    note = PerspectiveAssessment(
+        perspective="note",
+        status="completed",
+        risk_areas=["매출채권 회수"],
+        risk_level="Medium",
+        summary="note",
+        evidence=[],
+    )
+
+    result = cross_check_assessments([numeric, note])
+
+    assert result[0].verdict == "agreement"
+    assert result[0].risk_area == "매출채권/수익"
+
+
 def test_perspective_assessment_accepts_mock_agent(monkeypatch) -> None:
     class FakeAgent:
         async def run(self, prompt: str) -> SimpleNamespace:
@@ -162,3 +187,36 @@ def test_perspective_assessment_accepts_mock_agent(monkeypatch) -> None:
 
     assert result.perspective == "numeric"
     assert result.status == "completed"
+
+
+def test_multi_agent_report_has_four_independent_perspectives() -> None:
+    result = asyncio.run(build_multi_agent_report(run_llm=False))
+
+    perspectives = {item["perspective"] for item in result["perspective_assessments"]}
+
+    assert perspectives == {"numeric", "note", "flow", "change"}
+    assert set(result["materials"]) == {"numeric", "note", "flow", "change"}
+
+
+def test_flow_and_change_perspectives_accept_mock_agent(monkeypatch) -> None:
+    class FakeAgent:
+        async def run(self, prompt: str) -> SimpleNamespace:
+            perspective = "flow" if '"perspective": "flow"' in prompt else "change"
+            return SimpleNamespace(
+                output=PerspectiveAssessment(
+                    perspective=perspective,
+                    status="completed",
+                    risk_areas=["현금흐름"],
+                    risk_level="Medium",
+                    summary=f"{perspective} 관점 평가",
+                    evidence=["grounded"],
+                )
+            )
+
+    monkeypatch.setattr("src.report.perspectives.settings.google_api_key", "fake")
+
+    flow = asyncio.run(create_perspective_assessment("flow", {}, FakeAgent, (0,)))
+    change = asyncio.run(create_perspective_assessment("change", {}, FakeAgent, (0,)))
+
+    assert flow.perspective == "flow"
+    assert change.perspective == "change"

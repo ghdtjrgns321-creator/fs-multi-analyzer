@@ -7,11 +7,10 @@
 ## 현재 위치
 
 - 단계: 설계 확정 → 프로젝트 뼈대 구축 → L0 수집 → L1 정규화 → L2 신호엔진 →
-  **L4 멀티에이전트 독립 평가 + 교차 구조 완료 / live 관점 평가 503 보류**
-- 최근 작업 (2026-06-02): L4를 단일 종합 LLM이 아니라 수치 관점·주석 관점 독립 평가 후
-  결정론 교차 판정하는 구조로 전환했다. [../../src/report](../../src/report)에
-  perspective, crosscheck, material board 모듈을 추가했고 [INTEGRATED_REPORT.md](INTEGRATED_REPORT.md)에
-  실제 삼성 review queue, 지표 요약, live 503 보류 상태를 기록했다. D9 ADR을 추가했다.
+  **L4 멀티에이전트 4관점 live 완료**
+- 최근 작업 (2026-06-02): 메인 LLM 모델을 `gemini-2.5-flash`로 전환하고, L4 독립 관점에
+  흐름·변동 관점을 추가했다. 수치·주석·흐름·변동 4관점 live 평가와 교차 판정을
+  [INTEGRATED_REPORT.md](INTEGRATED_REPORT.md)에 기록했다. D10 ADR을 추가했다.
 
 ## 완료
 
@@ -58,12 +57,14 @@
 - 삼성 L4 통합 리포트 [INTEGRATED_REPORT.md](INTEGRATED_REPORT.md)
 - 통합 리포트 결정론/LLM mock 테스트 [../../tests/test_integrated_report.py](../../tests/test_integrated_report.py)
 - 결정 D9 ([DECISION.md](DECISION.md))
+- 결정 D10 ([DECISION.md](DECISION.md))
+- L4 4관점 live 통합 리포트 [INTEGRATED_REPORT.md](INTEGRATED_REPORT.md)
 
 ## 다음 할 일 (우선순위)
 
 1. 차입금 줄기 추가: `note_mappings.yaml`과 `relationship_chains.yaml`만 추가해
    `uv run python -m src.agents.account_finding --account 차입금 --year <연도>`로 검증
-2. Gemini 3.5 Flash 가용성 회복 후 재고 live Finding 재실행:
+2. `gemini-2.5-flash`로 재고 live Finding 재실행:
    `uv run python -m src.agents.first_inventory_finding`
 3. D82242/D82638 표 구조 정밀 복원 또는 note diff 추가 여부 결정
 
@@ -83,13 +84,16 @@
 - L4 종합 문단은 결정론 큐와 지표 요약에만 grounding한다. live 호출 실패 시 문단만 보류하고
   결정론 큐는 유지한다.
 - L4 관점 LLM은 독립 입력을 받는다. 수치 관점은 queue/ratio, 주석 관점은 D82242/D82638
-  note section material만 받으며, 서로의 결론을 입력으로 받지 않는다.
+  note section material, 흐름 관점은 BS-IS-CF/활동성·이익의 질 material, 변동 관점은
+  전기 대비 변동 material만 받으며, 서로의 결론을 입력으로 받지 않는다.
 - 감사기준·K-IFRS 근거는 검토 관점의 출처다. Finding은 부정·분식 확정 표현으로 쓰지 않는다.
 - 실무 재무지표도 검토 관점이다. 출처 없는 계산식은 플레이북에 넣지 않고, 계정 부족 지표는
   `mvp1_status: account_missing`으로 표시한다. 현재 ROI만 계정 부족으로 남아 있다.
 - 공개 KSA 원문별 링크는 확인하지 못한 항목이 있어 [AUDIT_BASIS.md](AUDIT_BASIS.md)에
   “KSA 원문 미검증”으로 표시했다. ISA/IFRS 제목과 요지는 공식 IAASB/IFRS 출처로 확인했다.
-- Gemini fallback은 `gemini_fallback_model` 설정이 비어 있으면 비활성이다. OpenAI fallback은 사용하지 않는다.
+- 메인 LLM 모델 기본값은 `config.settings.gemini_model == "gemini-2.5-flash"`다.
+  Gemini fallback은 `gemini_fallback_model` 설정이 비어 있으면 비활성이다. OpenAI fallback은
+  사용하지 않는다.
 - 재고자산 2023은 L2 threshold 미달로 특이 신호가 없고, 2024는 `revenue-vs-inventory`
   growth divergence가 잡힌다.
 

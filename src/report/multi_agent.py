@@ -6,10 +6,11 @@ import argparse
 import asyncio
 from typing import Any
 
+from src.agents.gemini_retry import DEFAULT_RETRY_DELAYS
 from src.report.company_report import build_company_report, render_markdown
 from src.report.crosscheck import CrossCheckResult, cross_check_assessments
 from src.report.integrated import payload_for_summary
-from src.report.materials import note_material, numeric_material
+from src.report.materials import change_material, flow_material, note_material, numeric_material
 from src.report.perspectives import (
     PerspectiveAssessment,
     create_perspective_assessment,
@@ -20,7 +21,7 @@ from src.report.synthesis import create_integrated_summary
 
 async def build_multi_agent_report(
     run_llm: bool = True,
-    retry_delays: tuple[float, ...] = (0.0,),
+    retry_delays: tuple[float, ...] = DEFAULT_RETRY_DELAYS,
 ) -> dict[str, object]:
     """Build deterministic queue, independent assessments, cross-check, and synthesis."""
 
@@ -42,7 +43,12 @@ async def build_multi_agent_report(
         "perspective_assessments": [item.model_dump(mode="json") for item in assessments],
         "cross_check": [item.model_dump(mode="json") for item in cross],
         "summary": summary,
-        "materials": {"numeric": numeric_material(report), "note": note_material()},
+        "materials": {
+            "numeric": numeric_material(report),
+            "note": note_material(),
+            "flow": flow_material(report),
+            "change": change_material(report),
+        },
     }
 
 
@@ -92,6 +98,8 @@ async def _assess(
         return [
             deferred_assessment("numeric", "LLM 실행을 생략했다."),
             deferred_assessment("note", "LLM 실행을 생략했다."),
+            deferred_assessment("flow", "LLM 실행을 생략했다."),
+            deferred_assessment("change", "LLM 실행을 생략했다."),
         ]
     return [
         await create_perspective_assessment(
@@ -102,6 +110,16 @@ async def _assess(
         await create_perspective_assessment(
             "note",
             note_material(),
+            retry_delays=retry_delays,
+        ),
+        await create_perspective_assessment(
+            "flow",
+            flow_material(report),
+            retry_delays=retry_delays,
+        ),
+        await create_perspective_assessment(
+            "change",
+            change_material(report),
             retry_delays=retry_delays,
         ),
     ]

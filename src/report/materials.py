@@ -27,14 +27,55 @@ def note_material(
     notes_root = Path("data/companies") / corp_code / str(year) / "raw" / "notes"
     sections = []
     for account in ("매출채권", "재고자산"):
-        for section in find_account_note_sections(account, notes_root, corp_code, year, fs_div):
+        account_sections = find_account_note_sections(account, notes_root, corp_code, year, fs_div)
+        for section in account_sections[:2]:
             sections.append(
                 {
                     "account": account,
+                    "year": year,
+                    "fs_div": fs_div,
                     "locator": section.locator,
                     "title": section.title,
                     "matched_keywords": section.matched_keywords,
-                    "excerpt": section.text[:700],
+                    "excerpt": section.text[:350],
                 }
             )
     return {"note_sections": sections, "scope": "note perspective only"}
+
+
+def flow_material(report: dict[str, object]) -> dict[str, object]:
+    """Inputs for BS-IS-CF flow perspective only."""
+
+    flow_items = [
+        item
+        for item in report["review_queue"]
+        if "현금흐름" in str(item["subject"])
+        or "매출채권" in str(item["subject"])
+        or str(item["subject"]) in {"영업CF/순이익", "발생액 비율"}
+        or "growth_divergence" in str(item["key_evidence"])
+    ]
+    return {
+        "flow_queue": flow_items[:10],
+        "ratio_summary": {
+            key: value
+            for key, value in report["ratio_summary"].items()
+            if key in {"활동성", "이익의 질"}
+        },
+        "scope": "flow perspective only",
+    }
+
+
+def change_material(report: dict[str, object]) -> dict[str, object]:
+    """Inputs for prior/current change perspective only."""
+
+    change_items = [
+        item
+        for item in report["review_queue"]
+        if "single_account_yoy" in str(item["key_evidence"])
+        or "growth_divergence" in str(item["key_evidence"])
+    ]
+    return {
+        "change_queue": change_items[:10],
+        "target_year": report["target_year"],
+        "scope": "change perspective only",
+    }

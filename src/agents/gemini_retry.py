@@ -11,7 +11,7 @@ from pydantic_ai.exceptions import ModelHTTPError
 
 from config.settings import settings
 
-MODEL_NAME = "gemini-3.5-flash"
+MODEL_NAME = settings.gemini_model
 DEFAULT_RETRY_DELAYS = (2.0, 4.0, 8.0, 16.0)
 
 

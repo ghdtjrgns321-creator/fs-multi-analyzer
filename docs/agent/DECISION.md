@@ -47,17 +47,17 @@
   보존한다. MVP1 밖 계정까지 확장할 때 매핑률이 부족하면 alias 보강 또는 Arelle 투입을
   재검토한다. 상세 수치는 [NORMALIZE_REPORT.md](NORMALIZE_REPORT.md).
 
-## D6. 첫 수치 분석가 LLM → Gemini 3.5 Flash 단일 + OpenAI 미사용
+## D6. 첫 수치 분석가 LLM → Gemini family 단일 + OpenAI 미사용
 
-- **결정**: 첫 Finding 수치 분석가는 PydanticAI + `google-genai` + `gemini-3.5-flash`만
-  사용한다. OpenAI 모델은 사용하지 않는다.
+- **결정**: 첫 Finding 수치 분석가는 PydanticAI + `google-genai` + 설정의
+  `gemini_model`만 사용한다. OpenAI 모델은 사용하지 않는다.
 - **이유**: 이번 단계의 산술·판정은 이미 L2 결정론 코드가 수행한다. LLM은 계산 능력이 아니라
   구조화된 설명, 반대 가능성, 정상일 수 있는 일반적 설명, 확인 질문 생성에만 쓴다.
 - **환각 방어**: 입력은 L2 신호와 EvidenceRef로 제한한다. 외부 뉴스·업황·특정 사건을
   단정하지 못하게 system prompt와 result validator를 둔다. 빈 근거 또는 confirm_question
   누락은 재시도한다.
-- **재검토**: 더 무거운 회계 추론이 필요해질 때 Gemini 3.1 Pro 승급을 검토한다. 단, 숫자
-  계산은 계속 코드가 담당한다.
+- **재검토**: 더 무거운 회계 추론이 필요해질 때 Gemini family 내 승급을 검토한다. 단,
+  숫자 계산은 계속 코드가 담당한다. 현재 모델 전환은 D10을 따른다.
 
 ## D7. 반박 에이전트(⑤) 보류 — 반박 기능을 스키마·기준선·가드에 내재화
 
@@ -99,3 +99,15 @@
   수행한다.
 - **재검토**: 흐름·변동 관점이 준비되면 동일한 인터페이스로 관점을 추가한다. 관점 추가는
   데이터 차원의 에이전트 증식이 아니라 PLAN §5의 역할 차원 확장으로 제한한다.
+
+## D10. 메인 Gemini 모델 → `gemini-2.5-flash`로 전환
+
+- **결정**: 메인 LLM 모델 기본값을 `gemini-3.5-flash`에서 `gemini-2.5-flash`로 변경한다.
+  모델명은 `config.settings.gemini_model` 한 곳에서 관리하고, `src.agents.gemini_retry.MODEL_NAME`은
+  그 설정을 참조한다.
+- **이유**: 개발 기간 동안 `gemini-3.5-flash`가 반복적으로 503 `UNAVAILABLE` high demand를
+  반환해 L4 live 멀티에이전트 평가를 검증하지 못했다. 사용자가 Gemini family 내 전환을
+  결정했다.
+- **영향**: 기존 503 재시도 정책(최대 5회, 지수 백오프+jitter)은 유지한다. OpenAI fallback은
+  계속 사용하지 않으며, 선택 fallback도 Gemini family로만 제한한다.
+- **검증**: `gemini-2.5-flash`로 L4 수치·주석·흐름·변동 4관점 live 평가를 완료했다.

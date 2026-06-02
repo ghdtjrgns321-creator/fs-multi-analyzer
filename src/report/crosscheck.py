@@ -8,6 +8,13 @@ from pydantic import BaseModel
 
 from src.report.perspectives import PerspectiveAssessment
 
+RISK_SYNONYMS = {
+    "매출채권/수익": ["매출채권", "수익", "receivable", "revenue"],
+    "재고": ["재고", "inventory"],
+    "현금흐름": ["현금흐름", "cash flow", "cashflow"],
+    "유동성/차입": ["차입", "유동성", "borrow", "liquidity", "short-term financial"],
+}
+
 
 class CrossCheckResult(BaseModel):
     verdict: Literal["agreement", "conflict", "insufficient"]
@@ -29,9 +36,10 @@ def cross_check_assessments(assessments: list[PerspectiveAssessment]) -> list[Cr
                 comment="완료된 독립 관점이 2개 미만이라 일치/충돌 판정은 보류한다.",
             )
         ]
-    shared = set(completed[0].risk_areas)
-    for item in completed[1:]:
-        shared &= set(item.risk_areas)
+    normalized = [_normalized_areas(item) for item in completed]
+    shared = set(normalized[0])
+    for areas in normalized[1:]:
+        shared &= set(areas)
     if shared:
         area = sorted(shared)[0]
         return [
@@ -62,3 +70,17 @@ def cross_check_assessments(assessments: list[PerspectiveAssessment]) -> list[Cr
             comment="공통 risk_area가 없어 추가 근거 확인이 필요하다.",
         )
     ]
+
+
+def _normalized_areas(assessment: PerspectiveAssessment) -> list[str]:
+    areas = []
+    for area in [*assessment.risk_areas, assessment.summary]:
+        text = area.lower()
+        matched = False
+        for canonical, aliases in RISK_SYNONYMS.items():
+            if any(alias.lower() in text for alias in aliases):
+                areas.append(canonical)
+                matched = True
+        if not matched:
+            areas.append(area)
+    return areas
