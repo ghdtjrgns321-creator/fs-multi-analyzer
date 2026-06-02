@@ -12,7 +12,7 @@ from config.settings import settings
 from src.analysis_tools import load_normalized_financials
 
 DEFAULT_CONFIG = settings.config_dir / "playbooks" / "financial_ratios.yaml"
-DEFAULT_YEARS = [2022, 2023, 2024]
+DEFAULT_YEARS = [2022, 2023, 2024, 2025]
 
 
 def load_ratio_config(path: Path | None = None) -> list[dict[str, Any]]:

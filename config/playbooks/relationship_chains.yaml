@@ -107,7 +107,7 @@ audit_basis:
 l2_mvp1:
   primary_fs_div: CFS
   reference_fs_div: OFS
-  years: [2022, 2023, 2024]
+  years: [2022, 2023, 2024, 2025]
   yoy_accounts:
     - 현금및현금성자산
     - 단기금융상품

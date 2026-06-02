@@ -9,7 +9,7 @@ from src.normalize.pipeline import normalize_company_year
 from src.normalize.report import build_report
 
 DEFAULT_CORP_CODE = "00126380"
-DEFAULT_YEARS = (2022, 2023, 2024)
+DEFAULT_YEARS = (2022, 2023, 2024, 2025)
 
 
 def normalize_company_years(

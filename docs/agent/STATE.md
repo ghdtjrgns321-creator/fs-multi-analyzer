@@ -7,10 +7,11 @@
 ## 현재 위치
 
 - 단계: 설계 확정 → 프로젝트 뼈대 구축 → L0 수집 → L1 정규화 → L2 신호엔진 →
-  **L4 멀티에이전트 5관점 live 완료**
-- 최근 작업 (2026-06-02): 외부 ContextBrief를 L4 5번째 독립 관점으로 승격했다.
-  수치·주석·흐름·변동·외부 5관점 live 평가와 외부 포함 교차 판정을
-  [INTEGRATED_REPORT.md](INTEGRATED_REPORT.md)에 기록했다. D11 ADR을 추가했다.
+  **2025 포함 최신 데이터 갱신 + L4 5관점 live 완료**
+- 최근 작업 (2026-06-02): 삼성전자 2025 사업보고서(`20260310002820`, `사업보고서 (2025.12)`)
+  재무제표 CFS/OFS, XBRL zip, 주요 주석을 수집했다. 2022~2025 정규화·관계사슬·실무지표를
+  재계산하고, 2025 기준 L4 5관점 live 결과를 [INTEGRATED_REPORT.md](INTEGRATED_REPORT.md)에
+  기록했다.
 
 ## 완료
 
@@ -20,11 +21,11 @@
 - CLAUDE.md, pyproject.toml, config/playbooks, src/ 스캐폴딩, `src/schemas/findings.py`
 - Codex/비-Claude 진입점 [../../AGENTS.md](../../AGENTS.md) + [CODEX.md](CODEX.md)
 - L0 수집 모듈 [../../src/collect](../../src/collect)
-- L0 raw 데이터 `data/companies/00126380/{2022,2023,2024}/raw/`
+- L0 raw 데이터 `data/companies/00126380/{2022,2023,2024,2025}/raw/`
 - Raw 데이터 계약 [DATA_CONTRACT.md](DATA_CONTRACT.md)
 - L1 정규화 모듈 [../../src/normalize](../../src/normalize)
 - L1 canonical config [../../config/canonical_accounts.yaml](../../config/canonical_accounts.yaml)
-- L1 정규화 결과 `data/companies/00126380/{2022,2023,2024}/analysis.duckdb`
+- L1 정규화 결과 `data/companies/00126380/{2022,2023,2024,2025}/analysis.duckdb`
 - L1 측정 보고서 [NORMALIZE_REPORT.md](NORMALIZE_REPORT.md)
 - 결정 D5 ([DECISION.md](DECISION.md))
 - L2 tool DSL [../../src/analysis_tools](../../src/analysis_tools)
@@ -60,20 +61,22 @@
 - 결정 D10 ([DECISION.md](DECISION.md))
 - 결정 D11 ([DECISION.md](DECISION.md))
 - L4 5관점 live 통합 리포트 [INTEGRATED_REPORT.md](INTEGRATED_REPORT.md)
+- 2025 포함 raw contract [DATA_CONTRACT.md](DATA_CONTRACT.md)
 
 ## 다음 할 일 (우선순위)
 
 1. 차입금 줄기 추가: `note_mappings.yaml`과 `relationship_chains.yaml`만 추가해
    `uv run python -m src.agents.account_finding --account 차입금 --year <연도>`로 검증
-2. `gemini-2.5-flash`로 재고 live Finding 재실행:
+2. `gemini-2.5-flash`로 2025 재고/매출채권 live Finding 재실행:
    `uv run python -m src.agents.first_inventory_finding`
 3. D82242/D82638 표 구조 정밀 복원 또는 note diff 추가 여부 결정
 
 ## 열린 이슈 / 주의
 
 - `finstate_all` 응답에는 `fs_div` 컬럼이 없다. 수집 context에서 CFS/OFS를 주입해야 한다.
-- `account_id == "-표준계정코드 미사용-"` 행이 존재한다. MVP1에서는 `매입채무`(2022)와
-  `단기차입금`(2023~2024)이 label alias 보조를 필요로 했다.
+- `account_id == "-표준계정코드 미사용-"` 행이 존재한다. MVP1/합계 계정에서는 `매입채무`,
+  `이자비용`, `당기순이익` 일부 과거 행과 `단기차입금`(2023~2025)이 label alias 보조를
+  필요로 했다.
 - 전체 raw 행 기준 미매핑 비율은 높다. 현재 `canonical_accounts.yaml`이 MVP1 10개 계정만
   담기 때문이며, 미매핑 계정을 숨기지 않는다.
 - 주석은 표와 텍스트가 섞인 HTML이다. 단순 TXT만으로는 행/열 구조가 손실된다.
@@ -96,8 +99,8 @@
 - 메인 LLM 모델 기본값은 `config.settings.gemini_model == "gemini-2.5-flash"`다.
   Gemini fallback은 `gemini_fallback_model` 설정이 비어 있으면 비활성이다. OpenAI fallback은
   사용하지 않는다.
-- 재고자산 2023은 L2 threshold 미달로 특이 신호가 없고, 2024는 `revenue-vs-inventory`
-  growth divergence가 잡힌다.
+- 2025 CFS는 현재 threshold 기준 중위험 관계 red flag가 없다. L4에는 2024→2025 신호
+  스냅샷을 별도 material로 넣어 약한 신호도 관점 평가에 제공한다.
 
 ## 진입 포인트
 

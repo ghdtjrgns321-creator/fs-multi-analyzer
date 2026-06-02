@@ -9,7 +9,7 @@ from src.agents.account_finding import run_account_finding
 
 
 async def run_first_note_finding() -> dict[str, object]:
-    return await run_account_finding("매출채권", 2023)
+    return await run_account_finding("매출채권", 2025)
 
 
 def main() -> None:

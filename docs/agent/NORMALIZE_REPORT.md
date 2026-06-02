@@ -1,6 +1,6 @@
 # NORMALIZE_REPORT — L1 정규화 스파이크 결과
 
-> 범위: 삼성전자(`00126380`) 2022~2024 사업보고서, CFS/OFS 재무제표 raw.
+> 범위: 삼성전자(`00126380`) 2022~2025 사업보고서, CFS/OFS 재무제표 raw.
 > 목적: `account_id` 1순위 canonical 매핑 가설을 수치로 검증한다.
 
 ## 1. 구현 범위
@@ -110,3 +110,22 @@
 `account_id` 1순위 전략은 MVP1 연결성에는 충분했다. 다만 `account_id`만으로는 6개
 행이 누락되므로 라벨 alias 보조는 필수다. Arelle/원본 XBRL taxonomy 파싱은 아직 투입하지
 않아도 MVP1 L2 입력을 만들 수 있다.
+
+## 9. 2025 포함 최신 매핑 점검
+
+2025 수집 후 `canonical_accounts.yaml`의 기본 합계 계정까지 포함한 최신 매핑 상태를
+재점검했다. MVP 계정은 2022~2025 CFS/OFS 전 구간에서 모두 1건씩 매핑됐다.
+
+| 연도 | 구분 | exact_taxonomy_match | label_alias_match | unmapped_extension_account |
+|---|---|---:|---:|---:|
+| 2022 | CFS | 28 | 3 | 154 |
+| 2022 | OFS | 23 | 3 | 88 |
+| 2023 | CFS | 29 | 1 | 146 |
+| 2023 | OFS | 25 | 1 | 89 |
+| 2024 | CFS | 32 | 1 | 180 |
+| 2024 | OFS | 28 | 1 | 102 |
+| 2025 | CFS | 32 | 1 | 196 |
+| 2025 | OFS | 28 | 1 | 112 |
+
+2025에서 label alias가 필요한 MVP 계정은 CFS/OFS 모두 `단기차입금`이다.
+`account_id == "-표준계정코드 미사용-"`이지만 라벨 보조로 매핑됐다.

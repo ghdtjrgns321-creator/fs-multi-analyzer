@@ -15,7 +15,7 @@ from src.collect.opendart import DartCollector
 from src.collect.storage import write_frame, write_json, year_dir
 
 DEFAULT_CORP_CODE = "00126380"
-DEFAULT_YEARS = (2024, 2023, 2022)
+DEFAULT_YEARS = (2025, 2024, 2023, 2022)
 FS_DIVS = ("CFS", "OFS")
 
 

@@ -13,6 +13,7 @@ def numeric_material(report: dict[str, object]) -> dict[str, object]:
     return {
         "review_queue": report["review_queue"][:10],
         "ratio_summary": report["ratio_summary"],
+        "latest_signal_snapshot": report.get("latest_signal_snapshot", {}),
         "scope": "numeric perspective only",
     }
 
@@ -56,6 +57,7 @@ def flow_material(report: dict[str, object]) -> dict[str, object]:
     ]
     return {
         "flow_queue": flow_items[:10],
+        "latest_signal_snapshot": report.get("latest_signal_snapshot", {}),
         "ratio_summary": {
             key: value
             for key, value in report["ratio_summary"].items()
@@ -76,6 +78,7 @@ def change_material(report: dict[str, object]) -> dict[str, object]:
     ]
     return {
         "change_queue": change_items[:10],
+        "latest_signal_snapshot": report.get("latest_signal_snapshot", {}),
         "target_year": report["target_year"],
         "scope": "change perspective only",
     }

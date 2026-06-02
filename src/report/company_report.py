@@ -19,7 +19,7 @@ from src.signals.ratios import build_ratio_report, load_ratio_config
 from src.signals.red_flags import extract_red_flags
 
 DEFAULT_CORP_CODE = "00126380"
-DEFAULT_YEARS = [2022, 2023, 2024]
+DEFAULT_YEARS = [2022, 2023, 2024, 2025]
 
 
 def build_company_report(
@@ -33,15 +33,12 @@ def build_company_report(
     target_year = max(target_years)
     frame = load_normalized_financials(corp_code, target_years)
     signal_report = build_mvp1_signal_report(frame)
-    red_flags = [
-        signal
-        for year in target_years[1:]
-        for signal in extract_red_flags(signal_report, int(year))
-    ]
+    red_flags = extract_red_flags(signal_report, target_year)
     ratios = build_ratio_report(frame, target_years)
     ratio_config = load_ratio_config()
-    findings = load_findings_from_report(
-        finding_report_path or Path("docs/agent/FINDING_REPORT.md")
+    findings = _target_year_findings(
+        load_findings_from_report(finding_report_path or Path("docs/agent/FINDING_REPORT.md")),
+        target_year,
     )
     queue = build_review_queue(findings, ratios, ratio_config, target_year, red_flags)
     ratio_summary = summarize_ratio_categories(ratios, target_year)
@@ -52,8 +49,25 @@ def build_company_report(
         "target_year": target_year,
         "review_queue": [item.to_dict() for item in queue],
         "ratio_summary": ratio_summary,
+        "latest_signal_snapshot": _latest_signal_snapshot(signal_report, target_year),
         "llm_payload": payload,
     }
+
+
+def _latest_signal_snapshot(report: dict[str, object], target_year: int) -> dict[str, object]:
+    return {
+        "growth_divergences": _rows_for_year(report["growth_divergences"], target_year),
+        "direction_checks": _rows_for_year(report["direction_checks"], target_year),
+        "primary_yoy": _rows_for_year(report["primary_yoy"], target_year),
+        "reference_yoy": _rows_for_year(report["reference_yoy"], target_year),
+    }
+
+
+def _rows_for_year(frame: Any, target_year: int) -> list[dict[str, object]]:
+    if not hasattr(frame, "to_dict"):
+        return []
+    latest = frame[frame["year"] == target_year]
+    return latest.to_dict(orient="records")
 
 
 def load_findings_from_report(path: Path) -> list[AccountFinding]:
@@ -69,6 +83,15 @@ def load_findings_from_report(path: Path) -> list[AccountFinding]:
         except Exception:
             continue
     return findings
+
+
+def _target_year_findings(findings: list[AccountFinding], target_year: int) -> list[AccountFinding]:
+    latest = []
+    for finding in findings:
+        evidence = finding.numeric_evidence + finding.note_evidence + finding.flow_evidence
+        if any(item.year == str(target_year) for item in evidence):
+            latest.append(finding)
+    return latest
 
 
 def render_markdown(report: dict[str, Any], summary: str | None = None) -> str:

@@ -46,7 +46,7 @@ async def build_multi_agent_report(
         "summary": summary,
         "materials": {
             "numeric": numeric_material(report),
-            "note": note_material(),
+            "note": _note_material(report),
             "flow": flow_material(report),
             "change": change_material(report),
             "external": external_material(report),
@@ -114,7 +114,7 @@ async def _assess(
         ),
         await create_perspective_assessment(
             "note",
-            note_material(),
+            _note_material(report),
             retry_delays=retry_delays,
         ),
         await create_perspective_assessment(
@@ -129,6 +129,10 @@ async def _assess(
         ),
         await create_external_assessment(report, retry_delays=retry_delays),
     ]
+
+
+def _note_material(report: dict[str, object]) -> dict[str, object]:
+    return note_material(year=int(report["target_year"]))
 
 
 def main() -> None:

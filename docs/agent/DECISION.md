@@ -35,17 +35,19 @@
 
 - **결정**: canonical 매핑은 `account_id` 표준 ID를 1순위로 사용하고, 표준 ID가 없거나
   MVP1 계정에서 누락될 때만 한글 라벨 alias를 2순위로 사용한다.
-- **측정**: 삼성전자 2022~2024 CFS/OFS에서 MVP1 10개 계정은 모든 연도·구분에 1건씩
+- **초기 측정**: 삼성전자 2022~2024 CFS/OFS에서 MVP1 10개 계정은 모든 연도·구분에 1건씩
   같은 canonical로 연결됐다. 각 연도·구분마다 9건은 `exact_taxonomy_match`, 1건은
   `label_alias_match`였다. 2022 CFS의 표준계정코드 미사용 51행 중 MVP1 alias로 구제된
   행은 1건(1.96%)이다.
 - **결론**: MVP1 범위에서는 Arelle/원본 XBRL taxonomy 파싱 없이 `finstate_all`의
   `account_id`와 라벨 alias만으로 L2 입력을 만들 수 있다. 단, `매입채무`(2022)와
-  `단기차입금`(2023~2024)은 `account_id == "-표준계정코드 미사용-"`이므로 라벨 보조가
+  `단기차입금`(2023~2025)은 `account_id == "-표준계정코드 미사용-"`이므로 라벨 보조가
   필수다.
 - **영향**: 미매핑 행은 제외하지 않고 `기타 중요 계정` + `unmapped_extension_account`로
   보존한다. MVP1 밖 계정까지 확장할 때 매핑률이 부족하면 alias 보강 또는 Arelle 투입을
   재검토한다. 상세 수치는 [NORMALIZE_REPORT.md](NORMALIZE_REPORT.md).
+- **2025 갱신**: 삼성전자 2025 CFS/OFS에서도 MVP 계정은 모두 1건씩 매핑됐다.
+  `단기차입금`은 2025에도 label alias 보조가 필요했다.
 
 ## D6. 첫 수치 분석가 LLM → Gemini family 단일 + OpenAI 미사용
 

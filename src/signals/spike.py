@@ -6,7 +6,7 @@ from src.analysis_tools import load_normalized_financials
 from src.signals.mvp1 import build_mvp1_signal_report
 
 DEFAULT_CORP_CODE = "00126380"
-DEFAULT_YEARS = [2022, 2023, 2024]
+DEFAULT_YEARS = [2022, 2023, 2024, 2025]
 
 
 def run_signal_spike(
