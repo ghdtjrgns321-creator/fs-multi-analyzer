@@ -7,11 +7,12 @@
 ## 현재 위치
 
 - 단계: 설계 확정 → 프로젝트 뼈대 구축 → L0 수집 → L1 정규화 → L2 신호엔진 →
-  **감사기준·K-IFRS 근거 전수 평가와 관계 사슬 매핑 완료**
-- 최근 작업 (2026-06-02): ISA/KSA 200·300·500·600·700번대와 재무제표·공시 관련
-  K-IFRS/IFRS 후보를 3축으로 평가해 [AUDIT_BASIS.md](AUDIT_BASIS.md)를 추가했다.
-  `relationship_chains.yaml`의 매출채권·재고·차입금 사슬에는 채택(Must/Should) 기준만
-  `audit_basis`로 매핑했고, materiality·공시 변동 근거는 별도 YAML 섹션으로 외부화했다.
+  **감사기준 1차 + 실무 재무지표 2차 근거 매핑 완료**
+- 최근 작업 (2026-06-02): 웹검색 출처 기반으로 실무 재무지표 15개를 발굴해
+  [../../config/playbooks/financial_ratios.yaml](../../config/playbooks/financial_ratios.yaml)에
+  외부화했다. 각 지표는 계산식, 계정 조합, 실무 의미, 출처 URL, MVP1 계정 계산 가능 여부,
+  1차 audit_basis 연결을 포함한다. [../user/METHODOLOGY.md](../user/METHODOLOGY.md)의
+  2차 섹션도 실제 결과로 갱신했다.
 
 ## 완료
 
@@ -49,6 +50,8 @@
 - 결정 D8 ([DECISION.md](DECISION.md))
 - 감사기준·K-IFRS 근거 평가 [AUDIT_BASIS.md](AUDIT_BASIS.md)
 - 관계 사슬별 audit_basis 매핑 [../../config/playbooks/relationship_chains.yaml](../../config/playbooks/relationship_chains.yaml)
+- 실무 재무지표 플레이북 [../../config/playbooks/financial_ratios.yaml](../../config/playbooks/financial_ratios.yaml)
+- 2단계 기준 선정 방법론 [../user/METHODOLOGY.md](../user/METHODOLOGY.md)
 
 ## 다음 할 일 (우선순위)
 
@@ -72,6 +75,8 @@
 - 외부 업황·뉴스 맥락은 `ContextBrief`로만 제시한다. 출처 없는 외부 주장은 버리고,
   Finding 판단 필드는 변경하지 않는다.
 - 감사기준·K-IFRS 근거는 검토 관점의 출처다. Finding은 부정·분식 확정 표현으로 쓰지 않는다.
+- 실무 재무지표도 검토 관점이다. 출처 없는 계산식은 플레이북에 넣지 않고, 계정 부족 지표는
+  `mvp1_status: account_missing`으로 표시한다.
 - 공개 KSA 원문별 링크는 확인하지 못한 항목이 있어 [AUDIT_BASIS.md](AUDIT_BASIS.md)에
   “KSA 원문 미검증”으로 표시했다. ISA/IFRS 제목과 요지는 공식 IAASB/IFRS 출처로 확인했다.
 - Gemini fallback은 `gemini_fallback_model` 설정이 비어 있으면 비활성이다. OpenAI fallback은 사용하지 않는다.

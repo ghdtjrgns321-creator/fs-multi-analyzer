@@ -1,0 +1,160 @@
+# 실무 재무지표 플레이북. 지표는 검토 관점이며 부정·분식 확정 근거가 아니다.
+
+version: 1
+basis_date: 2026-06-02
+common_audit_basis:
+  - {standard: ISA/KSA 315, procedure: risk_identification, gist: 재무제표 관계에서 위험 후보를 식별한다.}
+  - {standard: ISA/KSA 520, procedure: analytical_procedures, gist: 재무비율·추세·관계 분석의 직접 근거다.}
+  - {standard: ISA/KSA 500, procedure: evidence_grounding, gist: 계산식·숫자·출처를 근거로 분리 기록한다.}
+
+ratios:
+  - id: roe
+    category: profitability
+    name: ROE
+    formula: net_income / average_equity
+    accounts: [당기순이익, 자본]
+    meaning: 자본이 이익을 얼마나 창출했는지 보는 수익성 지표다.
+    mvp1_status: account_missing
+    missing_accounts: [당기순이익, 자본]
+    audit_basis: [ISA/KSA 520]
+    source: {title: CFI Return on Equity, url: "https://corporatefinanceinstitute.com/resources/accounting/what-is-return-on-equity-roe/"}
+  - id: roa
+    category: profitability
+    name: ROA
+    formula: net_income / average_total_assets
+    accounts: [당기순이익, 자산총계]
+    meaning: 자산이 이익을 얼마나 창출했는지 보는 효율성·수익성 지표다.
+    mvp1_status: account_missing
+    missing_accounts: [당기순이익, 자산총계]
+    audit_basis: [ISA/KSA 520]
+    source: {title: CFI Return on Assets, url: "https://corporatefinanceinstitute.com/resources/accounting/return-on-assets-roa-formula/"}
+  - id: roi
+    category: profitability
+    name: ROI
+    formula: net_income / cost_of_investment
+    accounts: [투자수익, 투자원가]
+    meaning: 투자원가 대비 효익을 보는 범용 투자수익률 지표다.
+    mvp1_status: account_missing
+    missing_accounts: [투자원가]
+    audit_basis: [ISA/KSA 520]
+    source: {title: CFI Return on Investment, url: "https://corporatefinanceinstitute.com/resources/knowledge/finance/return-on-investment-roi-formula/"}
+  - id: gross_profit_margin
+    category: profitability
+    name: 매출총이익률
+    formula: (revenue - cost_of_sales) / revenue
+    accounts: [매출, 매출원가]
+    meaning: 매출에서 직접 원가를 제외한 원가 구조와 수익성을 본다.
+    mvp1_status: computable
+    missing_accounts: []
+    audit_basis: [ISA/KSA 520, K-IFRS 1115, K-IFRS 1002]
+    source: {title: CFI Profitability Ratios, url: "https://corporatefinanceinstitute.com/resources/accounting/profitability-ratios/"}
+  - id: operating_margin
+    category: profitability
+    name: 영업이익률
+    formula: operating_profit / revenue
+    accounts: [영업이익, 매출]
+    meaning: 본업 영업활동의 이익 창출력을 본다.
+    mvp1_status: account_missing
+    missing_accounts: [영업이익]
+    audit_basis: [ISA/KSA 520]
+    source: {title: CFI Operating Profit Margin, url: "https://corporatefinanceinstitute.com/resources/accounting/operating-profit-margin/"}
+  - id: receivable_turnover
+    category: activity
+    name: 매출채권회전율
+    formula: net_credit_sales / average_accounts_receivable
+    accounts: [매출, 매출채권]
+    meaning: 매출채권 회수 효율과 수익의 현금화 속도를 본다.
+    mvp1_status: computable_with_proxy
+    missing_accounts: [순외상매출]
+    audit_basis: [ISA/KSA 520, K-IFRS 1109, K-IFRS 1107]
+    source: {title: CFI Accounts Receivable Turnover Ratio, url: "https://corporatefinanceinstitute.com/resources/financial-modeling/accounts-receivable-turnover-ratio-template/"}
+  - id: dso
+    category: activity
+    name: DSO
+    formula: accounts_receivable / net_credit_sales * days
+    accounts: [매출채권, 매출]
+    meaning: 매출채권이 현금으로 회수되는 평균 기간을 본다.
+    mvp1_status: computable_with_proxy
+    missing_accounts: [순외상매출]
+    audit_basis: [ISA/KSA 520, K-IFRS 1109, K-IFRS 1107]
+    source: {title: CFI Days Sales Outstanding, url: "https://corporatefinanceinstitute.com/resources/accounting/days-sales-outstanding/"}
+  - id: inventory_turnover
+    category: activity
+    name: 재고회전율
+    formula: cost_of_sales / average_inventory
+    accounts: [매출원가, 재고자산]
+    meaning: 재고가 판매·소진되는 속도와 진부화 가능성을 본다.
+    mvp1_status: computable
+    missing_accounts: []
+    audit_basis: [ISA/KSA 501, ISA/KSA 520, K-IFRS 1002]
+    source: {title: CFI Inventory Turnover, url: "https://corporatefinanceinstitute.com/resources/accounting/inventory-turnover-ratio/"}
+  - id: dio
+    category: activity
+    name: DIO
+    formula: average_inventory / cost_of_sales * days
+    accounts: [재고자산, 매출원가]
+    meaning: 재고가 판매 전 보유되는 평균 기간을 본다.
+    mvp1_status: computable
+    missing_accounts: []
+    audit_basis: [ISA/KSA 501, ISA/KSA 520, K-IFRS 1002]
+    source: {title: CFI Days Inventory Outstanding, url: "https://corporatefinanceinstitute.com/resources/accounting/days-inventory-outstanding-dio/"}
+  - id: total_asset_turnover
+    category: activity
+    name: 총자산회전율
+    formula: net_sales / average_total_assets
+    accounts: [매출, 자산총계]
+    meaning: 자산이 매출을 얼마나 효율적으로 만드는지 본다.
+    mvp1_status: account_missing
+    missing_accounts: [자산총계]
+    audit_basis: [ISA/KSA 520]
+    source: {title: CFI Asset Turnover Ratio, url: "https://corporatefinanceinstitute.com/resources/accounting/asset-turnover-ratio/"}
+  - id: debt_to_equity
+    category: stability
+    name: 부채비율
+    formula: total_debt_or_liabilities / equity
+    accounts: [부채, 자본]
+    meaning: 자본 대비 부채 부담과 재무 레버리지를 본다.
+    mvp1_status: account_missing
+    missing_accounts: [부채총계, 자본]
+    audit_basis: [ISA/KSA 520, ISA/KSA 570]
+    source: {title: CFI Debt to Equity Ratio, url: "https://corporatefinanceinstitute.com/resources/knowledge/finance/debt-to-equity-ratio-formula/"}
+  - id: current_ratio
+    category: stability
+    name: 유동비율
+    formula: current_assets / current_liabilities
+    accounts: [유동자산, 유동부채]
+    meaning: 단기 채무를 유동자산으로 상환할 수 있는지 본다.
+    mvp1_status: account_missing
+    missing_accounts: [유동자산]
+    audit_basis: [ISA/KSA 520, ISA/KSA 570]
+    source: {title: CFI Current Ratio Formula, url: "https://corporatefinanceinstitute.com/resources/accounting/current-ratio-formula/"}
+  - id: interest_coverage
+    category: stability
+    name: 이자보상배율
+    formula: ebit / interest_expense
+    accounts: [영업이익, 이자비용]
+    meaning: 영업이익이 이자비용을 감당하는 정도를 본다.
+    mvp1_status: account_missing
+    missing_accounts: [영업이익, 이자비용]
+    audit_basis: [ISA/KSA 520, ISA/KSA 570]
+    source: {title: CFI Interest Coverage Ratio, url: "https://corporatefinanceinstitute.com/resources/knowledge/finance/interest-coverage-ratio/"}
+  - id: ocf_to_net_income
+    category: earnings_quality
+    name: 영업CF/순이익
+    formula: operating_cash_flow / net_income
+    accounts: [영업활동현금흐름, 당기순이익]
+    meaning: 보고이익이 영업현금흐름으로 뒷받침되는지 본다.
+    mvp1_status: account_missing
+    missing_accounts: [당기순이익]
+    audit_basis: [ISA/KSA 520, K-IFRS 1007]
+    source: {title: Wall Street Prep Quality of Earnings Ratio, url: "https://www.wallstreetprep.com/knowledge/quality-of-earnings-ratio/"}
+  - id: accruals_ratio
+    category: earnings_quality
+    name: 발생액 비율
+    formula: (net_income - operating_cash_flow) / average_total_assets
+    accounts: [당기순이익, 영업활동현금흐름, 자산총계]
+    meaning: 이익 중 현금흐름으로 뒷받침되지 않는 발생액 비중을 본다.
+    mvp1_status: account_missing
+    missing_accounts: [당기순이익, 자산총계]
+    audit_basis: [ISA/KSA 520, K-IFRS 1007]
+    source: {title: Stockopedia Accrual Ratio, url: "https://www.stockopedia.com/ratios/accrual-ratio-555/"}
