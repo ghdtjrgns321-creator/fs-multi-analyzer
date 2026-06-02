@@ -7,12 +7,11 @@
 ## 현재 위치
 
 - 단계: 설계 확정 → 프로젝트 뼈대 구축 → L0 수집 → L1 정규화 → L2 신호엔진 →
-  **첫 수치 분석가 코드 완료 / live Finding 보류**
-- 최근 작업 (2026-06-02): L2 계산값에 config threshold를 적용해 2023 빨간불 신호를 추출했다.
-  PydanticAI + Gemini 3.5 Flash 수치 분석가 1명을 구현하고 EvidenceRef/confirm_question
-  guardrail 테스트를 추가했다. `GOOGLE_API_KEY`는 존재했지만 Gemini 3.5 Flash가 두 번 모두
-  503 high demand를 반환해 실제 AccountFinding 생성은 보류했다. 기록은
-  [FINDING_REPORT.md](FINDING_REPORT.md)에 남겼다.
+  **첫 수치 분석가 live Finding 생성 완료**
+- 최근 작업 (2026-06-02): Gemini 3.5 Flash 호출에 503/UNAVAILABLE 일시 오류 자동 재시도
+  (최대 5회, 지수 백오프+jitter)를 추가했다. 기본 비활성 Gemini-family fallback 설정을
+  추가했지만 기본값은 빈 값이라 `gemini-3.5-flash` 고정이다. `uv run python -m src.agents.first_finding`
+  재실행으로 첫 `AccountFinding` 생성을 완료했다. 기록은 [FINDING_REPORT.md](FINDING_REPORT.md)에 남겼다.
 
 ## 완료
 
@@ -35,14 +34,14 @@
 - L2 threshold 빨간불 추출 [../../src/signals/red_flags.py](../../src/signals/red_flags.py)
 - 수치 분석가 1명 [../../src/agents/numeric_analyst.py](../../src/agents/numeric_analyst.py)
 - 첫 Finding 실행 기록 [FINDING_REPORT.md](FINDING_REPORT.md)
+- Gemini 일시 오류 재시도 테스트 [../../tests/test_red_flags_and_agent.py](../../tests/test_red_flags_and_agent.py)
 - 결정 D6 ([DECISION.md](DECISION.md))
 
 ## 다음 할 일 (우선순위)
 
-1. **Gemini 3.5 Flash 재실행**: 503 해소 후 `uv run python -m src.agents.first_finding`
-   재실행해 실제 `AccountFinding` 생성
-2. L1.5 주석 인덱서 설계: HTML 표 구조와 문장영역을 분리 보존하는 입력 contract 정의
-3. 차입금/유동성 분석 확장: MVP1에 없는 유동자산총계·순이익 등 필요 계정 보강 여부 결정
+1. L1.5 주석 인덱서 설계: HTML 표 구조와 문장영역을 분리 보존하는 입력 contract 정의
+2. 차입금/유동성 분석 확장: MVP1에 없는 유동자산총계·순이익 등 필요 계정 보강 여부 결정
+3. L4 리포트 출력 형식 설계: 생성된 `AccountFinding`을 사람이 검토할 리포트로 변환
 
 ## 열린 이슈 / 주의
 
@@ -52,10 +51,9 @@
 - 전체 raw 행 기준 미매핑 비율은 높다. 현재 `canonical_accounts.yaml`이 MVP1 10개 계정만
   담기 때문이며, 미매핑 계정을 숨기지 않는다.
 - 주석은 표와 텍스트가 섞인 HTML이다. 단순 TXT만으로는 행/열 구조가 손실된다.
-- L2 2023 threshold 판정은 구현됐다. 현재 live Finding만 모델 503으로 보류 상태다.
 - 유동비율, 영업CF/순이익 비율은 MVP1 계정 부족으로 보류했다.
-- 2023 threshold 판정은 구현됐다. Gemini 3.5 Flash live Finding만 503으로 아직 생성되지 않았다.
 - 수치 분석가 prompt는 외부 사실을 쓰지 않는다. 정상 설명은 일반적 가능성으로만 작성해야 한다.
+- Gemini fallback은 `gemini_fallback_model` 설정이 비어 있으면 비활성이다. OpenAI fallback은 사용하지 않는다.
 
 ## 진입 포인트
 

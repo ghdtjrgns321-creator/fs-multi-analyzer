@@ -1,7 +1,7 @@
 # FINDING_REPORT — 첫 Finding 리포트 실행 기록
 
 > 범위: 삼성전자(`00126380`) 2023 CFS, MVP1 숫자 신호.
-> 상태: 결정론 신호 추출 완료, Gemini 3.5 Flash live Finding 생성은 모델 503으로 보류.
+> 상태: 결정론 신호 추출 완료, Gemini 3.5 Flash live Finding 생성 완료.
 
 ## 1. 실행 범위
 
@@ -26,25 +26,106 @@ LLM 입력에는 위 결정론 신호와 근거만 포함한다. 외부 뉴스, 
 
 ## 3. Live LLM 실행 결과
 
-`GOOGLE_API_KEY`는 설정상 존재했다. 그러나 `uv run python -m src.agents.first_finding` 실행이
-두 번 모두 Google API 503으로 실패했다.
+`GOOGLE_API_KEY`는 설정상 존재했다. 최초 실행에서는 Google API 503이 발생했으나,
+`src.agents.numeric_analyst`에 503/UNAVAILABLE 일시 오류 자동 재시도를 추가한 뒤
+`uv run python -m src.agents.first_finding` 재실행이 성공했다.
 
-```text
-status_code: 503
-model_name: gemini-3.5-flash
-message: This model is currently experiencing high demand.
+검증:
+
+```powershell
+uv run python -m pytest -q
+# 18 passed
+
+uv run ruff check .
+# All checks passed!
 ```
 
-고정 조건이 `Gemini 3.5 Flash 단일`이고 OpenAI 미사용이므로 다른 모델로 우회하지 않았다.
-따라서 실제 `AccountFinding`은 아직 생성되지 않았다.
+OpenAI fallback은 사용하지 않았다. `gemini_fallback_model` 설정은 기본 빈 값이라 비활성이고,
+설정하더라도 `gemini-` prefix 모델만 허용한다.
 
-## 4. 재실행 방법
+## 4. 생성된 Finding
 
-모델 503이 해소되면 아래 명령을 다시 실행한다.
+```json
+{
+  "account": "매출채권",
+  "issue_type": "receivables_quality",
+  "materiality_score": 80.0,
+  "anomaly_score": 75.0,
+  "confidence": "High",
+  "numeric_evidence": [
+    {
+      "source": "financial_statement",
+      "locator": "매출",
+      "year": "2023",
+      "value": "YoY -14.33%"
+    },
+    {
+      "source": "financial_statement",
+      "locator": "매출채권",
+      "year": "2023",
+      "value": "YoY 2.59%"
+    },
+    {
+      "source": "financial_statement",
+      "locator": "revenue-vs-receivable",
+      "year": "2023",
+      "value": "divergence -16.92pp"
+    },
+    {
+      "source": "financial_statement",
+      "locator": "매출",
+      "year": "2023",
+      "value": "direction decrease"
+    },
+    {
+      "source": "financial_statement",
+      "locator": "매출채권",
+      "year": "2023",
+      "value": "direction increase"
+    }
+  ],
+  "note_evidence": [],
+  "flow_evidence": [
+    {
+      "source": "financial_statement",
+      "locator": "매출채권",
+      "year": "2023",
+      "value": "direction increase"
+    },
+    {
+      "source": "cash_flow",
+      "locator": "영업활동현금흐름",
+      "year": "2023",
+      "value": "direction decrease"
+    }
+  ],
+  "counter_evidence": [
+    "매출채권의 절대적인 증가율 자체는 YoY 2.59% 수준으로 급격한 팽창으로 보기는 어려울 수 있음"
+  ],
+  "normal_explanation": [
+    "기말 시점에 매출이 집중되는 계절적 요인으로 인해 일시적으로 매출채권 잔액이 증가했을 가능성",
+    "정상적인 영업 정책의 일환으로 우량 거래처에 대한 신용 공여 기간이 연장되었을 가능성"
+  ],
+  "confirm_question": [
+    "기말 매출채권 연령 분석(Aging Analysis)에서 장기 연체 채권의 비중이 전년 대비 증가하였습니까?",
+    "대손충당금 설정 정책 및 대손충당금 설정률이 매출채권 증가 속도에 맞추어 보수적으로 조정되었습니까?"
+  ],
+  "next_procedure": [
+    "매출채권 연령 분석표를 검토하여 장기 미회수 채권의 대손충당금 설정 적정성을 평가한다.",
+    "보고기간 후 수금 내역(Subsequent Receipt)을 확인하여 기말 매출채권의 실제 회수 여부를 검증한다.",
+    "주요 거래처별 신용 한도 및 신용 정책의 변경 여부를 파악한다."
+  ],
+  "risk_level": "Medium"
+}
+```
+
+## 5. 재실행 방법
+
+같은 범위의 첫 Finding은 아래 명령으로 재실행한다.
 
 ```powershell
 uv run python -m src.agents.first_finding
 ```
 
-성공 시 출력은 `signals`와 `finding` JSON이다. `finding`은 `AccountFinding` 스키마를 따라야
-하며, `numeric_evidence` 또는 `flow_evidence`가 비어 있으면 result validator가 재시도한다.
+출력은 `signals`와 `finding` JSON이다. `finding`은 `AccountFinding` 스키마를 따라야 하며,
+`numeric_evidence` 또는 `flow_evidence`가 비어 있으면 result validator가 재시도한다.

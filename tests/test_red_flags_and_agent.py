@@ -2,6 +2,7 @@ import asyncio
 from types import SimpleNamespace
 
 import pytest
+from pydantic_ai.exceptions import ModelHTTPError
 
 from src.agents.guardrails import validate_numeric_finding
 from src.agents.numeric_analyst import create_numeric_finding
@@ -93,6 +94,89 @@ def test_numeric_agent_accepts_fake_client(monkeypatch) -> None:
     result = asyncio.run(create_numeric_finding({"signals": []}, agent_factory=FakeAgent))
 
     assert result.account == "매출채권"
+
+
+def test_numeric_agent_retries_503_then_succeeds(monkeypatch) -> None:
+    calls = 0
+
+    class FakeAgent:
+        async def run(self, prompt: str) -> SimpleNamespace:
+            nonlocal calls
+            calls += 1
+            if calls < 3:
+                raise ModelHTTPError(
+                    status_code=503,
+                    model_name="gemini-3.5-flash",
+                    body={"error": {"status": "UNAVAILABLE"}},
+                )
+            return SimpleNamespace(output=valid_finding())
+
+    monkeypatch.setattr("src.agents.numeric_analyst.settings.google_api_key", "fake")
+
+    result = asyncio.run(
+        create_numeric_finding(
+            {"signals": []},
+            agent_factory=FakeAgent,
+            retry_delays=(0, 0, 0),
+        )
+    )
+
+    assert calls == 3
+    assert result.account == "매출채권"
+
+
+def test_numeric_agent_retries_503_until_final_failure(monkeypatch) -> None:
+    calls = 0
+
+    class FakeAgent:
+        async def run(self, prompt: str) -> SimpleNamespace:
+            nonlocal calls
+            calls += 1
+            raise ModelHTTPError(
+                status_code=503,
+                model_name="gemini-3.5-flash",
+                body="This model is currently experiencing high demand.",
+            )
+
+    monkeypatch.setattr("src.agents.numeric_analyst.settings.google_api_key", "fake")
+
+    with pytest.raises(RuntimeError, match="Gemini temporary error"):
+        asyncio.run(
+            create_numeric_finding(
+                {"signals": []},
+                agent_factory=FakeAgent,
+                retry_delays=(0, 0),
+            )
+        )
+
+    assert calls == 3
+
+
+def test_numeric_agent_does_not_retry_permanent_4xx(monkeypatch) -> None:
+    calls = 0
+
+    class FakeAgent:
+        async def run(self, prompt: str) -> SimpleNamespace:
+            nonlocal calls
+            calls += 1
+            raise ModelHTTPError(
+                status_code=400,
+                model_name="gemini-3.5-flash",
+                body={"error": {"status": "INVALID_ARGUMENT"}},
+            )
+
+    monkeypatch.setattr("src.agents.numeric_analyst.settings.google_api_key", "fake")
+
+    with pytest.raises(ModelHTTPError):
+        asyncio.run(
+            create_numeric_finding(
+                {"signals": []},
+                agent_factory=FakeAgent,
+                retry_delays=(0, 0),
+            )
+        )
+
+    assert calls == 1
 
 
 def test_prompt_payload_serializes_evidence() -> None:

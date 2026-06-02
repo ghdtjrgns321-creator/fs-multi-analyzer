@@ -14,6 +14,7 @@ class Settings(BaseSettings):
     dart_api_key: str = ""
     openai_api_key: str = ""
     google_api_key: str = ""
+    gemini_fallback_model: str = ""
 
     # 경로
     data_dir: Path = Path("data/companies")

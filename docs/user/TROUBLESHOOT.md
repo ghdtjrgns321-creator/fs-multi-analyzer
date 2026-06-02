@@ -28,3 +28,16 @@
   보류로 기록했다.
 - 교훈: 모델 고정 요구가 있는 단계에서는 실패 원인을 모델 가용성으로 분리 기록하고,
   대체 모델을 임의로 쓰지 않는다. 모델이 회복되면 같은 명령을 재실행한다.
+
+### [2026-06-02] Gemini 일시 오류 자동 재시도 추가 후 첫 Finding 생성
+
+- 증상: `gemini-3.5-flash`의 503/UNAVAILABLE 같은 일시 오류가 발생하면 사람이 같은 명령을
+  수동 재실행해야 했다.
+- 원인: `src.agents.numeric_analyst`가 PydanticAI `Agent.run()`을 한 번만 호출했고,
+  `ModelHTTPError(status_code=503)` 같은 일시 오류를 분류하거나 백오프하지 않았다.
+- 해결: Gemini 호출부에 최대 5회 지수 백오프+jitter 재시도를 추가했다. 4xx 영구 오류는
+  재시도하지 않으며, 선택 fallback은 `gemini_fallback_model` 설정으로만 켤 수 있고 Gemini
+  패밀리로 제한했다. 재시도 테스트와 ruff를 통과했고, `uv run python -m src.agents.first_finding`
+  재실행으로 첫 `AccountFinding`을 생성했다.
+- 교훈: 라이브 모델 과부하처럼 정상 코드 바깥의 일시 장애는 호출 경계에서 정책화하고,
+  fallback은 기본 비활성으로 두어 모델 고정 조건을 깨지 않는다.
