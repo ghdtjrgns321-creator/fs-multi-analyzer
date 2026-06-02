@@ -7,12 +7,11 @@
 ## 현재 위치
 
 - 단계: 설계 확정 → 프로젝트 뼈대 구축 → L0 수집 → L1 정규화 → L2 신호엔진 →
-  **재고자산 줄기 추가 / 계정 추가 일반화 완료**
-- 최근 작업 (2026-06-02): 재고자산을 매출채권과 같은 L2→수치 분석가→주석 분석가
-  파이프라인에 연결했다. `재고자산 -> D82638` 주석 매핑과 `매출원가 vs 재고자산` 관계를
-  YAML에 추가했고, `src.agents.account_finding` 범용 실행점을 만들어 다음 계정은 계정명·연도
-  인자와 YAML 추가로 실행할 수 있게 했다. live 재고 Finding은 Gemini 3.5 Flash 503으로
-  보류했고, 실제 L2/D82638 입력 + mock 분석가로 검증했다.
+  **감사기준·K-IFRS 근거 전수 평가와 관계 사슬 매핑 완료**
+- 최근 작업 (2026-06-02): ISA/KSA 200·300·500·600·700번대와 재무제표·공시 관련
+  K-IFRS/IFRS 후보를 3축으로 평가해 [AUDIT_BASIS.md](AUDIT_BASIS.md)를 추가했다.
+  `relationship_chains.yaml`의 매출채권·재고·차입금 사슬에는 채택(Must/Should) 기준만
+  `audit_basis`로 매핑했고, materiality·공시 변동 근거는 별도 YAML 섹션으로 외부화했다.
 
 ## 완료
 
@@ -48,6 +47,8 @@
 - 재고 계정 파이프라인 mock 테스트 [../../tests/test_account_finding_pipeline.py](../../tests/test_account_finding_pipeline.py)
 - 결정 D6 ([DECISION.md](DECISION.md))
 - 결정 D8 ([DECISION.md](DECISION.md))
+- 감사기준·K-IFRS 근거 평가 [AUDIT_BASIS.md](AUDIT_BASIS.md)
+- 관계 사슬별 audit_basis 매핑 [../../config/playbooks/relationship_chains.yaml](../../config/playbooks/relationship_chains.yaml)
 
 ## 다음 할 일 (우선순위)
 
@@ -70,6 +71,9 @@
 - 수치 분석가 prompt는 외부 사실을 쓰지 않는다. 정상 설명은 일반적 가능성으로만 작성해야 한다.
 - 외부 업황·뉴스 맥락은 `ContextBrief`로만 제시한다. 출처 없는 외부 주장은 버리고,
   Finding 판단 필드는 변경하지 않는다.
+- 감사기준·K-IFRS 근거는 검토 관점의 출처다. Finding은 부정·분식 확정 표현으로 쓰지 않는다.
+- 공개 KSA 원문별 링크는 확인하지 못한 항목이 있어 [AUDIT_BASIS.md](AUDIT_BASIS.md)에
+  “KSA 원문 미검증”으로 표시했다. ISA/IFRS 제목과 요지는 공식 IAASB/IFRS 출처로 확인했다.
 - Gemini fallback은 `gemini_fallback_model` 설정이 비어 있으면 비활성이다. OpenAI fallback은 사용하지 않는다.
 - 재고자산 2023은 L2 threshold 미달로 특이 신호가 없고, 2024는 `revenue-vs-inventory`
   growth divergence가 잡힌다.

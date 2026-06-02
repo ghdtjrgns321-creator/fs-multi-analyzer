@@ -5,12 +5,104 @@ relationship_chains:
   - id: revenue-receivable-cf
     name: 수익의 질·회수가능성
     chain: [매출, 매출채권, 대손충당금, 영업활동현금흐름]
+    audit_basis:
+      - standard: ISA/KSA 520
+        procedure: analytical_procedures
+        gist: 매출, 매출채권, 대손충당금, 영업활동현금흐름 간 관계를 분석적 절차로 검토한다.
+        source_url: https://www.iaasb.org/standards-pronouncements
+      - standard: ISA/KSA 540
+        procedure: accounting_estimates_and_disclosures
+        gist: 대손충당금과 관련 주석을 회계추정 및 공시 검토 관점으로 본다.
+        source_url: https://www.iaasb.org/standards-pronouncements
+      - standard: K-IFRS 1109 / IFRS 9
+        procedure: financial_instruments_impairment
+        gist: 매출채권 손상과 기대신용손실 관련 숫자·주석을 교차검증한다.
+        source_url: https://www.ifrs.org/issued-standards/list-of-standards/ifrs-9-financial-instruments/
+      - standard: K-IFRS 1107 / IFRS 7
+        procedure: financial_instruments_disclosures
+        gist: 신용위험과 금융상품 공시를 매출채권 신호의 주석 근거로 사용한다.
+        source_url: https://www.ifrs.org/issued-standards/list-of-standards/ifrs-7-financial-instruments-disclosures/
+      - standard: K-IFRS 1115 / IFRS 15
+        procedure: revenue_recognition_disclosures
+        gist: 매출 인식과 수취채권 관련 공시를 매출-채권 관계 검토에 연결한다.
+        source_url: https://www.ifrs.org/issued-standards/list-of-standards/ifrs-15-revenue-from-contracts-with-customers/
   - id: inventory-cogs
     name: 재고 진부화·원가
     chain: [재고자산, 매출원가, 재고평가손실]
+    audit_basis:
+      - standard: ISA/KSA 501
+        procedure: selected_items_inventory
+        gist: 재고자산은 특정 항목 감사증거 검토 대상으로 별도 주의가 필요하다.
+        source_url: https://www.iaasb.org/standards-pronouncements
+      - standard: ISA/KSA 520
+        procedure: analytical_procedures
+        gist: 재고자산, 매출원가, 재고평가손실 간 관계를 분석적 절차로 검토한다.
+        source_url: https://www.iaasb.org/standards-pronouncements
+      - standard: ISA/KSA 540
+        procedure: accounting_estimates_and_disclosures
+        gist: 재고평가손실과 순실현가능가치 판단을 회계추정 및 공시 검토 관점으로 본다.
+        source_url: https://www.iaasb.org/standards-pronouncements
+      - standard: K-IFRS 1002 / IAS 2
+        procedure: inventories_measurement_disclosure
+        gist: 재고자산 측정, 비용 인식, 평가손실 주석을 숫자 신호와 교차검증한다.
+        source_url: https://www.ifrs.org/issued-standards/list-of-standards/ias-2-inventories/
+      - standard: K-IFRS 1036 / IAS 36
+        procedure: impairment_review
+        gist: 재고 외 자산 손상 신호와 손상 공시 확장 검토의 보조 근거로 사용한다.
+        source_url: https://www.ifrs.org/issued-standards/list-of-standards/ias-36-impairment-of-assets/
   - id: debt-interest-cf
     name: 유동성·계속기업
     chain: [차입금, 이자비용, 현금흐름, 차입금만기주석]
+    audit_basis:
+      - standard: ISA/KSA 520
+        procedure: analytical_procedures
+        gist: 차입금, 이자비용, 현금흐름 간 관계를 분석적 절차로 검토한다.
+        source_url: https://www.iaasb.org/standards-pronouncements
+      - standard: ISA/KSA 570
+        procedure: going_concern_review
+        gist: 유동성 압박과 계속기업 관련 주석을 검토 후보로 연결한다.
+        source_url: https://www.iaasb.org/standards-pronouncements
+      - standard: K-IFRS 1007 / IAS 7
+        procedure: cash_flow_statement_review
+        gist: 현금흐름표의 영업·재무 현금흐름을 차입금 신호와 함께 본다.
+        source_url: https://www.ifrs.org/issued-standards/list-of-standards/ias-7-statement-of-cash-flows/
+      - standard: K-IFRS 1107 / IFRS 7
+        procedure: liquidity_risk_disclosures
+        gist: 유동성위험과 만기 분석 공시를 차입금 신호의 주석 근거로 사용한다.
+        source_url: https://www.ifrs.org/issued-standards/list-of-standards/ifrs-7-financial-instruments-disclosures/
+
+audit_basis:
+  common_review:
+    - standard: ISA/KSA 315
+      procedure: risk_identification_from_fs_and_notes
+      gist: 공시 재무제표와 주석의 관계를 이용해 중요왜곡표시 위험 후보를 식별한다.
+      source_url: https://www.iaasb.org/standards-pronouncements
+    - standard: ISA/KSA 500
+      procedure: evidence_grounding
+      gist: 숫자 신호와 주석 위치를 충분하고 적합한 근거로 분리 기록한다.
+      source_url: https://www.iaasb.org/standards-pronouncements
+  materiality:
+    - standard: ISA/KSA 320
+      procedure: materiality_prioritization
+      gist: 임계값과 우선순위는 중요성 관점의 검토 보조 기준으로 사용한다.
+      source_url: https://www.iaasb.org/standards-pronouncements
+    - standard: ISA/KSA 450
+      procedure: misstatement_evaluation
+      gist: 누적된 신호를 왜곡표시 평가 관점으로 묶되 확정 판단은 하지 않는다.
+      source_url: https://www.iaasb.org/standards-pronouncements
+  disclosure_change:
+    - standard: ISA/KSA 560
+      procedure: subsequent_events_review
+      gist: 보고기간후 사건과 관련 주석 변동을 별도 공시 변동 신호로 본다.
+      source_url: https://www.iaasb.org/standards-pronouncements
+    - standard: ISA/KSA 701
+      procedure: key_audit_matter_context
+      gist: KAM은 Finding 판단을 바꾸지 않는 참고 맥락과 확인 질문에만 사용한다.
+      source_url: https://www.iaasb.org/standards-pronouncements
+    - standard: ISA/KSA 710
+      procedure: comparative_information_review
+      gist: 전기 대비 숫자·주석 비교의 기준으로 사용한다.
+      source_url: https://www.iaasb.org/standards-pronouncements
 
 l2_mvp1:
   primary_fs_div: CFS
