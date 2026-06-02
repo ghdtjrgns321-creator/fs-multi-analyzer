@@ -3,3 +3,7 @@ account_notes:
     note_code: D82242
     note_name: 매출채권 및 기타채권
     keywords: [신용위험, 연체, 대손, 손상, 회수]
+  재고자산:
+    note_code: D82638
+    note_name: 재고자산
+    keywords: [평가손실, 순실현가능가치, 저가법, 손상, 비용]

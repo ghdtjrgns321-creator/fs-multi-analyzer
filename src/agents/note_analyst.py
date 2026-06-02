@@ -19,7 +19,8 @@ from src.schemas.findings import AccountFinding
 SYSTEM_PROMPT = """
 You are the note analyst for a disclosure review tool.
 Use only the provided note_sections and existing AccountFinding.
-Extract actual mentions about credit risk, overdue, impairment, allowance, or collection.
+Extract actual mentions relevant to the account, such as credit risk, overdue, impairment,
+allowance, collection, inventory valuation loss, net realizable value, or cost recognition.
 Fill note_evidence with note locators and exact short Korean snippets from note_sections.
 Set note_cross_check to explain whether numeric signals align with or diverge from note text.
 Do not use external facts. If the note is insufficient, ask confirm_question.

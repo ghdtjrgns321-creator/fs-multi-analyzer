@@ -18,10 +18,10 @@
 
 - [x] L0 수집 (`src/collect`) — OpenDART 재무제표 + 주석 raw 저장
 - [x] L1 정규화 (`src/normalize`) — canonical + mapping confidence
-- [ ] L1.5 주석 인덱서 (`src/notes`) — 매출채권 D82242 섹션 파싱 완료, note diff 보류
+- [ ] L1.5 주석 인덱서 (`src/notes`) — D82242/D82638 섹션 파싱 완료, note diff 보류
 - [x] L2 신호엔진 (`src/signals`) — MVP1 관계 사슬 결정론 계산
 - [x] tool DSL (`src/analysis_tools`) — compare_growth / compute_ratio
-- [ ] L3 에이전트 5 (`src/agents`) — 수치 분석가 live 완료, 주석 분석가 코드 완료/live 보류
+- [ ] L3 에이전트 5 (`src/agents`) — 매출채권 live 완료, 재고 mock 완료/live 보류
 - [ ] L4 리포트 (`src/report`) — 외부 ContextBrief 코드 완료, 리포트 통합 보류
 - [ ] L5 대시보드 (`dashboard`)
   - [ ] (필수) 못 맞춘 계정 → 사전 보강 인터랙션: 사용자가 계정 지정 시
@@ -33,6 +33,7 @@
 - [x] canonical mapping
 - [x] 매출 → 매출채권 → 영업CF 관계 사슬 분석
 - [x] 매출채권 D82242 주석 섹션 인덱싱 + 주석 분석가 mock 검증
+- [x] 재고자산 D82638 주석 섹션 인덱싱 + 범용 계정 파이프라인 mock 검증
 - [x] 외부 맥락 ContextBrief 스키마 + Google Search grounding mock 검증
 - [ ] 차입금 / 유동성 기본 분석
 - [ ] 공시 변동 (watchlist 키워드 신규 등장)
@@ -45,10 +46,15 @@
 > 전부(165개)가 아니라 **통합 작동을 증명할 최소 계정(3~4개)**으로 충분하다.
 
 1. [x] 매출채권 줄기 (수치 + 주석 교차검증)
-2. [ ] **재고 줄기 추가** (매출채권 패턴 복제 + 일반화 점검 — 복제 비용 측정)
+2. [x] **재고 줄기 추가** (매출채권 패턴 복제 + 일반화 점검 — 복제 비용 측정)
 3. [ ] 차입금 줄기 추가
 4. [ ] **통합 리포트(L4)** — 여러 Finding → "이 회사 종합 리스크 한 장" ← 통합 테스트 지점
 5. [ ] 깊이 보강 (통합 작동 확인 후): 외부 맥락 live, 공시 변동 ④, 흐름 ③
+
+### 계정 추가 비용 측정
+
+- 매출채권 → 재고자산: config 8줄 추가(주석 매핑 4줄, 관계 4줄) + 일반화 코드 수정 1회.
+- 다음 계정 목표: config 추가만으로 `src.agents.account_finding` CLI 재사용.
 
 ## 이후 (PLAN §16)
 

@@ -7,11 +7,12 @@
 ## 현재 위치
 
 - 단계: 설계 확정 → 프로젝트 뼈대 구축 → L0 수집 → L1 정규화 → L2 신호엔진 →
-  **외부 맥락 ContextBrief 코드 완료, live 수집 보류**
-- 최근 작업 (2026-06-02): Gemini Google Search grounding 기반 외부 맥락 수집 단계를
-  `ContextBrief`로 추가했다. 외부 맥락은 Finding과 분리하며, grounding URL과 매칭되는
-  출처(title+URL)가 있는 항목만 남긴다. `risk_level`, `issue_type`, 점수 등 판단 필드는
-  변경하지 않는 mock 테스트를 추가했다. live 실행은 Gemini 3.5 Flash 503으로 보류했다.
+  **재고자산 줄기 추가 / 계정 추가 일반화 완료**
+- 최근 작업 (2026-06-02): 재고자산을 매출채권과 같은 L2→수치 분석가→주석 분석가
+  파이프라인에 연결했다. `재고자산 -> D82638` 주석 매핑과 `매출원가 vs 재고자산` 관계를
+  YAML에 추가했고, `src.agents.account_finding` 범용 실행점을 만들어 다음 계정은 계정명·연도
+  인자와 YAML 추가로 실행할 수 있게 했다. live 재고 Finding은 Gemini 3.5 Flash 503으로
+  보류했고, 실제 L2/D82638 입력 + mock 분석가로 검증했다.
 
 ## 완료
 
@@ -38,20 +39,23 @@
 - 매출채권 주석 매핑 [../../config/playbooks/note_mappings.yaml](../../config/playbooks/note_mappings.yaml)
 - 외부 맥락 스키마 [../../src/schemas/context.py](../../src/schemas/context.py)
 - Google Search grounding ContextBrief [../../src/agents/context_brief.py](../../src/agents/context_brief.py)
+- 범용 계정 Finding 파이프라인 [../../src/agents/account_finding.py](../../src/agents/account_finding.py)
+- 재고 Finding 실행점 [../../src/agents/first_inventory_finding.py](../../src/agents/first_inventory_finding.py)
 - 첫 Finding 실행 기록 [FINDING_REPORT.md](FINDING_REPORT.md)
 - Gemini 일시 오류 재시도 테스트 [../../tests/test_red_flags_and_agent.py](../../tests/test_red_flags_and_agent.py)
 - 주석 파싱/주석 분석가 mock 테스트 [../../tests/test_notes_and_note_agent.py](../../tests/test_notes_and_note_agent.py)
 - 외부 맥락 출처/비오염 테스트 [../../tests/test_context_brief.py](../../tests/test_context_brief.py)
+- 재고 계정 파이프라인 mock 테스트 [../../tests/test_account_finding_pipeline.py](../../tests/test_account_finding_pipeline.py)
 - 결정 D6 ([DECISION.md](DECISION.md))
 - 결정 D8 ([DECISION.md](DECISION.md))
 
 ## 다음 할 일 (우선순위)
 
-1. Gemini 3.5 Flash 가용성 회복 후 `uv run python -m src.agents.first_context_brief`
-   재실행해 출처 포함 `context_brief` live 수집
-2. Gemini 3.5 Flash 가용성 회복 후 `uv run python -m src.agents.first_note_finding`
-   재실행해 D82242 `note_evidence`가 병합된 live Finding 생성
-3. D82242 표 구조 정밀 복원 또는 note diff(2022↔2023) 추가 여부 결정
+1. 차입금 줄기 추가: `note_mappings.yaml`과 `relationship_chains.yaml`만 추가해
+   `uv run python -m src.agents.account_finding --account 차입금 --year <연도>`로 검증
+2. Gemini 3.5 Flash 가용성 회복 후 재고 live Finding 재실행:
+   `uv run python -m src.agents.first_inventory_finding`
+3. D82242/D82638 표 구조 정밀 복원 또는 note diff 추가 여부 결정
 
 ## 열린 이슈 / 주의
 
@@ -67,6 +71,8 @@
 - 외부 업황·뉴스 맥락은 `ContextBrief`로만 제시한다. 출처 없는 외부 주장은 버리고,
   Finding 판단 필드는 변경하지 않는다.
 - Gemini fallback은 `gemini_fallback_model` 설정이 비어 있으면 비활성이다. OpenAI fallback은 사용하지 않는다.
+- 재고자산 2023은 L2 threshold 미달로 특이 신호가 없고, 2024는 `revenue-vs-inventory`
+  growth divergence가 잡힌다.
 
 ## 진입 포인트
 

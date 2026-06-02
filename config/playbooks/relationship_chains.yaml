@@ -36,6 +36,10 @@ l2_mvp1:
       name: 매출 vs 재고자산 증가율 괴리
       account_a: 매출
       account_b: 재고자산
+    - id: cogs-vs-inventory
+      name: 매출원가 vs 재고자산 증가율 괴리
+      account_a: 매출원가
+      account_b: 재고자산
   direction_checks:
     - id: receivable-growth-vs-operating-cf
       name: 매출채권 증가율과 영업활동현금흐름 방향 비교

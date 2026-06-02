@@ -93,6 +93,43 @@ account_notes:
     assert "대손" in sections[0].matched_keywords
 
 
+def test_inventory_note_sections_use_d82638_mapping(tmp_path) -> None:
+    note_dir = tmp_path / "CFS"
+    note_dir.mkdir()
+    (note_dir / "D82638.html").write_text(
+        """
+<html><body>
+<p>[D826380] 재고자산</p>
+<p>재고자산 평가손실과 순실현가능가치를 검토한다.</p>
+</body></html>
+""",
+        encoding="utf-8",
+    )
+    mapping_path = tmp_path / "note_mappings.yaml"
+    mapping_path.write_text(
+        """
+account_notes:
+  재고자산:
+    note_code: D82638
+    note_name: 재고자산
+    keywords: [평가손실, 순실현가능가치]
+""",
+        encoding="utf-8",
+    )
+
+    sections = find_account_note_sections(
+        "재고자산",
+        notes_root=tmp_path,
+        corp_code="00126380",
+        year=2024,
+        fs_div="CFS",
+        mapping_path=mapping_path,
+    )
+
+    assert sections[0].locator == "note:D82638:CFS:2024:0"
+    assert sections[0].matched_keywords == ["평가손실", "순실현가능가치"]
+
+
 def test_note_analyst_accepts_mock_and_fills_note_evidence(monkeypatch) -> None:
     sections = _fixture_sections()
     risk_section = next(section for section in sections if "신용위험" in section.text)

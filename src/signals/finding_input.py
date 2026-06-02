@@ -8,12 +8,29 @@ from src.signals.red_flags import RedFlagSignal
 def select_2023_numeric_signal(signals: list[RedFlagSignal]) -> list[RedFlagSignal]:
     """Keep 2023 signals centered on the revenue/receivables/operating-CF chain."""
 
-    preferred = [
-        signal
-        for signal in signals
-        if signal.year == 2023 and signal.account in {"매출채권", "영업활동현금흐름"}
-    ]
-    return preferred or [signal for signal in signals if signal.year == 2023]
+    return select_account_signals(
+        signals,
+        account="매출채권",
+        year=2023,
+        include_accounts={"영업활동현금흐름"},
+        fallback_to_year=True,
+    )
+
+
+def select_account_signals(
+    signals: list[RedFlagSignal],
+    account: str,
+    year: int,
+    include_accounts: set[str] | None = None,
+    fallback_to_year: bool = False,
+) -> list[RedFlagSignal]:
+    """Keep signals for one account and optional chain-neighbor accounts."""
+
+    accounts = {account, *(include_accounts or set())}
+    preferred = [signal for signal in signals if signal.year == year and signal.account in accounts]
+    if preferred or not fallback_to_year:
+        return preferred
+    return [signal for signal in signals if signal.year == year]
 
 
 def signals_to_prompt_payload(signals: list[RedFlagSignal]) -> dict[str, object]:

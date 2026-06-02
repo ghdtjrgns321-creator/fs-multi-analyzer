@@ -7,7 +7,7 @@ from pydantic_ai.exceptions import ModelHTTPError
 from src.agents.guardrails import validate_numeric_finding
 from src.agents.numeric_analyst import create_numeric_finding
 from src.schemas.findings import AccountFinding, EvidenceRef, IssueType
-from src.signals.finding_input import signals_to_prompt_payload
+from src.signals.finding_input import select_account_signals, signals_to_prompt_payload
 from src.signals.mvp1 import build_mvp1_signal_report
 from src.signals.red_flags import extract_red_flags
 from tests.test_analysis_tools import fixture_frame
@@ -54,7 +54,7 @@ l2_mvp1:
   deferred_ratios: []
   signal_thresholds:
     divergence_pp_abs: 15
-    yoy_pct_abs: 60
+    yoy_pct_abs: 120
     direction_red_flags:
       - id: revenue-down-receivable-up
         name: 매출 감소 + 매출채권 증가
@@ -194,3 +194,20 @@ def test_prompt_payload_serializes_evidence() -> None:
     payload = signals_to_prompt_payload(signals)
 
     assert isinstance(payload["signals"][0]["evidence"][0], dict)
+
+
+def test_select_account_signals_generalizes_beyond_receivables() -> None:
+    report = build_mvp1_signal_report(fixture_frame())
+    signals = extract_red_flags(report, 2024)
+
+    selected = select_account_signals(signals, account="재고자산", year=2024)
+
+    assert selected
+    assert all(signal.account == "재고자산" for signal in selected)
+
+
+def test_select_account_signals_returns_empty_when_account_has_no_signal() -> None:
+    report = build_mvp1_signal_report(fixture_frame())
+    signals = extract_red_flags(report, 2023)
+
+    assert select_account_signals(signals, account="차입금", year=2023) == []
