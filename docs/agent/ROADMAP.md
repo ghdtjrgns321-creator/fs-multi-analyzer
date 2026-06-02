@@ -37,6 +37,7 @@
 - [x] 외부 맥락 ContextBrief 스키마 + Google Search grounding mock 검증
 - [x] 감사기준·K-IFRS 전수 평가 + 관계 사슬 audit_basis 매핑
 - [x] 실무 재무지표·계정 조합 웹검색 발굴 + financial_ratios.yaml 외부화
+- [x] 기본 합계 계정 추가 + 삼성 3개년 실무 재무지표 계산
 - [ ] 차입금 / 유동성 기본 분석
 - [ ] 공시 변동 (watchlist 키워드 신규 등장)
 - [x] 첫 Finding 리포트 + 감사인 확인 질문 — Gemini 3.5 Flash 재시도 후 생성 완료

@@ -7,12 +7,12 @@
 ## 현재 위치
 
 - 단계: 설계 확정 → 프로젝트 뼈대 구축 → L0 수집 → L1 정규화 → L2 신호엔진 →
-  **감사기준 1차 + 실무 재무지표 2차 근거 매핑 완료**
-- 최근 작업 (2026-06-02): 웹검색 출처 기반으로 실무 재무지표 15개를 발굴해
-  [../../config/playbooks/financial_ratios.yaml](../../config/playbooks/financial_ratios.yaml)에
-  외부화했다. 각 지표는 계산식, 계정 조합, 실무 의미, 출처 URL, MVP1 계정 계산 가능 여부,
-  1차 audit_basis 연결을 포함한다. [../user/METHODOLOGY.md](../user/METHODOLOGY.md)의
-  2차 섹션도 실제 결과로 갱신했다.
+  **기본 합계 계정 추가 + 실무 재무지표 계산 완료**
+- 최근 작업 (2026-06-02): `canonical_accounts.yaml`에 자산총계, 자본총계, 부채총계,
+  유동자산, 당기순이익, 영업이익, 이자비용을 추가하고 삼성 3개년 정규화 DB를 재생성했다.
+  [../../src/signals/ratios.py](../../src/signals/ratios.py)에서
+  [../../config/playbooks/financial_ratios.yaml](../../config/playbooks/financial_ratios.yaml)의
+  지표를 결정론으로 계산하며, 실제 결과는 [RATIO_REPORT.md](RATIO_REPORT.md)에 기록했다.
 
 ## 완료
 
@@ -52,6 +52,9 @@
 - 관계 사슬별 audit_basis 매핑 [../../config/playbooks/relationship_chains.yaml](../../config/playbooks/relationship_chains.yaml)
 - 실무 재무지표 플레이북 [../../config/playbooks/financial_ratios.yaml](../../config/playbooks/financial_ratios.yaml)
 - 2단계 기준 선정 방법론 [../user/METHODOLOGY.md](../user/METHODOLOGY.md)
+- 기본 합계 계정 7개 추가 [../../config/canonical_accounts.yaml](../../config/canonical_accounts.yaml)
+- 실무 재무지표 계산기 [../../src/signals/ratios.py](../../src/signals/ratios.py)
+- 삼성 3개년 실무 재무지표 보고서 [RATIO_REPORT.md](RATIO_REPORT.md)
 
 ## 다음 할 일 (우선순위)
 
@@ -70,13 +73,13 @@
   담기 때문이며, 미매핑 계정을 숨기지 않는다.
 - 주석은 표와 텍스트가 섞인 HTML이다. 단순 TXT만으로는 행/열 구조가 손실된다.
 - 이번 D82242 인덱서는 표를 텍스트 수준으로만 보존한다. 행/열 정밀 복원은 아직 하지 않았다.
-- 유동비율, 영업CF/순이익 비율은 MVP1 계정 부족으로 보류했다.
+- ROI는 공시 재무제표 기본 합계 계정에 투자원가가 없어 계산하지 않는다.
 - 수치 분석가 prompt는 외부 사실을 쓰지 않는다. 정상 설명은 일반적 가능성으로만 작성해야 한다.
 - 외부 업황·뉴스 맥락은 `ContextBrief`로만 제시한다. 출처 없는 외부 주장은 버리고,
   Finding 판단 필드는 변경하지 않는다.
 - 감사기준·K-IFRS 근거는 검토 관점의 출처다. Finding은 부정·분식 확정 표현으로 쓰지 않는다.
 - 실무 재무지표도 검토 관점이다. 출처 없는 계산식은 플레이북에 넣지 않고, 계정 부족 지표는
-  `mvp1_status: account_missing`으로 표시한다.
+  `mvp1_status: account_missing`으로 표시한다. 현재 ROI만 계정 부족으로 남아 있다.
 - 공개 KSA 원문별 링크는 확인하지 못한 항목이 있어 [AUDIT_BASIS.md](AUDIT_BASIS.md)에
   “KSA 원문 미검증”으로 표시했다. ISA/IFRS 제목과 요지는 공식 IAASB/IFRS 출처로 확인했다.
 - Gemini fallback은 `gemini_fallback_model` 설정이 비어 있으면 비활성이다. OpenAI fallback은 사용하지 않는다.

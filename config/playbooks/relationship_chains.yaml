@@ -138,10 +138,8 @@ l2_mvp1:
       growth_account: 매출채권
       flow_account: 영업활동현금흐름
   deferred_ratios:
-    - name: 유동비율
-      reason: MVP1에 유동자산총계가 없어 유동부채와 나눌 수 없다.
-    - name: 영업CF / 순이익
-      reason: MVP1에 순이익이 없어 이익의 질 비율을 계산할 수 없다.
+    - name: ROI
+      reason: 공시 재무제표 기본 합계 계정에 투자원가가 없어 계산하지 않는다.
   signal_thresholds:
     divergence_pp_abs: 15
     yoy_pct_abs: 50

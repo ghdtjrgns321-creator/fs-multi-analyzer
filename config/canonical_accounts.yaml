@@ -25,11 +25,31 @@ canonical_accounts:
     account_ids:
       - ifrs-full_Inventories
     aliases: [재고자산]
+  유동자산:
+    statement: BS
+    account_ids:
+      - ifrs-full_CurrentAssets
+    aliases: [유동자산, 유동자산계]
+  자산총계:
+    statement: BS
+    account_ids:
+      - ifrs-full_Assets
+    aliases: [자산총계]
   유동부채:
     statement: BS
     account_ids:
       - ifrs-full_CurrentLiabilities
     aliases: [유동부채, 유동부채계]
+  부채총계:
+    statement: BS
+    account_ids:
+      - ifrs-full_Liabilities
+    aliases: [부채총계]
+  자본총계:
+    statement: BS
+    account_ids:
+      - ifrs-full_Equity
+    aliases: [자본총계]
   매입채무:
     statement: BS
     account_ids:
@@ -50,6 +70,22 @@ canonical_accounts:
     account_ids:
       - ifrs-full_CostOfSales
     aliases: [매출원가]
+  영업이익:
+    statement: IS
+    account_ids:
+      - dart_OperatingIncomeLoss
+      - ifrs-full_ProfitLossFromOperatingActivities
+    aliases: [영업이익]
+  이자비용:
+    statement: IS
+    account_ids:
+      - ifrs-full_FinanceCosts
+    aliases: [금융비용, 이자비용]
+  당기순이익:
+    statement: IS
+    account_ids:
+      - ifrs-full_ProfitLoss
+    aliases: [당기순이익]
   영업활동현금흐름:
     statement: CF
     account_ids:
