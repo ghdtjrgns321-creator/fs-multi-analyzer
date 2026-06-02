@@ -1,0 +1,5 @@
+account_notes:
+  매출채권:
+    note_code: D82242
+    note_name: 매출채권 및 기타채권
+    keywords: [신용위험, 연체, 대손, 손상, 회수]

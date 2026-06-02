@@ -7,6 +7,7 @@ from pydantic_ai import ModelRetry
 from src.schemas.findings import AccountFinding
 
 BANNED_EXTERNAL_FACTS = ["반도체 불황", "뉴스", "시장점유율", "금리 인상으로", "AI 수요"]
+BANNED_CERTAINTY = ["명확히 증명", "증명합니다", "확정", "부정 적발", "분식"]
 
 
 def validate_numeric_finding(output: AccountFinding) -> AccountFinding:
@@ -23,9 +24,10 @@ def validate_numeric_finding(output: AccountFinding) -> AccountFinding:
             *output.normal_explanation,
             *output.next_procedure,
             *output.confirm_question,
+            output.note_cross_check or "",
         ]
     )
-    for phrase in BANNED_EXTERNAL_FACTS:
+    for phrase in [*BANNED_EXTERNAL_FACTS, *BANNED_CERTAINTY]:
         if phrase in text:
-            raise ModelRetry(f"External fact is not allowed: {phrase}")
+            raise ModelRetry(f"Unsupported assertion is not allowed: {phrase}")
     return output

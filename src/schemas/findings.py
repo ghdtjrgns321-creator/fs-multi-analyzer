@@ -50,6 +50,9 @@ class AccountFinding(BaseModel):
     numeric_evidence: list[EvidenceRef] = Field(default_factory=list)
     note_evidence: list[EvidenceRef] = Field(default_factory=list)
     flow_evidence: list[EvidenceRef] = Field(default_factory=list)
+    note_cross_check: str | None = Field(
+        default=None, description="숫자 신호와 주석 근거의 정합/괴리"
+    )
     counter_evidence: list[str] = Field(default_factory=list, description="숫자상 반대 가능성")
     normal_explanation: list[str] = Field(
         default_factory=list, description="정상일 수 있는 사업적 설명"

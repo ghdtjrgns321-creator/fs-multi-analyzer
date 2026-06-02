@@ -18,10 +18,10 @@
 
 - [x] L0 수집 (`src/collect`) — OpenDART 재무제표 + 주석 raw 저장
 - [x] L1 정규화 (`src/normalize`) — canonical + mapping confidence
-- [ ] L1.5 주석 인덱서 (`src/notes`) — 섹션 분류·note diff
+- [ ] L1.5 주석 인덱서 (`src/notes`) — 매출채권 D82242 섹션 파싱 완료, note diff 보류
 - [x] L2 신호엔진 (`src/signals`) — MVP1 관계 사슬 결정론 계산
 - [x] tool DSL (`src/analysis_tools`) — compare_growth / compute_ratio
-- [ ] L3 에이전트 5 (`src/agents`) — 수치 분석가 1명 live Finding 생성 완료, 나머지 역할 보류
+- [ ] L3 에이전트 5 (`src/agents`) — 수치 분석가 live 완료, 주석 분석가 코드 완료/live 보류
 - [ ] L4 리포트 (`src/report`)
 - [ ] L5 대시보드 (`dashboard`)
   - [ ] (필수) 못 맞춘 계정 → 사전 보강 인터랙션: 사용자가 계정 지정 시
@@ -32,6 +32,7 @@
 - [x] BS/IS/CF 3개년 raw 수집
 - [x] canonical mapping
 - [x] 매출 → 매출채권 → 영업CF 관계 사슬 분석
+- [x] 매출채권 D82242 주석 섹션 인덱싱 + 주석 분석가 mock 검증
 - [ ] 차입금 / 유동성 기본 분석
 - [ ] 공시 변동 (watchlist 키워드 신규 등장)
 - [x] 첫 Finding 리포트 + 감사인 확인 질문 — Gemini 3.5 Flash 재시도 후 생성 완료

@@ -83,6 +83,14 @@ def test_guardrails_reject_empty_evidence() -> None:
         validate_numeric_finding(finding)
 
 
+def test_guardrails_reject_unsupported_certainty() -> None:
+    finding = valid_finding()
+    finding.note_cross_check = "주석 근거가 위험을 명확히 증명합니다."
+
+    with pytest.raises(Exception, match="Unsupported assertion"):
+        validate_numeric_finding(finding)
+
+
 def test_numeric_agent_accepts_fake_client(monkeypatch) -> None:
     class FakeAgent:
         async def run(self, prompt: str) -> SimpleNamespace:
