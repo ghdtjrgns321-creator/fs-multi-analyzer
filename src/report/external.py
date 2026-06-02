@@ -5,39 +5,102 @@ from __future__ import annotations
 from collections.abc import Callable
 from typing import Any
 
-from src.agents.context_brief import create_context_brief_for_query
+from src.agents.context_brief import create_context_brief_for_queries
 from src.agents.gemini_retry import DEFAULT_RETRY_DELAYS
+from src.report.external_agentic import (
+    SearchKeywords,
+    build_eval_agent,
+    build_query_agent,
+    evaluate_external_context,
+    generate_search_keywords,
+)
 from src.report.perspectives import PerspectiveAssessment, deferred_assessment
-from src.schemas.context import ContextBrief
 
 
 async def create_external_assessment(
     report: dict[str, object],
-    context_factory: Callable[..., Any] = create_context_brief_for_query,
+    context_factory: Callable[..., Any] = create_context_brief_for_queries,
+    query_agent_factory: Callable[..., Any] | None = None,
+    eval_agent_factory: Callable[..., Any] | None = None,
     retry_delays: tuple[float, ...] = DEFAULT_RETRY_DELAYS,
 ) -> PerspectiveAssessment:
-    """Build external perspective from Google-grounded ContextBrief only."""
+    """Generate queries, search with grounding, then evaluate sourced context."""
 
-    query = _query(report)
+    keywords = _fallback_keywords(report)
     try:
-        brief = await context_factory(query, retry_delays=retry_delays)
+        keywords = await _keywords(report, query_agent_factory, retry_delays)
+        brief = await context_factory(keywords.queries, retry_delays=retry_delays)
+        assessment = await _evaluate(brief, eval_agent_factory, retry_delays)
     except TypeError:
-        brief = await context_factory(query)
+        brief = await context_factory(_fallback_keywords(report).queries)
+        assessment = _empty_assessment() if not brief.items else _legacy_assessment(brief)
     except Exception as exc:
         return deferred_assessment("external", str(exc) or exc.__class__.__name__)
+    assessment.evidence = [f"검색어: {query}" for query in keywords.queries] + assessment.evidence
+    return assessment
+
+
+async def _keywords(
+    report: dict[str, object],
+    agent_factory: Callable[..., Any] | None,
+    retry_delays: tuple[float, ...],
+) -> SearchKeywords:
+    if not agent_factory and not _has_google_key():
+        return _fallback_keywords(report)
+    return await generate_search_keywords(
+        external_material(report),
+        agent_factory=agent_factory or build_query_agent,
+        retry_delays=retry_delays,
+    )
+
+
+async def _evaluate(
+    brief: Any,
+    agent_factory: Callable[..., Any] | None,
+    retry_delays: tuple[float, ...],
+) -> PerspectiveAssessment:
     if not brief.items:
-        return PerspectiveAssessment(
-            perspective="external",
-            status="completed",
-            risk_areas=[],
-            risk_level="Low",
-            summary="출처가 확인된 관련 외부 맥락 없음. 내부 위험은 그대로 유지한다.",
-            evidence=[],
-        )
+        return _empty_assessment()
+    return await evaluate_external_context(
+        brief,
+        agent_factory=agent_factory or build_eval_agent,
+        retry_delays=retry_delays,
+    )
+
+
+def external_material(report: dict[str, object]) -> dict[str, object]:
+    return {
+        "company_name": report.get("company_name", report.get("corp_code", "")),
+        "target_year": report["target_year"],
+        "review_queue": report["review_queue"][:5],  # type: ignore[index]
+        "ratio_summary": report["ratio_summary"],
+        "latest_signal_snapshot": report.get("latest_signal_snapshot", {}),
+        "scope": "external query generation only",
+    }
+
+
+def _fallback_keywords(report: dict[str, object]) -> SearchKeywords:
+    company = str(report.get("company_name", report.get("corp_code", "")))
+    year = str(report["target_year"])
+    return SearchKeywords(queries=[f"{company} {year} 매출채권 현금흐름"])
+
+
+def _empty_assessment() -> PerspectiveAssessment:
     return PerspectiveAssessment(
         perspective="external",
         status="completed",
-        risk_areas=_risk_areas(brief),
+        risk_areas=[],
+        risk_level="Low",
+        summary="출처가 확인된 관련 외부 맥락 없음. 내부 위험은 그대로 유지한다.",
+        evidence=[],
+    )
+
+
+def _legacy_assessment(brief: Any) -> PerspectiveAssessment:
+    return PerspectiveAssessment(
+        perspective="external",
+        status="completed",
+        risk_areas=[],
         risk_level="Low",
         summary=" / ".join(item.claim for item in brief.items[:3])
         + " 외부 맥락은 설명용이며 내부 위험을 약화하지 않는다.",
@@ -45,28 +108,7 @@ async def create_external_assessment(
     )
 
 
-def _query(report: dict[str, object]) -> str:
-    subjects = []
-    for item in report["review_queue"][:6]:  # type: ignore[index]
-        subject = str(item["subject"])  # type: ignore[index]
-        if subject not in subjects:
-            subjects.append(subject)
-    return f"삼성전자 {report['target_year']} {' '.join(subjects)} 업황 뉴스"
+def _has_google_key() -> bool:
+    from config.settings import settings
 
-
-def external_material(report: dict[str, object]) -> dict[str, object]:
-    return {"query": _query(report), "scope": "external perspective only"}
-
-
-def _risk_areas(brief: ContextBrief) -> list[str]:
-    areas = []
-    text = " ".join(item.claim for item in brief.items).lower()
-    for area, aliases in {
-        "매출채권/수익": ["매출채권", "수익", "revenue", "receivable"],
-        "재고": ["재고", "inventory"],
-        "현금흐름": ["현금흐름", "cash flow", "cashflow"],
-        "유동성/차입": ["차입", "유동성", "borrow", "liquidity"],
-    }.items():
-        if any(alias in text for alias in aliases):
-            areas.append(area)
-    return areas
+    return bool(settings.google_api_key)

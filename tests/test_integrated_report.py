@@ -5,6 +5,7 @@ import pandas as pd
 
 from src.report.crosscheck import cross_check_assessments
 from src.report.external import create_external_assessment
+from src.report.external_agentic import SearchKeywords, generate_search_keywords
 from src.report.integrated import build_review_queue, summarize_ratio_categories
 from src.report.multi_agent import build_multi_agent_report, render_multi_agent_markdown
 from src.report.perspectives import PerspectiveAssessment, create_perspective_assessment
@@ -248,14 +249,34 @@ def test_flow_and_change_perspectives_accept_mock_agent(monkeypatch) -> None:
     assert change.perspective == "change"
 
 
-def test_external_perspective_accepts_mock_context() -> None:
-    async def fake_context(query: str, retry_delays: tuple[float, ...]) -> ContextBrief:
-        assert "삼성전자" in query
+def test_external_perspective_runs_query_search_and_eval_mocks() -> None:
+    class FakeQueryAgent:
+        async def run(self, prompt: str) -> SimpleNamespace:
+            assert "latest_signal_snapshot" in prompt
+            return SimpleNamespace(output=SearchKeywords(queries=["삼성전자 2025 매출채권 DSO"]))
+
+    class FakeEvalAgent:
+        async def run(self, prompt: str) -> SimpleNamespace:
+            assert "매출채권 회수 지연 뉴스" in prompt
+            assert "review_queue" not in prompt
+            return SimpleNamespace(
+                output=PerspectiveAssessment(
+                    perspective="external",
+                    status="completed",
+                    risk_areas=["매출채권/수익"],
+                    risk_level="Low",
+                    summary="출처 기반 외부 맥락은 내부 매출채권 검토 후보와 같은 방향이다.",
+                    evidence=[],
+                )
+            )
+
+    async def fake_context(queries: list[str], retry_delays: tuple[float, ...]) -> ContextBrief:
+        assert queries == ["삼성전자 2025 매출채권 DSO"]
         assert retry_delays == (0,)
         return ContextBrief(
             items=[
                 ContextItem(
-                    claim="매출채권 관련 업황 맥락이 보도되었다.",
+                    claim="매출채권 회수 지연 뉴스가 보도되었다.",
                     source_title="기사",
                     source_url="https://example.com/news",
                 )
@@ -263,16 +284,46 @@ def test_external_perspective_accepts_mock_context() -> None:
         )
 
     report = {
-        "target_year": 2024,
+        "company_name": "삼성전자",
+        "target_year": 2025,
         "review_queue": [{"subject": "매출채권"}, {"subject": "재고자산"}],
+        "ratio_summary": {"활동성": {"DSO": 51.83}},
+        "latest_signal_snapshot": {"primary_yoy": [{"canonical": "매출채권"}]},
     }
 
-    result = asyncio.run(create_external_assessment(report, fake_context, retry_delays=(0,)))
+    result = asyncio.run(
+        create_external_assessment(
+            report,
+            fake_context,
+            query_agent_factory=FakeQueryAgent,
+            eval_agent_factory=FakeEvalAgent,
+            retry_delays=(0,),
+        )
+    )
 
     assert result.perspective == "external"
     assert result.status == "completed"
     assert result.risk_level == "Low"
-    assert result.evidence == ["기사: https://example.com/news"]
+    assert result.evidence == [
+        "검색어: 삼성전자 2025 매출채권 DSO",
+        "기사: https://example.com/news",
+    ]
+
+
+def test_query_generation_sanitizes_speculative_terms() -> None:
+    class FakeAgent:
+        async def run(self, prompt: str) -> SimpleNamespace:
+            return SimpleNamespace(
+                output=SearchKeywords(
+                    queries=["회계부정", "삼성전자 2025 매출채권 DSO"]
+                )
+            )
+
+    material = {"company_name": "삼성전자", "target_year": 2025}
+
+    result = asyncio.run(generate_search_keywords(material, FakeAgent, retry_delays=(0,)))
+
+    assert result.queries == ["삼성전자 2025 매출채권 DSO"]
 
 
 def test_renderer_shows_external_source_url() -> None:

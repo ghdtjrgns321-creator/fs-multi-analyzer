@@ -20,6 +20,7 @@ from src.signals.red_flags import extract_red_flags
 
 DEFAULT_CORP_CODE = "00126380"
 DEFAULT_YEARS = [2022, 2023, 2024, 2025]
+COMPANY_NAMES = {"00126380": "삼성전자"}
 
 
 def build_company_report(
@@ -45,6 +46,7 @@ def build_company_report(
     payload = payload_for_summary(queue, ratio_summary)
     return {
         "corp_code": corp_code,
+        "company_name": COMPANY_NAMES.get(corp_code, corp_code),
         "years": target_years,
         "target_year": target_year,
         "review_queue": [item.to_dict() for item in queue],

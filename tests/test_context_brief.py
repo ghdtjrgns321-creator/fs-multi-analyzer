@@ -1,7 +1,11 @@
 import asyncio
 from types import SimpleNamespace
 
-from src.agents.context_brief import build_context_query, create_context_brief
+from src.agents.context_brief import (
+    build_context_query,
+    create_context_brief,
+    create_context_brief_for_queries,
+)
 from src.schemas.context import ContextBrief, ContextItem
 from tests.test_red_flags_and_agent import valid_finding
 
@@ -82,3 +86,33 @@ def test_context_brief_does_not_mutate_finding(monkeypatch) -> None:
     )
 
     assert finding.model_dump(mode="json") == original
+
+
+def test_context_brief_merges_multiple_queries_and_keeps_grounded_sources(monkeypatch) -> None:
+    class FakeClient:
+        def __init__(self, query: str) -> None:
+            self.query = query
+
+        async def run(self, prompt: str) -> SimpleNamespace:
+            return SimpleNamespace(
+                output=(
+                    ContextBrief(
+                        items=[
+                            ContextItem(
+                                claim=f"{self.query} 관련 출처",
+                                source_title="",
+                                source_url=f"https://example.com/{self.query[-1]}",
+                            )
+                        ]
+                    ),
+                    {f"https://example.com/{self.query[-1]}": f"기사 {self.query[-1]}"},
+                )
+            )
+
+    monkeypatch.setattr("src.agents.context_brief.settings.google_api_key", "fake")
+
+    brief = asyncio.run(
+        create_context_brief_for_queries(["검색어1", "검색어2"], FakeClient, retry_delays=(0,))
+    )
+
+    assert [item.source_title for item in brief.items] == ["기사 1", "기사 2"]

@@ -45,6 +45,23 @@ async def create_context_brief_for_query(
     return _filter_grounded_items(brief, grounded_sources)
 
 
+async def create_context_brief_for_queries(
+    queries: list[str],
+    client_factory: Callable[..., Any] | None = None,
+    retry_delays: tuple[float, ...] = DEFAULT_RETRY_DELAYS,
+) -> ContextBrief:
+    seen = set()
+    items = []
+    for query in queries:
+        brief = await create_context_brief_for_query(query, client_factory, retry_delays)
+        for item in brief.items:
+            if item.source_url in seen:
+                continue
+            seen.add(item.source_url)
+            items.append(item)
+    return ContextBrief(items=items[:5])
+
+
 class GeminiSearchClient:
     """Small adapter so existing retry helper can call google-genai."""
 
@@ -97,7 +114,9 @@ def _parse_response(response: Any) -> tuple[ContextBrief, dict[str, str]]:
     parsed = getattr(response, "parsed", None)
     brief = parsed if isinstance(parsed, ContextBrief) else None
     if brief is None:
-        brief = ContextBrief.model_validate(json.loads(_json_text(response.text or "")))
+        brief = ContextBrief.model_validate(
+            json.loads(_json_text(response.text or ""), strict=False)
+        )
     return brief, _grounded_sources(response)
 
 

@@ -13,6 +13,7 @@ from src.report.external import create_external_assessment, external_material
 from src.report.integrated import payload_for_summary
 from src.report.materials import change_material, flow_material, note_material, numeric_material
 from src.report.perspectives import (
+    LLM_TIMEOUT_SECONDS,
     PerspectiveAssessment,
     create_perspective_assessment,
     deferred_assessment,
@@ -35,7 +36,7 @@ async def build_multi_agent_report(
         try:
             summary = await asyncio.wait_for(
                 create_integrated_summary(summary_payload, retry_delays=retry_delays),
-                timeout=25.0,
+                timeout=LLM_TIMEOUT_SECONDS,
             )
         except Exception as exc:
             summary = f"LLM 종합 문단은 보류했다: {type(exc).__name__}"
