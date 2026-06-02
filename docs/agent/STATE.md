@@ -7,12 +7,11 @@
 ## 현재 위치
 
 - 단계: 설계 확정 → 프로젝트 뼈대 구축 → L0 수집 → L1 정규화 → L2 신호엔진 →
-  **기본 합계 계정 추가 + 실무 재무지표 계산 완료**
-- 최근 작업 (2026-06-02): `canonical_accounts.yaml`에 자산총계, 자본총계, 부채총계,
-  유동자산, 당기순이익, 영업이익, 이자비용을 추가하고 삼성 3개년 정규화 DB를 재생성했다.
-  [../../src/signals/ratios.py](../../src/signals/ratios.py)에서
-  [../../config/playbooks/financial_ratios.yaml](../../config/playbooks/financial_ratios.yaml)의
-  지표를 결정론으로 계산하며, 실제 결과는 [RATIO_REPORT.md](RATIO_REPORT.md)에 기록했다.
+  **L4 멀티에이전트 독립 평가 + 교차 구조 완료 / live 관점 평가 503 보류**
+- 최근 작업 (2026-06-02): L4를 단일 종합 LLM이 아니라 수치 관점·주석 관점 독립 평가 후
+  결정론 교차 판정하는 구조로 전환했다. [../../src/report](../../src/report)에
+  perspective, crosscheck, material board 모듈을 추가했고 [INTEGRATED_REPORT.md](INTEGRATED_REPORT.md)에
+  실제 삼성 review queue, 지표 요약, live 503 보류 상태를 기록했다. D9 ADR을 추가했다.
 
 ## 완료
 
@@ -55,6 +54,10 @@
 - 기본 합계 계정 7개 추가 [../../config/canonical_accounts.yaml](../../config/canonical_accounts.yaml)
 - 실무 재무지표 계산기 [../../src/signals/ratios.py](../../src/signals/ratios.py)
 - 삼성 3개년 실무 재무지표 보고서 [RATIO_REPORT.md](RATIO_REPORT.md)
+- L4 통합 리포트 조립기 [../../src/report](../../src/report)
+- 삼성 L4 통합 리포트 [INTEGRATED_REPORT.md](INTEGRATED_REPORT.md)
+- 통합 리포트 결정론/LLM mock 테스트 [../../tests/test_integrated_report.py](../../tests/test_integrated_report.py)
+- 결정 D9 ([DECISION.md](DECISION.md))
 
 ## 다음 할 일 (우선순위)
 
@@ -77,6 +80,10 @@
 - 수치 분석가 prompt는 외부 사실을 쓰지 않는다. 정상 설명은 일반적 가능성으로만 작성해야 한다.
 - 외부 업황·뉴스 맥락은 `ContextBrief`로만 제시한다. 출처 없는 외부 주장은 버리고,
   Finding 판단 필드는 변경하지 않는다.
+- L4 종합 문단은 결정론 큐와 지표 요약에만 grounding한다. live 호출 실패 시 문단만 보류하고
+  결정론 큐는 유지한다.
+- L4 관점 LLM은 독립 입력을 받는다. 수치 관점은 queue/ratio, 주석 관점은 D82242/D82638
+  note section material만 받으며, 서로의 결론을 입력으로 받지 않는다.
 - 감사기준·K-IFRS 근거는 검토 관점의 출처다. Finding은 부정·분식 확정 표현으로 쓰지 않는다.
 - 실무 재무지표도 검토 관점이다. 출처 없는 계산식은 플레이북에 넣지 않고, 계정 부족 지표는
   `mvp1_status: account_missing`으로 표시한다. 현재 ROI만 계정 부족으로 남아 있다.
