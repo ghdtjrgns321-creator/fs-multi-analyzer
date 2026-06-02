@@ -30,6 +30,16 @@ async def create_context_brief(
     if not _google_secret():
         raise RuntimeError("Google auth value is required to run Search grounding")
     query = build_context_query(company_name, year, finding)
+    return await create_context_brief_for_query(query, client_factory, retry_delays)
+
+
+async def create_context_brief_for_query(
+    query: str,
+    client_factory: Callable[..., Any] | None = None,
+    retry_delays: tuple[float, ...] = DEFAULT_RETRY_DELAYS,
+) -> ContextBrief:
+    if not _google_secret():
+        raise RuntimeError("Google auth value is required to run Search grounding")
     client = _make_client(client_factory, query)
     brief, grounded_sources = await run_with_retry(client, query, MODEL_NAME, retry_delays)
     return _filter_grounded_items(brief, grounded_sources)
@@ -50,8 +60,6 @@ class GeminiSearchClient:
             contents=self._prompt,
             config=types.GenerateContentConfig(
                 tools=[types.Tool(googleSearch=types.GoogleSearch())],
-                responseMimeType="application/json",
-                responseSchema=ContextBrief,
                 temperature=0,
             ),
         )
@@ -86,10 +94,23 @@ def _prompt(query: str) -> str:
 
 
 def _parse_response(response: Any) -> tuple[ContextBrief, dict[str, str]]:
-    brief = response.parsed if isinstance(response.parsed, ContextBrief) else None
+    parsed = getattr(response, "parsed", None)
+    brief = parsed if isinstance(parsed, ContextBrief) else None
     if brief is None:
-        brief = ContextBrief.model_validate(json.loads(response.text or '{"items": []}'))
+        brief = ContextBrief.model_validate(json.loads(_json_text(response.text or "")))
     return brief, _grounded_sources(response)
+
+
+def _json_text(text: str) -> str:
+    cleaned = text.strip()
+    if cleaned.startswith("```"):
+        cleaned = cleaned.strip("`")
+        cleaned = cleaned.removeprefix("json").strip()
+    start = cleaned.find("{")
+    end = cleaned.rfind("}")
+    if start == -1 or end == -1:
+        return '{"items": []}'
+    return cleaned[start : end + 1]
 
 
 def _grounded_sources(response: Any) -> dict[str, str]:

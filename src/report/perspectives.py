@@ -16,7 +16,7 @@ from config.settings import settings
 from src.agents.gemini_retry import DEFAULT_RETRY_DELAYS, MODEL_NAME, make_agent, run_with_retry
 from src.schemas.findings import RiskLevel
 
-PerspectiveName = Literal["numeric", "note", "flow", "change"]
+PerspectiveName = Literal["numeric", "note", "flow", "change", "external"]
 
 SYSTEM_PROMPT = """
 You are one independent perspective agent for a disclosure review tool.

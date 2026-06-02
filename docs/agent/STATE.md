@@ -7,10 +7,10 @@
 ## 현재 위치
 
 - 단계: 설계 확정 → 프로젝트 뼈대 구축 → L0 수집 → L1 정규화 → L2 신호엔진 →
-  **L4 멀티에이전트 4관점 live 완료**
-- 최근 작업 (2026-06-02): 메인 LLM 모델을 `gemini-2.5-flash`로 전환하고, L4 독립 관점에
-  흐름·변동 관점을 추가했다. 수치·주석·흐름·변동 4관점 live 평가와 교차 판정을
-  [INTEGRATED_REPORT.md](INTEGRATED_REPORT.md)에 기록했다. D10 ADR을 추가했다.
+  **L4 멀티에이전트 5관점 live 완료**
+- 최근 작업 (2026-06-02): 외부 ContextBrief를 L4 5번째 독립 관점으로 승격했다.
+  수치·주석·흐름·변동·외부 5관점 live 평가와 외부 포함 교차 판정을
+  [INTEGRATED_REPORT.md](INTEGRATED_REPORT.md)에 기록했다. D11 ADR을 추가했다.
 
 ## 완료
 
@@ -58,7 +58,8 @@
 - 통합 리포트 결정론/LLM mock 테스트 [../../tests/test_integrated_report.py](../../tests/test_integrated_report.py)
 - 결정 D9 ([DECISION.md](DECISION.md))
 - 결정 D10 ([DECISION.md](DECISION.md))
-- L4 4관점 live 통합 리포트 [INTEGRATED_REPORT.md](INTEGRATED_REPORT.md)
+- 결정 D11 ([DECISION.md](DECISION.md))
+- L4 5관점 live 통합 리포트 [INTEGRATED_REPORT.md](INTEGRATED_REPORT.md)
 
 ## 다음 할 일 (우선순위)
 
@@ -79,13 +80,14 @@
 - 이번 D82242 인덱서는 표를 텍스트 수준으로만 보존한다. 행/열 정밀 복원은 아직 하지 않았다.
 - ROI는 공시 재무제표 기본 합계 계정에 투자원가가 없어 계산하지 않는다.
 - 수치 분석가 prompt는 외부 사실을 쓰지 않는다. 정상 설명은 일반적 가능성으로만 작성해야 한다.
-- 외부 업황·뉴스 맥락은 `ContextBrief`로만 제시한다. 출처 없는 외부 주장은 버리고,
-  Finding 판단 필드는 변경하지 않는다.
+- 외부 업황·뉴스 맥락은 L4 `external` 관점으로 교차에 참여하지만, 출처 없는 외부 주장은
+  버리고 Finding 판단 필드는 변경하지 않는다. 외부 맥락은 설명용이며 면죄부가 아니다.
 - L4 종합 문단은 결정론 큐와 지표 요약에만 grounding한다. live 호출 실패 시 문단만 보류하고
   결정론 큐는 유지한다.
 - L4 관점 LLM은 독립 입력을 받는다. 수치 관점은 queue/ratio, 주석 관점은 D82242/D82638
   note section material, 흐름 관점은 BS-IS-CF/활동성·이익의 질 material, 변동 관점은
-  전기 대비 변동 material만 받으며, 서로의 결론을 입력으로 받지 않는다.
+  전기 대비 변동 material, 외부 관점은 Google Search grounded ContextBrief만 받으며,
+  서로의 결론을 입력으로 받지 않는다.
 - 감사기준·K-IFRS 근거는 검토 관점의 출처다. Finding은 부정·분식 확정 표현으로 쓰지 않는다.
 - 실무 재무지표도 검토 관점이다. 출처 없는 계산식은 플레이북에 넣지 않고, 계정 부족 지표는
   `mvp1_status: account_missing`으로 표시한다. 현재 ROI만 계정 부족으로 남아 있다.

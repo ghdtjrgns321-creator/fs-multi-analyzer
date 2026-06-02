@@ -9,6 +9,7 @@ from typing import Any
 from src.agents.gemini_retry import DEFAULT_RETRY_DELAYS
 from src.report.company_report import build_company_report, render_markdown
 from src.report.crosscheck import CrossCheckResult, cross_check_assessments
+from src.report.external import create_external_assessment, external_material
 from src.report.integrated import payload_for_summary
 from src.report.materials import change_material, flow_material, note_material, numeric_material
 from src.report.perspectives import (
@@ -48,6 +49,7 @@ async def build_multi_agent_report(
             "note": note_material(),
             "flow": flow_material(report),
             "change": change_material(report),
+            "external": external_material(report),
         },
     }
 
@@ -76,9 +78,11 @@ def render_multi_agent_markdown(result: dict[str, Any]) -> str:
     lines = [text, "", "## 관점별 독립 평가"]
     for item in result["perspective_assessments"]:
         areas = ", ".join(item["risk_areas"]) or "-"
+        evidence = "; ".join(item.get("evidence", []))
+        suffix = f" evidence: {evidence}" if item["perspective"] == "external" and evidence else ""
         lines.append(
             f"- {item['perspective']} / {item['status']} / {item['risk_level']}: "
-            f"{item['summary']} (risk_area: {areas})"
+            f"{item['summary']} (risk_area: {areas}){suffix}"
         )
     lines.extend(["", "## 일치/충돌"])
     for item in result["cross_check"]:
@@ -100,6 +104,7 @@ async def _assess(
             deferred_assessment("note", "LLM 실행을 생략했다."),
             deferred_assessment("flow", "LLM 실행을 생략했다."),
             deferred_assessment("change", "LLM 실행을 생략했다."),
+            deferred_assessment("external", "LLM 실행을 생략했다."),
         ]
     return [
         await create_perspective_assessment(
@@ -122,6 +127,7 @@ async def _assess(
             change_material(report),
             retry_delays=retry_delays,
         ),
+        await create_external_assessment(report, retry_delays=retry_delays),
     ]
 
 

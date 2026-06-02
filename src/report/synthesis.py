@@ -15,8 +15,10 @@ from src.agents.gemini_retry import DEFAULT_RETRY_DELAYS, MODEL_NAME, make_agent
 
 SYSTEM_PROMPT = """
 You write one Korean paragraph for a disclosure review report.
-Use only the provided review_queue and ratio_summary.
-Do not use external facts, news, industry memory, or causal claims.
+Use only the provided review_queue, ratio_summary, cross_check, and perspective_assessments.
+Use external context only when it is in the external perspective evidence with source URLs.
+Do not use model memory, unsourced news, industry memory, or causal claims.
+External context is explanatory only and must not weaken internal review candidates.
 Do not conclude fraud or accounting manipulation.
 You may mention connections outside predefined chains only as possibilities grounded in data.
 """

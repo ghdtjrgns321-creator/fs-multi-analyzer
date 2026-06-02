@@ -99,3 +99,15 @@
   4관점 live 평가가 completed로 나왔다.
 - 교훈: live LLM 검증은 모델명 중앙화, 공용 재시도 정책 적용, 관점별 입력 크기 관리가 함께
   필요하다.
+
+### [2026-06-02] Google Search grounding JSON schema 조합 400
+
+- 증상: 외부 맥락을 L4 5번째 관점으로 승격한 뒤 live 실행에서 Google API가
+  `400 INVALID_ARGUMENT`와 함께 `Tool use with a response mime type: 'application/json' is unsupported`를
+  반환했다.
+- 원인: Google Search tool 사용 시 `responseMimeType="application/json"`과 `responseSchema`를
+  함께 지정한 조합이 지원되지 않았다.
+- 해결: Search grounding tool은 유지하고, JSON 강제는 프롬프트와 응답 텍스트 파서로 처리했다.
+  출처 URL이 grounding chunk와 매칭되지 않는 항목은 기존처럼 버린다.
+- 교훈: grounding tool 호출은 구조화 출력 제약이 일반 LLM 호출과 다를 수 있으므로, 출처 검증과
+  스키마 파싱을 분리해 둔다.
