@@ -119,7 +119,23 @@ OpenAI fallback은 사용하지 않았다. `gemini_fallback_model` 설정은 기
 }
 ```
 
-## 5. 재실행 방법
+## 5. 외부 ContextBrief
+
+외부 업황·뉴스 맥락은 Finding 판단과 분리된 `ContextBrief`로만 제시한다. `ContextBrief`
+항목은 `claim`, `source_title`, `source_url`을 포함해야 하며, Gemini Google Search
+grounding 결과 URL과 매칭되지 않으면 버린다. 외부 맥락은 `risk_level`, `issue_type`,
+`materiality_score`, `anomaly_score`를 변경하지 않는다.
+
+실행 진입점:
+
+```powershell
+uv run python -m src.agents.first_context_brief
+```
+
+2026-06-02 live 실행은 `gemini-3.5-flash` 503 high demand로 보류했다. 따라서 현재
+실제 수집된 외부 맥락 항목은 없다.
+
+## 6. 재실행 방법
 
 같은 범위의 첫 Finding은 아래 명령으로 재실행한다.
 

@@ -58,3 +58,30 @@
   누락은 재시도한다.
 - **재검토**: 더 무거운 회계 추론이 필요해질 때 Gemini 3.1 Pro 승급을 검토한다. 단, 숫자
   계산은 계속 코드가 담당한다.
+
+## D7. 반박 에이전트(⑤) 보류 — 반박 기능을 스키마·기준선·가드에 내재화
+
+- **결정**: 별도 반박 에이전트를 지금 만들지 않는다. PLAN의 5개 역할 중 ⑤ 반박은 보류하고,
+  역할 에이전트는 수치·주석·흐름·변동 4개로 본다(반박은 내재화).
+- **이유**: 반박의 목적(과잉지적 방지·근거 검증)이 이미 세 곳에 분산 내재화돼 있다.
+  1. 신호 추출 단계의 결정론 threshold가 약한 신호를 사전 차단
+  2. 각 에이전트의 자기검열 — grounding 강제 + 확정·외부사실 표현 차단 guardrail
+  3. Finding 스키마의 counter_evidence / normal_explanation / confirm_question(자기반박 강제)
+  → 별도 반박가는 중복이며 현 구조에서 한계효용이 작다.
+- **무한 반복 우려 해소**: 1회 검증 구조(D2, 다회 토론 미채택)이므로 반박-재반박 핑퐁
+  무한루프는 발생하지 않는다.
+- **재검토**: Finding이 수십 건으로 늘고 자유도가 커지면 "최종 1회 검증 게이트"로 가볍게
+  재도입을 검토한다.
+
+## D8. 외부 맥락 → 출처 기반 참고용 ContextBrief로 분리
+
+- **결정**: Google Search grounding으로 수집한 외부 업황·뉴스 맥락은 `ContextBrief`로
+  Finding과 분리한다. 각 항목은 `claim`, `source_title`, `source_url`을 포함해야 하며,
+  grounding 결과 URL과 매칭되지 않는 항목은 버린다.
+- **이유**: 외부 정보는 회수가능성·업황을 이해하는 참고 자료일 수 있지만, 프로젝트의
+  판단 근거는 L1/L2 재무 데이터와 주석 EvidenceRef다. 외부 뉴스가 `risk_level`,
+  `issue_type`, `materiality_score`, `anomaly_score`를 오염시키면 PLAN §3 원칙4와
+  §15 포지셔닝을 위반한다.
+- **영향**: 외부 맥락은 `src/agents/context_brief.py`와 `src/schemas/context.py`에 격리한다.
+  Finding 생성 결과에는 별도 `context_brief` 키로 붙이며, Finding 객체는 변경하지 않는다.
+  출처가 없거나 grounding URL과 매칭되지 않는 외부 주장은 표시하지 않는다.

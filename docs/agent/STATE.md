@@ -7,12 +7,11 @@
 ## 현재 위치
 
 - 단계: 설계 확정 → 프로젝트 뼈대 구축 → L0 수집 → L1 정규화 → L2 신호엔진 →
-  **매출채권 D82242 주석 인덱서/주석 분석가 코드 완료, live 보강 보류**
-- 최근 작업 (2026-06-02): 매출채권 → D82242(`매출채권 및 기타채권`) 매핑을
-  `config/playbooks/note_mappings.yaml`에 추가하고, L1.5 주석 인덱서가 OpenDART 주석
-  HTML을 섹션 단위로 파싱하도록 구현했다. 주석 분석가 ②는 기존 Gemini 재시도 helper를
-  재사용하며 `note_evidence`와 `note_cross_check`만 기존 Finding에 병합한다. 테스트는
-  통과했지만, 최종 live 주석 보강 실행은 Gemini 3.5 Flash 503 및 timeout으로 보류했다.
+  **외부 맥락 ContextBrief 코드 완료, live 수집 보류**
+- 최근 작업 (2026-06-02): Gemini Google Search grounding 기반 외부 맥락 수집 단계를
+  `ContextBrief`로 추가했다. 외부 맥락은 Finding과 분리하며, grounding URL과 매칭되는
+  출처(title+URL)가 있는 항목만 남긴다. `risk_level`, `issue_type`, 점수 등 판단 필드는
+  변경하지 않는 mock 테스트를 추가했다. live 실행은 Gemini 3.5 Flash 503으로 보류했다.
 
 ## 완료
 
@@ -37,17 +36,22 @@
 - D82242 주석 인덱서 [../../src/notes/indexer.py](../../src/notes/indexer.py)
 - 매출채권 주석 분석가 [../../src/agents/note_analyst.py](../../src/agents/note_analyst.py)
 - 매출채권 주석 매핑 [../../config/playbooks/note_mappings.yaml](../../config/playbooks/note_mappings.yaml)
+- 외부 맥락 스키마 [../../src/schemas/context.py](../../src/schemas/context.py)
+- Google Search grounding ContextBrief [../../src/agents/context_brief.py](../../src/agents/context_brief.py)
 - 첫 Finding 실행 기록 [FINDING_REPORT.md](FINDING_REPORT.md)
 - Gemini 일시 오류 재시도 테스트 [../../tests/test_red_flags_and_agent.py](../../tests/test_red_flags_and_agent.py)
 - 주석 파싱/주석 분석가 mock 테스트 [../../tests/test_notes_and_note_agent.py](../../tests/test_notes_and_note_agent.py)
+- 외부 맥락 출처/비오염 테스트 [../../tests/test_context_brief.py](../../tests/test_context_brief.py)
 - 결정 D6 ([DECISION.md](DECISION.md))
+- 결정 D8 ([DECISION.md](DECISION.md))
 
 ## 다음 할 일 (우선순위)
 
-1. Gemini 3.5 Flash 가용성 회복 후 `uv run python -m src.agents.first_note_finding`
+1. Gemini 3.5 Flash 가용성 회복 후 `uv run python -m src.agents.first_context_brief`
+   재실행해 출처 포함 `context_brief` live 수집
+2. Gemini 3.5 Flash 가용성 회복 후 `uv run python -m src.agents.first_note_finding`
    재실행해 D82242 `note_evidence`가 병합된 live Finding 생성
-2. D82242 표 구조 정밀 복원 또는 note diff(2022↔2023) 추가 여부 결정
-3. 차입금/유동성 분석 확장: MVP1에 없는 유동자산총계·순이익 등 필요 계정 보강 여부 결정
+3. D82242 표 구조 정밀 복원 또는 note diff(2022↔2023) 추가 여부 결정
 
 ## 열린 이슈 / 주의
 
@@ -60,6 +64,8 @@
 - 이번 D82242 인덱서는 표를 텍스트 수준으로만 보존한다. 행/열 정밀 복원은 아직 하지 않았다.
 - 유동비율, 영업CF/순이익 비율은 MVP1 계정 부족으로 보류했다.
 - 수치 분석가 prompt는 외부 사실을 쓰지 않는다. 정상 설명은 일반적 가능성으로만 작성해야 한다.
+- 외부 업황·뉴스 맥락은 `ContextBrief`로만 제시한다. 출처 없는 외부 주장은 버리고,
+  Finding 판단 필드는 변경하지 않는다.
 - Gemini fallback은 `gemini_fallback_model` 설정이 비어 있으면 비활성이다. OpenAI fallback은 사용하지 않는다.
 
 ## 진입 포인트
