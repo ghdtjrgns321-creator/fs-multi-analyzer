@@ -462,3 +462,9 @@ MVP에서 제외하되 설계상 확장 가능하게 인터페이스를 열어�
 - 재활용: `src/signals/ratios.py` + materiality baseline 추상화(D3에서 인터페이스 이미 열어둠).
 - 근거 기준: ISA 520 분석적 절차의 industry comparison (AUDIT_BASIS).
 - 주의: 회사별 회계정책·사업구조 차이(사과-오렌지) → "확정"이 아니라 "참고 신호"(§15).
+
+구현 상태(2026-06-03): B 접근을 `config/industry_peers.yaml`, `src/peers`,
+`src/report/industry.py`로 구현했다. 삼성전자 `induty_code == 264` 기준 피어는 LG전자와
+가온그룹이며, 피어는 `finstate_all` 재무제표만 수집해 지표 중앙값·분위수를 계산한다.
+주석·외부·5축 분석은 피어에 적용하지 않는다. ⑥ 관점은 L4 교차에 참여하지만 내부 판단 필드를
+변경하지 않는다(D15).

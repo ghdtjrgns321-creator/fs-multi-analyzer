@@ -43,9 +43,12 @@ def cross_check_assessments(assessments: list[PerspectiveAssessment]) -> list[Cr
     if shared:
         area = sorted(shared)[0]
         has_external = any(item.perspective == "external" for item in completed)
+        has_industry = any(item.perspective == "industry" for item in completed)
         comment = f"{area}에 대해 독립 관점이 같은 방향을 가리켜 신호 강화로 본다."
         if has_external:
             comment += " 외부 맥락은 설명용이며 내부 위험을 약화하지 않는다."
+        if has_industry:
+            comment += " 동종업계 비교는 참고 신호이며 내부 판단 필드를 바꾸지 않는다."
         return [
             CrossCheckResult(
                 verdict="agreement",
@@ -61,6 +64,8 @@ def cross_check_assessments(assessments: list[PerspectiveAssessment]) -> list[Cr
         comment = f"{area}는 한 관점에서 위험이나 다른 관점은 주석 잠잠 또는 낮은 위험이다."
         if any(item.perspective == "external" for item in quiet):
             comment = f"{area}는 내부 위험이나 외부 맥락은 잠잠해 회사 고유 가능성으로 주목한다."
+        if any(item.perspective == "industry" for item in quiet):
+            comment += " 동종업계 관점은 낮은 위험이나 사업구조 차이를 고려해 참고로만 본다."
         return [
             CrossCheckResult(
                 verdict="conflict",

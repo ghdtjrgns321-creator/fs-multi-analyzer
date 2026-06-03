@@ -22,7 +22,7 @@
 - [x] L2 신호엔진 (`src/signals`) — MVP1 관계 사슬 결정론 계산
 - [x] tool DSL (`src/analysis_tools`) — compare_growth / compute_ratio
 - [ ] L3 에이전트 5 (`src/agents`) — 매출채권 live 완료, 재고 mock 완료/live 보류
-- [x] L4 리포트 (`src/report`) — 5관점 독립 평가 + 교차 + 종합 live 완료
+- [x] L4 리포트 (`src/report`) — 6관점 독립 평가 + 교차 + 종합 live 완료
 - [ ] L5 대시보드 (`dashboard`)
   - [ ] (필수) 못 맞춘 계정 → 사전 보강 인터랙션: 사용자가 계정 지정 시
     `config/canonical_accounts.yaml` 자동 확장 (Human-in-the-Loop). 상세: [../user/UX.md](../user/UX.md)
@@ -45,6 +45,7 @@
 - [x] 삼성전자 2025 사업보고서 포함 L0~L4 최신 재실행
 - [x] 외부 관점 agentic search 개선(LLM 쿼리 생성 → 검색 → 외부 평가)
 - [x] 외부 관점 Gemini 3.1 Pro preview 라우팅 분리
+- [x] 동종업계 6번째 관점 추가(B 접근: 피어 지표 baseline + 교차 참여)
 - [ ] 차입금 / 유동성 기본 분석
 - [ ] 공시 변동 (watchlist 키워드 신규 등장)
 - [x] 첫 Finding 리포트 + 감사인 확인 질문 — Gemini 3.5 Flash 재시도 후 생성 완료
@@ -68,4 +69,4 @@
 
 ## 이후 (PLAN §16)
 
-업종 벤치마크 · 주석 의미 diff 고도화 · 다회 토론 · RAGAS 평가
+주석 의미 diff 고도화 · 다회 토론 · RAGAS 평가

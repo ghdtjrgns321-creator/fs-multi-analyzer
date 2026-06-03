@@ -4,6 +4,7 @@ from types import SimpleNamespace
 
 import pandas as pd
 
+import src.peers.benchmark as benchmark_module
 import src.report.external as external_module
 from src.agents.gemini_retry import MODEL_NAME
 from src.report.crosscheck import cross_check_assessments
@@ -13,6 +14,7 @@ from src.report.external_agentic import (
     SearchKeywords,
     generate_search_keywords,
 )
+from src.report.industry import create_industry_assessment, industry_material
 from src.report.integrated import build_review_queue, summarize_ratio_categories
 from src.report.multi_agent import build_multi_agent_report, render_multi_agent_markdown
 from src.report.perspectives import PerspectiveAssessment, create_perspective_assessment
@@ -223,13 +225,13 @@ def test_perspective_assessment_accepts_mock_agent(monkeypatch) -> None:
     assert result.status == "completed"
 
 
-def test_multi_agent_report_has_five_independent_perspectives() -> None:
+def test_multi_agent_report_has_six_independent_perspectives() -> None:
     result = asyncio.run(build_multi_agent_report(run_llm=False))
 
     perspectives = {item["perspective"] for item in result["perspective_assessments"]}
 
-    assert perspectives == {"numeric", "note", "flow", "change", "external"}
-    assert set(result["materials"]) == {"numeric", "note", "flow", "change", "external"}
+    assert perspectives == {"numeric", "note", "flow", "change", "external", "industry"}
+    assert set(result["materials"]) == {"numeric", "note", "flow", "change", "external", "industry"}
 
 
 def test_flow_and_change_perspectives_accept_mock_agent(monkeypatch) -> None:
@@ -317,6 +319,127 @@ def test_external_perspective_runs_query_search_and_eval_mocks() -> None:
         "검색어: 삼성전자 2025 매출채권 회수 지연",
         "기사: https://example.com/news",
     ]
+
+
+def test_industry_benchmark_uses_peer_median_and_target_percentile(tmp_path, monkeypatch) -> None:
+    config = tmp_path / "peers.yaml"
+    config.write_text(
+        """
+targets:
+  "00126380":
+    company_name: 삼성전자
+    industry_code: "264"
+    selection: {max_peers: 2}
+    caveat: 단순 비교 한계
+    peers:
+      - {corp_code: "00401731", company_name: LG전자, stock_code: "066570", industry_code: "264"}
+      - {corp_code: "00441304", company_name: 가온그룹, stock_code: "078890", industry_code: "264"}
+""",
+        encoding="utf-8",
+    )
+
+    def fake_ratios(frame: pd.DataFrame, years: list[int]) -> pd.DataFrame:
+        corp = frame["corp_code"].iloc[0]
+        value = {"00126380": 12.0, "00401731": 10.0, "00441304": 20.0}[corp]
+        return pd.DataFrame(
+            [
+                {
+                    "id": "roe",
+                    "category": "profitability",
+                    "name": "ROE",
+                    "year": 2025,
+                    "value": value,
+                    "status": "computed",
+                }
+            ]
+        )
+
+    monkeypatch.setattr(
+        benchmark_module,
+        "load_normalized_financials",
+        lambda corp_code, years: pd.DataFrame({"corp_code": [corp_code]}),
+    )
+    monkeypatch.setattr(benchmark_module, "build_ratio_report", fake_ratios)
+
+    result = benchmark_module.build_industry_benchmark(
+        "00126380",
+        [2024, 2025],
+        peer_config_path=config,
+        ensure_data=lambda *args, **kwargs: None,
+    )
+
+    row = result["baseline"][0]
+    assert row["peer_median"] == 15.0
+    assert row["target_percentile"] == 50.0
+    assert result["peers"][0]["corp_code"] == "00401731"
+
+
+def test_industry_perspective_accepts_mock_agent(monkeypatch) -> None:
+    class FakeAgent:
+        async def run(self, prompt: str) -> SimpleNamespace:
+            assert "peer-ratio" in prompt or "피어" in prompt
+            return SimpleNamespace(
+                output=PerspectiveAssessment(
+                    perspective="industry",
+                    status="completed",
+                    risk_areas=["수익성"],
+                    risk_level="Low",
+                    summary="동종업계 대비 참고 신호만 제시한다.",
+                    evidence=["ROE 업종 중앙값"],
+                )
+            )
+
+    report = {
+        "corp_code": "00126380",
+        "company_name": "삼성전자",
+        "years": [2024, 2025],
+        "target_year": 2025,
+        "review_queue": [],
+    }
+    benchmark = {
+        "target_year": 2025,
+        "peers": [],
+        "baseline": [{"name": "ROE", "target_value": 12.0, "peer_median": 15.0}],
+    }
+    monkeypatch.setattr("src.report.perspectives.settings.google_api_key", "fake")
+
+    material = industry_material(report, lambda *args, **kwargs: benchmark)
+    result = asyncio.run(
+        create_industry_assessment(
+            report,
+            benchmark_factory=lambda *args, **kwargs: benchmark,
+            agent_factory=FakeAgent,
+            retry_delays=(0,),
+        )
+    )
+
+    assert material["benchmark"]["baseline"][0]["name"] == "ROE"
+    assert result.perspective == "industry"
+    assert result.status == "completed"
+
+
+def test_cross_check_industry_reference_does_not_mutate_internal_judgment() -> None:
+    numeric = PerspectiveAssessment(
+        perspective="numeric",
+        status="completed",
+        risk_areas=["수익성"],
+        risk_level="Medium",
+        summary="수익성 검토 필요",
+        evidence=[],
+    )
+    industry = PerspectiveAssessment(
+        perspective="industry",
+        status="completed",
+        risk_areas=["수익성"],
+        risk_level="Low",
+        summary="업종 대비 낮은 위치이나 참고 신호다.",
+        evidence=["ISA/KSA 520"],
+    )
+
+    result = cross_check_assessments([numeric, industry])
+
+    assert result[0].verdict == "agreement"
+    assert "판단 필드" in result[0].comment
 
 
 def test_query_generation_sanitizes_speculative_terms() -> None:

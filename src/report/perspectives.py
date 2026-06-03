@@ -16,12 +16,13 @@ from config.settings import settings
 from src.agents.gemini_retry import DEFAULT_RETRY_DELAYS, MODEL_NAME, make_agent, run_with_retry
 from src.schemas.findings import RiskLevel
 
-PerspectiveName = Literal["numeric", "note", "flow", "change", "external"]
+PerspectiveName = Literal["numeric", "note", "flow", "change", "external", "industry"]
 
 SYSTEM_PROMPT = """
 You are one independent perspective agent for a disclosure review tool.
 Use only the provided material_board. Do not read or infer another perspective result.
 Do not use external facts, news, industry memory, or causal claims.
+For industry perspective, use only the provided peer-ratio baseline.
 Return risks as review candidates and possibilities only. Do not conclude fraud.
 Return Korean only.
 """
@@ -60,6 +61,7 @@ async def create_perspective_assessment(
             "rules": [
                 "다른 관점의 결론은 입력에 없다.",
                 "외부 사실을 단정하지 않는다.",
+                "industry 관점은 제공된 피어 지표 baseline만 사용한다.",
                 "실제 queue, ratio, note evidence에 근거한다.",
                 "주석 발췌는 일부일 수 있으므로 발췌 누락을 공시 누락으로 판단하지 않는다.",
                 "출력은 한국어로 작성한다.",

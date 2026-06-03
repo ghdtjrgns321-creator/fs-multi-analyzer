@@ -10,6 +10,7 @@ from src.agents.gemini_retry import DEFAULT_RETRY_DELAYS
 from src.report.company_report import build_company_report, render_markdown
 from src.report.crosscheck import CrossCheckResult, cross_check_assessments
 from src.report.external import create_external_assessment, external_material
+from src.report.industry import create_industry_assessment, industry_material
 from src.report.integrated import payload_for_summary
 from src.report.materials import change_material, flow_material, note_material, numeric_material
 from src.report.perspectives import (
@@ -51,6 +52,7 @@ async def build_multi_agent_report(
             "flow": flow_material(report),
             "change": change_material(report),
             "external": external_material(report),
+            "industry": _industry_material(report) if run_llm else _deferred_material(),
         },
     }
 
@@ -106,6 +108,7 @@ async def _assess(
             deferred_assessment("flow", "LLM 실행을 생략했다."),
             deferred_assessment("change", "LLM 실행을 생략했다."),
             deferred_assessment("external", "LLM 실행을 생략했다."),
+            deferred_assessment("industry", "LLM 실행을 생략했다."),
         ]
     return [
         await create_perspective_assessment(
@@ -129,11 +132,23 @@ async def _assess(
             retry_delays=retry_delays,
         ),
         await create_external_assessment(report, retry_delays=retry_delays),
+        await create_industry_assessment(report, retry_delays=retry_delays),
     ]
 
 
 def _note_material(report: dict[str, object]) -> dict[str, object]:
     return note_material(year=int(report["target_year"]))
+
+
+def _industry_material(report: dict[str, object]) -> dict[str, object]:
+    try:
+        return industry_material(report)
+    except Exception as exc:
+        return {"status": "deferred", "reason": str(exc) or exc.__class__.__name__}
+
+
+def _deferred_material() -> dict[str, object]:
+    return {"status": "deferred", "reason": "LLM/peer benchmark 실행을 생략했다."}
 
 
 def main() -> None:

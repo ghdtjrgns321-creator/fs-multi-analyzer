@@ -38,6 +38,11 @@ class DartCollector:
 
         return self._dart.finstate_all(corp_code, year, reprt_code="11011", fs_div=fs_div)
 
+    def company(self, corp_code: str) -> dict[str, object]:
+        """Fetch OpenDART company profile metadata."""
+
+        return dict(self._dart.company(corp_code))
+
     def annual_report(self, corp_code: str, year: int) -> AnnualReport | None:
         """Find the final annual report submitted after the business year."""
 

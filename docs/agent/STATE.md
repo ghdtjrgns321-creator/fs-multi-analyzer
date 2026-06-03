@@ -7,11 +7,11 @@
 ## 현재 위치
 
 - 단계: 설계 확정 → 프로젝트 뼈대 구축 → L0 수집 → L1 정규화 → L2 신호엔진 →
-  **L4 외부 관점 Pro 라우팅 live 완료**
-- 최근 작업 (2026-06-03): 외부 관점의 쿼리 생성·검색 결과 평가 모델을
-  `gemini-3.1-pro-preview`로 분리했다. 내부 4관점은 `gemini-2.5-flash`를 유지한다.
-  2025 기준 L4 live에서 원인 탐색형 검색어와 출처 기반 외부 평가를 확인했고
-  [INTEGRATED_REPORT.md](INTEGRATED_REPORT.md)에 기록했다. D14 ADR을 추가했다.
+  **L4 6관점(수치·주석·흐름·변동·외부·동종업계) live 완료**
+- 최근 작업 (2026-06-03): PLAN §16.1 B 접근으로 동종업계 관점(`industry`)을 6번째
+  독립 관점으로 추가했다. 삼성전자 `induty_code == 264` 기준 피어(LG전자, 가온그룹)의
+  재무제표만 수집·정규화해 지표 baseline 중앙값·분위수를 만들고 L4 교차에 참여시켰다.
+  동종업계 관점은 참고 신호이며 내부 판단 필드를 변경하지 않는다. D15 ADR을 추가했다.
 
 ## 완료
 
@@ -62,7 +62,10 @@
 - 결정 D11 ([DECISION.md](DECISION.md))
 - 결정 D13 ([DECISION.md](DECISION.md))
 - 결정 D14 ([DECISION.md](DECISION.md))
-- L4 5관점 live 통합 리포트 [INTEGRATED_REPORT.md](INTEGRATED_REPORT.md)
+- 결정 D15 ([DECISION.md](DECISION.md))
+- L4 6관점 live 통합 리포트 [INTEGRATED_REPORT.md](INTEGRATED_REPORT.md)
+- 동종업계 피어 config [../../config/industry_peers.yaml](../../config/industry_peers.yaml)
+- 피어 지표 baseline [../../src/peers](../../src/peers)
 - 2025 포함 raw contract [DATA_CONTRACT.md](DATA_CONTRACT.md)
 
 ## 다음 할 일 (우선순위)
@@ -90,6 +93,9 @@
   `gemini_model == "gemini-2.5-flash"`를 유지한다. 쿼리 생성은 내부 데이터 기반으로 하되,
   외부 평가는 검색 결과와 출처만 입력받는다. 출처 없는 외부 주장은 버리고 Finding 판단
   필드는 변경하지 않는다. 외부 맥락은 설명용이며 면죄부가 아니다.
+- 동종업계 비교는 L4 `industry` 관점으로 교차에 참여한다. 피어는 DART `induty_code == 264`
+  config 피어의 재무지표 baseline만 계산하며, 주석·외부·5축 분석을 피어에 적용하지 않는다.
+  삼성전자는 사업 다각화 기업이라 단순 업종 비교 한계를 항상 명시한다.
 - L4 종합 문단은 결정론 큐와 지표 요약에만 grounding한다. live 호출 실패 시 문단만 보류하고
   결정론 큐는 유지한다.
 - L4 관점 LLM은 독립 입력을 받는다. 수치 관점은 queue/ratio, 주석 관점은 D82242/D82638
