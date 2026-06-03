@@ -25,6 +25,23 @@ canonical_accounts:
     account_ids:
       - ifrs-full_Inventories
     aliases: [재고자산]
+  미수금:
+    statement: BS
+    account_ids:
+      - dart_ShortTermOtherReceivables
+      - dart_ShortTermOtherReceivablesNet
+    aliases: [미수금]
+  선급비용:
+    statement: BS
+    account_ids:
+      - dart_ShortTermPrepaidExpenses
+      - ifrs-full_CurrentPrepaidExpenses
+    aliases: [선급비용]
+  기타유동자산:
+    statement: BS
+    account_ids:
+      - ifrs-full_OtherCurrentAssets
+    aliases: [기타유동자산]
   유동자산:
     statement: BS
     account_ids:
@@ -50,6 +67,43 @@ canonical_accounts:
     account_ids:
       - ifrs-full_Equity
     aliases: [자본총계]
+  지배기업소유주지분:
+    statement: BS
+    account_ids:
+      - ifrs-full_EquityAttributableToOwnersOfParent
+    aliases: [지배기업 소유주지분, 지배기업 소유지분]
+  비지배지분:
+    statement: BS
+    account_ids:
+      - ifrs-full_NoncontrollingInterests
+    aliases: [비지배지분]
+  비유동자산:
+    statement: BS
+    account_ids:
+      - ifrs-full_NoncurrentAssets
+    aliases: [비유동자산]
+  관계기업투자:
+    statement: BS
+    account_ids:
+      - ifrs-full_InvestmentAccountedForUsingEquityMethod
+      - ifrs-full_InvestmentsInSubsidiariesJointVenturesAndAssociates
+    aliases: [관계기업 및 공동기업 투자, 종속기업, 관계기업 및 공동기업 투자]
+  무형자산:
+    statement: BS
+    account_ids:
+      - ifrs-full_IntangibleAssetsAndGoodwill
+      - ifrs-full_IntangibleAssetsOtherThanGoodwill
+    aliases: [무형자산]
+  이연법인세자산:
+    statement: BS
+    account_ids:
+      - ifrs-full_DeferredTaxAssets
+    aliases: [이연법인세자산]
+  이연법인세부채:
+    statement: BS
+    account_ids:
+      - ifrs-full_DeferredTaxLiabilities
+    aliases: [이연법인세부채]
   매입채무:
     statement: BS
     account_ids:
@@ -60,6 +114,32 @@ canonical_accounts:
     account_ids:
       - ifrs-full_ShorttermBorrowings
     aliases: [단기차입금, 단기차입부채]
+  미지급금:
+    statement: BS
+    account_ids:
+      - ifrs-full_OtherCurrentPayables
+    aliases: [미지급금]
+  미지급비용:
+    statement: BS
+    account_ids:
+      - ifrs-full_AccrualsClassifiedAsCurrent
+    aliases: [미지급비용]
+  선수금:
+    statement: BS
+    account_ids:
+      - dart_ShortTermAdvancesCustomers
+      - ifrs-full_CurrentAdvances
+    aliases: [선수금]
+  예수금:
+    statement: BS
+    account_ids:
+      - dart_ShortTermWithholdings
+    aliases: [예수금]
+  당기법인세부채:
+    statement: BS
+    account_ids:
+      - ifrs-full_CurrentTaxLiabilities
+    aliases: [당기법인세부채]
   장기차입금:
     statement: BS
     account_ids:
@@ -94,6 +174,16 @@ canonical_accounts:
     account_ids:
       - ifrs-full_IssuedCapital
     aliases: [자본금]
+  이익잉여금:
+    statement: BS
+    account_ids:
+      - ifrs-full_RetainedEarnings
+    aliases: [이익잉여금]
+  주식발행초과금:
+    statement: BS
+    account_ids:
+      - ifrs-full_SharePremium
+    aliases: [주식발행초과금]
   매출:
     statement: IS
     account_ids:
@@ -104,6 +194,16 @@ canonical_accounts:
     account_ids:
       - ifrs-full_CostOfSales
     aliases: [매출원가]
+  매출총이익:
+    statement: IS
+    account_ids:
+      - ifrs-full_GrossProfit
+    aliases: [매출총이익]
+  판매비와관리비:
+    statement: IS
+    account_ids:
+      - dart_TotalSellingGeneralAdministrativeExpenses
+    aliases: [판매비와관리비]
   영업이익:
     statement: IS
     account_ids:
@@ -115,18 +215,149 @@ canonical_accounts:
     account_ids:
       - ifrs-full_FinanceCosts
     aliases: [금융비용, 이자비용]
+  금융수익:
+    statement: IS
+    account_ids:
+      - ifrs-full_FinanceIncome
+    aliases: [금융수익]
+  기타수익:
+    statement: IS
+    account_ids:
+      - dart_OtherGains
+    aliases: [기타수익]
+  기타비용:
+    statement: IS
+    account_ids:
+      - dart_OtherLosses
+    aliases: [기타비용]
+  법인세비용차감전순이익:
+    statement: IS
+    account_ids:
+      - ifrs-full_ProfitLossBeforeTax
+    aliases: [법인세비용차감전순이익, 법인세비용차감전순이익(손실)]
+  법인세비용:
+    statement: IS
+    account_ids:
+      - ifrs-full_IncomeTaxExpenseContinuingOperations
+    aliases: [법인세비용, 법인세비용(수익)]
   당기순이익:
     statement: IS
     account_ids:
       - ifrs-full_ProfitLoss
     aliases: [당기순이익]
+  지배기업귀속순이익:
+    statement: IS
+    account_ids:
+      - ifrs-full_ProfitLossAttributableToOwnersOfParent
+    aliases: [지배기업의 소유주에게 귀속되는 당기순이익, 지배기업 소유지분]
+  비지배지분순이익:
+    statement: IS
+    account_ids:
+      - ifrs-full_ProfitLossAttributableToNoncontrollingInterests
+    aliases: [비지배지분에 귀속되는 당기순이익, 비지배지분]
   기본주당이익:
     statement: IS
     account_ids:
       - ifrs-full_BasicEarningsLossPerShare
     aliases: [기본주당이익, 기본주당이익(손실)]
+  희석주당이익:
+    statement: IS
+    account_ids:
+      - ifrs-full_DilutedEarningsLossPerShare
+    aliases: [희석주당이익, 희석주당이익(손실)]
+  지분법이익:
+    statement: IS
+    account_ids:
+      - ifrs-full_ShareOfProfitLossOfAssociatesAndJointVenturesAccountedForUsingEquityMethod
+    aliases: [지분법이익]
   영업활동현금흐름:
     statement: CF
     account_ids:
       - ifrs-full_CashFlowsFromUsedInOperatingActivities
     aliases: [영업활동현금흐름, 영업활동 현금흐름]
+  영업창출현금흐름:
+    statement: CF
+    account_ids:
+      - ifrs-full_CashFlowsFromUsedInOperations
+    aliases: [영업에서 창출된 현금흐름]
+  운전자본변동:
+    statement: CF
+    account_ids:
+      - dart_AdjustmentsForAssetsLiabilitiesOfOperatingActivities
+    aliases: [영업활동으로 인한 자산부채의 변동]
+  투자활동현금흐름:
+    statement: CF
+    account_ids:
+      - ifrs-full_CashFlowsFromUsedInInvestingActivities
+    aliases: [투자활동현금흐름, 투자활동 현금흐름]
+  재무활동현금흐름:
+    statement: CF
+    account_ids:
+      - ifrs-full_CashFlowsFromUsedInFinancingActivities
+    aliases: [재무활동현금흐름, 재무활동 현금흐름]
+  유형자산취득:
+    statement: CF
+    account_ids:
+      - ifrs-full_PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities
+    aliases: [유형자산의 취득]
+  유형자산처분:
+    statement: CF
+    account_ids:
+      - ifrs-full_ProceedsFromSalesOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities
+    aliases: [유형자산의 처분]
+  무형자산취득:
+    statement: CF
+    account_ids:
+      - ifrs-full_PurchaseOfIntangibleAssetsClassifiedAsInvestingActivities
+    aliases: [무형자산의 취득]
+  사업결합순현금유출:
+    statement: CF
+    account_ids:
+      - ifrs-full_CashFlowsUsedInObtainingControlOfSubsidiariesOrOtherBusinessesClassifiedAsInvestingActivities
+    aliases: [사업결합으로 인한 순현금유출액]
+  장기차입금차입:
+    statement: CF
+    account_ids:
+      - dart_ProceedsFromLongTermBorrowings
+    aliases: [장기차입금의 차입, 장기차입금의 차입 (주27)]
+  단기차입금순증감:
+    statement: CF
+    account_ids:
+      - ifrs-full_CashFlowsFromUsedInIncreaseDecreaseInCurrentBorrowings
+    aliases: [단기차입금의 순증가(감소), 단기차입금의 순증가(감소) (주27)]
+  비유동차입금차입:
+    statement: CF
+    account_ids:
+      - ifrs-full_ProceedsFromNoncurrentBorrowings
+    aliases: [사채 및 장기차입금의 차입]
+  비유동차입금상환:
+    statement: CF
+    account_ids:
+      - dart_RepaymentsOfLongTermBorrowings
+      - ifrs-full_RepaymentsOfNoncurrentBorrowings
+    aliases: [사채 및 장기차입금의 상환, 사채 및 장기차입금의 상환 (주27)]
+  배당금지급:
+    statement: CF
+    account_ids:
+      - ifrs-full_DividendsPaidClassifiedAsFinancingActivities
+    aliases: [배당금의 지급, 배당금의지급]
+  자기주식취득:
+    statement: CF
+    account_ids:
+      - dart_AcquisitionOfTreasuryShares
+    aliases: [자기주식의 취득]
+  이자지급:
+    statement: CF
+    account_ids:
+      - ifrs-full_InterestPaidClassifiedAsOperatingActivities
+    aliases: [이자의 지급]
+  이자수취:
+    statement: CF
+    account_ids:
+      - ifrs-full_InterestReceivedClassifiedAsOperatingActivities
+    aliases: [이자의 수취]
+  법인세납부:
+    statement: CF
+    account_ids:
+      - ifrs-full_IncomeTaxesPaidRefundClassifiedAsOperatingActivities
+    aliases: [법인세 납부액]

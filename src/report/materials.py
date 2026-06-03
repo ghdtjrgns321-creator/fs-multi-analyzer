@@ -60,17 +60,34 @@ def _priority(account: str) -> str:
 def flow_material(report: dict[str, object]) -> dict[str, object]:
     """Inputs for BS-IS-CF flow perspective only."""
 
+    flow_keywords = (
+        "현금흐름",
+        "차입",
+        "사채",
+        "이자",
+        "법인세",
+        "순이익",
+        "영업이익",
+        "투자",
+        "유형자산",
+        "사업결합",
+        "배당",
+        "매출채권",
+        "재고",
+        "매입채무",
+    )
     flow_items = [
         item
         for item in report["review_queue"]
-        if "현금흐름" in str(item["subject"])
-        or "매출채권" in str(item["subject"])
+        if any(keyword in str(item["subject"]) for keyword in flow_keywords)
         or str(item["subject"]) in {"영업CF/순이익", "발생액 비율"}
         or "growth_divergence" in str(item["key_evidence"])
+        or "direction_mismatch" in str(item["key_evidence"])
     ]
     return {
         "flow_queue": flow_items[:10],
         "latest_signal_snapshot": report.get("latest_signal_snapshot", {}),
+        "unmapped_material_accounts": report.get("unmapped_material_accounts", []),
         "ratio_summary": {
             key: value
             for key, value in report["ratio_summary"].items()

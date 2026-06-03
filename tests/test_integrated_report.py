@@ -84,6 +84,54 @@ def test_review_queue_sorts_by_risk_then_materiality_without_severity_sum() -> N
     assert all(item.audit_basis for item in queue)
 
 
+def test_review_queue_exposes_unmapped_material_accounts() -> None:
+    queue = build_review_queue(
+        [],
+        ratio_frame(),
+        ratio_config(),
+        target_year=2024,
+        red_flags=[],
+        unmapped_rows=[
+            {
+                "year": 2024,
+                "label": "회사확장계정",
+                "account_id": "-표준계정코드 미사용-",
+                "amount": 1234.0,
+            }
+        ],
+    )
+
+    item = next(item for item in queue if item.item_type == "unmapped_material_account")
+    assert item.subject == "회사확장계정"
+    assert item.issue == "미등록 중요 계정"
+
+
+def test_flow_material_includes_is_cf_flow_items() -> None:
+    from src.report.materials import flow_material
+
+    material = flow_material(
+        {
+            "review_queue": [
+                {
+                    "subject": "투자활동현금흐름",
+                    "key_evidence": "single_account_yoy: -80",
+                },
+                {
+                    "subject": "영업이익",
+                    "key_evidence": "growth_divergence: 20",
+                },
+            ],
+            "ratio_summary": {"이익의 질": {"영업CF/순이익": 1.2}},
+            "latest_signal_snapshot": {},
+            "unmapped_material_accounts": [{"label": "확장"}],
+        }
+    )
+
+    subjects = {item["subject"] for item in material["flow_queue"]}
+    assert {"투자활동현금흐름", "영업이익"}.issubset(subjects)
+    assert material["unmapped_material_accounts"] == [{"label": "확장"}]
+
+
 def test_ratio_summary_groups_latest_values_by_category() -> None:
     summary = summarize_ratio_categories(ratio_frame(), target_year=2024)
 

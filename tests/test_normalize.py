@@ -32,6 +32,11 @@ def test_new_canonical_accounts_map_standard_ids() -> None:
         ("ifrs-full_NoncurrentPortionOfNoncurrentBondsIssued", "사채"),
         ("ifrs-full_OtherShorttermProvisions", "충당부채"),
         ("ifrs-full_PropertyPlantAndEquipment", "유형자산"),
+        ("ifrs-full_GrossProfit", "매출총이익"),
+        ("ifrs-full_CashFlowsFromUsedInInvestingActivities", "투자활동현금흐름"),
+        ("ifrs-full_DividendsPaidClassifiedAsFinancingActivities", "배당금지급"),
+        ("ifrs-full_NoncontrollingInterests", "비지배지분"),
+        ("ifrs-full_ProfitLossAttributableToOwnersOfParent", "지배기업귀속순이익"),
     ]
 
     for account_id, expected in cases:

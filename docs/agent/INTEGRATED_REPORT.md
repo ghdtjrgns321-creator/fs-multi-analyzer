@@ -7,6 +7,8 @@
 
 - 계정 Finding: 최신 연도와 근거 연도가 맞는 항목만 큐에 반영한다.
 - 관계사슬 신호: [SIGNAL_REPORT.md](SIGNAL_REPORT.md), `src.signals.red_flags`
+- 전수 보편 스캔: `src.signals.universal` — BS·IS·CF 전 계정(account_id)에 YoY,
+  z-score, 구성비 급변, CFS/OFS 괴리를 적용한다.
 - 실무 재무지표: [RATIO_REPORT.md](RATIO_REPORT.md), `config/playbooks/financial_ratios.yaml`
 - 근거 체계: [AUDIT_BASIS.md](AUDIT_BASIS.md)
 - 독립 관점: 수치 관점, 주석 관점, 흐름 관점, 변동 관점, 외부 관점, 동종업계 관점
@@ -22,21 +24,23 @@ grounding 결과 중 출처 URL이 확인된 항목만 사용한다. 외부 맥�
 
 ## 2. 2025 검토 우선순위 큐
 
-새 canonical과 주석 매핑 반영 후 2025 CFS에서는 장기차입금과 사채 변동이 Medium 관계 신호로
-큐 상단에 올라왔다.
+BS·IS·CF 주요 계정 canonical 확장과 전 계정 보편 스캔 후 2025 CFS에서는 사업결합,
+장기차입금 차입, 자기주식취득, 운전자본변동 등 CF 흐름 항목이 Medium 관계 신호로 큐
+상단에 올라왔다. 등록되지 않은 account_id도 보편 스캔과 `unmapped_material_account`로
+숨기지 않는다.
 
 | 순위 | 대상 | 유형 | risk | score | 핵심 근거 | 근거 | 출처 |
 |---:|---|---|---|---:|---|---|---|
-| 1 | 장기차입금 | relationship_signal | Medium | 64.63 | single_account_yoy: 64.63 | ISA/KSA 315, ISA/KSA 520 | - |
-| 2 | 사채 | relationship_signal | Medium | 50.90 | single_account_yoy: -50.9 | ISA/KSA 315, ISA/KSA 520 | - |
-| 3 | DIO | financial_ratio | Low | 94.20 | 2025: 94.20 | ISA/KSA 501, ISA/KSA 520, K-IFRS 1002 | https://corporatefinanceinstitute.com/resources/accounting/days-inventory-outstanding-dio/ |
-| 4 | DSO | financial_ratio | Low | 51.83 | 2025: 51.83 | ISA/KSA 520, K-IFRS 1109, K-IFRS 1107 | https://corporatefinanceinstitute.com/resources/accounting/days-sales-outstanding/ |
-| 5 | 매출총이익률 | financial_ratio | Low | 39.38 | 2025: 39.38 | ISA/KSA 520, K-IFRS 1115, K-IFRS 1002 | https://corporatefinanceinstitute.com/resources/accounting/profitability-ratios/ |
-| 6 | 부채비율 | financial_ratio | Low | 29.94 | 2025: 29.94 | ISA/KSA 520, ISA/KSA 570 | https://corporatefinanceinstitute.com/resources/knowledge/finance/debt-to-equity-ratio-formula/ |
-| 7 | 영업이익률 | financial_ratio | Low | 13.07 | 2025: 13.07 | ISA/KSA 520 | https://corporatefinanceinstitute.com/resources/accounting/operating-profit-margin/ |
-| 8 | ROE | financial_ratio | Low | 10.78 | 2025: 10.78 | ISA/KSA 520 | https://corporatefinanceinstitute.com/resources/accounting/what-is-return-on-equity-roe/ |
-| 9 | ROA | financial_ratio | Low | 8.36 | 2025: 8.36 | ISA/KSA 520 | https://corporatefinanceinstitute.com/resources/accounting/return-on-assets-roa-formula/ |
-| 10 | 발생액 비율 | financial_ratio | Low | 7.42 | 2025: -7.42 | ISA/KSA 520, K-IFRS 1007 | https://www.stockopedia.com/ratios/accrual-ratio-555/ |
+| 1 | 사업결합순현금유출 | relationship_signal | Medium | 2102.89 | single_account_yoy: 2102.89 | ISA/KSA 315, ISA/KSA 520 | - |
+| 2 | 장기차입금차입 | relationship_signal | Medium | 593.17 | single_account_yoy: 593.17 | ISA/KSA 315, ISA/KSA 520 | - |
+| 3 | 장기차입금차입 | relationship_signal | Medium | 593.17 | universal_yoy: 593.17 | ISA/KSA 315, ISA/KSA 520 | - |
+| 4 | 자기주식취득 | relationship_signal | Medium | 552.00 | single_account_yoy: 552.0 | ISA/KSA 315, ISA/KSA 520 | - |
+| 5 | 운전자본변동 | relationship_signal | Medium | 513.31 | single_account_yoy: -513.31 | ISA/KSA 315, ISA/KSA 520 | - |
+| 6 | 운전자본변동 | relationship_signal | Medium | 513.31 | universal_yoy: -513.31 | ISA/KSA 315, ISA/KSA 520 | - |
+| 7 | 기타수익 | relationship_signal | Medium | 353.00 | universal_z_score: 353.0 | ISA/KSA 315, ISA/KSA 520 | - |
+| 8 | 장기금융상품의 취득 | relationship_signal | Medium | 239.42 | universal_yoy: 239.42 | ISA/KSA 315, ISA/KSA 520 | - |
+| 9 | 장기차입금 | relationship_signal | Medium | 137.49 | growth_divergence: -137.49 | ISA/KSA 315, ISA/KSA 520 | - |
+| 10 | 기타자본항목 | relationship_signal | Medium | 132.82 | cfs_ofs_gap: 132.82 | ISA/KSA 315, ISA/KSA 520 | - |
 
 ## 3. 회사 전체 지표 요약
 
@@ -47,11 +51,24 @@ grounding 결과 중 출처 URL이 확인된 항목만 사용한다. 외부 맥�
 
 ## 4. 2024→2025 신호 스냅샷
 
+- 등록 canonical: BS 34개, IS 17개, CF 18개.
 - 매출 YoY 10.88%, 매출채권 YoY 17.20%, 괴리 -6.32pp
 - 매출 YoY 10.88%, 재고자산 YoY 1.70%, 괴리 9.18pp
 - 매출원가 YoY 8.40%, 재고자산 YoY 1.70%, 괴리 6.70pp
 - 단기차입금 YoY 33.42%, 영업활동현금흐름 YoY 16.90%
 - 장기차입금 YoY 64.63%, 사채 YoY -50.90%
+- 재무활동CF YoY -72.86%, 장기차입금 YoY 64.63%, 괴리 -137.49pp
+- 투자활동CF YoY 19.76%, 유형자산취득 YoY -7.56%, 괴리 27.32pp
+- 사업결합순현금유출 YoY 2102.89%, 장기차입금차입 YoY 593.17%
+- 운전자본변동 YoY -513.31%, 자기주식취득 YoY 552.00%
+- 전수 보편 스캔: 장기차입금차입 universal_yoy 593.17%, 운전자본변동 -513.31%,
+  기타수익 universal_z_score 353.0, 장기금융상품의 취득 universal_yoy 239.42%,
+  무형자산취득 universal_yoy 98.30%
+- CFS/OFS 연결·별도 괴리: 기타자본항목 132.82%, 법인세비용 105.86%,
+  당기손익-공정가치금융자산 100.00%, 단기금융상품 81.85%
+- 기타 중요 계정(unmapped material): 부채와자본총계 566,942,110백만원, 기초자본
+  402,192,070백만원·391,687,603백만원·370,513,188백만원, 기말의 현금및현금성자산
+  57,856,378백만원
 
 ## 5. 동종업계 baseline
 
@@ -78,34 +95,35 @@ material board만 받았다.
 
 | 관점 | 상태 | risk | 평가 | 출처 |
 |---|---|---|---|---|
-| numeric | completed | Medium | 장기차입금·사채 변동과 매출 대비 매출채권 증가율 괴리를 주요 검토 대상으로 보았다. | 2025 ratio/signals |
-| note | completed | High | D82242에서 비유동 매출채권과 대손 관련 변동, D82757에서 우발부채 언급을 확인해 회수가능성·우발부채 공시 검토가 필요하다고 보았다. | D82242/D82638/D82240/D82245/D82757 주석 발췌 |
-| flow | completed | Medium | 매출채권 증가율이 매출 증가율을 상회하나 영업CF와 발생액 지표는 양호해 현금흐름 효율성 저하 가능성을 검토 대상으로 보았다. | 2025 signal snapshot |
-| change | completed | High | CFS 장기차입금 +64.63%, OFS 장기차입금 고증가, 사채 -50.90%, 단기차입금 증가를 재무구조 변화 후보로 보았다. | 2024→2025 signal snapshot |
-| external | completed | Low | 외부 맥락은 매출채권 증가가 매출 증가와 연관된다는 설명 배경을 제공했지만 내부 위험을 약화하지 않는다. | samsung.com, youtube.com |
-| industry | completed | Medium | DSO가 피어 중앙값보다 높고, 매출총이익률은 피어 대비 현저히 높아 사업 다각화 한계를 전제로 참고 검토가 필요하다고 보았다. | `config/industry_peers.yaml`, ISA/KSA 520 |
+| numeric | completed | Medium | 사업결합순현금유출, 장기차입금차입, 자기주식취득, 운전자본변동, 기타수익, 장기금융상품의 취득, 기타자본항목 CFS/OFS 괴리를 검토 대상으로 보았다. | 2025 ratio/signals |
+| note | completed | High | 비유동 매출채권 급증, 대손상각비 증가, 매출채권 담보 제공, 유동성장기차입금 공시 불명확성을 검토 대상으로 보았다. | D82242/D82638/D82240/D82245/D82757 주석 발췌 |
+| flow | completed | Medium | 사업결합순현금유출, 장기차입금 차입, 비유동차입금 상환, 자기주식취득, 운전자본변동, 재무활동CF와 장기차입금 괴리, 법인세비용·배당금수입·이자수취 CFS/OFS 괴리를 보았다. | 2025 IS/CF signal snapshot |
+| change | completed | Medium | 2025년 사업결합순현금유출, 장기차입금 차입, 자기주식취득, 운전자본변동의 큰 전기 대비 변화를 자금 흐름 검토 후보로 보았다. | 2024→2025 signal snapshot |
+| external | completed | Low | 외부 출처는 2025년 자사주 매입과 임직원 주식보상 활용 맥락을 제공했지만 내부 위험을 약화하지 않는다. | hani.co.kr, einfomax.co.kr |
+| industry | completed | Medium | 수익성·안정성은 피어 대비 우수하나 DSO, 총자산회전율, 발생액 비율 편차와 CF 변동 신호를 참고 검토 대상으로 보았다. | `config/industry_peers.yaml`, ISA/KSA 520 |
 
 외부 관점 생성 검색어(개선 후, Pro):
 
-1. `"삼성전자" 2025 장기차입금 증가 자금조달`
-2. `"삼성전자" 2025 사채 상환 감소`
-3. `"삼성전자" 2025 매출채권 증가 원인`
+1. `"삼성전자" 2025 인수합병 OR 사업결합 OR 지분투자`
+2. `"삼성전자" 2025 장기차입금 차입 OR 자금조달`
+3. `"삼성전자" 2025 자사주 매입 OR 자기주식 취득`
 
-외부 관점 출처: samsung.com, youtube.com grounding URL.
+외부 관점 출처: hani.co.kr, einfomax.co.kr grounding URL.
 
 ## 7. 일치/충돌
 
 | verdict | risk_area | perspectives | comment |
 |---|---|---|---|
-| agreement | 매출채권/수익 | numeric, note, flow, change, external, industry | 매출채권/수익에 대해 독립 관점이 같은 방향을 가리켜 신호 강화로 본다. 외부 맥락은 설명용이며 내부 위험을 약화하지 않는다. 동종업계 비교는 참고 신호이며 내부 판단 필드를 바꾸지 않는다. |
+| conflict | 사업결합순현금유출 | numeric, note, flow, change, external, industry | 사업결합순현금유출은 내부 위험이나 외부 맥락은 잠잠해 회사 고유 가능성으로 주목한다. |
 
 ## 8. 한 단락 종합
 
-2025년 최신 기준에서는 매출채권 회수가능성과 차입금 구조 변화가 함께 검토 후보로 올라왔다.
-DSO는 51.83일로 피어 중앙값 44.39일보다 높고, 매출채권 YoY 17.20%가 매출 YoY 10.88%를
-상회했다. 주석 관점은 비유동 매출채권과 대손 관련 변동, D82757의 우발부채 언급을 확인했다.
-장기차입금은 64.63% 증가했고 사채는 50.90% 감소해 D82240/D82245 만기·상환 주석과 함께
-재무구조 변화 후보로 본다. 외부와 동종업계 관점은 설명·참고 신호로만 사용하며 내부 판단
+2025년 재무제표 검토 결과, 사업결합순현금유출은 전년 대비 2102.89% 증가했고
+장기차입금차입도 593.17% 증가했다. 재무활동현금흐름과 장기차입금 증가율 간 괴리,
+운전자본변동 급증, 기타자본항목 CFS/OFS 괴리가 함께 관찰되어 자금 조달과 사용처,
+연결·별도 차이의 설명 가능성을 추가 검토할 필요가 있다. 외부 관점은 자사주 매입 맥락만
+출처 기반으로 확인했으며, 사업결합순현금유출에 대해서는 외부 설명이 충분하지 않아 회사
+고유 가능성으로 남긴다. 외부와 동종업계 관점은 설명·참고 신호로만 사용하며 내부 판단
 필드를 바꾸지 않는다.
 
 ## 9. 실행

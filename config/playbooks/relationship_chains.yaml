@@ -52,7 +52,7 @@ relationship_chains:
         source_url: https://www.ifrs.org/issued-standards/list-of-standards/ias-36-impairment-of-assets/
   - id: debt-interest-cf
     name: 유동성·계속기업
-    chain: [단기차입금, 장기차입금, 사채, 이자비용, 영업활동현금흐름, 차입금만기주석]
+    chain: [단기차입금, 장기차입금, 사채, 이자비용, 재무활동현금흐름, 차입금만기주석]
     audit_basis:
       - standard: ISA/KSA 520
         procedure: analytical_procedures
@@ -70,6 +70,38 @@ relationship_chains:
         procedure: liquidity_risk_disclosures
         gist: 유동성위험과 만기 분석 공시를 차입금 신호의 주석 근거로 사용한다.
         source_url: https://www.ifrs.org/issued-standards/list-of-standards/ifrs-7-financial-instruments-disclosures/
+  - id: operating-profit-net-income
+    name: 영업손익에서 순이익으로
+    chain: [영업이익, 금융수익, 이자비용, 기타수익, 기타비용, 법인세비용, 당기순이익]
+    audit_basis:
+      - standard: ISA/KSA 520
+        procedure: analytical_procedures
+        gist: 영업이익과 순이익의 차이를 영업외손익·세금으로 설명한다.
+        source_url: https://www.iaasb.org/standards-pronouncements
+  - id: debt-funding-use
+    name: 차입금 조달과 사용처
+    chain: [장기차입금, 단기차입금, 재무활동현금흐름, 투자활동현금흐름, 유형자산취득, 사업결합순현금유출]
+    audit_basis:
+      - standard: ISA/KSA 520
+        procedure: analytical_procedures
+        gist: 차입금 증가가 재무활동CF와 투자활동CF·설비투자로 연결되는지 본다.
+        source_url: https://www.iaasb.org/standards-pronouncements
+      - standard: K-IFRS 1007 / IAS 7
+        procedure: cash_flow_statement_review
+        gist: 투자·재무 현금흐름의 주요 하위 항목으로 자금 조달과 사용처를 확인한다.
+        source_url: https://www.ifrs.org/issued-standards/list-of-standards/ias-7-statement-of-cash-flows/
+  - id: earnings-cash-working-capital
+    name: 순이익·영업CF·운전자본
+    chain: [당기순이익, 영업창출현금흐름, 영업활동현금흐름, 운전자본변동, 매출채권, 재고자산, 매입채무]
+    audit_basis:
+      - standard: ISA/KSA 520
+        procedure: analytical_procedures
+        gist: 순이익과 영업CF 차이를 운전자본 변동과 조정 항목으로 검토한다.
+        source_url: https://www.iaasb.org/standards-pronouncements
+      - standard: K-IFRS 1007 / IAS 7
+        procedure: cash_flow_statement_review
+        gist: 영업활동 현금흐름과 운전자본 변동을 이익의 질 검토 근거로 사용한다.
+        source_url: https://www.ifrs.org/issued-standards/list-of-standards/ias-7-statement-of-cash-flows/
   - id: provision-contingency-note
     name: 충당부채·우발부채 교차
     chain: [충당부채, 장기충당부채, 우발부채주석]
@@ -86,6 +118,18 @@ relationship_chains:
         procedure: provisions_contingencies_disclosure
         gist: 충당부채·우발부채 인식과 공시를 수치와 텍스트로 교차검증한다.
         source_url: https://www.ifrs.org/issued-standards/list-of-standards/ias-37-provisions-contingent-liabilities-and-contingent-assets/
+  - id: consolidation-structure
+    name: 연결 구조·비지배지분
+    chain: [지배기업소유주지분, 비지배지분, 지배기업귀속순이익, 비지배지분순이익, 관계기업투자, 지분법이익]
+    audit_basis:
+      - standard: K-IFRS 1110 / IFRS 10
+        procedure: consolidated_financial_statement_review
+        gist: 연결재무제표 작성과 내부거래 제거 원칙을 CFS/OFS 괴리 검토의 회계 근거로 사용한다.
+        source_url: https://www.ifrs.org/issued-standards/list-of-standards/ifrs-10-consolidated-financial-statements/
+      - standard: ISA/KSA 600
+        procedure: group_audit_context
+        gist: 그룹 재무정보 통합과 구성단위 관련 검토 맥락을 연결 특유 신호의 보조 근거로 사용한다.
+        source_url: https://www.iaasb.org/standards-pronouncements
 
 audit_basis:
   common_review:
@@ -127,8 +171,13 @@ l2_mvp1:
   yoy_accounts:
     - 현금및현금성자산
     - 단기금융상품
+    - 미수금
+    - 선급비용
     - 매출채권
     - 재고자산
+    - 기타유동자산
+    - 관계기업투자
+    - 무형자산
     - 유동부채
     - 매입채무
     - 단기차입금
@@ -138,9 +187,36 @@ l2_mvp1:
     - 장기충당부채
     - 유형자산
     - 자본금
+    - 지배기업소유주지분
+    - 비지배지분
     - 매출
     - 매출원가
+    - 매출총이익
+    - 판매비와관리비
+    - 영업이익
+    - 금융수익
+    - 이자비용
+    - 기타수익
+    - 기타비용
+    - 법인세비용차감전순이익
+    - 법인세비용
+    - 당기순이익
+    - 지배기업귀속순이익
+    - 비지배지분순이익
+    - 지분법이익
+    - 투자활동현금흐름
+    - 재무활동현금흐름
     - 영업활동현금흐름
+    - 영업창출현금흐름
+    - 운전자본변동
+    - 유형자산취득
+    - 사업결합순현금유출
+    - 장기차입금차입
+    - 단기차입금순증감
+    - 비유동차입금차입
+    - 비유동차입금상환
+    - 배당금지급
+    - 자기주식취득
   growth_divergences:
     - id: revenue-vs-receivable
       name: 매출 vs 매출채권 증가율 괴리
@@ -154,10 +230,34 @@ l2_mvp1:
       name: 매출원가 vs 재고자산 증가율 괴리
       account_a: 매출원가
       account_b: 재고자산
+    - id: operating-profit-vs-net-income
+      name: 영업이익 vs 당기순이익 증가율 괴리
+      account_a: 영업이익
+      account_b: 당기순이익
+    - id: operating-cf-vs-net-income
+      name: 영업활동현금흐름 vs 당기순이익 증가율 괴리
+      account_a: 영업활동현금흐름
+      account_b: 당기순이익
+    - id: financing-cf-vs-long-borrowing
+      name: 재무활동CF vs 장기차입금 증가율 괴리
+      account_a: 재무활동현금흐름
+      account_b: 장기차입금
+    - id: investing-cf-vs-capex
+      name: 투자활동CF vs 유형자산 취득 증가율 괴리
+      account_a: 투자활동현금흐름
+      account_b: 유형자산취득
   direction_checks:
     - id: receivable-growth-vs-operating-cf
       name: 매출채권 증가율과 영업활동현금흐름 방향 비교
       growth_account: 매출채권
+      flow_account: 영업활동현금흐름
+    - id: debt-growth-vs-financing-cf
+      name: 장기차입금 증가와 재무활동현금흐름 방향 비교
+      growth_account: 장기차입금
+      flow_account: 재무활동현금흐름
+    - id: income-vs-operating-cf
+      name: 당기순이익과 영업활동현금흐름 방향 비교
+      growth_account: 당기순이익
       flow_account: 영업활동현금흐름
   deferred_ratios:
     - name: ROI
@@ -165,6 +265,11 @@ l2_mvp1:
   signal_thresholds:
     divergence_pp_abs: 15
     yoy_pct_abs: 50
+    mix_shift_pp_abs: 5
+    z_score_abs: 2
+    cfs_ofs_gap_pct_abs: 30
+    universal_min_abs_amount: 1000000000000
+    universal_top_n: 12
     direction_red_flags:
       - id: revenue-down-receivable-up
         name: 매출 감소 + 매출채권 증가

@@ -48,6 +48,8 @@
 - [x] 동종업계 6번째 관점 추가(B 접근: 피어 지표 baseline + 교차 참여)
 - [x] 차입금 / 유동성 기본 분석
 - [x] 남은 주요 주석 카테고리 매핑(D82240/D82245/D82757/D82210/D86120/D83800)
+- [x] BS·IS·CF 주요 계정 전면 등록 + IS·CF 흐름 분석 강화
+- [x] 전 계정 보편 신호 스캔 + CFS/OFS 연결 괴리 신호
 - [ ] 공시 변동 (watchlist 키워드 신규 등장)
 - [x] 첫 Finding 리포트 + 감사인 확인 질문 — Gemini 3.5 Flash 재시도 후 생성 완료
 
@@ -68,6 +70,10 @@
 - 매출채권 → 재고자산: config 8줄 추가(주석 매핑 4줄, 관계 4줄) + 일반화 코드 수정 1회.
 - 재고자산 → 차입금·사채·충당부채: 주석 mapping/canonical/relationship config 보강 +
   L4 note material 하드코딩 제거 1회. 다음 계정은 YAML 추가 중심으로 확장 가능.
+- BS·IS·CF 확장: canonical BS 34개, IS 17개, CF 18개 등록. 흐름 관점은 CF/차입/영업손익/
+  운전자본 키워드 기반 material로 확대.
+- 전수 보편 스캔: 코드 1개 모듈(`src/signals/universal.py`) 추가 후 계정 추가 없이 모든
+  BS·IS·CF account_id에 YoY/z-score/구성비/CFS-OFS 괴리를 적용한다.
 
 ## 이후 (PLAN §16)
 

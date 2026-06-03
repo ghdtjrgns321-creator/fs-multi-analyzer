@@ -7,13 +7,14 @@
 ## 현재 위치
 
 - 단계: 설계 확정 → 프로젝트 뼈대 구축 → L0 수집 → L1 정규화 → L2 신호엔진 →
-  **주요 주석 카테고리 확장 + L4 6관점 live 재실행 완료**
-- 최근 작업 (2026-06-03): 남은 주요 주석 카테고리를 매핑했다. D82240 차입금,
-  D82245 사채, D82757 충당부채를 high priority로 L4 주석 material에 연결하고,
-  D82210 유형자산, D86120 자본, D83800 주당이익은 low priority 매핑으로 추가했다.
-  canonical에는 장기차입금·사채·충당부채 등 실제 account_id를 추가하고 L1 정규화를
-  재실행했다. L4 6관점 live에서 장기차입금·사채가 review queue 상위로 올라왔고,
-  주석 관점은 D82757의 우발부채 언급을 검토 후보로 반영했다.
+  **전 계정 보편 스캔 + BS·IS·CF·연결 신호 + L4 6관점 live 재실행 완료**
+- 최근 작업 (2026-06-03): BS 34개, IS 17개, CF 18개 canonical을 raw account_id 기반으로
+  등록하고 L1 정규화를 재실행했다. `src/signals/universal.py`를 추가해 BS·IS·CF 모든
+  account_id에 YoY, z-score, 구성비 급변, CFS/OFS 괴리 신호를 적용했다. relationship chain에는
+  영업이익→순이익, 차입금→재무활동CF→투자활동CF/CAPEX, 순이익→영업CF→운전자본변동,
+  연결 구조·비지배지분 사슬을 추가했다. L4 6관점 live에서 사업결합순현금유출,
+  장기차입금차입, 운전자본변동, 기타수익 z-score, 장기금융상품 취득, 기타자본항목 CFS/OFS
+  괴리가 queue 상위로 올라왔고, 교차 결과는 사업결합순현금유출 conflict로 나왔다.
 
 ## 완료
 
@@ -70,15 +71,19 @@
 - 피어 지표 baseline [../../src/peers](../../src/peers)
 - 남은 주석 카테고리 매핑 [../../config/playbooks/note_mappings.yaml](../../config/playbooks/note_mappings.yaml)
 - 장기차입금·사채·충당부채 canonical 보강 [../../config/canonical_accounts.yaml](../../config/canonical_accounts.yaml)
+- BS·IS·CF 주요 canonical 확장 [../../config/canonical_accounts.yaml](../../config/canonical_accounts.yaml)
+- IS·CF 흐름 관계 사슬 보강 [../../config/playbooks/relationship_chains.yaml](../../config/playbooks/relationship_chains.yaml)
+- 전 계정 보편 스캔 [../../src/signals/universal.py](../../src/signals/universal.py)
 - 2025 포함 raw contract [DATA_CONTRACT.md](DATA_CONTRACT.md)
 
 ## 다음 할 일 (우선순위)
 
-1. 충당부채 공시 변동 고도화: D82757 전기/당기 텍스트 diff로 우발부채 문구 확대·축소를
+1. 공시 변동 고도화: D82757 및 주요 주석의 전기/당기 텍스트 diff로 우발부채 문구 확대·축소를
    수치 충당부채 변동과 교차한다.
-2. `gemini-2.5-flash`로 2025 재고/매출채권 live Finding 재실행:
+2. CF 흐름 리포트 보강: 사업결합순현금유출, 장기차입금차입, 자기주식취득, 운전자본변동의
+   구성과 원천/사용처를 표로 분리한다.
+3. `gemini-2.5-flash`로 2025 재고/매출채권 live Finding 재실행:
    `uv run python -m src.agents.first_inventory_finding`
-3. D82242/D82638/D82240/D82245/D82757 표 구조 정밀 복원 또는 note diff 추가 여부 결정
 
 ## 열린 이슈 / 주의
 
@@ -86,8 +91,12 @@
 - `account_id == "-표준계정코드 미사용-"` 행이 존재한다. MVP1/합계 계정에서는 `매입채무`,
   `이자비용`, `당기순이익` 일부 과거 행과 `단기차입금`(2023~2025)이 label alias 보조를
   필요로 했다.
-- 전체 raw 행 기준 미매핑 비율은 높다. 현재 `canonical_accounts.yaml`이 MVP1 10개 계정만
-  담기 때문이며, 미매핑 계정을 숨기지 않는다.
+- 전체 raw 행 기준 미매핑 행은 여전히 존재한다. 이제 L4 review queue는 target year CFS의
+  금액 큰 미등록 계정을 `unmapped_material_account`로 Low risk 노출하고, 전수 보편 스캔은
+  미등록 BS·IS·CF account_id도 label/account_id로 신호화한다.
+- 연결 특유 이슈는 별도 에이전트가 아니라 CFS/OFS 괴리와 연결 구조 사슬로 흡수한다. 영업권은
+  raw에서 단독 계정이 아니라 `ifrs-full_IntangibleAssetsAndGoodwill`에 포함되어 무형자산으로
+  다룬다.
 - 주석은 표와 텍스트가 섞인 HTML이다. 단순 TXT만으로는 행/열 구조가 손실된다.
 - 현재 주석 인덱서는 8개 카테고리 모두 섹션 단위 텍스트로 보존한다. 행/열 정밀 복원은
   아직 하지 않았다.
@@ -119,8 +128,9 @@
   외부 관점 query/eval 모델은 `config.settings.gemini_external_model == "gemini-3.1-pro-preview"`다.
   Gemini fallback은 `gemini_fallback_model` 설정이 비어 있으면 비활성이다. OpenAI fallback은
   사용하지 않는다.
-- 2025 CFS는 현재 threshold 기준 중위험 관계 red flag가 없다. L4에는 2024→2025 신호
-  스냅샷을 별도 material로 넣어 약한 신호도 관점 평가에 제공한다.
+- 2025 CFS는 IS·CF 계정 확장 후 Medium 관계 red flag가 여럿 있다. 대표 신호는
+  사업결합순현금유출 YoY 2102.89%, 장기차입금차입 YoY 593.17%, 자기주식취득 YoY 552.00%,
+  운전자본변동 YoY -513.31%, 재무활동CF vs 장기차입금 괴리 -137.49pp다.
 
 ## 진입 포인트
 

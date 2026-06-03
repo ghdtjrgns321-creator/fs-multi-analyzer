@@ -26,7 +26,9 @@
 
 ## 3. 매핑 규칙
 
-`config/canonical_accounts.yaml`은 MVP1 10개 계정을 `account_id` 1순위 스키마로 관리한다.
+초기 스파이크에서는 MVP1 10개 계정을 `account_id` 1순위 스키마로 관리했다. 현재
+`config/canonical_accounts.yaml`은 BS·IS·CF 주요 계정까지 확장되어 있으며, 최신 측정은
+§9가 기준이다.
 
 1. `account_id`가 `account_ids`에 있으면 `exact_taxonomy_match`
 2. 표준 ID로 매칭되지 않고 한글 라벨이 `aliases`에 있으면 `label_alias_match`
@@ -59,8 +61,8 @@
 
 해석:
 
-- 전체 raw 행 기준 미매핑 비율은 높다. 이번 config가 MVP1 10개 계정만 대상으로 하므로
-  정상적인 결과다.
+- 전체 raw 행 기준 미매핑 비율은 높았다. 이 표는 초기 MVP1 10개 계정 중심 config의
+  스파이크 결과이며, 최신 확장 후 분포는 §9를 본다.
 - 각 연도·구분마다 MVP1 10개 중 9개는 `account_id`로 직접 매칭됐고, 1개는 라벨 alias가
   필요했다.
 
@@ -113,19 +115,21 @@
 
 ## 9. 2025 포함 최신 매핑 점검
 
-2025 수집 후 `canonical_accounts.yaml`의 기본 합계 계정까지 포함한 최신 매핑 상태를
-재점검했다. MVP 계정은 2022~2025 CFS/OFS 전 구간에서 모두 1건씩 매핑됐다.
+2025 수집 및 BS·IS·CF 주요 계정 확장 후 최신 매핑 상태를 재점검했다. `canonical_accounts.yaml`
+기준 등록 canonical은 BS 34개, IS 17개, CF 18개다.
 
 | 연도 | 구분 | exact_taxonomy_match | label_alias_match | unmapped_extension_account |
 |---|---|---:|---:|---:|
-| 2022 | CFS | 28 | 3 | 154 |
-| 2022 | OFS | 23 | 3 | 88 |
-| 2023 | CFS | 29 | 1 | 146 |
-| 2023 | OFS | 25 | 1 | 89 |
-| 2024 | CFS | 32 | 1 | 180 |
-| 2024 | OFS | 28 | 1 | 102 |
-| 2025 | CFS | 32 | 1 | 196 |
-| 2025 | OFS | 28 | 1 | 112 |
+| 2022 | CFS | 64 | 18 | 103 |
+| 2022 | OFS | 56 | 12 | 46 |
+| 2023 | CFS | 79 | 3 | 94 |
+| 2023 | OFS | 68 | 1 | 46 |
+| 2024 | CFS | 81 | 12 | 120 |
+| 2024 | OFS | 70 | 8 | 53 |
+| 2025 | CFS | 83 | 10 | 136 |
+| 2025 | OFS | 72 | 6 | 63 |
 
-2025에서 label alias가 필요한 MVP 계정은 CFS/OFS 모두 `단기차입금`이다.
-`account_id == "-표준계정코드 미사용-"`이지만 라벨 보조로 매핑됐다.
+2025 CFS에서 label alias가 필요한 주요 계정은 `단기차입금`, 일부 금융상품 순증감 등이다.
+미매핑 행은 여전히 `기타 중요 계정`으로 보존되며, L4 review queue는 금액이 큰 미등록 행을
+`unmapped_material_account`로 노출한다. BS·IS·CF 전 계정 보편 스캔은 미매핑 account_id도
+label/account_id로 추적해 YoY, z-score, 구성비 급변, CFS/OFS 괴리를 계산한다.

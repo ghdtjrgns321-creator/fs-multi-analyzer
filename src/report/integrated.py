@@ -40,11 +40,13 @@ def build_review_queue(
     ratio_config: list[dict[str, Any]],
     target_year: int,
     red_flags: list[RedFlagSignal] | None = None,
+    unmapped_rows: list[dict[str, object]] | None = None,
 ) -> list[ReviewItem]:
     """Collect account findings, relationship signals, and ratios into one queue."""
 
     items = [_finding_item(finding) for finding in findings]
     items.extend(_red_flag_item(signal) for signal in red_flags or [])
+    items.extend(_unmapped_item(row) for row in unmapped_rows or [])
     items.extend(_ratio_items(ratios, ratio_config, target_year))
     return sorted(
         items,
@@ -110,6 +112,19 @@ def _red_flag_item(signal: RedFlagSignal) -> ReviewItem:
         materiality_score=round(score, 2),
         key_evidence=f"{signal.signal_type}: {metric}",
         audit_basis=["ISA/KSA 315", "ISA/KSA 520"],
+    )
+
+
+def _unmapped_item(row: dict[str, object]) -> ReviewItem:
+    amount = abs(float(row.get("amount") or 0.0))
+    return ReviewItem(
+        subject=str(row.get("label") or "기타 중요 계정"),
+        item_type="unmapped_material_account",
+        issue="미등록 중요 계정",
+        risk_level="Low",
+        materiality_score=round(amount, 2),
+        key_evidence=f"{row.get('year')}: {int(float(row.get('amount') or 0.0)):,}",
+        audit_basis=["ISA/KSA 315", "ISA/KSA 500"],
     )
 
 

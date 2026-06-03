@@ -17,6 +17,7 @@ from src.schemas.findings import AccountFinding
 from src.signals.mvp1 import build_mvp1_signal_report
 from src.signals.ratios import build_ratio_report, load_ratio_config
 from src.signals.red_flags import extract_red_flags
+from src.signals.universal import scan_cfs_ofs_gaps, scan_universal_signals
 
 DEFAULT_CORP_CODE = "00126380"
 DEFAULT_YEARS = [2022, 2023, 2024, 2025]
@@ -42,15 +43,22 @@ def build_company_report(
     frame = load_normalized_financials(corp_code, target_years)
     signal_report = build_mvp1_signal_report(frame)
     red_flags = extract_red_flags(signal_report, target_year)
+    universal_signals = scan_universal_signals(frame, target_year)
+    cfs_ofs_signals = scan_cfs_ofs_gaps(frame, target_year)
     ratios = build_ratio_report(frame, target_years)
     ratio_config = load_ratio_config()
+    unmapped = _top_unmapped_material_accounts(frame, target_year)
     findings = _target_year_findings(
         load_findings_from_report(finding_report_path or Path("docs/agent/FINDING_REPORT.md")),
         target_year,
     )
-    queue = build_review_queue(findings, ratios, ratio_config, target_year, red_flags)
+    all_signals = red_flags + universal_signals + cfs_ofs_signals
+    queue = build_review_queue(findings, ratios, ratio_config, target_year, all_signals, unmapped)
     ratio_summary = summarize_ratio_categories(ratios, target_year)
     payload = payload_for_summary(queue, ratio_summary)
+    latest_snapshot = _latest_signal_snapshot(signal_report, target_year)
+    latest_snapshot["universal_scan"] = _signal_rows(universal_signals)
+    latest_snapshot["cfs_ofs_gaps"] = _signal_rows(cfs_ofs_signals)
     return {
         "corp_code": corp_code,
         "company_name": COMPANY_NAMES.get(corp_code, corp_code),
@@ -59,7 +67,8 @@ def build_company_report(
         "target_year": target_year,
         "review_queue": [item.to_dict() for item in queue],
         "ratio_summary": ratio_summary,
-        "latest_signal_snapshot": _latest_signal_snapshot(signal_report, target_year),
+        "latest_signal_snapshot": latest_snapshot,
+        "unmapped_material_accounts": unmapped,
         "llm_payload": payload,
     }
 
@@ -78,6 +87,36 @@ def _rows_for_year(frame: Any, target_year: int) -> list[dict[str, object]]:
         return []
     latest = frame[frame["year"] == target_year]
     return latest.to_dict(orient="records")
+
+
+def _signal_rows(signals: list[Any]) -> list[dict[str, object]]:
+    return [
+        {
+            "id": signal.id,
+            "year": signal.year,
+            "account": signal.account,
+            "signal_type": signal.signal_type,
+            "description": signal.description,
+            "metric_value": signal.metric_value,
+            "evidence": [item.model_dump(mode="json") for item in signal.evidence],
+        }
+        for signal in signals
+    ]
+
+
+def _top_unmapped_material_accounts(frame: Any, target_year: int) -> list[dict[str, object]]:
+    if not hasattr(frame, "to_dict"):
+        return []
+    scoped = frame[
+        (frame["year"].astype(str) == str(target_year))
+        & (frame["fs_div"] == "CFS")
+        & (frame["mapping_status"] == "unmapped_extension_account")
+    ].copy()
+    if scoped.empty:
+        return []
+    scoped["abs_amount"] = scoped["amount"].abs()
+    scoped = scoped[scoped["abs_amount"] > 0].sort_values("abs_amount", ascending=False)
+    return scoped[["year", "fs_div", "label", "account_id", "amount"]].head(5).to_dict("records")
 
 
 def load_findings_from_report(path: Path) -> list[AccountFinding]:

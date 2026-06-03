@@ -37,9 +37,10 @@ def _growth_divergence_flags(
     year: int,
     thresholds: dict,
 ) -> list[RedFlagSignal]:
+    divergence = pd.to_numeric(frame["divergence_pp"], errors="coerce")
     flagged = frame[
         (frame["year"] == year)
-        & (frame["divergence_pp"].abs() >= float(thresholds["divergence_pp_abs"]))
+        & (divergence.abs() >= float(thresholds["divergence_pp_abs"]))
     ]
     return [
         RedFlagSignal(

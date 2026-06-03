@@ -217,4 +217,12 @@ def test_l2_config_includes_debt_and_provision_accounts() -> None:
     report = build_mvp1_signal_report(fixture_frame())
     configured = set(report["primary_yoy"]["canonical"].unique())
 
-    assert {"단기차입금", "장기차입금", "사채", "충당부채"}.issubset(configured)
+    assert {
+        "단기차입금",
+        "장기차입금",
+        "사채",
+        "충당부채",
+        "영업이익",
+        "투자활동현금흐름",
+        "재무활동현금흐름",
+    }.issubset(configured)
