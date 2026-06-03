@@ -21,6 +21,13 @@ from src.signals.red_flags import extract_red_flags
 DEFAULT_CORP_CODE = "00126380"
 DEFAULT_YEARS = [2022, 2023, 2024, 2025]
 COMPANY_NAMES = {"00126380": "삼성전자"}
+COMPANY_DOMAINS = {
+    "00126380": {
+        "source": "OpenDART company profile",
+        "stock_name": "삼성전자",
+        "induty_code": "264",
+    }
+}
 
 
 def build_company_report(
@@ -47,6 +54,7 @@ def build_company_report(
     return {
         "corp_code": corp_code,
         "company_name": COMPANY_NAMES.get(corp_code, corp_code),
+        "business_domain": COMPANY_DOMAINS.get(corp_code, {}),
         "years": target_years,
         "target_year": target_year,
         "review_queue": [item.to_dict() for item in queue],

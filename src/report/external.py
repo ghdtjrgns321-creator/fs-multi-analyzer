@@ -71,6 +71,7 @@ async def _evaluate(
 def external_material(report: dict[str, object]) -> dict[str, object]:
     return {
         "company_name": report.get("company_name", report.get("corp_code", "")),
+        "business_domain": report.get("business_domain", {}),
         "target_year": report["target_year"],
         "review_queue": report["review_queue"][:5],  # type: ignore[index]
         "ratio_summary": report["ratio_summary"],
@@ -82,7 +83,13 @@ def external_material(report: dict[str, object]) -> dict[str, object]:
 def _fallback_keywords(report: dict[str, object]) -> SearchKeywords:
     company = str(report.get("company_name", report.get("corp_code", "")))
     year = str(report["target_year"])
-    return SearchKeywords(queries=[f"{company} {year} 매출채권 현금흐름"])
+    subjects = [
+        str(item["subject"])
+        for item in report.get("review_queue", [])[:2]  # type: ignore[index]
+        if item.get("subject")  # type: ignore[union-attr]
+    ]
+    topic = " ".join(subjects) if subjects else "재무지표 변화 원인"
+    return SearchKeywords(queries=[f"{company} {year} {topic}"])
 
 
 def _empty_assessment() -> PerspectiveAssessment:

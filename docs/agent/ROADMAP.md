@@ -44,6 +44,7 @@
 - [x] 외부 ContextBrief 5번째 관점 승격 + 외부 포함 교차 판정
 - [x] 삼성전자 2025 사업보고서 포함 L0~L4 최신 재실행
 - [x] 외부 관점 agentic search 개선(LLM 쿼리 생성 → 검색 → 외부 평가)
+- [x] 외부 관점 Gemini 3.1 Pro preview 라우팅 분리
 - [ ] 차입금 / 유동성 기본 분석
 - [ ] 공시 변동 (watchlist 키워드 신규 등장)
 - [x] 첫 Finding 리포트 + 감사인 확인 질문 — Gemini 3.5 Flash 재시도 후 생성 완료

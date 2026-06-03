@@ -1,11 +1,18 @@
 import asyncio
+import inspect
 from types import SimpleNamespace
 
 import pandas as pd
 
+import src.report.external as external_module
+from src.agents.gemini_retry import MODEL_NAME
 from src.report.crosscheck import cross_check_assessments
 from src.report.external import create_external_assessment
-from src.report.external_agentic import SearchKeywords, generate_search_keywords
+from src.report.external_agentic import (
+    EXTERNAL_MODEL_NAME,
+    SearchKeywords,
+    generate_search_keywords,
+)
 from src.report.integrated import build_review_queue, summarize_ratio_categories
 from src.report.multi_agent import build_multi_agent_report, render_multi_agent_markdown
 from src.report.perspectives import PerspectiveAssessment, create_perspective_assessment
@@ -253,7 +260,9 @@ def test_external_perspective_runs_query_search_and_eval_mocks() -> None:
     class FakeQueryAgent:
         async def run(self, prompt: str) -> SimpleNamespace:
             assert "latest_signal_snapshot" in prompt
-            return SimpleNamespace(output=SearchKeywords(queries=["삼성전자 2025 매출채권 DSO"]))
+            return SimpleNamespace(
+                output=SearchKeywords(queries=["삼성전자 2025 매출채권 회수 지연"])
+            )
 
     class FakeEvalAgent:
         async def run(self, prompt: str) -> SimpleNamespace:
@@ -271,7 +280,7 @@ def test_external_perspective_runs_query_search_and_eval_mocks() -> None:
             )
 
     async def fake_context(queries: list[str], retry_delays: tuple[float, ...]) -> ContextBrief:
-        assert queries == ["삼성전자 2025 매출채권 DSO"]
+        assert queries == ["삼성전자 2025 매출채권 회수 지연"]
         assert retry_delays == (0,)
         return ContextBrief(
             items=[
@@ -305,7 +314,7 @@ def test_external_perspective_runs_query_search_and_eval_mocks() -> None:
     assert result.status == "completed"
     assert result.risk_level == "Low"
     assert result.evidence == [
-        "검색어: 삼성전자 2025 매출채권 DSO",
+        "검색어: 삼성전자 2025 매출채권 회수 지연",
         "기사: https://example.com/news",
     ]
 
@@ -323,7 +332,40 @@ def test_query_generation_sanitizes_speculative_terms() -> None:
 
     result = asyncio.run(generate_search_keywords(material, FakeAgent, retry_delays=(0,)))
 
-    assert result.queries == ["삼성전자 2025 매출채권 DSO"]
+    assert result.queries == ["삼성전자 2025 재무지표 변화 원인"]
+
+
+def test_external_query_generation_uses_separate_pro_model() -> None:
+    assert MODEL_NAME == "gemini-2.5-flash"
+    assert EXTERNAL_MODEL_NAME == "gemini-3.1-pro-preview"
+    assert EXTERNAL_MODEL_NAME != MODEL_NAME
+
+
+def test_query_generation_drops_metric_acronyms() -> None:
+    class FakeAgent:
+        async def run(self, prompt: str) -> SimpleNamespace:
+            return SimpleNamespace(
+                output=SearchKeywords(
+                    queries=[
+                        "삼성전자 2025 DIO DSO",
+                        "삼성전자 2025 매출채권 회수 지연",
+                    ]
+                )
+            )
+
+    material = {"company_name": "삼성전자", "target_year": 2025}
+
+    result = asyncio.run(generate_search_keywords(material, FakeAgent, retry_delays=(0,)))
+
+    assert result.queries == ["삼성전자 2025 매출채권 회수 지연"]
+
+
+def test_external_query_has_no_account_keyword_mapping_table() -> None:
+    source = inspect.getsource(external_module)
+
+    assert "account_query" not in source.lower()
+    assert '"매출채권":' not in source
+    assert "'매출채권':" not in source
 
 
 def test_renderer_shows_external_source_url() -> None:

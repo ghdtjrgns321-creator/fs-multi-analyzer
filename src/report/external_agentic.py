@@ -12,7 +12,7 @@ from pydantic_ai.models.google import GoogleModel
 from pydantic_ai.providers.google import GoogleProvider
 
 from config.settings import settings
-from src.agents.gemini_retry import DEFAULT_RETRY_DELAYS, MODEL_NAME, make_agent, run_with_retry
+from src.agents.gemini_retry import DEFAULT_RETRY_DELAYS, make_agent, run_with_retry
 from src.report.perspectives import PerspectiveAssessment
 from src.schemas.context import ContextBrief
 
@@ -21,11 +21,16 @@ class SearchKeywords(BaseModel):
     queries: list[str] = Field(min_length=1, max_length=3)
 
 
+EXTERNAL_MODEL_NAME = settings.gemini_external_model
+
 QUERY_PROMPT = """
 You generate Korean Google Search queries for disclosure review context.
-Use only the supplied company_name, target_year, review_queue, ratio_summary, and signals.
+Use only the supplied company_name, business_domain, target_year, review_queue, ratio_summary,
+and signals.
 Return 1 to 3 concise search queries. Each query must include company_name and target_year.
 Use internal facts only.
+Search for possible cause events behind the internal anomalies.
+Do not copy metric acronyms such as DIO, DSO, ROE, ROA, ROI, or CFO into queries.
 Do not use speculative words like fraud, manipulation, scandal, or misconduct.
 """
 
@@ -38,12 +43,12 @@ Return Korean only.
 """
 
 
-def build_query_agent(model_name: str = MODEL_NAME) -> Agent[None, SearchKeywords]:
+def build_query_agent(model_name: str = EXTERNAL_MODEL_NAME) -> Agent[None, SearchKeywords]:
     model = GoogleModel(model_name, provider=GoogleProvider(api_key=settings.google_api_key))
     return Agent(model, output_type=SearchKeywords, system_prompt=QUERY_PROMPT, retries=2)
 
 
-def build_eval_agent(model_name: str = MODEL_NAME) -> Agent[None, PerspectiveAssessment]:
+def build_eval_agent(model_name: str = EXTERNAL_MODEL_NAME) -> Agent[None, PerspectiveAssessment]:
     model = GoogleModel(model_name, provider=GoogleProvider(api_key=settings.google_api_key))
     return Agent(model, output_type=PerspectiveAssessment, system_prompt=EVAL_PROMPT, retries=2)
 
@@ -55,7 +60,10 @@ async def generate_search_keywords(
 ) -> SearchKeywords:
     prompt = json.dumps(material, ensure_ascii=False, indent=2)
     keywords = await run_with_retry(
-        make_agent(agent_factory, MODEL_NAME), prompt, MODEL_NAME, retry_delays
+        make_agent(agent_factory, EXTERNAL_MODEL_NAME),
+        prompt,
+        EXTERNAL_MODEL_NAME,
+        retry_delays,
     )
     return _sanitize_keywords(keywords, material)
 
@@ -67,9 +75,9 @@ async def evaluate_external_context(
 ) -> PerspectiveAssessment:
     prompt = json.dumps({"context_brief": brief.model_dump()}, ensure_ascii=False, indent=2)
     result = await run_with_retry(
-        make_agent(agent_factory, MODEL_NAME),
+        make_agent(agent_factory, EXTERNAL_MODEL_NAME),
         prompt,
-        MODEL_NAME,
+        EXTERNAL_MODEL_NAME,
         retry_delays,
     )
     result.perspective = "external"
@@ -83,10 +91,24 @@ async def evaluate_external_context(
 def _sanitize_keywords(keywords: SearchKeywords, material: dict[str, object]) -> SearchKeywords:
     company = str(material["company_name"])
     year = str(material["target_year"])
-    banned = ("분식", "부정", "fraud", "manipulation", "scandal", "misconduct")
+    banned = (
+        "분식",
+        "부정",
+        "fraud",
+        "manipulation",
+        "scandal",
+        "misconduct",
+        "dio",
+        "dso",
+        "roe",
+        "roa",
+        "roi",
+        "cfo",
+    )
     queries = []
     for query in keywords.queries:
-        if any(word.lower() in query.lower() for word in banned):
+        lowered = query.lower()
+        if any(word in lowered for word in banned):
             continue
         text = " ".join(str(query).split())
         if company not in text:
@@ -96,5 +118,11 @@ def _sanitize_keywords(keywords: SearchKeywords, material: dict[str, object]) ->
         if text not in queries:
             queries.append(text)
     if not queries:
-        queries = [f"{company} {year} 매출채권 현금흐름"]
+        subjects = [
+            str(item["subject"])
+            for item in material.get("review_queue", [])[:2]  # type: ignore[index]
+            if item.get("subject")  # type: ignore[union-attr]
+        ]
+        topic = " ".join(subjects) if subjects else "재무지표 변화 원인"
+        queries = [f"{company} {year} {topic}"]
     return SearchKeywords(queries=queries[:3])
