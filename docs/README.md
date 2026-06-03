@@ -9,6 +9,7 @@
 | 문서 | 내용 |
 |------|------|
 | [user/FEATURES.md](user/FEATURES.md) | 핵심 기능 — 이 프로젝트가 무엇을 하는가 |
+| [user/MULTI_AGENT.md](user/MULTI_AGENT.md) | 관점(에이전트) 6개의 기능·작동·근거 + 왜 멀티에이전트인가 |
 | [user/TECH_STACK.md](user/TECH_STACK.md) | 사용 기술과 이유 (비전문가용 풀이 포함) |
 | [user/UI.md](user/UI.md) | 화면 구성 (설계안) |
 | [user/UX.md](user/UX.md) | 사용자 경험 흐름 (설계안) |
