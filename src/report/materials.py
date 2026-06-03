@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from src.notes.indexer import find_account_note_sections
+from src.notes.indexer import find_account_note_sections, load_account_note_mappings
 
 
 def numeric_material(report: dict[str, object]) -> dict[str, object]:
@@ -27,9 +27,10 @@ def note_material(
 
     notes_root = Path("data/companies") / corp_code / str(year) / "raw" / "notes"
     sections = []
-    for account in ("매출채권", "재고자산"):
+    for account in _note_accounts():
         account_sections = find_account_note_sections(account, notes_root, corp_code, year, fs_div)
-        for section in account_sections[:2]:
+        limit = 2 if _priority(account) == "high" else 1
+        for section in account_sections[:limit]:
             sections.append(
                 {
                     "account": account,
@@ -42,6 +43,18 @@ def note_material(
                 }
             )
     return {"note_sections": sections, "scope": "note perspective only"}
+
+
+def _note_accounts() -> list[str]:
+    mappings = load_account_note_mappings()
+    return sorted(
+        mappings,
+        key=lambda account: (mappings[account].get("analysis_priority") != "high", account),
+    )
+
+
+def _priority(account: str) -> str:
+    return str(load_account_note_mappings()[account].get("analysis_priority", "low"))
 
 
 def flow_material(report: dict[str, object]) -> dict[str, object]:

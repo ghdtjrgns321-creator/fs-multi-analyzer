@@ -112,5 +112,14 @@ def find_account_note_sections(
     return matched or sections[:1]
 
 
+def load_account_note_mappings(
+    mapping_path: Path = DEFAULT_MAPPING,
+) -> dict[str, dict[str, object]]:
+    """Load account-to-note mappings from YAML."""
+
+    payload = yaml.safe_load(mapping_path.read_text(encoding="utf-8")) or {}
+    return dict(payload.get("account_notes", {}))
+
+
 def _looks_like_title(line: str) -> bool:
     return line.startswith("[") or "[개요]" in line or "문장영역" in line

@@ -18,10 +18,10 @@
 
 - [x] L0 수집 (`src/collect`) — OpenDART 재무제표 + 주석 raw 저장
 - [x] L1 정규화 (`src/normalize`) — canonical + mapping confidence
-- [ ] L1.5 주석 인덱서 (`src/notes`) — D82242/D82638 섹션 파싱 완료, note diff 보류
+- [x] L1.5 주석 인덱서 (`src/notes`) — 8개 주석 카테고리 매핑/섹션 파싱, note diff 보류
 - [x] L2 신호엔진 (`src/signals`) — MVP1 관계 사슬 결정론 계산
 - [x] tool DSL (`src/analysis_tools`) — compare_growth / compute_ratio
-- [ ] L3 에이전트 5 (`src/agents`) — 매출채권 live 완료, 재고 mock 완료/live 보류
+- [ ] L3 계정 에이전트 (`src/agents`) — 매출채권·장기차입금·사채 live 완료, 재고 mock 완료
 - [x] L4 리포트 (`src/report`) — 6관점 독립 평가 + 교차 + 종합 live 완료
 - [ ] L5 대시보드 (`dashboard`)
   - [ ] (필수) 못 맞춘 계정 → 사전 보강 인터랙션: 사용자가 계정 지정 시
@@ -46,7 +46,8 @@
 - [x] 외부 관점 agentic search 개선(LLM 쿼리 생성 → 검색 → 외부 평가)
 - [x] 외부 관점 Gemini 3.1 Pro preview 라우팅 분리
 - [x] 동종업계 6번째 관점 추가(B 접근: 피어 지표 baseline + 교차 참여)
-- [ ] 차입금 / 유동성 기본 분석
+- [x] 차입금 / 유동성 기본 분석
+- [x] 남은 주요 주석 카테고리 매핑(D82240/D82245/D82757/D82210/D86120/D83800)
 - [ ] 공시 변동 (watchlist 키워드 신규 등장)
 - [x] 첫 Finding 리포트 + 감사인 확인 질문 — Gemini 3.5 Flash 재시도 후 생성 완료
 
@@ -58,14 +59,15 @@
 
 1. [x] 매출채권 줄기 (수치 + 주석 교차검증)
 2. [x] **재고 줄기 추가** (매출채권 패턴 복제 + 일반화 점검 — 복제 비용 측정)
-3. [ ] 차입금 줄기 추가
+3. [x] 차입금 줄기 추가
 4. [x] **통합 리포트(L4)** — 여러 Finding → "이 회사 종합 리스크 한 장" ← 통합 테스트 지점
 5. [ ] 깊이 보강 (통합 작동 확인 후): note diff 정밀화, 외부 결과 도메인 필터 개선
 
 ### 계정 추가 비용 측정
 
 - 매출채권 → 재고자산: config 8줄 추가(주석 매핑 4줄, 관계 4줄) + 일반화 코드 수정 1회.
-- 다음 계정 목표: config 추가만으로 `src.agents.account_finding` CLI 재사용.
+- 재고자산 → 차입금·사채·충당부채: 주석 mapping/canonical/relationship config 보강 +
+  L4 note material 하드코딩 제거 1회. 다음 계정은 YAML 추가 중심으로 확장 가능.
 
 ## 이후 (PLAN §16)
 

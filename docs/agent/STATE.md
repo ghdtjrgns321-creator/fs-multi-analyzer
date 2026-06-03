@@ -7,11 +7,13 @@
 ## 현재 위치
 
 - 단계: 설계 확정 → 프로젝트 뼈대 구축 → L0 수집 → L1 정규화 → L2 신호엔진 →
-  **L4 6관점(수치·주석·흐름·변동·외부·동종업계) live 완료**
-- 최근 작업 (2026-06-03): PLAN §16.1 B 접근으로 동종업계 관점(`industry`)을 6번째
-  독립 관점으로 추가했다. 삼성전자 `induty_code == 264` 기준 피어(LG전자, 가온그룹)의
-  재무제표만 수집·정규화해 지표 baseline 중앙값·분위수를 만들고 L4 교차에 참여시켰다.
-  동종업계 관점은 참고 신호이며 내부 판단 필드를 변경하지 않는다. D15 ADR을 추가했다.
+  **주요 주석 카테고리 확장 + L4 6관점 live 재실행 완료**
+- 최근 작업 (2026-06-03): 남은 주요 주석 카테고리를 매핑했다. D82240 차입금,
+  D82245 사채, D82757 충당부채를 high priority로 L4 주석 material에 연결하고,
+  D82210 유형자산, D86120 자본, D83800 주당이익은 low priority 매핑으로 추가했다.
+  canonical에는 장기차입금·사채·충당부채 등 실제 account_id를 추가하고 L1 정규화를
+  재실행했다. L4 6관점 live에서 장기차입금·사채가 review queue 상위로 올라왔고,
+  주석 관점은 D82757의 우발부채 언급을 검토 후보로 반영했다.
 
 ## 완료
 
@@ -66,15 +68,17 @@
 - L4 6관점 live 통합 리포트 [INTEGRATED_REPORT.md](INTEGRATED_REPORT.md)
 - 동종업계 피어 config [../../config/industry_peers.yaml](../../config/industry_peers.yaml)
 - 피어 지표 baseline [../../src/peers](../../src/peers)
+- 남은 주석 카테고리 매핑 [../../config/playbooks/note_mappings.yaml](../../config/playbooks/note_mappings.yaml)
+- 장기차입금·사채·충당부채 canonical 보강 [../../config/canonical_accounts.yaml](../../config/canonical_accounts.yaml)
 - 2025 포함 raw contract [DATA_CONTRACT.md](DATA_CONTRACT.md)
 
 ## 다음 할 일 (우선순위)
 
-1. 차입금 줄기 추가: `note_mappings.yaml`과 `relationship_chains.yaml`만 추가해
-   `uv run python -m src.agents.account_finding --account 차입금 --year <연도>`로 검증
+1. 충당부채 공시 변동 고도화: D82757 전기/당기 텍스트 diff로 우발부채 문구 확대·축소를
+   수치 충당부채 변동과 교차한다.
 2. `gemini-2.5-flash`로 2025 재고/매출채권 live Finding 재실행:
    `uv run python -m src.agents.first_inventory_finding`
-3. D82242/D82638 표 구조 정밀 복원 또는 note diff 추가 여부 결정
+3. D82242/D82638/D82240/D82245/D82757 표 구조 정밀 복원 또는 note diff 추가 여부 결정
 
 ## 열린 이슈 / 주의
 
@@ -85,7 +89,10 @@
 - 전체 raw 행 기준 미매핑 비율은 높다. 현재 `canonical_accounts.yaml`이 MVP1 10개 계정만
   담기 때문이며, 미매핑 계정을 숨기지 않는다.
 - 주석은 표와 텍스트가 섞인 HTML이다. 단순 TXT만으로는 행/열 구조가 손실된다.
-- 이번 D82242 인덱서는 표를 텍스트 수준으로만 보존한다. 행/열 정밀 복원은 아직 하지 않았다.
+- 현재 주석 인덱서는 8개 카테고리 모두 섹션 단위 텍스트로 보존한다. 행/열 정밀 복원은
+  아직 하지 않았다.
+- 충당부채는 2025 threshold 기준 수치 red flag가 없어 계정 Finding은 생성되지 않았다.
+  대신 D82757 섹션은 L4 주석 관점에서 우발부채 공시 검토 후보로 반영된다.
 - ROI는 공시 재무제표 기본 합계 계정에 투자원가가 없어 계산하지 않는다.
 - 수치 분석가 prompt는 외부 사실을 쓰지 않는다. 정상 설명은 일반적 가능성으로만 작성해야 한다.
 - 외부 업황·뉴스 맥락은 L4 `external` 관점으로 교차에 참여한다. 쿼리 생성과 외부 평가는
@@ -98,8 +105,9 @@
   삼성전자는 사업 다각화 기업이라 단순 업종 비교 한계를 항상 명시한다.
 - L4 종합 문단은 결정론 큐와 지표 요약에만 grounding한다. live 호출 실패 시 문단만 보류하고
   결정론 큐는 유지한다.
-- L4 관점 LLM은 독립 입력을 받는다. 수치 관점은 queue/ratio, 주석 관점은 D82242/D82638
-  note section material, 흐름 관점은 BS-IS-CF/활동성·이익의 질 material, 변동 관점은
+- L4 관점 LLM은 독립 입력을 받는다. 수치 관점은 queue/ratio, 주석 관점은
+  `note_mappings.yaml`의 8개 카테고리 note section material, 흐름 관점은
+  BS-IS-CF/활동성·이익의 질 material, 변동 관점은
   전기 대비 변동 material을 받는다. 외부 관점은 내부 데이터로 검색어만 생성하고, 평가는
   Google Search grounded ContextBrief만 받는다. 서로의 결론은 입력으로 받지 않는다.
 - 감사기준·K-IFRS 근거는 검토 관점의 출처다. Finding은 부정·분식 확정 표현으로 쓰지 않는다.

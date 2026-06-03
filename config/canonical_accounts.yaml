@@ -60,6 +60,40 @@ canonical_accounts:
     account_ids:
       - ifrs-full_ShorttermBorrowings
     aliases: [단기차입금, 단기차입부채]
+  장기차입금:
+    statement: BS
+    account_ids:
+      - dart_LongTermBorrowingsGross
+      - ifrs-full_NoncurrentPortionOfNoncurrentLoansReceived
+    aliases: [장기차입금]
+  사채:
+    statement: BS
+    account_ids:
+      - dart_BondsIssued
+      - ifrs-full_NoncurrentPortionOfNoncurrentBondsIssued
+    aliases: [사채]
+  충당부채:
+    statement: BS
+    account_ids:
+      - ifrs-full_CurrentProvisions
+      - ifrs-full_OtherShorttermProvisions
+    aliases: [충당부채]
+  장기충당부채:
+    statement: BS
+    account_ids:
+      - ifrs-full_NoncurrentProvisions
+      - ifrs-full_OtherLongtermProvisions
+    aliases: [장기충당부채]
+  유형자산:
+    statement: BS
+    account_ids:
+      - ifrs-full_PropertyPlantAndEquipment
+    aliases: [유형자산]
+  자본금:
+    statement: BS
+    account_ids:
+      - ifrs-full_IssuedCapital
+    aliases: [자본금]
   매출:
     statement: IS
     account_ids:
@@ -86,6 +120,11 @@ canonical_accounts:
     account_ids:
       - ifrs-full_ProfitLoss
     aliases: [당기순이익]
+  기본주당이익:
+    statement: IS
+    account_ids:
+      - ifrs-full_BasicEarningsLossPerShare
+    aliases: [기본주당이익, 기본주당이익(손실)]
   영업활동현금흐름:
     statement: CF
     account_ids:

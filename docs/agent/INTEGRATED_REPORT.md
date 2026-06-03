@@ -22,20 +22,21 @@ grounding 결과 중 출처 URL이 확인된 항목만 사용한다. 외부 맥�
 
 ## 2. 2025 검토 우선순위 큐
 
-2025 CFS는 현재 threshold 기준 중위험 관계 신호가 없어서 최신 큐가 Low 지표 중심으로 구성됐다.
+새 canonical과 주석 매핑 반영 후 2025 CFS에서는 장기차입금과 사채 변동이 Medium 관계 신호로
+큐 상단에 올라왔다.
 
 | 순위 | 대상 | 유형 | risk | score | 핵심 근거 | 근거 | 출처 |
 |---:|---|---|---|---:|---|---|---|
-| 1 | DIO | financial_ratio | Low | 94.20 | 2025: 94.20 | ISA/KSA 501, ISA/KSA 520, K-IFRS 1002 | https://corporatefinanceinstitute.com/resources/accounting/days-inventory-outstanding-dio/ |
-| 2 | DSO | financial_ratio | Low | 51.83 | 2025: 51.83 | ISA/KSA 520, K-IFRS 1109, K-IFRS 1107 | https://corporatefinanceinstitute.com/resources/accounting/days-sales-outstanding/ |
-| 3 | 매출총이익률 | financial_ratio | Low | 39.38 | 2025: 39.38 | ISA/KSA 520, K-IFRS 1115, K-IFRS 1002 | https://corporatefinanceinstitute.com/resources/accounting/profitability-ratios/ |
-| 4 | 부채비율 | financial_ratio | Low | 29.94 | 2025: 29.94 | ISA/KSA 520, ISA/KSA 570 | https://corporatefinanceinstitute.com/resources/knowledge/finance/debt-to-equity-ratio-formula/ |
-| 5 | 영업이익률 | financial_ratio | Low | 13.07 | 2025: 13.07 | ISA/KSA 520 | https://corporatefinanceinstitute.com/resources/accounting/operating-profit-margin/ |
-| 6 | ROE | financial_ratio | Low | 10.78 | 2025: 10.78 | ISA/KSA 520 | https://corporatefinanceinstitute.com/resources/accounting/what-is-return-on-equity-roe/ |
-| 7 | ROA | financial_ratio | Low | 8.36 | 2025: 8.36 | ISA/KSA 520 | https://corporatefinanceinstitute.com/resources/accounting/return-on-assets-roa-formula/ |
-| 8 | 발생액 비율 | financial_ratio | Low | 7.42 | 2025: -7.42 | ISA/KSA 520, K-IFRS 1007 | https://www.stockopedia.com/ratios/accrual-ratio-555/ |
-| 9 | 매출채권회전율 | financial_ratio | Low | 7.04 | 2025: 7.04 | ISA/KSA 520, K-IFRS 1109, K-IFRS 1107 | https://corporatefinanceinstitute.com/resources/financial-modeling/accounts-receivable-turnover-ratio-template/ |
-| 10 | 재고회전율 | financial_ratio | Low | 3.87 | 2025: 3.87 | ISA/KSA 501, ISA/KSA 520, K-IFRS 1002 | https://corporatefinanceinstitute.com/resources/accounting/inventory-turnover-ratio/ |
+| 1 | 장기차입금 | relationship_signal | Medium | 64.63 | single_account_yoy: 64.63 | ISA/KSA 315, ISA/KSA 520 | - |
+| 2 | 사채 | relationship_signal | Medium | 50.90 | single_account_yoy: -50.9 | ISA/KSA 315, ISA/KSA 520 | - |
+| 3 | DIO | financial_ratio | Low | 94.20 | 2025: 94.20 | ISA/KSA 501, ISA/KSA 520, K-IFRS 1002 | https://corporatefinanceinstitute.com/resources/accounting/days-inventory-outstanding-dio/ |
+| 4 | DSO | financial_ratio | Low | 51.83 | 2025: 51.83 | ISA/KSA 520, K-IFRS 1109, K-IFRS 1107 | https://corporatefinanceinstitute.com/resources/accounting/days-sales-outstanding/ |
+| 5 | 매출총이익률 | financial_ratio | Low | 39.38 | 2025: 39.38 | ISA/KSA 520, K-IFRS 1115, K-IFRS 1002 | https://corporatefinanceinstitute.com/resources/accounting/profitability-ratios/ |
+| 6 | 부채비율 | financial_ratio | Low | 29.94 | 2025: 29.94 | ISA/KSA 520, ISA/KSA 570 | https://corporatefinanceinstitute.com/resources/knowledge/finance/debt-to-equity-ratio-formula/ |
+| 7 | 영업이익률 | financial_ratio | Low | 13.07 | 2025: 13.07 | ISA/KSA 520 | https://corporatefinanceinstitute.com/resources/accounting/operating-profit-margin/ |
+| 8 | ROE | financial_ratio | Low | 10.78 | 2025: 10.78 | ISA/KSA 520 | https://corporatefinanceinstitute.com/resources/accounting/what-is-return-on-equity-roe/ |
+| 9 | ROA | financial_ratio | Low | 8.36 | 2025: 8.36 | ISA/KSA 520 | https://corporatefinanceinstitute.com/resources/accounting/return-on-assets-roa-formula/ |
+| 10 | 발생액 비율 | financial_ratio | Low | 7.42 | 2025: -7.42 | ISA/KSA 520, K-IFRS 1007 | https://www.stockopedia.com/ratios/accrual-ratio-555/ |
 
 ## 3. 회사 전체 지표 요약
 
@@ -50,6 +51,7 @@ grounding 결과 중 출처 URL이 확인된 항목만 사용한다. 외부 맥�
 - 매출 YoY 10.88%, 재고자산 YoY 1.70%, 괴리 9.18pp
 - 매출원가 YoY 8.40%, 재고자산 YoY 1.70%, 괴리 6.70pp
 - 단기차입금 YoY 33.42%, 영업활동현금흐름 YoY 16.90%
+- 장기차입금 YoY 64.63%, 사채 YoY -50.90%
 
 ## 5. 동종업계 baseline
 
@@ -76,38 +78,35 @@ material board만 받았다.
 
 | 관점 | 상태 | risk | 평가 | 출처 |
 |---|---|---|---|---|
-| numeric | completed | Medium | 2025년 활동성 지표와 매출채권 증가율이 매출 증가율을 상회하는 점, 단기차입금 증가가 추가 검토 필요성을 시사한다고 보았다. | 2025 ratio/signals |
-| note | completed | High | 2025년 금융자산 관련 대손상각(환입) 금액이 2024년 대비 크게 증가해 채권 손상 관련 검토가 필요하다고 보았다. | D82242/D82638 주석 발췌 |
-| flow | completed | Medium | 매출채권 증가율이 매출 증가율을 상회하고, 단기차입금 증가와 OFS 현금및현금성자산 증가도 추가 확인 대상으로 보았다. | 2025 signal snapshot |
-| change | completed | High | 매출 대비 매출채권 증가율, 현금흐름 부담 가능성, 재고자산 관리를 전기 대비 변화 관점 검토 후보로 보았다. | 2024→2025 signal snapshot |
-| external | completed | Low | 출처가 확인된 관련 외부 맥락 없음. 내부 위험은 그대로 유지한다. | Google Search grounding |
-| industry | completed | Low | 대부분의 수익성·안정성 지표는 피어 중앙값보다 우수하거나 유사했다. 다만 DSO는 피어 중앙값보다 높아 추가 검토 참고 신호로 보았다. 사업 다각화로 단순 비교 한계를 명시했다. | `config/industry_peers.yaml`, ISA/KSA 520 |
+| numeric | completed | Medium | 장기차입금·사채 변동과 매출 대비 매출채권 증가율 괴리를 주요 검토 대상으로 보았다. | 2025 ratio/signals |
+| note | completed | High | D82242에서 비유동 매출채권과 대손 관련 변동, D82757에서 우발부채 언급을 확인해 회수가능성·우발부채 공시 검토가 필요하다고 보았다. | D82242/D82638/D82240/D82245/D82757 주석 발췌 |
+| flow | completed | Medium | 매출채권 증가율이 매출 증가율을 상회하나 영업CF와 발생액 지표는 양호해 현금흐름 효율성 저하 가능성을 검토 대상으로 보았다. | 2025 signal snapshot |
+| change | completed | High | CFS 장기차입금 +64.63%, OFS 장기차입금 고증가, 사채 -50.90%, 단기차입금 증가를 재무구조 변화 후보로 보았다. | 2024→2025 signal snapshot |
+| external | completed | Low | 외부 맥락은 매출채권 증가가 매출 증가와 연관된다는 설명 배경을 제공했지만 내부 위험을 약화하지 않는다. | samsung.com, youtube.com |
+| industry | completed | Medium | DSO가 피어 중앙값보다 높고, 매출총이익률은 피어 대비 현저히 높아 사업 다각화 한계를 전제로 참고 검토가 필요하다고 보았다. | `config/industry_peers.yaml`, ISA/KSA 520 |
 
 외부 관점 생성 검색어(개선 후, Pro):
 
-1. `삼성전자 2025 매출채권 증가 사유`
-2. `삼성전자 2025 단기차입금 및 현금성자산 증가 배경`
-3. `삼성전자 2025 매출 증가 및 재고자산 현황`
+1. `"삼성전자" 2025 장기차입금 증가 자금조달`
+2. `"삼성전자" 2025 사채 상환 감소`
+3. `"삼성전자" 2025 매출채권 증가 원인`
 
-외부 관점 출처: 이번 live에서 출처가 확인된 관련 외부 맥락 없음.
+외부 관점 출처: samsung.com, youtube.com grounding URL.
 
 ## 7. 일치/충돌
 
 | verdict | risk_area | perspectives | comment |
 |---|---|---|---|
-| conflict | 활동성 지표 관련 리스크(매출채권, 재고자산) | numeric, note, flow, change, external, industry | 활동성 지표는 내부 위험이나 외부 맥락은 잠잠해 회사 고유 가능성으로 주목한다. 동종업계 관점은 낮은 위험이나 사업구조 차이를 고려해 참고로만 본다. |
+| agreement | 매출채권/수익 | numeric, note, flow, change, external, industry | 매출채권/수익에 대해 독립 관점이 같은 방향을 가리켜 신호 강화로 본다. 외부 맥락은 설명용이며 내부 위험을 약화하지 않는다. 동종업계 비교는 참고 신호이며 내부 판단 필드를 바꾸지 않는다. |
 
 ## 8. 한 단락 종합
 
-2025년 최신 기준에서는 threshold를 넘는 중위험 관계 신호는 없지만, 활동성 지표와 2024→2025
-신호 스냅샷에서 추가 검토 후보가 남아 있다. DSO는 48.69일에서 51.83일로 늘었고, 매출채권
-YoY 17.20%가 매출 YoY 10.88%를 상회했다. 단기차입금은 33.42% 증가했고, 부채비율은
-27.93%에서 29.94%로 상승했다. 주석 관점은 2025년 비유동 매출채권과 대손상각 비용 증가를
-채권 회수 가능성 확인 대상으로 보았다. 외부 Pro 관점은 출처가 확인된 관련 외부 맥락을
-찾지 못했으므로 내부 위험은 그대로 유지한다. 따라서 내부에서
-식별된 활동성 후보는 회사 고유 가능성으로 계속 주목한다. 동종업계 baseline에서는 DSO가
-피어 중앙값 44.39일보다 높은 51.83일로 나타나 매출채권 회수 기간 검토 신호를 보강하지만,
-피어 수와 사업구조 차이 때문에 참고 관점으로만 사용한다.
+2025년 최신 기준에서는 매출채권 회수가능성과 차입금 구조 변화가 함께 검토 후보로 올라왔다.
+DSO는 51.83일로 피어 중앙값 44.39일보다 높고, 매출채권 YoY 17.20%가 매출 YoY 10.88%를
+상회했다. 주석 관점은 비유동 매출채권과 대손 관련 변동, D82757의 우발부채 언급을 확인했다.
+장기차입금은 64.63% 증가했고 사채는 50.90% 감소해 D82240/D82245 만기·상환 주석과 함께
+재무구조 변화 후보로 본다. 외부와 동종업계 관점은 설명·참고 신호로만 사용하며 내부 판단
+필드를 바꾸지 않는다.
 
 ## 9. 실행
 

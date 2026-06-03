@@ -20,7 +20,9 @@ SYSTEM_PROMPT = """
 You are the note analyst for a disclosure review tool.
 Use only the provided note_sections and existing AccountFinding.
 Extract actual mentions relevant to the account, such as credit risk, overdue, impairment,
-allowance, collection, inventory valuation loss, net realizable value, or cost recognition.
+allowance, collection, inventory valuation loss, net realizable value, cost recognition,
+borrowing maturity, liquidity risk, bonds, provisions, contingent liabilities, litigation,
+warranty, restoration obligations, or capital/share information.
 Fill note_evidence with note locators and exact short Korean snippets from note_sections.
 Set note_cross_check to explain whether numeric signals align with or diverge from note text.
 Do not use external facts. If the note is insufficient, ask confirm_question.
@@ -111,11 +113,21 @@ def _validate_note_grounding(
     for evidence in finding.note_evidence:
         if evidence.source != "note" or evidence.locator not in texts:
             raise ModelRetry(f"Invalid note evidence locator: {evidence.locator}")
-        if evidence.value and evidence.value not in texts[evidence.locator]:
+        if evidence.value and not _contains_grounded_value(texts[evidence.locator], evidence.value):
             raise ModelRetry("note_evidence value must be copied from the note section")
     if not finding.note_cross_check:
         raise ModelRetry("note_cross_check is required")
     return finding
+
+
+def _contains_grounded_value(section_text: str, value: str) -> bool:
+    """Accept exact snippets with harmless whitespace differences only."""
+
+    return _compact(value) in _compact(section_text)
+
+
+def _compact(text: str) -> str:
+    return " ".join(str(text).split())
 
 
 def _merge_note_fields(base: AccountFinding, note_result: AccountFinding) -> AccountFinding:

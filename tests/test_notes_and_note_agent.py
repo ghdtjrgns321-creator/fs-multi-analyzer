@@ -1,8 +1,14 @@
 import asyncio
 from types import SimpleNamespace
 
-from src.agents.note_analyst import create_note_enriched_finding
-from src.notes.indexer import NoteSection, find_account_note_sections, parse_note_html
+from src.agents.note_analyst import _contains_grounded_value, create_note_enriched_finding
+from src.notes.indexer import (
+    NoteSection,
+    find_account_note_sections,
+    load_account_note_mappings,
+    parse_note_html,
+)
+from src.report.materials import note_material
 from src.schemas.findings import AccountFinding, EvidenceRef, IssueType
 
 FIXTURE_HTML = """
@@ -130,6 +136,64 @@ account_notes:
     assert sections[0].matched_keywords == ["평가손실", "순실현가능가치"]
 
 
+def test_new_note_categories_are_configured() -> None:
+    mappings = load_account_note_mappings()
+
+    assert mappings["단기차입금"]["note_code"] == "D82240"
+    assert mappings["사채"]["note_code"] == "D82245"
+    assert mappings["충당부채"]["note_code"] == "D82757"
+    assert mappings["유형자산"]["analysis_priority"] == "low"
+
+
+def test_provision_note_sections_use_d82757_mapping(tmp_path) -> None:
+    note_dir = tmp_path / "CFS"
+    note_dir.mkdir()
+    (note_dir / "D82757.html").write_text(
+        """
+<html><body>
+<p>[D827570] 충당부채</p>
+<p>충당부채와 우발부채, 소송 및 보증 지급가능성을 검토한다.</p>
+</body></html>
+""",
+        encoding="utf-8",
+    )
+    mapping_path = tmp_path / "note_mappings.yaml"
+    mapping_path.write_text(
+        """
+account_notes:
+  충당부채:
+    note_code: D82757
+    note_name: 충당부채
+    keywords: [충당부채, 우발부채, 소송, 보증]
+""",
+        encoding="utf-8",
+    )
+
+    sections = find_account_note_sections(
+        "충당부채",
+        notes_root=tmp_path,
+        corp_code="00126380",
+        year=2025,
+        fs_div="CFS",
+        mapping_path=mapping_path,
+    )
+
+    assert sections[0].locator == "note:D82757:CFS:2025:0"
+    assert "우발부채" in sections[0].matched_keywords
+    assert "소송" in sections[0].matched_keywords
+
+
+def test_note_material_uses_yaml_mappings_for_new_categories() -> None:
+    material = note_material(year=2025)
+    accounts = {section["account"] for section in material["note_sections"]}
+    locators = {section["locator"] for section in material["note_sections"]}
+
+    assert {"단기차입금", "사채", "충당부채"}.issubset(accounts)
+    assert any(locator.startswith("note:D82240") for locator in locators)
+    assert any(locator.startswith("note:D82245") for locator in locators)
+    assert any(locator.startswith("note:D82757") for locator in locators)
+
+
 def test_note_analyst_accepts_mock_and_fills_note_evidence(monkeypatch) -> None:
     sections = _fixture_sections()
     risk_section = next(section for section in sections if "신용위험" in section.text)
@@ -162,6 +226,11 @@ def test_note_analyst_accepts_mock_and_fills_note_evidence(monkeypatch) -> None:
 
     assert result.note_evidence[0].source == "note"
     assert result.note_cross_check.startswith("숫자상")
+
+
+def test_note_grounding_accepts_whitespace_only_differences() -> None:
+    text = "장기차입금\n6,479,517,000,000\n만기상환일\n2027-01-01"
+    assert _contains_grounded_value(text, "장기차입금 6,479,517,000,000")
 
 
 def _fixture_sections() -> list[NoteSection]:

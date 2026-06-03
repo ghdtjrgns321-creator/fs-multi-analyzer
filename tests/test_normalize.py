@@ -25,6 +25,21 @@ def test_mapper_prefers_account_id_over_alias() -> None:
     assert result.mapping_status == EXACT
 
 
+def test_new_canonical_accounts_map_standard_ids() -> None:
+    mapper = AccountMapper(load_canonical_accounts(Path("config/canonical_accounts.yaml")))
+
+    cases = [
+        ("ifrs-full_NoncurrentPortionOfNoncurrentBondsIssued", "사채"),
+        ("ifrs-full_OtherShorttermProvisions", "충당부채"),
+        ("ifrs-full_PropertyPlantAndEquipment", "유형자산"),
+    ]
+
+    for account_id, expected in cases:
+        result = mapper.map_row(pd.Series({"account_id": account_id, "account_nm": "unused"}))
+        assert result.canonical == expected
+        assert result.mapping_status == EXACT
+
+
 def test_normalize_raw_file_statuses(tmp_path: Path) -> None:
     raw = pd.DataFrame(
         [

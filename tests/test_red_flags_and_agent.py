@@ -211,3 +211,10 @@ def test_select_account_signals_returns_empty_when_account_has_no_signal() -> No
     signals = extract_red_flags(report, 2023)
 
     assert select_account_signals(signals, account="차입금", year=2023) == []
+
+
+def test_l2_config_includes_debt_and_provision_accounts() -> None:
+    report = build_mvp1_signal_report(fixture_frame())
+    configured = set(report["primary_yoy"]["canonical"].unique())
+
+    assert {"단기차입금", "장기차입금", "사채", "충당부채"}.issubset(configured)

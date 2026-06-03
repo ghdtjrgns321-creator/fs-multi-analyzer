@@ -111,3 +111,15 @@
   출처 URL이 grounding chunk와 매칭되지 않는 항목은 기존처럼 버린다.
 - 교훈: grounding tool 호출은 구조화 출력 제약이 일반 LLM 호출과 다를 수 있으므로, 출처 검증과
   스키마 파싱을 분리해 둔다.
+
+### [2026-06-03] 장기차입금 주석 live grounding 공백 차이
+
+- 증상: `uv run python -m src.agents.account_finding --account 장기차입금 --year 2025`에서
+  LLM이 D82240 주석의 실제 문구를 인용했지만 줄바꿈과 공백 차이 때문에
+  `note_evidence value must be copied from the note section` 재시도가 반복되어 실패했다.
+- 원인: 주석 텍스트는 표에서 추출되어 줄바꿈이 많고, LLM은 같은 문구를 한 줄로 합쳐 반환할 수
+  있다. 기존 validator는 완전한 substring만 허용해 공백만 다른 실제 인용도 거부했다.
+- 해결: `src.agents.note_analyst`의 grounding 검증을 공백 정규화 후 포함 여부로 바꾸었다.
+  값 자체가 주석에 없으면 여전히 거부하므로 환각 방어는 유지된다.
+- 교훈: HTML 표 기반 주석 grounding은 의미 없는 공백 차이를 허용하되, 숫자·단어 순서가
+  바뀌는 인용까지 허용하지 않도록 좁게 정규화한다.
