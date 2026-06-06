@@ -374,9 +374,8 @@ def test_industry_benchmark_uses_peer_median_and_target_percentile(tmp_path, mon
     config.write_text(
         """
 targets:
-  "00126380":
-    company_name: 삼성전자
-    industry_code: "264"
+industries:
+  "264":
     selection: {max_peers: 2}
     caveat: 단순 비교 한계
     peers:
@@ -413,6 +412,7 @@ targets:
         "00126380",
         [2024, 2025],
         peer_config_path=config,
+        company_profile={"stock_name": "삼성전자", "induty_code": "264"},
         ensure_data=lambda *args, **kwargs: None,
     )
 
@@ -464,6 +464,25 @@ def test_industry_perspective_accepts_mock_agent(monkeypatch) -> None:
     assert material["benchmark"]["baseline"][0]["name"] == "ROE"
     assert result.perspective == "industry"
     assert result.status == "completed"
+
+
+def test_industry_perspective_defers_when_peer_config_missing(tmp_path) -> None:
+    config = tmp_path / "peers.yaml"
+    config.write_text("industries: {}\n", encoding="utf-8")
+
+    result = benchmark_module.build_industry_benchmark
+    try:
+        result(
+            "12345678",
+            [2024, 2025],
+            peer_config_path=config,
+            company_profile={"stock_name": "테스트회사", "induty_code": "999"},
+            ensure_data=lambda *args, **kwargs: None,
+        )
+    except Exception as exc:
+        assert "피어 미구성" in str(exc)
+    else:
+        raise AssertionError("missing peer config should defer/fail gracefully")
 
 
 def test_cross_check_industry_reference_does_not_mutate_internal_judgment() -> None:
