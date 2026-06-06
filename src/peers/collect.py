@@ -33,7 +33,9 @@ def ensure_peer_financials(
         for fs_div in missing:
             frame = dart.finstate_all(corp_code, int(year), fs_div)
             if frame is None or frame.empty:
-                raise RuntimeError(f"{corp_code} {year} {fs_div} finstate_all 응답이 비어 있다.")
+                continue
             write_frame(pd.DataFrame(frame), raw_dir / f"finstate_all_{fs_div}.csv")
+        if not any((raw_dir / f"finstate_all_{fs_div}.csv").exists() for fs_div in ("CFS", "OFS")):
+            raise RuntimeError(f"{corp_code} {year} finstate_all 응답이 모두 비어 있다.")
         normalized = normalize_company_year(corp_code, year, data_dir=root)
         write_normalized_financials(normalized, corp_code, year, data_dir=root)

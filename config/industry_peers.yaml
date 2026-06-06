@@ -1,19 +1,2982 @@
-# 동종업계 관점(⑥) 피어 후보. 피어는 지표 baseline 계산에만 사용한다.
-
-version: 1
 industries:
-  "264":
-    selection:
-      source: OpenDART company profile induty_code
-      rule: exact_induty_code_configured_peers
-      max_peers: 2
+  '101':
     caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
     peers:
-      - corp_code: "00401731"
-        company_name: LG전자
-        stock_code: "066570"
-        industry_code: "264"
-      - corp_code: "00441304"
-        company_name: 가온그룹
-        stock_code: "078890"
-        industry_code: "264"
+    - company_name: 마니커
+      corp_code: 00204208
+      industry_code: '101'
+      stock_code: '027740'
+    - company_name: 정다운
+      corp_code: '01047415'
+      industry_code: '101'
+      stock_code: '208140'
+    - company_name: 동우팜투테이블
+      corp_code: 00228712
+      industry_code: '101'
+      stock_code: 088910
+    - company_name: 체리부로
+      corp_code: '00216434'
+      industry_code: '101'
+      stock_code: '066360'
+    - company_name: 우리손에프앤지
+      corp_code: '00413417'
+      industry_code: '101'
+      stock_code: '073560'
+    - company_name: 하림
+      corp_code: 00857727
+      industry_code: '101'
+      stock_code: '136480'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '108':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 행남사
+      corp_code: '00164362'
+      industry_code: '108'
+      stock_code: 008800
+    - company_name: 비피도
+      corp_code: 01109070
+      industry_code: '108'
+      stock_code: '238200'
+    - company_name: 한국맥널티
+      corp_code: 00579139
+      industry_code: '108'
+      stock_code: '222980'
+    - company_name: 뉴온
+      corp_code: 00809429
+      industry_code: '108'
+      stock_code: '123840'
+    - company_name: 네오크레마
+      corp_code: 01219155
+      industry_code: '108'
+      stock_code: '311390'
+    - company_name: 코스맥스엔비티
+      corp_code: 00656289
+      industry_code: '108'
+      stock_code: '222040'
+    - company_name: 조흥
+      corp_code: 00149345
+      industry_code: '108'
+      stock_code: '002600'
+    - company_name: 삼양식품
+      corp_code: 00126955
+      industry_code: '108'
+      stock_code: '003230'
+    - company_name: 삼양사
+      corp_code: 00896285
+      industry_code: '108'
+      stock_code: '145990'
+    - company_name: CJ제일제당
+      corp_code: '00635134'
+      industry_code: '108'
+      stock_code: 097950
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '109':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 미래생명자원
+      corp_code: 01071944
+      industry_code: '109'
+      stock_code: '218150'
+    - company_name: 현대사료
+      corp_code: 00164618
+      industry_code: '109'
+      stock_code: 016790
+    - company_name: 케이씨피드
+      corp_code: '00101752'
+      industry_code: '109'
+      stock_code: 025880
+    - company_name: 대주산업
+      corp_code: '00112457'
+      industry_code: '109'
+      stock_code: '003310'
+    - company_name: 한일사료
+      corp_code: 00162911
+      industry_code: '109'
+      stock_code: 005860
+    - company_name: 이지바이오
+      corp_code: 01480568
+      industry_code: '109'
+      stock_code: '353810'
+    - company_name: 팜스토리
+      corp_code: 00192499
+      industry_code: '109'
+      stock_code: '027710'
+    - company_name: 선진
+      corp_code: 00855093
+      industry_code: '109'
+      stock_code: '136490'
+    - company_name: 이지홀딩스
+      corp_code: 00242378
+      industry_code: '109'
+      stock_code: 035810
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '111':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 세븐브로이맥주
+      corp_code: '01575361'
+      industry_code: '111'
+      stock_code: '267080'
+    - company_name: 한울앤제주
+      corp_code: '01230255'
+      industry_code: '111'
+      stock_code: '276730'
+    - company_name: 진로발효
+      corp_code: 00170877
+      industry_code: '111'
+      stock_code: 018120
+    - company_name: 보해양조
+      corp_code: '00123541'
+      industry_code: '111'
+      stock_code: 000890
+    - company_name: 풍국주정
+      corp_code: '00155452'
+      industry_code: '111'
+      stock_code: 023900
+    - company_name: 국순당
+      corp_code: '00256715'
+      industry_code: '111'
+      stock_code: '043650'
+    - company_name: MH에탄올
+      corp_code: '00121534'
+      industry_code: '111'
+      stock_code: '023150'
+    - company_name: 무학
+      corp_code: '00121543'
+      industry_code: '111'
+      stock_code: 033920
+    - company_name: 하이트진로
+      corp_code: '00150244'
+      industry_code: '111'
+      stock_code: 000080
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '131':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 일신방직
+      corp_code: 00146269
+      industry_code: '131'
+      stock_code: '003200'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '132':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 우성머티리얼스
+      corp_code: 00132868
+      industry_code: '132'
+      stock_code: '011300'
+    - company_name: 원림
+      corp_code: 00143794
+      industry_code: '132'
+      stock_code: 005820
+    - company_name: 방림
+      corp_code: 00122348
+      industry_code: '132'
+      stock_code: '003610'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '141':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 미쥬
+      corp_code: 01547933
+      industry_code: '141'
+      stock_code: '351020'
+    - company_name: 에스티오
+      corp_code: 00612188
+      industry_code: '141'
+      stock_code: 098660
+    - company_name: 코데즈컴바인
+      corp_code: 00329093
+      industry_code: '141'
+      stock_code: '047770'
+    - company_name: 티비에이치글로벌
+      corp_code: 00409672
+      industry_code: '141'
+      stock_code: 084870
+    - company_name: 그리티
+      corp_code: 00671978
+      industry_code: '141'
+      stock_code: '204020'
+    - company_name: 비비안
+      corp_code: '00107677'
+      industry_code: '141'
+      stock_code: '002070'
+    - company_name: 호전실업
+      corp_code: '00226316'
+      industry_code: '141'
+      stock_code: '111110'
+    - company_name: TP
+      corp_code: 00154329
+      industry_code: '141'
+      stock_code: 007980
+    - company_name: 한세실업
+      corp_code: 00728638
+      industry_code: '141'
+      stock_code: '105630'
+    - company_name: 한세예스24홀딩스
+      corp_code: 00161976
+      industry_code: '141'
+      stock_code: '016450'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '143':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 노브랜드
+      corp_code: 00305941
+      industry_code: '143'
+      stock_code: '145170'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '171':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 아크솔루션스
+      corp_code: '01036367'
+      industry_code: '171'
+      stock_code: '203690'
+    - company_name: 대양제지공업
+      corp_code: '00111227'
+      industry_code: '171'
+      stock_code: 006580
+    - company_name: 무림SP
+      corp_code: '00121507'
+      industry_code: '171'
+      stock_code: 001810
+    - company_name: 페이퍼코리아
+      corp_code: '00134723'
+      industry_code: '171'
+      stock_code: '001020'
+    - company_name: 깨끗한나라
+      corp_code: 00113492
+      industry_code: '171'
+      stock_code: '004540'
+    - company_name: 한국제지
+      corp_code: '00133706'
+      industry_code: '171'
+      stock_code: 027970
+    - company_name: 삼보판지
+      corp_code: 00125938
+      industry_code: '171'
+      stock_code: '023600'
+    - company_name: 무림P&P
+      corp_code: 00119007
+      industry_code: '171'
+      stock_code: 009580
+    - company_name: 한솔제지
+      corp_code: '01060744'
+      industry_code: '171'
+      stock_code: '213500'
+    - company_name: 무림페이퍼
+      corp_code: 00136086
+      industry_code: '171'
+      stock_code: 009200
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '192':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 미창석유공업
+      corp_code: '00122056'
+      industry_code: '192'
+      stock_code: '003650'
+    - company_name: 극동유화
+      corp_code: '00105156'
+      industry_code: '192'
+      stock_code: '014530'
+    - company_name: S-Oil
+      corp_code: 00138279
+      industry_code: '192'
+      stock_code: 010950
+    - company_name: SK이노베이션
+      corp_code: 00631518
+      industry_code: '192'
+      stock_code: 096770
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '201':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 이엠앤아이
+      corp_code: 00475718
+      industry_code: '201'
+      stock_code: 083470
+    - company_name: 램테크놀러지
+      corp_code: '00654272'
+      industry_code: '201'
+      stock_code: '171010'
+    - company_name: 이수스페셜티케미컬
+      corp_code: 01762569
+      industry_code: '201'
+      stock_code: '457190'
+    - company_name: 경인양행
+      corp_code: '00102113'
+      industry_code: '201'
+      stock_code: '012610'
+    - company_name: 성일하이텍
+      corp_code: 01274329
+      industry_code: '201'
+      stock_code: '365340'
+    - company_name: 태경산업
+      corp_code: 00153339
+      industry_code: '201'
+      stock_code: 015890
+    - company_name: 유니드
+      corp_code: 00159786
+      industry_code: '201'
+      stock_code: 014830
+    - company_name: KPX홀딩스
+      corp_code: 00587466
+      industry_code: '201'
+      stock_code: 092230
+    - company_name: 롯데정밀화학
+      corp_code: 00157681
+      industry_code: '201'
+      stock_code: '004000'
+    - company_name: LG화학
+      corp_code: '00356361'
+      industry_code: '201'
+      stock_code: 051910
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '204':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 잉글우드랩
+      corp_code: 01165739
+      industry_code: '204'
+      stock_code: '950140'
+    - company_name: 에스디생명공학
+      corp_code: 01099667
+      industry_code: '204'
+      stock_code: '217480'
+    - company_name: 엔에프씨
+      corp_code: 01217829
+      industry_code: '204'
+      stock_code: '265740'
+    - company_name: 케이디켐
+      corp_code: 00370918
+      industry_code: '204'
+      stock_code: '221980'
+    - company_name: 에이블씨엔씨
+      corp_code: 00400857
+      industry_code: '204'
+      stock_code: 078520
+    - company_name: 브이티
+      corp_code: '00150165'
+      industry_code: '204'
+      stock_code: 018290
+    - company_name: 잇츠한불
+      corp_code: 00911955
+      industry_code: '204'
+      stock_code: '226320'
+    - company_name: DS단석
+      corp_code: 00108612
+      industry_code: '204'
+      stock_code: 017860
+    - company_name: 솔브레인
+      corp_code: 01489648
+      industry_code: '204'
+      stock_code: '357780'
+    - company_name: 한화
+      corp_code: 00160588
+      industry_code: '204'
+      stock_code: 000880
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '205':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 레몬
+      corp_code: 01011395
+      industry_code: '205'
+      stock_code: '294140'
+    - company_name: 씨앤투스
+      corp_code: 00875237
+      industry_code: '205'
+      stock_code: '352700'
+    - company_name: HS효성첨단소재
+      corp_code: '01316254'
+      industry_code: '205'
+      stock_code: '298050'
+    - company_name: 태광산업
+      corp_code: 00153393
+      industry_code: '205'
+      stock_code: '003240'
+    - company_name: 효성티앤씨
+      corp_code: '01316227'
+      industry_code: '205'
+      stock_code: '298020'
+    - company_name: 코오롱인더
+      corp_code: 00795135
+      industry_code: '205'
+      stock_code: '120110'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '211':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 엔케이젠바이오텍코리아
+      corp_code: 00977650
+      industry_code: '211'
+      stock_code: '182400'
+    - company_name: 샤페론
+      corp_code: 01387164
+      industry_code: '211'
+      stock_code: '378800'
+    - company_name: 바이오솔루션
+      corp_code: 00560982
+      industry_code: '211'
+      stock_code: 086820
+    - company_name: 테고사이언스
+      corp_code: 00926522
+      industry_code: '211'
+      stock_code: '191420'
+    - company_name: 제놀루션
+      corp_code: '01062177'
+      industry_code: '211'
+      stock_code: '225220'
+    - company_name: 지놈앤컴퍼니
+      corp_code: '01276026'
+      industry_code: '211'
+      stock_code: '314130'
+    - company_name: 케어젠
+      corp_code: 00549891
+      industry_code: '211'
+      stock_code: '214370'
+    - company_name: 바이오플러스
+      corp_code: '00636656'
+      industry_code: '211'
+      stock_code: 099430
+    - company_name: 코오롱생명과학
+      corp_code: '00525642'
+      industry_code: '211'
+      stock_code: '102940'
+    - company_name: 삼성바이오로직스
+      corp_code: 00877059
+      industry_code: '211'
+      stock_code: '207940'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '212':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 에스바이오메딕스
+      corp_code: 01258020
+      industry_code: '212'
+      stock_code: '304360'
+    - company_name: 듀켐바이오
+      corp_code: 00867034
+      industry_code: '212'
+      stock_code: '176750'
+    - company_name: 유바이오로직스
+      corp_code: 00927558
+      industry_code: '212'
+      stock_code: '206650'
+    - company_name: 대화제약
+      corp_code: '00210740'
+      industry_code: '212'
+      stock_code: 067080
+    - company_name: 명문제약
+      corp_code: 00121039
+      industry_code: '212'
+      stock_code: 017180
+    - company_name: 신풍제약
+      corp_code: 00137359
+      industry_code: '212'
+      stock_code: 019170
+    - company_name: 제일약품
+      corp_code: 01236897
+      industry_code: '212'
+      stock_code: '271980'
+    - company_name: 에이프로젠
+      corp_code: 00152385
+      industry_code: '212'
+      stock_code: '007460'
+    - company_name: 보령
+      corp_code: '00123143'
+      industry_code: '212'
+      stock_code: 003850
+    - company_name: 대웅
+      corp_code: 00111810
+      industry_code: '212'
+      stock_code: 003090
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '213':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 엑세스바이오
+      corp_code: 00956028
+      industry_code: '213'
+      stock_code: '950130'
+    - company_name: 피씨엘
+      corp_code: 01051092
+      industry_code: '213'
+      stock_code: '241820'
+    - company_name: 피플바이오
+      corp_code: 01118281
+      industry_code: '213'
+      stock_code: '304840'
+    - company_name: 로킷헬스케어
+      corp_code: '01335143'
+      industry_code: '213'
+      stock_code: '376900'
+    - company_name: 녹십자엠에스
+      corp_code: 00513948
+      industry_code: '213'
+      stock_code: '142280'
+    - company_name: 한스바이오메드
+      corp_code: 00349060
+      industry_code: '213'
+      stock_code: '042520'
+    - company_name: 제테마
+      corp_code: 01222867
+      industry_code: '213'
+      stock_code: '216080'
+    - company_name: 휴마시스
+      corp_code: 01042979
+      industry_code: '213'
+      stock_code: '205470'
+    - company_name: HLB생명과학
+      corp_code: 00365590
+      industry_code: '213'
+      stock_code: '067630'
+    - company_name: 씨젠
+      corp_code: 00788773
+      industry_code: '213'
+      stock_code: 096530
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '222':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 코이즈
+      corp_code: 00807397
+      industry_code: '222'
+      stock_code: '121850'
+    - company_name: 뉴보텍
+      corp_code: '00351375'
+      industry_code: '222'
+      stock_code: '060260'
+    - company_name: 나노캠텍
+      corp_code: '00542074'
+      industry_code: '222'
+      stock_code: 091970
+    - company_name: WISCOM
+      corp_code: 00142865
+      industry_code: '222'
+      stock_code: '024070'
+    - company_name: 스톰테크
+      corp_code: '01226270'
+      industry_code: '222'
+      stock_code: '352090'
+    - company_name: 덕성
+      corp_code: 00114093
+      industry_code: '222'
+      stock_code: 004830
+    - company_name: 영보화학
+      corp_code: 00140779
+      industry_code: '222'
+      stock_code: '014440'
+    - company_name: 펌텍코리아
+      corp_code: 00761059
+      industry_code: '222'
+      stock_code: '251970'
+    - company_name: 삼양패키징
+      corp_code: 01060814
+      industry_code: '222'
+      stock_code: '272550'
+    - company_name: LX하우시스
+      corp_code: 00759513
+      industry_code: '222'
+      stock_code: '108670'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '233':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 모헨즈
+      corp_code: 00163318
+      industry_code: '233'
+      stock_code: 006920
+    - company_name: 서산
+      corp_code: 00130408
+      industry_code: '233'
+      stock_code: 079650
+    - company_name: 부산산업
+      corp_code: '00124027'
+      industry_code: '233'
+      stock_code: 011390
+    - company_name: 유니온
+      corp_code: '00144252'
+      industry_code: '233'
+      stock_code: 000910
+    - company_name: 태경비케이
+      corp_code: 00122481
+      industry_code: '233'
+      stock_code: 014580
+    - company_name: 성신양회
+      corp_code: 00132804
+      industry_code: '233'
+      stock_code: 004980
+    - company_name: 아세아시멘트
+      corp_code: 00990165
+      industry_code: '233'
+      stock_code: '183190'
+    - company_name: 유진기업
+      corp_code: 00184667
+      industry_code: '233'
+      stock_code: '023410'
+    - company_name: 한일홀딩스
+      corp_code: 00162993
+      industry_code: '233'
+      stock_code: '003300'
+    - company_name: 쌍용씨앤이
+      corp_code: 00138224
+      industry_code: '233'
+      stock_code: '003410'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '241':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 광진실업
+      corp_code: '00104120'
+      industry_code: '241'
+      stock_code: 026910
+    - company_name: 화인베스틸
+      corp_code: 00661847
+      industry_code: '241'
+      stock_code: '133820'
+    - company_name: 쎄니트
+      corp_code: 00239596
+      industry_code: '241'
+      stock_code: '037760'
+    - company_name: 원일특강
+      corp_code: 00143907
+      industry_code: '241'
+      stock_code: '012620'
+    - company_name: 동일산업
+      corp_code: 00172936
+      industry_code: '241'
+      stock_code: 004890
+    - company_name: 세아특수강
+      corp_code: 00133991
+      industry_code: '241'
+      stock_code: 019440
+    - company_name: 동국산업
+      corp_code: 00172680
+      industry_code: '241'
+      stock_code: '005160'
+    - company_name: 휴스틸
+      corp_code: 00156488
+      industry_code: '241'
+      stock_code: '005010'
+    - company_name: 동국씨엠
+      corp_code: '01765256'
+      industry_code: '241'
+      stock_code: '460850'
+    - company_name: POSCO홀딩스
+      corp_code: 00155319
+      industry_code: '241'
+      stock_code: 005490
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '242':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 그린플러스
+      corp_code: 00602279
+      industry_code: '242'
+      stock_code: '186230'
+    - company_name: 대호에이엘
+      corp_code: 00428729
+      industry_code: '242'
+      stock_code: 069460
+    - company_name: 한주라이트메탈
+      corp_code: '00156600'
+      industry_code: '242'
+      stock_code: '198940'
+    - company_name: KBI메탈
+      corp_code: 00158024
+      industry_code: '242'
+      stock_code: 024840
+    - company_name: DSR
+      corp_code: 00110608
+      industry_code: '242'
+      stock_code: '155660'
+    - company_name: 삼아알미늄
+      corp_code: 00126779
+      industry_code: '242'
+      stock_code: '006110'
+    - company_name: 황금에스티
+      corp_code: 00218575
+      industry_code: '242'
+      stock_code: '032560'
+    - company_name: 대창
+      corp_code: '00112651'
+      industry_code: '242'
+      stock_code: 012800
+    - company_name: 풍산
+      corp_code: 00684714
+      industry_code: '242'
+      stock_code: '103140'
+    - company_name: 고려아연
+      corp_code: 00102858
+      industry_code: '242'
+      stock_code: '010130'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '243':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 동일금속
+      corp_code: 00118284
+      industry_code: '243'
+      stock_code: '109860'
+    - company_name: 서원
+      corp_code: 00131197
+      industry_code: '243'
+      stock_code: '021050'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '259':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 현진소재
+      corp_code: 00188715
+      industry_code: '259'
+      stock_code: '053660'
+    - company_name: 유진테크놀로지
+      corp_code: 01085026
+      industry_code: '259'
+      stock_code: '240600'
+    - company_name: 풍강
+      corp_code: '00155373'
+      industry_code: '259'
+      stock_code: 093380
+    - company_name: 포인트엔지니어링
+      corp_code: 01179608
+      industry_code: '259'
+      stock_code: '256630'
+    - company_name: 와이엠
+      corp_code: 00140858
+      industry_code: '259'
+      stock_code: '007530'
+    - company_name: 대림통상
+      corp_code: 00109824
+      industry_code: '259'
+      stock_code: '006570'
+    - company_name: 삼화왕관
+      corp_code: 00129235
+      industry_code: '259'
+      stock_code: '004450'
+    - company_name: 신화프리텍
+      corp_code: 00526951
+      industry_code: '259'
+      stock_code: 095190
+    - company_name: 케이피에프
+      corp_code: '00157636'
+      industry_code: '259'
+      stock_code: 024880
+    - company_name: 와이지-원
+      corp_code: 00139719
+      industry_code: '259'
+      stock_code: 019210
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '26':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 휴스토리
+      corp_code: '00263140'
+      industry_code: '26'
+      stock_code: '046400'
+    - company_name: 엔터미디어
+      corp_code: 00407975
+      industry_code: '26'
+      stock_code: 068420
+    - company_name: 엠소닉
+      corp_code: '00124577'
+      industry_code: '26'
+      stock_code: 008120
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '261':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 알에프세미
+      corp_code: '00516246'
+      industry_code: '261'
+      stock_code: 096610
+    - company_name: 티엘아이
+      corp_code: 00261887
+      industry_code: '261'
+      stock_code: 062860
+    - company_name: 아이씨티케이
+      corp_code: 01373709
+      industry_code: '261'
+      stock_code: '456010'
+    - company_name: 우리이앤엘하루틴
+      corp_code: 00815095
+      industry_code: '261'
+      stock_code: '153490'
+    - company_name: 루멘스
+      corp_code: 00406329
+      industry_code: '261'
+      stock_code: 038060
+    - company_name: 메카로
+      corp_code: '00652007'
+      industry_code: '261'
+      stock_code: '241770'
+    - company_name: 한양디지텍
+      corp_code: 00488989
+      industry_code: '261'
+      stock_code: 078350
+    - company_name: 신성이엔지
+      corp_code: '00136271'
+      industry_code: '261'
+      stock_code: 011930
+    - company_name: 서울바이오시스
+      corp_code: 00488402
+      industry_code: '261'
+      stock_code: 092190
+    - company_name: SK하이닉스
+      corp_code: 00164779
+      industry_code: '261'
+      stock_code: '000660'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '262':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 이엘케이
+      corp_code: 00379016
+      industry_code: '262'
+      stock_code: 094190
+    - company_name: 육일씨엔에쓰
+      corp_code: 00843900
+      industry_code: '262'
+      stock_code: '191410'
+    - company_name: 핌스
+      corp_code: 01405390
+      industry_code: '262'
+      stock_code: '347770'
+    - company_name: 에이엔피
+      corp_code: '00143314'
+      industry_code: '262'
+      stock_code: '015260'
+    - company_name: 아비코전자
+      corp_code: 00138598
+      industry_code: '262'
+      stock_code: '036010'
+    - company_name: 덕우전자
+      corp_code: 00571298
+      industry_code: '262'
+      stock_code: '263600'
+    - company_name: 삼화콘덴서공업
+      corp_code: 00129350
+      industry_code: '262'
+      stock_code: 001820
+    - company_name: 에프에스티
+      corp_code: '00223434'
+      industry_code: '262'
+      stock_code: 036810
+    - company_name: 케이에이치필룩스
+      corp_code: 00193009
+      industry_code: '262'
+      stock_code: 033180
+    - company_name: 두산
+      corp_code: '00117212'
+      industry_code: '262'
+      stock_code: '000150'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '263':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 잘만테크
+      corp_code: 00491336
+      industry_code: '263'
+      stock_code: 090120
+    - company_name: 푸른로보틱스
+      corp_code: 00537832
+      industry_code: '263'
+      stock_code: 094940
+    - company_name: 주연테크
+      corp_code: 00269241
+      industry_code: '263'
+      stock_code: 044380
+    - company_name: 딜리
+      corp_code: 00629212
+      industry_code: '263'
+      stock_code: '131180'
+    - company_name: 아이디피
+      corp_code: 01213586
+      industry_code: '263'
+      stock_code: '332370'
+    - company_name: 포인트모바일
+      corp_code: 00962393
+      industry_code: '263'
+      stock_code: '318020'
+    - company_name: 앱코
+      corp_code: '01207716'
+      industry_code: '263'
+      stock_code: '129890'
+    - company_name: 에이루트
+      corp_code: 00608839
+      industry_code: '263'
+      stock_code: 096690
+    - company_name: 빅솔론
+      corp_code: 00478900
+      industry_code: '263'
+      stock_code: 093190
+    - company_name: 신도리코
+      corp_code: 00135795
+      industry_code: '263'
+      stock_code: 029530
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '264':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 텔라움
+      corp_code: '00304401'
+      industry_code: '264'
+      stock_code: '047730'
+    - company_name: 주성코퍼레이션
+      corp_code: '00753643'
+      industry_code: '264'
+      stock_code: '109070'
+    - company_name: 오늘이엔엠
+      corp_code: 00623184
+      industry_code: '264'
+      stock_code: '192410'
+    - company_name: 오이솔루션
+      corp_code: 00571483
+      industry_code: '264'
+      stock_code: '138080'
+    - company_name: 우리넷
+      corp_code: 00664048
+      industry_code: '264'
+      stock_code: '115440'
+    - company_name: 에스코넥
+      corp_code: 00573269
+      industry_code: '264'
+      stock_code: 096630
+    - company_name: 케이엠더블유
+      corp_code: '00226352'
+      industry_code: '264'
+      stock_code: '032500'
+    - company_name: 슈프리마
+      corp_code: '01124653'
+      industry_code: '264'
+      stock_code: '236200'
+    - company_name: RFHIC
+      corp_code: 01078178
+      industry_code: '264'
+      stock_code: '218410'
+    - company_name: LG전자
+      corp_code: '00401731'
+      industry_code: '264'
+      stock_code: '066570'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '265':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 아남전자
+      corp_code: 00138516
+      industry_code: '265'
+      stock_code: 008700
+    - company_name: DGI
+      corp_code: 00627029
+      industry_code: '265'
+      stock_code: 099520
+    - company_name: 벡트
+      corp_code: 01453944
+      industry_code: '265'
+      stock_code: '457600'
+    - company_name: 엑시큐어하이트론
+      corp_code: '00156150'
+      industry_code: '265'
+      stock_code: 019490
+    - company_name: 인터엠
+      corp_code: 00145914
+      industry_code: '265'
+      stock_code: '017250'
+    - company_name: 씨아이테크
+      corp_code: 00127158
+      industry_code: '265'
+      stock_code: 004920
+    - company_name: 블루콤
+      corp_code: 00238001
+      industry_code: '265'
+      stock_code: '033560'
+    - company_name: 에스텍
+      corp_code: 00306719
+      industry_code: '265'
+      stock_code: 069510
+    - company_name: 엠씨넥스
+      corp_code: '00564562'
+      industry_code: '265'
+      stock_code: 097520
+    - company_name: 토비스
+      corp_code: 00390365
+      industry_code: '265'
+      stock_code: '051360'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '271':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 인트로메딕
+      corp_code: '00661157'
+      industry_code: '271'
+      stock_code: '150840'
+    - company_name: 레이저옵텍
+      corp_code: '01161432'
+      industry_code: '271'
+      stock_code: '199550'
+    - company_name: 아스테라시스
+      corp_code: 01590528
+      industry_code: '271'
+      stock_code: '450950'
+    - company_name: 멕아이씨에스
+      corp_code: '00270113'
+      industry_code: '271'
+      stock_code: 058110
+    - company_name: 셀바스헬스케어
+      corp_code: '01047451'
+      industry_code: '271'
+      stock_code: '208370'
+    - company_name: 디알젬
+      corp_code: 00966168
+      industry_code: '271'
+      stock_code: '263690'
+    - company_name: 레이
+      corp_code: 00828761
+      industry_code: '271'
+      stock_code: '228670'
+    - company_name: 휴비츠
+      corp_code: 00398668
+      industry_code: '271'
+      stock_code: '065510'
+    - company_name: 인바디
+      corp_code: 00269922
+      industry_code: '271'
+      stock_code: 041830
+    - company_name: 에스디바이오센서
+      corp_code: 00854997
+      industry_code: '271'
+      stock_code: '137310'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '272':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 시스웍
+      corp_code: 01188378
+      industry_code: '272'
+      stock_code: '269620'
+    - company_name: 이즈미디어
+      corp_code: 00861720
+      industry_code: '272'
+      stock_code: '181340'
+    - company_name: 파이버프로
+      corp_code: '01513440'
+      industry_code: '272'
+      stock_code: '368770'
+    - company_name: 3S
+      corp_code: 00378363
+      industry_code: '272'
+      stock_code: '060310'
+    - company_name: 빅텍
+      corp_code: 00385363
+      industry_code: '272'
+      stock_code: '065450'
+    - company_name: 위드텍
+      corp_code: 00925587
+      industry_code: '272'
+      stock_code: '348350'
+    - company_name: 이엘씨
+      corp_code: 00137289
+      industry_code: '272'
+      stock_code: '041520'
+    - company_name: 코메론
+      corp_code: 00152783
+      industry_code: '272'
+      stock_code: 049430
+    - company_name: 디아이
+      corp_code: 00118275
+      industry_code: '272'
+      stock_code: '003160'
+    - company_name: 케이씨
+      corp_code: 00209780
+      industry_code: '272'
+      stock_code: 029460
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '273':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 노블엠앤비
+      corp_code: 00536329
+      industry_code: '273'
+      stock_code: '106520'
+    - company_name: 큐리오시스
+      corp_code: 01786958
+      industry_code: '273'
+      stock_code: '494120'
+    - company_name: 토모큐브
+      corp_code: '01573336'
+      industry_code: '273'
+      stock_code: '475960'
+    - company_name: LK삼양
+      corp_code: 00992543
+      industry_code: '273'
+      stock_code: '225190'
+    - company_name: 얼라인드
+      corp_code: 01073678
+      industry_code: '273'
+      stock_code: '238120'
+    - company_name: 해성옵틱스
+      corp_code: 00483735
+      industry_code: '273'
+      stock_code: '076610'
+    - company_name: 재영솔루텍
+      corp_code: 00147082
+      industry_code: '273'
+      stock_code: 049630
+    - company_name: 옵트론텍
+      corp_code: 00327396
+      industry_code: '273'
+      stock_code: 082210
+    - company_name: 세코닉스
+      corp_code: '00351630'
+      industry_code: '273'
+      stock_code: '053450'
+    - company_name: 하이비젼시스템
+      corp_code: 00825959
+      industry_code: '273'
+      stock_code: '126700'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '281':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 서울전자통신
+      corp_code: 00130587
+      industry_code: '281'
+      stock_code: '027040'
+    - company_name: 파루
+      corp_code: 00266934
+      industry_code: '281'
+      stock_code: '043200'
+    - company_name: 지투파워
+      corp_code: '01462605'
+      industry_code: '281'
+      stock_code: '388050'
+    - company_name: 서호전기
+      corp_code: '00220622'
+      industry_code: '281'
+      stock_code: '065710'
+    - company_name: 제일일렉트릭
+      corp_code: 00148470
+      industry_code: '281'
+      stock_code: '199820'
+    - company_name: 이화전기공업
+      corp_code: 00145738
+      industry_code: '281'
+      stock_code: 024810
+    - company_name: 지엔씨에너지
+      corp_code: '00626464'
+      industry_code: '281'
+      stock_code: '119850'
+    - company_name: 파워넷
+      corp_code: '00231354'
+      industry_code: '281'
+      stock_code: '037030'
+    - company_name: 한국단자공업
+      corp_code: '00157070'
+      industry_code: '281'
+      stock_code: '025540'
+    - company_name: 효성중공업
+      corp_code: '01316245'
+      industry_code: '281'
+      stock_code: '298040'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '289':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 로보로보
+      corp_code: 01063990
+      industry_code: '289'
+      stock_code: '215100'
+    - company_name: 대보마그네틱
+      corp_code: 01259418
+      industry_code: '289'
+      stock_code: '290670'
+    - company_name: 엔시스
+      corp_code: '01310773'
+      industry_code: '289'
+      stock_code: '333620'
+    - company_name: 강원에너지
+      corp_code: '00100601'
+      industry_code: '289'
+      stock_code: '114190'
+    - company_name: APS이노베이션
+      corp_code: '00445160'
+      industry_code: '289'
+      stock_code: 079810
+    - company_name: 에이프로
+      corp_code: 00604268
+      industry_code: '289'
+      stock_code: '262260'
+    - company_name: 대아티아이
+      corp_code: 00318316
+      industry_code: '289'
+      stock_code: 045390
+    - company_name: 티에이치엔
+      corp_code: 00118965
+      industry_code: '289'
+      stock_code: 019180
+    - company_name: 서진시스템
+      corp_code: 00838005
+      industry_code: '289'
+      stock_code: '178320'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '291':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 케이웨더
+      corp_code: 00426828
+      industry_code: '291'
+      stock_code: 068100
+    - company_name: 지에프아이
+      corp_code: 01450938
+      industry_code: '291'
+      stock_code: '493330'
+    - company_name: 포스뱅크
+      corp_code: 00862312
+      industry_code: '291'
+      stock_code: '105760'
+    - company_name: 아스플로
+      corp_code: '00561732'
+      industry_code: '291'
+      stock_code: '159010'
+    - company_name: 에이텍
+      corp_code: '00256502'
+      industry_code: '291'
+      stock_code: '045660'
+    - company_name: 씨케이솔루션
+      corp_code: '01210677'
+      industry_code: '291'
+      stock_code: '480370'
+    - company_name: 제이엔케이글로벌
+      corp_code: '00442154'
+      industry_code: '291'
+      stock_code: '126880'
+    - company_name: 제이브이엠
+      corp_code: 00361381
+      industry_code: '291'
+      stock_code: 054950
+    - company_name: 비에이치아이
+      corp_code: 00409788
+      industry_code: '291'
+      stock_code: 083650
+    - company_name: 한온시스템
+      corp_code: '00161125'
+      industry_code: '291'
+      stock_code: 018880
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '292':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: NPX
+      corp_code: '01037542'
+      industry_code: '292'
+      stock_code: '222160'
+    - company_name: 인베니아
+      corp_code: 00409371
+      industry_code: '292'
+      stock_code: 079950
+    - company_name: 저스템
+      corp_code: 01383229
+      industry_code: '292'
+      stock_code: '417840'
+    - company_name: 미래컴퍼니
+      corp_code: '00447760'
+      industry_code: '292'
+      stock_code: 049950
+    - company_name: 로체시스템즈
+      corp_code: 00363486
+      industry_code: '292'
+      stock_code: 071280
+    - company_name: 넥스틴
+      corp_code: 01080252
+      industry_code: '292'
+      stock_code: '348210'
+    - company_name: 현대에버다임
+      corp_code: 00228536
+      industry_code: '292'
+      stock_code: '041440'
+    - company_name: 두산로보틱스
+      corp_code: '01105153'
+      industry_code: '292'
+      stock_code: '454910'
+    - company_name: 유진테크
+      corp_code: '00531014'
+      industry_code: '292'
+      stock_code: 084370
+    - company_name: 두산밥캣
+      corp_code: 01032486
+      industry_code: '292'
+      stock_code: '241560'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '303':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: DH오토넥스
+      corp_code: 00126089
+      industry_code: '303'
+      stock_code: '000300'
+    - company_name: KB오토시스
+      corp_code: 00157539
+      industry_code: '303'
+      stock_code: '024120'
+    - company_name: 모토닉
+      corp_code: 00151128
+      industry_code: '303'
+      stock_code: 009680
+    - company_name: 대원산업
+      corp_code: 00111874
+      industry_code: '303'
+      stock_code: '005710'
+    - company_name: 아진산업
+      corp_code: 00139083
+      industry_code: '303'
+      stock_code: '013310'
+    - company_name: 영화테크
+      corp_code: 00659976
+      industry_code: '303'
+      stock_code: '265560'
+    - company_name: 삼현
+      corp_code: '00262266'
+      industry_code: '303'
+      stock_code: '437730'
+    - company_name: 에스제이엠
+      corp_code: 00815369
+      industry_code: '303'
+      stock_code: '123700'
+    - company_name: 삼기
+      corp_code: 00799177
+      industry_code: '303'
+      stock_code: '122350'
+    - company_name: HL만도
+      corp_code: '01042775'
+      industry_code: '303'
+      stock_code: '204320'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '311':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 스타코링크
+      corp_code: '00373571'
+      industry_code: '311'
+      stock_code: '060240'
+    - company_name: 메디콕스
+      corp_code: 00356839
+      industry_code: '311'
+      stock_code: 054180
+    - company_name: 일승
+      corp_code: 01396676
+      industry_code: '311'
+      stock_code: '333430'
+    - company_name: 한라IMS
+      corp_code: 00528515
+      industry_code: '311'
+      stock_code: 092460
+    - company_name: 대양전기공업
+      corp_code: 00111193
+      industry_code: '311'
+      stock_code: '108380'
+    - company_name: 현대힘스
+      corp_code: '00667373'
+      industry_code: '311'
+      stock_code: '460930'
+    - company_name: 인화정공
+      corp_code: 00482426
+      industry_code: '311'
+      stock_code: '101930'
+    - company_name: 케이프
+      corp_code: '00152437'
+      industry_code: '311'
+      stock_code: 064820
+    - company_name: 에이치디현대미포
+      corp_code: 00164609
+      industry_code: '311'
+      stock_code: '010620'
+    - company_name: HD현대중공업
+      corp_code: 01390344
+      industry_code: '311'
+      stock_code: '329180'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '313':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 이노스페이스
+      corp_code: 01700587
+      industry_code: '313'
+      stock_code: '462350'
+    - company_name: 케이피항공산업
+      corp_code: '01101254'
+      industry_code: '313'
+      stock_code: '288180'
+    - company_name: 하이즈항공
+      corp_code: 00688358
+      industry_code: '313'
+      stock_code: '221840'
+    - company_name: 켄코아에어로스페이스
+      corp_code: 01158553
+      industry_code: '313'
+      stock_code: '274090'
+    - company_name: 쎄트렉아이
+      corp_code: 00449254
+      industry_code: '313'
+      stock_code: 099320
+    - company_name: 한화에어로스페이스
+      corp_code: '00126566'
+      industry_code: '313'
+      stock_code: '012450'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '339':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 피코그램
+      corp_code: 00604028
+      industry_code: '339'
+      stock_code: '376180'
+    - company_name: 엑스플러스
+      corp_code: 01514698
+      industry_code: '339'
+      stock_code: '373200'
+    - company_name: 휴엠앤씨
+      corp_code: 01185566
+      industry_code: '339'
+      stock_code: '263920'
+    - company_name: 에이디칩스
+      corp_code: 00356927
+      industry_code: '339'
+      stock_code: '054630'
+    - company_name: 엔바이오니아
+      corp_code: 00964595
+      industry_code: '339'
+      stock_code: '317870'
+    - company_name: 에이럭스
+      corp_code: '01641600'
+      industry_code: '339'
+      stock_code: '475580'
+    - company_name: 삼진엘앤디
+      corp_code: 00239514
+      industry_code: '339'
+      stock_code: 054090
+    - company_name: 노바텍
+      corp_code: 01259232
+      industry_code: '339'
+      stock_code: '285490'
+    - company_name: 슈피겐코리아
+      corp_code: 00917861
+      industry_code: '339'
+      stock_code: '192440'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '351':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 에이전트AI
+      corp_code: 00367695
+      industry_code: '351'
+      stock_code: 060900
+    - company_name: SGC에너지
+      corp_code: '00125150'
+      industry_code: '351'
+      stock_code: 005090
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '352':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 인천도시가스
+      corp_code: 00145862
+      industry_code: '352'
+      stock_code: 034590
+    - company_name: 대성에너지
+      corp_code: 00787376
+      industry_code: '352'
+      stock_code: '117580'
+    - company_name: 경동도시가스
+      corp_code: 01208885
+      industry_code: '352'
+      stock_code: '267290'
+    - company_name: 서울도시가스
+      corp_code: 00130684
+      industry_code: '352'
+      stock_code: 017390
+    - company_name: 한진중공업홀딩스
+      corp_code: '00163673'
+      industry_code: '352'
+      stock_code: 003480
+    - company_name: 삼천리
+      corp_code: 00128555
+      industry_code: '352'
+      stock_code: 004690
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '411':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 신한
+      corp_code: '00173740'
+      industry_code: '411'
+      stock_code: '005450'
+    - company_name: 웰크론한텍
+      corp_code: 00487546
+      industry_code: '411'
+      stock_code: 076080
+    - company_name: 상지건설
+      corp_code: '00232007'
+      industry_code: '411'
+      stock_code: 042940
+    - company_name: KD
+      corp_code: 00111218
+      industry_code: '411'
+      stock_code: 044180
+    - company_name: 대원
+      corp_code: 00111838
+      industry_code: '411'
+      stock_code: 007680
+    - company_name: 신세계건설
+      corp_code: 00217947
+      industry_code: '411'
+      stock_code: '034300'
+    - company_name: SGC E&C
+      corp_code: '00141246'
+      industry_code: '411'
+      stock_code: '016250'
+    - company_name: 금호건설
+      corp_code: '00106313'
+      industry_code: '411'
+      stock_code: 002990
+    - company_name: 두산건설
+      corp_code: '00102760'
+      industry_code: '411'
+      stock_code: '011160'
+    - company_name: 한신공영
+      corp_code: '00162063'
+      industry_code: '411'
+      stock_code: 004960
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '412':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 에스지신성건설
+      corp_code: '00173661'
+      industry_code: '412'
+      stock_code: 001970
+    - company_name: 케이에이치건설
+      corp_code: 01097906
+      industry_code: '412'
+      stock_code: '226360'
+    - company_name: 성지건설
+      corp_code: 00133238
+      industry_code: '412'
+      stock_code: 005980
+    - company_name: 삼부토건
+      corp_code: 00125974
+      industry_code: '412'
+      stock_code: '001470'
+    - company_name: 플랜텍
+      corp_code: 00181934
+      industry_code: '412'
+      stock_code: '051310'
+    - company_name: 일성건설
+      corp_code: '00146232'
+      industry_code: '412'
+      stock_code: '013360'
+    - company_name: HL D&I
+      corp_code: '00161116'
+      industry_code: '412'
+      stock_code: 014790
+    - company_name: HJ중공업
+      corp_code: 00633835
+      industry_code: '412'
+      stock_code: 097230
+    - company_name: 계룡건설산업
+      corp_code: '00102432'
+      industry_code: '412'
+      stock_code: 013580
+    - company_name: 태영건설
+      corp_code: 00153861
+      industry_code: '412'
+      stock_code: 009410
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '461':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 케이옥션
+      corp_code: 00668600
+      industry_code: '461'
+      stock_code: '102370'
+    - company_name: 이상네트웍스
+      corp_code: 00454399
+      industry_code: '461'
+      stock_code: 080010
+    - company_name: 서울옥션
+      corp_code: 00410915
+      industry_code: '461'
+      stock_code: '063170'
+    - company_name: 골프존홀딩스
+      corp_code: 00674498
+      industry_code: '461'
+      stock_code: '121440'
+    - company_name: LX인터내셔널
+      corp_code: '00120076'
+      industry_code: '461'
+      stock_code: '001120'
+    - company_name: 포스코인터내셔널
+      corp_code: '00124504'
+      industry_code: '461'
+      stock_code: '047050'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '463':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 비엘팜텍
+      corp_code: 00384717
+      industry_code: '463'
+      stock_code: '065170'
+    - company_name: 대산F&B
+      corp_code: 00390860
+      industry_code: '463'
+      stock_code: '065150'
+    - company_name: 신라에스지
+      corp_code: '00136004'
+      industry_code: '463'
+      stock_code: 025870
+    - company_name: 바이온
+      corp_code: 00232089
+      industry_code: '463'
+      stock_code: 032980
+    - company_name: 나라셀라
+      corp_code: 01021639
+      industry_code: '463'
+      stock_code: '405920'
+    - company_name: 맘스터치앤컴퍼니
+      corp_code: 01089855
+      industry_code: '463'
+      stock_code: '220630'
+    - company_name: 교촌에프앤비
+      corp_code: 00453284
+      industry_code: '463'
+      stock_code: '339770'
+    - company_name: 현대코퍼레이션홀딩스
+      corp_code: 01108099
+      industry_code: '463'
+      stock_code: '227840'
+    - company_name: CJ프레시웨이
+      corp_code: 00127954
+      industry_code: '463'
+      stock_code: '051500'
+    - company_name: 동서
+      corp_code: 00144395
+      industry_code: '463'
+      stock_code: 026960
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '464':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 퀀타피아
+      corp_code: 00501970
+      industry_code: '464'
+      stock_code: 078940
+    - company_name: 지엘팜텍
+      corp_code: 01042359
+      industry_code: '464'
+      stock_code: '204840'
+    - company_name: 한국화장품
+      corp_code: 00823429
+      industry_code: '464'
+      stock_code: '123690'
+    - company_name: 더블유에스아이
+      corp_code: 01318261
+      industry_code: '464'
+      stock_code: '299170'
+    - company_name: ES큐브
+      corp_code: '00175623'
+      industry_code: '464'
+      stock_code: '050120'
+    - company_name: 케이바이오랩스
+      corp_code: '00255105'
+      industry_code: '464'
+      stock_code: 038530
+    - company_name: 청담글로벌
+      corp_code: '01534577'
+      industry_code: '464'
+      stock_code: '362320'
+    - company_name: 윌비스
+      corp_code: 00104999
+      industry_code: '464'
+      stock_code: 008600
+    - company_name: 삼천리자전거
+      corp_code: 00128607
+      industry_code: '464'
+      stock_code: 024950
+    - company_name: 미스토홀딩스
+      corp_code: 00195229
+      industry_code: '464'
+      stock_code: 081660
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '465':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 한울비앤씨
+      corp_code: 00820389
+      industry_code: '465'
+      stock_code: '214870'
+    - company_name: 엠젠솔루션
+      corp_code: 00110884
+      industry_code: '465'
+      stock_code: 032790
+    - company_name: 대한과학
+      corp_code: 00608316
+      industry_code: '465'
+      stock_code: '131220'
+    - company_name: 신흥
+      corp_code: 00173795
+      industry_code: '465'
+      stock_code: 004080
+    - company_name: 제이씨현시스템
+      corp_code: '00223513'
+      industry_code: '465'
+      stock_code: '033320'
+    - company_name: 카스
+      corp_code: '00152260'
+      industry_code: '465'
+      stock_code: 016920
+    - company_name: 매커스
+      corp_code: 00596677
+      industry_code: '465'
+      stock_code: 093520
+    - company_name: 휴맥스
+      corp_code: 00787057
+      industry_code: '465'
+      stock_code: '115160'
+    - company_name: ISC
+      corp_code: 00572905
+      industry_code: '465'
+      stock_code: 095340
+    - company_name: 다우데이타
+      corp_code: 00238782
+      industry_code: '465'
+      stock_code: 032190
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '467':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 세우글로벌
+      corp_code: '00134176'
+      industry_code: '467'
+      stock_code: '013000'
+    - company_name: 신풍
+      corp_code: 00137368
+      industry_code: '467'
+      stock_code: 002870
+    - company_name: 블루엠텍
+      corp_code: 01559637
+      industry_code: '467'
+      stock_code: '439580'
+    - company_name: 한솔피엔에스
+      corp_code: '00103626'
+      industry_code: '467'
+      stock_code: '010420'
+    - company_name: 원익큐브
+      corp_code: 00128175
+      industry_code: '467'
+      stock_code: 014190
+    - company_name: 남성
+      corp_code: 00172185
+      industry_code: '467'
+      stock_code: '004270'
+    - company_name: HC홈센타
+      corp_code: 00288495
+      industry_code: '467'
+      stock_code: '060560'
+    - company_name: 리드코프
+      corp_code: 00117708
+      industry_code: '467'
+      stock_code: '012700'
+    - company_name: SK네트웍스
+      corp_code: 00131780
+      industry_code: '467'
+      stock_code: '001740'
+    - company_name: 삼성물산
+      corp_code: 00149655
+      industry_code: '467'
+      stock_code: 028260
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '468':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 디에이치엑스컴퍼니
+      corp_code: 00180865
+      industry_code: '468'
+      stock_code: 031860
+    - company_name: 메디앙스
+      corp_code: 00267854
+      industry_code: '468'
+      stock_code: '014100'
+    - company_name: 소노스퀘어
+      corp_code: 00104810
+      industry_code: '468'
+      stock_code: '007720'
+    - company_name: SG세계물산
+      corp_code: '00133511'
+      industry_code: '468'
+      stock_code: '004060'
+    - company_name: STX
+      corp_code: 00138297
+      industry_code: '468'
+      stock_code: 011810
+    - company_name: 우리엔터프라이즈
+      corp_code: 00155692
+      industry_code: '468'
+      stock_code: '037400'
+    - company_name: GS글로벌
+      corp_code: 00138190
+      industry_code: '468'
+      stock_code: '001250'
+    - company_name: 화승인더스트리
+      corp_code: '00166227'
+      industry_code: '468'
+      stock_code: '006060'
+    - company_name: 현대코퍼레이션
+      corp_code: 00164812
+      industry_code: '468'
+      stock_code: '011760'
+    - company_name: LS네트웍스
+      corp_code: 00104698
+      industry_code: '468'
+      stock_code: 000680
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '471':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: HLB글로벌
+      corp_code: 00169048
+      industry_code: '471'
+      stock_code: 003580
+    - company_name: 대구백화점
+      corp_code: 00108977
+      industry_code: '471'
+      stock_code: '006370'
+    - company_name: 베뉴지
+      corp_code: 00267906
+      industry_code: '471'
+      stock_code: 019010
+    - company_name: 경방
+      corp_code: 00101628
+      industry_code: '471'
+      stock_code: '000050'
+    - company_name: 한화갤러리아
+      corp_code: '01722437'
+      industry_code: '471'
+      stock_code: '452260'
+    - company_name: BGF리테일
+      corp_code: '01263022'
+      industry_code: '471'
+      stock_code: '282330'
+    - company_name: GS리테일
+      corp_code: '00140177'
+      industry_code: '471'
+      stock_code: '007070'
+    - company_name: 현대백화점
+      corp_code: 00428251
+      industry_code: '471'
+      stock_code: 069960
+    - company_name: 신세계
+      corp_code: 00136378
+      industry_code: '471'
+      stock_code: '004170'
+    - company_name: 롯데쇼핑
+      corp_code: '00120526'
+      industry_code: '471'
+      stock_code: '023530'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '493':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 국보
+      corp_code: 00104519
+      industry_code: '493'
+      stock_code: '001140'
+    - company_name: 한익스프레스
+      corp_code: 00129509
+      industry_code: '493'
+      stock_code: '014130'
+    - company_name: 인터지스
+      corp_code: 00151368
+      industry_code: '493'
+      stock_code: '129260'
+    - company_name: 케이씨티시
+      corp_code: '00103042'
+      industry_code: '493'
+      stock_code: 009070
+    - company_name: 세방
+      corp_code: 00133812
+      industry_code: '493'
+      stock_code: '004360'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '501':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: STX그린로지스
+      corp_code: 01784394
+      industry_code: '501'
+      stock_code: '465770'
+    - company_name: 흥아해운
+      corp_code: 00167208
+      industry_code: '501'
+      stock_code: 003280
+    - company_name: 대한해운
+      corp_code: '00113535'
+      industry_code: '501'
+      stock_code: 005880
+    - company_name: 팬오션
+      corp_code: '00122737'
+      industry_code: '501'
+      stock_code: 028670
+    - company_name: HMM
+      corp_code: '00164645'
+      industry_code: '501'
+      stock_code: '011200'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '511':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 트리니티항공
+      corp_code: '00671376'
+      industry_code: '511'
+      stock_code: 091810
+    - company_name: 제주항공
+      corp_code: 00555874
+      industry_code: '511'
+      stock_code: 089590
+    - company_name: 아시아나항공
+      corp_code: 00138792
+      industry_code: '511'
+      stock_code: '020560'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '581':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 스포츠서울
+      corp_code: 00298687
+      industry_code: '581'
+      stock_code: 039670
+    - company_name: 골드앤에스
+      corp_code: 00249502
+      industry_code: '581'
+      stock_code: 035290
+    - company_name: 디앤씨미디어
+      corp_code: 01186404
+      industry_code: '581'
+      stock_code: '263720'
+    - company_name: 예림당
+      corp_code: 00259934
+      industry_code: '581'
+      stock_code: '036000'
+    - company_name: 비상교육
+      corp_code: 00520887
+      industry_code: '581'
+      stock_code: '100220'
+    - company_name: 메가스터디
+      corp_code: 00422284
+      industry_code: '581'
+      stock_code: 072870
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '582':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 모바일어플라이언스
+      corp_code: '00556615'
+      industry_code: '582'
+      stock_code: 087260
+    - company_name: 비트컴퓨터
+      corp_code: '00231707'
+      industry_code: '582'
+      stock_code: 032850
+    - company_name: 비즈니스온커뮤니케이션
+      corp_code: '01014657'
+      industry_code: '582'
+      stock_code: '138580'
+    - company_name: 아톤
+      corp_code: 00595182
+      industry_code: '582'
+      stock_code: '158430'
+    - company_name: 티사이언티픽
+      corp_code: 00372688
+      industry_code: '582'
+      stock_code: 057680
+    - company_name: 한컴위드
+      corp_code: 00363592
+      industry_code: '582'
+      stock_code: 054920
+    - company_name: 셀바스AI
+      corp_code: '00666064'
+      industry_code: '582'
+      stock_code: '108860'
+    - company_name: 액토즈소프트
+      corp_code: 00348034
+      industry_code: '582'
+      stock_code: 052790
+    - company_name: 네오위즈
+      corp_code: 00628860
+      industry_code: '582'
+      stock_code: 095660
+    - company_name: KG이니시스
+      corp_code: '00264547'
+      industry_code: '582'
+      stock_code: '035600'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '591':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 아센디오
+      corp_code: '00145437'
+      industry_code: '591'
+      stock_code: '012170'
+    - company_name: 한주에이알티
+      corp_code: '00146427'
+      industry_code: '591'
+      stock_code: 058450
+    - company_name: 삼화네트웍스
+      corp_code: '00301112'
+      industry_code: '591'
+      stock_code: 046390
+    - company_name: 바른손이앤에이
+      corp_code: 00259590
+      industry_code: '591'
+      stock_code: '035620'
+    - company_name: 팬엔터테인먼트
+      corp_code: 00397191
+      industry_code: '591'
+      stock_code: 068050
+    - company_name: 아이에이치큐
+      corp_code: '00154426'
+      industry_code: '591'
+      stock_code: '003560'
+    - company_name: 스튜디오에스
+      corp_code: 00280688
+      industry_code: '591'
+      stock_code: '046140'
+    - company_name: 초록뱀미디어
+      corp_code: 00299464
+      industry_code: '591'
+      stock_code: 047820
+    - company_name: 콘텐트리중앙
+      corp_code: '00203315'
+      industry_code: '591'
+      stock_code: '036420'
+    - company_name: CJ CGV
+      corp_code: 00303873
+      industry_code: '591'
+      stock_code: 079160
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '592':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 알비더블유
+      corp_code: 01303029
+      industry_code: '592'
+      stock_code: '361570'
+    - company_name: 큐브엔터
+      corp_code: 00985686
+      industry_code: '592'
+      stock_code: '182360'
+    - company_name: 와이지엔터테인먼트
+      corp_code: 00613318
+      industry_code: '592'
+      stock_code: '122870'
+    - company_name: 하이브
+      corp_code: '01204056'
+      industry_code: '592'
+      stock_code: '352820'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '602':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 씨씨에스
+      corp_code: 00249441
+      industry_code: '602'
+      stock_code: 066790
+    - company_name: 티비씨
+      corp_code: '00204642'
+      industry_code: '602'
+      stock_code: 033830
+    - company_name: KNN
+      corp_code: 00208134
+      industry_code: '602'
+      stock_code: 058400
+    - company_name: KX
+      corp_code: 00657987
+      industry_code: '602'
+      stock_code: '122450'
+    - company_name: 케이티스카이라이프
+      corp_code: 00349097
+      industry_code: '602'
+      stock_code: '053210'
+    - company_name: LG헬로비전
+      corp_code: '00222532'
+      industry_code: '602'
+      stock_code: '037560'
+    - company_name: SBS
+      corp_code: '00130772'
+      industry_code: '602'
+      stock_code: '034120'
+    - company_name: CJ ENM
+      corp_code: '00265324'
+      industry_code: '602'
+      stock_code: '035760'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '612':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 인스코비
+      corp_code: 00122825
+      industry_code: '612'
+      stock_code: 006490
+    - company_name: 케이엘넷
+      corp_code: '00246620'
+      industry_code: '612'
+      stock_code: 039420
+    - company_name: 인포바인
+      corp_code: 00491415
+      industry_code: '612'
+      stock_code: '115310'
+    - company_name: 와이어블
+      corp_code: '00250137'
+      industry_code: '612'
+      stock_code: '065530'
+    - company_name: 버킷스튜디오
+      corp_code: 00378220
+      industry_code: '612'
+      stock_code: '066410'
+    - company_name: 아이즈비전
+      corp_code: 00200910
+      industry_code: '612'
+      stock_code: '031310'
+    - company_name: 드림라인
+      corp_code: 00249034
+      industry_code: '612'
+      stock_code: '035430'
+    - company_name: 한국정보통신
+      corp_code: 00159342
+      industry_code: '612'
+      stock_code: '025770'
+    - company_name: 나이스정보통신
+      corp_code: 00264945
+      industry_code: '612'
+      stock_code: 036800
+    - company_name: 에스케이브로드밴드
+      corp_code: 00243988
+      industry_code: '612'
+      stock_code: '033630'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '631':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 소리바다
+      corp_code: 00352718
+      industry_code: '631'
+      stock_code: '053110'
+    - company_name: 유엔젤
+      corp_code: '00416654'
+      industry_code: '631'
+      stock_code: '072130'
+    - company_name: 디지틀조선
+      corp_code: '00231442'
+      industry_code: '631'
+      stock_code: '033130'
+    - company_name: 한일네트웍스
+      corp_code: '00277736'
+      industry_code: '631'
+      stock_code: '046110'
+    - company_name: 텔코웨어
+      corp_code: 00361488
+      industry_code: '631'
+      stock_code: 078000
+    - company_name: YG PLUS
+      corp_code: 00249247
+      industry_code: '631'
+      stock_code: '037270'
+    - company_name: 케이아이엔엑스
+      corp_code: 00603348
+      industry_code: '631'
+      stock_code: 093320
+    - company_name: 키다리스튜디오
+      corp_code: '00140131'
+      industry_code: '631'
+      stock_code: '020120'
+    - company_name: 카페24
+      corp_code: 00260879
+      industry_code: '631'
+      stock_code: '042000'
+    - company_name: 다우기술
+      corp_code: 00176914
+      industry_code: '631'
+      stock_code: 023590
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '639':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 지유온
+      corp_code: 00689418
+      industry_code: '639'
+      stock_code: '111820'
+    - company_name: 팍스넷
+      corp_code: '00334624'
+      industry_code: '639'
+      stock_code: 038160
+    - company_name: 서울평가정보
+      corp_code: '00260745'
+      industry_code: '639'
+      stock_code: '036120'
+    - company_name: 이크레더블
+      corp_code: 00634728
+      industry_code: '639'
+      stock_code: 092130
+    - company_name: 에프앤가이드
+      corp_code: '00331016'
+      industry_code: '639'
+      stock_code: 064850
+    - company_name: 인포뱅크
+      corp_code: '00243757'
+      industry_code: '639'
+      stock_code: 039290
+    - company_name: THE E&M
+      corp_code: 00519252
+      industry_code: '639'
+      stock_code: 089230
+    - company_name: 이글루
+      corp_code: 00364847
+      industry_code: '639'
+      stock_code: 067920
+    - company_name: KTcs
+      corp_code: 00372882
+      industry_code: '639'
+      stock_code: 058850
+    - company_name: NICE평가정보
+      corp_code: 00158325
+      industry_code: '639'
+      stock_code: 030190
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '641':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 제주은행
+      corp_code: 00148832
+      industry_code: '641'
+      stock_code: '006220'
+    - company_name: 전북은행
+      corp_code: 00147295
+      industry_code: '641'
+      stock_code: '006350'
+    - company_name: 아이엠뱅크
+      corp_code: 00109019
+      industry_code: '641'
+      stock_code: '005270'
+    - company_name: 부산은행
+      corp_code: '00124106'
+      industry_code: '641'
+      stock_code: 005280
+    - company_name: 한국스탠다드차타드은행
+      corp_code: 00148504
+      industry_code: '641'
+      stock_code: '000110'
+    - company_name: 기업은행
+      corp_code: 00149646
+      industry_code: '641'
+      stock_code: '024110'
+    - company_name: 우리은행
+      corp_code: '00254045'
+      industry_code: '641'
+      stock_code: '000030'
+    - company_name: 하나은행
+      corp_code: 00158909
+      industry_code: '641'
+      stock_code: 004940
+    - company_name: 국민은행
+      corp_code: 00386937
+      industry_code: '641'
+      stock_code: '060000'
+    - company_name: 신한은행
+      corp_code: 00149293
+      industry_code: '641'
+      stock_code: '000010'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '642':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 에스유앤피
+      corp_code: '00136642'
+      industry_code: '642'
+      stock_code: 019590
+    - company_name: 린드먼아시아
+      corp_code: 00616962
+      industry_code: '642'
+      stock_code: '277070'
+    - company_name: 플루토스
+      corp_code: '00110750'
+      industry_code: '642'
+      stock_code: 019570
+    - company_name: 신한글로벌액티브리츠
+      corp_code: 01714997
+      industry_code: '642'
+      stock_code: '481850'
+    - company_name: TS인베스트먼트
+      corp_code: 00778235
+      industry_code: '642'
+      stock_code: '246690'
+    - company_name: DSC인베스트먼트
+      corp_code: 01109715
+      industry_code: '642'
+      stock_code: '241520'
+    - company_name: 스틱인베스트먼트
+      corp_code: 00117498
+      industry_code: '642'
+      stock_code: 026890
+    - company_name: 한국자산신탁
+      corp_code: '00404701'
+      industry_code: '642'
+      stock_code: '123890'
+    - company_name: 한국토지신탁
+      corp_code: '00233653'
+      industry_code: '642'
+      stock_code: 034830
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '649':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: CS홀딩스
+      corp_code: 00149026
+      industry_code: '649'
+      stock_code: 000590
+    - company_name: 크라운해태홀딩스
+      corp_code: '00153126'
+      industry_code: '649'
+      stock_code: '005740'
+    - company_name: F&F 홀딩스
+      corp_code: 00126487
+      industry_code: '649'
+      stock_code: '007700'
+    - company_name: 삼양홀딩스
+      corp_code: 00126937
+      industry_code: '649'
+      stock_code: '000070'
+    - company_name: 효성
+      corp_code: 00117188
+      industry_code: '649'
+      stock_code: 004800
+    - company_name: 오리온홀딩스
+      corp_code: '00117577'
+      industry_code: '649'
+      stock_code: 001800
+    - company_name: 산은캐피탈
+      corp_code: '00260356'
+      industry_code: '649'
+      stock_code: 008270
+    - company_name: SK디스커버리
+      corp_code: 00131832
+      industry_code: '649'
+      stock_code: '006120'
+    - company_name: 하림지주
+      corp_code: 00148364
+      industry_code: '649'
+      stock_code: 003380
+    - company_name: HD한국조선해양
+      corp_code: 00164830
+      industry_code: '649'
+      stock_code: 009540
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '651':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 서울보증보험
+      corp_code: 00112998
+      industry_code: '651'
+      stock_code: '031210'
+    - company_name: 한화손해보험
+      corp_code: 00135917
+      industry_code: '651'
+      stock_code: '000370'
+    - company_name: 미래에셋생명
+      corp_code: '00112332'
+      industry_code: '651'
+      stock_code: 085620
+    - company_name: 동양생명
+      corp_code: '00117267'
+      industry_code: '651'
+      stock_code: 082640
+    - company_name: 메리츠화재해상보험
+      corp_code: '00117744'
+      industry_code: '651'
+      stock_code: '000060'
+    - company_name: KB손해보험
+      corp_code: '00120216'
+      industry_code: '651'
+      stock_code: '002550'
+    - company_name: 현대해상
+      corp_code: 00164973
+      industry_code: '651'
+      stock_code: '001450'
+    - company_name: DB손해보험
+      corp_code: 00159102
+      industry_code: '651'
+      stock_code: 005830
+    - company_name: 삼성화재해상보험
+      corp_code: 00139214
+      industry_code: '651'
+      stock_code: 000810
+    - company_name: 한화생명
+      corp_code: 00113058
+      industry_code: '651'
+      stock_code: 088350
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '661':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 상상인증권
+      corp_code: 00112059
+      industry_code: '661'
+      stock_code: 001290
+    - company_name: 한양증권
+      corp_code: '00162416'
+      industry_code: '661'
+      stock_code: '001750'
+    - company_name: 부국증권
+      corp_code: '00123772'
+      industry_code: '661'
+      stock_code: '001270'
+    - company_name: 신영증권
+      corp_code: '00136721'
+      industry_code: '661'
+      stock_code: '001720'
+    - company_name: 유진증권
+      corp_code: '00131054'
+      industry_code: '661'
+      stock_code: '001200'
+    - company_name: 현대차증권
+      corp_code: 00137997
+      industry_code: '661'
+      stock_code: '001500'
+    - company_name: 교보증권
+      corp_code: 00113359
+      industry_code: '661'
+      stock_code: '030610'
+    - company_name: 유안타증권
+      corp_code: '00117601'
+      industry_code: '661'
+      stock_code: '003470'
+    - company_name: 대신증권
+      corp_code: 00110893
+      industry_code: '661'
+      stock_code: '003540'
+    - company_name: 케이비증권
+      corp_code: 00164876
+      industry_code: '661'
+      stock_code: '003450'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '681':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 케이씨더블류
+      corp_code: '00175650'
+      industry_code: '681'
+      stock_code: 068060
+    - company_name: JK리버스톤리츠
+      corp_code: 01035289
+      industry_code: '681'
+      stock_code: '204210'
+    - company_name: 케이탑리츠
+      corp_code: 00861076
+      industry_code: '681'
+      stock_code: '145270'
+    - company_name: 부방
+      corp_code: '00243067'
+      industry_code: '681'
+      stock_code: '014470'
+    - company_name: 디티씨
+      corp_code: '00371740'
+      industry_code: '681'
+      stock_code: '066670'
+    - company_name: 이지스레지던스리츠
+      corp_code: 01436628
+      industry_code: '681'
+      stock_code: '350520'
+    - company_name: 이지스밸류플러스리츠
+      corp_code: 01394377
+      industry_code: '681'
+      stock_code: '334890'
+    - company_name: 자이에스앤디
+      corp_code: 00367844
+      industry_code: '681'
+      stock_code: '317400'
+    - company_name: 제이알글로벌리츠
+      corp_code: 01415892
+      industry_code: '681'
+      stock_code: '348950'
+    - company_name: 신한알파리츠
+      corp_code: 01276594
+      industry_code: '681'
+      stock_code: '293940'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '701':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 페니트리움바이오
+      corp_code: 01409022
+      industry_code: '701'
+      stock_code: '187660'
+    - company_name: 내츄럴엔도텍
+      corp_code: 00923792
+      industry_code: '701'
+      stock_code: '168330'
+    - company_name: 큐리언트
+      corp_code: '01042650'
+      industry_code: '701'
+      stock_code: '115180'
+    - company_name: 에이비온
+      corp_code: 00977377
+      industry_code: '701'
+      stock_code: '203400'
+    - company_name: 인바이츠바이오코아
+      corp_code: '00537221'
+      industry_code: '701'
+      stock_code: '216400'
+    - company_name: 메지온
+      corp_code: 00808022
+      industry_code: '701'
+      stock_code: '140410'
+    - company_name: 제넨바이오
+      corp_code: 00408956
+      industry_code: '701'
+      stock_code: '072520'
+    - company_name: 랩지노믹스
+      corp_code: '00545114'
+      industry_code: '701'
+      stock_code: 084650
+    - company_name: 제넥신
+      corp_code: 00545929
+      industry_code: '701'
+      stock_code: 095700
+    - company_name: 리가켐바이오
+      corp_code: 00842619
+      industry_code: '701'
+      stock_code: '141080'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '715':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 솔본
+      corp_code: 00249982
+      industry_code: '715'
+      stock_code: '035610'
+    - company_name: 유수홀딩스
+      corp_code: 00163691
+      industry_code: '715'
+      stock_code: '000700'
+    - company_name: 성창기업지주
+      corp_code: '00133335'
+      industry_code: '715'
+      stock_code: 000180
+    - company_name: 제일파마홀딩스
+      corp_code: 00148443
+      industry_code: '715'
+      stock_code: '002620'
+    - company_name: 대성홀딩스
+      corp_code: 00108940
+      industry_code: '715'
+      stock_code: '016710'
+    - company_name: INVENI
+      corp_code: '00105101'
+      industry_code: '715'
+      stock_code: '015360'
+    - company_name: 아세아
+      corp_code: 00138701
+      industry_code: '715'
+      stock_code: '002030'
+    - company_name: NICE
+      corp_code: 00158316
+      industry_code: '715'
+      stock_code: '034310'
+    - company_name: 녹십자홀딩스
+      corp_code: 00108135
+      industry_code: '715'
+      stock_code: '005250'
+    - company_name: 웅진
+      corp_code: '00143651'
+      industry_code: '715'
+      stock_code: 016880
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '721':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 한성크린텍
+      corp_code: 00389998
+      industry_code: '721'
+      stock_code: 066980
+    - company_name: 앱튼
+      corp_code: 01228515
+      industry_code: '721'
+      stock_code: '270520'
+    - company_name: 한전산업
+      corp_code: 00194947
+      industry_code: '721'
+      stock_code: '130660'
+    - company_name: 희림
+      corp_code: 00236863
+      industry_code: '721'
+      stock_code: '037440'
+    - company_name: 유신
+      corp_code: '00144650'
+      industry_code: '721'
+      stock_code: 054930
+    - company_name: 한미글로벌
+      corp_code: '00413523'
+      industry_code: '721'
+      stock_code: 053690
+    - company_name: 도화엔지니어링
+      corp_code: '00114552'
+      industry_code: '721'
+      stock_code: '002150'
+    - company_name: 포스코DX
+      corp_code: '00155212'
+      industry_code: '721'
+      stock_code: '022100'
+    - company_name: 한전기술
+      corp_code: 00159209
+      industry_code: '721'
+      stock_code: 052690
+    - company_name: 한양이엔지
+      corp_code: '00216762'
+      industry_code: '721'
+      stock_code: '045100'
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '761':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 바다로19호선박투자회사
+      corp_code: 00910947
+      industry_code: '761'
+      stock_code: '155900'
+    - company_name: 쏘카
+      corp_code: '01026157'
+      industry_code: '761'
+      stock_code: '403550'
+    - company_name: 에스케이렌터카
+      corp_code: '00201450'
+      industry_code: '761'
+      stock_code: 068400
+    - company_name: 롯데렌탈
+      corp_code: '00545716'
+      industry_code: '761'
+      stock_code: 089860
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+  '855':
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
+    peers:
+    - company_name: 메가엠디
+      corp_code: 00807555
+      industry_code: '855'
+      stock_code: '133750'
+    - company_name: 정상제이엘에스
+      corp_code: 00287788
+      industry_code: '855'
+      stock_code: '040420'
+    - company_name: 아이비김영
+      corp_code: '01414422'
+      industry_code: '855'
+      stock_code: '339950'
+    - company_name: 크레버스
+      corp_code: 00525882
+      industry_code: '855'
+      stock_code: 096240
+    - company_name: 디지털대성
+      corp_code: 00398808
+      industry_code: '855'
+      stock_code: 068930
+    selection:
+      industry_key_length: 3
+      max_peers: 10
+      rule: middle_class_induty_code_asset_quantile_peers
+      source: OpenDART company profile induty_code
+version: 1

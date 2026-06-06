@@ -442,6 +442,54 @@ industries:
     assert result["peers"][0]["corp_code"] == "00401731"
 
 
+def test_industry_benchmark_uses_middle_class_industry_key(tmp_path, monkeypatch) -> None:
+    config = tmp_path / "peers.yaml"
+    config.write_text(
+        """
+industries:
+  "313":
+    selection: {max_peers: 1}
+    peers:
+      - {corp_code: "00000001", company_name: 피어, stock_code: "000001", industry_code: "313"}
+""",
+        encoding="utf-8",
+    )
+
+    monkeypatch.setattr(
+        benchmark_module,
+        "load_normalized_financials",
+        lambda corp_code, years: pd.DataFrame({"corp_code": [corp_code]}),
+    )
+    monkeypatch.setattr(
+        benchmark_module,
+        "build_ratio_report",
+        lambda frame, years: pd.DataFrame(
+            [
+                {
+                    "id": "roe",
+                    "category": "profitability",
+                    "name": "ROE",
+                    "year": 2019,
+                    "value": 1.0,
+                    "status": "computed",
+                }
+            ]
+        ),
+    )
+
+    result = benchmark_module.build_industry_benchmark(
+        "00409681",
+        [2018, 2019],
+        peer_config_path=config,
+        company_profile={"stock_name": "아스트", "induty_code": "31322"},
+        ensure_data=lambda *args, **kwargs: None,
+    )
+
+    assert result["industry_code"] == "313"
+    assert result["raw_industry_code"] == "31322"
+    assert result["peers"][0]["industry_code"] == "313"
+
+
 def test_industry_perspective_accepts_mock_agent(monkeypatch) -> None:
     class FakeAgent:
         async def run(self, prompt: str) -> SimpleNamespace:

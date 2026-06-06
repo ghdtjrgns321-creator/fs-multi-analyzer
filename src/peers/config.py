@@ -9,6 +9,7 @@ import yaml
 from pydantic import BaseModel, Field
 
 from config.settings import settings
+from src.peers.industry_code import industry_key
 
 DEFAULT_PEER_CONFIG = settings.config_dir / "industry_peers.yaml"
 
@@ -31,14 +32,15 @@ def load_peer_config(
     industry_code: str,
     path: Path | None = None,
 ) -> IndustryPeerConfig:
-    """Load configured peers for one DART industry code."""
+    """Load configured peers for one DART middle-class industry key."""
 
+    key = industry_key(industry_code)
     with (path or DEFAULT_PEER_CONFIG).open(encoding="utf-8") as file:
         payload = yaml.safe_load(file) or {}
-    config = payload.get("industries", {}).get(industry_code)
+    config = payload.get("industries", {}).get(key)
     if not config:
-        raise KeyError(f"피어 미구성: industry_code={industry_code}")
-    return IndustryPeerConfig.model_validate({"industry_code": industry_code, **config})
+        raise KeyError(f"피어 미구성: industry_code={key}")
+    return IndustryPeerConfig.model_validate({"industry_code": key, **config})
 
 
 def filter_same_industry(
@@ -53,7 +55,7 @@ def filter_same_industry(
         if company_provider is not None:
             profile = company_provider(peer.corp_code)
             industry_code = str(profile.get("induty_code", industry_code))
-        if industry_code == config.industry_code:
+        if industry_key(industry_code) == config.industry_code:
             peers.append(peer)
     max_peers = int(config.selection.get("max_peers", len(peers)))
     return peers[:max_peers]
