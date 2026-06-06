@@ -89,6 +89,9 @@ def find_account_note_sections(
 ) -> list[NoteSection]:
     mapping = yaml.safe_load(mapping_path.read_text(encoding="utf-8"))["account_notes"][account]
     path = notes_root / fs_div / f"{mapping['note_code']}.html"
+    # 주석 미수집(finstate만 받은 회사 등)이면 해당 계정 섹션 없음으로 degrade한다.
+    if not path.exists():
+        return []
     sections = parse_note_html(
         path.read_text(encoding="utf-8"),
         corp_code=corp_code,
@@ -101,14 +104,10 @@ def find_account_note_sections(
     matched = []
     for section in sections:
         hits = [
-            keyword
-            for keyword in keywords
-            if keyword in section.text or keyword in section.title
+            keyword for keyword in keywords if keyword in section.text or keyword in section.title
         ]
         if hits:
-            matched.append(
-                NoteSection(**{**section.__dict__, "matched_keywords": hits})
-            )
+            matched.append(NoteSection(**{**section.__dict__, "matched_keywords": hits}))
     return matched or sections[:1]
 
 
