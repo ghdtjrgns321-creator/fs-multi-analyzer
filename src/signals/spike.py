@@ -17,7 +17,7 @@ def run_signal_spike(
 
     target_years = years or DEFAULT_YEARS
     frame = load_normalized_financials(corp_code, target_years)
-    return build_mvp1_signal_report(frame)
+    return build_mvp1_signal_report(frame, years=target_years)
 
 
 def main() -> None:

@@ -20,30 +20,29 @@ class PeerCompany(BaseModel):
     industry_code: str
 
 
-class TargetPeerConfig(BaseModel):
-    company_name: str
+class IndustryPeerConfig(BaseModel):
     industry_code: str
     selection: dict[str, object] = Field(default_factory=dict)
-    caveat: str = ""
+    caveat: str = "대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다."
     peers: list[PeerCompany] = Field(default_factory=list)
 
 
 def load_peer_config(
-    corp_code: str,
+    industry_code: str,
     path: Path | None = None,
-) -> TargetPeerConfig:
-    """Load configured peers for one target company."""
+) -> IndustryPeerConfig:
+    """Load configured peers for one DART industry code."""
 
     with (path or DEFAULT_PEER_CONFIG).open(encoding="utf-8") as file:
         payload = yaml.safe_load(file) or {}
-    target = payload.get("targets", {}).get(corp_code)
-    if not target:
-        raise KeyError(f"peer config not found for {corp_code}")
-    return TargetPeerConfig.model_validate(target)
+    config = payload.get("industries", {}).get(industry_code)
+    if not config:
+        raise KeyError(f"피어 미구성: industry_code={industry_code}")
+    return IndustryPeerConfig.model_validate({"industry_code": industry_code, **config})
 
 
 def filter_same_industry(
-    config: TargetPeerConfig,
+    config: IndustryPeerConfig,
     company_provider: Any | None = None,
 ) -> list[PeerCompany]:
     """Keep peers whose configured/live DART industry code matches the target."""

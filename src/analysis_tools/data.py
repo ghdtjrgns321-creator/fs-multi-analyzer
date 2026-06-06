@@ -33,10 +33,14 @@ def load_normalized_financials(
     frames: list[pd.DataFrame] = []
     for year in years:
         path = db_path(corp_code, year, data_dir or settings.data_dir)
+        if not path.exists():
+            continue
         with duckdb.connect(str(path), read_only=True) as con:
             frame = con.execute(
                 "SELECT corp_code, year, fs_div, sj_div, canonical, account_id, "
                 "label, amount, mapping_status FROM normalized_financials"
             ).fetchdf()
         frames.append(frame)
+    if not frames:
+        return pd.DataFrame(columns=TOOL_COLUMNS)
     return pd.concat(frames, ignore_index=True)[TOOL_COLUMNS]

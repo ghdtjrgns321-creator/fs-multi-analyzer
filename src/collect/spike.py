@@ -23,6 +23,8 @@ def collect_company_years(
     corp_code: str = DEFAULT_CORP_CODE,
     years: tuple[int, ...] = DEFAULT_YEARS,
     data_dir: Path | None = None,
+    include_xbrl: bool = True,
+    include_notes: bool = True,
 ) -> dict[str, object]:
     """Collect raw financial statements and XBRL zip files for a company."""
 
@@ -30,8 +32,8 @@ def collect_company_years(
         return {"status": "skipped", "reason": "DART_API_KEY is not configured"}
 
     collector = DartCollector()
-    note_collector = NoteCollector()
-    note_categories = note_collector.categories()
+    note_collector = NoteCollector() if include_notes else None
+    note_categories = note_collector.categories() if note_collector else []
     root = data_dir or settings.data_dir
     summary: dict[str, object] = {"status": "ok", "corp_code": corp_code, "years": {}}
     years_payload: dict[str, object] = {}
@@ -52,8 +54,8 @@ def collect_company_years(
                 "columns": list(frame.columns),
             }
 
-        report = collector.annual_report(corp_code, year)
-        if report is not None:
+        report = collector.annual_report(corp_code, year) if include_xbrl else None
+        if include_xbrl and report is not None:
             zip_path = raw_dir / "financial_statement_xbrl.zip"
             collector.save_xbrl_zip(report, zip_path)
             year_summary["xbrl_zip"] = {
@@ -62,23 +64,24 @@ def collect_company_years(
                 "path": str(zip_path),
             }
 
-        note_dir = raw_dir / "notes"
-        write_json(
-            {"categories": [category.__dict__ for category in note_categories]},
-            note_dir / "note_categories.json",
-        )
-        detail_summary: dict[str, object] = {}
-        for fs_div, toc in TOCS.items():
-            fs_summary: dict[str, object] = {}
-            for category in note_categories:
-                html = note_collector.detail_html(corp_code, year, toc, category.code)
-                stats = write_note_detail(
-                    html,
-                    note_dir / fs_div / category.code,
-                )
-                fs_summary[category.code] = {"name": category.name, **stats}
-            detail_summary[fs_div] = fs_summary
-        year_summary["notes"]["details"] = detail_summary
+        if note_collector:
+            note_dir = raw_dir / "notes"
+            write_json(
+                {"categories": [category.__dict__ for category in note_categories]},
+                note_dir / "note_categories.json",
+            )
+            detail_summary: dict[str, object] = {}
+            for fs_div, toc in TOCS.items():
+                fs_summary: dict[str, object] = {}
+                for category in note_categories:
+                    html = note_collector.detail_html(corp_code, year, toc, category.code)
+                    stats = write_note_detail(
+                        html,
+                        note_dir / fs_div / category.code,
+                    )
+                    fs_summary[category.code] = {"name": category.name, **stats}
+                detail_summary[fs_div] = fs_summary
+            year_summary["notes"]["details"] = detail_summary
 
         write_json(year_summary, raw_dir / "collection_summary.json")
         years_payload[str(year)] = year_summary

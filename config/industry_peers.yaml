@@ -1,15 +1,13 @@
 # 동종업계 관점(⑥) 피어 후보. 피어는 지표 baseline 계산에만 사용한다.
 
 version: 1
-targets:
-  "00126380":
-    company_name: 삼성전자
-    industry_code: "264"
+industries:
+  "264":
     selection:
       source: OpenDART company profile induty_code
       rule: exact_induty_code_configured_peers
       max_peers: 2
-    caveat: 삼성전자는 사업 다각화 기업이라 단순 업종코드 피어 비교에는 한계가 있다.
+    caveat: 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있다.
     peers:
       - corp_code: "00401731"
         company_name: LG전자

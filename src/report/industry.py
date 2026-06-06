@@ -20,7 +20,11 @@ def industry_material(
 ) -> dict[str, object]:
     """Build deterministic material for the industry perspective."""
 
-    benchmark = benchmark_factory(str(report["corp_code"]), list(report["years"]))  # type: ignore[arg-type]
+    benchmark = benchmark_factory(
+        str(report["corp_code"]),
+        list(report["years"]),  # type: ignore[arg-type]
+        company_profile=report.get("business_domain"),
+    )
     return {
         "scope": "industry reference perspective only; no judgment-field mutation",
         "company_name": report.get("company_name", report["corp_code"]),
@@ -30,7 +34,7 @@ def industry_material(
         "rules": [
             "피어는 지표 baseline 계산에만 사용했다.",
             "피어 주석·교차·5축 분석은 수행하지 않았다.",
-            "삼성전자는 사업 다각화 기업이라 단순 비교 한계를 명시한다.",
+            "대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있음을 명시한다.",
             "업종 비교는 ISA/KSA 520 분석적 절차의 참고 신호일 뿐 확정 근거가 아니다.",
         ],
     }

@@ -137,7 +137,10 @@ async def _assess(
 
 
 def _note_material(report: dict[str, object]) -> dict[str, object]:
-    return note_material(year=int(report["target_year"]))
+    return note_material(
+        corp_code=str(report["corp_code"]),
+        year=int(report["target_year"]),
+    )
 
 
 def _industry_material(report: dict[str, object]) -> dict[str, object]:

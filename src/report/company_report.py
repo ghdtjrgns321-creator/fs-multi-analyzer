@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from src.analysis_tools import load_normalized_financials
+from src.collect.opendart import DartCollector
 from src.report.integrated import (
     build_review_queue,
     payload_for_summary,
@@ -21,27 +22,21 @@ from src.signals.universal import scan_cfs_ofs_gaps, scan_universal_signals
 
 DEFAULT_CORP_CODE = "00126380"
 DEFAULT_YEARS = [2022, 2023, 2024, 2025]
-COMPANY_NAMES = {"00126380": "삼성전자"}
-COMPANY_DOMAINS = {
-    "00126380": {
-        "source": "OpenDART company profile",
-        "stock_name": "삼성전자",
-        "induty_code": "264",
-    }
-}
 
 
 def build_company_report(
     corp_code: str = DEFAULT_CORP_CODE,
     years: list[int] | None = None,
     finding_report_path: Path | None = None,
+    company_provider: Any | None = None,
 ) -> dict[str, object]:
     """Assemble deterministic L4 report inputs for one company."""
 
     target_years = years or DEFAULT_YEARS
     target_year = max(target_years)
     frame = load_normalized_financials(corp_code, target_years)
-    signal_report = build_mvp1_signal_report(frame)
+    company_profile = _company_profile(corp_code, company_provider)
+    signal_report = build_mvp1_signal_report(frame, years=target_years)
     red_flags = extract_red_flags(signal_report, target_year)
     universal_signals = scan_universal_signals(frame, target_year)
     cfs_ofs_signals = scan_cfs_ofs_gaps(frame, target_year)
@@ -61,8 +56,8 @@ def build_company_report(
     latest_snapshot["cfs_ofs_gaps"] = _signal_rows(cfs_ofs_signals)
     return {
         "corp_code": corp_code,
-        "company_name": COMPANY_NAMES.get(corp_code, corp_code),
-        "business_domain": COMPANY_DOMAINS.get(corp_code, {}),
+        "company_name": _company_name(company_profile, corp_code),
+        "business_domain": company_profile,
         "years": target_years,
         "target_year": target_year,
         "review_queue": [item.to_dict() for item in queue],
@@ -71,6 +66,29 @@ def build_company_report(
         "unmapped_material_accounts": unmapped,
         "llm_payload": payload,
     }
+
+
+def _company_profile(corp_code: str, company_provider: Any | None = None) -> dict[str, object]:
+    provider = company_provider
+    if provider is None:
+        try:
+            provider = DartCollector().company
+        except Exception:
+            return {"source": "OpenDART company profile unavailable", "corp_code": corp_code}
+    try:
+        profile = dict(provider(corp_code))
+    except Exception:
+        return {"source": "OpenDART company profile unavailable", "corp_code": corp_code}
+    profile.setdefault("source", "OpenDART company profile")
+    return profile
+
+
+def _company_name(profile: dict[str, object], corp_code: str) -> str:
+    for key in ("stock_name", "corp_name", "corp_name_eng"):
+        value = str(profile.get(key, "")).strip()
+        if value:
+            return value
+    return corp_code
 
 
 def _latest_signal_snapshot(report: dict[str, object], target_year: int) -> dict[str, object]:

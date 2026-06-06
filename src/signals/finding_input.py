@@ -33,11 +33,14 @@ def select_account_signals(
     return [signal for signal in signals if signal.year == year]
 
 
-def signals_to_prompt_payload(signals: list[RedFlagSignal]) -> dict[str, object]:
+def signals_to_prompt_payload(
+    signals: list[RedFlagSignal],
+    scope: str = "deterministic numeric signals only",
+) -> dict[str, object]:
     """Serialize only deterministic signal data for the LLM."""
 
     return {
-        "scope": "삼성전자 2023 CFS MVP1 numeric signals only",
+        "scope": scope,
         "rules": [
             "외부 사실, 뉴스, 업황, 특정 사건을 단정하지 않는다.",
             "normal_explanation은 일반적 가능성으로만 표현한다.",

@@ -21,16 +21,21 @@ def build_industry_benchmark(
     *,
     peer_config_path: Path | None = None,
     collector: DartCollector | None = None,
+    company_profile: dict[str, object] | None = None,
     ensure_data: Callable[..., None] = ensure_peer_financials,
 ) -> dict[str, object]:
     """Build peer median and target percentile for latest-year ratios."""
 
     target_year = max(years)
-    config = load_peer_config(corp_code, peer_config_path)
+    target_profile = company_profile or _target_profile(corp_code, collector)
+    industry_code = str(target_profile.get("induty_code", "")).strip()
+    if not industry_code:
+        raise RuntimeError("피어 미구성: 대상 회사 induty_code 없음")
+    config = load_peer_config(industry_code, peer_config_path)
     provider = collector.company if collector else None
     peers = filter_same_industry(config, provider)
     if not peers:
-        raise RuntimeError("동일 업종코드 피어가 없다.")
+        raise RuntimeError(f"피어 미구성: industry_code={industry_code}")
     peer_years = sorted({target_year - 1, target_year})
     for peer in peers:
         ensure_data(peer.corp_code, peer_years, collector=collector)
@@ -44,9 +49,9 @@ def build_industry_benchmark(
         )
     return {
         "target_corp_code": corp_code,
-        "target_company": config.company_name,
+        "target_company": _profile_name(target_profile, corp_code),
         "target_year": target_year,
-        "industry_code": config.industry_code,
+        "industry_code": industry_code,
         "basis": {
             "standard": "ISA/KSA 520",
             "procedure": "industry_comparison",
@@ -56,6 +61,23 @@ def build_industry_benchmark(
         "peers": [peer.model_dump() for peer in peers],
         "baseline": _baseline(target_ratios, peer_rows),
     }
+
+
+def _target_profile(
+    corp_code: str,
+    collector: DartCollector | None,
+) -> dict[str, object]:
+    if collector is None:
+        return {"corp_code": corp_code}
+    return dict(collector.company(corp_code))
+
+
+def _profile_name(profile: dict[str, object], corp_code: str) -> str:
+    for key in ("stock_name", "corp_name", "corp_name_eng"):
+        value = str(profile.get(key, "")).strip()
+        if value:
+            return value
+    return corp_code
 
 
 def _ratios(corp_code: str, years: list[int], target_year: int) -> list[dict[str, Any]]:

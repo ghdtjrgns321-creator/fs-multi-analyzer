@@ -6,6 +6,15 @@ import pandas as pd
 
 from config.settings import settings
 
+GROWTH_COLUMNS = [
+    "year",
+    "account_a",
+    "account_b",
+    "growth_a_pct",
+    "growth_b_pct",
+    "divergence_pp",
+]
+
 
 def account_series(
     frame: pd.DataFrame,
@@ -68,7 +77,7 @@ def compare_growth(
                 "divergence_pp": divergence,
             }
         )
-    return pd.DataFrame(rows)
+    return pd.DataFrame(rows, columns=GROWTH_COLUMNS)
 
 
 def compute_ratio(

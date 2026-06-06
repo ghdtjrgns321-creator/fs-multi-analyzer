@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 from pathlib import Path
 from typing import Any
 
@@ -137,8 +138,12 @@ def _missing(reason: str) -> dict[str, object]:
 
 
 def main() -> None:
-    frame = load_normalized_financials("00126380", DEFAULT_YEARS)
-    print(build_ratio_report(frame, DEFAULT_YEARS).to_string(index=False))
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--corp-code", default="00126380")
+    parser.add_argument("--years", nargs="+", type=int, default=DEFAULT_YEARS)
+    args = parser.parse_args()
+    frame = load_normalized_financials(args.corp_code, args.years)
+    print(build_ratio_report(frame, args.years).to_string(index=False))
 
 
 if __name__ == "__main__":
