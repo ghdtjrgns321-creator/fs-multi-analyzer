@@ -50,6 +50,18 @@ relationship_chains:
         procedure: impairment_review
         gist: 재고 외 자산 손상 신호와 손상 공시 확장 검토의 보조 근거로 사용한다.
         source_url: https://www.ifrs.org/issued-standards/list-of-standards/ias-36-impairment-of-assets/
+  - id: revenue-contract-progress
+    name: 진행률 수익·계약자산
+    chain: [매출, 계약자산, 계약부채, 공사손실충당부채]
+    audit_basis:
+      - standard: ISA/KSA 520
+        procedure: analytical_procedures
+        gist: 매출과 계약자산 증가율 괴리를 분석적 절차로 검토한다.
+        source_url: https://www.iaasb.org/standards-pronouncements
+      - standard: K-IFRS 1115 / IFRS 15
+        procedure: revenue_recognition_contract_balances
+        gist: 계약자산·계약부채와 수익 인식의 관계를 진행률 수익 검토 근거로 사용한다.
+        source_url: https://www.ifrs.org/issued-standards/list-of-standards/ifrs-15-revenue-from-contracts-with-customers/
   - id: debt-interest-cf
     name: 유동성·계속기업
     chain: [단기차입금, 장기차입금, 사채, 이자비용, 재무활동현금흐름, 차입금만기주석]
@@ -167,6 +179,8 @@ audit_basis:
 l2_mvp1:
   primary_fs_div: CFS
   reference_fs_div: OFS
+  # Deprecated for analysis windows. Signal years are derived from loaded data
+  # or passed explicitly by callers.
   years: [2022, 2023, 2024, 2025]
   yoy_accounts:
     - 현금및현금성자산
@@ -174,6 +188,8 @@ l2_mvp1:
     - 미수금
     - 선급비용
     - 매출채권
+    - 계약자산
+    - 계약부채
     - 재고자산
     - 기타유동자산
     - 관계기업투자
@@ -185,6 +201,7 @@ l2_mvp1:
     - 사채
     - 충당부채
     - 장기충당부채
+    - 공사손실충당부채
     - 유형자산
     - 자본금
     - 지배기업소유주지분
@@ -226,6 +243,10 @@ l2_mvp1:
       name: 매출 vs 재고자산 증가율 괴리
       account_a: 매출
       account_b: 재고자산
+    - id: revenue-vs-contract-asset
+      name: 매출 vs 계약자산 증가율 괴리
+      account_a: 매출
+      account_b: 계약자산
     - id: cogs-vs-inventory
       name: 매출원가 vs 재고자산 증가율 괴리
       account_a: 매출원가
@@ -267,8 +288,15 @@ l2_mvp1:
     yoy_pct_abs: 50
     mix_shift_pp_abs: 5
     z_score_abs: 2
+    universal_z_score_cap: 10
+    signal_strength_cap: 10
     cfs_ofs_gap_pct_abs: 30
-    universal_min_abs_amount: 1000000000000
+    universal_min_pct_of_assets: 1.0
+    universal_min_abs_amount: 100000000
+    asset_sanity_jump_multiple: 100
+    track_split_pct_of_assets: 5.0
+    track_a_quota: 6
+    track_b_quota: 6
     universal_top_n: 12
     direction_red_flags:
       - id: revenue-down-receivable-up

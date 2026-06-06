@@ -18,6 +18,7 @@ OTHER_CANONICAL = "기타 중요 계정"
 class MappingResult:
     canonical: str
     mapping_status: str
+    statement: str = ""
 
 
 class AccountMapper:
@@ -25,10 +26,10 @@ class AccountMapper:
 
     def __init__(self, accounts: list[CanonicalAccount]) -> None:
         self._by_id = {
-            account_id: account.name for account in accounts for account_id in account.account_ids
+            account_id: account for account in accounts for account_id in account.account_ids
         }
         self._by_alias = {
-            normalize_label(alias): account.name
+            normalize_label(alias): account
             for account in accounts
             for alias in account.aliases
         }
@@ -38,7 +39,9 @@ class AccountMapper:
         label = normalize_label(row.get("account_nm", ""))
 
         if account_id in self._by_id:
-            return MappingResult(self._by_id[account_id], EXACT)
+            account = self._by_id[account_id]
+            return MappingResult(account.name, EXACT, account.statement)
         if label in self._by_alias:
-            return MappingResult(self._by_alias[label], ALIAS)
+            account = self._by_alias[label]
+            return MappingResult(account.name, ALIAS, account.statement)
         return MappingResult(OTHER_CANONICAL, UNMAPPED)

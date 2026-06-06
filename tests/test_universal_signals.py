@@ -1,6 +1,6 @@
 import pandas as pd
 
-from src.signals.universal import scan_cfs_ofs_gaps, scan_universal_signals
+from src.signals.universal import preferred_fs_div, scan_cfs_ofs_gaps, scan_universal_signals
 
 
 def frame() -> pd.DataFrame:
@@ -13,6 +13,15 @@ def frame() -> pd.DataFrame:
             "label": "확장중요계정",
             "canonical": "기타 중요 계정",
             "amount": 1_000_000_000_000.0,
+        },
+        {
+            "year": 2024,
+            "fs_div": "CFS",
+            "sj_div": "BS",
+            "account_id": "ifrs-full_Assets",
+            "label": "자산총계",
+            "canonical": "자산총계",
+            "amount": 10_000_000_000_000.0,
         },
         {
             "year": 2025,
@@ -60,3 +69,347 @@ def test_cfs_ofs_gap_flags_consolidation_difference() -> None:
     signal = next(item for item in signals if item.signal_type == "cfs_ofs_gap")
     assert signal.account == "자산총계"
     assert signal.metric_value == 60.0
+
+
+def test_universal_scan_groups_changed_account_id_by_canonical() -> None:
+    data = pd.DataFrame(
+        [
+            {
+                "year": 2024,
+                "fs_div": "CFS",
+                "sj_div": "IS",
+                "account_id": "old_Revenue",
+                "label": "수익",
+                "canonical": "매출",
+                "amount": 100_000_000.0,
+            },
+            {
+                "year": 2025,
+                "fs_div": "CFS",
+                "sj_div": "IS",
+                "account_id": "new_Revenue",
+                "label": "매출액",
+                "canonical": "매출",
+                "amount": 1_000_000_000.0,
+            },
+            {
+                "year": 2024,
+                "fs_div": "CFS",
+                "sj_div": "BS",
+                "account_id": "ifrs-full_Assets",
+                "label": "자산총계",
+                "canonical": "자산총계",
+                "amount": 10_000_000_000.0,
+            },
+            {
+                "year": 2025,
+                "fs_div": "CFS",
+                "sj_div": "BS",
+                "account_id": "ifrs-full_Assets",
+                "label": "자산총계",
+                "canonical": "자산총계",
+                "amount": 10_000_000_000.0,
+            },
+        ]
+    )
+
+    signal = next(
+        item for item in scan_universal_signals(data, 2025) if item.account == "매출"
+    )
+
+    assert signal.signal_type == "universal_yoy"
+    assert signal.metric_value == 900.0
+    assert signal.evidence[0].locator == "new_Revenue|매출액"
+
+
+def test_universal_scan_excludes_configured_bs_subtotals() -> None:
+    data = pd.DataFrame(
+        [
+            {
+                "year": 2024,
+                "fs_div": "CFS",
+                "sj_div": "BS",
+                "account_id": "ifrs-full_CurrentAssets",
+                "label": "유동자산",
+                "canonical": "유동자산",
+                "amount": 1_000_000_000_000.0,
+            },
+            {
+                "year": 2025,
+                "fs_div": "CFS",
+                "sj_div": "BS",
+                "account_id": "ifrs-full_CurrentAssets",
+                "label": "유동자산",
+                "canonical": "유동자산",
+                "amount": 2_000_000_000_000.0,
+            },
+            {
+                "year": 2024,
+                "fs_div": "CFS",
+                "sj_div": "BS",
+                "account_id": "ifrs-full_Assets",
+                "label": "자산총계",
+                "canonical": "자산총계",
+                "amount": 10_000_000_000_000.0,
+            },
+            {
+                "year": 2025,
+                "fs_div": "CFS",
+                "sj_div": "BS",
+                "account_id": "ifrs-full_Assets",
+                "label": "자산총계",
+                "canonical": "자산총계",
+                "amount": 10_000_000_000_000.0,
+            },
+        ]
+    )
+
+    assert scan_universal_signals(data, 2025) == []
+
+
+def test_universal_scan_uses_ofs_when_cfs_series_is_incomplete() -> None:
+    data = pd.DataFrame(
+        [
+            {
+                "year": 2024,
+                "fs_div": "OFS",
+                "sj_div": "BS",
+                "account_id": "custom_cash",
+                "label": "현금",
+                "canonical": "기타 중요 계정",
+                "amount": 100_000_000.0,
+            },
+            {
+                "year": 2024,
+                "fs_div": "OFS",
+                "sj_div": "BS",
+                "account_id": "ifrs-full_Assets",
+                "label": "자산총계",
+                "canonical": "자산총계",
+                "amount": 10_000_000_000.0,
+            },
+            {
+                "year": 2025,
+                "fs_div": "OFS",
+                "sj_div": "BS",
+                "account_id": "custom_cash",
+                "label": "현금",
+                "canonical": "기타 중요 계정",
+                "amount": 1_000_000_000.0,
+            },
+            {
+                "year": 2025,
+                "fs_div": "CFS",
+                "sj_div": "BS",
+                "account_id": "custom_cash",
+                "label": "현금",
+                "canonical": "기타 중요 계정",
+                "amount": 100_000_000.0,
+            },
+            {
+                "year": 2025,
+                "fs_div": "OFS",
+                "sj_div": "BS",
+                "account_id": "ifrs-full_Assets",
+                "label": "자산총계",
+                "canonical": "자산총계",
+                "amount": 10_000_000_000.0,
+            },
+        ]
+    )
+
+    signals = scan_universal_signals(data, 2025)
+
+    assert preferred_fs_div(data, 2025) == "OFS"
+    assert any(item.account == "현금" and item.metric_value == 900.0 for item in signals)
+
+
+def test_universal_scan_excludes_cf_from_level_statistics() -> None:
+    data = pd.DataFrame(
+        [
+            {
+                "year": 2024,
+                "fs_div": "CFS",
+                "sj_div": "CF",
+                "account_id": "cf_jump",
+                "label": "영업활동현금흐름",
+                "canonical": "영업활동현금흐름",
+                "amount": 100_000_000.0,
+            },
+            {
+                "year": 2025,
+                "fs_div": "CFS",
+                "sj_div": "CF",
+                "account_id": "cf_jump",
+                "label": "영업활동현금흐름",
+                "canonical": "영업활동현금흐름",
+                "amount": 10_000_000_000.0,
+            },
+        ]
+    )
+
+    assert scan_universal_signals(data, 2025) == []
+
+
+def test_universal_yoy_skips_small_or_sign_changed_prior_base() -> None:
+    data = pd.DataFrame(
+        [
+            {
+                "year": 2024,
+                "fs_div": "CFS",
+                "sj_div": "IS",
+                "account_id": "small_base",
+                "label": "작은기저",
+                "canonical": "기타 중요 계정",
+                "amount": 10_000_000.0,
+            },
+            {
+                "year": 2025,
+                "fs_div": "CFS",
+                "sj_div": "IS",
+                "account_id": "small_base",
+                "label": "작은기저",
+                "canonical": "기타 중요 계정",
+                "amount": 10_000_000_000.0,
+            },
+            {
+                "year": 2024,
+                "fs_div": "CFS",
+                "sj_div": "IS",
+                "account_id": "sign_flip",
+                "label": "부호반전",
+                "canonical": "기타 중요 계정",
+                "amount": -1_000_000_000.0,
+            },
+            {
+                "year": 2025,
+                "fs_div": "CFS",
+                "sj_div": "IS",
+                "account_id": "sign_flip",
+                "label": "부호반전",
+                "canonical": "기타 중요 계정",
+                "amount": 1_000_000_000.0,
+            },
+        ]
+    )
+
+    signals = scan_universal_signals(data, 2025)
+
+    assert not any(item.account in {"작은기저", "부호반전"} for item in signals)
+
+
+def test_universal_z_score_is_capped() -> None:
+    rows = []
+    for year, amount in zip(
+        [2021, 2022, 2023, 2024, 2025],
+        [100_000_000.0, 101_000_000.0, 99_000_000.0, 100_500_000.0, 1_000_000_000.0],
+        strict=True,
+    ):
+        rows.append(
+            {
+                "year": year,
+                "fs_div": "CFS",
+                "sj_div": "BS",
+                "account_id": "capped_z",
+                "label": "캡대상",
+                "canonical": "기타 중요 계정",
+                "amount": amount,
+            }
+        )
+    data = pd.DataFrame(rows)
+
+    signal = next(
+        item
+        for item in scan_universal_signals(data, 2025)
+        if item.signal_type == "universal_z_score"
+    )
+
+    assert signal.account == "캡대상"
+    assert signal.metric_value == 10.0
+
+
+def test_universal_scan_excludes_asset_sanity_bad_year() -> None:
+    rows = []
+    for year, asset, sales in [
+        (2021, 1_000_000_000_000.0, 100_000_000_000.0),
+        (2022, 1_000_000_000_000_000_000.0, 1_000_000_000_000_000.0),
+        (2023, 1_100_000_000_000.0, 120_000_000_000.0),
+    ]:
+        rows.extend(
+            [
+                {
+                    "year": year,
+                    "fs_div": "CFS",
+                    "sj_div": "BS",
+                    "account_id": "ifrs-full_Assets",
+                    "label": "자산총계",
+                    "canonical": "자산총계",
+                    "amount": asset,
+                },
+                {
+                    "year": year,
+                    "fs_div": "CFS",
+                    "sj_div": "IS",
+                    "account_id": "ifrs-full_Revenue",
+                    "label": "매출",
+                    "canonical": "매출",
+                    "amount": sales,
+                },
+            ]
+        )
+
+    signals = scan_universal_signals(pd.DataFrame(rows), 2022)
+
+    assert signals == []
+
+
+def test_universal_scan_posts_two_track_quotas_without_losing_raw_option() -> None:
+    rows = []
+    for year in [2024, 2025]:
+        rows.append(
+            {
+                "year": year,
+                "fs_div": "CFS",
+                "sj_div": "BS",
+                "account_id": "ifrs-full_Assets",
+                "label": "자산총계",
+                "canonical": "자산총계",
+                "amount": 1_000_000_000_000.0,
+            }
+        )
+    for idx in range(7):
+        for year, amount in [(2024, 100_000_000_000.0), (2025, 200_000_000_000.0 + idx)]:
+            rows.append(
+                {
+                    "year": year,
+                    "fs_div": "CFS",
+                    "sj_div": "IS",
+                    "account_id": f"big_{idx}",
+                    "label": f"규모계정{idx}",
+                    "canonical": "기타 중요 계정",
+                    "amount": amount,
+                }
+            )
+    for idx in range(7):
+        for year, amount in [(2024, 20_000_000_000.0), (2025, 40_000_000_000.0 + idx)]:
+            rows.append(
+                {
+                    "year": year,
+                    "fs_div": "CFS",
+                    "sj_div": "IS",
+                    "account_id": f"small_{idx}",
+                    "label": f"소액계정{idx}",
+                    "canonical": "기타 중요 계정",
+                    "amount": amount,
+                }
+            )
+    data = pd.DataFrame(rows)
+
+    posted = scan_universal_signals(data, 2025)
+    all_signals = scan_universal_signals(data, 2025, include_all=True)
+
+    assert len(posted) == 12
+    assert sum(1 for item in posted if item.track == "A") == 6
+    assert sum(1 for item in posted if item.track == "B") == 6
+    assert len(all_signals) == 14
+    assert all(item.current_amount is not None for item in all_signals)

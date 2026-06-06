@@ -6,8 +6,11 @@ from dataclasses import dataclass
 
 import pandas as pd
 
+from config.settings import settings
+from src.normalize.config import subtotal_account_names
 from src.schemas.findings import EvidenceRef
 from src.signals.config import load_l2_config
+from src.signals.tracks import apply_track_quota, track_for_amount
 
 
 @dataclass(frozen=True)
@@ -19,31 +22,72 @@ class RedFlagSignal:
     description: str
     metric_value: float | str
     evidence: list[EvidenceRef]
+    track: str | None = None
+    magnitude_ratio: float | None = None
+    current_amount: float | None = None
 
 
-def extract_red_flags(report: dict[str, object], target_year: int) -> list[RedFlagSignal]:
+def extract_red_flags(
+    report: dict[str, object],
+    target_year: int,
+    include_all: bool = False,
+) -> list[RedFlagSignal]:
     """Extract configured red-flag signals for one year."""
 
     thresholds = report.get("signal_thresholds") or load_l2_config()["signal_thresholds"]
+    asset_totals = (
+        report.get("asset_totals") if isinstance(report.get("asset_totals"), dict) else {}
+    )
     signals: list[RedFlagSignal] = []
-    signals.extend(_growth_divergence_flags(report["growth_divergences"], target_year, thresholds))
-    signals.extend(_single_yoy_flags(report["primary_yoy"], target_year, thresholds))
-    signals.extend(_direction_flags(report, target_year, thresholds))
-    return signals
+    signals.extend(
+        _growth_divergence_flags(
+            report["growth_divergences"],
+            target_year,
+            thresholds,
+            asset_totals,
+        )
+    )
+    signals.extend(_single_yoy_flags(report["primary_yoy"], target_year, thresholds, asset_totals))
+    signals.extend(_direction_flags(report, target_year, thresholds, asset_totals))
+    if include_all:
+        return signals
+    return apply_track_quota(signals, thresholds, _score)
 
 
 def _growth_divergence_flags(
     frame: pd.DataFrame,
     year: int,
     thresholds: dict,
+    asset_totals: dict,
 ) -> list[RedFlagSignal]:
+    required = {
+        "year",
+        "divergence_pp",
+        "id",
+        "name",
+        "account_a",
+        "account_b",
+        "current_amount_b",
+        "growth_a_pct",
+        "growth_b_pct",
+    }
+    if frame.empty or not required.issubset(frame.columns):
+        return []
     divergence = pd.to_numeric(frame["divergence_pp"], errors="coerce")
     flagged = frame[
         (frame["year"] == year)
         & (divergence.abs() >= float(thresholds["divergence_pp_abs"]))
     ]
-    return [
-        RedFlagSignal(
+    signals = []
+    for row in flagged.itertuples():
+        current_amount = _numeric_or_none(row.current_amount_b)
+        track, magnitude_ratio = track_for_amount(
+            current_amount,
+            asset_totals.get(int(year)),
+            thresholds,
+        )
+        signals.append(
+            RedFlagSignal(
             id=f"divergence:{row.id}:{year}",
             year=year,
             account=row.account_b,
@@ -55,16 +99,43 @@ def _growth_divergence_flags(
                 _evidence(row.account_b, year, f"YoY {row.growth_b_pct:.2f}%"),
                 _evidence(row.id, year, f"divergence {row.divergence_pp:.2f}pp"),
             ],
+            track=track,
+            magnitude_ratio=magnitude_ratio,
+            current_amount=current_amount,
         )
-        for row in flagged.itertuples()
-    ]
+        )
+    return signals
 
 
-def _single_yoy_flags(frame: pd.DataFrame, year: int, thresholds: dict) -> list[RedFlagSignal]:
+def _single_yoy_flags(
+    frame: pd.DataFrame,
+    year: int,
+    thresholds: dict,
+    asset_totals: dict,
+) -> list[RedFlagSignal]:
+    required = {"year", "canonical", "amount", "yoy_growth_pct"}
+    if frame.empty or not required.issubset(frame.columns):
+        return []
     growth = pd.to_numeric(frame["yoy_growth_pct"], errors="coerce")
-    flagged = frame[(frame["year"] == year) & (growth.abs() >= float(thresholds["yoy_pct_abs"]))]
-    return [
-        RedFlagSignal(
+    mask = (frame["year"] == year) & (growth.abs() >= float(thresholds["yoy_pct_abs"]))
+    if "sj_div" in frame.columns:
+        mask &= frame["sj_div"] != "CF"
+    if "valid_yoy_base" in frame.columns:
+        mask &= frame["valid_yoy_base"].fillna(False).astype(bool)
+    subtotals = subtotal_account_names(settings.config_dir / "canonical_accounts.yaml")
+    if subtotals:
+        mask &= ~frame["canonical"].isin(subtotals)
+    flagged = frame[mask]
+    signals = []
+    for row in flagged.itertuples():
+        current_amount = _numeric_or_none(row.amount)
+        track, magnitude_ratio = track_for_amount(
+            current_amount,
+            asset_totals.get(int(year)),
+            thresholds,
+        )
+        signals.append(
+            RedFlagSignal(
             id=f"yoy:{row.canonical}:{year}",
             year=year,
             account=row.canonical,
@@ -75,18 +146,36 @@ def _single_yoy_flags(frame: pd.DataFrame, year: int, thresholds: dict) -> list[
                 _evidence(row.canonical, year, f"amount {int(row.amount):,}"),
                 _evidence(row.canonical, year, f"YoY {row.yoy_growth_pct:.2f}%"),
             ],
+            track=track,
+            magnitude_ratio=magnitude_ratio,
+            current_amount=current_amount,
         )
-        for row in flagged.itertuples()
-    ]
+        )
+    return signals
 
 
-def _direction_flags(report: dict[str, object], year: int, thresholds: dict) -> list[RedFlagSignal]:
+def _direction_flags(
+    report: dict[str, object],
+    year: int,
+    thresholds: dict,
+    asset_totals: dict,
+) -> list[RedFlagSignal]:
     yoy = report["primary_yoy"]
+    if not isinstance(yoy, pd.DataFrame) or yoy.empty:
+        return []
+    if not {"canonical", "year", "yoy_growth_pct"}.issubset(yoy.columns):
+        return []
     rows = []
     for rule in thresholds["direction_red_flags"]:
         left = _direction_for(yoy, rule["account_a"], year)
         right = _direction_for(yoy, rule["account_b"], year)
         if left == rule["direction_a"] and right == rule["direction_b"]:
+            current_amount = _amount_for(yoy, rule["account_b"], year)
+            track, magnitude_ratio = track_for_amount(
+                current_amount,
+                asset_totals.get(int(year)),
+                thresholds,
+            )
             rows.append(
                 RedFlagSignal(
                     id=f"direction:{rule['id']}:{year}",
@@ -99,13 +188,19 @@ def _direction_flags(report: dict[str, object], year: int, thresholds: dict) -> 
                         _evidence(rule["account_a"], year, f"direction {left}"),
                         _evidence(rule["account_b"], year, f"direction {right}"),
                     ],
+                    track=track,
+                    magnitude_ratio=magnitude_ratio,
+                    current_amount=current_amount,
                 )
             )
     return rows
 
 
 def _direction_for(frame: pd.DataFrame, account: str, year: int) -> str:
-    value = frame[(frame["canonical"] == account) & (frame["year"] == year)].iloc[0].yoy_growth_pct
+    matched = frame[(frame["canonical"] == account) & (frame["year"] == year)]
+    if matched.empty:
+        return "missing"
+    value = matched.iloc[0].yoy_growth_pct
     if pd.isna(value):
         return "missing"
     if value > 0:
@@ -113,6 +208,32 @@ def _direction_for(frame: pd.DataFrame, account: str, year: int) -> str:
     if value < 0:
         return "decrease"
     return "flat"
+
+
+def _amount_for(frame: pd.DataFrame, account: str, year: int) -> float | None:
+    matched = frame[(frame["canonical"] == account) & (frame["year"] == year)]
+    if matched.empty or "amount" not in matched.columns:
+        return None
+    return _numeric_or_none(matched.iloc[0].amount)
+
+
+def _numeric_or_none(value: object) -> float | None:
+    parsed = pd.to_numeric(pd.Series([value]), errors="coerce").iloc[0]
+    return None if pd.isna(parsed) else float(parsed)
+
+
+def _score(signal: RedFlagSignal) -> float:
+    if not isinstance(signal.metric_value, int | float):
+        return 0.0
+    thresholds = load_l2_config()["signal_thresholds"]
+    threshold = {
+        "single_account_yoy": thresholds.get("yoy_pct_abs"),
+        "growth_divergence": thresholds.get("divergence_pp_abs"),
+        "direction_mismatch": 1,
+    }.get(signal.signal_type)
+    if not isinstance(threshold, int | float) or float(threshold) == 0:
+        return abs(float(signal.metric_value))
+    return abs(float(signal.metric_value)) / float(threshold)
 
 
 def _evidence(locator: str, year: int, value: str) -> EvidenceRef:
