@@ -175,3 +175,30 @@
 - **영향**: 피어 config는 `config/industry_peers.yaml`, baseline 계산은 `src.peers`,
   L4 연결은 `src.report.industry`가 담당한다. 해당 `induty_code` 피어가 config에 없거나
   피어 수집 실패 또는 Gemini 503이면 `industry` 관점만 deferred되고 기존 5축은 유지된다.
+
+## D16. L4 분석·판정 모델 → GPT-5.4, 외부 검색 관점은 Gemini 유지
+
+- **결정**: L4 내부 분석·판정 관점(`numeric`, `note`, `flow`, `change`, `industry`)과
+  종합 문단은 `config.settings.openai_model == "gpt-5.4"`를 사용한다. 외부 검색 관점은
+  기존처럼 `gemini_external_model == "gemini-3.1-pro-preview"`와 Google Search grounding을
+  유지한다. L3 계정 Finding agent와 Stage1 결정론 신호엔진은 변경하지 않는다.
+- **이유**: Stage2 판단은 큐에 뜬 변화율 신호 설명을 넘어 전 계정 수준·추세·지표를 함께
+  검토해야 하므로 더 강한 분석 모델을 사용한다. 외부 관점은 검색 grounding이 본질이므로
+  Gemini 경로를 유지한다.
+- **선택 과정**: 기존 Gemini 2.5 Flash는 분식 추론에 약했다. 추론 모델 후보(Gemini 3 Pro·
+  GPT-5.4·OpenAI o3)를 벤치마크로 비교했다. 추론력은 Gemini 3 Pro와 GPT-5.4가 막상막하였으나,
+  **2026 금융 환각 벤치마크에서 GPT-5.4만 출처 없는 수치를 날조하지 않고 감사를 통과할 수준의
+  출력을 냈고, Gemini 3.1 Pro는 환각 기준을 모두 실패**했다. 분식·감사 도구는 없는 수치를
+  지어내면 치명적이므로(EvidenceRef 앵커링 원칙과 직결), 처음 통합 편의로 검토하던 Gemini 3 Pro를
+  근거 보고 뒤집어 GPT-5.4로 정했다.
+- **검증**: 아스트(00409681)를 분식 진행연도 2019로 live 실행했을 때, 재고자산이 결정론 큐
+  top10에 없음에도 GPT-5.4 관점들이 DIO 227.86→432.95일 추세·재고↔매출원가 괴리로 재고 적체를
+  스스로 제기했다. 출력 수치(DIO·무형자산 55.7→1,761.4억·재고 +38.74%)는 전부 제공 material과
+  일치해 환각 0이었다. 결정론이 못 잡고 *수준*으로만 드러나는 분식을 LLM이 환각 없이 자가
+  발견함을 실증했다(큐 의존 탈피 + 모델 업그레이드의 결합 효과).
+- **입력 원칙**: `review_queue`는 참고 후보로 강등하고, 관점 material에는 핵심 계정 수준
+  시계열과 전체 지표 시계열을 함께 제공한다. 큐 밖 항목도 제공 material에 근거하면 검토
+  후보로 제기할 수 있다.
+- **API 경계**: 현재 PydanticAI OpenAI 경로는 `/v1/chat/completions`를 사용한다. GPT-5.4에서
+  structured output/function tool과 `reasoning_effort` 조합은 400 오류를 반환하므로,
+  `openai_reasoning_effort` 기본값은 비활성으로 둔다. timeout은 120초로 늘렸다.

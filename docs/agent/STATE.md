@@ -327,6 +327,30 @@
   mega(126사: positive 16, clean 110) 재실행 결과는 발굴 15/16, legacy strict 14/16,
   track hit 13/16이다. 아스트 재고자산은 트랙 A 6위, 셀트리온 재고자산은 트랙 B 2위로
   정원 내 게시된다. 정상 110사의 강도 10 신호는 legacy top10 기준 111개, track A 기준 75개다.
+- Stage2 LLM 강화: L4 내부 분석·판정 관점과 synthesis를 GPT-5.4로 전환했다. 외부 검색 관점은
+  Gemini 3.1 Pro preview + Google Search grounding을 유지한다. `material_board`는 더 이상
+  review_queue 중심이 아니라 핵심 계정 수준 시계열과 전체 지표 시계열을 포함한다. 아스트
+  2015~2019 live에서 numeric/flow/change 관점이 review_queue 밖 재고자산을 DIO 432.95,
+  재고회전율 0.84, 재고자산 증가 근거로 직접 제기했다.
+
+## Stage1 마무리 — floor 버그·커버리지 갭·트랙 채점 확정 (2026-06-06)
+
+- **floor 버그 발견·수정**: universal 스캔 materiality 하한이 `_exclude_subtotal_rows`로 자산총계를
+  잃어 자산×1% 상대하한이 0→1억으로 추락하던 버그. 소계 제외 *전* frame으로 floor를 계산해 자산1%
+  복원(현대건설 2023 floor 2,371억=자산1%). 정상 110사 강도10 노이즈 309→109개, 아스트 재고
+  16→6위·셀트리온 재고 13→3위로 단일 잣대에서도 상승. ([../user/TROUBLESHOOT.md](../user/TROUBLESHOOT.md) 2026-06-06)
+- **커버리지 갭 보강**: 제조 편중 표본에 빠진 업종(건설·통신·전기/가스·게임/SW·항공·물류·리테일·교육)
+  대표 17사 추가 → 138사. 건설 4사로 FIX 2(계약자산/계약부채) 실증, DL이앤씨 유동계약자산/유동계약부채
+  alias 누락 보강. 새 발견 유형 0(5가지 수렴 유지). ([../user/VERIFICATION.md](../user/VERIFICATION.md) 커버리지)
+- **신규분식 5사 복원**: `known_cases_mega.json`의 신규분식(웰바이오텍·에스엘·이렘·더테크놀로지·한창)
+  run_years가 비어 dart_ok=False로 빠져있던 stale 수정 → mega **16사 완전체**. 신규 5사 전부 발굴.
+- **트랙 채점 확정**: FIX 3 두 트랙을 채점 잣대로 채택(track strict 13/16). 단일 top10(legacy 14/16)
+  병기. 트랙 13<legacy 14는 유네코 매출채권이 A 정원 6 밖(7위)으로 잘린 것 — 정원은 오버피팅 회피로
+  안 만진다. 트랙 고유 가치는 점수가 아니라 소액 부정 별도 노출(세토피아 B 1위).
+- **핵심 통찰**: 노이즈 309개의 진짜 원인은 트랙(FIX 3)이 아니라 floor 버그였다. floor 수정만으로
+  분식계정이 단일 잣대에서도 top10 진입. 트랙은 점수론 -1, 가치는 가독성.
+- 7개 논리 커밋(develop). pytest 89·ruff 통과. 항등식 0/458.
+- **Stage1(결정론 백테스트 검증) 종료.** 결정론은 발굴기(15/16), 정상과의 최종 판별은 Stage2 LLM 층.
 
 ## 다음 할 일 (우선순위)
 
@@ -358,29 +382,33 @@
 - ROI는 공시 재무제표 기본 합계 계정에 투자원가가 없어 계산하지 않는다.
 - 수치 분석가 prompt는 외부 사실을 쓰지 않는다. 정상 설명은 일반적 가능성으로만 작성해야 한다.
 - 외부 업황·뉴스 맥락은 L4 `external` 관점으로 교차에 참여한다. 쿼리 생성과 외부 평가는
-  `gemini_external_model == "gemini-3.1-pro-preview"`를 사용하고, 내부 4관점은
-  `gemini_model == "gemini-2.5-flash"`를 유지한다. 쿼리 생성은 내부 데이터 기반으로 하되,
+  `gemini_external_model == "gemini-3.1-pro-preview"`를 사용하고, 내부 분석·판정 관점
+  `numeric/note/flow/change/industry`와 종합 문단은 `openai_model == "gpt-5.4"`를 사용한다.
+  쿼리 생성은 내부 데이터 기반으로 하되,
   외부 평가는 검색 결과와 출처만 입력받는다. 출처 없는 외부 주장은 버리고 Finding 판단
   필드는 변경하지 않는다. 외부 맥락은 설명용이며 면죄부가 아니다.
 - 동종업계 비교는 L4 `industry` 관점으로 교차에 참여한다. 피어는 대상 회사 DART
   `induty_code`별 config 피어의 재무지표 baseline만 계산하며, 주석·외부·5축 분석을 피어에
   적용하지 않는다. 해당 업종 피어가 없으면 `industry` 관점만 deferred한다.
-- L4 종합 문단은 결정론 큐와 지표 요약에만 grounding한다. live 호출 실패 시 문단만 보류하고
-  결정론 큐는 유지한다.
-- L4 관점 LLM은 독립 입력을 받는다. 수치 관점은 queue/ratio, 주석 관점은
+- L4 종합 문단은 결정론 큐, 지표 요약, 계정·지표 시계열, 관점별 평가, 교차 결과에 grounding한다.
+  live 호출 실패 시 문단만 보류하고 결정론 큐는 유지한다.
+- L4 관점 LLM은 독립 입력을 받는다. 수치 관점은 review_queue 참고 후보와 계정·지표 시계열,
+  주석 관점은
   `note_mappings.yaml`의 8개 카테고리 note section material, 흐름 관점은
-  BS-IS-CF/활동성·이익의 질 material, 변동 관점은
-  전기 대비 변동 material을 받는다. 외부 관점은 내부 데이터로 검색어만 생성하고, 평가는
+  BS-IS-CF/활동성·이익의 질 material과 계정 시계열, 변동 관점은
+  전기 대비 변동 material과 수준·추세 시계열을 받는다. review_queue는 정답이 아니라 참고
+  후보이며, 큐 밖 항목도 제공 material에 근거하면 검토 후보로 제기할 수 있다.
+  외부 관점은 내부 데이터로 검색어만 생성하고, 평가는
   Google Search grounded ContextBrief만 받는다. 서로의 결론은 입력으로 받지 않는다.
 - 감사기준·K-IFRS 근거는 검토 관점의 출처다. Finding은 부정·분식 확정 표현으로 쓰지 않는다.
 - 실무 재무지표도 검토 관점이다. 출처 없는 계산식은 플레이북에 넣지 않고, 계정 부족 지표는
   `mvp1_status: account_missing`으로 표시한다. 현재 ROI만 계정 부족으로 남아 있다.
 - 공개 KSA 원문별 링크는 확인하지 못한 항목이 있어 [AUDIT_BASIS.md](AUDIT_BASIS.md)에
   “KSA 원문 미검증”으로 표시했다. ISA/IFRS 제목과 요지는 공식 IAASB/IFRS 출처로 확인했다.
-- 메인 LLM 모델 기본값은 `config.settings.gemini_model == "gemini-2.5-flash"`다.
-  외부 관점 query/eval 모델은 `config.settings.gemini_external_model == "gemini-3.1-pro-preview"`다.
-  Gemini fallback은 `gemini_fallback_model` 설정이 비어 있으면 비활성이다. OpenAI fallback은
-  사용하지 않는다.
+- L3 Gemini 모델 기본값은 `config.settings.gemini_model == "gemini-2.5-flash"`다.
+  L4 내부 분석 모델은 `config.settings.openai_model == "gpt-5.4"`이고, 외부 관점 query/eval
+  모델은 `config.settings.gemini_external_model == "gemini-3.1-pro-preview"`다.
+  Gemini fallback은 `gemini_fallback_model` 설정이 비어 있으면 비활성이다.
 - 2025 CFS는 IS·CF 계정 확장 후 Medium 관계 red flag가 여럿 있다. 대표 신호는
   사업결합순현금유출 YoY 2102.89%, 장기차입금차입 YoY 593.17%, 자기주식취득 YoY 552.00%,
   운전자본변동 YoY -513.31%, 재무활동CF vs 장기차입금 괴리 -137.49pp다.
