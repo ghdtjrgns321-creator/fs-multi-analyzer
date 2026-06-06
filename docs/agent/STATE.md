@@ -76,14 +76,267 @@
 - 전 계정 보편 스캔 [../../src/signals/universal.py](../../src/signals/universal.py)
 - 2025 포함 raw contract [DATA_CONTRACT.md](DATA_CONTRACT.md)
 
+## 백테스트 (검증 — 진행 중, 2026-06-03)
+
+> "토이 같다"는 인식의 근본 원인 = 검증 증거 부재(건강한 회사 1곳만 분석). 실제 분식 사건에
+> 도구를 돌려 탐지율을 정량 측정한다.
+
+- **익명 사례집 → 검색 특정은 폐기.** 금감원 감리지적사례(HWP146+PDF84, Codex 파싱 542사례)는
+  일부러 익명화·금액 마스킹돼 있어, 가장 구별력 높은 단서조차 웹검색으로 회사 특정 불가.
+  업종+연도만으론 후보가 너무 많아 오특정(정답지 오염) 위험. 파싱 산출(분식유형 분포)은 참고로만.
+- **방향 전환 = 실명 공개 확정사건으로 정답지 구성**(옵션1 유명사건 + 옵션2 증선위 의결 실명).
+  `data/backtest/known_cases.json`(내 검증) → `src/backtest/build_labels.py` → `data/backtest/labels.csv`.
+- **실행 가능 8건 확정**(OpenDART 2015~ 가용·상장): positive 6(두산에너빌리티·아스트·디아이동일·
+  모델솔루션·셀트리온·세토피아) + clean 1(삼성전자) + negative 1(KAI, 법원 무죄·과징금취소).
+  럭슬은 출처 1개뿐이라 제외. reference 7건(대우조선·대우건설·효성·경남기업·STX·모뉴엘·중국고섬)은
+  pre-2015/비상장이라 실행불가, 패턴 참고용.
+- 정답지·검증방법·각 사건 한계는 사람용 문서 [../user/BACKTEST.md](../user/BACKTEST.md)에 문서화.
+  각 사건 한계: 중과실(두산·셀트리온), 연결특화(디아이동일), 상장시점(모델솔루션), 손익영향 제한(세토피아).
+- **Stage1 백테스트가 핵심 엔진 버그를 발견**: 전수 스캔 `universal_min_abs_amount: 1조원`(절대값)이
+  삼성 같은 거대사에만 맞아, 중소형 분식사(아스트 0.58조·세토피아 0.06조)는 전 계정이 규모 미달로
+  스캔 0건이 된다. "계정매핑실패"는 오해 라벨이고 실제론 매핑 정상·규모 필터 탈락. 수정 방향:
+  규모 임계를 자산총계 대비 비율(%)로 상대화(`universal_min_pct_of_assets`) + 절대 하한 1억.
+  miss_reason도 정직하게(계정부재/규모미달/변동미미/상위10밖) 재정의.
+
+## 백테스트 Stage1 결과 + 해부 (2026-06-03)
+
+- Stage1 결정론 백테스트 실행·재채점 완료. recall: 분식계정 신호 발화 5/6(세토피아만 단일연도),
+  상위10 엄격 hit 2/6(두산 미청구공사 z=-16·모델솔루션 당기순이익). 정상 삼성은 채점대상 79개 →
+  결정론 단독은 발굴기지 판별기가 아님을 실증(멀티에이전트 층 정당화).
+- 사건별 해부 → [../user/BACKTEST_ANALYSIS.md](../user/BACKTEST_ANALYSIS.md). "잡을 수 있었는데
+  못 잡음(도구 약점)" 3가지 식별:
+  1. 노이즈 매몰(단일 계정 신호 과다 → 분식계정 중위권 매몰, 아스트 재고 68위).
+  2. account_id 변경 시 시계열 단절(연결 편입으로 디아이동일 수익 +4088% 점프가 신호 누락).
+  3. CFS-only 처리로 OFS-only 연도 누락(세토피아 2017·2018 별도 존재하는데 "데이터부족" 오판).
+- 결정론 본질적 한계(→LLM/주석/동종업계): 점진적 분식(셀트리온 개발비 매년 +3~14% 자본화),
+  관계로만 드러나는 분식(아스트 재고↑ vs 매출원가 flat), 움직임 포착 후 분식 여부 판단.
+
+## 백테스트 Stage1 수정 ②·③ (2026-06-04)
+
+- `src/signals/universal.py`: 전수 보편 스캔 시계열 키를 `account_id|label`에서
+  canonical 우선, 미매핑 정규화 label 기준으로 변경했다. account_id는 evidence locator로
+  보존한다. mapped canonical 중복은 연도별 합산하고, 미매핑 label 중복은 금액이 큰 대표 행을
+  사용해 유동/비유동 등 우연한 label 중복 이중계상을 피한다.
+- `src/signals/universal.py`: CFS 연속 시계열이 불완전하면 OFS 기준을 선택하고, 한 신호
+  계산 안에서 CFS/OFS를 섞지 않는다. `src/normalize/pipeline.py`와
+  `src/backtest/run_backtest.py`도 CFS/OFS 둘 중 하나만 있어도 해당 연도를 정규화·평가하도록
+  바꿨다.
+- 검증 결과: 세토피아는 available `[2017, 2018, 2019]`로 데이터부족이 해소되고
+  `금융부채`가 상위10밖(14위)으로 재분류됐다. 디아이동일은 `수익` 상위10밖(35위)으로
+  신호는 유지되나 hit는 아니다. 삼성전자는 clean 유지, 모델솔루션은 hit 유지. 두산에너빌리티는
+  `미청구공사` z-score가 생성됐지만 상위10 기준 12위라 hit에서 miss로 남았다. 채점 로직과
+  신호 임계값은 변경하지 않았다.
+
+## 백테스트 P7 관계엔진 연도 수정 (2026-06-04)
+
+- `src/signals/mvp1.py`: `build_mvp1_signal_report`가 `relationship_chains.yaml`의
+  `l2_mvp1.years` 대신 frame 실제 연도 또는 호출자가 넘긴 years를 분석 윈도우로 사용한다.
+  `src/signals/spike.py`와 L4 회사 리포트 호출부도 years를 명시 전달한다. YAML의 `years`는
+  분석 윈도우 제어용이 아님을 deprecated 주석으로 표시했다.
+- 재실행 결과: 삼성전자 2022~2025는 기존 config 윈도우와 같아 raw fired 125와 top10 구성이
+  불변이다. 아스트는 `cogs-vs-inventory` 관계 신호가 2017, 2018, 2019, 2020, 2022년에
+  발화했다. 가장 강한 2022 신호는 99.97pp, 정규화강도 6.6647, 전체 채점대상 61위다.
+- strict positive recall은 1/6으로 유지됐다. 모델솔루션 hit 유지, 삼성 clean 유지.
+  관계 신호 복구로 KAI negative control은 개발비가 10위에서 19위로 밀려 hit가 False가 됐다.
+  채점 로직·임계값·상위10 기준은 변경하지 않았다.
+
+## L4 삼성 하드코딩 일반화 (2026-06-04)
+
+- `src/report/company_report.py`: 삼성 전용 `COMPANY_NAMES`/`COMPANY_DOMAINS` map을 제거하고,
+  회사명·업종 메타데이터는 OpenDART `DartCollector.company(corp_code)` 프로필에서 채운다.
+  API/profile이 없으면 corp_code 기반으로 degrade하되 분석 계산은 계속 인자와 데이터로만 수행한다.
+- `src/peers`와 `config/industry_peers.yaml`: 피어 config를 target corp_code별 구조에서
+  DART `induty_code`별 구조로 변경했다. 대상 회사의 `induty_code`가 config에 없으면
+  `industry` 관점만 `피어 미구성`으로 deferred된다. 기존 264 피어는 264 업종에만 적용된다.
+- `src/report/industry.py`: 삼성전자 사업 다각화 문구를 제거하고, 대상 회사 일반 caveat
+  ("대상 회사의 사업구조가 피어와 달라 단순 비교에 한계")로 바꿨다. `industry` 관점은 계속
+  판단 필드를 바꾸지 않는 참고 관점이다.
+- 데모 러너(`first_*`, `ratios.py`)는 corp_code/year CLI 인자를 받도록 정리했다. 기본값은
+  데모 편의용이며 분석 함수 본체의 대상 선택을 좌우하지 않는다.
+- Stage1 백테스트는 L4 변경 영향 없이 직전 결과와 동일했다. positive recall 1/6, 삼성 clean,
+  모델솔루션 hit, KAI negative hit False를 유지했다.
+
+## Stage1 신호 아티팩트 억제 Tier 1+2 (2026-06-04)
+
+- `src/signals/universal.py`: universal YoY/z-score/mix 스캔에서 CF 계정을 제외하고 BS·IS만
+  대상으로 삼았다. CF는 기존 관계사슬과 방향 신호가 담당한다. `scan_cfs_ofs_gaps`는 변경하지
+  않았다.
+- YoY/mix는 전년 금액이 동적 floor 이상이고 전년·당년 부호가 같을 때만 계산하도록 기저
+  가드를 추가했다. 0 근처 폭발·부호반전 YoY 아티팩트를 제거한다.
+- universal z-score는 `config/playbooks/relationship_chains.yaml`의
+  `universal_z_score_cap: 10`으로 캡한다. 기존 `z_score_abs: 2`, `yoy_pct_abs: 50` 등
+  신호 임계값은 변경하지 않았다.
+- `src/backtest/score.py`: raw fired_signals는 보존하되, strict top10과 account_scores 산정은
+  같은 계정명당 최강 신호 1개로 dedupe한다. hit 규칙(분식계정이 고유 계정 top10 안에 있으면 hit)은
+  유지했다.
+- 재실행 결과: positive strict hit는 1/6 → 3/6으로 상승했다. 모델솔루션 당기순이익 1위 유지,
+  셀트리온 재고자산 9위, 세토피아 금융부채 4위가 포착됐다. 아스트 재고자산 16위,
+  디아이동일 수익 13위, 두산 미청구공사 12위로 올라왔지만 여전히 strict hit는 아니다.
+  삼성 clean은 유지되고 raw fired는 125 → 110으로 줄었다. KAI negative control은 공사진행률/매출
+  9위로 다시 hit=True가 됐다.
+
+## Stage1 mvp1 Tier 1 가드 확장 (2026-06-05)
+
+- `src/signals/mvp1.py`: universal에 적용했던 Tier 1 기저 가드를 관계엔진에도 확장했다.
+  `single_account_yoy`는 raw `primary_yoy` 테이블에는 CF 계정을 보존하되, red flag 발화에서는
+  `sj_div == "CF"`를 제외한다. CF 흐름은 기존 direction/growth 관계 신호가 담당한다.
+- `growth_divergence`는 양쪽 계정 모두 전년 금액이 동적 floor
+  `max(자산총계 x 1%, 1억)` 이상이고 전년·당년 부호가 같을 때만 growth%와 divergence를
+  채운다. 한쪽이라도 0 근처 기저·부호반전이면 해당 연도 divergence는 `None`으로 둔다.
+- 채점 hit 규칙·상위10 기준·기존 신호 임계값은 변경하지 않았다. P4 순위 공정성도 이번 범위에서
+  건드리지 않았다.
+- 재실행 결과: positive strict hit는 3/6 → 6/6으로 상승했다. 두산 미청구공사 2위,
+  아스트 재고자산 6위, 디아이동일 수익 7위, 모델솔루션 당기순이익 1위, 셀트리온 재고자산
+  3위, 세토피아 금융부채 4위가 포착됐다. 아스트 `cogs-vs-inventory`는 2017 -43.85pp,
+  2022 99.97pp 등 material 기저라 유지됐다. 기존 908pp급 장기차입금 0근처 폭발은 사라졌고,
+  material 기저에서 나온 장기차입금 관계 신호만 남았다. 삼성 clean은 유지되고 raw fired는
+  110 → 87로 줄었다. KAI negative control은 hit False, miss_reason `변동미미`다.
+
+## Stage1 홀드아웃 검증 — 엔진 동결 (2026-06-05)
+
+- `src/backtest/build_labels.py`: 입력/출력 경로 인자를 추가해
+  `known_cases_holdout.json` → `labels_holdout.csv`를 생성했다. 기본 `known_cases.json` →
+  `labels.csv` 동작은 유지한다.
+- `src/backtest/run_backtest.py`: `--labels` 인자를 추가했다. `labels_holdout.csv` 실행 시
+  `backtest_results_holdout.jsonl`과 `BACKTEST_REPORT_holdout.md`를 생성한다. 삼성/KAI 전용
+  보고 줄은 해당 회사가 있을 때만 출력한다. clean 회사처럼 fraud_year가 없으면 `run_years`로
+  윈도우를 잡는다.
+- 신호엔진(`src/signals/*`), `score.py`, config 임계값은 변경하지 않았다. 기존 labels 백테스트는
+  positive 6/6, 삼성 clean, KAI `변동미미`로 유지됐다.
+- 홀드아웃 결과: positive 3/3. 티피씨메카트로닉스 재고자산 2위, 유네코 매출채권 7위,
+  본느 재고자산 6위가 top10에 들어 hit다. 정상 5곳(NAVER, KT&G, 오리온, 한미반도체,
+  영원무역)은 모두 hit False다.
+- 정상군 잔여 아티팩트: NAVER는 당기순이익 divergence -1854.67pp, 관계기업투자 YoY
+  1574.99%, 유형자산취득 divergence -458.52pp가 상위5에 남았다. 한미반도체는 기타수익
+  YoY 5239.94%가 상위5에 남았다. KT&G, 오리온, 영원무역은 상위5 기준 극단 아티팩트 후보가
+  없다. 삼성 baseline raw fired 87과 비교하면 NAVER 88, 영원무역 110은 비슷하거나 더 높아
+  Stage1 숫자 신호 단독은 여전히 검토 큐 생성기이지 판별기가 아니다.
+
+## Stage1 single_account_yoy 기저 가드 완성 + 강도 캡 (2026-06-05)
+
+- `src/signals/mvp1.py`: `single_account_yoy`의 전년 기저 판정을 대상 연도 동적 floor 기준으로
+  보강했다. 예: 한미반도체 기타수익은 2022 전년 56억이 2023 자산총계 1% floor 72억에
+  못 미쳐 `single_account_yoy` red flag에서 제외됐다. `primary_yoy` 테이블에는 값과
+  `valid_yoy_base=False`를 보존한다.
+- `config/playbooks/relationship_chains.yaml`: 원칙값 `signal_strength_cap: 10`을 추가했다.
+  `src/backtest/score.py`는 `%/pp` 기반 신호(`single_account_yoy`, `universal_yoy`,
+  `growth_divergence`, `universal_mix_shift`)의 normalized_strength만 10으로 캡한다.
+  raw metric_value는 증거로 보존한다. z-score는 기존 raw z cap을 그대로 쓴다.
+- 재실행 결과: 튜닝 세트 positive 6/6 유지, 삼성 clean 유지(raw fired 87), KAI negative
+  `변동미미` 유지. 홀드아웃 positive 3/3 유지. 본느 재고자산은 6위→5위, 유네코 매출채권
+  7위 유지, 티피씨 재고자산 2위 유지.
+- 정상군 효과: 한미반도체 기타수익 YoY 5239.94% 신호는 top5에서 사라지고 fired 60→59로
+  줄었다. NAVER의 극단 raw 값(당기순이익 divergence -1840.96pp, 관계기업투자 YoY
+  1574.99%)은 raw 증거로 남지만 normalized_strength는 10으로 캡되어 123배·31배 강도로
+  순위를 지배하지 않는다.
+
+## Stage1 데이터 정리 시도 — 중단 (2026-06-05)
+
+- 요청 범위대로 신호 임계·채점 hit 규칙은 건드리지 않고 정규화 중복행 제거, BS 소계
+  `is_subtotal` config 표시, 매출 alias 보강을 적용해 재실행했다.
+- 정규화 중복은 16개 실행 회사 모두 `(account_id, label, year, fs_div, sj_div)` 기준 0건으로
+  수렴했다. 소계 계정(`자산총계`, `유동자산`, `부채총계`, `자본총계` 등)은 universal/
+  single_account_yoy scoring fired_signals에서 0건으로 사라졌다.
+- 그러나 튜닝 세트 positive가 6/6 → 2/6으로 깨졌다. 두산과 모델솔루션만 hit 유지,
+  아스트 재고자산 16위, 디아이동일 수익 14위, 셀트리온 재고자산 13위, 세토피아 금융부채
+  `변동미미`로 내려갔다. 홀드아웃 positive 3/3은 유지됐다.
+- 원인 관찰: BS 소계 제거 자체는 정상 작동했지만, 중복행 제거 후 기존에 덜 보이던 확장계정
+  YoY 신호(아스트 임차보증금/미수금/유동파생상품부채, 셀트리온 기타수취채권/기타비용 등)가
+  top10을 점유했다. 세토피아는 `금융부채`가 score.py의 현재 동치 매핑상 `부채총계`에
+  묶여 있어, BS 소계 제외 후 더 이상 hit에 기여하지 않는다.
+- 지시대로 여기서 추가 튜닝을 중단한다. 다음 결정 필요: 소계 제외를 유지할지, score의
+  `금융부채→부채총계` 동치 매핑을 데이터 매핑으로 대체할지, 확장계정 alias/소계 판별을 더
+  정교화할지.
+
+## Stage1 백테스트 지표 재정의 — 발굴 recall 중심 (2026-06-05)
+
+- 데이터 정리(B1/B2/B4)는 유지했다. 중복행 제거, BS 소계 제외, 매출 alias 보강은 되돌리지 않았다.
+- `src/backtest/score.py`: 주 지표를 strict top10 hit가 아니라 분식계정 발굴 recall로 분리했다.
+  `account_scores.status`가 `포착` 또는 `상위10밖`이면 `discovered=True`다. 기존 top10 기준은
+  `hit` 필드와 리포트의 `상위10 strict hit` 보조 지표로 유지한다.
+- `score.py`의 소계 crutch 매핑을 제거했다. 특히 `금융부채→부채총계`, `금융자산→기타 중요 계정`,
+  `자기자본→자본총계`를 제거했다. 분식계정은 실제 line item 또는 canonical alias로만 잡는다.
+- 재실행 결과: 튜닝 세트는 발굴 recall 5/6, 상위10 strict 2/6이다. 두산 미청구공사와
+  모델솔루션 당기순이익은 strict hit, 아스트 재고/매출원가, 디아이동일 종속기업투자·수익,
+  셀트리온 재고는 발굴됐지만 top10 밖이다. 세토피아 금융자산/금융부채는 `변동미미`로,
+  recall로도 잡히지 않는다.
+- 홀드아웃은 발굴 recall 3/3, 상위10 strict 3/3이다. 티피씨 재고자산 2위, 유네코 매출채권 8위,
+  본느 재고자산 4위가 strict hit다.
+- 해석: Stage1 결정론은 분식계정이 후보로 뜨는지 보는 발굴기다. 정상 변동과 분식 후보를
+  최종 판별하는 순위/맥락 판단은 다음 층(관계 우선, 주석/LLM, 외부/동종업계 교차)에서 다룬다.
+
+## Stage1 빈 mvp1 테이블 robustness 수정 (2026-06-05)
+
+- `compare_growth`, `account_yoy_table`, `direction_table`, `build_mvp1_signal_report`가 빈 결과에서도
+  기대 컬럼을 가진 빈 DataFrame을 반환하도록 보강했다. 단일연도/관계계정 없음 케이스에서
+  `growth_divergences`가 `(0,2)`의 `id,name`만 남아 `divergence_pp` KeyError를 내던 문제를 막았다.
+- `red_flags.py`는 growth/yoy/direction 입력 테이블이 비어 있거나 필요 컬럼이 없으면 `[]`를
+  반환한다. 크래시 대신 빈 신호로 degrade한다.
+- 재현 확인: `run_signal_spike('00688996', [2023])` 후 `extract_red_flags(..., 2023)`이 `[]`를
+  반환한다. 기존 백테스트 결과는 유지됐다(기본 발굴 5/6·strict 2/6, 홀드아웃 발굴 3/3·strict 3/3).
+
+## 매출채권 조합 라벨 proxy 매핑 (2026-06-05)
+
+- `config/canonical_accounts.yaml`: `매출채권 및 기타유동채권`, `매출채권 및 기타채권`,
+  `매출채권및기타채권`을 canonical `매출채권` alias로 추가했다. 조합 수취채권 라벨이므로
+  기타채권이 포함되지만 매출채권 사슬 복구용 proxy로 수용한다.
+- `장기매출채권 및 기타비유동채권` 등 장기/비유동 조합은 이번 alias에 넣지 않았다.
+- 검증 결과: 기존 백테스트 결과는 유지됐다(기본 발굴 5/6·strict 2/6, 홀드아웃 발굴 3/3·strict 3/3).
+  빈 mvp1 테이블 재현도 계속 크래시 없이 `[]`를 반환한다.
+
+## 매입채무 조합 라벨 proxy 매핑 (2026-06-05)
+
+- `config/canonical_accounts.yaml`: `매입채무 및 기타유동채무`, `매입채무및기타채무`,
+  `매입채무 및 기타채무`를 canonical `매입채무` alias로 추가했다. 매출채권 조합 라벨과 같은
+  proxy 원칙이다.
+- 투자부동산·전환사채는 case-specific/스코프 확장 위험이 있어 이번 매핑에서 제외했다.
+- 검증 결과: 기존 백테스트 결과는 유지됐다(기본 발굴 5/6·strict 2/6, 홀드아웃 발굴 3/3·strict 3/3).
+
+## 백테스트 홀리스틱 리뷰 — Codex 독립 산출 (2026-06-05)
+
+- `data/backtest/review_packets_0_45.txt`, `review_packets_45_90.txt`, `review_packets_90_200.txt`의
+  121사 공용 패킷만 사용해 [../../data/backtest/REVIEW_CODEX.md](../../data/backtest/REVIEW_CODEX.md)를
+  작성했다. 외부 검색·실명 추정·코드/config 수정은 하지 않았다.
+- 사용자의 추가 재검토 지시에 따라 스크리닝식/체크리스트식 리뷰를 폐기하고 심층 감사조서식 리뷰로
+  다시 작성했다. 회사별로 핵심 판단, FS 읽기(BS/IS/CF·운전자본·손익-현금 괴리), 엔진 신호 검토,
+  데이터·매핑 검토, 다음 검토 포인트를 분리해 121사 전부 기록했다.
+- 집계: 항등식 불일치 0사, 핵심 입력 결측 93건, 핵심 미매핑 84건, 극단 신호/아티팩트 145건,
+  엔진 신호 없음 12건, positive 중 분식계정 미발굴 1사(세토피아), clean 강한 신호 5개 이상 51사.
+- 이 문서는 Claude 독립 리뷰와 교차검증할 Codex 측 회사별 회계 감각 리뷰 산출물이다.
+
+## FIX 1·2·4 — 매핑 완전화·진행률 계정·sanity 가드 (2026-06-05)
+
+- FIX 1: `normalize_label`이 alias 비교 전 후행 `(손실)/(이익)/(손익)`만 제거하도록 보강했다.
+  `당기순이익(손실)`은 `당기순이익`으로 매핑되고, `수익(매출액)` 같은 총액 매출 라벨은 보존된다.
+  매출 alias는 총액 라벨(`영업수익`, `수익(매출액)`, `재화의 판매로 인한 수익(매출액)`, `방송수익`)
+  중심으로 보강하고, `제품매출` 같은 구성요소는 매출로 끌지 않는다.
+- FIX 2: `계약자산`, `계약부채`, `공사손실충당부채` canonical과 `매출 vs 계약자산 증가율 괴리`
+  관계사슬을 추가했다. 정규화는 mapped canonical에 대해 회사·연도·fs_div당 대표 1라인만 남기며,
+  canonical statement(BS/IS/CF)를 우선해 SCE/CF 중복 라벨이 IS/BS 대표행을 밀어내지 않게 했다.
+  새 canonical과 충돌하던 score의 `공사손실충당부채→충당부채` 우회매핑도 제거했다.
+- FIX 4: `src/signals/sanity.py`를 추가해 자산총계가 인접/중앙값 대비 100배 이상 튀는 연도를 신호 계산에서
+  제외한다. 소프트센(00204226) 2022년이 `suspicious_asset_years == [2022]`로 검출되고 신호 입력에서
+  제외됨을 확인했다.
+- 안전선 확인: 기본+홀드아웃 재정규화 후 `매출/매출채권/매입채무/자산총계/계약자산/계약부채/당기순이익`
+  canonical의 회사·연도·fs_div 중복은 0건이다. 백테스트 결과는 기본 발굴 5/6·strict 2/6,
+  홀드아웃 발굴 3/3·strict 3/3이다.
+- FIX 3: 신호를 제거하거나 raw 값을 감쇠하지 않고, 대상 계정 당해연도 금액/자산총계 비율로
+  트랙 A(규모 계정)와 트랙 B(소액 급변)를 분리 게시한다. 설정은
+  `track_split_pct_of_assets: 5.0`, `track_a_quota: 6`, `track_b_quota: 6`이다.
+  결과 JSON과 리포트는 기존 단일 top10 strict와 새 track quota hit를 병기한다.
+  mega(126사: positive 16, clean 110) 재실행 결과는 발굴 15/16, legacy strict 14/16,
+  track hit 13/16이다. 아스트 재고자산은 트랙 A 6위, 셀트리온 재고자산은 트랙 B 2위로
+  정원 내 게시된다. 정상 110사의 강도 10 신호는 legacy top10 기준 111개, track A 기준 75개다.
+
 ## 다음 할 일 (우선순위)
 
-1. 공시 변동 고도화: D82757 및 주요 주석의 전기/당기 텍스트 diff로 우발부채 문구 확대·축소를
-   수치 충당부채 변동과 교차한다.
-2. CF 흐름 리포트 보강: 사업결합순현금유출, 장기차입금차입, 자기주식취득, 운전자본변동의
-   구성과 원천/사용처를 표로 분리한다.
-3. `gemini-2.5-flash`로 2025 재고/매출채권 live Finding 재실행:
-   `uv run python -m src.agents.first_inventory_finding`
+1. **Stage2 LLM 시연**: 결정론이 발굴한 트랙 A/B 후보를 6관점 L4가 어떻게 설명·교차검증하는지
+   확인한다. 특히 세토피아처럼 소액 부정이 숫자 임계로는 변동미미인 사례는 과장하지 않고
+   도구 한계로 남긴다.
+2. **Stage2 LLM 시연**: 본질적 한계 사례(셀트리온 개발비, 아스트 재고-매출원가 관계)에 6관점 live
+   실행해 결정론이 못 한 분별을 LLM이 하는지 확인. (대상 회사 주석 수집 필요)
+2. 공시 변동 고도화: D82757 등 주석 전기/당기 텍스트 diff로 우발부채 문구 변화를 수치 변동과 교차.
+3. CF 흐름 리포트 보강: 사업결합순현금유출·장기차입금차입·자기주식취득·운전자본변동 원천/사용처 표 분리.
 
 ## 열린 이슈 / 주의
 
@@ -109,9 +362,9 @@
   `gemini_model == "gemini-2.5-flash"`를 유지한다. 쿼리 생성은 내부 데이터 기반으로 하되,
   외부 평가는 검색 결과와 출처만 입력받는다. 출처 없는 외부 주장은 버리고 Finding 판단
   필드는 변경하지 않는다. 외부 맥락은 설명용이며 면죄부가 아니다.
-- 동종업계 비교는 L4 `industry` 관점으로 교차에 참여한다. 피어는 DART `induty_code == 264`
-  config 피어의 재무지표 baseline만 계산하며, 주석·외부·5축 분석을 피어에 적용하지 않는다.
-  삼성전자는 사업 다각화 기업이라 단순 업종 비교 한계를 항상 명시한다.
+- 동종업계 비교는 L4 `industry` 관점으로 교차에 참여한다. 피어는 대상 회사 DART
+  `induty_code`별 config 피어의 재무지표 baseline만 계산하며, 주석·외부·5축 분석을 피어에
+  적용하지 않는다. 해당 업종 피어가 없으면 `industry` 관점만 deferred한다.
 - L4 종합 문단은 결정론 큐와 지표 요약에만 grounding한다. live 호출 실패 시 문단만 보류하고
   결정론 큐는 유지한다.
 - L4 관점 LLM은 독립 입력을 받는다. 수치 관점은 queue/ratio, 주석 관점은

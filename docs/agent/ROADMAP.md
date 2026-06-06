@@ -46,10 +46,20 @@
 - [x] 외부 관점 agentic search 개선(LLM 쿼리 생성 → 검색 → 외부 평가)
 - [x] 외부 관점 Gemini 3.1 Pro preview 라우팅 분리
 - [x] 동종업계 6번째 관점 추가(B 접근: 피어 지표 baseline + 교차 참여)
+- [x] L4 삼성 하드코딩 일반화(company profile 동적 조회 + induty_code별 피어 config)
 - [x] 차입금 / 유동성 기본 분석
 - [x] 남은 주요 주석 카테고리 매핑(D82240/D82245/D82757/D82210/D86120/D83800)
 - [x] BS·IS·CF 주요 계정 전면 등록 + IS·CF 흐름 분석 강화
 - [x] 전 계정 보편 신호 스캔 + CFS/OFS 연결 괴리 신호
+- [x] Stage1 백테스트 보편 스캔 결함 수정(account_id 변경 시계열 연결 + OFS fallback)
+- [x] P7 관계엔진 연도 하드코딩 제거(config years 대신 데이터/호출자 years 사용)
+- [x] Stage1 신호 아티팩트 억제 Tier 1+2(CF universal 제외, YoY 기저 가드, z cap, 계정 dedupe)
+- [x] Stage1 mvp1 Tier 1 가드 확장(CF single_account_yoy 제외, 관계 divergence 양측 기저 가드)
+- [x] Stage1 홀드아웃 검증 실행(엔진 동결, labels/run_backtest 인자화, positive 3/3)
+- [x] Stage1 single_account_yoy 기저 가드 완성 + `%/pp` normalized strength cap
+- [x] Stage1 백테스트 지표 재정의(발굴 recall 주지표 + 상위10 strict 보조)
+- [x] Stage1 FIX 1·2·4(라벨 매핑 완전화, 진행률 계약자산/계약부채 사슬, 자산총계 sanity 가드)
+- [x] Stage1 FIX 3(신호 두 트랙 분리 게시: 규모 계정 A / 소액 급변 B, legacy strict 병기)
 - [ ] 공시 변동 (watchlist 키워드 신규 등장)
 - [x] 첫 Finding 리포트 + 감사인 확인 질문 — Gemini 3.5 Flash 재시도 후 생성 완료
 

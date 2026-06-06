@@ -9,11 +9,15 @@
 | 문서 | 내용 |
 |------|------|
 | [user/FEATURES.md](user/FEATURES.md) | 핵심 기능 — 이 프로젝트가 무엇을 하는가 |
+| [user/WHY_NOT_LLM.md](user/WHY_NOT_LLM.md) | 재무제표를 LLM에 그대로 넣는 것과 무엇이 다른가 (재현·전수·앵커링·일관성) |
 | [user/MULTI_AGENT.md](user/MULTI_AGENT.md) | 관점(에이전트) 6개의 기능·작동·근거 + 왜 멀티에이전트인가 |
 | [user/TECH_STACK.md](user/TECH_STACK.md) | 사용 기술과 이유 (비전문가용 풀이 포함) |
 | [user/UI.md](user/UI.md) | 화면 구성 (설계안) |
 | [user/UX.md](user/UX.md) | 사용자 경험 흐름 (설계안) |
 | [user/METHODOLOGY.md](user/METHODOLOGY.md) | 분석 기준(인과관계·지표)을 정하는 2단계 방법론 + 왜 |
+| [user/BACKTEST.md](user/BACKTEST.md) | 실제 분식사건으로 도구를 검증하는 방법·정답지·한계 |
+| [user/BACKTEST_ANALYSIS.md](user/BACKTEST_ANALYSIS.md) | 백테스트 결과 해부 — 무엇을 잡고 무엇을 왜 놓쳤나(도구 약점 vs 결정론 한계) |
+| [user/VERIFICATION.md](user/VERIFICATION.md) | 엔진 검증 — 121사 전수 홀리스틱 리뷰 + 교차검증으로 계산 정확성을 세운 방법 |
 | [user/TROUBLESHOOT.md](user/TROUBLESHOOT.md) | 문제 해결 과정 (증상→원인→해결→교훈, 시간순 누적) |
 
 ## 🤖 `agent/` — AI가 작업 중 확인하는 문서 (새 세션 진입점)
