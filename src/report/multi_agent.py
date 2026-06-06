@@ -7,7 +7,12 @@ import asyncio
 from typing import Any
 
 from src.agents.gemini_retry import DEFAULT_RETRY_DELAYS
-from src.report.company_report import build_company_report, render_markdown
+from src.report.company_report import (
+    DEFAULT_CORP_CODE,
+    DEFAULT_YEARS,
+    build_company_report,
+    render_markdown,
+)
 from src.report.crosscheck import CrossCheckResult, cross_check_assessments
 from src.report.external import create_external_assessment, external_material
 from src.report.industry import create_industry_assessment, industry_material
@@ -23,12 +28,14 @@ from src.report.synthesis import create_integrated_summary
 
 
 async def build_multi_agent_report(
+    corp_code: str = DEFAULT_CORP_CODE,
+    years: list[int] | None = None,
     run_llm: bool = True,
     retry_delays: tuple[float, ...] = DEFAULT_RETRY_DELAYS,
 ) -> dict[str, object]:
     """Build deterministic queue, independent assessments, cross-check, and synthesis."""
 
-    report = build_company_report()
+    report = build_company_report(corp_code, years or DEFAULT_YEARS)
     assessments = await _assess(report, run_llm, retry_delays)
     cross = cross_check_assessments(assessments)
     summary = None
@@ -69,6 +76,9 @@ def payload_for_summary_items(
         report["ratio_summary"],  # type: ignore[arg-type]
     )
     payload["review_queue"] = report["review_queue"][:8]
+    payload["review_queue_role"] = "deterministic reference queue only"
+    payload["ratio_time_series"] = report.get("ratio_time_series", [])
+    payload["account_level_series"] = report.get("account_level_series", [])[:120]
     payload["perspective_assessments"] = [item.model_dump(mode="json") for item in assessments]
     payload["cross_check"] = [item.model_dump(mode="json") for item in cross]
     return payload
@@ -156,9 +166,17 @@ def _deferred_material() -> dict[str, object]:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
+    parser.add_argument("--corp-code", default=DEFAULT_CORP_CODE)
+    parser.add_argument("--years", nargs="+", type=int, default=None)
     parser.add_argument("--no-llm", action="store_true")
     args = parser.parse_args()
-    result = asyncio.run(build_multi_agent_report(run_llm=not args.no_llm))
+    result = asyncio.run(
+        build_multi_agent_report(
+            corp_code=args.corp_code,
+            years=args.years,
+            run_llm=not args.no_llm,
+        )
+    )
     print(render_multi_agent_markdown(result))
 
 

@@ -29,11 +29,14 @@ def industry_material(
         "scope": "industry reference perspective only; no judgment-field mutation",
         "company_name": report.get("company_name", report["corp_code"]),
         "target_year": report["target_year"],
-        "review_queue": report["review_queue"][:5],  # type: ignore[index]
+        "review_queue_reference": report["review_queue"][:5],  # type: ignore[index]
+        "ratio_time_series": report.get("ratio_time_series", []),
         "benchmark": benchmark,
         "rules": [
             "피어는 지표 baseline 계산에만 사용했다.",
             "피어 주석·교차·5축 분석은 수행하지 않았다.",
+            "review_queue_reference는 참고 후보일 뿐이며, "
+            "benchmark와 ratio_time_series를 직접 검토한다.",
             "대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있음을 명시한다.",
             "업종 비교는 ISA/KSA 520 분석적 절차의 참고 신호일 뿐 확정 근거가 아니다.",
         ],

@@ -17,6 +17,7 @@ from src.report.external_agentic import (
 from src.report.industry import create_industry_assessment, industry_material
 from src.report.integrated import build_review_queue, summarize_ratio_categories
 from src.report.multi_agent import build_multi_agent_report, render_multi_agent_markdown
+from src.report.perspectives import OPENAI_MODEL_NAME as PERSPECTIVE_MODEL_NAME
 from src.report.perspectives import PerspectiveAssessment, create_perspective_assessment
 from src.report.synthesis import create_integrated_summary
 from src.schemas.context import ContextBrief, ContextItem
@@ -127,9 +128,28 @@ def test_flow_material_includes_is_cf_flow_items() -> None:
         }
     )
 
-    subjects = {item["subject"] for item in material["flow_queue"]}
+    subjects = {item["subject"] for item in material["flow_queue_reference"]}
     assert {"투자활동현금흐름", "영업이익"}.issubset(subjects)
     assert material["unmapped_material_accounts"] == [{"label": "확장"}]
+
+
+def test_numeric_material_includes_full_series_not_only_queue() -> None:
+    from src.report.materials import numeric_material
+
+    material = numeric_material(
+        {
+            "review_queue": [{"subject": "매출채권"}],
+            "ratio_summary": {"활동성": {"DIO": 432.0}},
+            "ratio_time_series": [{"name": "DIO", "year": 2019, "value": 432.0}],
+            "account_level_series": [{"series_key": "재고자산", "year": 2019, "amount": 100.0}],
+            "latest_signal_snapshot": {},
+        }
+    )
+
+    assert material["review_queue_reference"] == [{"subject": "매출채권"}]
+    assert material["ratio_time_series"][0]["name"] == "DIO"
+    assert material["account_level_series"][0]["series_key"] == "재고자산"
+    assert "정답이 아니다" in material["queue_role"]
 
 
 def test_ratio_summary_groups_latest_values_by_category() -> None:
@@ -145,7 +165,7 @@ def test_integrated_summary_accepts_mock_agent(monkeypatch) -> None:
             assert "review_queue" in prompt
             return SimpleNamespace(output="실제 데이터에 근거한 가능성 중심 종합 문단")
 
-    monkeypatch.setattr("src.report.synthesis.settings.google_api_key", "fake")
+    monkeypatch.setattr("src.report.synthesis.settings.openai_api_key", "fake")
     result = asyncio.run(
         create_integrated_summary({"review_queue": []}, agent_factory=FakeAgent, retry_delays=(0,))
     )
@@ -264,7 +284,7 @@ def test_perspective_assessment_accepts_mock_agent(monkeypatch) -> None:
                 )
             )
 
-    monkeypatch.setattr("src.report.perspectives.settings.google_api_key", "fake")
+    monkeypatch.setattr("src.report.perspectives.settings.openai_api_key", "fake")
     result = asyncio.run(
         create_perspective_assessment("numeric", {"review_queue": []}, FakeAgent, (0,))
     )
@@ -297,7 +317,7 @@ def test_flow_and_change_perspectives_accept_mock_agent(monkeypatch) -> None:
                 )
             )
 
-    monkeypatch.setattr("src.report.perspectives.settings.google_api_key", "fake")
+    monkeypatch.setattr("src.report.perspectives.settings.openai_api_key", "fake")
 
     flow = asyncio.run(create_perspective_assessment("flow", {}, FakeAgent, (0,)))
     change = asyncio.run(create_perspective_assessment("change", {}, FakeAgent, (0,)))
@@ -449,7 +469,7 @@ def test_industry_perspective_accepts_mock_agent(monkeypatch) -> None:
         "peers": [],
         "baseline": [{"name": "ROE", "target_value": 12.0, "peer_median": 15.0}],
     }
-    monkeypatch.setattr("src.report.perspectives.settings.google_api_key", "fake")
+    monkeypatch.setattr("src.report.perspectives.settings.openai_api_key", "fake")
 
     material = industry_material(report, lambda *args, **kwargs: benchmark)
     result = asyncio.run(
@@ -527,8 +547,10 @@ def test_query_generation_sanitizes_speculative_terms() -> None:
 
 def test_external_query_generation_uses_separate_pro_model() -> None:
     assert MODEL_NAME == "gemini-2.5-flash"
+    assert PERSPECTIVE_MODEL_NAME == "gpt-5.4"
     assert EXTERNAL_MODEL_NAME == "gemini-3.1-pro-preview"
     assert EXTERNAL_MODEL_NAME != MODEL_NAME
+    assert EXTERNAL_MODEL_NAME != PERSPECTIVE_MODEL_NAME
 
 
 def test_query_generation_drops_metric_acronyms() -> None:

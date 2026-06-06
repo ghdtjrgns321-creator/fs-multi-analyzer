@@ -62,6 +62,8 @@ def build_company_report(
         "target_year": target_year,
         "review_queue": [item.to_dict() for item in queue],
         "ratio_summary": ratio_summary,
+        "ratio_time_series": _ratio_time_series(ratios),
+        "account_level_series": _account_level_series(frame, target_years, target_year),
         "latest_signal_snapshot": latest_snapshot,
         "unmapped_material_accounts": unmapped,
         "llm_payload": payload,
@@ -120,6 +122,48 @@ def _signal_rows(signals: list[Any]) -> list[dict[str, object]]:
         }
         for signal in signals
     ]
+
+
+def _ratio_time_series(ratios: Any) -> list[dict[str, object]]:
+    if not hasattr(ratios, "to_dict") or ratios.empty:
+        return []
+    scoped = ratios[ratios["status"] == "computed"].copy()
+    scoped = scoped.sort_values(["category", "id", "year"])
+    return scoped[["id", "category", "name", "year", "value", "basis"]].to_dict("records")
+
+
+def _account_level_series(
+    frame: Any,
+    years: list[int],
+    target_year: int,
+    limit: int = 40,
+) -> list[dict[str, object]]:
+    if not hasattr(frame, "to_dict") or frame.empty:
+        return []
+    fs_div = _primary_fs_div(frame, target_year)
+    scoped = frame[(frame["fs_div"] == fs_div) & (frame["sj_div"].isin(["BS", "IS", "CF"]))].copy()
+    if scoped.empty:
+        return []
+    scoped["series_key"] = scoped["canonical"].where(
+        scoped["canonical"].notna() & (scoped["canonical"] != ""),
+        scoped["label"],
+    )
+    latest = scoped[scoped["year"].astype(int) == int(target_year)].copy()
+    latest["abs_amount"] = latest["amount"].abs()
+    keys = latest.sort_values("abs_amount", ascending=False)["series_key"].dropna().head(limit)
+    result = scoped[
+        (scoped["series_key"].isin(keys))
+        & (scoped["year"].astype(int).isin([int(year) for year in years]))
+    ].copy()
+    result = result.sort_values(["sj_div", "series_key", "year"])
+    return result[
+        ["year", "fs_div", "sj_div", "series_key", "canonical", "label", "amount", "mapping_status"]
+    ].to_dict("records")
+
+
+def _primary_fs_div(frame: Any, target_year: int) -> str:
+    latest = frame[frame["year"].astype(int) == int(target_year)]
+    return "CFS" if (latest["fs_div"] == "CFS").any() else "OFS"
 
 
 def _top_unmapped_material_accounts(frame: Any, target_year: int) -> list[dict[str, object]]:

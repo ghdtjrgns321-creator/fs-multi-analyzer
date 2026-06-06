@@ -17,6 +17,9 @@ class Settings(BaseSettings):
     gemini_model: str = "gemini-2.5-flash"
     gemini_external_model: str = "gemini-3.1-pro-preview"
     gemini_fallback_model: str = ""
+    openai_model: str = "gpt-5.4"
+    openai_reasoning_effort: str = ""
+    openai_timeout_seconds: float = 120.0
 
     # 경로
     data_dir: Path = Path("data/companies")
