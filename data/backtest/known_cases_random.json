@@ -1,0 +1,51 @@
+{
+  "_meta": {
+    "purpose": "2차 검증(랜덤 확장). 튜닝·1차 홀드아웃에 안 쓴 회사들. 엔진 동결한 채 돌려 Stage1 결론(발굴기지 판별기 아님·오버피팅 아님)이 더 큰 표본에서도 버티는지, 특히 소·중형 정상회사에서 캡포화/거짓양성이 일반적인지, 무형자산 자본화형 분식(점진적·어려운 유형)이 발굴되는지 확인.",
+    "commitment": "결과 보기 전 회사·연도·분식계정 고정. 엔진·채점·임계 변경 금지."
+  },
+  "cases": [
+    {
+      "company": "이트론", "corp_code": "00480756", "stock_code": "096040", "market": "코스닥",
+      "fraud_year_start": 2019, "fraud_year_end": 2022, "run_years": [2019, 2020, 2021, 2022],
+      "accounts": ["무형자산", "관계기업투자", "당기순이익", "자기자본"],
+      "fraud_type": "자산과대(연구비 무형자산 자본화+투자주식 오분류)", "fs_detectable": true,
+      "confirmed": "증선위 과징금 23.7억·검찰고발(2025)", "label": "positive", "runnable": true, "confidence": "high",
+      "sources": ["https://biz.heraldcorp.com/article/10445544"],
+      "notes": "2차검증. 이화그룹 계열. 무형자산·관계기업투자 과대. 2017~2018 OFS, 2019~2022 CFS. 2023 상폐."
+    },
+    {
+      "company": "웨이브일렉트로닉스", "corp_code": "00526696", "stock_code": "095270", "market": "코스닥",
+      "fraud_year_start": 2015, "fraud_year_end": 2019, "run_years": [2015, 2016, 2017, 2018, 2019],
+      "accounts": ["무형자산", "관계기업투자", "당기순이익", "자기자본"],
+      "fraud_type": "자산과대(연구비 무형자산 자본화)", "fs_detectable": true,
+      "confirmed": "증선위 과징금 13.5억·감사인지정(2024)", "label": "positive", "runnable": true, "confidence": "high",
+      "sources": ["https://www.fsc.go.kr/no020102/84433"],
+      "notes": "2차검증. 방산 부품. 연구비 무형자산 자본화→자기자본 과대. 점진적 자본화형(셀트리온 개발비와 유사 난이도)."
+    },
+
+    {"company": "농심", "corp_code": "00108241", "stock_code": "004370", "market": "유가",
+      "fraud_year_start": null, "fraud_year_end": null, "run_years": [2020, 2021, 2022, 2023],
+      "accounts": [], "fraud_type": null, "fs_detectable": false, "confirmed": "해당없음(정상)",
+      "label": "clean", "runnable": true, "confidence": "high", "sources": [], "notes": "2차검증 정상. 식품 중대형."},
+    {"company": "빙그레", "corp_code": "00124726", "stock_code": "005180", "market": "유가",
+      "fraud_year_start": null, "fraud_year_end": null, "run_years": [2020, 2021, 2022, 2023],
+      "accounts": [], "fraud_type": null, "fs_detectable": false, "confirmed": "해당없음(정상)",
+      "label": "clean", "runnable": true, "confidence": "high", "sources": [], "notes": "2차검증 정상. 식품 소중형."},
+    {"company": "한섬", "corp_code": "00188089", "stock_code": "020000", "market": "유가",
+      "fraud_year_start": null, "fraud_year_end": null, "run_years": [2020, 2021, 2022, 2023],
+      "accounts": [], "fraud_type": null, "fs_detectable": false, "confirmed": "해당없음(정상)",
+      "label": "clean", "runnable": true, "confidence": "high", "sources": [], "notes": "2차검증 정상. 의류 중형."},
+    {"company": "대한제강", "corp_code": "00113225", "stock_code": "084010", "market": "유가",
+      "fraud_year_start": null, "fraud_year_end": null, "run_years": [2020, 2021, 2022, 2023],
+      "accounts": [], "fraud_type": null, "fs_detectable": false, "confirmed": "해당없음(정상)",
+      "label": "clean", "runnable": true, "confidence": "high", "sources": [], "notes": "2차검증 정상. 철강 소중형."},
+    {"company": "인탑스", "corp_code": "00226866", "stock_code": "049070", "market": "코스닥",
+      "fraud_year_start": null, "fraud_year_end": null, "run_years": [2020, 2021, 2022, 2023],
+      "accounts": [], "fraud_type": null, "fs_detectable": false, "confirmed": "해당없음(정상)",
+      "label": "clean", "runnable": true, "confidence": "high", "sources": [], "notes": "2차검증 정상. 전자부품 소중형(코스닥)."},
+    {"company": "동원F&B", "corp_code": "00340917", "stock_code": "049770", "market": "유가",
+      "fraud_year_start": null, "fraud_year_end": null, "run_years": [2020, 2021, 2022, 2023],
+      "accounts": [], "fraud_type": null, "fs_detectable": false, "confirmed": "해당없음(정상)",
+      "label": "clean", "runnable": true, "confidence": "high", "sources": [], "notes": "2차검증 정상. 식품 중형."}
+  ]
+}

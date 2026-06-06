@@ -1,0 +1,12 @@
+{
+  "total_cases": 542,
+  "fs_detectable_true": 497,
+  "type_distribution": {
+    "자산과대": 257,
+    "가공매출": 68,
+    "기타": 197,
+    "null": 17,
+    "손상미인식": 2,
+    "결산수정": 1
+  }
+}

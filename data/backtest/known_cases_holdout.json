@@ -1,0 +1,72 @@
+{
+  "_meta": {
+    "purpose": "홀드아웃 검증 세트. 튜닝(P1~P7·아티팩트 가드)에 전혀 쓰지 않은 회사들. 엔진을 동결한 채 돌려 오버피팅 여부를 판정한다. 분식 3건이 잡히면 일반화, 정상 5곳이 아티팩트 없이 멀쩡하면 수정이 일반적임을 확인.",
+    "commitment": "결과를 보기 전에 회사·연도·분식계정을 고정했다. 채점 잣대·신호 임계·엔진 코드는 변경 금지.",
+    "fraud_accounts": "분식 유형의 일반 FS 발자국에서 도출(정답 신호를 보고 고른 것 아님)."
+  },
+  "cases": [
+    {
+      "company": "티피씨메카트로닉스", "corp_code": "00108649", "stock_code": "048770", "market": "코스닥",
+      "fraud_year_start": 2014, "fraud_year_end": 2016, "run_years": [2015, 2016],
+      "accounts": ["재고자산", "매출원가"],
+      "fraud_type": "자산과대(재고자산 과대)", "fs_detectable": true,
+      "confirmed": "증선위 과징금 4.35억·감사인지정", "label": "positive", "runnable": true, "confidence": "high",
+      "sources": ["https://www.intn.co.kr/news/articleView.html?idxno=2008702"],
+      "notes": "홀드아웃. 재고 과대→매출원가 과소→이익 과대. 공압 자동화부품. 2014~2016 중 2015~2016이 DART 범위."
+    },
+    {
+      "company": "유네코", "corp_code": "00127699", "stock_code": "064510", "market": "코스닥",
+      "fraud_year_start": 2014, "fraud_year_end": 2019, "run_years": [2017, 2018, 2019],
+      "accounts": ["매출채권", "대손충당금", "차입금"],
+      "fraud_type": "자산과대(매출채권 과대·대손충당금 과소)", "fs_detectable": true,
+      "confirmed": "증선위 검찰고발·과징금·감사인지정3년", "label": "positive", "runnable": true, "confidence": "high",
+      "sources": ["https://www.intn.co.kr/news/articleView.html?idxno=2024852"],
+      "notes": "홀드아웃. 차입금 입금을 매출채권 회수로 가장→매출채권 과대·대손충당금 과소. 2016 DART 없음, 2017~2019 가용. 2022 상폐."
+    },
+    {
+      "company": "본느", "corp_code": "01098792", "stock_code": "226340", "market": "코스닥",
+      "fraud_year_start": 2022, "fraud_year_end": 2023, "run_years": [2021, 2022, 2023],
+      "accounts": ["재고자산", "충당부채"],
+      "fraud_type": "자산과대(재고)+결산수정(비용이연)", "fs_detectable": true,
+      "confirmed": "증선위 검찰고발·과징금 2.15억·감사인지정3년", "label": "positive", "runnable": true, "confidence": "high",
+      "sources": ["https://www.sedaily.com/NewsView/2GNM4BT7CU"],
+      "notes": "홀드아웃. 재고 과대 + 손해배상비용 이연. 화장품 OEM/ODM. 2015 상장."
+    },
+
+    {
+      "company": "NAVER", "corp_code": "00266961", "stock_code": "035420", "market": "유가",
+      "fraud_year_start": null, "fraud_year_end": null, "run_years": [2020, 2021, 2022, 2023],
+      "accounts": [], "fraud_type": null, "fs_detectable": false,
+      "confirmed": "해당없음(정상)", "label": "clean", "runnable": true, "confidence": "high",
+      "sources": [], "notes": "홀드아웃 정상. IT 대형. 아티팩트·거짓양성 점검용."
+    },
+    {
+      "company": "KT&G", "corp_code": "00244455", "stock_code": "033780", "market": "유가",
+      "fraud_year_start": null, "fraud_year_end": null, "run_years": [2020, 2021, 2022, 2023],
+      "accounts": [], "fraud_type": null, "fs_detectable": false,
+      "confirmed": "해당없음(정상)", "label": "clean", "runnable": true, "confidence": "high",
+      "sources": [], "notes": "홀드아웃 정상. 담배·안정적 현금흐름."
+    },
+    {
+      "company": "오리온", "corp_code": "01238169", "stock_code": "271560", "market": "유가",
+      "fraud_year_start": null, "fraud_year_end": null, "run_years": [2020, 2021, 2022, 2023],
+      "accounts": [], "fraud_type": null, "fs_detectable": false,
+      "confirmed": "해당없음(정상)", "label": "clean", "runnable": true, "confidence": "high",
+      "sources": [], "notes": "홀드아웃 정상. 식품."
+    },
+    {
+      "company": "한미반도체", "corp_code": "00161383", "stock_code": "042700", "market": "유가",
+      "fraud_year_start": null, "fraud_year_end": null, "run_years": [2020, 2021, 2022, 2023],
+      "accounts": [], "fraud_type": null, "fs_detectable": false,
+      "confirmed": "해당없음(정상)", "label": "clean", "runnable": true, "confidence": "high",
+      "sources": [], "notes": "홀드아웃 정상. 반도체 장비 중형(아스트와 규모대 유사 — 소형사 일반화 점검)."
+    },
+    {
+      "company": "영원무역", "corp_code": "00776820", "stock_code": "111770", "market": "유가",
+      "fraud_year_start": null, "fraud_year_end": null, "run_years": [2020, 2021, 2022, 2023],
+      "accounts": [], "fraud_type": null, "fs_detectable": false,
+      "confirmed": "해당없음(정상)", "label": "clean", "runnable": true, "confidence": "high",
+      "sources": [], "notes": "홀드아웃 정상. 의류 OEM 제조."
+    }
+  ]
+}

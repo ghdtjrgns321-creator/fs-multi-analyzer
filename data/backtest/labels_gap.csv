@@ -1,0 +1,18 @@
+﻿company,corp_code,stock_code,market,label,runnable,dart_ok,fraud_year_start,fraud_year_end,run_years,fraud_type,fs_detectable,accounts,confirmed,confidence,sources,notes
+현대건설,00164478,000720,유가,clean,True,True,,,2020;2021;2022;2023,,False,,정상,high,,갭:종합건설(진행률·계약자산)
+GS건설,00120030,006360,유가,clean,True,True,,,2020;2021;2022;2023,,False,,정상,high,,갭:종합건설(진행률·계약자산)
+DL이앤씨,01524093,375500,유가,clean,True,True,,,2021;2022;2023,,False,,정상,high,,갭:종합건설(2021 분할상장)
+HDC현대산업개발,01310269,294870,유가,clean,True,True,,,2020;2021;2022;2023,,False,,정상,high,,갭:종합건설
+SK텔레콤,00159023,017670,유가,clean,True,True,,,2020;2021;2022;2023,,False,,정상,high,,갭:통신(가입자·리스 특수회계)
+KT,00190321,030200,유가,clean,True,True,,,2020;2021;2022;2023,,False,,정상,high,,갭:통신
+LG유플러스,00231363,032640,유가,clean,True,True,,,2020;2021;2022;2023,,False,,정상,high,,갭:통신
+한국전력공사,00159193,015760,유가,clean,True,True,,,2020;2021;2022;2023,,False,,정상,high,,갭:전기유틸리티(대규모 유형자산·적자전환)
+한국가스공사,00261285,036460,유가,clean,True,True,,,2020;2021;2022;2023,,False,,정상,high,,갭:가스유틸리티(미수금 특수)
+엔씨소프트,00261443,036570,유가,clean,True,True,,,2020;2021;2022;2023,,False,,정상,high,,갭:게임SW(개발비·무형자산)
+크래프톤,00760971,259960,유가,clean,True,True,,,2021;2022;2023,,False,,정상,high,,갭:게임SW(2021 상장)
+카카오,00258801,035720,유가,clean,True,True,,,2020;2021;2022;2023,,False,,정상,high,,갭:플랫폼SW(다수 종속·무형자산)
+펄어비스,01152470,263750,코스닥,clean,True,True,,,2020;2021;2022;2023,,False,,정상,high,,갭:게임SW(코스닥)
+대한항공,00113526,003490,유가,clean,True,True,,,2020;2021;2022;2023,,False,,정상,high,,갭:항공운송(리스·정비충당부채)
+CJ대한통운,00113410,000120,유가,clean,True,True,,,2020;2021;2022;2023,,False,,정상,high,,갭:물류운송
+이마트,00872984,139480,유가,clean,True,True,,,2020;2021;2022;2023,,False,,정상,high,,갭:소매유통(다수 종속·리스)
+메가스터디교육,01074862,215200,코스닥,clean,True,True,,,2020;2021;2022;2023,,False,,정상,high,,갭:교육서비스(선수금·계약부채)

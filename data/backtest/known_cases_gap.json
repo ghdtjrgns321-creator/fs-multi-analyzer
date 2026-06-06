@@ -1,0 +1,26 @@
+{
+ "_meta": {
+  "purpose": "커버리지 갭 보강. 121사 mega 표본에 빠진 업종(건설·통신·유틸리티·SW/게임·항공·물류·리테일·교육) 대표 대형주를 추가해 홀리스틱 재검증. 전부 정상(clean) 회사이며, 새로운 발견 유형(6번째)이 나오는지·진행률 계정(건설)이 어떻게 처리되는지 확인용.",
+  "commitment": "결과 보기 전 회사 확정. 엔진·채점·임계 변경 금지. 분식 정답 아님 — 업종 행동 관찰용.",
+  "gap_rationale": "기존 표본은 제조(전자·기계·화학·의약·금속)+도매 편중. 건설(진행률 분식 대표업종)·통신·유틸리티·SW가 0~1사뿐이라 보강."
+ },
+ "cases": [
+  {"company": "현대건설", "stock_code": "000720", "market": "유가", "label": "clean", "runnable": true, "run_years": [2020, 2021, 2022, 2023], "accounts": [], "fs_detectable": false, "confirmed": "정상", "confidence": "high", "sources": [], "notes": "갭:종합건설(진행률·계약자산)"},
+  {"company": "GS건설", "stock_code": "006360", "market": "유가", "label": "clean", "runnable": true, "run_years": [2020, 2021, 2022, 2023], "accounts": [], "fs_detectable": false, "confirmed": "정상", "confidence": "high", "sources": [], "notes": "갭:종합건설(진행률·계약자산)"},
+  {"company": "DL이앤씨", "stock_code": "375500", "market": "유가", "label": "clean", "runnable": true, "run_years": [2021, 2022, 2023], "accounts": [], "fs_detectable": false, "confirmed": "정상", "confidence": "high", "sources": [], "notes": "갭:종합건설(2021 분할상장)"},
+  {"company": "HDC현대산업개발", "stock_code": "294870", "market": "유가", "label": "clean", "runnable": true, "run_years": [2020, 2021, 2022, 2023], "accounts": [], "fs_detectable": false, "confirmed": "정상", "confidence": "high", "sources": [], "notes": "갭:종합건설"},
+  {"company": "SK텔레콤", "stock_code": "017670", "market": "유가", "label": "clean", "runnable": true, "run_years": [2020, 2021, 2022, 2023], "accounts": [], "fs_detectable": false, "confirmed": "정상", "confidence": "high", "sources": [], "notes": "갭:통신(가입자·리스 특수회계)"},
+  {"company": "KT", "stock_code": "030200", "market": "유가", "label": "clean", "runnable": true, "run_years": [2020, 2021, 2022, 2023], "accounts": [], "fs_detectable": false, "confirmed": "정상", "confidence": "high", "sources": [], "notes": "갭:통신"},
+  {"company": "LG유플러스", "stock_code": "032640", "market": "유가", "label": "clean", "runnable": true, "run_years": [2020, 2021, 2022, 2023], "accounts": [], "fs_detectable": false, "confirmed": "정상", "confidence": "high", "sources": [], "notes": "갭:통신"},
+  {"company": "한국전력공사", "stock_code": "015760", "market": "유가", "label": "clean", "runnable": true, "run_years": [2020, 2021, 2022, 2023], "accounts": [], "fs_detectable": false, "confirmed": "정상", "confidence": "high", "sources": [], "notes": "갭:전기유틸리티(대규모 유형자산·적자전환)"},
+  {"company": "한국가스공사", "stock_code": "036460", "market": "유가", "label": "clean", "runnable": true, "run_years": [2020, 2021, 2022, 2023], "accounts": [], "fs_detectable": false, "confirmed": "정상", "confidence": "high", "sources": [], "notes": "갭:가스유틸리티(미수금 특수)"},
+  {"company": "엔씨소프트", "stock_code": "036570", "market": "유가", "label": "clean", "runnable": true, "run_years": [2020, 2021, 2022, 2023], "accounts": [], "fs_detectable": false, "confirmed": "정상", "confidence": "high", "sources": [], "notes": "갭:게임SW(개발비·무형자산)"},
+  {"company": "크래프톤", "stock_code": "259960", "market": "유가", "label": "clean", "runnable": true, "run_years": [2021, 2022, 2023], "accounts": [], "fs_detectable": false, "confirmed": "정상", "confidence": "high", "sources": [], "notes": "갭:게임SW(2021 상장)"},
+  {"company": "카카오", "stock_code": "035720", "market": "유가", "label": "clean", "runnable": true, "run_years": [2020, 2021, 2022, 2023], "accounts": [], "fs_detectable": false, "confirmed": "정상", "confidence": "high", "sources": [], "notes": "갭:플랫폼SW(다수 종속·무형자산)"},
+  {"company": "펄어비스", "stock_code": "263750", "market": "코스닥", "label": "clean", "runnable": true, "run_years": [2020, 2021, 2022, 2023], "accounts": [], "fs_detectable": false, "confirmed": "정상", "confidence": "high", "sources": [], "notes": "갭:게임SW(코스닥)"},
+  {"company": "대한항공", "stock_code": "003490", "market": "유가", "label": "clean", "runnable": true, "run_years": [2020, 2021, 2022, 2023], "accounts": [], "fs_detectable": false, "confirmed": "정상", "confidence": "high", "sources": [], "notes": "갭:항공운송(리스·정비충당부채)"},
+  {"company": "CJ대한통운", "stock_code": "000120", "market": "유가", "label": "clean", "runnable": true, "run_years": [2020, 2021, 2022, 2023], "accounts": [], "fs_detectable": false, "confirmed": "정상", "confidence": "high", "sources": [], "notes": "갭:물류운송"},
+  {"company": "이마트", "stock_code": "139480", "market": "유가", "label": "clean", "runnable": true, "run_years": [2020, 2021, 2022, 2023], "accounts": [], "fs_detectable": false, "confirmed": "정상", "confidence": "high", "sources": [], "notes": "갭:소매유통(다수 종속·리스)"},
+  {"company": "메가스터디교육", "stock_code": "215200", "market": "코스닥", "label": "clean", "runnable": true, "run_years": [2020, 2021, 2022, 2023], "accounts": [], "fs_detectable": false, "confirmed": "정상", "confidence": "high", "sources": [], "notes": "갭:교육서비스(선수금·계약부채)"}
+ ]
+}

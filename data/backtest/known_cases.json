@@ -1,0 +1,146 @@
+{
+  "_meta": {
+    "purpose": "백테스트 정답지(실명 공개 분식사건). 금감원 익명 사례집을 검색으로 푸는 대신, 이미 실명 공개된 확정 사건을 쓴다(오특정 위험 0). 옵션1(유명 확정사건)+옵션2(증선위 의결 실명).",
+    "label": "positive=분식 확정·FS탐지가능 / negative=법원이 분식 부정 / clean=정상 통제",
+    "runnable": "OpenDART finstate_all(2015~) 가용 + 상장이면 도구 실행 가능. pre-2015/비상장은 reference(패턴 참고).",
+    "confirmed_caveat": "중과실=고의 분식 아님(증선위 과징금). 정답지엔 positive로 넣되 라벨 주의.",
+    "verified_by": "웹검색 교차확인(증선위 보도자료·판결·언론). 상세 출처는 각 항목 sources."
+  },
+  "cases": [
+    {
+      "company": "두산에너빌리티", "corp_code": "00159616", "stock_code": "034020", "market": "유가",
+      "fraud_year_start": 2017, "fraud_year_end": 2019, "run_years": [2017, 2018, 2019],
+      "accounts": ["공사매출", "미청구공사", "공사손실충당부채", "종속기업투자주식", "손상차손"],
+      "fraud_type": "진행률과대+손상미인식", "fs_detectable": true,
+      "confirmed": "증선위 중과실·금융위 과징금 161.4억", "label": "positive", "runnable": true, "confidence": "high",
+      "sources": ["https://www.hankookilbo.com/News/Read/A2024032017420004025", "https://m.dt.co.kr/contents.html?article_no=2024032002109963077003"],
+      "notes": "인도 화력발전 손실 미반영. 매출 과대 2017·2018 각 약900억, 2019 255억(연결). 중과실 확정."
+    },
+    {
+      "company": "아스트", "corp_code": "00409681", "stock_code": "067390", "market": "코스닥",
+      "fraud_year_start": 2017, "fraud_year_end": 2022, "run_years": [2018, 2019, 2020, 2021],
+      "accounts": ["재고자산", "매출원가", "자기자본"],
+      "fraud_type": "자산과대(재고자산 과대)", "fs_detectable": true,
+      "confirmed": "증선위 과징금(임원 합계 21.84억·감사인지정)", "label": "positive", "runnable": true, "confidence": "high",
+      "sources": ["https://www.newsis.com/view/NISX20250711_0003249062", "https://www.sedaily.com/NewsView/2GVB5VAGG1"],
+      "notes": "판매된 재고를 매출원가 미처리·재고로 유지→자기자본·당기순이익 과대. 항공기 부품 제조."
+    },
+    {
+      "company": "디아이동일", "corp_code": "00118345", "stock_code": "001530", "market": "유가",
+      "fraud_year_start": 2015, "fraud_year_end": 2019, "run_years": [2016, 2017, 2018, 2019],
+      "accounts": ["종속기업투자", "자기자본", "수익", "이연법인세부채"],
+      "fraud_type": "자산/자본 과대(연결범위 부당 포함)", "fs_detectable": true,
+      "confirmed": "증선위 2024.11 검찰고발·감사인 과징금", "label": "positive", "runnable": true, "confidence": "high",
+      "sources": ["https://www.inews24.com/view/1785735", "https://www.asiae.co.kr/article/2024112022354788418"],
+      "notes": "공동지배기업 동일라코스테를 연결대상에 고의 포함→자기자본·수익 과대(977억~1115억). 연결 특화 사례라 탐지 난이도 높음."
+    },
+    {
+      "company": "모델솔루션", "corp_code": "00657783", "stock_code": "417970", "market": "코스닥",
+      "fraud_year_start": 2022, "fraud_year_end": 2023, "run_years": [2022, 2023],
+      "accounts": ["매출", "매출원가", "자기자본", "당기순이익"],
+      "fraud_type": "결산수정+총액매출 과대", "fs_detectable": true,
+      "confirmed": "증선위 2025.11 과징금 1.9억·감사인지정3년", "label": "positive", "runnable": true, "confidence": "high",
+      "sources": ["https://www.hankyung.com/article/202511194062i", "https://www.edaily.co.kr/News/Read?newsId=04293526642333248&mediaCodeNo=257"],
+      "notes": "2022 매입 누락분을 2023 손익 반영→자기자본 왜곡. 유상사급 총액인식으로 매출·매출원가 과대(2022 25.7억, 2023 20.75억)."
+    },
+    {
+      "company": "셀트리온", "corp_code": "00413046", "stock_code": "068270", "market": "유가",
+      "fraud_year_start": 2016, "fraud_year_end": 2020, "run_years": [2016, 2017, 2018, 2019],
+      "accounts": ["개발비(무형자산)", "무형자산", "재고자산", "재고자산평가손실"],
+      "fraud_type": "자산과대(개발비 자산화+재고평가손실 미인식)", "fs_detectable": true,
+      "confirmed": "증선위 2022.3 중과실·과징금 약60억", "label": "positive", "runnable": true, "confidence": "high",
+      "sources": ["https://www.hankyung.com/article/2022031100335", "https://m.khan.co.kr/article/202203111843001"],
+      "notes": "2017~2020 개발비 약1149억 과대, 2016 재고평가손실 미인식. 중과실(고의 아님)."
+    },
+    {
+      "company": "세토피아", "corp_code": "01091382", "stock_code": "222810", "market": "코스닥",
+      "fraud_year_start": 2019, "fraud_year_end": 2019, "run_years": [2018, 2019],
+      "accounts": ["금융자산", "금융부채"],
+      "fraud_type": "자산과대(미납입 BW를 납입 처리)", "fs_detectable": true,
+      "confirmed": "증선위 2025.3 과징금2.7억·검찰통보", "label": "positive", "runnable": true, "confidence": "medium",
+      "sources": ["https://www.sedaily.com/NewsView/2GQ7VO39JE", "https://www.hankyung.com/article/2025031203106"],
+      "notes": "종속회사 BW 인수대금 약80억 미납입에도 납입처리→금융자산·부채 과대. 손익영향 제한적이라 탐지 난이도 있음."
+    },
+    {
+      "company": "삼성전자", "corp_code": "00126380", "stock_code": "005930", "market": "유가",
+      "fraud_year_start": null, "fraud_year_end": null, "run_years": [2022, 2023, 2024, 2025],
+      "accounts": [], "fraud_type": null, "fs_detectable": false,
+      "confirmed": "해당없음(정상)", "label": "clean", "runnable": true, "confidence": "high",
+      "sources": [],
+      "notes": "정상 통제군. 도구가 건강한 회사를 과하게 위험으로 몰지 않는지 확인(거짓양성 점검). 이미 분석 완료."
+    },
+    {
+      "company": "한국항공우주산업(KAI)", "corp_code": null, "stock_code": "047810", "market": "유가",
+      "fraud_year_start": 2013, "fraud_year_end": 2017, "run_years": [2016, 2017],
+      "accounts": ["개발비(무형자산)", "선급금", "공사진행률", "매출"],
+      "fraud_type": "자산과대/진행률과대(주장)", "fs_detectable": true,
+      "confirmed": "분식 형사 1·2·3심 무죄(2025.2 대법 확정)+과징금 행정소송 취소", "label": "negative", "runnable": true, "confidence": "high",
+      "sources": ["https://www.sisajournal-e.com/news/articleView.html?idxno=409502", "https://biz.heraldcorp.com/article/10426168"],
+      "notes": "음성 통제. 검찰 5000억대 분식 기소했으나 법원 '재무 실질왜곡 아님' 무죄·과징금 취소. 도구가 여기서 강한 신호를 내면 거짓양성 경향 점검 자료."
+    },
+
+    {
+      "company": "한화오션(구 대우조선해양)", "corp_code": null, "stock_code": "042660", "market": "유가",
+      "fraud_year_start": 2012, "fraud_year_end": 2014, "run_years": [],
+      "accounts": ["매출", "매출원가", "미청구공사", "공사손실충당부채"],
+      "fraud_type": "진행률과대", "fs_detectable": true,
+      "confirmed": "증선위 과징금45억+대법 유죄(고재호 9년)", "label": "positive", "runnable": false, "confidence": "high",
+      "sources": ["https://news.sbs.co.kr/news/endPage.do?news_id=N1004061425"],
+      "notes": "reference. 분식연도 2012~2014가 OpenDART 커버(2015~) 이전이라 도구 실행 불가. 패턴 참고용."
+    },
+    {
+      "company": "대우건설", "corp_code": "00124540", "stock_code": "047040", "market": "유가",
+      "fraud_year_start": 2013, "fraud_year_end": 2014, "run_years": [],
+      "accounts": ["공사손실충당부채", "미청구공사", "영업이익"],
+      "fraud_type": "손상미인식/손실충당부채 과소", "fs_detectable": true,
+      "confirmed": "증선위 과징금20억(분식 약3896억)", "label": "positive", "runnable": false, "confidence": "high",
+      "sources": ["https://www.hankyung.com/article/2015081926091"],
+      "notes": "reference. 분식연도 pre-2015. 패턴 참고용."
+    },
+    {
+      "company": "효성", "corp_code": "00677918", "stock_code": "004800", "market": "유가",
+      "fraud_year_start": 1999, "fraud_year_end": 2008, "run_years": [],
+      "accounts": ["가공자산", "유형자산", "자기자본"],
+      "fraud_type": "자산과대", "fs_detectable": true,
+      "confirmed": "대법 유죄(조석래 2020.12 확정)", "label": "positive", "runnable": false, "confidence": "high",
+      "sources": ["https://www.lawtimes.co.kr/news/81612"],
+      "notes": "reference. 분식연도 1999~2008, 커버 이전. 패턴 참고용."
+    },
+    {
+      "company": "경남기업", "corp_code": null, "stock_code": "000800", "market": "유가",
+      "fraud_year_start": 2006, "fraud_year_end": 2013, "run_years": [],
+      "accounts": ["미청구공사", "매출", "자산"],
+      "fraud_type": "자산과대", "fs_detectable": true,
+      "confirmed": "형사 미확정(성완종 사망 공소권없음)", "label": "positive", "runnable": false, "confidence": "medium",
+      "sources": ["https://www.hankookilbo.com/News/Read/201505010413704720"],
+      "notes": "reference. 2015 상장폐지·형사 미확정. 패턴 참고용(라벨 주의)."
+    },
+    {
+      "company": "STX조선해양(현 케이조선)", "corp_code": null, "stock_code": null, "market": "유가(상폐)",
+      "fraud_year_start": 2008, "fraud_year_end": 2012, "run_years": [],
+      "accounts": ["매출", "매출원가", "매출총이익"],
+      "fraud_type": "진행률과대", "fs_detectable": true,
+      "confirmed": "민사 분식인정·배상55억(회장 형사 분식은 무죄)", "label": "positive", "runnable": false, "confidence": "medium",
+      "sources": ["https://www.lawtimes.co.kr/news/articleView.html?idxno=181064"],
+      "notes": "reference. 2014 상장폐지·pre-2015. 패턴 참고용."
+    },
+    {
+      "company": "모뉴엘", "corp_code": null, "stock_code": null, "market": "비상장",
+      "fraud_year_start": 2008, "fraud_year_end": 2014, "run_years": [],
+      "accounts": ["매출", "매출채권", "수출채권"],
+      "fraud_type": "가공매출", "fs_detectable": true,
+      "confirmed": "대법 유죄(박홍석 23년)", "label": "positive", "runnable": false, "confidence": "high",
+      "sources": ["https://www.lawtimes.co.kr/news/96165"],
+      "notes": "reference. 본체 비상장·pre-2015. 가공매출 패턴 참고용."
+    },
+    {
+      "company": "중국고섬", "corp_code": null, "stock_code": null, "market": "유가(상폐)",
+      "fraud_year_start": 2010, "fraud_year_end": 2010, "run_years": [],
+      "accounts": ["현금및현금성자산", "예금"],
+      "fraud_type": "현금허위", "fs_detectable": true,
+      "confirmed": "현금 11억위안 기재 vs 실제 9300만위안·상장폐지", "label": "positive", "runnable": false, "confidence": "high",
+      "sources": ["https://www.mt.co.kr/society/2019/06/28/2019062813368246061"],
+      "notes": "reference. 외국기업·2013 상장폐지·pre-2015. 현금허위 패턴 참고용."
+    }
+  ]
+}

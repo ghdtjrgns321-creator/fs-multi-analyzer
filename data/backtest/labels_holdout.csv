@@ -1,0 +1,9 @@
+﻿company,corp_code,stock_code,market,label,runnable,dart_ok,fraud_year_start,fraud_year_end,run_years,fraud_type,fs_detectable,accounts,confirmed,confidence,sources,notes
+티피씨메카트로닉스,00108649,048770,코스닥,positive,True,True,2014,2016,2015;2016,자산과대(재고자산 과대),True,재고자산;매출원가,증선위 과징금 4.35억·감사인지정,high,https://www.intn.co.kr/news/articleView.html?idxno=2008702,홀드아웃. 재고 과대→매출원가 과소→이익 과대. 공압 자동화부품. 2014~2016 중 2015~2016이 DART 범위.
+유네코,00127699,064510,코스닥,positive,True,True,2014,2019,2017;2018;2019,자산과대(매출채권 과대·대손충당금 과소),True,매출채권;대손충당금;차입금,증선위 검찰고발·과징금·감사인지정3년,high,https://www.intn.co.kr/news/articleView.html?idxno=2024852,"홀드아웃. 차입금 입금을 매출채권 회수로 가장→매출채권 과대·대손충당금 과소. 2016 DART 없음, 2017~2019 가용. 2022 상폐."
+본느,01098792,226340,코스닥,positive,True,True,2022,2023,2021;2022;2023,자산과대(재고)+결산수정(비용이연),True,재고자산;충당부채,증선위 검찰고발·과징금 2.15억·감사인지정3년,high,https://www.sedaily.com/NewsView/2GNM4BT7CU,홀드아웃. 재고 과대 + 손해배상비용 이연. 화장품 OEM/ODM. 2015 상장.
+NAVER,00266961,035420,유가,clean,True,True,,,2020;2021;2022;2023,,False,,해당없음(정상),high,,홀드아웃 정상. IT 대형. 아티팩트·거짓양성 점검용.
+KT&G,00244455,033780,유가,clean,True,True,,,2020;2021;2022;2023,,False,,해당없음(정상),high,,홀드아웃 정상. 담배·안정적 현금흐름.
+오리온,01238169,271560,유가,clean,True,True,,,2020;2021;2022;2023,,False,,해당없음(정상),high,,홀드아웃 정상. 식품.
+한미반도체,00161383,042700,유가,clean,True,True,,,2020;2021;2022;2023,,False,,해당없음(정상),high,,홀드아웃 정상. 반도체 장비 중형(아스트와 규모대 유사 — 소형사 일반화 점검).
+영원무역,00776820,111770,유가,clean,True,True,,,2020;2021;2022;2023,,False,,해당없음(정상),high,,홀드아웃 정상. 의류 OEM 제조.
