@@ -15,6 +15,10 @@ __pycache__/
 data/companies/
 *.duckdb
 
+# 백테스트 파싱 원문 (감리지적 원천에서 재생성 가능, 용량 큼)
+# clues.jsonl·labels.csv 등 구조화 산출물은 추적 (정답지/포트폴리오 자산)
+data/backtest/raw_text/
+
 # 캐시 (OpenDartReader corp code 등 재생성 가능)
 docs_cache/
 *.pkl

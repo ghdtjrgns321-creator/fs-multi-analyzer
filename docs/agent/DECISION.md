@@ -163,7 +163,7 @@
 ## D15. 동종업계 관점 → 6번째 참고 관점으로 승격
 
 - **결정**: PLAN §16.1의 B 접근을 구현해 `industry`를 L4의 6번째 독립 관점으로 추가한다.
-  피어는 DART 회사개황의 `induty_code`가 삼성전자와 같은 `264`인 config 피어만 사용하고,
+  피어는 대상 회사 DART 회사개황의 `induty_code`를 조회한 뒤 해당 industry config 피어만 사용하고,
   재무지표 계산용 재무제표만 수집·정규화한다. 피어에는 주석, 교차, 외부, 5축 분석을 적용하지
   않는다.
 - **이유**: ISA/KSA 520 분석적 절차는 업종·외부 정보와의 비교를 참고 절차로 허용한다.
@@ -171,7 +171,7 @@
   "정규화 N배" 부담은 지표-only 수집으로 제한한다.
 - **비오염 원칙**: 동종업계 관점은 외부 관점(D8/D11)처럼 `risk_level`, `issue_type`,
   `materiality_score` 등 내부 판단 필드를 바꾸지 않는다. 교차 판정에서 일치/충돌 참고
-  신호로만 쓰며, 삼성전자의 사업 다각화 때문에 단순 피어 비교 한계를 항상 명시한다.
+  신호로만 쓰며, 대상 회사의 사업구조가 피어와 달라 단순 비교에 한계가 있음을 항상 명시한다.
 - **영향**: 피어 config는 `config/industry_peers.yaml`, baseline 계산은 `src.peers`,
-  L4 연결은 `src.report.industry`가 담당한다. 피어 수집 실패 또는 Gemini 503이면
-  `industry` 관점만 deferred되고 기존 5축은 유지된다.
+  L4 연결은 `src.report.industry`가 담당한다. 해당 `induty_code` 피어가 config에 없거나
+  피어 수집 실패 또는 Gemini 503이면 `industry` 관점만 deferred되고 기존 5축은 유지된다.

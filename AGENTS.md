@@ -30,6 +30,7 @@
 - LLM은 계산 결과, 주석 근거, EvidenceRef를 해석하는 역할로 제한한다.
 - 자유 Text-to-SQL보다 안전한 tool DSL을 우선한다.
 - 계정명, 관계 사슬, watchlist 키워드는 코드에 하드코딩하지 않고 설정 또는 매핑 레이어에 둔다.
+- 분석을 구동하는 회사·연도·계정·fs_div·규모 기준은 데이터나 호출 인자에서 받아야 하며, 상수·샘플 config 리터럴이 실제 계산을 좌우하면 버그다.
 - Finding은 `counter_evidence`, `normal_explanation`, `confirm_question`, `next_procedure`를 포함한다.
 - "분식 확정", "부정 적발", "운영 성능 검증 완료" 같은 확정·성능보장 표현을 쓰지 않는다.
 - `.env`, API 키, 토큰, 원본 공시 payload, 대용량 민감 데이터 내용을 출력하지 않는다.
