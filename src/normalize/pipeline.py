@@ -60,8 +60,10 @@ def _dedupe_statement_rows(frame: pd.DataFrame) -> pd.DataFrame:
     key = ["account_id", "label", "year", "fs_div", "sj_div"]
     scoped = frame.copy()
     scoped["_detail_score"] = scoped.apply(_detail_score, axis=1)
-    scoped["_has_amount"] = scoped["amount"].notna()
-    scoped["_abs_amount"] = scoped["amount"].abs().fillna(-1)
+    # amount에 None/비numeric이 섞이면 object dtype → .abs() 크래시(선진). numeric 변환.
+    amount_num = pd.to_numeric(scoped["amount"], errors="coerce")
+    scoped["_has_amount"] = amount_num.notna()
+    scoped["_abs_amount"] = amount_num.abs().fillna(-1)
     return (
         scoped.sort_values(
             ["_detail_score", "_has_amount", "_abs_amount"],
@@ -85,7 +87,7 @@ def _dedupe_canonical_rows(frame: pd.DataFrame) -> pd.DataFrame:
     if mapped.empty:
         return scoped
     mapped["_canonical_score"] = mapped.apply(_canonical_score, axis=1)
-    mapped["_abs_amount"] = mapped["amount"].abs().fillna(-1)
+    mapped["_abs_amount"] = pd.to_numeric(mapped["amount"], errors="coerce").abs().fillna(-1)
     deduped = (
         mapped.sort_values(
             ["_canonical_score", "_abs_amount"],
