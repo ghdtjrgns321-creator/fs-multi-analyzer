@@ -202,3 +202,16 @@
 - **API 경계**: 현재 PydanticAI OpenAI 경로는 `/v1/chat/completions`를 사용한다. GPT-5.4에서
   structured output/function tool과 `reasoning_effort` 조합은 400 오류를 반환하므로,
   `openai_reasoning_effort` 기본값은 비활성으로 둔다. timeout은 120초로 늘렸다.
+
+## D17. 동종업계 피어 매칭 → DART 업종 중분류(앞 3자리)
+
+- **결정**: L4 `industry` 관점의 피어 config key와 매칭 기준을 DART `induty_code` 전체값이
+  아니라 앞 3자리 중분류로 바꾼다. 예를 들어 아스트의 `31322`는 `313` 피어 그룹에 매칭된다.
+- **이유**: 5자리 exact matching은 표본 대부분에서 피어 미구성 deferred를 만들었다. 중분류는
+  동일 업종의 현실적 비교 가능성을 넓히면서도 업종 전체를 무차별로 섞지 않는 절충점이다.
+- **피어 선정 원칙**: `known_cases*` 표본 회사는 피어에서 제외한다. 상장 보통주 회사 중 같은
+  중분류 후보를 DART 회사개황에서 추출하고, 자산총계 확인 가능 후보를 기준으로 대/중/소가
+  섞이도록 분위 위치에서 최대 10개를 고른다. 가용 후보가 10개 미만이면 있는 만큼만 쓴다.
+- **영향**: `config/industry_peers.yaml`은 72개 중분류, 601개 피어를 담는다. 표본 대상 업종
+  73개 중 `266`은 피어 후보가 없어 config에 쓰지 않았다. 피어는 재무지표 baseline 계산에만
+  쓰며 주석·외부·6축 분석은 피어에 적용하지 않는다.

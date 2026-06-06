@@ -46,6 +46,7 @@
 - [x] 외부 관점 agentic search 개선(LLM 쿼리 생성 → 검색 → 외부 평가)
 - [x] 외부 관점 Gemini 3.1 Pro preview 라우팅 분리
 - [x] 동종업계 6번째 관점 추가(B 접근: 피어 지표 baseline + 교차 참여)
+- [x] 피어 DB 전면 구축(표본 중분류 72개/601개 피어 + 앞3자리 업종 매칭)
 - [x] Stage2 LLM 강화(GPT-5.4 내부 관점/종합 라우팅 + 계정·지표 시계열 material 확대)
 - [x] L4 삼성 하드코딩 일반화(company profile 동적 조회 + induty_code별 피어 config)
 - [x] 차입금 / 유동성 기본 분석

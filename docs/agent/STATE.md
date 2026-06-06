@@ -332,6 +332,13 @@
   review_queue 중심이 아니라 핵심 계정 수준 시계열과 전체 지표 시계열을 포함한다. 아스트
   2015~2019 live에서 numeric/flow/change 관점이 review_queue 밖 재고자산을 DIO 432.95,
   재고회전율 0.84, 재고자산 증가 근거로 직접 제기했다.
+- 피어 DB 구축: `industry` 관점 매칭을 DART `induty_code` 앞 3자리 중분류로 바꿨고,
+  `known_cases_mega.json` + `known_cases_gap.json` 표본의 73개 중분류를 대상으로
+  `config/industry_peers.yaml`에 72개 중분류/601개 피어를 등록했다. 표본/known case 회사와
+  피어 overlap은 0건이다. 10개 미만 업종은 26개이며, `266`은 피어 후보가 없어 미등록이다.
+  아스트 `31322`는 `313`으로 매칭되고, industry baseline은 DIO 432.95 vs 피어 중앙값 46.8,
+  재고회전율 0.84 vs 피어 중앙값 7.8을 산출했다. L4 live에서 `industry / completed / High`를
+  확인했다.
 
 ## Stage1 마무리 — floor 버그·커버리지 갭·트랙 채점 확정 (2026-06-06)
 
@@ -388,8 +395,8 @@
   외부 평가는 검색 결과와 출처만 입력받는다. 출처 없는 외부 주장은 버리고 Finding 판단
   필드는 변경하지 않는다. 외부 맥락은 설명용이며 면죄부가 아니다.
 - 동종업계 비교는 L4 `industry` 관점으로 교차에 참여한다. 피어는 대상 회사 DART
-  `induty_code`별 config 피어의 재무지표 baseline만 계산하며, 주석·외부·5축 분석을 피어에
-  적용하지 않는다. 해당 업종 피어가 없으면 `industry` 관점만 deferred한다.
+  `induty_code` 앞 3자리 중분류 config 피어의 재무지표 baseline만 계산하며, 주석·외부·5축
+  분석을 피어에 적용하지 않는다. 해당 중분류 피어가 없으면 `industry` 관점만 deferred한다.
 - L4 종합 문단은 결정론 큐, 지표 요약, 계정·지표 시계열, 관점별 평가, 교차 결과에 grounding한다.
   live 호출 실패 시 문단만 보류하고 결정론 큐는 유지한다.
 - L4 관점 LLM은 독립 입력을 받는다. 수치 관점은 review_queue 참고 후보와 계정·지표 시계열,
