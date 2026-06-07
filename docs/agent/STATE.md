@@ -526,11 +526,51 @@
   material에는 `account_level_series` 기준 BS 1,498, IS 89, CIS 464, CF 1,838, SCE 282행과
   universal snapshot 기준 CF 47, CIS 15, SCE 10개가 남아 LLM 관점이 5종을 계속 볼 수 있다.
 
+## S4 미매핑 핵심계정 canonical 보강 (2026-06-07)
+
+- `config/canonical_accounts.yaml`: IFRS16 사용권자산·유동리스부채·비유동리스부채·리스부채,
+  투자부동산, 관계기업투자 표준 ID/alias, FVPL/FVOCI/상각후원가 금융자산(유동/비유동 포함),
+  순확정급여부채·확정급여부채, 유동성장기차입금을 추가했다. 리스부채는 유동/비유동 구분을
+  유지하고, 일반 `리스부채`는 별도 generic canonical로 둔다.
+- 관계기업투자는 기존 alias 중복/누락을 정리하고 `ifrs-full_InvestmentsInAssociates`,
+  `ifrs-full_InvestmentsInSubsidiaries`를 추가했다. 이트론 raw의 `관계기업에 대한 투자자산`
+  (`ifrs-full_InvestmentsInAssociates`)이 `관계기업투자`로 매핑된다.
+- 검증: `.venv\\Scripts\\python.exe -m pytest -q` 106개 통과,
+  `.venv\\Scripts\\python.exe -m ruff check .` 통과. 기본 labels 백테스트는 positive 발굴
+  5/6 유지, 삼성 clean False, KAI negative strict=False/track=False 유지.
+- 표본 27사(positive 16 + 정상 다양 10 + 삼성) raw BS 9,536행 재측정 결과:
+  미매핑 3,708행, 행 기준 38.88%다. 기존 감사 baseline 48% 대비 9.12%p 하락했다.
+  금액 기준 미매핑률은 3.79%다.
+- 조 단위 핵심계정 canonical 탈출 확인: 사용권자산 15사 최대 5.16조, 비유동리스부채 18사
+  최대 5.62조, 리스부채 5사 최대 5.40조, 투자부동산 19사 최대 2.30조, 유동성장기차입금
+  16사 최대 22.26조, FVPL금융자산 8사 최대 29.31조, FVOCI금융자산 5사 최대 16.30조,
+  상각후원가금융자산 4사 최대 10.71조, 관계기업투자 26사 최대 59.50조가 canonical로
+  매핑된다.
+- 16개 positive 회사 관계기업투자는 16/16사에서 매핑된다. 이렘은 2016 CFS 142억,
+  2019 CFS 255억/OFS 421억, 2020 CFS 155억 등 `관계기업투자` canonical 행이 확인됐다.
+- 과병합/이중계상 안전선: 매출, 매출채권, 매입채무, 자산총계, 계약자산, 당기순이익,
+  관계기업투자, 사용권자산, 유동리스부채, 비유동리스부채, 투자부동산의
+  `(company, year, fs_div, canonical)` 중복은 0건이다.
+
+## S4 후속: 종속기업투자 canonical 분리 (2026-06-07)
+
+- S4 검증 중 별도재무제표(OFS)에서 종속기업투자와 관계기업투자가 같은 canonical로 합쳐져,
+  `_dedupe_canonical_rows`(합산 안 함, 점수·금액 1행만 keep)에서 한 계정이 통째로 버려지는
+  데이터 소실을 발견했다(하림지주 OFS: 종속 2.5조 vs 관계 30억 → 관계 소실).
+- `ifrs-full_InvestmentsInSubsidiaries`와 종속 단독 alias 6종을 신설 canonical `종속기업투자`로
+  분리했다. 종속+관계 통합ID(`...InSubsidiariesJointVenturesAndAssociates`)·통합 alias는 분리
+  불가하므로 관계기업투자(대표)에 유지하고 배치 이유를 yaml 인라인 주석으로 남겼다.
+- 검증(직접 재현): 하림지주·웰바이오텍·아진산업 OFS에서 종속·관계가 각각 별도 canonical 1행
+  → dedupe 소실 0. 미매핑률 38.56%→38.43%(개선). 관계+종속 합쳐 분식 16/16 누락 0. pytest
+  107 통과, 백테 positive 5/6·삼성 clean·KAI strict=False 회귀 0.
+- 미결(별도 결정): `relationship_chains.yaml` consolidation-structure 체인에 종속기업투자
+  포함 여부는 흐름신호 설계 사항으로 보류.
+
 ## 다음 할 일 (우선순위)
 
-1. **S4 미매핑 보강(IFRS16·관계기업)**: 리스/사용권자산/리스부채와 관계기업·공동기업 세목
-   canonical을 보강한다. S3 결과상 CF/CIS/SCE 미매핑 세목이 신호로 많이 남아 있으므로
-   미매핑 보강은 신호 의미 분리와 중복 축소에도 필요하다.
+1. **S5 절대 수준 이상 신호(DIO 등)**: 변동률이 작아도 절대 수준이 비정상적인 재고·운전자본·
+   현금흐름 지표를 후보화한다. S4로 핵심 BS 계정 coverage가 넓어졌으므로 수준 신호 입력이
+   더 안정적이다.
 2. **Stage2 LLM 시연**: 결정론이 발굴한 트랙 A/B 후보를 6관점 L4가 어떻게 설명·교차검증하는지
    확인한다. 특히 세토피아처럼 소액 부정이 숫자 임계로는 변동미미인 사례는 과장하지 않고
    도구 한계로 남긴다.

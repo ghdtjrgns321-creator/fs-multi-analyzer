@@ -17,6 +17,20 @@
 
 ## 기록
 
+### [2026-06-07] 관계기업투자 alias 보강 후에도 이트론 누락
+
+- 증상: S4 초기 보강 후 positive 16사 중 관계기업투자가 15/16사만 매핑됐고, 이트론이 빠졌다.
+- 원인: 이트론 raw BS 라벨은 `관계기업에 대한 투자자산`이고 표준 ID는
+  `ifrs-full_InvestmentsInAssociates`였다. 기존 mapping은
+  `ifrs-full_InvestmentAccountedForUsingEquityMethod`,
+  `ifrs-full_InvestmentsInSubsidiariesJointVenturesAndAssociates`만 포함해 standalone associates
+  표준 ID를 놓쳤다.
+- 해결: `관계기업투자` canonical에 `ifrs-full_InvestmentsInAssociates`와 실제 라벨 alias를
+  추가했다. 재정규화 후 positive 16/16사에서 관계기업투자가 매핑됐고, 이렘도 관계기업투자 행이
+  유지됨을 확인했다.
+- 교훈: 같은 경제 계정도 IFRS taxonomy ID가 `equity method`, `subsidiaries/joint ventures/associates`,
+  standalone `associates`로 갈라진다. alias만 보강하지 말고 실제 raw account_id를 먼저 확인해야 한다.
+
 ### [2026-06-07] 5종 재무제표 universal 확장 후 CF/CIS/SCE 정상 신호 증가
 
 - 증상: S3에서 universal 스캔을 BS·IS에서 BS·IS·CIS·CF·SCE 5종으로 확장하자 정상 다양

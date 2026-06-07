@@ -66,6 +66,7 @@
 - [x] S2 소급재작성 신호(`prior_amount[N]` vs `amount[N-1]`) + change material 연결
 - [x] S3 재무제표 5종 전수(CIS/SCE canonical 보강 + BS/IS/CIS/CF/SCE universal 스캔)
 - [x] S3 보완(CF/CIS/SCE 결정론 큐·strict 제외, LLM material 5종 유지)
+- [x] S4 미매핑 핵심계정 canonical 보강(IFRS16·투자부동산·관계기업·금융자산)
 - [ ] 공시 변동 (watchlist 키워드 신규 등장)
 - [x] 첫 Finding 리포트 + 감사인 확인 질문 — Gemini 3.5 Flash 재시도 후 생성 완료
 
@@ -88,6 +89,9 @@
   L4 note material 하드코딩 제거 1회. 다음 계정은 YAML 추가 중심으로 확장 가능.
 - BS·IS·CF 확장: canonical BS 34개, IS 17개, CF 18개 등록. S3에서 CIS 10개, SCE 7개를
   추가 등록했다. 흐름 관점은 CF/차입/영업손익/운전자본 키워드 기반 material로 확대.
+- S4 미매핑 보강: 사용권자산·리스부채·투자부동산·관계기업투자·FVPL/FVOCI/상각후원가 금융자산·
+  순확정급여부채·유동성장기차입금 canonical을 추가해 표본 BS 미매핑률을 48% baseline에서
+  38.88%로 낮췄다.
 - 전수 보편 스캔: 코드 1개 모듈(`src/signals/universal.py`) 추가 후 계정 추가 없이 모든
   BS·IS·CIS·CF·SCE account_id에 YoY/z-score/구성비를 적용한다. CFS-OFS 괴리는 기존
   BS·IS·CF 범위를 유지한다.
