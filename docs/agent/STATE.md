@@ -7,7 +7,7 @@
 ## 현재 위치
 
 - 단계: 설계 확정 → 프로젝트 뼈대 구축 → L0 수집 → L1 정규화 → L2 신호엔진 →
-  **전 계정 보편 스캔 + BS·IS·CF·연결 신호 + L4 6관점 live 재실행 완료**
+  **S1 전기/전전기 금액 보존 완료, S2 소급재작성 신호 준비**
 - 최근 작업 (2026-06-03): BS 34개, IS 17개, CF 18개 canonical을 raw account_id 기반으로
   등록하고 L1 정규화를 재실행했다. `src/signals/universal.py`를 추가해 BS·IS·CF 모든
   account_id에 YoY, z-score, 구성비 급변, CFS/OFS 괴리 신호를 적용했다. relationship chain에는
@@ -359,15 +359,55 @@
 - 7개 논리 커밋(develop). pytest 89·ruff 통과. 항등식 0/458.
 - **Stage1(결정론 백테스트 검증) 종료.** 결정론은 발굴기(15/16), 정상과의 최종 판별은 Stage2 LLM 층.
 
+## DART 데이터 커버리지 전수 감사 (2026-06-07)
+
+- 사용자 요청에 따라 [../../data/backtest/COVERAGE_AUDIT2.md](../../data/backtest/COVERAGE_AUDIT2.md)를
+  전수 기준으로 재작성했다. 표본은 positive 16사 + 정상 다양 10사 + 삼성전자 1사, 총 27사다.
+- 회사-연도 모집단 119개에 대해 CFS/OFS 양쪽 raw `finstate_all` 계정 운명 39,612행을
+  L0→L1→L2 단계로 추적했다. sidecar CSV는
+  `data/backtest/coverage_audit_cache/account_fate_full.csv`다.
+- DART API 커버리지는 report code 4종 × fs_div 2(952 레코드), 사업보고서 report API 28종
+  (3,332 레코드), event/regstate/share/list(1,296 레코드)를 상태·행수 기준으로 확인했다.
+  원문 payload는 출력하지 않았다.
+- 주요 정량: BS/IS floor 미달 4,146/11,610(35.7%), L2 미스캔 SCE 11,317행·CF 10,503행·
+  CIS 4,321행, `frmtrm_amount` 대조 가능 19,077 pair 중 3,744 불일치(현재 L1/L2 미사용).
+- 재확인 결론: `reprt_code=11011`만 수집, CF/CIS/SCE 전수 스캔 누락, KAM/감사의견·정정공시·
+  원문 주석 미수집, 주석 매핑 8/70 수준, `ord`/`currency`/전기·전전기 금액 미보존이 확인됐다.
+  전기·전전기 금액 미보존은 아래 S1에서 해소했다.
+
+## S1 전기/전전기 금액 정규화 보존 (2026-06-07)
+
+- `src/normalize/pipeline.py`: `finstate_all`의 `frmtrm_amount`, `bfefrmtrm_amount`를 각각
+  `prior_amount`, `prior2_amount`로 정규화 출력에 보존한다. `parse_amount`와
+  `settings.amount_round_digits` 정책은 기존 `amount`와 동일하다. 비교표시 컬럼이 없는 raw도
+  결측으로 degrade한다.
+- `OUTPUT_COLUMNS`와 `src.analysis_tools.data.TOOL_COLUMNS`를 확장했다. DuckDB
+  `normalized_financials`는 재정규화 시 새 스키마로 생성된다. 오래된 DB는 로더가 누락 컬럼을
+  결측으로 채우지만, S2 검증에는 재정규화 DB를 사용해야 한다.
+- dedupe 키·대표행 선정 로직은 변경하지 않았다. `_dedupe_statement_rows`는 계속
+  `(account_id, label, year, fs_div, sj_div)`, `_dedupe_canonical_rows`는 계속
+  `(canonical, year, fs_div)` 기준이며, 정렬 기준도 기존 `amount` 기반이다.
+- 검증: `.venv\\Scripts\\python.exe -m pytest -q` 92개 통과. 기본 labels 백테스트는 발굴 5/6,
+  legacy strict 5/6, track 5/6으로 유지됐다. mega 백테스트는 발굴 15/16, legacy strict 14/16,
+  track 13/16으로 유지됐다.
+- 16개 positive 회사 재정규화 결과: 총 19,101행, `prior_amount` 비결측 16,999행(89.00%),
+  `prior2_amount` 비결측 16,676행(87.30%).
+- 아스트 재고 대조 앵커: 2020 보고서 OFS 재고 `prior_amount` 41,854,541,192원(약 419억),
+  2019 보고서 OFS 재고 `amount` 110,270,586,075원(약 1,103억)을 재현했다. 이는 S2의
+  N년 전기 표시 vs N-1년 당기 대조 입력이다.
+
 ## 다음 할 일 (우선순위)
 
-1. **Stage2 LLM 시연**: 결정론이 발굴한 트랙 A/B 후보를 6관점 L4가 어떻게 설명·교차검증하는지
+1. **S2 소급재작성 신호**: S1에서 보존한 `prior_amount`와 전년도 `amount`를
+   account_id/sj_div/fs_div 기준으로 대조해 재작성 후보를 L2 red flag와 change 관점 입력으로
+   연결한다.
+2. **Stage2 LLM 시연**: 결정론이 발굴한 트랙 A/B 후보를 6관점 L4가 어떻게 설명·교차검증하는지
    확인한다. 특히 세토피아처럼 소액 부정이 숫자 임계로는 변동미미인 사례는 과장하지 않고
    도구 한계로 남긴다.
-2. **Stage2 LLM 시연**: 본질적 한계 사례(셀트리온 개발비, 아스트 재고-매출원가 관계)에 6관점 live
+3. **Stage2 LLM 시연**: 본질적 한계 사례(셀트리온 개발비, 아스트 재고-매출원가 관계)에 6관점 live
    실행해 결정론이 못 한 분별을 LLM이 하는지 확인. (대상 회사 주석 수집 필요)
-2. 공시 변동 고도화: D82757 등 주석 전기/당기 텍스트 diff로 우발부채 문구 변화를 수치 변동과 교차.
-3. CF 흐름 리포트 보강: 사업결합순현금유출·장기차입금차입·자기주식취득·운전자본변동 원천/사용처 표 분리.
+4. 공시 변동 고도화: D82757 등 주석 전기/당기 텍스트 diff로 우발부채 문구 변화를 수치 변동과 교차.
+5. CF 흐름 리포트 보강: 사업결합순현금유출·장기차입금차입·자기주식취득·운전자본변동 원천/사용처 표 분리.
 
 ## 열린 이슈 / 주의
 

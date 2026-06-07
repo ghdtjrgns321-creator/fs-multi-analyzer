@@ -62,6 +62,7 @@
 - [x] Stage1 백테스트 지표 재정의(발굴 recall 주지표 + 상위10 strict 보조)
 - [x] Stage1 FIX 1·2·4(라벨 매핑 완전화, 진행률 계약자산/계약부채 사슬, 자산총계 sanity 가드)
 - [x] Stage1 FIX 3(신호 두 트랙 분리 게시: 규모 계정 A / 소액 급변 B, legacy strict 병기)
+- [x] S1 전기/전전기 금액 보존(`prior_amount`, `prior2_amount`) + 16사 재정규화 검증
 - [ ] 공시 변동 (watchlist 키워드 신규 등장)
 - [x] 첫 Finding 리포트 + 감사인 확인 질문 — Gemini 3.5 Flash 재시도 후 생성 완료
 

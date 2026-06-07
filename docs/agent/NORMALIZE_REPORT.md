@@ -10,7 +10,8 @@
 - 테이블: `normalized_financials`
 - L1 long format:
   - `corp_code`, `year`, `fs_div`, `sj_div`
-  - `canonical`, `account_id`, `label`, `amount`, `mapping_status`
+  - `canonical`, `account_id`, `label`, `amount`, `prior_amount`, `prior2_amount`,
+    `mapping_status`
 
 이번 단계에서는 정규화까지만 수행했다. LLM, 신호엔진, 에이전트, 주석 인덱싱(L1.5)은
 호출하지 않았다.
@@ -20,6 +21,8 @@
 - `fs_div`: API 응답에는 없으므로 파일/수집 context에서 `CFS` 또는 `OFS`를 주입한다.
 - `sj_div`: `BS`, `IS`, `CIS`, `CF`, `SCE` enum으로 검증한다.
 - `amount`: `thstrm_amount` 문자열을 숫자로 캐스팅한다.
+- `prior_amount`: `frmtrm_amount` 문자열을 `amount`와 같은 정책으로 캐스팅한다.
+- `prior2_amount`: `bfefrmtrm_amount` 문자열을 `amount`와 같은 정책으로 캐스팅한다.
   - 쉼표 제거
   - `None`, 빈 문자열, `-`, `nan`은 결측 처리
   - 비교·집계 전 `settings.amount_round_digits` 기준으로 반올림

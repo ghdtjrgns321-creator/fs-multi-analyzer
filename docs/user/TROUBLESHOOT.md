@@ -17,6 +17,18 @@
 
 ## 기록
 
+### [2026-06-07] DART 커버리지 감사 범위 축소 오판
+
+- 증상: DART 데이터 커버리지 "전수 감사" 요청에 대해 최초 산출물이 표본 마지막 대상연도와
+  preferred fs_div 중심의 부분 감사로 작성됐다.
+- 원인: 전수 범위를 시간·API 호출 부담 관점에서 임의 축소했고, 로컬 데이터 기반 코드 대조를
+  DART API/전연도/CFS·OFS 전수 확인의 대체물처럼 취급했다.
+- 해결: `COVERAGE_AUDIT2.md`를 재작성했다. positive 16사 + 정상 10사 + 삼성전자 1사의
+  회사-연도 119개, CFS/OFS raw 계정 39,612행을 전수 운명표로 재집계하고, report code 4종,
+  report API 28종, event/regstate/share/list API 행수 확인을 추가했다.
+- 교훈: "전수/전체/all/full" 요청은 비용·시간·rate limit 때문에 샘플·부분·로컬 캐시 분석으로
+  대체하지 않는다. 완료 전 요청 모집단과 실제 커버 모집단을 비교한다.
+
 ### [2026-06-02] Gemini 3.5 Flash live Finding 생성 503
 
 - 증상: `uv run python -m src.agents.first_finding` 실행 시 두 번 모두 Google API가
