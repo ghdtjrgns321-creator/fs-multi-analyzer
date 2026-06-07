@@ -45,9 +45,10 @@ def test_compute_ratio_handles_zero_denominator() -> None:
     assert result.iloc[0]["ratio_pct"] is None
 
 
-def test_receivable_combo_labels_map_to_receivable_proxy() -> None:
+def test_receivable_combo_labels_map_to_combined_canonical() -> None:
     mapper = AccountMapper(load_canonical_accounts(Path("config/canonical_accounts.yaml")))
 
+    # "및 기타채권" 통합 라벨은 누락 없이 매핑되되, 순수 매출채권과 별도 canonical로 분리한다.
     mapped = [
         mapper.map_row(pd.Series({"account_id": "", "account_nm": label})).canonical
         for label in [
@@ -60,13 +61,14 @@ def test_receivable_combo_labels_map_to_receivable_proxy() -> None:
         pd.Series({"account_id": "", "account_nm": "장기매출채권 및 기타비유동채권"})
     )
 
-    assert mapped == ["매출채권", "매출채권", "매출채권"]
+    assert mapped == ["매출채권및기타유동채권"] * 3
     assert long_term.canonical != "매출채권"
 
 
-def test_payable_combo_labels_map_to_payable_proxy() -> None:
+def test_payable_combo_labels_map_to_combined_canonical() -> None:
     mapper = AccountMapper(load_canonical_accounts(Path("config/canonical_accounts.yaml")))
 
+    # "및 기타채무" 통합 라벨은 누락 없이 매핑되되, 순수 매입채무와 별도 canonical로 분리한다.
     mapped = [
         mapper.map_row(pd.Series({"account_id": "", "account_nm": label})).canonical
         for label in [
@@ -79,7 +81,7 @@ def test_payable_combo_labels_map_to_payable_proxy() -> None:
         pd.Series({"account_id": "", "account_nm": "장기매입채무 및 기타비유동채무"})
     )
 
-    assert mapped == ["매입채무", "매입채무", "매입채무"]
+    assert mapped == ["매입채무및기타유동채무"] * 3
     assert long_term.canonical != "매입채무"
 
 
@@ -207,9 +209,11 @@ l2_mvp1:
 
     report = build_mvp1_signal_report(data, config)
 
-    row = report["growth_divergences"][
-        report["growth_divergences"]["year"] == 2025
-    ].set_index("id").loc["revenue-vs-contract-asset"]
+    row = (
+        report["growth_divergences"][report["growth_divergences"]["year"] == 2025]
+        .set_index("id")
+        .loc["revenue-vs-contract-asset"]
+    )
     assert row["divergence_pp"] == -90.0
 
 

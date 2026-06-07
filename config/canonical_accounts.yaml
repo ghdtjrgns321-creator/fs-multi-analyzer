@@ -19,8 +19,14 @@ canonical_accounts:
     account_ids:
       - dart_ShortTermTradeReceivable
       - ifrs-full_CurrentTradeReceivables
-    # 조합 수취채권 라벨은 매출채권 proxy로 사용한다. 장기/비유동 조합은 제외한다.
-    aliases: [매출채권, 매출채권 및 기타유동채권, 매출채권 및 기타채권, 매출채권및기타채권]
+    # 순수 매출채권만. "매출채권 및 기타채권" 통합은 별도 canonical(소실·덮어쓰기 방지).
+    aliases: [매출채권]
+  매출채권및기타유동채권:
+    statement: BS
+    account_ids:
+      - ifrs-full_TradeAndOtherCurrentReceivables
+      - ifrs_TradeAndOtherCurrentReceivables
+    aliases: [매출채권 및 기타유동채권, 매출채권 및 기타채권, 매출채권및기타채권]
   비유동매출채권:
     statement: BS
     account_ids:
@@ -221,8 +227,14 @@ canonical_accounts:
     statement: BS
     account_ids:
       - ifrs-full_TradeAndOtherCurrentPayablesToTradeSuppliers
-    # 조합 지급채무 라벨은 매입채무 proxy로 사용한다. 장기/비유동 조합은 제외한다.
-    aliases: [매입채무, 매입채무 및 기타유동채무, 매입채무및기타채무, 매입채무 및 기타채무]
+    # 순수 매입채무만. "매입채무 및 기타채무" 통합은 별도 canonical(소실·덮어쓰기 방지).
+    aliases: [매입채무]
+  매입채무및기타유동채무:
+    statement: BS
+    account_ids:
+      - ifrs-full_TradeAndOtherCurrentPayables
+      - ifrs_TradeAndOtherCurrentPayables
+    aliases: [매입채무 및 기타유동채무, 매입채무및기타채무, 매입채무 및 기타채무]
   비유동매입채무:
     statement: BS
     account_ids:

@@ -132,7 +132,7 @@ relationship_chains:
         source_url: https://www.ifrs.org/issued-standards/list-of-standards/ias-37-provisions-contingent-liabilities-and-contingent-assets/
   - id: consolidation-structure
     name: 연결 구조·비지배지분
-    chain: [지배기업소유주지분, 비지배지분, 지배기업귀속순이익, 비지배지분순이익, 관계기업투자, 지분법이익]
+    chain: [지배기업소유주지분, 비지배지분, 지배기업귀속순이익, 비지배지분순이익, 종속기업투자, 관계기업투자, 지분법이익]
     audit_basis:
       - standard: K-IFRS 1110 / IFRS 10
         procedure: consolidated_financial_statement_review

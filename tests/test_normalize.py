@@ -191,6 +191,46 @@ def test_current_noncurrent_split_account_ids() -> None:
         assert result.mapping_status == EXACT
 
 
+def test_pure_vs_combined_trade_accounts_separated() -> None:
+    mapper = AccountMapper(load_canonical_accounts(Path("config/canonical_accounts.yaml")))
+
+    # 순수 매출채권/매입채무 — 순수 canonical
+    for account_id in ["dart_ShortTermTradeReceivable", "ifrs-full_CurrentTradeReceivables"]:
+        result = mapper.map_row(pd.Series({"account_id": account_id, "account_nm": "매출채권"}))
+        assert result.canonical == "매출채권"
+    result = mapper.map_row(
+        pd.Series(
+            {
+                "account_id": "ifrs-full_TradeAndOtherCurrentPayablesToTradeSuppliers",
+                "account_nm": "매입채무",
+            }
+        )
+    )
+    assert result.canonical == "매입채무"
+
+    # "및 기타채권/채무" 통합 — 별도 canonical(순수계정 안 덮음)
+    result = mapper.map_row(
+        pd.Series(
+            {
+                "account_id": "ifrs-full_TradeAndOtherCurrentReceivables",
+                "account_nm": "매출채권 및 기타유동채권",
+            }
+        )
+    )
+    assert result.canonical == "매출채권및기타유동채권"
+    result = mapper.map_row(pd.Series({"account_id": "", "account_nm": "매출채권 및 기타채권"}))
+    assert result.canonical == "매출채권및기타유동채권"
+    result = mapper.map_row(
+        pd.Series(
+            {
+                "account_id": "ifrs-full_TradeAndOtherCurrentPayables",
+                "account_nm": "매입채무및기타채무",
+            }
+        )
+    )
+    assert result.canonical == "매입채무및기타유동채무"
+
+
 def test_statement_guard_demotes_cross_statement_keeps_is_cis() -> None:
     from src.normalize.pipeline import _apply_statement_guard
 
