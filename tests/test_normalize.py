@@ -83,3 +83,53 @@ def test_normalize_raw_file_statuses(tmp_path: Path) -> None:
     assert frame["fs_div"].tolist() == ["CFS", "CFS", "CFS"]
     assert frame["mapping_status"].tolist() == [EXACT, ALIAS, UNMAPPED]
     assert frame["amount"].tolist()[:2] == [1000.0, -200.0]
+
+
+def test_normalize_raw_file_preserves_prior_period_amounts(tmp_path: Path) -> None:
+    raw = pd.DataFrame(
+        [
+            {
+                "corp_code": "00126380",
+                "bsns_year": "2024",
+                "sj_div": "BS",
+                "account_id": "ifrs-full_CashAndCashEquivalents",
+                "account_nm": "현금및현금성자산",
+                "thstrm_amount": "1,000",
+                "frmtrm_amount": "900",
+                "bfefrmtrm_amount": "800",
+            },
+            {
+                "corp_code": "00126380",
+                "bsns_year": "2024",
+                "sj_div": "BS",
+                "account_id": "-표준계정코드 미사용-",
+                "account_nm": "단기차입금",
+                "thstrm_amount": "-200",
+                "frmtrm_amount": "-300",
+                "bfefrmtrm_amount": "",
+            },
+        ]
+    )
+    path = tmp_path / "raw.csv"
+    raw.to_csv(path, index=False)
+    mapper = AccountMapper(load_canonical_accounts(Path("config/canonical_accounts.yaml")))
+
+    frame = normalize_raw_file(path, "CFS", mapper)
+
+    assert frame.columns.tolist() == [
+        "corp_code",
+        "year",
+        "fs_div",
+        "sj_div",
+        "canonical",
+        "account_id",
+        "label",
+        "amount",
+        "prior_amount",
+        "prior2_amount",
+        "mapping_status",
+    ]
+    assert frame["amount"].tolist() == [1000.0, -200.0]
+    assert frame["prior_amount"].tolist() == [900.0, -300.0]
+    assert frame.iloc[0]["prior2_amount"] == 800.0
+    assert pd.isna(frame.iloc[1]["prior2_amount"])

@@ -21,6 +21,8 @@ OUTPUT_COLUMNS = [
     "account_id",
     "label",
     "amount",
+    "prior_amount",
+    "prior2_amount",
     "mapping_status",
 ]
 
@@ -45,11 +47,25 @@ def normalize_raw_file(path: Path, fs_div: str, mapper: AccountMapper) -> pd.Dat
                 parse_amount(value, settings.amount_round_digits)
                 for value in frame["thstrm_amount"]
             ],
+            "prior_amount": [
+                parse_amount(value, settings.amount_round_digits)
+                for value in _optional_amount_column(frame, "frmtrm_amount")
+            ],
+            "prior2_amount": [
+                parse_amount(value, settings.amount_round_digits)
+                for value in _optional_amount_column(frame, "bfefrmtrm_amount")
+            ],
             "mapping_status": [item.mapping_status for item in mapped],
             "account_detail": frame.get("account_detail", ""),
         }
     )
     return _dedupe_canonical_rows(_dedupe_statement_rows(output))[OUTPUT_COLUMNS]
+
+
+def _optional_amount_column(frame: pd.DataFrame, column: str) -> pd.Series:
+    if column in frame:
+        return frame[column]
+    return pd.Series([None] * len(frame), index=frame.index)
 
 
 def _dedupe_statement_rows(frame: pd.DataFrame) -> pd.DataFrame:
