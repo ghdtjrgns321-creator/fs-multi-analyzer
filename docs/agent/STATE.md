@@ -7,7 +7,7 @@
 ## 현재 위치
 
 - 단계: 설계 확정 → 프로젝트 뼈대 구축 → L0 수집 → L1 정규화 → L2 신호엔진 →
-  **S1 전기/전전기 금액 보존 완료, S2 소급재작성 신호 준비**
+  **S1 전기/전전기 금액 보존 + S2 소급재작성 신호 완료, S3 재무제표 5종 신호 준비**
 - 최근 작업 (2026-06-03): BS 34개, IS 17개, CF 18개 canonical을 raw account_id 기반으로
   등록하고 L1 정규화를 재실행했다. `src/signals/universal.py`를 추가해 BS·IS·CF 모든
   account_id에 YoY, z-score, 구성비 급변, CFS/OFS 괴리 신호를 적용했다. relationship chain에는
@@ -396,11 +396,81 @@
   2019 보고서 OFS 재고 `amount` 110,270,586,075원(약 1,103억)을 재현했다. 이는 S2의
   N년 전기 표시 vs N-1년 당기 대조 입력이다.
 
+## S2 소급재작성 신호 (2026-06-07)
+
+- `src/signals/restatement.py`: 정규화 frame에서 N년 보고서 `prior_amount`와 N-1년 보고서
+  `amount`를 같은 line item 기준으로 대조하는 `scan_restatement_signals`를 추가했다.
+  임계값은 `relationship_chains.yaml`의 `restatement_abs_amount: 100000000`,
+  `restatement_rel_pct: 1.0`이다.
+- restatement용 `scan_key`는 canonical 집계가 아니라 `account_id + normalized label` 기준이다.
+  `-표준계정코드 미사용-`은 normalized label 기준으로 비교한다. canonical만 쓰면 서로 다른
+  CIS/CF 세목이 같은 canonical으로 섞일 수 있어 line item 기준으로 좁혔다.
+- `RedFlagSignal.signal_type == "restatement"`를 생성한다. `metric_value`는
+  `prior_amount[N] - amount[N-1]` 원시 괴리 금액이고, evidence에는 N년 비교표시 값과
+  N-1년 원래 공시 값을 각각 넣는다.
+- 최초 S2 구현에서는 L4 `build_company_report`가 restatement 신호를 review queue와
+  `latest_signal_snapshot["restatements"]`에 함께 포함했다. 아래 S2 마무리에서 review queue
+  합산은 제거했고, `change_material`의 `restatement_signals` 단서만 유지한다.
+- 검증: 신규 테스트 포함 `.venv\\Scripts\\python.exe -m pytest -q` 95개 통과. 기본 labels
+  백테스트는 발굴 5/6, legacy strict 5/6, track 5/6으로 유지됐다.
+- 16개 positive 회사 전수: 전 `sj_div` 기준 15/16사 394개 신호. 기존 감사 baseline과 같은
+  BS line item 기준은 12/16사이며 모델솔루션·본느·이트론·에스엘의 BS 신호는 0이다.
+  본느·이트론·에스엘은 전 `sj_div` 확장 시 CIS/CF/SCE 재분류·부호표시 변화가 추가로 잡힌다.
+- 분식 직격 앵커: 셀트리온 2016 CFS 무형자산 −108,537,593,133원, 아스트 2020 CFS
+  자산총계 −99,677,813,878원, 이렘 2020 CFS 매입채무 −62,726,226,951원이
+  restatement 신호로 발생했다.
+- 정상 10사 측정: 전 `sj_div` 기준 4/10사 19개 신호, BS 기준 0개다. 정상에서도 CF/SCE
+  표시·재분류 신호가 있을 수 있으므로 L4 change 관점은 `sj_div`와 evidence를 함께 봐야 한다.
+
+## S2 보완 — 소급재작성 거짓양성 억제 (2026-06-07)
+
+- 생산 코드 변경은 `src/signals/restatement.py`에 한정했다. 소계 계정은 restatement 신호 후보에서
+  제외하되, 자산총계는 자산 대비 floor 계산에는 계속 사용한다.
+- 억제 가드: `subtotal_account_names` 기반 소계 제외, `rel_pct >= 1000%` 또는
+  `prior_amount`/전년 `amount` 스케일 100배 이상 단위혼입 제외, `max(1억원, 자산총계 x 1%)`
+  floor, `(account, fs_div, year, diff)` 중복 제거.
+- 임계값은 `load_l2_config()["signal_thresholds"]`에서 읽고, YAML에 없는 값은
+  `restatement_rel_pct_max=1000`, `restatement_scale_multiple_max=100`,
+  `restatement_min_pct_of_assets=universal_min_pct_of_assets` fallback을 사용한다.
+- 검증: `.venv\\Scripts\\python.exe -m pytest -q` 99개 통과, `.venv\\Scripts\\python.exe -m ruff check .`
+  통과. 기본 labels 백테스트는 발굴 5/6, legacy strict 5/6, track 5/6 유지.
+- 정상 10사 억제 후: 전 `sj_div` 기준 2/10사 2개, BS 기준 0/10사 0개. 이전 S2 측정
+  4/10사 19개 대비 감소했다.
+- 16개 positive 억제 후: 전 `sj_div` 기준 15/16사 157개, BS 기준 9/16사 33개. 이전 S2
+  15/16사 394개, BS 12/16사 대비 신호 수가 줄었다. BS에서 빠진 두산에너빌리티,
+  디아이동일, 웰바이오텍은 자산 1% floor 미달 소액 재분류 성격이다.
+- 분식 앵커 유지: 셀트리온 2016 CFS 무형자산 −108,537,593,133원, 이렘 2020 CFS
+  매입채무 −62,726,226,951원 유지. 아스트 2020 CFS 자산총계 −99,677,813,878원은 소계 제외로
+  빠지고, 구성요소 재고자산 −80,511,480,581원이 유지된다.
+
+## S2 마무리 — restatement 큐 제외·change 단서 격하 (2026-06-07)
+
+- `src/report/company_report.py`: `restatement_signals`를 `all_signals` 합산에서 제거했다.
+  따라서 review queue와 결정론 점수 산정에는 restatement가 들어가지 않는다.
+- `latest_signal_snapshot["restatements"]`와 `change_material()["restatement_signals"]`는 유지한다.
+  restatement는 결정론 큐가 아니라 change 관점 LLM의 맥락 단서다.
+- `src/report/perspectives.py`: change 관점 rules에 소급재작성 해석 가이드를 추가했다. 회계정책 변경,
+  중단영업 재분류, EPS 소급재계산, 오류수정, 사업결합 잠정조정, 연결범위 변동 등 정상 사유를
+  위험으로 보지 말고, 이익·자산 과대계상 후 하향 재작성 패턴만 검토 후보로 제기하도록 했다.
+  restatement 단독으로 High를 주지 말고, 금융자산·차입금·현금의 광범위 재분류/연결범위 변동은
+  정상 소급 후보로 낮춰 보라는 가드도 추가했다.
+- 검증: `.venv\\Scripts\\python.exe -m pytest -q` 101개 통과, `.venv\\Scripts\\python.exe -m ruff check .`
+  통과. 기본 labels 백테스트는 발굴 5/6, legacy strict 5/6, track 5/6 유지.
+- 정상 10사 실제 company report 확인: review_queue의 restatement 0건. change material에는
+  target year에 남은 restatement 단서만 들어간다.
+- change material 앵커 확인: 셀트리온 2016 무형자산 −108,537,593,133원, 아스트 2020
+  재고자산 −80,511,480,581원 및 OFS 재고 −68,416,044,883원, 이렘 2020 매입채무
+  −62,726,226,951원이 실린다.
+- LLM 표본: 셀트리온 2016 change 관점은 무형자산 하향 재작성과 이익/자산 과대계상 후 하향
+  가능성을 검토 후보로 제기했다. 다우기술 2023 change 관점은 restatement 단서 6개를 받았지만
+  광범위 금융자산·차입금·현금 재분류와 연결범위 변동 가능성을 들어 Medium으로 낮춰 보고,
+  분식 단정 대신 재작성 사유와 금융부채 재분류 맵핑 확인을 제안했다.
+
 ## 다음 할 일 (우선순위)
 
-1. **S2 소급재작성 신호**: S1에서 보존한 `prior_amount`와 전년도 `amount`를
-   account_id/sj_div/fs_div 기준으로 대조해 재작성 후보를 L2 red flag와 change 관점 입력으로
-   연결한다.
+1. **S3 재무제표 5종 신호**: CIS/SCE canonical 보강과 CF/CIS/SCE 스캔 확장을 진행한다.
+   S2 결과상 CF/CIS/SCE는 재분류·부호표시 신호가 많으므로 BS 잔액 신호와 해석을 분리한다.
+   Restatement는 결정론 큐가 아니라 change 관점 단서로만 유지한다.
 2. **Stage2 LLM 시연**: 결정론이 발굴한 트랙 A/B 후보를 6관점 L4가 어떻게 설명·교차검증하는지
    확인한다. 특히 세토피아처럼 소액 부정이 숫자 임계로는 변동미미인 사례는 과장하지 않고
    도구 한계로 남긴다.
