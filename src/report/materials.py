@@ -111,16 +111,24 @@ def flow_material(report: dict[str, object]) -> dict[str, object]:
 def change_material(report: dict[str, object]) -> dict[str, object]:
     """Inputs for prior/current change perspective only."""
 
+    latest_snapshot = report.get("latest_signal_snapshot", {})
+    restatements = (
+        latest_snapshot.get("restatements", [])
+        if isinstance(latest_snapshot, dict)
+        else []
+    )
     change_items = [
         item
         for item in report["review_queue"]
         if "single_account_yoy" in str(item["key_evidence"])
         or "growth_divergence" in str(item["key_evidence"])
+        or "restatement" in str(item["key_evidence"])
     ]
     return {
         "change_queue_reference": change_items[:10],
+        "restatement_signals": restatements[:20] if isinstance(restatements, list) else [],
         "review_queue_reference": report["review_queue"][:10],
-        "latest_signal_snapshot": report.get("latest_signal_snapshot", {}),
+        "latest_signal_snapshot": latest_snapshot,
         "account_level_series": report.get("account_level_series", []),
         "ratio_time_series": report.get("ratio_time_series", []),
         "target_year": report["target_year"],

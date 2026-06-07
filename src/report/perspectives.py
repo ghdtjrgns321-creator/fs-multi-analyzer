@@ -65,6 +65,16 @@ def build_perspective_agent(
     )
 
 
+CHANGE_RESTATEMENT_GUIDANCE = (
+    "소급재작성은 회계정책 변경·중단영업(IFRS5) 재분류·EPS 소급재계산"
+    "(주식분할·무상증자)·오류수정·사업결합 잠정조정·연결범위 변동 등 정상 사유가 다수다. "
+    "이런 정상 소급은 위험으로 보지 말고, 이익·자산을 과대계상했다가 하향 재작성한 "
+    "분식성 패턴만 검토 후보로 제기하라. restatement 단서만으로 risk_level을 High로 올리지 말고, "
+    "금융자산·차입금·현금 등 광범위한 재분류나 연결범위 변동으로 설명 가능한 패턴은 정상 소급 "
+    "후보로 낮춰 보라."
+)
+
+
 async def create_perspective_assessment(
     perspective: PerspectiveName,
     material_board: dict[str, object],
@@ -75,20 +85,23 @@ async def create_perspective_assessment(
 
     if not settings.openai_api_key:
         return deferred_assessment(perspective, "OPENAI_API_KEY가 없어 보류했다.")
+    rules = [
+        "다른 관점의 결론은 입력에 없다.",
+        "외부 사실을 단정하지 않는다.",
+        "industry 관점은 제공된 피어 지표 baseline만 사용한다.",
+        "review_queue는 참고 후보일 뿐 정답이 아니다.",
+        "제공된 계정 수준 시계열과 지표 시계열 전체를 능동적으로 검토한다.",
+        "큐에 없더라도 제공 material에 근거한 수준 이상이나 추세 이상은 제기할 수 있다.",
+        "실제 account_series, ratio_series, queue, ratio, note evidence에 근거한다.",
+        "주석 발췌는 일부일 수 있으므로 발췌 누락을 공시 누락으로 판단하지 않는다.",
+        "출력은 한국어로 작성한다.",
+    ]
+    if perspective == "change":
+        rules.append(CHANGE_RESTATEMENT_GUIDANCE)
     prompt = json.dumps(
         {
             "perspective": perspective,
-            "rules": [
-                "다른 관점의 결론은 입력에 없다.",
-                "외부 사실을 단정하지 않는다.",
-                "industry 관점은 제공된 피어 지표 baseline만 사용한다.",
-                "review_queue는 참고 후보일 뿐 정답이 아니다.",
-                "제공된 계정 수준 시계열과 지표 시계열 전체를 능동적으로 검토한다.",
-                "큐에 없더라도 제공 material에 근거한 수준 이상이나 추세 이상은 제기할 수 있다.",
-                "실제 account_series, ratio_series, queue, ratio, note evidence에 근거한다.",
-                "주석 발췌는 일부일 수 있으므로 발췌 누락을 공시 누락으로 판단하지 않는다.",
-                "출력은 한국어로 작성한다.",
-            ],
+            "rules": rules,
             "material_board": material_board,
         },
         ensure_ascii=False,

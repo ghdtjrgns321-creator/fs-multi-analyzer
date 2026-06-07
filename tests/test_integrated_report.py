@@ -152,6 +152,80 @@ def test_numeric_material_includes_full_series_not_only_queue() -> None:
     assert "정답이 아니다" in material["queue_role"]
 
 
+def test_company_report_keeps_restatements_out_of_review_queue_but_in_snapshot(monkeypatch) -> None:
+    from src.report import company_report as company_report_module
+    from src.schemas.findings import EvidenceRef
+    from src.signals.red_flags import RedFlagSignal
+
+    restatement = RedFlagSignal(
+        id="restatement:account_id_label:ifrs-full_IntangibleAssets|무형자산:CFS:BS:2024",
+        year=2024,
+        account="무형자산",
+        signal_type="restatement",
+        description="전기 비교표시 금액과 전년도 공시 당기 금액 괴리",
+        metric_value=-108_537_593_133.0,
+        evidence=[EvidenceRef(source="financial_statement", locator="x", year="2024")],
+    )
+
+    frame = pd.DataFrame(
+        [
+            {
+                "corp_code": "00413046",
+                "year": 2024,
+                "fs_div": "CFS",
+                "sj_div": "BS",
+                "canonical": "무형자산",
+                "account_id": "ifrs-full_IntangibleAssets",
+                "label": "무형자산",
+                "amount": 100.0,
+                "mapping_status": "exact_taxonomy_match",
+            }
+        ]
+    )
+    empty_signal_report = {
+        "growth_divergences": pd.DataFrame(columns=["year"]),
+        "direction_checks": pd.DataFrame(columns=["year"]),
+        "primary_yoy": pd.DataFrame(columns=["year"]),
+        "reference_yoy": pd.DataFrame(columns=["year"]),
+    }
+    ratio_frame = pd.DataFrame(
+        columns=["id", "category", "name", "year", "value", "status", "basis"]
+    )
+
+    monkeypatch.setattr(company_report_module, "load_normalized_financials", lambda *args: frame)
+    monkeypatch.setattr(
+        company_report_module,
+        "build_mvp1_signal_report",
+        lambda *args, **kwargs: empty_signal_report,
+    )
+    monkeypatch.setattr(company_report_module, "extract_red_flags", lambda *args, **kwargs: [])
+    monkeypatch.setattr(company_report_module, "scan_universal_signals", lambda *args, **kwargs: [])
+    monkeypatch.setattr(company_report_module, "scan_cfs_ofs_gaps", lambda *args, **kwargs: [])
+    monkeypatch.setattr(
+        company_report_module,
+        "scan_restatement_signals",
+        lambda *args, **kwargs: [restatement],
+    )
+    monkeypatch.setattr(
+        company_report_module,
+        "build_ratio_report",
+        lambda *args, **kwargs: ratio_frame,
+    )
+    monkeypatch.setattr(company_report_module, "load_ratio_config", lambda: [])
+    monkeypatch.setattr(company_report_module, "load_findings_from_report", lambda *args: [])
+
+    report = company_report_module.build_company_report(
+        corp_code="00413046",
+        years=[2024],
+        company_provider=lambda corp_code: {"stock_name": "셀트리온"},
+    )
+
+    assert not any(
+        "restatement" in str(item["key_evidence"]) for item in report["review_queue"]
+    )
+    assert report["latest_signal_snapshot"]["restatements"][0]["account"] == "무형자산"
+
+
 def test_ratio_summary_groups_latest_values_by_category() -> None:
     summary = summarize_ratio_categories(ratio_frame(), target_year=2024)
 
@@ -324,6 +398,48 @@ def test_flow_and_change_perspectives_accept_mock_agent(monkeypatch) -> None:
 
     assert flow.perspective == "flow"
     assert change.perspective == "change"
+
+
+def test_change_perspective_prompt_guides_restatement_as_context_not_queue(monkeypatch) -> None:
+    captured: dict[str, str] = {}
+
+    class FakeAgent:
+        async def run(self, prompt: str) -> SimpleNamespace:
+            captured["prompt"] = prompt
+            return SimpleNamespace(
+                output=PerspectiveAssessment(
+                    perspective="change",
+                    status="completed",
+                    risk_areas=[],
+                    risk_level="Low",
+                    summary="정상 소급 가능성을 우선 검토한다.",
+                    evidence=[],
+                )
+            )
+
+    monkeypatch.setattr("src.report.perspectives.settings.openai_api_key", "fake")
+
+    asyncio.run(
+        create_perspective_assessment(
+            "change",
+            {
+                "review_queue_reference": [],
+                "restatement_signals": [
+                    {
+                        "account": "무형자산",
+                        "signal_type": "restatement",
+                        "metric_value": -108_537_593_133.0,
+                    }
+                ],
+            },
+            FakeAgent,
+            (0,),
+        )
+    )
+
+    assert "소급재작성은 회계정책 변경" in captured["prompt"]
+    assert "정상 소급은 위험으로 보지 말고" in captured["prompt"]
+    assert "이익·자산을 과대계상했다가 하향 재작성" in captured["prompt"]
 
 
 def test_external_perspective_runs_query_search_and_eval_mocks() -> None:

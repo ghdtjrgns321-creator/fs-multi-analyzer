@@ -18,6 +18,7 @@ from src.schemas.findings import AccountFinding
 from src.signals.mvp1 import build_mvp1_signal_report
 from src.signals.ratios import build_ratio_report, load_ratio_config
 from src.signals.red_flags import extract_red_flags
+from src.signals.restatement import scan_restatement_signals
 from src.signals.universal import scan_cfs_ofs_gaps, scan_universal_signals
 
 DEFAULT_CORP_CODE = "00126380"
@@ -40,6 +41,7 @@ def build_company_report(
     red_flags = extract_red_flags(signal_report, target_year)
     universal_signals = scan_universal_signals(frame, target_year)
     cfs_ofs_signals = scan_cfs_ofs_gaps(frame, target_year)
+    restatement_signals = scan_restatement_signals(frame, target_year)
     ratios = build_ratio_report(frame, target_years)
     ratio_config = load_ratio_config()
     unmapped = _top_unmapped_material_accounts(frame, target_year)
@@ -54,6 +56,7 @@ def build_company_report(
     latest_snapshot = _latest_signal_snapshot(signal_report, target_year)
     latest_snapshot["universal_scan"] = _signal_rows(universal_signals)
     latest_snapshot["cfs_ofs_gaps"] = _signal_rows(cfs_ofs_signals)
+    latest_snapshot["restatements"] = _signal_rows(restatement_signals)
     return {
         "corp_code": corp_code,
         "company_name": _company_name(company_profile, corp_code),
