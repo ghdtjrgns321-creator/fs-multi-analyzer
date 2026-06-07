@@ -21,11 +21,26 @@ canonical_accounts:
       - ifrs-full_CurrentTradeReceivables
     # 조합 수취채권 라벨은 매출채권 proxy로 사용한다. 장기/비유동 조합은 제외한다.
     aliases: [매출채권, 매출채권 및 기타유동채권, 매출채권 및 기타채권, 매출채권및기타채권]
+  비유동매출채권:
+    statement: BS
+    account_ids:
+      - ifrs-full_NoncurrentTradeReceivables
+      - dart_LongTermTradeReceivablesGross
+    aliases: [장기매출채권, 비유동매출채권]
   계약자산:
     statement: BS
-    account_ids: []
-    # K-IFRS 1115 진행률/수주 계약자산. 총계와 유동/비유동 구성요소가 같이 있으면 정규화에서 대표 1라인만 쓴다.
-    aliases: [계약자산, 유동계약자산, 비유동계약자산, 미청구공사, 단기미청구공사, 미청구공사채권, 확정계약자산, 유동확정계약자산, 비유동확정계약자산]
+    account_ids:
+      - ifrs-full_ContractAssets
+      - ifrs-full_CurrentContractAssets
+      - dart_ShortTermDueFromCustomersForContractWork
+    # K-IFRS 1115 진행률/수주 유동 계약자산. 비유동은 별도 canonical로 분리.
+    aliases: [계약자산, 유동계약자산, 미청구공사, 단기미청구공사, 미청구공사채권, 확정계약자산, 유동확정계약자산]
+  비유동계약자산:
+    statement: BS
+    account_ids:
+      - ifrs-full_NoncurrentContractAssets
+      - dart_LongTermDueFromCustomersForContractWork
+    aliases: [비유동계약자산]
   재고자산:
     statement: BS
     account_ids:
@@ -110,8 +125,27 @@ canonical_accounts:
     statement: BS
     account_ids:
       - ifrs-full_InvestmentAccountedForUsingEquityMethod
+      # 통합ID(종속+관계+공동): 분리 불가한 합산값 → 대표 canonical인 관계기업투자에 유지.
+      # 순수 종속(ifrs-full_InvestmentsInSubsidiaries)은 종속기업투자로 분리됨.
       - ifrs-full_InvestmentsInSubsidiariesJointVenturesAndAssociates
-    aliases: [관계기업 및 공동기업 투자, 종속기업, 관계기업 및 공동기업 투자]
+      - ifrs-full_InvestmentsInAssociates
+    aliases: [관계기업투자, 관계기업 및 공동기업 투자, 관계기업및공동기업 투자, 관계기업및공동기업투자, 관계기업및공동기업투자주식, "종속기업, 관계기업 및 공동기업투자", 종속기업및관계기업투자주식, 관계기업투자주식]
+  종속기업투자:
+    statement: BS
+    account_ids:
+      - ifrs-full_InvestmentsInSubsidiaries
+    aliases: [종속기업투자, 종속기업투자주식, 종속기업에 대한 투자자산, 종속기업투자자산, 종속기업지분투자, 종속기업에 대한 투자]
+  투자부동산:
+    statement: BS
+    account_ids:
+      - ifrs-full_InvestmentProperty
+    aliases: [투자부동산]
+  사용권자산:
+    statement: BS
+    account_ids:
+      - ifrs-full_RightofuseAssets
+      - ifrs-full_RightOfUseAssets
+    aliases: [사용권자산]
   무형자산:
     statement: BS
     account_ids:
@@ -128,22 +162,107 @@ canonical_accounts:
     account_ids:
       - ifrs-full_DeferredTaxLiabilities
     aliases: [이연법인세부채]
+  순확정급여부채:
+    statement: BS
+    account_ids:
+      - dart_PostemploymentBenefitObligations
+    aliases: [순확정급여부채, 순확정급여채무]
+  확정급여부채:
+    statement: BS
+    account_ids:
+      - ifrs-full_DefinedBenefitObligation
+    aliases: [확정급여부채, 확정급여채무]
+  FVPL금융자산:
+    statement: BS
+    account_ids:
+      - ifrs-full_FinancialAssetsMeasuredAtFairValueThroughProfitOrLoss
+    aliases: [당기손익-공정가치 측정 금융자산, 당기손익-공정가치측정금융자산, 당기손익공정가치측정금융자산, 당기손익인식금융자산]
+  유동FVPL금융자산:
+    statement: BS
+    account_ids:
+      - ifrs-full_CurrentFinancialAssetsMeasuredAtFairValueThroughProfitOrLoss
+    aliases: [유동 당기손익-공정가치 측정 금융자산, 유동당기손익-공정가치측정금융자산, 유동당기손익공정가치측정금융자산]
+  비유동FVPL금융자산:
+    statement: BS
+    account_ids:
+      - ifrs-full_NoncurrentFinancialAssetsMeasuredAtFairValueThroughProfitOrLoss
+    aliases: [비유동 당기손익-공정가치 측정 금융자산, 비유동당기손익-공정가치측정금융자산, 비유동당기손익공정가치측정금융자산]
+  FVOCI금융자산:
+    statement: BS
+    account_ids:
+      - ifrs-full_FinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome
+    aliases: [기타포괄손익-공정가치 측정 금융자산, 기타포괄손익-공정가치측정금융자산, 기타포괄손익공정가치측정금융자산, 기타포괄손익-공정가치금융자산]
+  유동FVOCI금융자산:
+    statement: BS
+    account_ids:
+      - ifrs-full_CurrentFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome
+    aliases: [유동 기타포괄손익-공정가치 측정 금융자산, 유동기타포괄손익-공정가치측정금융자산, 유동기타포괄손익공정가치측정금융자산]
+  비유동FVOCI금융자산:
+    statement: BS
+    account_ids:
+      - ifrs-full_NoncurrentFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome
+    aliases: [비유동 기타포괄손익-공정가치 측정 금융자산, 비유동기타포괄손익-공정가치측정금융자산, 비유동기타포괄손익공정가치측정금융자산]
+  상각후원가금융자산:
+    statement: BS
+    account_ids:
+      - ifrs-full_FinancialAssetsMeasuredAtAmortisedCost
+    aliases: [상각후원가측정금융자산, 상각후원가 측정 금융자산]
+  유동상각후원가금융자산:
+    statement: BS
+    account_ids:
+      - ifrs-full_CurrentFinancialAssetsMeasuredAtAmortisedCost
+    aliases: [유동상각후원가측정금융자산, 유동 상각후원가 측정 금융자산]
+  비유동상각후원가금융자산:
+    statement: BS
+    account_ids:
+      - ifrs-full_NoncurrentFinancialAssetsMeasuredAtAmortisedCost
+    aliases: [비유동상각후원가측정금융자산, 비유동 상각후원가 측정 금융자산]
   매입채무:
     statement: BS
     account_ids:
       - ifrs-full_TradeAndOtherCurrentPayablesToTradeSuppliers
     # 조합 지급채무 라벨은 매입채무 proxy로 사용한다. 장기/비유동 조합은 제외한다.
     aliases: [매입채무, 매입채무 및 기타유동채무, 매입채무및기타채무, 매입채무 및 기타채무]
+  비유동매입채무:
+    statement: BS
+    account_ids:
+      - ifrs-full_NoncurrentPayablesToTradeSuppliers
+    aliases: [장기매입채무, 비유동매입채무]
   계약부채:
     statement: BS
-    account_ids: []
-    # K-IFRS 1115 진행률/수주 계약부채. 총계와 유동/비유동 구성요소가 같이 있으면 정규화에서 대표 1라인만 쓴다.
-    aliases: [계약부채, 유동계약부채, 비유동계약부채, 초과청구공사, 단기초과청구공사, 확정계약부채, 유동확정계약부채, 비유동확정계약부채]
+    account_ids:
+      - ifrs-full_CurrentContractLiabilities
+      - dart_ShortTermIncomeReceivedInAdvance
+      - dart_ShortTermDueToCustomersForContractWork
+    # K-IFRS 1115 진행률/수주 유동 계약부채. 비유동은 별도 canonical로 분리.
+    aliases: [계약부채, 유동계약부채, 초과청구공사, 단기초과청구공사, 확정계약부채, 유동확정계약부채]
+  비유동계약부채:
+    statement: BS
+    account_ids:
+      - ifrs-full_NoncurrentContractLiabilities
+      - dart_LongTermIncomeReceivedInAdvance
+    aliases: [비유동계약부채]
   단기차입금:
     statement: BS
     account_ids:
       - ifrs-full_ShorttermBorrowings
     aliases: [단기차입금, 단기차입부채]
+  유동성장기차입금:
+    statement: BS
+    account_ids:
+      - ifrs-full_CurrentPortionOfLongtermBorrowings
+      - ifrs-full_CurrentPortionOfNoncurrentBorrowings
+    aliases: [유동성장기차입금, 유동성 장기차입금, 유동성장기부채, 유동성 장기부채]
+  유동리스부채:
+    statement: BS
+    account_ids:
+      - ifrs-full_CurrentLeaseLiabilities
+    aliases: [유동리스부채, 유동 리스부채]
+  리스부채:
+    statement: BS
+    account_ids:
+      - ifrs-full_LeaseLiabilities
+    aliases: [리스부채]
   미지급금:
     statement: BS
     account_ids:
@@ -176,27 +295,51 @@ canonical_accounts:
       - dart_LongTermBorrowingsGross
       - ifrs-full_NoncurrentPortionOfNoncurrentLoansReceived
     aliases: [장기차입금]
+  비유동리스부채:
+    statement: BS
+    account_ids:
+      - ifrs-full_NoncurrentLeaseLiabilities
+    aliases: [비유동리스부채, 비유동 리스부채]
   사채:
     statement: BS
     account_ids:
       - dart_BondsIssued
       - ifrs-full_NoncurrentPortionOfNoncurrentBondsIssued
     aliases: [사채]
+  유동성사채:
+    statement: BS
+    account_ids:
+      - dart_CurrentPortionOfBonds
+    aliases: [유동성사채, 유동성 사채]
   충당부채:
     statement: BS
     account_ids:
       - ifrs-full_CurrentProvisions
+      - ifrs_CurrentProvisions
       - ifrs-full_OtherShorttermProvisions
+      - ifrs-full_ShorttermMiscellaneousOtherProvisions
+      - ifrs_ShorttermMiscellaneousOtherProvisions
+      - ifrs-full_ShorttermProvisionForDecommissioningRestorationAndRehabilitationCosts
     aliases: [충당부채]
   공사손실충당부채:
     statement: BS
-    account_ids: []
+    account_ids:
+      - dart_CurrentProvisionForConstructionLosses
     aliases: [공사손실충당부채]
   장기충당부채:
     statement: BS
     account_ids:
       - ifrs-full_NoncurrentProvisions
+      - ifrs_NoncurrentProvisions
       - ifrs-full_OtherLongtermProvisions
+      - ifrs-full_LongtermMiscellaneousOtherProvisions
+      - ifrs_LongtermMiscellaneousOtherProvisions
+      - ifrs-full_LongtermLegalProceedingsProvision
+      - ifrs-full_LongtermProvisionForDecommissioningRestorationAndRehabilitationCosts
+      - ifrs-full_LongtermWarrantyProvision
+      - dart_NonCurrentProvisionsForConstructionWarranties
+      - dart_NonCurrentProvisionsForProductWarranties
+      - dart_NonCurrentProvisionsForReturnedGoods
     aliases: [장기충당부채]
   유형자산:
     statement: BS

@@ -9,8 +9,12 @@ from pandas.errors import EmptyDataError
 
 from config.settings import settings
 from src.normalize.config import load_canonical_accounts
-from src.normalize.mapper import AccountMapper
+from src.normalize.mapper import OTHER_CANONICAL, UNMAPPED, AccountMapper
 from src.normalize.schema import parse_amount, validate_raw_frame
+
+# IS↔CIS는 손익·포괄손익 통합신고(이자비용·지분법이익·당기순이익 등이 CIS로 신고)라 상호 호환.
+# 나머지 재무제표 교차는 흐름조정·자본변동 행이 잔액/손익 칸으로 흡수되는 오매핑이므로 차단.
+_STATEMENT_COMPATIBLE = {("IS", "CIS"), ("CIS", "IS")}
 
 OUTPUT_COLUMNS = [
     "corp_code",
@@ -59,7 +63,43 @@ def normalize_raw_file(path: Path, fs_div: str, mapper: AccountMapper) -> pd.Dat
             "account_detail": frame.get("account_detail", ""),
         }
     )
-    return _dedupe_canonical_rows(_dedupe_statement_rows(output))[OUTPUT_COLUMNS]
+    return _dedupe_canonical_rows(_dedupe_statement_rows(_apply_statement_guard(output)))[
+        OUTPUT_COLUMNS
+    ]
+
+
+def _apply_statement_guard(frame: pd.DataFrame) -> pd.DataFrame:
+    """행의 재무제표 구분(sj_div)이 매핑된 canonical의 정해진 statement와 다르면
+    그 매핑을 무효화한다(기타 중요 계정으로 강등).
+
+    Why: 공시자가 현금흐름표 증감조정·자본변동 행을 잔액/손익 계정과 같은 라벨로 적으면
+    label alias로 엉뚱한 canonical(예: CF '재고자산' 조정 → 재고자산 잔액 칸)에 흡수되고,
+    중복제거 키에 sj_div가 없어 잔액 계정을 덮거나 소실시킨다. statement 일치를 강제해 차단.
+    IS↔CIS만 통합신고 호환으로 허용한다.
+    """
+
+    if frame.empty:
+        return frame
+    scoped = frame.copy()
+    canonical_statement = scoped["canonical_statement"].astype(str)
+    sj_div = scoped["sj_div"].astype(str)
+    compatible = pd.Series(
+        [
+            (sj, cs) in _STATEMENT_COMPATIBLE
+            for sj, cs in zip(sj_div, canonical_statement, strict=True)
+        ],
+        index=scoped.index,
+    )
+    mismatch = (
+        (scoped["canonical"] != OTHER_CANONICAL)
+        & (canonical_statement != "")
+        & (canonical_statement != sj_div)
+        & ~compatible
+    )
+    scoped.loc[mismatch, "canonical"] = OTHER_CANONICAL
+    scoped.loc[mismatch, "mapping_status"] = UNMAPPED
+    scoped.loc[mismatch, "canonical_statement"] = ""
+    return scoped
 
 
 def _optional_amount_column(frame: pd.DataFrame, column: str) -> pd.Series:
