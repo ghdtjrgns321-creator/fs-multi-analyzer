@@ -87,7 +87,11 @@ def find_account_note_sections(
     fs_div: str,
     mapping_path: Path = DEFAULT_MAPPING,
 ) -> list[NoteSection]:
-    mapping = yaml.safe_load(mapping_path.read_text(encoding="utf-8"))["account_notes"][account]
+    account_notes = yaml.safe_load(mapping_path.read_text(encoding="utf-8"))["account_notes"]
+    # 주석 매핑이 없는 계정(무형자산 등)은 KeyError 대신 섹션 없음으로 degrade한다.
+    if account not in account_notes:
+        return []
+    mapping = account_notes[account]
     path = notes_root / fs_div / f"{mapping['note_code']}.html"
     # 주석 미수집(finstate만 받은 회사 등)이면 해당 계정 섹션 없음으로 degrade한다.
     if not path.exists():
