@@ -17,6 +17,39 @@
 
 ## 기록
 
+### [2026-06-07] 5종 재무제표 universal 확장 후 CF/CIS/SCE 정상 신호 증가
+
+- 증상: S3에서 universal 스캔을 BS·IS에서 BS·IS·CIS·CF·SCE 5종으로 확장하자 정상 다양
+  10사 모두에서 CF/CIS/SCE 신호가 발생했다. 중복 억제 후에도 정상 10사 기준 CF 202개,
+  CIS 53개, SCE 23개 신호가 남았다. KAI negative control도 CF `무형자산취득` 등이 top10에
+  들어 strict hit가 True가 됐다.
+- 원인: 현금흐름표 세목은 정상적인 자금 조달·상환·투자 집행만으로도 YoY 50%와 자산 1% floor를
+  넘기 쉽다. CIS/SCE에는 당기순이익·총포괄손익·기초/기말 자본 같은 반복/소계 성격 행도 많아,
+  그대로 스캔하면 BS 잔액 신호보다 해석 노이즈가 크다.
+- 해결: 새 임계는 만들지 않았다. `canonical_accounts.yaml`의 `statement` 메타데이터를 재사용해
+  mapped canonical은 실제 `sj_div`와 statement가 일치할 때만 universal 스캔하도록 했다.
+  CIS/SCE 표에 반복 표시되는 IS canonical(예: 당기순이익)은 제외된다. `기초자본`은 roll-forward
+  시작 잔액이므로 `is_subtotal`로 표시해 universal 신호에서 제외했다. 미매핑 확장계정은 전수
+  스캔 대상이라 유지했다.
+- 교훈: S3는 사각 제거 단계이지 판별력 완성 단계가 아니다. CF/CIS/SCE 숫자 신호는 정상 거래와
+  재분류가 많이 섞이므로 L4 material에서 맥락 판단해야 하며, 다음 S4/S5에서는 IFRS16·관계기업
+  미매핑 보강과 절대 수준 신호로 의미 있는 계정 세목을 더 분리해야 한다.
+
+### [2026-06-07] CF/CIS/SCE 확장 신호의 KAI strict 회귀
+
+- 증상: S3 이후 KAI negative control이 strict=True로 회귀했다. 주요 원인은 CF `무형자산취득`,
+  `재무활동현금흐름`, `기말현금및현금성자산` 같은 정상 변동성 큰 현금흐름표 세목이 결정론
+  top10에 들어간 것이다.
+- 원인: universal 신호 생성 범위를 5종으로 넓히면서, CF/CIS/SCE 신호를 BS/IS 잔액·손익 신호와
+  같은 strict 점수 큐에 넣었다. 또한 mvp1 관계 신호는 `sj_div` 메타데이터가 없어 CF 관계 신호를
+  큐 경계에서 식별하기 어려웠다.
+- 해결: `RedFlagSignal`에 선택적 `sj_div`를 추가했다. universal/CFS-OFS 신호는 실제 `sj_div`,
+  mvp1 관계 신호는 canonical statement를 채운다. review queue와 backtest scoring은
+  `sj_div is None` 또는 BS/IS만 허용하고, CF/CIS/SCE 신호는 raw fired/snapshot/material에는
+  보존하되 strict/track 채점에서 제외한다.
+- 교훈: 커버리지 확장과 결정론 판별 큐는 분리해야 한다. 변동성 큰 재무제표(CF/CIS/SCE)는
+  LLM 관점 material로 제공하고, 결정론 strict는 BS/IS 중심으로 유지해야 음성 통제 회귀를 줄일 수 있다.
+
 ### [2026-06-07] 소급재작성 12/16 baseline과 전 sj_div 확장 결과 불일치
 
 - 증상: S2 restatement 신호를 의뢰 범위대로 BS/IS/CF/CIS/SCE 전부에 적용하자 16개 positive

@@ -15,6 +15,44 @@ L0 수집(OpenDART) → L1 정규화(XBRL→canonical) → L1.5 주석 인덱서
 → L2 신호엔진(결정론) → L3 역할 에이전트 5개 → L4 리포트 → L5 Human
 ```
 
+## 데이터 흐름 (전수 읽기 → 관점 배분 → 독립 판단)
+
+```
+   ┌──────────────────────────────────────────────────────────┐
+   │  L1 frame · 5종 전 계정  (BS · IS · CIS · CF · SCE)         │
+   └──────────────────────────────────────────────────────────┘
+                          │  L2 전수 스캔
+                          │  universal · red_flags · restatement
+                          ▼
+   ┌──────────────────────────────────────────────────────────┐
+   │  review_queue          (strict 점수 = BS·IS 만)            │
+   │  account_level_series  (5종 전 계정 시계열)                │
+   │  ratio_summary · note_sections · restatements             │
+   └──────────────────────────────────────────────────────────┘
+                          │  materials.py 관점별 발췌
+                          ▼
+   ┌────────┐┌────────┐┌────────┐┌────────┐┌────────┐┌────────┐
+   │numeric ││ flow   ││ change ││ note   ││external││industry│
+   └────────┘└────────┘└────────┘└────────┘└────────┘└────────┘
+     GPT-5.4   GPT-5.4   GPT-5.4   GPT-5.4   Gemini    GPT-5.4
+                          │  create_perspective_assessment ×6 (독립)
+                          ▼
+                  crosscheck (교차, 결정론)
+                          │
+                          ▼
+              synthesis (종합) ──▶ L5 Human 확인
+```
+
+- **strict 채점 경계 = `sj_div ∈ {BS, IS}`**. CF·CIS·SCE·restatement는 점수 제외, material 단서로만.
+- 관점은 발췌만 받음(통째 X). 관점당 LLM 1회 + 종합 1회. 관점끼리 결과 입력 안 받음(독립).
+
+- **전수 읽기는 결정론(L2)**: `universal.scan_*`가 5종 전 계정을 스캔해 후보 큐·전계정 시계열·지표·주석을 만든다.
+- **strict 채점 경계 = `sj_div ∈ {BS, IS}`**(S3 보완). CF·CIS·SCE·restatement는 결정론 점수에서 제외하고
+  `account_level_series`·관점 material에 단서로만 실어 LLM이 맥락 판단(S2·S3 격하 패턴).
+- **관점은 발췌만 받는다**: `materials.py`가 역할별로 분배(numeric=큐+지표+시계열, note=주석섹션, flow=흐름,
+  change=변동+재작성, external=Gemini grounding, industry=peer). 내부 5관점 GPT-5.4, external Gemini.
+- LLM 호출 = **관점당 1회(6) + 종합 1회**. 관점끼리 결과를 입력으로 받지 않는다(독립). 교차·종합은 그 뒤.
+
 ## 5원칙 (요약)
 
 1. 계산은 코드(결정론), 발견은 LLM

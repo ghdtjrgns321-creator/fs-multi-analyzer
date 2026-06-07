@@ -64,6 +64,8 @@
 - [x] Stage1 FIX 3(신호 두 트랙 분리 게시: 규모 계정 A / 소액 급변 B, legacy strict 병기)
 - [x] S1 전기/전전기 금액 보존(`prior_amount`, `prior2_amount`) + 16사 재정규화 검증
 - [x] S2 소급재작성 신호(`prior_amount[N]` vs `amount[N-1]`) + change material 연결
+- [x] S3 재무제표 5종 전수(CIS/SCE canonical 보강 + BS/IS/CIS/CF/SCE universal 스캔)
+- [x] S3 보완(CF/CIS/SCE 결정론 큐·strict 제외, LLM material 5종 유지)
 - [ ] 공시 변동 (watchlist 키워드 신규 등장)
 - [x] 첫 Finding 리포트 + 감사인 확인 질문 — Gemini 3.5 Flash 재시도 후 생성 완료
 
@@ -84,10 +86,11 @@
 - 매출채권 → 재고자산: config 8줄 추가(주석 매핑 4줄, 관계 4줄) + 일반화 코드 수정 1회.
 - 재고자산 → 차입금·사채·충당부채: 주석 mapping/canonical/relationship config 보강 +
   L4 note material 하드코딩 제거 1회. 다음 계정은 YAML 추가 중심으로 확장 가능.
-- BS·IS·CF 확장: canonical BS 34개, IS 17개, CF 18개 등록. 흐름 관점은 CF/차입/영업손익/
-  운전자본 키워드 기반 material로 확대.
+- BS·IS·CF 확장: canonical BS 34개, IS 17개, CF 18개 등록. S3에서 CIS 10개, SCE 7개를
+  추가 등록했다. 흐름 관점은 CF/차입/영업손익/운전자본 키워드 기반 material로 확대.
 - 전수 보편 스캔: 코드 1개 모듈(`src/signals/universal.py`) 추가 후 계정 추가 없이 모든
-  BS·IS·CF account_id에 YoY/z-score/구성비/CFS-OFS 괴리를 적용한다.
+  BS·IS·CIS·CF·SCE account_id에 YoY/z-score/구성비를 적용한다. CFS-OFS 괴리는 기존
+  BS·IS·CF 범위를 유지한다.
 
 ## 이후 (PLAN §16)
 

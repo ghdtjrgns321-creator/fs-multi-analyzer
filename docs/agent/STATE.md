@@ -7,7 +7,7 @@
 ## 현재 위치
 
 - 단계: 설계 확정 → 프로젝트 뼈대 구축 → L0 수집 → L1 정규화 → L2 신호엔진 →
-  **S1 전기/전전기 금액 보존 + S2 소급재작성 신호 완료, S3 재무제표 5종 신호 준비**
+  **S1 전기/전전기 금액 보존 + S2 소급재작성 신호 + S3 재무제표 5종 신호 완료**
 - 최근 작업 (2026-06-03): BS 34개, IS 17개, CF 18개 canonical을 raw account_id 기반으로
   등록하고 L1 정규화를 재실행했다. `src/signals/universal.py`를 추가해 BS·IS·CF 모든
   account_id에 YoY, z-score, 구성비 급변, CFS/OFS 괴리 신호를 적용했다. relationship chain에는
@@ -466,11 +466,71 @@
   광범위 금융자산·차입금·현금 재분류와 연결범위 변동 가능성을 들어 Medium으로 낮춰 보고,
   분식 단정 대신 재작성 사유와 금융부채 재분류 맵핑 확인을 제안했다.
 
+## S3 재무제표 5종 전수 신호 (2026-06-07)
+
+- `config/canonical_accounts.yaml`: CIS canonical 10개(총포괄손익, 기타포괄손익,
+  FVOCI/매도가능 평가손익, 해외사업환산, 현금흐름위험회피, 확정급여재측정 등)와 SCE canonical
+  7개(기초자본, 배당변동, 자본금변동, 자본잉여금변동, 이익잉여금변동, 자기주식변동,
+  기타자본변동)를 추가했다. `기초자본`은 roll-forward 시작 잔액이라 `is_subtotal`로 표시해
+  universal 신호에서는 제외한다.
+- `src/signals/universal.py`: 보편 스캔 대상 `sj_div`를 BS·IS에서 BS·IS·CIS·CF·SCE 5종으로
+  확장했다. `scan_cfs_ofs_gaps`는 기존 BS·IS·CF 범위를 유지해 SCE/CIS CFS-OFS 괴리 신호가
+  새로 섞이지 않게 했다.
+- 노이즈 억제는 새 임계 없이 기존 장치를 재사용했다. 기존 floor/base/sanity/subtotal 제외를
+  유지하고, mapped canonical은 `canonical_accounts.yaml`의 `statement`와 실제 `sj_div`가 맞을
+  때만 universal 스캔한다. 예: CIS/SCE 표에 반복 표시된 `당기순이익`은 IS canonical이므로
+  중복 신호에서 제외된다. 미매핑 확장계정은 전수 스캔 대상이라 그대로 둔다.
+- 검증: `.venv\\Scripts\\python.exe -m pytest -q` 102개 통과,
+  `.venv\\Scripts\\python.exe -m ruff check .` 통과. 기본 labels 백테스트는 positive 발굴
+  5/6 유지(세토피아 `변동미미`). KAI negative control은 CF 확장 후 `무형자산취득` 등이
+  top10에 들어 strict=True가 되어, CF 세목 신호는 정상/음성 통제에서 잔여 노이즈가 있음을
+  확인했다.
+- 삼성전자+16개 positive 재정규화/스캔 결과: 삼성은 funnel BS 177, IS 70, CIS 44, CF 158,
+  SCE 19행, universal 신호 BS 6, IS 11, CIS 11, CF 13, SCE 1개다. 16개 positive는 funnel
+  BS 2,156, IS 437, CIS 871, CF 2,892, SCE 449행, universal 신호 BS 254, IS 32, CIS 102,
+  CF 336, SCE 52개다. 16/16사 모두 CIS/CF/SCE 신호가 발생했다.
+- 정상 다양 10사(SK하이닉스, LG화학, 한국단자공업, 아진산업, 강원에너지, 계룡건설산업,
+  하림지주, 롯데쇼핑, HMM, 다우기술)는 funnel BS 1,545, IS 150, CIS 483, CF 1,990,
+  SCE 270행, universal 신호 BS 101, IS 20, CIS 53, CF 202, SCE 23개다. 10/10사에서
+  CIS/CF/SCE 신호가 발생했다. 원인은 정상 영업·투자·재무 현금흐름 세목과 총포괄손익의 큰
+  변동이 자산 1% floor를 넘는 경우가 많기 때문이다. S3는 사각 제거 단계이며, CF/CIS/SCE
+  신호는 L4 material에서 맥락 판단이 필요하다.
+- 표본 내 직접 사례: 세토피아 2019 CF `전환사채의 발행` YoY 1371.55%와 SCE `자본금변동`
+  mix shift -31.88pp, 유네코 2018 CIS `총포괄손익` YoY -2169.04%, 셀트리온 2017 CIS
+  `지배기업귀속총포괄손익` YoY 136.01% 등이 새 5종 스캔에서 생성된다. 표본 라벨에는
+  순수 OCI 은닉으로 확정된 사건이 없어 OCI 신호는 검토 후보로만 기록한다.
+
+## S3 보완 — CF/CIS/SCE 결정론 큐·strict 제외 (2026-06-07)
+
+- universal 5종 신호 생성은 유지하되, `RedFlagSignal`에 선택적 `sj_div`를 붙여
+  결정론 큐와 백테스트 scoring에서 statement를 구분한다. `src.signals.universal`의 universal
+  신호와 CFS/OFS gap은 실제 `sj_div`를 채운다.
+- `src.signals.red_flags`: mvp1 관계 신호는 raw 반복표 `sj_div`가 아니라
+  `canonical_accounts.yaml`의 canonical statement를 기준으로 `sj_div`를 채운다. 예를 들어
+  SCE에 반복 표시된 `당기순이익`도 canonical statement는 IS이므로 기존 BS/IS 채점에서
+  빠지지 않는다.
+- `src.report.integrated`: review queue에 들어가는 `RedFlagSignal`은 `sj_div is None` 또는
+  `sj_div in {BS, IS}`만 허용한다. `sj_div`가 있는 미매핑 중요계정도 BS/IS만 큐에 넣고,
+  원본 `unmapped_material_accounts` material은 5종을 유지한다.
+- `src.backtest.score`: `fired_signals`에는 CF/CIS/SCE 신호를 보존하되
+  `excluded_from_scoring=True`로 표시해 strict/track 채점에서 제외한다.
+- `src.report.company_report`: `latest_signal_snapshot["universal_scan"]`에는 `sj_div`를 포함하고,
+  `account_level_series`는 BS·IS·CIS·CF·SCE 5종을 유지한다. 따라서 LLM 관점 material은
+  5종 시계열과 단서를 계속 받는다.
+- 검증: `.venv\\Scripts\\python.exe -m pytest -q` 104개 통과,
+  `.venv\\Scripts\\python.exe -m ruff check .` 통과. 기본 labels 백테스트는 positive 발굴
+  5/6 유지, 삼성 clean False, KAI negative control strict=False/track=False(`변동미미`)로
+  복귀했다.
+- 정상 다양 10사 검증: target 2023 기준 생성 단계에는 CF 108, CIS 15, SCE 10개 비-BS/IS
+  신호가 있었지만 deterministic queue 필터 뒤 CF/CIS/SCE 신호 누수는 0건이다. 같은 회사들의
+  material에는 `account_level_series` 기준 BS 1,498, IS 89, CIS 464, CF 1,838, SCE 282행과
+  universal snapshot 기준 CF 47, CIS 15, SCE 10개가 남아 LLM 관점이 5종을 계속 볼 수 있다.
+
 ## 다음 할 일 (우선순위)
 
-1. **S3 재무제표 5종 신호**: CIS/SCE canonical 보강과 CF/CIS/SCE 스캔 확장을 진행한다.
-   S2 결과상 CF/CIS/SCE는 재분류·부호표시 신호가 많으므로 BS 잔액 신호와 해석을 분리한다.
-   Restatement는 결정론 큐가 아니라 change 관점 단서로만 유지한다.
+1. **S4 미매핑 보강(IFRS16·관계기업)**: 리스/사용권자산/리스부채와 관계기업·공동기업 세목
+   canonical을 보강한다. S3 결과상 CF/CIS/SCE 미매핑 세목이 신호로 많이 남아 있으므로
+   미매핑 보강은 신호 의미 분리와 중복 축소에도 필요하다.
 2. **Stage2 LLM 시연**: 결정론이 발굴한 트랙 A/B 후보를 6관점 L4가 어떻게 설명·교차검증하는지
    확인한다. 특히 세토피아처럼 소액 부정이 숫자 임계로는 변동미미인 사례는 과장하지 않고
    도구 한계로 남긴다.
@@ -487,7 +547,7 @@
   필요로 했다.
 - 전체 raw 행 기준 미매핑 행은 여전히 존재한다. 이제 L4 review queue는 target year CFS의
   금액 큰 미등록 계정을 `unmapped_material_account`로 Low risk 노출하고, 전수 보편 스캔은
-  미등록 BS·IS·CF account_id도 label/account_id로 신호화한다.
+  미등록 BS·IS·CIS·CF·SCE account_id도 label/account_id로 신호화한다.
 - 연결 특유 이슈는 별도 에이전트가 아니라 CFS/OFS 괴리와 연결 구조 사슬로 흡수한다. 영업권은
   raw에서 단독 계정이 아니라 `ifrs-full_IntangibleAssetsAndGoodwill`에 포함되어 무형자산으로
   다룬다.
