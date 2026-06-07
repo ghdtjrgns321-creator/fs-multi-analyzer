@@ -387,6 +387,59 @@ def test_percent_signal_strength_is_capped() -> None:
     assert _signal_row(signal)["normalized_strength"] == 10.0
 
 
+def test_score_case_excludes_non_bs_is_statement_signals_from_strict_scoring() -> None:
+    frame = pd.DataFrame(
+        [
+            {
+                "year": 2025,
+                "fs_div": "CFS",
+                "sj_div": "BS",
+                "canonical": "무형자산",
+                "account_id": "ifrs-full_IntangibleAssetsOtherThanGoodwill",
+                "label": "무형자산",
+                "amount": 100_000_000_000.0,
+            },
+            {
+                "year": 2025,
+                "fs_div": "CFS",
+                "sj_div": "CF",
+                "canonical": "무형자산취득",
+                "account_id": "ifrs-full_PurchaseOfIntangibleAssetsClassifiedAsInvestingActivities",
+                "label": "무형자산의 취득",
+                "amount": 10_000_000_000.0,
+            },
+        ]
+    )
+    cf_signal = RedFlagSignal(
+        id="universal_yoy:cf_intangible:2025",
+        year=2025,
+        account="무형자산취득",
+        signal_type="universal_yoy",
+        description="CF universal",
+        metric_value=500.0,
+        evidence=[EvidenceRef(source="financial_statement", locator="x", year="2025")],
+        sj_div="CF",
+    )
+
+    result = score_case(
+        {
+            "corp_code": "00000000",
+            "company": "테스트",
+            "label": "positive",
+            "accounts": "개발비",
+        },
+        [2025],
+        [cf_signal],
+        frame,
+        [2025],
+    )
+
+    assert result["fired_signals"][0]["excluded_from_scoring"] is True
+    assert result["fired_signals"][0]["sj_div"] == "CF"
+    assert result["hit"] is False
+    assert result["account_scores"][0]["status"] == "변동미미"
+
+
 def test_discovery_rate_counts_accounts_outside_top10() -> None:
     results = [
         {"label": "positive", "discovered": True, "hit": False},

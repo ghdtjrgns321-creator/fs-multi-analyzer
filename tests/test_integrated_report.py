@@ -226,6 +226,124 @@ def test_company_report_keeps_restatements_out_of_review_queue_but_in_snapshot(m
     assert report["latest_signal_snapshot"]["restatements"][0]["account"] == "무형자산"
 
 
+def test_company_report_keeps_non_bs_is_universal_out_of_queue_but_in_material(
+    monkeypatch,
+) -> None:
+    from src.report import company_report as company_report_module
+    from src.schemas.findings import EvidenceRef
+    from src.signals.red_flags import RedFlagSignal
+
+    cf_signal = RedFlagSignal(
+        id="universal_yoy:cf:2024",
+        year=2024,
+        account="영업활동현금흐름",
+        signal_type="universal_yoy",
+        description="CF universal",
+        metric_value=200.0,
+        evidence=[EvidenceRef(source="financial_statement", locator="cf", year="2024")],
+        sj_div="CF",
+    )
+    cis_signal = RedFlagSignal(
+        id="universal_yoy:cis:2024",
+        year=2024,
+        account="총포괄손익",
+        signal_type="universal_yoy",
+        description="CIS universal",
+        metric_value=150.0,
+        evidence=[EvidenceRef(source="financial_statement", locator="cis", year="2024")],
+        sj_div="CIS",
+    )
+    bs_signal = RedFlagSignal(
+        id="universal_yoy:bs:2024",
+        year=2024,
+        account="재고자산",
+        signal_type="universal_yoy",
+        description="BS universal",
+        metric_value=100.0,
+        evidence=[EvidenceRef(source="financial_statement", locator="bs", year="2024")],
+        sj_div="BS",
+    )
+    frame = pd.DataFrame(
+        [
+            {
+                "corp_code": "00000000",
+                "year": 2024,
+                "fs_div": "CFS",
+                "sj_div": sj_div,
+                "canonical": canonical,
+                "account_id": account_id,
+                "label": canonical,
+                "amount": amount,
+                "mapping_status": "exact_taxonomy_match",
+            }
+            for sj_div, canonical, account_id, amount in [
+                ("BS", "재고자산", "ifrs-full_Inventories", 100.0),
+                (
+                    "CF",
+                    "영업활동현금흐름",
+                    "ifrs-full_CashFlowsFromUsedInOperatingActivities",
+                    90.0,
+                ),
+                ("CIS", "총포괄손익", "ifrs-full_ComprehensiveIncome", 80.0),
+                ("SCE", "자기주식변동", "dart_TreasuryShareTransactions", 70.0),
+            ]
+        ]
+    )
+    empty_signal_report = {
+        "growth_divergences": pd.DataFrame(columns=["year"]),
+        "direction_checks": pd.DataFrame(columns=["year"]),
+        "primary_yoy": pd.DataFrame(columns=["year"]),
+        "reference_yoy": pd.DataFrame(columns=["year"]),
+    }
+    ratio_frame = pd.DataFrame(
+        columns=["id", "category", "name", "year", "value", "status", "basis"]
+    )
+
+    monkeypatch.setattr(company_report_module, "load_normalized_financials", lambda *args: frame)
+    monkeypatch.setattr(
+        company_report_module,
+        "build_mvp1_signal_report",
+        lambda *args, **kwargs: empty_signal_report,
+    )
+    monkeypatch.setattr(company_report_module, "extract_red_flags", lambda *args, **kwargs: [])
+    monkeypatch.setattr(
+        company_report_module,
+        "scan_universal_signals",
+        lambda *args, **kwargs: [cf_signal, cis_signal, bs_signal],
+    )
+    monkeypatch.setattr(company_report_module, "scan_cfs_ofs_gaps", lambda *args, **kwargs: [])
+    monkeypatch.setattr(
+        company_report_module,
+        "scan_restatement_signals",
+        lambda *args, **kwargs: [],
+    )
+    monkeypatch.setattr(
+        company_report_module,
+        "build_ratio_report",
+        lambda *args, **kwargs: ratio_frame,
+    )
+    monkeypatch.setattr(company_report_module, "load_ratio_config", lambda: [])
+    monkeypatch.setattr(company_report_module, "load_findings_from_report", lambda *args: [])
+
+    report = company_report_module.build_company_report(
+        corp_code="00000000",
+        years=[2024],
+        company_provider=lambda corp_code: {"stock_name": "테스트"},
+    )
+
+    queue_subjects = {item["subject"] for item in report["review_queue"]}
+    snapshot_accounts = {
+        item["account"] for item in report["latest_signal_snapshot"]["universal_scan"]
+    }
+    material_sj_divs = {item["sj_div"] for item in report["account_level_series"]}
+
+    assert "재고자산" in queue_subjects
+    assert "영업활동현금흐름" not in queue_subjects
+    assert "총포괄손익" not in queue_subjects
+    assert {"영업활동현금흐름", "총포괄손익", "재고자산"} <= snapshot_accounts
+    assert {"BS", "CF", "CIS", "SCE"} <= material_sj_divs
+
+
 def test_ratio_summary_groups_latest_values_by_category() -> None:
     summary = summarize_ratio_categories(ratio_frame(), target_year=2024)
 

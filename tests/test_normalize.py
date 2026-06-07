@@ -37,6 +37,24 @@ def test_new_canonical_accounts_map_standard_ids() -> None:
         ("ifrs-full_DividendsPaidClassifiedAsFinancingActivities", "배당금지급"),
         ("ifrs-full_NoncontrollingInterests", "비지배지분"),
         ("ifrs-full_ProfitLossAttributableToOwnersOfParent", "지배기업귀속순이익"),
+        ("ifrs-full_ComprehensiveIncome", "총포괄손익"),
+        ("ifrs-full_OtherComprehensiveIncome", "기타포괄손익"),
+        (
+            "ifrs-full_OtherComprehensiveIncomeNetOfTaxGainsLossesFromInvestmentsInEquityInstruments",
+            "FVOCI평가손익",
+        ),
+        (
+            "ifrs-full_GainsLossesOnExchangeDifferencesOnTranslationNetOfTax",
+            "해외사업환산손익",
+        ),
+        ("ifrs-full_GainsLossesOnCashFlowHedgesNetOfTax", "현금흐름위험회피손익"),
+        (
+            "ifrs-full_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRemeasurementsOfDefinedBenefitPlans",
+            "확정급여재측정손익",
+        ),
+        ("dart_EquityAtBeginningOfPeriod", "기초자본"),
+        ("ifrs-full_DividendsPaid", "배당변동"),
+        ("dart_TreasuryShareTransactions", "자기주식변동"),
     ]
 
     for account_id, expected in cases:

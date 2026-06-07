@@ -7,7 +7,7 @@ from dataclasses import dataclass
 import pandas as pd
 
 from config.settings import settings
-from src.normalize.config import subtotal_account_names
+from src.normalize.config import load_canonical_accounts, subtotal_account_names
 from src.schemas.findings import EvidenceRef
 from src.signals.config import load_l2_config
 from src.signals.tracks import apply_track_quota, track_for_amount
@@ -25,6 +25,7 @@ class RedFlagSignal:
     track: str | None = None
     magnitude_ratio: float | None = None
     current_amount: float | None = None
+    sj_div: str | None = None
 
 
 def extract_red_flags(
@@ -39,16 +40,28 @@ def extract_red_flags(
         report.get("asset_totals") if isinstance(report.get("asset_totals"), dict) else {}
     )
     signals: list[RedFlagSignal] = []
+    account_statements = _canonical_statement_map()
     signals.extend(
         _growth_divergence_flags(
             report["growth_divergences"],
             target_year,
             thresholds,
             asset_totals,
+            account_statements,
         )
     )
-    signals.extend(_single_yoy_flags(report["primary_yoy"], target_year, thresholds, asset_totals))
-    signals.extend(_direction_flags(report, target_year, thresholds, asset_totals))
+    signals.extend(
+        _single_yoy_flags(
+            report["primary_yoy"],
+            target_year,
+            thresholds,
+            asset_totals,
+            account_statements,
+        )
+    )
+    signals.extend(
+        _direction_flags(report, target_year, thresholds, asset_totals, account_statements)
+    )
     if include_all:
         return signals
     return apply_track_quota(signals, thresholds, _score)
@@ -59,6 +72,7 @@ def _growth_divergence_flags(
     year: int,
     thresholds: dict,
     asset_totals: dict,
+    account_statements: dict[str, str],
 ) -> list[RedFlagSignal]:
     required = {
         "year",
@@ -88,21 +102,22 @@ def _growth_divergence_flags(
         )
         signals.append(
             RedFlagSignal(
-            id=f"divergence:{row.id}:{year}",
-            year=year,
-            account=row.account_b,
-            signal_type="growth_divergence",
-            description=row.name,
-            metric_value=float(row.divergence_pp),
-            evidence=[
-                _evidence(row.account_a, year, f"YoY {row.growth_a_pct:.2f}%"),
-                _evidence(row.account_b, year, f"YoY {row.growth_b_pct:.2f}%"),
-                _evidence(row.id, year, f"divergence {row.divergence_pp:.2f}pp"),
-            ],
-            track=track,
-            magnitude_ratio=magnitude_ratio,
-            current_amount=current_amount,
-        )
+                id=f"divergence:{row.id}:{year}",
+                year=year,
+                account=row.account_b,
+                signal_type="growth_divergence",
+                description=row.name,
+                metric_value=float(row.divergence_pp),
+                evidence=[
+                    _evidence(row.account_a, year, f"YoY {row.growth_a_pct:.2f}%"),
+                    _evidence(row.account_b, year, f"YoY {row.growth_b_pct:.2f}%"),
+                    _evidence(row.id, year, f"divergence {row.divergence_pp:.2f}pp"),
+                ],
+                track=track,
+                magnitude_ratio=magnitude_ratio,
+                current_amount=current_amount,
+                sj_div=account_statements.get(str(row.account_b)),
+            )
         )
     return signals
 
@@ -112,6 +127,7 @@ def _single_yoy_flags(
     year: int,
     thresholds: dict,
     asset_totals: dict,
+    account_statements: dict[str, str],
 ) -> list[RedFlagSignal]:
     required = {"year", "canonical", "amount", "yoy_growth_pct"}
     if frame.empty or not required.issubset(frame.columns):
@@ -136,20 +152,21 @@ def _single_yoy_flags(
         )
         signals.append(
             RedFlagSignal(
-            id=f"yoy:{row.canonical}:{year}",
-            year=year,
-            account=row.canonical,
-            signal_type="single_account_yoy",
-            description=f"{row.canonical} YoY 절대값 기준 초과",
-            metric_value=float(row.yoy_growth_pct),
-            evidence=[
-                _evidence(row.canonical, year, f"amount {int(row.amount):,}"),
-                _evidence(row.canonical, year, f"YoY {row.yoy_growth_pct:.2f}%"),
-            ],
-            track=track,
-            magnitude_ratio=magnitude_ratio,
-            current_amount=current_amount,
-        )
+                id=f"yoy:{row.canonical}:{year}",
+                year=year,
+                account=row.canonical,
+                signal_type="single_account_yoy",
+                description=f"{row.canonical} YoY 절대값 기준 초과",
+                metric_value=float(row.yoy_growth_pct),
+                evidence=[
+                    _evidence(row.canonical, year, f"amount {int(row.amount):,}"),
+                    _evidence(row.canonical, year, f"YoY {row.yoy_growth_pct:.2f}%"),
+                ],
+                track=track,
+                magnitude_ratio=magnitude_ratio,
+                current_amount=current_amount,
+                sj_div=account_statements.get(str(row.canonical), getattr(row, "sj_div", None)),
+            )
         )
     return signals
 
@@ -159,6 +176,7 @@ def _direction_flags(
     year: int,
     thresholds: dict,
     asset_totals: dict,
+    account_statements: dict[str, str],
 ) -> list[RedFlagSignal]:
     yoy = report["primary_yoy"]
     if not isinstance(yoy, pd.DataFrame) or yoy.empty:
@@ -191,6 +209,7 @@ def _direction_flags(
                     track=track,
                     magnitude_ratio=magnitude_ratio,
                     current_amount=current_amount,
+                    sj_div=account_statements.get(str(rule["account_b"])),
                 )
             )
     return rows
@@ -215,6 +234,13 @@ def _amount_for(frame: pd.DataFrame, account: str, year: int) -> float | None:
     if matched.empty or "amount" not in matched.columns:
         return None
     return _numeric_or_none(matched.iloc[0].amount)
+
+
+def _canonical_statement_map() -> dict[str, str]:
+    return {
+        account.name: account.statement
+        for account in load_canonical_accounts(settings.config_dir / "canonical_accounts.yaml")
+    }
 
 
 def _numeric_or_none(value: object) -> float | None:

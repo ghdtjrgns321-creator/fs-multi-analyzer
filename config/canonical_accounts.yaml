@@ -305,6 +305,97 @@ canonical_accounts:
     account_ids:
       - ifrs-full_ShareOfProfitLossOfAssociatesAndJointVenturesAccountedForUsingEquityMethod
     aliases: [지분법이익]
+  총포괄손익:
+    statement: CIS
+    account_ids:
+      - ifrs-full_ComprehensiveIncome
+      - ifrs_ComprehensiveIncome
+    aliases: [총포괄손익, 포괄손익]
+  지배기업귀속총포괄손익:
+    statement: CIS
+    account_ids:
+      - ifrs-full_ComprehensiveIncomeAttributableToOwnersOfParent
+      - ifrs_ComprehensiveIncomeAttributableToOwnersOfParent
+    aliases: [지배기업의 소유주에게 귀속되는 총포괄손익, 지배기업 소유주지분 총포괄손익]
+  비지배지분총포괄손익:
+    statement: CIS
+    account_ids:
+      - ifrs-full_ComprehensiveIncomeAttributableToNoncontrollingInterests
+      - ifrs_ComprehensiveIncomeAttributableToNoncontrollingInterests
+    aliases: [비지배지분에 귀속되는 총포괄손익, 비지배지분 총포괄손익]
+  기타포괄손익:
+    statement: CIS
+    account_ids:
+      - ifrs-full_OtherComprehensiveIncome
+      - ifrs_OtherComprehensiveIncome
+    aliases: [기타포괄손익, 연결기타포괄손익]
+  재분류가능기타포괄손익:
+    statement: CIS
+    account_ids:
+      - ifrs-full_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax
+    aliases: [후속적으로 당기손익으로 재분류되는 포괄손익, 후속적으로 당기손익으로 재분류될 수 있는 항목]
+  재분류불가능기타포괄손익:
+    statement: CIS
+    account_ids:
+      - ifrs-full_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax
+    aliases: [후속적으로 당기손익으로 재분류되지 않는 포괄손익, 후속적으로 당기손익으로 재분류되지 않는 항목]
+  FVOCI평가손익:
+    statement: CIS
+    account_ids:
+      - ifrs-full_OtherComprehensiveIncomeNetOfTaxGainsLossesFromInvestmentsInEquityInstruments
+    aliases: [기타포괄손익-공정가치금융자산평가손익, 기타포괄손익-공정가치 측정 금융자산 평가손익, 매도가능금융상품평가손익]
+  해외사업환산손익:
+    statement: CIS
+    account_ids:
+      - ifrs-full_GainsLossesOnExchangeDifferencesOnTranslationNetOfTax
+    aliases: [해외사업장환산외환차이, 해외사업환산손익, 해외사업환산손익(손실)]
+  현금흐름위험회피손익:
+    statement: CIS
+    account_ids:
+      - ifrs-full_GainsLossesOnCashFlowHedgesNetOfTax
+    aliases: [현금흐름위험회피파생상품평가손익, 현금흐름위험회피손익]
+  확정급여재측정손익:
+    statement: CIS
+    account_ids:
+      - ifrs-full_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRemeasurementsOfDefinedBenefitPlans
+      - dart_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRemeasurementsOfDefinedBenefitPlans
+    aliases: [순확정급여부채(자산) 재측정요소, 순확정급여제도의 재측정손익(세후기타포괄손익), 순확정급여부채의 재측정요소, 확정급여제도의 재측정요소]
+  기초자본:
+    statement: SCE
+    is_subtotal: true
+    account_ids:
+      - dart_EquityAtBeginningOfPeriod
+    aliases: [기초자본]
+  배당변동:
+    statement: SCE
+    account_ids:
+      - ifrs-full_DividendsPaid
+    aliases: [배당, 현금배당, 연차배당]
+  자본금변동:
+    statement: SCE
+    account_ids:
+      - ifrs-full_IssueOfEquity
+    aliases: [유상증자, 자본금의 증가, 자본금의 감소, 신주발행]
+  자본잉여금변동:
+    statement: SCE
+    account_ids: []
+    aliases: [전환권 행사, 교환권 행사, 주식매입선택권 행사 및 취소, 주식매입선택권 인식, 자본잉여금의 증가, 자본잉여금의 감소]
+  이익잉여금변동:
+    statement: SCE
+    account_ids: []
+    aliases: [이익잉여금 처분, 결손금보전, 주식배당, 이익잉여금의 증가, 이익잉여금의 감소]
+  자기주식변동:
+    statement: SCE
+    account_ids:
+      - dart_TreasuryShareTransactions
+    aliases: [자기주식 취득, 자기주식 처분, 자기주식의 취득, 자기주식의 처분, 자기주식]
+  기타자본변동:
+    statement: SCE
+    account_ids:
+      - dart_ChangesInConsolidatedCompanies
+      - dart_IntercompanyAcquisition
+      - ifrs-full_IncreaseDecreaseThroughChangesInAccountingPolicies
+    aliases: [연결실체의 변동, 연결실체내 자본거래 등, 회계정책변경에 따른 증가(감소), 전환사채 조기상환, 신주인수권 행사, 기타자본의 증가, 기타자본의 감소]
   영업활동현금흐름:
     statement: CF
     account_ids:
@@ -380,6 +471,7 @@ canonical_accounts:
     statement: CF
     account_ids:
       - dart_AcquisitionOfTreasuryShares
+      - ifrs-full_PurchaseOfTreasuryShares
     aliases: [자기주식의 취득]
   이자지급:
     statement: CF

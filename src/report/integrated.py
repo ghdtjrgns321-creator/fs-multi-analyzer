@@ -11,6 +11,7 @@ from src.schemas.findings import AccountFinding
 from src.signals.red_flags import RedFlagSignal
 
 RISK_ORDER = {"High": 3, "Medium": 2, "Low": 1}
+DETERMINISTIC_QUEUE_STATEMENTS = {"BS", "IS"}
 CATEGORY_LABELS = {
     "profitability": "수익성",
     "activity": "활동성",
@@ -45,8 +46,16 @@ def build_review_queue(
     """Collect account findings, relationship signals, and ratios into one queue."""
 
     items = [_finding_item(finding) for finding in findings]
-    items.extend(_red_flag_item(signal) for signal in red_flags or [])
-    items.extend(_unmapped_item(row) for row in unmapped_rows or [])
+    items.extend(
+        _red_flag_item(signal)
+        for signal in red_flags or []
+        if _include_in_deterministic_queue(signal)
+    )
+    items.extend(
+        _unmapped_item(row)
+        for row in unmapped_rows or []
+        if _include_unmapped_in_deterministic_queue(row)
+    )
     items.extend(_ratio_items(ratios, ratio_config, target_year))
     return sorted(
         items,
@@ -113,6 +122,19 @@ def _red_flag_item(signal: RedFlagSignal) -> ReviewItem:
         key_evidence=f"{signal.signal_type}: {metric}",
         audit_basis=["ISA/KSA 315", "ISA/KSA 520"],
     )
+
+
+def _include_in_deterministic_queue(signal: RedFlagSignal) -> bool:
+    if signal.sj_div is None:
+        return True
+    return signal.sj_div in DETERMINISTIC_QUEUE_STATEMENTS
+
+
+def _include_unmapped_in_deterministic_queue(row: dict[str, object]) -> bool:
+    sj_div = row.get("sj_div")
+    if sj_div is None:
+        return True
+    return str(sj_div) in DETERMINISTIC_QUEUE_STATEMENTS
 
 
 def _unmapped_item(row: dict[str, object]) -> ReviewItem:

@@ -11,6 +11,7 @@ from src.signals.red_flags import RedFlagSignal
 from src.signals.universal import account_above_floor
 
 EXCLUDED_TYPES = {"cfs_ofs_gap"}
+DETERMINISTIC_SCORE_STATEMENTS = {"BS", "IS"}
 ACCOUNT_EQUIV = {
     "수익": "매출",
     "공사매출": "매출",
@@ -206,6 +207,7 @@ def _raw_matches(account: str, frame: pd.DataFrame) -> list[str]:
 def _signal_row(signal: RedFlagSignal) -> dict[str, object]:
     threshold = _threshold_for(signal.signal_type)
     strength = _strength(signal.signal_type, signal.metric_value, threshold)
+    excluded = signal.signal_type in EXCLUDED_TYPES or _excluded_statement(signal)
     return {
         "account": signal.account,
         "type": signal.signal_type,
@@ -213,11 +215,18 @@ def _signal_row(signal: RedFlagSignal) -> dict[str, object]:
         "threshold": threshold,
         "normalized_strength": strength,
         "year": signal.year,
-        "excluded_from_scoring": signal.signal_type in EXCLUDED_TYPES,
+        "excluded_from_scoring": excluded,
+        "sj_div": signal.sj_div,
         "track": signal.track,
         "magnitude_ratio": signal.magnitude_ratio,
         "current_amount": signal.current_amount,
     }
+
+
+def _excluded_statement(signal: RedFlagSignal) -> bool:
+    if signal.sj_div is None:
+        return False
+    return signal.sj_div not in DETERMINISTIC_SCORE_STATEMENTS
 
 
 def _threshold_for(signal_type: str) -> object:

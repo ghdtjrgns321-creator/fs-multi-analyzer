@@ -3,12 +3,13 @@
 from __future__ import annotations
 
 import math
+from functools import lru_cache
 from typing import Any
 
 import pandas as pd
 
 from config.settings import settings
-from src.normalize.config import normalize_label, subtotal_account_names
+from src.normalize.config import load_canonical_accounts, normalize_label, subtotal_account_names
 from src.schemas.findings import EvidenceRef
 from src.signals.config import load_l2_config
 from src.signals.red_flags import RedFlagSignal
@@ -16,6 +17,8 @@ from src.signals.sanity import exclude_asset_sanity_years
 from src.signals.tracks import apply_track_quota, track_for_amount
 
 MIN_Z_HISTORY = 4
+UNIVERSAL_STATEMENTS = ("BS", "IS", "CIS", "CF", "SCE")
+CFS_OFS_GAP_STATEMENTS = ("BS", "IS", "CF")
 
 
 def scan_universal_signals(
@@ -33,7 +36,7 @@ def scan_universal_signals(
     scoped = exclude_asset_sanity_years(scoped, thresholds)
     if scoped.empty:
         return []
-    scoped = scoped[scoped["sj_div"].isin(["BS", "IS"])].copy()
+    scoped = scoped[scoped["sj_div"].isin(UNIVERSAL_STATEMENTS)].copy()
     if scoped.empty:
         return []
     scoped = _aggregate_series(scoped)
@@ -67,6 +70,7 @@ def scan_cfs_ofs_gaps(frame: pd.DataFrame, target_year: int) -> list[RedFlagSign
     top_n = int(thresholds.get("universal_top_n", 12))
     scoped = _scan_frame(frame, None)
     scoped = exclude_asset_sanity_years(scoped, thresholds)
+    scoped = scoped[scoped["sj_div"].isin(CFS_OFS_GAP_STATEMENTS)].copy()
     floors = scale_floors(scoped, thresholds)
     scoped = scoped[(scoped["year"] == target_year) & (scoped["fs_div"].isin(["CFS", "OFS"]))]
     if scoped.empty:
@@ -101,6 +105,7 @@ def scan_cfs_ofs_gaps(frame: pd.DataFrame, target_year: int) -> list[RedFlagSign
                 _evidence(row.scan_key, target_year, f"CFS {int(row.CFS):,}"),
                 _evidence(row.scan_key, target_year, f"OFS {int(row.OFS):,}"),
             ],
+            sj_div=str(row.sj_div),
         )
         for row in flagged.itertuples()
     ][:top_n]
@@ -133,7 +138,7 @@ def _scan_frame(frame: pd.DataFrame, fs_div: str | None) -> pd.DataFrame:
     if fs_div:
         scoped = scoped[scoped["fs_div"] == fs_div]
     if "sj_div" in scoped.columns:
-        scoped = scoped[scoped["sj_div"].isin(["BS", "IS", "CF"])]
+        scoped = scoped[scoped["sj_div"].isin(UNIVERSAL_STATEMENTS)]
     else:
         scoped["sj_div"] = ""
     scoped = scoped[scoped["amount"].notna()].copy()
@@ -154,7 +159,29 @@ def _scan_frame(frame: pd.DataFrame, fs_div: str | None) -> pd.DataFrame:
     scoped["evidence_key"] = scoped["account_id"] + "|" + scoped["label"]
     scoped["scan_key"] = scoped.apply(_series_key, axis=1)
     scoped["abs_amount"] = scoped["amount"].abs()
+    scoped = _filter_statement_compatible(scoped)
     return scoped
+
+
+def _filter_statement_compatible(scoped: pd.DataFrame) -> pd.DataFrame:
+    statement_by_account = _canonical_statement_map()
+    if not statement_by_account:
+        return scoped
+    canonical_statement = scoped["canonical"].map(statement_by_account)
+    compatible = (
+        scoped["canonical"].eq("기타 중요 계정")
+        | canonical_statement.isna()
+        | canonical_statement.eq(scoped["sj_div"])
+    )
+    return scoped[compatible].copy()
+
+
+@lru_cache(maxsize=1)
+def _canonical_statement_map() -> dict[str, str]:
+    return {
+        account.name: account.statement
+        for account in load_canonical_accounts(settings.config_dir / "canonical_accounts.yaml")
+    }
 
 
 def _aggregate_series(scoped: pd.DataFrame) -> pd.DataFrame:
@@ -282,6 +309,7 @@ def _with_track(
         track=track,
         magnitude_ratio=ratio,
         current_amount=signal.current_amount,
+        sj_div=signal.sj_div,
     )
 
 
@@ -383,6 +411,7 @@ def _signal(signal_type: str, row: Any, year: int, metric: float) -> RedFlagSign
         metric_value=round(float(metric), 2),
         evidence=[_evidence(locator, year, f"{row.label}: {int(row.amount):,}")],
         current_amount=float(row.amount),
+        sj_div=str(row.sj_div),
     )
 
 

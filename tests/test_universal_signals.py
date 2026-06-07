@@ -224,31 +224,100 @@ def test_universal_scan_uses_ofs_when_cfs_series_is_incomplete() -> None:
     assert any(item.account == "현금" and item.metric_value == 900.0 for item in signals)
 
 
-def test_universal_scan_excludes_cf_from_level_statistics() -> None:
-    data = pd.DataFrame(
-        [
+def test_universal_scan_includes_all_five_statements_with_existing_floor_guards() -> None:
+    rows = []
+    for year in [2024, 2025]:
+        rows.append(
             {
-                "year": 2024,
+                "year": year,
+                "fs_div": "CFS",
+                "sj_div": "BS",
+                "account_id": "ifrs-full_Assets",
+                "label": "자산총계",
+                "canonical": "자산총계",
+                "amount": 1_000_000_000_000.0,
+            }
+        )
+    for sj_div, account in [
+        ("CF", "영업활동현금흐름"),
+        ("CIS", "총포괄손익"),
+        ("SCE", "이익잉여금변동"),
+    ]:
+        for year, amount in [(2024, 20_000_000_000.0), (2025, 40_000_000_000.0)]:
+            rows.append(
+                {
+                    "year": year,
+                    "fs_div": "CFS",
+                    "sj_div": sj_div,
+                    "account_id": f"{sj_div}_{account}",
+                    "label": account,
+                    "canonical": account,
+                    "amount": amount,
+                }
+            )
+    for year, amount in [(2024, 10_000_000.0), (2025, 40_000_000_000.0)]:
+        rows.append(
+            {
+                "year": year,
                 "fs_div": "CFS",
                 "sj_div": "CF",
-                "account_id": "cf_jump",
-                "label": "영업활동현금흐름",
-                "canonical": "영업활동현금흐름",
-                "amount": 100_000_000.0,
-            },
-            {
-                "year": 2025,
-                "fs_div": "CFS",
-                "sj_div": "CF",
-                "account_id": "cf_jump",
-                "label": "영업활동현금흐름",
-                "canonical": "영업활동현금흐름",
-                "amount": 10_000_000_000.0,
-            },
-        ]
-    )
+                "account_id": "cf_small_base",
+                "label": "작은기저CF",
+                "canonical": "기타 중요 계정",
+                "amount": amount,
+            }
+        )
+    data = pd.DataFrame(rows)
 
-    assert scan_universal_signals(data, 2025) == []
+    signals = scan_universal_signals(data, 2025, include_all=True)
+    flagged = {(item.account, item.signal_type) for item in signals}
+
+    assert ("영업활동현금흐름", "universal_yoy") in flagged
+    assert ("총포괄손익", "universal_yoy") in flagged
+    assert ("이익잉여금변동", "universal_yoy") in flagged
+    assert not any(item.account == "작은기저CF" for item in signals)
+
+
+def test_universal_scan_skips_mapped_accounts_repeated_in_other_statement_tables() -> None:
+    rows = []
+    for year in [2024, 2025]:
+        rows.extend(
+            [
+                {
+                    "year": year,
+                    "fs_div": "CFS",
+                    "sj_div": "BS",
+                    "account_id": "ifrs-full_Assets",
+                    "label": "자산총계",
+                    "canonical": "자산총계",
+                    "amount": 1_000_000_000_000.0,
+                },
+                {
+                    "year": year,
+                    "fs_div": "CFS",
+                    "sj_div": "CIS",
+                    "account_id": "ifrs-full_ProfitLoss",
+                    "label": "당기순이익",
+                    "canonical": "당기순이익",
+                    "amount": 20_000_000_000.0 if year == 2024 else 40_000_000_000.0,
+                },
+                {
+                    "year": year,
+                    "fs_div": "CFS",
+                    "sj_div": "CIS",
+                    "account_id": "ifrs-full_ComprehensiveIncome",
+                    "label": "총포괄손익",
+                    "canonical": "총포괄손익",
+                    "amount": 20_000_000_000.0 if year == 2024 else 40_000_000_000.0,
+                },
+            ]
+        )
+    data = pd.DataFrame(rows)
+
+    accounts = {item.account for item in scan_universal_signals(data, 2025, include_all=True)}
+
+    assert "총포괄손익" in accounts
+    assert "당기순이익" not in accounts
 
 
 def test_universal_yoy_skips_small_or_sign_changed_prior_base() -> None:

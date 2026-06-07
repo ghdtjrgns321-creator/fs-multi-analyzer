@@ -19,7 +19,7 @@ from src.signals.mvp1 import build_mvp1_signal_report
 from src.signals.ratios import build_ratio_report, load_ratio_config
 from src.signals.red_flags import extract_red_flags
 from src.signals.restatement import scan_restatement_signals
-from src.signals.universal import scan_cfs_ofs_gaps, scan_universal_signals
+from src.signals.universal import UNIVERSAL_STATEMENTS, scan_cfs_ofs_gaps, scan_universal_signals
 
 DEFAULT_CORP_CODE = "00126380"
 DEFAULT_YEARS = [2022, 2023, 2024, 2025]
@@ -121,6 +121,7 @@ def _signal_rows(signals: list[Any]) -> list[dict[str, object]]:
             "signal_type": signal.signal_type,
             "description": signal.description,
             "metric_value": signal.metric_value,
+            "sj_div": signal.sj_div,
             "evidence": [item.model_dump(mode="json") for item in signal.evidence],
         }
         for signal in signals
@@ -144,7 +145,9 @@ def _account_level_series(
     if not hasattr(frame, "to_dict") or frame.empty:
         return []
     fs_div = _primary_fs_div(frame, target_year)
-    scoped = frame[(frame["fs_div"] == fs_div) & (frame["sj_div"].isin(["BS", "IS", "CF"]))].copy()
+    scoped = frame[
+        (frame["fs_div"] == fs_div) & (frame["sj_div"].isin(UNIVERSAL_STATEMENTS))
+    ].copy()
     if scoped.empty:
         return []
     scoped["series_key"] = scoped["canonical"].where(
@@ -181,7 +184,11 @@ def _top_unmapped_material_accounts(frame: Any, target_year: int) -> list[dict[s
         return []
     scoped["abs_amount"] = scoped["amount"].abs()
     scoped = scoped[scoped["abs_amount"] > 0].sort_values("abs_amount", ascending=False)
-    return scoped[["year", "fs_div", "label", "account_id", "amount"]].head(5).to_dict("records")
+    return (
+        scoped[["year", "fs_div", "sj_div", "label", "account_id", "amount"]]
+        .head(5)
+        .to_dict("records")
+    )
 
 
 def load_findings_from_report(path: Path) -> list[AccountFinding]:
