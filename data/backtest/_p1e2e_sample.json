@@ -1,0 +1,42 @@
+[
+  {
+    "cell": "대형·금융·신양식",
+    "asset": 26396108665000.0,
+    "fin": true,
+    "rows": 305,
+    "corp": "00110893",
+    "year": "2024",
+    "fs": "CFS",
+    "note": true
+  },
+  {
+    "cell": "대형·비금융·구양식",
+    "asset": 1600258897742.0,
+    "fin": false,
+    "rows": 152,
+    "corp": "00125521",
+    "year": "2017",
+    "fs": "CFS",
+    "note": true
+  },
+  {
+    "cell": "소형·비금융·신양식",
+    "asset": 111411700508.0,
+    "fin": false,
+    "rows": 184,
+    "corp": "00112457",
+    "year": "2024",
+    "fs": "CFS",
+    "note": true
+  },
+  {
+    "cell": "소형·금융·구양식",
+    "asset": 93579239998.0,
+    "fin": true,
+    "rows": 306,
+    "corp": "00108649",
+    "year": "2015",
+    "fs": "CFS",
+    "note": true
+  }
+]

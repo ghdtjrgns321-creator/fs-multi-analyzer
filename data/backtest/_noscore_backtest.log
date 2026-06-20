@@ -1,0 +1,9 @@
+두산에너빌리티	discovered=True	None
+아스트	discovered=True	None
+디아이동일	discovered=True	None
+모델솔루션	discovered=True	None
+셀트리온	discovered=True	None
+세토피아	discovered=False	변동미미
+삼성전자	discovered=False	해당없음
+한국항공우주산업(KAI)	discovered=False	변동미미
+wrote data\backtest\backtest_results.jsonl and data\backtest\BACKTEST_REPORT.md

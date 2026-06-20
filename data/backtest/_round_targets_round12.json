@@ -1,0 +1,311 @@
+{
+  "name": "round12",
+  "seed": 12,
+  "pool": 1572,
+  "strata_sizes": {
+    "S1_금융형": 36,
+    "S2_별도전용": 17,
+    "S3_blankid고비중": 393,
+    "S4_다년대형": 161,
+    "S5_단년소형": 218
+  },
+  "cases": [
+    {
+      "corp_code": "00260879",
+      "run_years": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "stratum": "S1_금융형",
+      "n_years": 6,
+      "ofs_only": false,
+      "blank_ratio": 0.04712041884816754,
+      "fin": true,
+      "assets": 415599634562
+    },
+    {
+      "corp_code": "00526951",
+      "run_years": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "stratum": "S2_별도전용",
+      "n_years": 5,
+      "ofs_only": true,
+      "blank_ratio": 0.05343511450381679,
+      "fin": false,
+      "assets": 236762069886
+    },
+    {
+      "corp_code": "01147487",
+      "run_years": [
+        "2025"
+      ],
+      "stratum": "S3_blankid고비중",
+      "n_years": 1,
+      "ofs_only": false,
+      "blank_ratio": 0.16455696202531644,
+      "fin": false,
+      "assets": 87680194136
+    },
+    {
+      "corp_code": "00728638",
+      "run_years": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "stratum": "S4_다년대형",
+      "n_years": 6,
+      "ofs_only": false,
+      "blank_ratio": 0.043689320388349516,
+      "fin": false,
+      "assets": 1535658846708
+    },
+    {
+      "corp_code": "01217865",
+      "run_years": [
+        "2025"
+      ],
+      "stratum": "S5_단년소형",
+      "n_years": 1,
+      "ofs_only": false,
+      "blank_ratio": 0.02857142857142857,
+      "fin": false,
+      "assets": 65244955356
+    },
+    {
+      "corp_code": "00161444",
+      "run_years": [
+        "2020",
+        "2021",
+        "2022",
+        "2023"
+      ],
+      "stratum": "S1_금융형",
+      "n_years": 4,
+      "ofs_only": false,
+      "blank_ratio": 0.047619047619047616,
+      "fin": true,
+      "assets": 38380075000000
+    },
+    {
+      "corp_code": "00160621",
+      "run_years": [
+        "2020",
+        "2021",
+        "2022",
+        "2023"
+      ],
+      "stratum": "S2_별도전용",
+      "n_years": 4,
+      "ofs_only": true,
+      "blank_ratio": 0.3805970149253731,
+      "fin": false,
+      "assets": 89173514797
+    },
+    {
+      "corp_code": "00450995",
+      "run_years": [
+        "2020",
+        "2021",
+        "2022",
+        "2023"
+      ],
+      "stratum": "S3_blankid고비중",
+      "n_years": 4,
+      "ofs_only": false,
+      "blank_ratio": 0.2845528455284553,
+      "fin": false,
+      "assets": 63144326874
+    },
+    {
+      "corp_code": "00102760",
+      "run_years": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "stratum": "S4_다년대형",
+      "n_years": 6,
+      "ofs_only": false,
+      "blank_ratio": 0.22380952380952382,
+      "fin": false,
+      "assets": 1946644232260
+    },
+    {
+      "corp_code": "00624749",
+      "run_years": [
+        "2025"
+      ],
+      "stratum": "S5_단년소형",
+      "n_years": 1,
+      "ofs_only": false,
+      "blank_ratio": 0.01935483870967742,
+      "fin": false,
+      "assets": 98935815057
+    },
+    {
+      "corp_code": "00382199",
+      "run_years": [
+        "2020",
+        "2021",
+        "2022",
+        "2023"
+      ],
+      "stratum": "S1_금융형",
+      "n_years": 4,
+      "ofs_only": false,
+      "blank_ratio": 0.23395445134575568,
+      "fin": true,
+      "assets": 691795333000000
+    },
+    {
+      "corp_code": "00351579",
+      "run_years": [
+        "2020",
+        "2021",
+        "2022",
+        "2023"
+      ],
+      "stratum": "S2_별도전용",
+      "n_years": 4,
+      "ofs_only": true,
+      "blank_ratio": 0.15730337078651685,
+      "fin": false,
+      "assets": 67327743710
+    },
+    {
+      "corp_code": "01135057",
+      "run_years": [
+        "2025"
+      ],
+      "stratum": "S3_blankid고비중",
+      "n_years": 1,
+      "ofs_only": false,
+      "blank_ratio": 0.13496932515337423,
+      "fin": false,
+      "assets": 222249644479
+    },
+    {
+      "corp_code": "00367844",
+      "run_years": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "stratum": "S4_다년대형",
+      "n_years": 6,
+      "ofs_only": false,
+      "blank_ratio": 0.0,
+      "fin": false,
+      "assets": 1189917477862
+    },
+    {
+      "corp_code": "01307593",
+      "run_years": [
+        "2025"
+      ],
+      "stratum": "S5_단년소형",
+      "n_years": 1,
+      "ofs_only": false,
+      "blank_ratio": 0.10559006211180125,
+      "fin": false,
+      "assets": 83207949869
+    },
+    {
+      "corp_code": "00148832",
+      "run_years": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "stratum": "S1_금융형",
+      "n_years": 6,
+      "ofs_only": false,
+      "blank_ratio": 0.07531380753138076,
+      "fin": true,
+      "assets": 8019927000000
+    },
+    {
+      "corp_code": "00604815",
+      "run_years": [
+        "2020",
+        "2021",
+        "2022",
+        "2023"
+      ],
+      "stratum": "S2_별도전용",
+      "n_years": 4,
+      "ofs_only": true,
+      "blank_ratio": 0.2785714285714286,
+      "fin": false,
+      "assets": 14611073392
+    },
+    {
+      "corp_code": "00101752",
+      "run_years": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "stratum": "S3_blankid고비중",
+      "n_years": 6,
+      "ofs_only": false,
+      "blank_ratio": 0.16161616161616163,
+      "fin": false,
+      "assets": 100350220320
+    },
+    {
+      "corp_code": "00130772",
+      "run_years": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "stratum": "S4_다년대형",
+      "n_years": 6,
+      "ofs_only": false,
+      "blank_ratio": 0.034782608695652174,
+      "fin": false,
+      "assets": 2044005089985
+    },
+    {
+      "corp_code": "00861997",
+      "run_years": [
+        "2025"
+      ],
+      "stratum": "S5_단년소형",
+      "n_years": 1,
+      "ofs_only": false,
+      "blank_ratio": 0.03932584269662921,
+      "fin": false,
+      "assets": 61931148269
+    }
+  ]
+}

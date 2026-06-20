@@ -31,7 +31,36 @@ def write_normalized_financials(
     with duckdb.connect(str(path)) as con:
         con.register("normalized_frame", frame)
         con.execute(
-            "CREATE OR REPLACE TABLE normalized_financials "
-            "AS SELECT * FROM normalized_frame"
+            "CREATE OR REPLACE TABLE normalized_financials AS SELECT * FROM normalized_frame"
         )
+    return path
+
+
+def write_sce_components(
+    frame: pd.DataFrame,
+    corp_code: str,
+    year: int | str,
+    data_dir: Path | None = None,
+) -> Path:
+    """Replace sce_equity_components table for one company-year (별도 2D 산출물)."""
+
+    path = db_path(corp_code, year, data_dir)
+    with duckdb.connect(str(path)) as con:
+        con.register("sce_frame", frame)
+        con.execute("CREATE OR REPLACE TABLE sce_equity_components AS SELECT * FROM sce_frame")
+    return path
+
+
+def write_note_facts_classified(
+    frame: pd.DataFrame,
+    corp_code: str,
+    year: int | str,
+    data_dir: Path | None = None,
+) -> Path:
+    """Replace note_facts_classified table for one company-year (분류·필터된 주석 facts)."""
+
+    path = db_path(corp_code, year, data_dir)
+    with duckdb.connect(str(path)) as con:
+        con.register("note_frame", frame)
+        con.execute("CREATE OR REPLACE TABLE note_facts_classified AS SELECT * FROM note_frame")
     return path

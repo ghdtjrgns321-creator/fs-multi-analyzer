@@ -1,0 +1,523 @@
+﻿fs_div,sj_div,account_id,label,amount,verdict,canonical,norm_amount,detail
+CFS,BS,dart_CashAndDuefromBanks,현금및예치금,2406632887000,정확매핑,현금및예치금,2406632887000.0,-
+CFS,BS,dart_LoansAtAmortisedCost,대출채권,7543092272000,정확매핑,상각후원가측정대출채권,7543092272000.0,-
+CFS,BS,-표준계정코드 미사용-,기타자산,821504395000,정확매핑,기타자산,821504395000.0,-
+CFS,BS,ifrs-full_Assets,자산총계,26396108665000,정확매핑,자산총계,26396108665000.0,-
+CFS,BS,ifrs-full_CurrentTaxAssets,당기법인세자산,33437652000,정확매핑,당기법인세자산,33437652000.0,-
+CFS,BS,ifrs-full_DeferredTaxAssets,이연법인세자산,168107366000,정확매핑,이연법인세자산,168107366000.0,-
+CFS,BS,ifrs-full_FinancialAssetsAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산,1996650978000,정확매핑,IV. 기타포괄손익-공정가치측정금융자산,1996650978000.0,-
+CFS,BS,ifrs-full_FinancialAssetsAtFairValueThroughProfitOrLoss,당기손익-공정가치측정금융자산,8945951215000,정확매핑,당기손익-공정가치측정금융자산(유동),8945951215000.0,-
+CFS,BS,-표준계정코드 미사용-,파생상품자산,615051824000,정확매핑,유동파생상품자산,615051824000.0,-
+CFS,BS,-표준계정코드 미사용-,당기손익-공정가치측정금융자산,8330899391000,정확매핑,FVPL금융자산,8330899391000.0,-
+CFS,BS,ifrs-full_IntangibleAssetsAndGoodwill,무형자산,142165423000,정확매핑,무형자산,142165423000.0,-
+CFS,BS,ifrs-full_InventoriesTotal,재고자산,55273307000,정확매핑,재고자산,55273307000.0,-
+CFS,BS,ifrs-full_InvestmentProperty,투자부동산,2928993327000,정확매핑,투자부동산,2928993327000.0,-
+CFS,BS,ifrs-full_InvestmentsInSubsidiariesJointVenturesAndAssociates,관계기업및공동기업투자,621958653000,정확매핑,종속관계공동기업투자,621958653000.0,-
+CFS,BS,ifrs-full_NoncurrentAssetsOrDisposalGroupsClassifiedAsHeldForSale,매각예정비유동자산,149250600000,정확매핑,매각예정비유동자산,149250600000.0,-
+CFS,BS,ifrs-full_PropertyPlantAndEquipment,유형자산,583090590000,정확매핑,유형자산,583090590000.0,-
+CFS,BS,ifrs-full_Equity,자본총계,3315389037000,정확매핑,자본총계,3315389037000.0,-
+CFS,BS,ifrs-full_EquityAttributableToOwnersOfParent,지배기업의 소유주지분,3320378412000,정확매핑,지배기업소유주지분,3320378412000.0,-
+CFS,BS,dart_CapitalAdjustments,자본조정,-242640471000,정확매핑,자본조정(BS),-242640471000.0,-
+CFS,BS,dart_CapitalSurplus,자본잉여금,902814776000,정확매핑,자본잉여금,902814776000.0,-
+CFS,BS,ifrs-full_AccumulatedOtherComprehensiveIncome,기타포괄손익누적액,483939450000,정확매핑,기타포괄손익누계액(BS),483939450000.0,-
+CFS,BS,ifrs-full_IssuedCapital,자본금,456730090000,정확매핑,자본금,456730090000.0,-
+CFS,BS,ifrs-full_RetainedEarnings,이익잉여금,1719534567000,정확매핑,이익잉여금,1719534567000.0,-
+CFS,BS,dart_RegulatoryReserveForCreditLoss,(대손준비금 적립액),8421848000,정확매핑,대손준비금 적립액,8421848000.0,-
+CFS,BS,dart_RegulatoryReserveForCreditLossToBeAddedReversed,(대손준비금 적립 예정금액),19143178000,정확매핑,대손준비금 적립(환입)예정액,19143178000.0,-
+CFS,BS,ifrs-full_NoncontrollingInterests,비지배지분,-4989375000,정확매핑,비지배지분,-4989375000.0,-
+CFS,BS,ifrs-full_EquityAndLiabilities,부채및자본총계,26396108665000,정확매핑,자본과부채총계,26396108665000.0,-
+CFS,BS,-표준계정코드 미사용-,종업원급여부채,7980315000,기타강등,기타 중요 계정,7980315000.0,-
+CFS,BS,-표준계정코드 미사용-,기타부채,772224962000,정확매핑,기타부채,772224962000.0,-
+CFS,BS,ifrs-full_BondsIssued,사채,3799445786000,정확매핑,사채,3799445786000.0,-
+CFS,BS,ifrs-full_Borrowings,차입부채,11345179030000,정확매핑,차입부채,11345179030000.0,-
+CFS,BS,ifrs-full_CurrentTaxLiabilities,당기법인세부채,59065060000,정확매핑,당기법인세부채,59065060000.0,-
+CFS,BS,ifrs-full_DeferredTaxLiabilities,이연법인세부채,64568845000,정확매핑,이연법인세부채,64568845000.0,-
+CFS,BS,ifrs-full_DepositsFromCustomers,예수부채,4154324332000,정확매핑,예수부채,4154324332000.0,-
+CFS,BS,ifrs-full_FinancialLiabilitiesAtFairValueThroughProfitOrLoss,당기손익-공정가치측정금융부채,2844791224000,정확매핑,당기손익-공정가치측정금융부채,2844791224000.0,-
+CFS,BS,-표준계정코드 미사용-,당기손익-공정가치측정금융부채,155862910000,기타강등,기타 중요 계정,155862910000.0,-
+CFS,BS,-표준계정코드 미사용-,파생상품부채,557197409000,정확매핑,유동파생상품부채,557197409000.0,-
+CFS,BS,ifrs-full_FinancialLiabilitiesAtFairValueThroughProfitOrLossDesignatedAsUponInitialRecognition,당기손익-공정가치측정지정금융부채,2131730905000,정확매핑,당기손익-공정가치측정지정금융부채,2131730905000.0,-
+CFS,BS,ifrs-full_Liabilities,부채총계,23080719628000,정확매핑,부채총계,23080719628000.0,-
+CFS,BS,ifrs-full_OtherNonfinancialLiabilities,매각예정비유동부채,15000000000,기타강등,기타 중요 계정,15000000000.0,-
+CFS,BS,ifrs-full_Provisions,충당부채,18140074000,정확매핑,VIII. 충당부채,18140074000.0,-
+CFS,CIS,dart_NonOperatingProfitLoss,영업외손익,104796452000,정확매핑,영업외손익,104796452000.0,-
+CFS,CIS,dart_NonOperatingExpense,영업외손실,98539105000,정확매핑,영업외비용,98539105000.0,-
+CFS,CIS,dart_NonOperatingIncome,영업외이익,203335557000,정확매핑,영업외수익,203335557000.0,-
+CFS,CIS,-표준계정코드 미사용-,당기순손익의 귀속,144182139000,기타강등,기타 중요 계정,144182139000.0,-
+CFS,CIS,ifrs-full_ProfitLossAttributableToNoncontrollingInterests,비재배지분순손익,-635461000,정확매핑,비지배지분순이익,-635461000.0,-
+CFS,CIS,ifrs-full_ProfitLossAttributableToOwnersOfParent,지배기업주주지분순손익,144817600000,정확매핑,지배기업귀속순이익,144817600000.0,-
+CFS,CIS,-표준계정코드 미사용-,당기총포괄손익의 귀속,147189274000,기타강등,기타 중요 계정,147189274000.0,-
+CFS,CIS,ifrs-full_ComprehensiveIncomeAttributableToNoncontrollingInterests,비지배지분총포괄손익,-1331419000,정확매핑,비지배지분총포괄손익,-1331419000.0,-
+CFS,CIS,ifrs-full_ComprehensiveIncomeAttributableToOwnersOfParent,지배기업주주지분총포괄손익,148520693000,정확매핑,지배기업귀속총포괄손익,148520693000.0,-
+CFS,CIS,ifrs-full_ComprehensiveIncome,당기총포괄이익,147189274000,정확매핑,총포괄손익,147189274000.0,-
+CFS,CIS,dart_BasicEarningsLossPerSharePreferredStock,우선주기본주당순이익,1988,정확매핑,우선주기본주당순이익(손실),1988.0,-
+CFS,CIS,dart_DilutedEarningsLossPerSharePreferredStock,우선주희석주당순이익,1988,정확매핑,우선주희석주당순이익(손실),1988.0,-
+CFS,CIS,-표준계정코드 미사용-,2우선주기본주당순이익,1938,기타강등,기타 중요 계정,1938.0,-
+CFS,CIS,-표준계정코드 미사용-,2우선주희석주당순이익,1938,기타강등,기타 중요 계정,1938.0,-
+CFS,CIS,ifrs-full_BasicEarningsLossPerShare,보통주기본주당순이익,1962,정확매핑,기본주당이익,1962.0,-
+CFS,CIS,ifrs-full_DilutedEarningsLossPerShare,보통주희석주당순이익,1760,정확매핑,희석주당이익,1760.0,-
+CFS,CIS,ifrs-full_IncomeTaxExpenseContinuingOperations,법인세비용,44207348000,정확매핑,법인세비용,44207348000.0,-
+CFS,CIS,ifrs-full_OperatingExpense,영업비용,4010269713000,정확매핑,영업비용,4010269713000.0,-
+CFS,CIS,dart_AdditionalImpairmentLossesOfFinancialAssets,신용손실충당금전입액,198732477000,정확매핑,신용손실충당금 전입액,198732477000.0,-
+CFS,CIS,dart_CostOfSalesFromSaleOfGoodsRealEstate,분양비용,23126355000,정확매핑,분양매출원가,23126355000.0,-
+CFS,CIS,dart_LossFromFinancialInstrumentsAtFairValueThroughProfitOrLoss,당기손익-공정가치측정금융상품관련손실,1994685168000,정확매핑,당기손익-공정가치측정금융상품관련손실,1994685168000.0,-
+CFS,CIS,dart_MiscellaneousExpenses,기타판매비와관리비,192413188000,정확매핑,기타판매비와관리비,192413188000.0,-
+CFS,CIS,dart_OtherOperatingExpense,기타영업비용,37392173000,정확매핑,기타영업비용,37392173000.0,-
+CFS,CIS,dart_PersonalExpense,인건비,284280085000,정확매핑,인건비,284280085000.0,-
+CFS,CIS,dart_RentalPropertyAdministrationExpenseSellingGeneralAdministrativeExpenses,임대비용,47611705000,정확매핑,임대비용,47611705000.0,-
+CFS,CIS,-표준계정코드 미사용-,당기손익-공정가치측정지정금융상품관련손실,128744497000,기타강등,기타 중요 계정,128744497000.0,-
+CFS,CIS,ifrs-full_DepreciationAndAmortisationExpense,감가상각비 및 상각비,38045826000,정확매핑,감가상각비 및 상각비,38045826000.0,-
+CFS,CIS,ifrs-full_FeeAndCommissionExpense,수수료비용,51836011000,정확매핑,수수료비용,51836011000.0,-
+CFS,CIS,ifrs-full_InterestExpense,이자비용,659064321000,정확매핑,금융부채의 이자비용,659064321000.0,-
+CFS,CIS,ifrs-full_NetForeignExchangeLoss,외환거래손실,354337907000,정확매핑,순외환차손,354337907000.0,-
+CFS,CIS,ifrs-full_OtherComprehensiveIncome,당기기타포괄손익,3007135000,정확매핑,기타포괄손익,3007135000.0,-
+CFS,CIS,ifrs-full_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax,후속적으로 당기손익으로 재분류되는 항목,21820854000,정확매핑,재분류가능기타포괄손익,21820854000.0,-
+CFS,CIS,dart_AdjustmentsForIncreaseDecreaseInCumulativeEffectForeignCurrencyTranslation,해외사업환산손익,47544074000,정확매핑,해외사업환산손익,47544074000.0,-
+CFS,CIS,-표준계정코드 미사용-,기타포괄손익-공정가치측정채무증권 평가손익,-23832393000,기타강등,기타 중요 계정,-23832393000.0,-
+CFS,CIS,ifrs-full_ShareOfProfitLossOfAssociatesAndJointVenturesAccountedForUsingEquityMethod,관계기업투자 지분법평가,-1890827000,정확매핑,지분법이익,-1890827000.0,-
+CFS,CIS,ifrs-full_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax,후속적으로 당기손익으로 재분류되지 않는 항목,-18813719000,정확매핑,재분류불가능기타포괄손익,-18813719000.0,-
+CFS,CIS,dart_AdjustmentsForGainsOnRevaluationOfPropertyPlantAndEquipment,유형자산재평가차익,-3252100000,기타강등,기타 중요 계정,-3252100000.0,-
+CFS,CIS,dart_OtherComprehensiveIncomeNetOfTaxChangeInFairValueOfInvestmentsInEquityInstruments,기타포괄손익-공정가치측정지분증권평가손익,-15525881000,기타강등,기타 중요 계정,-15525881000.0,-
+CFS,CIS,ifrs-full_OtherComprehensiveIncomeNetOfTaxChangeInFairValueOfFinancialLiabilityAttributableToChangeInCreditRiskOfLiability,당기손익-공정가치측정지정금융부채의 자기신용위험변동손익,945473000,정확매핑,당기손익-공정가치측정지정금융부채의 자기신용위험조정,945473000.0,-
+CFS,CIS,ifrs-full_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRemeasurementsOfDefinedBenefitPlans,확정급여제도의 재측정요소,-981211000,정확매핑,확정급여재측정손익,-981211000.0,-
+CFS,CIS,ifrs-full_ProfitLoss,당기순이익,144182139000,정확매핑,당기순이익,144182139000.0,-
+CFS,CIS,ifrs-full_ProfitLossBeforeTax,법인세차감전순이익,188389487000,정확매핑,법인세비용차감전순이익,188389487000.0,-
+CFS,CIS,ifrs-full_ProfitLossFromOperatingActivities,영업이익,83593035000,정확매핑,영업이익,83593035000.0,-
+CFS,CIS,ifrs-full_Revenue,영업수익,4093862748000,정확매핑,매출,4093862748000.0,-
+CFS,CIS,dart_GainFromFinancialInstrumentsAtFairValueThroughProfitOrLoss,당기손익-공정가치측정금융상품관련이익,2314892229000,정확매핑,당기손익-공정가치측정금융상품관련이익,2314892229000.0,-
+CFS,CIS,dart_OtherOperatingIncome,기타의영업수익,116769287000,정확매핑,기타영업수익,116769287000.0,-
+CFS,CIS,dart_RevenueFromRenderingOfServicesRental,임대수익,76767471000,정확매핑,임대수익(CIS),76767471000.0,-
+CFS,CIS,dart_RevenueFromSaleOfGoodsRealEstate,분양수익,24244745000,정확매핑,분양매출,24244745000.0,-
+CFS,CIS,-표준계정코드 미사용-,당기손익-공정가치측정지정금융상품관련이익,30509465000,기타강등,기타 중요 계정,30509465000.0,-
+CFS,CIS,ifrs-full_FeeAndCommissionIncome,수수료수익,428130525000,정확매핑,수수료수익,428130525000.0,-
+CFS,CIS,ifrs-full_NetForeignExchangeGain,외환거래이익,384558389000,정확매핑,순외환차익,384558389000.0,-
+CFS,CIS,ifrs-full_RevenueFromInterest,이자수익,690766030000,정확매핑,이자수익(CIS),690766030000.0,-
+CFS,CIS,ifrs-full_ReversalAllowanceAccountForCreditLossesOfFinancialAssets,신용손실충당금환입액,27224607000,정확매핑,신용손실충당금 환입액,27224607000.0,-
+CFS,CF,dart_CashAndCashEquivalentsAtBeginningOfPeriodCf,기초현금및현금성자산,1564366567000,정확매핑,기초현금및현금성자산,1564366567000.0,-
+CFS,CF,ifrs-full_CashAndCashEquivalents,당기말의 현금및현금성자산,1267694740000,기타강등,기타 중요 계정,1267694740000.0,-
+CFS,CF,ifrs-full_CashFlowsFromUsedInFinancingActivities,재무활동으로부터의 현금흐름,3921277247000,정확매핑,재무활동현금흐름,3921277247000.0,-
+CFS,CF,dart_AdjustmentsForIncreaseDecreaseInOtherNonCurrentLiabilities,매각예정비유동부채의 증가,30000000000,정확매핑,기타비유동부채의 증가(감소),30000000000.0,-
+CFS,CF,dart_DecreaseInGuaranteeDepositsAsFinancialActivities,임대보증금의 감소,-5225612000,정확매핑,임대보증금감소,-5225612000.0,-
+CFS,CF,dart_DispositionOfTreasuryShares,자기주식의 처분,0,정확매핑,자기주식처분,0.0,-
+CFS,CF,dart_IncreaseInGuaranteeDepositsAsFinancialActivities,임대보증금의 증가,4414778000,정확매핑,임대보증금증가,4414778000.0,-
+CFS,CF,dart_IncreaseInNoncontrollingInterests,비지배지분(부채)의 증감,52030094000,정확매핑,비지배지분의 증가,52030094000.0,-
+CFS,CF,dart_RepaymentsOfBonds,사채의 상환,-677000000000,정확매핑,사채상환,-677000000000.0,-
+CFS,CF,-표준계정코드 미사용-,매각예정비유동부채의 감소,-24596710000,기타강등,기타 중요 계정,-24596710000.0,-
+CFS,CF,-표준계정코드 미사용-,차입부채 순증감,2381497976000,기타강등,기타 중요 계정,2381497976000.0,-
+CFS,CF,ifrs-full_DividendsPaidClassifiedAsFinancingActivities,배당금의 지급,-82059005000,정확매핑,배당금지급,-82059005000.0,-
+CFS,CF,ifrs-full_PaymentsOfLeaseLiabilitiesClassifiedAsFinancingActivities,리스부채의 감소,-13646857000,정확매핑,리스부채상환,-13646857000.0,-
+CFS,CF,ifrs-full_ProceedsFromContributionsOfNoncontrollingInterests,비지배지분의 증감,-5528509000,정확매핑,비지배지분의 출자,-5528509000.0,-
+CFS,CF,ifrs-full_ProceedsFromIssueOfBondsNotesAndDebentures,사채의 발행,2031694484000,정확매핑,사채의 발행,2031694484000.0,-
+CFS,CF,ifrs-full_ProceedsFromIssueOfPreferenceShares,상환전환우선주의 발행,229696608000,정확매핑,상환전환우선주 발행,229696608000.0,-
+CFS,CF,ifrs-full_PurchaseOfTreasuryShares,자기주식의 취득,0,정확매핑,자기주식취득,0.0,-
+CFS,CF,ifrs-full_CashFlowsFromUsedInInvestingActivities,투자활동으로부터의 현금흐름,-226662947000,정확매핑,투자활동현금흐름,-226662947000.0,-
+CFS,CF,dart_AdjustmentsForDecreaseincreaseInAdvancePayments,선급금의 증가,-150000000,정확매핑,선급금의 감소(증가),-150000000.0,-
+CFS,CF,dart_AdjustmentsForGainsOnDisposalsOfNoncurrentAssetsOrDisposalGroupsClassifiedAsHeldForSale,매각예정비유동자산의 처분,18595485000,정확매핑,매각예정비유동자산처분이익,18595485000.0,-
+CFS,CF,dart_DecreaseInGuaranteeDeposits,보증금의 감소,6025000000,정확매핑,임차보증금감소,6025000000.0,-
+CFS,CF,dart_IncreaseInGuaranteeDeposits,보증금의 증가,-9232354000,정확매핑,임차보증금증가,-9232354000.0,-
+CFS,CF,dart_ProceedsFromSalesOfFairValueFinancialAsset,당기손익-공정가치측정금융자산의 처분,34514533000,정확매핑,FVPL금융자산처분,34514533000.0,-
+CFS,CF,dart_ProceedsFromSalesOfFinancialAssetsAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산의 처분,10153993000,정확매핑,기타포괄손익-공정가치측정금융자산의처분,10153993000.0,-
+CFS,CF,dart_ProceedsFromSalesOfInvestmentsInSubsidiaries,종속기업 투자의 처분(보유현금 차감 후),-18294153000,정확매핑,종속기업투자처분,-18294153000.0,-
+CFS,CF,dart_PurchaseOfFinancialAssetsAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산의 취득,-80517021000,정확매핑,기타포괄손익-공정가치측정금융자산의취득,-80517021000.0,-
+CFS,CF,dart_PurchaseOfFinancialAssetsAtFairValueThroughProfitOrLossClassifiedAsInvestingActivities,당기손익-공정가치측정금융자산의 취득,-56734472000,정확매핑,당기손익-공정가치측정금융자산의 취득,-56734472000.0,-
+CFS,CF,dart_PurchaseOfInvestmentsInSubsidiaries,종속기업 투자의 취득(보유현금 차감 후),0,정확매핑,종속기업투자취득,0.0,-
+CFS,CF,-표준계정코드 미사용-,대출채권의 상환,9500000000,기타강등,기타 중요 계정,9500000000.0,-
+CFS,CF,ifrs-full_ProceedsFromSalesOfIntangibleAssetsClassifiedAsInvestingActivities,무형자산의 처분,0,정확매핑,무형자산처분,0.0,-
+CFS,CF,ifrs-full_ProceedsFromSalesOfInterestsInAssociates,관계기업 투자의 처분,349802514000,정확매핑,관계기업투자자산의 처분,349802514000.0,-
+CFS,CF,ifrs-full_ProceedsFromSalesOfInvestmentProperty,투자부동산의 처분,65500000000,정확매핑,투자부동산의 처분,65500000000.0,-
+CFS,CF,ifrs-full_ProceedsFromSalesOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities,유형자산의 처분,1245043000,정확매핑,유형자산처분,1245043000.0,-
+CFS,CF,ifrs-full_PurchaseOfIntangibleAssetsClassifiedAsInvestingActivities,무형자산의 취득,-3084628000,정확매핑,무형자산취득,-3084628000.0,-
+CFS,CF,ifrs-full_PurchaseOfInterestsInAssociates,관계기업 투자의 취득,-518531091000,정확매핑,관계기업투자자산의 취득,-518531091000.0,-
+CFS,CF,ifrs-full_PurchaseOfInvestmentProperty,투자부동산의 취득,-19328860000,정확매핑,투자부동산취득,-19328860000.0,-
+CFS,CF,ifrs-full_PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities,유형자산의 취득,-14939417000,정확매핑,유형자산취득,-14939417000.0,-
+CFS,CF,ifrs-full_PurchaseOfPropertyPlantAndEquipmentIntangibleAssetsOtherThanGoodwillInvestmentPropertyAndOtherNoncurrentAssets,매각예정비유동자산의 취득,-1187519000,정확매핑,매각예정비유동자산의 취득,-1187519000.0,-
+CFS,CF,ifrs-full_CashFlowsFromUsedInOperatingActivities,영업활동순현금흐름,-3970594099000,정확매핑,영업활동현금흐름,-3970594099000.0,-
+CFS,CF,ifrs-full_CashFlowsFromUsedInOperations,영업에서 창출된 현금흐름,-3968687094000,정확매핑,영업창출현금흐름,-3968687094000.0,-
+CFS,CF,dart_AdjustmentsForAssetsLiabilitiesOfOperatingActivities,자산·부채의 증감,-4039106981000,정확매핑,운전자본변동,-4039106981000.0,-
+CFS,CF,dart_AdjustmentsForDecreaseIncreaseInDuefromBanks,예치금,-556589996000,정확매핑,예치금,-556589996000.0,-
+CFS,CF,dart_AdjustmentsForDecreaseIncreaseInFinancialAssetsAtFairValueThroughProfitOrLossClassifiedAsOperatingActivities,당기손익-공정가치측정금융자산,-281504547000,정확매핑,당기손익-공정가치측정금융자산의 감소(증가) - 영업활동,-281504547000.0,-
+CFS,CF,dart_AdjustmentsForDecreaseIncreaseInFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncomeClassifiedAsOperatingActivities,기타포괄손익-공정가치측정금융자산,-707241420000,정확매핑,기타포괄손익-공정가치측정금융자산,-707241420000.0,-
+CFS,CF,dart_AdjustmentsForDecreaseIncreaseInLoans,대출채권,-2250169088000,정확매핑,대출채권,-2250169088000.0,-
+CFS,CF,dart_AdjustmentsForIncreaseDecreaseInFinancialLiabilitiesAtFairValueThroughProfitOrLossClassifiedAsOperatingActivities,당기손익-공정가치측정금융부채,-22883556000,정확매핑,당기손익-공정가치측정금융부채(CF),-22883556000.0,-
+CFS,CF,dart_AdjustmentsForIncreaseDecreaseInFinancialLiabilitiesDesignatedAtFairValueThroughProfitOrLossClassifiedAsOperatingActivities,당기손익-공정가치측정지정금융부채,750078617000,정확매핑,당기손익인식지정금융부채,750078617000.0,-
+CFS,CF,dart_AdjustmentsForIncreasedecreaseInOtherFinancialLiabilities,차입부채,-403574576000,정확매핑,기타금융부채의 증가(감소),-403574576000.0,-
+CFS,CF,-표준계정코드 미사용-,매각예정비유동자산,4091270000,기타강등,기타 중요 계정,4091270000.0,-
+CFS,CF,-표준계정코드 미사용-,매각예정비유동부채,0,기타강등,기타 중요 계정,0.0,-
+CFS,CF,ifrs-full_AdjustmentsForDecreaseIncreaseInDerivativeFinancialAssets,파생상품,-169398532000,정확매핑,파생상품자산의 감소(증가)(CF),-169398532000.0,-
+CFS,CF,ifrs-full_AdjustmentsForDecreaseIncreaseInInventories,재고자산,43466476000,정확매핑,재고자산증감,43466476000.0,-
+CFS,CF,ifrs-full_AdjustmentsForDecreaseIncreaseInOtherAssets,기타자산,31540936000,정확매핑,기타자산의 감소(증가),31540936000.0,-
+CFS,CF,ifrs-full_AdjustmentsForIncreaseDecreaseInDepositsFromCustomers,예수부채,-158173747000,정확매핑,예수부채(CF),-158173747000.0,-
+CFS,CF,ifrs-full_AdjustmentsForIncreaseDecreaseInEmployeeBenefitLiabilities,종업원급여부채,-4958891000,정확매핑,순확정급여부채 증가(감소),-4958891000.0,-
+CFS,CF,ifrs-full_AdjustmentsForIncreaseDecreaseInOtherLiabilities,기타부채,-91860343000,정확매핑,기타부채의 증가(감소),-91860343000.0,-
+CFS,CF,ifrs-full_ChangesInInvestmentProperty,투자부동산,-221929584000,정확매핑,투자부동산(CF),-221929584000.0,-
+CFS,CF,ifrs-full_AdjustmentsForReconcileProfitLoss,손익조정사항,-73762252000,정확매핑,당기순이익조정가감,-73762252000.0,-
+CFS,CF,dart_AdjustmentsForGainLossOnDisposalOfInvestmentsInAssociates,관계기업투자관련손익,36407850000,정확매핑,관계기업투자주식처분손익,36407850000.0,-
+CFS,CF,dart_AdjustmentsForGainLossOnDisposalsOfIntangibleAssets,무형자산처분손익,0,정확매핑,무형자산처분손익,0.0,-
+CFS,CF,dart_AdjustmentsForGainLossOnDisposalsOfInvestmentProperty,투자부동산처분손익,-27212229000,정확매핑,투자부동산처분손익,-27212229000.0,-
+CFS,CF,dart_AdjustmentsForGainLossOnForeignExchangeTranslations,외화환산손익,-65661172000,정확매핑,외화환산손익,-65661172000.0,-
+CFS,CF,dart_AdjustmentsForGainsLossesOnDisposalsOfNoncurrentAssetsHeldForSale,매각예정비유동자산처분손익,-3169399000,정확매핑,매각예정비유동관련처분손익,-3169399000.0,-
+CFS,CF,dart_AdjustmentsForImpairmentLossesOfNoncurrentAssetsOrDisposalGroupsClassifiedAsHeldForSale,매각예정비유동자산손상손익,472399000,정확매핑,매각예정비유동자산손상차손,472399000.0,-
+CFS,CF,dart_AdjustmentsForOtherIncomeExpense,기타손익,12892741000,정확매핑,기타손익,12892741000.0,-
+CFS,CF,dart_AdjustmentsForOtherLongtermEmployeeBenefits,종업원급여관련비용,5417563000,정확매핑,기타장기종업원급여,5417563000.0,-
+CFS,CF,dart_DividendIncomeNonOperating,배당금수익,-30436701000,정확매핑,배당금수익(CF),-30436701000.0,-
+CFS,CF,dart_GainLossFromDerivativesHeldForHedging,파생상품관련손익,-661464000,기타강등,기타 중요 계정,-661464000.0,-
+CFS,CF,dart_GainLossFromFinancialInstrumentsAtAmortisedCost,상각후원가측정금융자산관련손익,131412230000,기타강등,기타 중요 계정,131412230000.0,-
+CFS,CF,dart_GainLossFromFinancialInstrumentsAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융상품 순손익,52151817000,기타강등,기타 중요 계정,52151817000.0,-
+CFS,CF,dart_GainLossFromFinancialInstrumentsAtFairValueThroughProfitOrLoss,당기손익-공정가치측정금융상품 순손익,-113636132000,기타강등,기타 중요 계정,-113636132000.0,-
+CFS,CF,-표준계정코드 미사용-,당기손익-공정가치측정지정금융상품 순손익,41769486000,기타강등,기타 중요 계정,41769486000.0,-
+CFS,CF,ifrs-full_AdjustmentsForDepreciationAndAmortisationExpense,감가상각비 및 상각비,38045826000,정확매핑,감가상각비와 상각비의 조정,38045826000.0,-
+CFS,CF,ifrs-full_AdjustmentsForGainLossOnDisposalsPropertyPlantAndEquipment,유형자산처분손익,323078000,정확매핑,유형자산처분손익,323078000.0,-
+CFS,CF,ifrs-full_AdjustmentsForIncomeTaxExpense,법인세비용,44207348000,정확매핑,법인세비용조정,44207348000.0,-
+CFS,CF,ifrs-full_InterestRevenueExpense,순이자손익,-196085493000,기타강등,기타 중요 계정,-196085493000.0,-
+CFS,CF,ifrs-full_ProfitLoss,당기순이익,144182139000,기타강등,기타 중요 계정,144182139000.0,-
+CFS,CF,ifrs-full_DividendsReceivedClassifiedAsOperatingActivities,배당금의 수취,30344864000,정확매핑,배당금수취,30344864000.0,-
+CFS,CF,ifrs-full_IncomeTaxesPaidClassifiedAsOperatingActivities,법인세의 지급,-104012354000,정확매핑,"법인세 납부, 영업활동",-104012354000.0,-
+CFS,CF,ifrs-full_InterestPaidClassifiedAsInvestingActivities,이자지급,-681037965000,정확매핑,이자지급(CF2),-681037965000.0,-
+CFS,CF,ifrs-full_InterestReceivedClassifiedAsOperatingActivities,이자의 수취,752798450000,정확매핑,이자수취,752798450000.0,-
+CFS,CF,ifrs-full_EffectOfExchangeRateChangesOnCashAndCashEquivalents,외화로 표시된 현금및현금성자산에 대한 환율변동효과,-20692028000,정확매핑,현금환율변동효과,-20692028000.0,-
+CFS,CF,ifrs-full_IncreaseDecreaseInCashAndCashEquivalents,현금흐름의 증감(I+II+III+Ⅳ),-296671827000,정확매핑,현금및현금성자산순증감,-296671827000.0,-
+CFS,SCE,dart_EquityAtBeginningOfPeriod,기초자본,3020064866000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]
+CFS,SCE,dart_EquityAtBeginningOfPeriod,기초자본,482811321000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|기타포괄손익누적액 [구성요소]
+CFS,SCE,dart_EquityAtBeginningOfPeriod,기초자본,1653763513000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|이익잉여금 [구성요소]
+CFS,SCE,dart_EquityAtBeginningOfPeriod,기초자본,434867000000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본금 [구성요소]
+CFS,SCE,dart_EquityAtBeginningOfPeriod,기초자본,694981258000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본잉여금 [구성요소]
+CFS,SCE,dart_EquityAtBeginningOfPeriod,기초자본,-246358226000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본조정 [구성요소]
+CFS,SCE,dart_EquityAtBeginningOfPeriod,기초자본,3021428824000,SCE보존,(SCE 2D),,연결재무제표 [member]
+CFS,SCE,dart_EquityAtBeginningOfPeriod,기초자본,1363958000,SCE보존,(SCE 2D),,자본 [구성요소]|비지배지분 [구성요소]
+CFS,SCE,dart_AppropriationTransferReservationOfRetainedEarnings,이익잉여금 대체,0,SCE보존,(SCE 2D),,연결재무제표 [member]
+CFS,SCE,dart_AppropriationTransferReservationOfRetainedEarnings,이익잉여금 대체,0,SCE보존,(SCE 2D),,자본 [구성요소]|비지배지분 [구성요소]
+CFS,SCE,dart_AppropriationTransferReservationOfRetainedEarnings,이익잉여금 대체,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]
+CFS,SCE,dart_AppropriationTransferReservationOfRetainedEarnings,이익잉여금 대체,-2574964000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|기타포괄손익누적액 [구성요소]
+CFS,SCE,dart_AppropriationTransferReservationOfRetainedEarnings,이익잉여금 대체,2574964000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|이익잉여금 [구성요소]
+CFS,SCE,dart_AppropriationTransferReservationOfRetainedEarnings,이익잉여금 대체,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본잉여금 [구성요소]
+CFS,SCE,dart_AppropriationTransferReservationOfRetainedEarnings,이익잉여금 대체,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본금 [구성요소]
+CFS,SCE,dart_AppropriationTransferReservationOfRetainedEarnings,이익잉여금 대체,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본조정 [구성요소]
+CFS,SCE,dart_GainsLossesOnDisposalsOfFinancialAssetsAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산처분손익 조정,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본조정 [구성요소]
+CFS,SCE,dart_GainsLossesOnDisposalsOfFinancialAssetsAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산처분손익 조정,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본잉여금 [구성요소]
+CFS,SCE,dart_GainsLossesOnDisposalsOfFinancialAssetsAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산처분손익 조정,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본금 [구성요소]
+CFS,SCE,dart_GainsLossesOnDisposalsOfFinancialAssetsAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산처분손익 조정,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]
+CFS,SCE,dart_GainsLossesOnDisposalsOfFinancialAssetsAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산처분손익 조정,2574964000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|이익잉여금 [구성요소]
+CFS,SCE,dart_GainsLossesOnDisposalsOfFinancialAssetsAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산처분손익 조정,-2574964000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|기타포괄손익누적액 [구성요소]
+CFS,SCE,dart_GainsLossesOnDisposalsOfFinancialAssetsAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산처분손익 조정,0,SCE보존,(SCE 2D),,자본 [구성요소]|비지배지분 [구성요소]
+CFS,SCE,dart_GainsLossesOnDisposalsOfFinancialAssetsAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산처분손익 조정,0,SCE보존,(SCE 2D),,연결재무제표 [member]
+CFS,SCE,dart_AnnualDividendsPaid,연차배당,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본조정 [구성요소]
+CFS,SCE,dart_AnnualDividendsPaid,연차배당,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본잉여금 [구성요소]
+CFS,SCE,dart_AnnualDividendsPaid,연차배당,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본금 [구성요소]
+CFS,SCE,dart_AnnualDividendsPaid,연차배당,81621510000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|이익잉여금 [구성요소]
+CFS,SCE,dart_AnnualDividendsPaid,연차배당,81621510000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]
+CFS,SCE,dart_AnnualDividendsPaid,연차배당,0,SCE보존,(SCE 2D),,자본 [구성요소]|비지배지분 [구성요소]
+CFS,SCE,dart_AnnualDividendsPaid,연차배당,81621510000,SCE보존,(SCE 2D),,연결재무제표 [member]
+CFS,SCE,dart_AnnualDividendsPaid,연차배당,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|기타포괄손익누적액 [구성요소]
+CFS,SCE,dart_DecreaseInNoncontrollingInterests,비지배지분의 변동,-5021914000,SCE보존,(SCE 2D),,연결재무제표 [member]
+CFS,SCE,dart_DecreaseInNoncontrollingInterests,비지배지분의 변동,-5021914000,SCE보존,(SCE 2D),,자본 [구성요소]|비지배지분 [구성요소]
+CFS,SCE,dart_DecreaseInNoncontrollingInterests,비지배지분의 변동,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]
+CFS,SCE,dart_DecreaseInNoncontrollingInterests,비지배지분의 변동,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|기타포괄손익누적액 [구성요소]
+CFS,SCE,dart_DecreaseInNoncontrollingInterests,비지배지분의 변동,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|이익잉여금 [구성요소]
+CFS,SCE,dart_DecreaseInNoncontrollingInterests,비지배지분의 변동,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본금 [구성요소]
+CFS,SCE,dart_DecreaseInNoncontrollingInterests,비지배지분의 변동,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본잉여금 [구성요소]
+CFS,SCE,dart_DecreaseInNoncontrollingInterests,비지배지분의 변동,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본조정 [구성요소]
+CFS,SCE,dart_TreasuryShareTransactions,자기주식의변동,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본잉여금 [구성요소]
+CFS,SCE,dart_TreasuryShareTransactions,자기주식의변동,8022543000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본조정 [구성요소]
+CFS,SCE,dart_TreasuryShareTransactions,자기주식의변동,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본금 [구성요소]
+CFS,SCE,dart_TreasuryShareTransactions,자기주식의변동,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|이익잉여금 [구성요소]
+CFS,SCE,dart_TreasuryShareTransactions,자기주식의변동,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|기타포괄손익누적액 [구성요소]
+CFS,SCE,dart_TreasuryShareTransactions,자기주식의변동,8022543000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]
+CFS,SCE,dart_TreasuryShareTransactions,자기주식의변동,0,SCE보존,(SCE 2D),,자본 [구성요소]|비지배지분 [구성요소]
+CFS,SCE,dart_TreasuryShareTransactions,자기주식의변동,8022543000,SCE보존,(SCE 2D),,연결재무제표 [member]
+CFS,SCE,ifrs-full_IncreaseDecreaseThroughTransfersAndOtherChangesEquity,기타,-4304788000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본조정 [구성요소]
+CFS,SCE,ifrs-full_IncreaseDecreaseThroughTransfersAndOtherChangesEquity,기타,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본잉여금 [구성요소]
+CFS,SCE,ifrs-full_IncreaseDecreaseThroughTransfersAndOtherChangesEquity,기타,-4304788000,SCE보존,(SCE 2D),,연결재무제표 [member]
+CFS,SCE,ifrs-full_IncreaseDecreaseThroughTransfersAndOtherChangesEquity,기타,0,SCE보존,(SCE 2D),,자본 [구성요소]|비지배지분 [구성요소]
+CFS,SCE,ifrs-full_IncreaseDecreaseThroughTransfersAndOtherChangesEquity,기타,-4304788000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]
+CFS,SCE,ifrs-full_IncreaseDecreaseThroughTransfersAndOtherChangesEquity,기타,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|기타포괄손익누적액 [구성요소]
+CFS,SCE,ifrs-full_IncreaseDecreaseThroughTransfersAndOtherChangesEquity,기타,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|이익잉여금 [구성요소]
+CFS,SCE,ifrs-full_IncreaseDecreaseThroughTransfersAndOtherChangesEquity,기타,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본금 [구성요소]
+CFS,SCE,ifrs-full_IssueOfEquity,상환전환우선주의 발행,229696608000,SCE보존,(SCE 2D),,연결재무제표 [member]
+CFS,SCE,ifrs-full_IssueOfEquity,상환전환우선주의 발행,207833518000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본잉여금 [구성요소]
+CFS,SCE,ifrs-full_IssueOfEquity,상환전환우선주의 발행,21863090000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본금 [구성요소]
+CFS,SCE,ifrs-full_IssueOfEquity,상환전환우선주의 발행,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|이익잉여금 [구성요소]
+CFS,SCE,ifrs-full_IssueOfEquity,상환전환우선주의 발행,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|기타포괄손익누적액 [구성요소]
+CFS,SCE,ifrs-full_IssueOfEquity,상환전환우선주의 발행,229696608000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]
+CFS,SCE,ifrs-full_IssueOfEquity,상환전환우선주의 발행,0,SCE보존,(SCE 2D),,자본 [구성요소]|비지배지분 [구성요소]
+CFS,SCE,ifrs-full_IssueOfEquity,상환전환우선주의 발행,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본조정 [구성요소]
+CFS,SCE,dart_AdjustmentsForGainsOnRevaluationOfPropertyPlantAndEquipment,유형자산재평가차익,-3252100000,SCE보존,(SCE 2D),,연결재무제표 [member]
+CFS,SCE,dart_AdjustmentsForGainsOnRevaluationOfPropertyPlantAndEquipment,유형자산재평가차익,0,SCE보존,(SCE 2D),,자본 [구성요소]|비지배지분 [구성요소]
+CFS,SCE,dart_AdjustmentsForGainsOnRevaluationOfPropertyPlantAndEquipment,유형자산재평가차익,-3252100000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]
+CFS,SCE,dart_AdjustmentsForGainsOnRevaluationOfPropertyPlantAndEquipment,유형자산재평가차익,-3252100000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|기타포괄손익누적액 [구성요소]
+CFS,SCE,dart_AdjustmentsForGainsOnRevaluationOfPropertyPlantAndEquipment,유형자산재평가차익,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|이익잉여금 [구성요소]
+CFS,SCE,dart_AdjustmentsForGainsOnRevaluationOfPropertyPlantAndEquipment,유형자산재평가차익,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본금 [구성요소]
+CFS,SCE,dart_AdjustmentsForGainsOnRevaluationOfPropertyPlantAndEquipment,유형자산재평가차익,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본잉여금 [구성요소]
+CFS,SCE,dart_AdjustmentsForGainsOnRevaluationOfPropertyPlantAndEquipment,유형자산재평가차익,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본조정 [구성요소]
+CFS,SCE,dart_OtherComprehensiveIncomeBeforeTaxChangeInFairValueOfFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산평가손익,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본잉여금 [구성요소]
+CFS,SCE,dart_OtherComprehensiveIncomeBeforeTaxChangeInFairValueOfFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산평가손익,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본금 [구성요소]
+CFS,SCE,dart_OtherComprehensiveIncomeBeforeTaxChangeInFairValueOfFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산평가손익,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|이익잉여금 [구성요소]
+CFS,SCE,dart_OtherComprehensiveIncomeBeforeTaxChangeInFairValueOfFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산평가손익,-39358274000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|기타포괄손익누적액 [구성요소]
+CFS,SCE,dart_OtherComprehensiveIncomeBeforeTaxChangeInFairValueOfFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산평가손익,-39358274000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]
+CFS,SCE,dart_OtherComprehensiveIncomeBeforeTaxChangeInFairValueOfFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산평가손익,0,SCE보존,(SCE 2D),,자본 [구성요소]|비지배지분 [구성요소]
+CFS,SCE,dart_OtherComprehensiveIncomeBeforeTaxChangeInFairValueOfFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산평가손익,-39358274000,SCE보존,(SCE 2D),,연결재무제표 [member]
+CFS,SCE,dart_OtherComprehensiveIncomeBeforeTaxChangeInFairValueOfFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산평가손익,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본조정 [구성요소]
+CFS,SCE,ifrs-full_InvestmentsInAssociatesAccountedForUsingEquityMethod,관계기업투자 지분법평가,-1890827000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]
+CFS,SCE,ifrs-full_InvestmentsInAssociatesAccountedForUsingEquityMethod,관계기업투자 지분법평가,0,SCE보존,(SCE 2D),,자본 [구성요소]|비지배지분 [구성요소]
+CFS,SCE,ifrs-full_InvestmentsInAssociatesAccountedForUsingEquityMethod,관계기업투자 지분법평가,-1890827000,SCE보존,(SCE 2D),,연결재무제표 [member]
+CFS,SCE,ifrs-full_InvestmentsInAssociatesAccountedForUsingEquityMethod,관계기업투자 지분법평가,-1890827000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|기타포괄손익누적액 [구성요소]
+CFS,SCE,ifrs-full_InvestmentsInAssociatesAccountedForUsingEquityMethod,관계기업투자 지분법평가,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본조정 [구성요소]
+CFS,SCE,ifrs-full_InvestmentsInAssociatesAccountedForUsingEquityMethod,관계기업투자 지분법평가,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본잉여금 [구성요소]
+CFS,SCE,ifrs-full_InvestmentsInAssociatesAccountedForUsingEquityMethod,관계기업투자 지분법평가,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본금 [구성요소]
+CFS,SCE,ifrs-full_InvestmentsInAssociatesAccountedForUsingEquityMethod,관계기업투자 지분법평가,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|이익잉여금 [구성요소]
+CFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxChangeInFairValueOfFinancialLiabilityAttributableToChangeInCreditRiskOfLiability,당기손익-공정가치측정지정금융부채의 자기신용위험변동손익,945473000,SCE보존,(SCE 2D),,연결재무제표 [member]
+CFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxChangeInFairValueOfFinancialLiabilityAttributableToChangeInCreditRiskOfLiability,당기손익-공정가치측정지정금융부채의 자기신용위험변동손익,0,SCE보존,(SCE 2D),,자본 [구성요소]|비지배지분 [구성요소]
+CFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxChangeInFairValueOfFinancialLiabilityAttributableToChangeInCreditRiskOfLiability,당기손익-공정가치측정지정금융부채의 자기신용위험변동손익,945473000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]
+CFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxChangeInFairValueOfFinancialLiabilityAttributableToChangeInCreditRiskOfLiability,당기손익-공정가치측정지정금융부채의 자기신용위험변동손익,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본잉여금 [구성요소]
+CFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxChangeInFairValueOfFinancialLiabilityAttributableToChangeInCreditRiskOfLiability,당기손익-공정가치측정지정금융부채의 자기신용위험변동손익,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본금 [구성요소]
+CFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxChangeInFairValueOfFinancialLiabilityAttributableToChangeInCreditRiskOfLiability,당기손익-공정가치측정지정금융부채의 자기신용위험변동손익,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|이익잉여금 [구성요소]
+CFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxChangeInFairValueOfFinancialLiabilityAttributableToChangeInCreditRiskOfLiability,당기손익-공정가치측정지정금융부채의 자기신용위험변동손익,945473000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|기타포괄손익누적액 [구성요소]
+CFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxChangeInFairValueOfFinancialLiabilityAttributableToChangeInCreditRiskOfLiability,당기손익-공정가치측정지정금융부채의 자기신용위험변동손익,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본조정 [구성요소]
+CFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxExchangeDifferencesOnTranslation,해외사업환산손익,48236857000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]
+CFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxExchangeDifferencesOnTranslation,해외사업환산손익,-692783000,SCE보존,(SCE 2D),,자본 [구성요소]|비지배지분 [구성요소]
+CFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxExchangeDifferencesOnTranslation,해외사업환산손익,47544074000,SCE보존,(SCE 2D),,연결재무제표 [member]
+CFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxExchangeDifferencesOnTranslation,해외사업환산손익,48236857000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|기타포괄손익누적액 [구성요소]
+CFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxExchangeDifferencesOnTranslation,해외사업환산손익,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본조정 [구성요소]
+CFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxExchangeDifferencesOnTranslation,해외사업환산손익,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본잉여금 [구성요소]
+CFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxExchangeDifferencesOnTranslation,해외사업환산손익,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본금 [구성요소]
+CFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxExchangeDifferencesOnTranslation,해외사업환산손익,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|이익잉여금 [구성요소]
+CFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRemeasurementsOfDefinedBenefitPlans,확정급여제도의 재측정요소,-978036000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]
+CFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRemeasurementsOfDefinedBenefitPlans,확정급여제도의 재측정요소,-3175000,SCE보존,(SCE 2D),,자본 [구성요소]|비지배지분 [구성요소]
+CFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRemeasurementsOfDefinedBenefitPlans,확정급여제도의 재측정요소,-981211000,SCE보존,(SCE 2D),,연결재무제표 [member]
+CFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRemeasurementsOfDefinedBenefitPlans,확정급여제도의 재측정요소,-978036000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|기타포괄손익누적액 [구성요소]
+CFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRemeasurementsOfDefinedBenefitPlans,확정급여제도의 재측정요소,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|이익잉여금 [구성요소]
+CFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRemeasurementsOfDefinedBenefitPlans,확정급여제도의 재측정요소,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본금 [구성요소]
+CFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRemeasurementsOfDefinedBenefitPlans,확정급여제도의 재측정요소,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본잉여금 [구성요소]
+CFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRemeasurementsOfDefinedBenefitPlans,확정급여제도의 재측정요소,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본조정 [구성요소]
+CFS,SCE,ifrs-full_ProfitLoss,당기순이익,144817600000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]
+CFS,SCE,ifrs-full_ProfitLoss,당기순이익,-635461000,SCE보존,(SCE 2D),,자본 [구성요소]|비지배지분 [구성요소]
+CFS,SCE,ifrs-full_ProfitLoss,당기순이익,144182139000,SCE보존,(SCE 2D),,연결재무제표 [member]
+CFS,SCE,ifrs-full_ProfitLoss,당기순이익,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|기타포괄손익누적액 [구성요소]
+CFS,SCE,ifrs-full_ProfitLoss,당기순이익,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본조정 [구성요소]
+CFS,SCE,ifrs-full_ProfitLoss,당기순이익,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본잉여금 [구성요소]
+CFS,SCE,ifrs-full_ProfitLoss,당기순이익,0,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본금 [구성요소]
+CFS,SCE,ifrs-full_ProfitLoss,당기순이익,144817600000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|이익잉여금 [구성요소]
+CFS,SCE,ifrs-full_Equity,자본총계,902814776000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본잉여금 [구성요소]
+CFS,SCE,ifrs-full_Equity,자본총계,456730090000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본금 [구성요소]
+CFS,SCE,ifrs-full_Equity,자본총계,1719534567000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|이익잉여금 [구성요소]
+CFS,SCE,ifrs-full_Equity,자본총계,483939450000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|기타포괄손익누적액 [구성요소]
+CFS,SCE,ifrs-full_Equity,자본총계,3320378412000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]
+CFS,SCE,ifrs-full_Equity,자본총계,-4989375000,SCE보존,(SCE 2D),,자본 [구성요소]|비지배지분 [구성요소]
+CFS,SCE,ifrs-full_Equity,자본총계,3315389037000,SCE보존,(SCE 2D),,연결재무제표 [member]
+CFS,SCE,ifrs-full_Equity,자본총계,-242640471000,SCE보존,(SCE 2D),,자본 [구성요소]|지배기업의 소유주에게 귀속되는 지분 [구성요소]|자본조정 [구성요소]
+OFS,BS,dart_CashAndDuefromBanks,현금및예치금,1530134957000,정확매핑,현금및예치금,1530134957000.0,-
+OFS,BS,dart_LoansAtAmortisedCost,대출채권,3537708997000,정확매핑,상각후원가측정대출채권,3537708997000.0,-
+OFS,BS,-표준계정코드 미사용-,기타자산,659100772000,정확매핑,기타자산,659100772000.0,-
+OFS,BS,ifrs-full_Assets,자산총계,17315231110000,정확매핑,자산총계,17315231110000.0,-
+OFS,BS,ifrs-full_FinancialAssetsAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산,464061173000,정확매핑,IV. 기타포괄손익-공정가치측정금융자산,464061173000.0,-
+OFS,BS,ifrs-full_FinancialAssetsAtFairValueThroughProfitOrLoss,당기손익-공정가치측정금융자산,8351816659000,정확매핑,당기손익-공정가치측정금융자산(유동),8351816659000.0,-
+OFS,BS,-표준계정코드 미사용-,파생상품자산,603785931000,정확매핑,유동파생상품자산,603785931000.0,-
+OFS,BS,-표준계정코드 미사용-,당기손익-공정가치측정금융자산,7748030728000,정확매핑,FVPL금융자산,7748030728000.0,-
+OFS,BS,ifrs-full_IntangibleAssetsAndGoodwill,무형자산,43008674000,정확매핑,무형자산,43008674000.0,-
+OFS,BS,ifrs-full_InvestmentProperty,투자부동산,277585394000,정확매핑,투자부동산,277585394000.0,-
+OFS,BS,ifrs-full_InvestmentsInSubsidiariesJointVenturesAndAssociates,관계기업및공동기업투자,2025576160000,정확매핑,종속관계공동기업투자,2025576160000.0,-
+OFS,BS,ifrs-full_PropertyPlantAndEquipment,유형자산,426238324000,정확매핑,유형자산,426238324000.0,-
+OFS,BS,dart_CapitalAdjustments,자본조정,-221877615000,정확매핑,자본조정(BS),-221877615000.0,-
+OFS,BS,dart_CapitalSurplus,자본잉여금,902814776000,정확매핑,자본잉여금,902814776000.0,-
+OFS,BS,ifrs-full_AccumulatedOtherComprehensiveIncome,기타포괄손익누적액,355227397000,정확매핑,기타포괄손익누계액(BS),355227397000.0,-
+OFS,BS,ifrs-full_Equity,자본총계,3112879005000,정확매핑,자본총계,3112879005000.0,-
+OFS,BS,ifrs-full_IssuedCapital,자본금,456730090000,정확매핑,자본금,456730090000.0,-
+OFS,BS,ifrs-full_RetainedEarnings,이익잉여금,1619984357000,정확매핑,이익잉여금,1619984357000.0,-
+OFS,BS,dart_RegulatoryReserveForCreditLoss,(대손준비금 적립액),8421848000,정확매핑,대손준비금 적립액,8421848000.0,-
+OFS,BS,dart_RegulatoryReserveForCreditLossToBeAddedReversed,(대손준비금 적립 예정금액),19143178000,정확매핑,대손준비금 적립(환입)예정액,19143178000.0,-
+OFS,BS,ifrs-full_EquityAndLiabilities,부채및자본총계,17315231110000,정확매핑,자본과부채총계,17315231110000.0,-
+OFS,BS,-표준계정코드 미사용-,종업원급여부채,6636563000,기타강등,기타 중요 계정,6636563000.0,-
+OFS,BS,ifrs-full_BondsIssued,사채,664268920000,정확매핑,사채,664268920000.0,-
+OFS,BS,ifrs-full_Borrowings,차입부채,7436946810000,정확매핑,차입부채,7436946810000.0,-
+OFS,BS,ifrs-full_CurrentTaxLiabilities,당기법인세부채,38969149000,정확매핑,당기법인세부채,38969149000.0,-
+OFS,BS,ifrs-full_DeferredTaxLiabilities,이연법인세부채,50425645000,정확매핑,이연법인세부채,50425645000.0,-
+OFS,BS,ifrs-full_DepositsFromCustomers,예수부채,2374778226000,정확매핑,예수부채,2374778226000.0,-
+OFS,BS,ifrs-full_FinancialLiabilitiesAtFairValueThroughProfitOrLoss,당기손익-공정가치측정금융부채,2869176866000,정확매핑,당기손익-공정가치측정금융부채,2869176866000.0,-
+OFS,BS,-표준계정코드 미사용-,파생상품부채,581583051000,정확매핑,유동파생상품부채,581583051000.0,-
+OFS,BS,-표준계정코드 미사용-,당기손익-공정가치측정금융부채,155862910000,기타강등,기타 중요 계정,155862910000.0,-
+OFS,BS,ifrs-full_FinancialLiabilitiesAtFairValueThroughProfitOrLossDesignatedAsUponInitialRecognition,당기손익-공정가치측정지정금융부채,2131730905000,정확매핑,당기손익-공정가치측정지정금융부채,2131730905000.0,-
+OFS,BS,ifrs-full_Liabilities,부채총계,14202352105000,정확매핑,부채총계,14202352105000.0,-
+OFS,BS,ifrs-full_OtherLiabilities,기타부채,516221872000,정확매핑,기타부채(BS),516221872000.0,-
+OFS,BS,ifrs-full_Provisions,충당부채,244928054000,정확매핑,VIII. 충당부채,244928054000.0,-
+OFS,CIS,dart_NonOperatingProfitLoss,영업외손익,15558895000,정확매핑,영업외손익,15558895000.0,-
+OFS,CIS,dart_NonOperatingExpense,영업외손실,13092723000,정확매핑,영업외비용,13092723000.0,-
+OFS,CIS,dart_NonOperatingIncome,영업외이익,28651618000,정확매핑,영업외수익,28651618000.0,-
+OFS,CIS,ifrs-full_ComprehensiveIncome,당기총포괄이익,105892911000,정확매핑,총포괄손익,105892911000.0,-
+OFS,CIS,dart_BasicEarningsLossPerSharePreferredStock,우선주기본주당순이익,1638,정확매핑,우선주기본주당순이익(손실),1638.0,-
+OFS,CIS,dart_DilutedEarningsLossPerSharePreferredStock,우선주희석주당순이익,1638,정확매핑,우선주희석주당순이익(손실),1638.0,-
+OFS,CIS,-표준계정코드 미사용-,2우선주기본주당순이익,1588,기타강등,기타 중요 계정,1588.0,-
+OFS,CIS,-표준계정코드 미사용-,2우선주희석주당순이익,1588,기타강등,기타 중요 계정,1588.0,-
+OFS,CIS,ifrs-full_BasicEarningsLossPerShare,보통주기본주당순이익,1608,정확매핑,기본주당이익,1608.0,-
+OFS,CIS,ifrs-full_DilutedEarningsLossPerShare,보통주희석주당순이익,1442,정확매핑,희석주당이익,1442.0,-
+OFS,CIS,ifrs-full_IncomeTaxExpenseContinuingOperations,법인세비용,31943667000,정확매핑,법인세비용,31943667000.0,-
+OFS,CIS,ifrs-full_OperatingExpense,영업비용,3271106153000,정확매핑,영업비용,3271106153000.0,-
+OFS,CIS,dart_AdditionalImpairmentLossesOfFinancialAssets,신용손실충당금전입액,27704874000,정확매핑,신용손실충당금 전입액,27704874000.0,-
+OFS,CIS,dart_LossFromFinancialInstrumentsAtFairValueThroughProfitOrLoss,당기손익-공정가치측정금융상품관련손실,1958593973000,정확매핑,당기손익-공정가치측정금융상품관련손실,1958593973000.0,-
+OFS,CIS,dart_MiscellaneousExpenses,기타판매비와관리비,136667997000,정확매핑,기타판매비와관리비,136667997000.0,-
+OFS,CIS,dart_OtherOperatingExpense,기타영업비용,89088711000,정확매핑,기타영업비용,89088711000.0,-
+OFS,CIS,dart_PersonalExpense,인건비,213341045000,정확매핑,인건비,213341045000.0,-
+OFS,CIS,-표준계정코드 미사용-,당기손익-공정가치측정지정금융상품관련손실,128744497000,기타강등,기타 중요 계정,128744497000.0,-
+OFS,CIS,ifrs-full_DepreciationAndAmortisationExpense,감가상각비 및 상각비,31148415000,정확매핑,감가상각비 및 상각비,31148415000.0,-
+OFS,CIS,ifrs-full_FeeAndCommissionExpense,수수료비용,25591895000,정확매핑,수수료비용,25591895000.0,-
+OFS,CIS,ifrs-full_InterestExpense,이자비용,317191876000,정확매핑,금융부채의 이자비용,317191876000.0,-
+OFS,CIS,ifrs-full_NetForeignExchangeLoss,외환거래손실,343032870000,정확매핑,순외환차손,343032870000.0,-
+OFS,CIS,ifrs-full_OtherComprehensiveIncome,당기기타포괄손익,-15108596000,정확매핑,기타포괄손익,-15108596000.0,-
+OFS,CIS,ifrs-full_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossBeforeTax,후속적으로 당기손익으로 재분류되지 않는 항목,-15108596000,정확매핑,당기손익으로 재분류되지 않는 항목(세전기타포괄손익),-15108596000.0,-
+OFS,CIS,dart_OtherComprehensiveIncomeNetOfTaxChangeInFairValueOfInvestmentsInEquityInstruments,기타포괄손익-공정가치측정지분증권평가손익,-15525881000,기타강등,기타 중요 계정,-15525881000.0,-
+OFS,CIS,dart_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRevaluationOfPropertyPlandAndEquipment,유형자산재평가차익,0,기타강등,기타 중요 계정,0.0,-
+OFS,CIS,ifrs-full_OtherComprehensiveIncomeNetOfTaxChangeInFairValueOfFinancialLiabilityAttributableToChangeInCreditRiskOfLiability,당기손익-공정가치측정지정금융부채의 자기신용위험변동손익,945473000,정확매핑,당기손익-공정가치측정지정금융부채의 자기신용위험조정,945473000.0,-
+OFS,CIS,ifrs-full_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRemeasurementsOfDefinedBenefitPlans,확정급여제도의 재측정요소,-528188000,정확매핑,확정급여재측정손익,-528188000.0,-
+OFS,CIS,ifrs-full_ProfitLoss,당기순이익,121001507000,정확매핑,당기순이익,121001507000.0,-
+OFS,CIS,ifrs-full_ProfitLossBeforeTax,법인세차감전순이익,152945174000,정확매핑,법인세비용차감전순이익,152945174000.0,-
+OFS,CIS,ifrs-full_ProfitLossFromOperatingActivities,영업이익,137386279000,정확매핑,영업이익,137386279000.0,-
+OFS,CIS,ifrs-full_Revenue,영업수익,3408492432000,정확매핑,매출,3408492432000.0,-
+OFS,CIS,dart_GainFromFinancialInstrumentsAtFairValueThroughProfitOrLoss,당기손익-공정가치측정금융상품관련이익,2317098801000,정확매핑,당기손익-공정가치측정금융상품관련이익,2317098801000.0,-
+OFS,CIS,dart_OtherOperatingIncome,기타의영업수익,101048414000,정확매핑,기타영업수익,101048414000.0,-
+OFS,CIS,dart_ReversalsOfImpairmentLossesOfFinancialAssets,신용손실충당금환입액,0,정확매핑,신용손실충당금 환입액,0.0,-
+OFS,CIS,-표준계정코드 미사용-,당기손익-공정가치측정지정금융상품관련이익,30509465000,기타강등,기타 중요 계정,30509465000.0,-
+OFS,CIS,ifrs-full_FeeAndCommissionIncome,수수료수익,405034059000,정확매핑,수수료수익,405034059000.0,-
+OFS,CIS,ifrs-full_NetForeignExchangeGain,외환거래이익,326788466000,정확매핑,순외환차익,326788466000.0,-
+OFS,CIS,ifrs-full_RevenueFromInterest,이자수익,228013227000,정확매핑,이자수익(CIS),228013227000.0,-
+OFS,CF,dart_CashAndCashEquivalentsAtBeginningOfPeriodCf,기초현금및현금성자산,838029702000,정확매핑,기초현금및현금성자산,838029702000.0,-
+OFS,CF,ifrs-full_CashAndCashEquivalents,당기말의 현금및현금성자산,621307906000,기타강등,기타 중요 계정,621307906000.0,-
+OFS,CF,ifrs-full_CashFlowsFromUsedInFinancingActivities,재무활동으로부터의 현금흐름,1610723830000,정확매핑,재무활동현금흐름,1610723830000.0,-
+OFS,CF,dart_DecreaseInGuaranteeDepositsAsFinancialActivities,임대보증금의 감소,293211000,정확매핑,임대보증금감소,293211000.0,-
+OFS,CF,dart_DispositionOfTreasuryShares,자기주식의 처분,0,정확매핑,자기주식처분,0.0,-
+OFS,CF,dart_IncreaseInGuaranteeDepositsAsFinancialActivities,임대보증금의 증가,269117000,정확매핑,임대보증금증가,269117000.0,-
+OFS,CF,dart_RepaymentsOfBonds,사채의 상환,-460000000000,정확매핑,사채상환,-460000000000.0,-
+OFS,CF,-표준계정코드 미사용-,차입부채의 순증감,1556598389000,기타강등,기타 중요 계정,1556598389000.0,-
+OFS,CF,ifrs-full_DividendsPaidClassifiedAsFinancingActivities,배당금의 지급,82059005000,정확매핑,배당금지급,82059005000.0,-
+OFS,CF,ifrs-full_PaymentsOfLeaseLiabilitiesClassifiedAsFinancingActivities,리스부채의 감소,12743528000,정확매핑,리스부채상환,12743528000.0,-
+OFS,CF,ifrs-full_ProceedsFromIssueOfBondsNotesAndDebentures,사채의 발행,379255460000,정확매핑,사채의 발행,379255460000.0,-
+OFS,CF,ifrs-full_ProceedsFromIssueOfPreferenceShares,상환전환우선주의 발행,229696608000,정확매핑,상환전환우선주 발행,229696608000.0,-
+OFS,CF,ifrs-full_PurchaseOfTreasuryShares,자기주식의 취득,0,정확매핑,자기주식취득,0.0,-
+OFS,CF,ifrs-full_CashFlowsFromUsedInInvestingActivities,투자활동으로부터의 현금흐름,-284606195000,정확매핑,투자활동현금흐름,-284606195000.0,-
+OFS,CF,dart_AdjustmentsForDecreaseincreaseInAdvancePayments,선급금의 증가,-150000000,정확매핑,선급금의 감소(증가),-150000000.0,-
+OFS,CF,dart_AdjustmentsForGainsOnDisposalsOfNoncurrentAssetsOrDisposalGroupsClassifiedAsHeldForSale,매각예정비유동자산의 처분,0,정확매핑,매각예정비유동자산처분이익,0.0,-
+OFS,CF,dart_DecreaseInGuaranteeDeposits,보증금의 감소,4750000000,정확매핑,임차보증금감소,4750000000.0,-
+OFS,CF,dart_IncreaseInGuaranteeDeposits,보증금의 증가,1817850000,정확매핑,임차보증금증가,1817850000.0,-
+OFS,CF,dart_ProceedsFromSalesOfFinancialAssetsAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산의 처분,10153993000,정확매핑,기타포괄손익-공정가치측정금융자산의처분,10153993000.0,-
+OFS,CF,dart_PurchaseOfFinancialAssetsAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산의 취득,80517021000,정확매핑,기타포괄손익-공정가치측정금융자산의취득,80517021000.0,-
+OFS,CF,-표준계정코드 미사용-,종속기업 및 관계기업 투자의 취득,554299435000,기타강등,기타 중요 계정,554299435000.0,-
+OFS,CF,-표준계정코드 미사용-,리스채권의 감소,0,기타강등,기타 중요 계정,0.0,-
+OFS,CF,-표준계정코드 미사용-,종속기업 및 관계기업 투자의 처분,349112568000,기타강등,기타 중요 계정,349112568000.0,-
+OFS,CF,ifrs-full_ProceedsFromSalesOfInvestmentProperty,투자부동산의 처분,0,정확매핑,투자부동산의 처분,0.0,-
+OFS,CF,ifrs-full_ProceedsFromSalesOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities,유형자산의 처분,6180000,정확매핑,유형자산처분,6180000.0,-
+OFS,CF,ifrs-full_PurchaseOfIntangibleAssetsClassifiedAsInvestingActivities,무형자산의 취득,2574115000,정확매핑,무형자산취득,2574115000.0,-
+OFS,CF,ifrs-full_PurchaseOfInvestmentProperty,투자부동산의 취득,0,정확매핑,투자부동산취득,0.0,-
+OFS,CF,ifrs-full_PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities,유형자산의 취득,9270515000,정확매핑,유형자산취득,9270515000.0,-
+OFS,CF,ifrs-full_CashFlowsFromUsedInOperatingActivities,영업활동순현금흐름,-1554043871000,정확매핑,영업활동현금흐름,-1554043871000.0,-
+OFS,CF,ifrs-full_CashFlowsFromUsedInOperations,영업에서 창출된 현금흐름,-1640839826000,정확매핑,영업창출현금흐름,-1640839826000.0,-
+OFS,CF,dart_AdjustmentsForAssetsLiabilitiesOfOperatingActivities,자산·부채의 증감,-1611593455000,정확매핑,운전자본변동,-1611593455000.0,-
+OFS,CF,dart_AdjustmentsForDecreaseIncreaseInDuefromBanks,예치금,-489243368000,정확매핑,예치금,-489243368000.0,-
+OFS,CF,dart_AdjustmentsForDecreaseIncreaseInFinancialAssetsAtFairValueThroughProfitOrLossClassifiedAsOperatingActivities,당기손익-공정가치측정금융자산,60596831000,정확매핑,당기손익-공정가치측정금융자산의 감소(증가) - 영업활동,60596831000.0,-
+OFS,CF,dart_AdjustmentsForDecreaseIncreaseInLoans,대출채권,-1413018408000,정확매핑,대출채권,-1413018408000.0,-
+OFS,CF,dart_AdjustmentsForIncreaseDecreaseInFinancialLiabilitiesAtFairValueThroughProfitOrLossClassifiedAsOperatingActivities,당기손익-공정가치측정금융부채,-22883556000,정확매핑,당기손익-공정가치측정금융부채(CF),-22883556000.0,-
+OFS,CF,dart_AdjustmentsForIncreaseDecreaseInFinancialLiabilitiesDesignatedAtFairValueThroughProfitOrLossClassifiedAsOperatingActivities,당기손익-공정가치측정지정금융부채,750078617000,정확매핑,당기손익인식지정금융부채,750078617000.0,-
+OFS,CF,dart_AdjustmentsForIncreasedecreaseInOtherFinancialLiabilities,차입부채,-397694820000,정확매핑,기타금융부채의 증가(감소),-397694820000.0,-
+OFS,CF,ifrs-full_AdjustmentsForDecreaseIncreaseInDerivativeFinancialAssets,파생상품,-165920198000,정확매핑,파생상품자산의 감소(증가)(CF),-165920198000.0,-
+OFS,CF,ifrs-full_AdjustmentsForDecreaseIncreaseInOtherAssets,기타자산,183512063000,정확매핑,기타자산의 감소(증가),183512063000.0,-
+OFS,CF,ifrs-full_AdjustmentsForIncreaseDecreaseInDepositsFromCustomers,예수부채,59292996000,정확매핑,예수부채(CF),59292996000.0,-
+OFS,CF,ifrs-full_AdjustmentsForIncreaseDecreaseInEmployeeBenefitLiabilities,종업원급여부채,-2412348000,정확매핑,순확정급여부채 증가(감소),-2412348000.0,-
+OFS,CF,ifrs-full_AdjustmentsForIncreaseDecreaseInOtherLiabilities,기타부채,-173901264000,정확매핑,기타부채의 증가(감소),-173901264000.0,-
+OFS,CF,ifrs-full_AdjustmentsForReconcileProfitLoss,손익조정사항,-150247878000,정확매핑,당기순이익조정가감,-150247878000.0,-
+OFS,CF,dart_AdjustmentsForGainLossOnDisposalsOfInvestmentProperty,투자부동산처분손익,0,정확매핑,투자부동산처분손익,0.0,-
+OFS,CF,dart_AdjustmentsForGainsLossesOnDisposalsOfNoncurrentAssetsHeldForSale,매각예정비유동자산처분손익,0,정확매핑,매각예정비유동관련처분손익,0.0,-
+OFS,CF,dart_AdjustmentsForOtherLongtermEmployeeBenefits,종업원급여관련비용,2870057000,정확매핑,기타장기종업원급여,2870057000.0,-
+OFS,CF,dart_AdjustmentsForOtherOperatingIncomeExpense,기타손익,-3101161000,정확매핑,기타영업손익(CF),-3101161000.0,-
+OFS,CF,-표준계정코드 미사용-,감가상각비 및 상각비,31148415000,기타강등,기타 중요 계정,31148415000.0,-
+OFS,CF,-표준계정코드 미사용-,기타포괄손익-공정가치측정금융상품 순손익,0,기타강등,기타 중요 계정,0.0,-
+OFS,CF,-표준계정코드 미사용-,파생상품관련손익,-18819276000,기타강등,기타 중요 계정,-18819276000.0,-
+OFS,CF,-표준계정코드 미사용-,상각후원가측정금융자산관련손익,27704874000,기타강등,기타 중요 계정,27704874000.0,-
+OFS,CF,-표준계정코드 미사용-,당기손익-공정가치측정금융상품 순손익,-104508169000,기타강등,기타 중요 계정,-104508169000.0,-
+OFS,CF,-표준계정코드 미사용-,당기손익-공정가치측정지정금융상품 순손익,41769486000,기타강등,기타 중요 계정,41769486000.0,-
+OFS,CF,-표준계정코드 미사용-,외화환산손익,-18082168000,정확매핑,외화환산손익,-18082168000.0,-
+OFS,CF,ifrs-full_AdjustmentsForDividendIncome,배당금수익,69800724000,정확매핑,배당금수익,69800724000.0,-
+OFS,CF,ifrs-full_AdjustmentsForGainLossOnDisposalOfInvestmentsInSubsidiariesJointVenturesAndAssociates,종속기업및관계기업투자처분손익,3583817000,정확매핑,"종속기업, 공동기업, 및 관계기업에 대한 투자지분의 처분이익(손실)에 대한 조정",3583817000.0,-
+OFS,CF,ifrs-full_AdjustmentsForGainLossOnDisposalsPropertyPlantAndEquipment,유형자산처분손익,-326953000,정확매핑,유형자산처분손익,-326953000.0,-
+OFS,CF,ifrs-full_AdjustmentsForIncomeTaxExpense,법인세비용,31943667000,정확매핑,법인세비용조정,31943667000.0,-
+OFS,CF,ifrs-full_AdjustmentsForInterestIncome,순이자손익,74318337000,정확매핑,이자수익조정,74318337000.0,-
+OFS,CF,ifrs-full_ProfitLoss,당기순이익,121001507000,기타강등,기타 중요 계정,121001507000.0,-
+OFS,CF,ifrs-full_DividendsReceivedClassifiedAsOperatingActivities,배당금의 수취,68529673000,정확매핑,배당금수취,68529673000.0,-
+OFS,CF,ifrs-full_IncomeTaxesPaidRefundClassifiedAsOperatingActivities,법인세의 지급,52893252000,정확매핑,법인세납부,52893252000.0,-
+OFS,CF,ifrs-full_InterestPaidClassifiedAsOperatingActivities,이자의 지급,319074684000,정확매핑,이자지급,319074684000.0,-
+OFS,CF,ifrs-full_InterestReceivedClassifiedAsOperatingActivities,이자의 수취,390234218000,정확매핑,이자수취,390234218000.0,-
+OFS,CF,ifrs-full_EffectOfExchangeRateChangesOnCashAndCashEquivalents,외화로 표시된 현금및현금성자산에 대한 환율변동효과,11204440000,정확매핑,현금환율변동효과,11204440000.0,-
+OFS,CF,ifrs-full_IncreaseDecreaseInCashAndCashEquivalents,현금흐름의 증감(I+II+III+Ⅳ),-216721796000,정확매핑,현금및현금성자산순증감,-216721796000.0,-
+OFS,SCE,dart_EquityAtBeginningOfPeriod,기초자본,434867000000,SCE보존,(SCE 2D),,자본 [구성요소]|자본금 [구성요소]
+OFS,SCE,dart_EquityAtBeginningOfPeriod,기초자본,694981258000,SCE보존,(SCE 2D),,자본 [구성요소]|자본잉여금 [구성요소]
+OFS,SCE,dart_EquityAtBeginningOfPeriod,기초자본,1578029396000,SCE보존,(SCE 2D),,자본 [구성요소]|이익잉여금 [구성요소]
+OFS,SCE,dart_EquityAtBeginningOfPeriod,기초자본,372910957000,SCE보존,(SCE 2D),,자본 [구성요소]|기타포괄손익누적액 [구성요소]
+OFS,SCE,dart_EquityAtBeginningOfPeriod,기초자본,2853194901000,SCE보존,(SCE 2D),,별도재무제표 [member]
+OFS,SCE,dart_EquityAtBeginningOfPeriod,기초자본,-227593710000,SCE보존,(SCE 2D),,자본 [구성요소]|자본조정 [구성요소]
+OFS,SCE,dart_AppropriationTransferReservationOfRetainedEarnings,이익잉여금 대체,-2574964000,SCE보존,(SCE 2D),,자본 [구성요소]|기타포괄손익누적액 [구성요소]
+OFS,SCE,dart_AppropriationTransferReservationOfRetainedEarnings,이익잉여금 대체,0,SCE보존,(SCE 2D),,별도재무제표 [member]
+OFS,SCE,dart_AppropriationTransferReservationOfRetainedEarnings,이익잉여금 대체,2574964000,SCE보존,(SCE 2D),,자본 [구성요소]|이익잉여금 [구성요소]
+OFS,SCE,dart_AppropriationTransferReservationOfRetainedEarnings,이익잉여금 대체,0,SCE보존,(SCE 2D),,자본 [구성요소]|자본조정 [구성요소]
+OFS,SCE,dart_AppropriationTransferReservationOfRetainedEarnings,이익잉여금 대체,0,SCE보존,(SCE 2D),,자본 [구성요소]|자본잉여금 [구성요소]
+OFS,SCE,dart_AppropriationTransferReservationOfRetainedEarnings,이익잉여금 대체,0,SCE보존,(SCE 2D),,자본 [구성요소]|자본금 [구성요소]
+OFS,SCE,dart_GainsLossesOnDisposalsOfFinancialAssetsAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산처분손익 조정,0,SCE보존,(SCE 2D),,별도재무제표 [member]
+OFS,SCE,dart_GainsLossesOnDisposalsOfFinancialAssetsAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산처분손익 조정,-2574964000,SCE보존,(SCE 2D),,자본 [구성요소]|기타포괄손익누적액 [구성요소]
+OFS,SCE,dart_GainsLossesOnDisposalsOfFinancialAssetsAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산처분손익 조정,0,SCE보존,(SCE 2D),,자본 [구성요소]|자본잉여금 [구성요소]
+OFS,SCE,dart_GainsLossesOnDisposalsOfFinancialAssetsAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산처분손익 조정,0,SCE보존,(SCE 2D),,자본 [구성요소]|자본금 [구성요소]
+OFS,SCE,dart_GainsLossesOnDisposalsOfFinancialAssetsAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산처분손익 조정,2574964000,SCE보존,(SCE 2D),,자본 [구성요소]|이익잉여금 [구성요소]
+OFS,SCE,dart_GainsLossesOnDisposalsOfFinancialAssetsAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산처분손익 조정,0,SCE보존,(SCE 2D),,자본 [구성요소]|자본조정 [구성요소]
+OFS,SCE,dart_AnnualDividendsPaid,연차배당,0,SCE보존,(SCE 2D),,자본 [구성요소]|자본조정 [구성요소]
+OFS,SCE,dart_AnnualDividendsPaid,연차배당,0,SCE보존,(SCE 2D),,자본 [구성요소]|자본잉여금 [구성요소]
+OFS,SCE,dart_AnnualDividendsPaid,연차배당,0,SCE보존,(SCE 2D),,자본 [구성요소]|자본금 [구성요소]
+OFS,SCE,dart_AnnualDividendsPaid,연차배당,81621510000,SCE보존,(SCE 2D),,자본 [구성요소]|이익잉여금 [구성요소]
+OFS,SCE,dart_AnnualDividendsPaid,연차배당,81621510000,SCE보존,(SCE 2D),,별도재무제표 [member]
+OFS,SCE,dart_AnnualDividendsPaid,연차배당,0,SCE보존,(SCE 2D),,자본 [구성요소]|기타포괄손익누적액 [구성요소]
+OFS,SCE,dart_TreasuryShareTransactions,자기주식의변동,0,SCE보존,(SCE 2D),,자본 [구성요소]|기타포괄손익누적액 [구성요소]
+OFS,SCE,dart_TreasuryShareTransactions,자기주식의변동,0,SCE보존,(SCE 2D),,자본 [구성요소]|이익잉여금 [구성요소]
+OFS,SCE,dart_TreasuryShareTransactions,자기주식의변동,0,SCE보존,(SCE 2D),,자본 [구성요소]|자본금 [구성요소]
+OFS,SCE,dart_TreasuryShareTransactions,자기주식의변동,0,SCE보존,(SCE 2D),,자본 [구성요소]|자본잉여금 [구성요소]
+OFS,SCE,dart_TreasuryShareTransactions,자기주식의변동,8022543000,SCE보존,(SCE 2D),,자본 [구성요소]|자본조정 [구성요소]
+OFS,SCE,dart_TreasuryShareTransactions,자기주식의변동,8022543000,SCE보존,(SCE 2D),,별도재무제표 [member]
+OFS,SCE,ifrs-full_IncreaseDecreaseThroughTransfersAndOtherChangesEquity,기타,0,SCE보존,(SCE 2D),,자본 [구성요소]|기타포괄손익누적액 [구성요소]
+OFS,SCE,ifrs-full_IncreaseDecreaseThroughTransfersAndOtherChangesEquity,기타,0,SCE보존,(SCE 2D),,자본 [구성요소]|이익잉여금 [구성요소]
+OFS,SCE,ifrs-full_IncreaseDecreaseThroughTransfersAndOtherChangesEquity,기타,0,SCE보존,(SCE 2D),,자본 [구성요소]|자본금 [구성요소]
+OFS,SCE,ifrs-full_IncreaseDecreaseThroughTransfersAndOtherChangesEquity,기타,0,SCE보존,(SCE 2D),,자본 [구성요소]|자본잉여금 [구성요소]
+OFS,SCE,ifrs-full_IncreaseDecreaseThroughTransfersAndOtherChangesEquity,기타,-2306448000,SCE보존,(SCE 2D),,자본 [구성요소]|자본조정 [구성요소]
+OFS,SCE,ifrs-full_IncreaseDecreaseThroughTransfersAndOtherChangesEquity,기타,-2306448000,SCE보존,(SCE 2D),,별도재무제표 [member]
+OFS,SCE,ifrs-full_IssueOfEquity,상환전환우선주의 발행,207833518000,SCE보존,(SCE 2D),,자본 [구성요소]|자본잉여금 [구성요소]
+OFS,SCE,ifrs-full_IssueOfEquity,상환전환우선주의 발행,0,SCE보존,(SCE 2D),,자본 [구성요소]|자본조정 [구성요소]
+OFS,SCE,ifrs-full_IssueOfEquity,상환전환우선주의 발행,21863090000,SCE보존,(SCE 2D),,자본 [구성요소]|자본금 [구성요소]
+OFS,SCE,ifrs-full_IssueOfEquity,상환전환우선주의 발행,0,SCE보존,(SCE 2D),,자본 [구성요소]|이익잉여금 [구성요소]
+OFS,SCE,ifrs-full_IssueOfEquity,상환전환우선주의 발행,0,SCE보존,(SCE 2D),,자본 [구성요소]|기타포괄손익누적액 [구성요소]
+OFS,SCE,ifrs-full_IssueOfEquity,상환전환우선주의 발행,229696608000,SCE보존,(SCE 2D),,별도재무제표 [member]
+OFS,SCE,dart_OtherComprehensiveIncomeNetOfTaxChangeInFairValueOfFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산평가손익,0,SCE보존,(SCE 2D),,자본 [구성요소]|자본조정 [구성요소]
+OFS,SCE,dart_OtherComprehensiveIncomeNetOfTaxChangeInFairValueOfFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산평가손익,0,SCE보존,(SCE 2D),,자본 [구성요소]|자본잉여금 [구성요소]
+OFS,SCE,dart_OtherComprehensiveIncomeNetOfTaxChangeInFairValueOfFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산평가손익,0,SCE보존,(SCE 2D),,자본 [구성요소]|자본금 [구성요소]
+OFS,SCE,dart_OtherComprehensiveIncomeNetOfTaxChangeInFairValueOfFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산평가손익,0,SCE보존,(SCE 2D),,자본 [구성요소]|이익잉여금 [구성요소]
+OFS,SCE,dart_OtherComprehensiveIncomeNetOfTaxChangeInFairValueOfFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산평가손익,-15525881000,SCE보존,(SCE 2D),,자본 [구성요소]|기타포괄손익누적액 [구성요소]
+OFS,SCE,dart_OtherComprehensiveIncomeNetOfTaxChangeInFairValueOfFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome,기타포괄손익-공정가치측정금융자산평가손익,-15525881000,SCE보존,(SCE 2D),,별도재무제표 [member]
+OFS,SCE,dart_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRevaluationOfPropertyPlandAndEquipment,유형자산재평가차익,0,SCE보존,(SCE 2D),,별도재무제표 [member]
+OFS,SCE,dart_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRevaluationOfPropertyPlandAndEquipment,유형자산재평가차익,0,SCE보존,(SCE 2D),,자본 [구성요소]|기타포괄손익누적액 [구성요소]
+OFS,SCE,dart_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRevaluationOfPropertyPlandAndEquipment,유형자산재평가차익,0,SCE보존,(SCE 2D),,자본 [구성요소]|이익잉여금 [구성요소]
+OFS,SCE,dart_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRevaluationOfPropertyPlandAndEquipment,유형자산재평가차익,0,SCE보존,(SCE 2D),,자본 [구성요소]|자본금 [구성요소]
+OFS,SCE,dart_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRevaluationOfPropertyPlandAndEquipment,유형자산재평가차익,0,SCE보존,(SCE 2D),,자본 [구성요소]|자본잉여금 [구성요소]
+OFS,SCE,dart_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRevaluationOfPropertyPlandAndEquipment,유형자산재평가차익,0,SCE보존,(SCE 2D),,자본 [구성요소]|자본조정 [구성요소]
+OFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxChangeInFairValueOfFinancialLiabilityAttributableToChangeInCreditRiskOfLiability,당기손익-공정가치측정지정금융부채의 자기신용위험변동손익,0,SCE보존,(SCE 2D),,자본 [구성요소]|자본잉여금 [구성요소]
+OFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxChangeInFairValueOfFinancialLiabilityAttributableToChangeInCreditRiskOfLiability,당기손익-공정가치측정지정금융부채의 자기신용위험변동손익,0,SCE보존,(SCE 2D),,자본 [구성요소]|자본조정 [구성요소]
+OFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxChangeInFairValueOfFinancialLiabilityAttributableToChangeInCreditRiskOfLiability,당기손익-공정가치측정지정금융부채의 자기신용위험변동손익,945473000,SCE보존,(SCE 2D),,별도재무제표 [member]
+OFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxChangeInFairValueOfFinancialLiabilityAttributableToChangeInCreditRiskOfLiability,당기손익-공정가치측정지정금융부채의 자기신용위험변동손익,945473000,SCE보존,(SCE 2D),,자본 [구성요소]|기타포괄손익누적액 [구성요소]
+OFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxChangeInFairValueOfFinancialLiabilityAttributableToChangeInCreditRiskOfLiability,당기손익-공정가치측정지정금융부채의 자기신용위험변동손익,0,SCE보존,(SCE 2D),,자본 [구성요소]|이익잉여금 [구성요소]
+OFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxChangeInFairValueOfFinancialLiabilityAttributableToChangeInCreditRiskOfLiability,당기손익-공정가치측정지정금융부채의 자기신용위험변동손익,0,SCE보존,(SCE 2D),,자본 [구성요소]|자본금 [구성요소]
+OFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRemeasurementsOfDefinedBenefitPlans,확정급여제도의 재측정요소,-528188000,SCE보존,(SCE 2D),,자본 [구성요소]|기타포괄손익누적액 [구성요소]
+OFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRemeasurementsOfDefinedBenefitPlans,확정급여제도의 재측정요소,-528188000,SCE보존,(SCE 2D),,별도재무제표 [member]
+OFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRemeasurementsOfDefinedBenefitPlans,확정급여제도의 재측정요소,0,SCE보존,(SCE 2D),,자본 [구성요소]|이익잉여금 [구성요소]
+OFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRemeasurementsOfDefinedBenefitPlans,확정급여제도의 재측정요소,0,SCE보존,(SCE 2D),,자본 [구성요소]|자본금 [구성요소]
+OFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRemeasurementsOfDefinedBenefitPlans,확정급여제도의 재측정요소,0,SCE보존,(SCE 2D),,자본 [구성요소]|자본잉여금 [구성요소]
+OFS,SCE,ifrs-full_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRemeasurementsOfDefinedBenefitPlans,확정급여제도의 재측정요소,0,SCE보존,(SCE 2D),,자본 [구성요소]|자본조정 [구성요소]
+OFS,SCE,ifrs-full_ProfitLoss,당기순이익,0,SCE보존,(SCE 2D),,자본 [구성요소]|기타포괄손익누적액 [구성요소]
+OFS,SCE,ifrs-full_ProfitLoss,당기순이익,121001507000,SCE보존,(SCE 2D),,별도재무제표 [member]
+OFS,SCE,ifrs-full_ProfitLoss,당기순이익,121001507000,SCE보존,(SCE 2D),,자본 [구성요소]|이익잉여금 [구성요소]
+OFS,SCE,ifrs-full_ProfitLoss,당기순이익,0,SCE보존,(SCE 2D),,자본 [구성요소]|자본조정 [구성요소]
+OFS,SCE,ifrs-full_ProfitLoss,당기순이익,0,SCE보존,(SCE 2D),,자본 [구성요소]|자본잉여금 [구성요소]
+OFS,SCE,ifrs-full_ProfitLoss,당기순이익,0,SCE보존,(SCE 2D),,자본 [구성요소]|자본금 [구성요소]
+OFS,SCE,ifrs-full_Equity,자본총계,3112879005000,SCE보존,(SCE 2D),,별도재무제표 [member]
+OFS,SCE,ifrs-full_Equity,자본총계,355227397000,SCE보존,(SCE 2D),,자본 [구성요소]|기타포괄손익누적액 [구성요소]
+OFS,SCE,ifrs-full_Equity,자본총계,902814776000,SCE보존,(SCE 2D),,자본 [구성요소]|자본잉여금 [구성요소]
+OFS,SCE,ifrs-full_Equity,자본총계,456730090000,SCE보존,(SCE 2D),,자본 [구성요소]|자본금 [구성요소]
+OFS,SCE,ifrs-full_Equity,자본총계,1619984357000,SCE보존,(SCE 2D),,자본 [구성요소]|이익잉여금 [구성요소]
+OFS,SCE,ifrs-full_Equity,자본총계,-221877615000,SCE보존,(SCE 2D),,자본 [구성요소]|자본조정 [구성요소]

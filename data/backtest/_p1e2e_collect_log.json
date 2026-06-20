@@ -1,0 +1,38 @@
+[
+  {
+    "corp": "00110893",
+    "year": 2024,
+    "report_doc": "ok",
+    "report_doc_bytes": 7151883,
+    "event_types": 3,
+    "report_types": 28,
+    "corrections": 1
+  },
+  {
+    "corp": "00125521",
+    "year": 2017,
+    "report_doc": "absent",
+    "report_doc_bytes": 0,
+    "event_types": 0,
+    "report_types": 25,
+    "corrections": 1
+  },
+  {
+    "corp": "00112457",
+    "year": 2024,
+    "report_doc": "ok",
+    "report_doc_bytes": 1399122,
+    "event_types": 0,
+    "report_types": 28,
+    "corrections": 0
+  },
+  {
+    "corp": "00108649",
+    "year": 2015,
+    "report_doc": "ok",
+    "report_doc_bytes": 1205862,
+    "event_types": 1,
+    "report_types": 25,
+    "corrections": 3
+  }
+]

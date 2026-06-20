@@ -13,8 +13,7 @@ from src.normalize.config import load_canonical_accounts, normalize_label, subto
 from src.schemas.findings import EvidenceRef
 from src.signals.config import load_l2_config
 from src.signals.red_flags import RedFlagSignal
-from src.signals.sanity import exclude_asset_sanity_years
-from src.signals.tracks import apply_track_quota, track_for_amount
+from src.signals.sanity import exclude_asset_sanity_years, exclude_foreign_currency_years
 
 MIN_Z_HISTORY = 4
 UNIVERSAL_STATEMENTS = ("BS", "IS", "CIS", "CF", "SCE")
@@ -30,7 +29,7 @@ def scan_universal_signals(
     """Scan every account time series on one consistent statement basis."""
 
     thresholds = load_l2_config()["signal_thresholds"]
-    top_n = int(thresholds.get("universal_top_n", 12))
+    frame = exclude_foreign_currency_years(frame, target_year)  # 통화전환 cross-year 차단
     fs_div = preferred_fs_div(frame, target_year)
     scoped = _scan_frame(frame, fs_div)
     scoped = exclude_asset_sanity_years(scoped, thresholds)
@@ -42,24 +41,21 @@ def scan_universal_signals(
     scoped = _aggregate_series(scoped)
     scale_frame = scoped.copy()
     floors = scale_floors(scale_frame, thresholds, fs_div)
-    asset_totals = _asset_totals(scale_frame, fs_div)
     scoped = _exclude_subtotal_rows(scoped)
     if scoped.empty:
         return []
-    scoped["mix_pct"] = scoped["abs_amount"] / scoped.groupby(["year", "sj_div"])[
-        "abs_amount"
-    ].transform("sum") * 100
+    scoped["mix_pct"] = (
+        scoped["abs_amount"]
+        / scoped.groupby(["year", "sj_div"])["abs_amount"].transform("sum")
+        * 100
+    )
     grouped = scoped.groupby("scan_key", sort=False)
     signals = _yoy_and_mix(grouped, target_year, thresholds, floors)
     signals.extend(_z_scores(grouped, target_year, thresholds, floors))
-    signals = [_with_track(signal, asset_totals, thresholds) for signal in signals]
-    ranked = sorted(signals, key=lambda item: _score(item), reverse=True)
-    if include_all:
-        return ranked
-    if legacy_unified:
-        return ranked[:top_n]
-    quotaed = apply_track_quota(ranked, thresholds, _score)
-    return quotaed[:top_n]
+    # ② 채점/랭킹(track quota·top-N 선택) 제거: 신호를 materiality 순으로 전부 반환한다.
+    # 정렬은 참고용일 뿐이며(Phase2 LLM은 review_queue를 참고만), 선택·할당은 하지 않는다.
+    # include_all/legacy_unified는 하위호환용 무시 인자.
+    return sorted(signals, key=_score, reverse=True)
 
 
 def scan_cfs_ofs_gaps(frame: pd.DataFrame, target_year: int) -> list[RedFlagSignal]:
@@ -67,7 +63,7 @@ def scan_cfs_ofs_gaps(frame: pd.DataFrame, target_year: int) -> list[RedFlagSign
 
     thresholds = load_l2_config()["signal_thresholds"]
     min_gap = float(thresholds.get("cfs_ofs_gap_pct_abs", 30))
-    top_n = int(thresholds.get("universal_top_n", 12))
+    frame = exclude_foreign_currency_years(frame, target_year)  # 통화전환 cross-year 차단
     scoped = _scan_frame(frame, None)
     scoped = exclude_asset_sanity_years(scoped, thresholds)
     scoped = scoped[scoped["sj_div"].isin(CFS_OFS_GAP_STATEMENTS)].copy()
@@ -85,9 +81,7 @@ def scan_cfs_ofs_gaps(frame: pd.DataFrame, target_year: int) -> list[RedFlagSign
         return []
     floor = floors.get(target_year, _abs_min(thresholds))
     pivot = pivot[(pivot["CFS"].abs() >= floor) | (pivot["OFS"].abs() >= floor)].copy()
-    pivot["gap_pct"] = (
-        (pivot["CFS"] - pivot["OFS"]) / pivot[["CFS", "OFS"]].abs().max(axis=1) * 100
-    )
+    pivot["gap_pct"] = (pivot["CFS"] - pivot["OFS"]) / pivot[["CFS", "OFS"]].abs().max(axis=1) * 100
     flagged = pivot[pivot["gap_pct"].abs() >= min_gap].sort_values(
         "gap_pct",
         key=abs,
@@ -108,7 +102,7 @@ def scan_cfs_ofs_gaps(frame: pd.DataFrame, target_year: int) -> list[RedFlagSign
             sj_div=str(row.sj_div),
         )
         for row in flagged.itertuples()
-    ][:top_n]
+    ]
 
 
 def preferred_fs_div(frame: pd.DataFrame, target_year: int) -> str:
@@ -123,9 +117,9 @@ def preferred_fs_div(frame: pd.DataFrame, target_year: int) -> str:
         return "CFS"
     for fs_div in ("CFS", "OFS"):
         available = set(
-            scoped[
-                (scoped["fs_div"] == fs_div) & (scoped["year"] <= target_year)
-            ]["year"].astype(int)
+            scoped[(scoped["fs_div"] == fs_div) & (scoped["year"] <= target_year)]["year"].astype(
+                int
+            )
         )
         if years.issubset(available):
             return fs_div
@@ -263,54 +257,11 @@ def _asset_total(rows: pd.DataFrame, fs_div: str | None) -> float | None:
     sj_mask = scoped["sj_div"] == "BS" if scoped["sj_div"].ne("").any() else True
     assets = scoped[
         sj_mask
-        & (
-            (scoped["canonical"] == "자산총계")
-            | (scoped["account_id"] == "ifrs-full_Assets")
-        )
+        & ((scoped["canonical"] == "자산총계") | (scoped["account_id"] == "ifrs-full_Assets"))
     ]
     if assets.empty:
         return None
     return float(assets.iloc[0].amount)
-
-
-def _asset_totals(frame: pd.DataFrame, fs_div: str | None) -> dict[int, float]:
-    scoped = frame if fs_div is None else frame[frame["fs_div"] == fs_div]
-    assets = scoped[
-        (scoped["canonical"] == "자산총계") | (scoped["account_id"] == "ifrs-full_Assets")
-    ]
-    if assets.empty:
-        return {}
-    return {
-        int(row.year): float(row.amount)
-        for row in assets.sort_values("abs_amount", ascending=False)
-        .drop_duplicates(["year"])
-        .itertuples()
-    }
-
-
-def _with_track(
-    signal: RedFlagSignal,
-    asset_totals: dict[int, float],
-    thresholds: dict[str, Any],
-) -> RedFlagSignal:
-    track, ratio = track_for_amount(
-        signal.current_amount,
-        asset_totals.get(int(signal.year)),
-        thresholds,
-    )
-    return RedFlagSignal(
-        id=signal.id,
-        year=signal.year,
-        account=signal.account,
-        signal_type=signal.signal_type,
-        description=signal.description,
-        metric_value=signal.metric_value,
-        evidence=signal.evidence,
-        track=track,
-        magnitude_ratio=ratio,
-        current_amount=signal.current_amount,
-        sj_div=signal.sj_div,
-    )
 
 
 def _series_key(row: pd.Series) -> str:

@@ -1,0 +1,497 @@
+{
+ "files": 9319,
+ "new_mapped_rows": 4662,
+ "groups_same": 572385,
+ "groups_changed": 27,
+ "groups_new": 4180,
+ "changed_canonical": {
+  "기타자본변동": 8,
+  "이자비용": 7,
+  "재분류불가능기타포괄손익": 2,
+  "계약부채": 2,
+  "FVOCI금융자산": 2,
+  "종속기업투자": 2,
+  "이자지급": 1,
+  "재분류가능기타포괄손익": 1,
+  "비지배지분순이익": 1,
+  "관계기업투자": 1
+ },
+ "core_changed_count": 5,
+ "core_changed": [
+  {
+   "corp": "00309503",
+   "key": [
+    "계약부채",
+    "2016",
+    "CFS"
+   ],
+   "old": [
+    "ifrs_CurrentPortionOfLongtermBorrowings",
+    56805000000.0
+   ],
+   "new": null
+  },
+  {
+   "corp": "00309503",
+   "key": [
+    "계약부채",
+    "2016",
+    "OFS"
+   ],
+   "old": [
+    "ifrs_CurrentPortionOfLongtermBorrowings",
+    56805000000.0
+   ],
+   "new": null
+  },
+  {
+   "corp": "00449254",
+   "key": [
+    "종속기업투자",
+    "2018",
+    "OFS"
+   ],
+   "old": [
+    "ifrs_InvestmentsInSubsidiariesJointVenturesAndAssociates",
+    1145000000.0
+   ],
+   "new": null
+  },
+  {
+   "corp": "00526696",
+   "key": [
+    "관계기업투자",
+    "2017",
+    "OFS"
+   ],
+   "old": [
+    "-표준계정코드 미사용-",
+    1591773180.0
+   ],
+   "new": [
+    "ifrs_InvestmentsInSubsidiariesJointVenturesAndAssociates",
+    3740866678.0
+   ]
+  },
+  {
+   "corp": "00526696",
+   "key": [
+    "종속기업투자",
+    "2017",
+    "OFS"
+   ],
+   "old": [
+    "ifrs_InvestmentsInSubsidiariesJointVenturesAndAssociates",
+    3740866678.0
+   ],
+   "new": null
+  }
+ ],
+ "changed_examples": [
+  {
+   "corp": "00108649",
+   "key": [
+    "이자비용",
+    "2016",
+    "CFS"
+   ],
+   "old": [
+    "dart_InterestExpenseFinanceExpense",
+    1271606556.0
+   ],
+   "new": [
+    "ifrs_FinanceCosts",
+    1271606556.0
+   ]
+  },
+  {
+   "corp": "00108649",
+   "key": [
+    "이자비용",
+    "2016",
+    "OFS"
+   ],
+   "old": [
+    "dart_InterestExpenseFinanceExpense",
+    996324258.0
+   ],
+   "new": [
+    "ifrs_FinanceCosts",
+    996324258.0
+   ]
+  },
+  {
+   "corp": "00108649",
+   "key": [
+    "이자지급",
+    "2016",
+    "OFS"
+   ],
+   "old": [
+    "-표준계정코드 미사용-",
+    null
+   ],
+   "new": [
+    "ifrs_InterestPaidClassifiedAsOperatingActivities",
+    873614235.0
+   ]
+  },
+  {
+   "corp": "00110750",
+   "key": [
+    "재분류가능기타포괄손익",
+    "2020",
+    "OFS"
+   ],
+   "old": [
+    "dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+    null
+   ],
+   "new": null
+  },
+  {
+   "corp": "00118345",
+   "key": [
+    "이자비용",
+    "2017",
+    "CFS"
+   ],
+   "old": [
+    "dart_InterestExpenseFinanceExpense",
+    8640801731.0
+   ],
+   "new": [
+    "ifrs_FinanceCosts",
+    17798664000.0
+   ]
+  },
+  {
+   "corp": "00118345",
+   "key": [
+    "이자비용",
+    "2017",
+    "OFS"
+   ],
+   "old": [
+    "dart_InterestExpenseFinanceExpense",
+    4516602627.0
+   ],
+   "new": [
+    "ifrs_FinanceCosts",
+    8862189932.0
+   ]
+  },
+  {
+   "corp": "00118345",
+   "key": [
+    "이자비용",
+    "2018",
+    "CFS"
+   ],
+   "old": [
+    "dart_InterestExpenseFinanceExpense",
+    9782882110.0
+   ],
+   "new": [
+    "ifrs_FinanceCosts",
+    15296592848.0
+   ]
+  },
+  {
+   "corp": "00118345",
+   "key": [
+    "이자비용",
+    "2018",
+    "OFS"
+   ],
+   "old": [
+    "dart_InterestExpenseFinanceExpense",
+    5499521804.0
+   ],
+   "new": [
+    "ifrs_FinanceCosts",
+    7542374362.0
+   ]
+  },
+  {
+   "corp": "00127699",
+   "key": [
+    "재분류불가능기타포괄손익",
+    "2017",
+    "CFS"
+   ],
+   "old": [
+    "dart_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax",
+    572748819.0
+   ],
+   "new": null
+  },
+  {
+   "corp": "00127699",
+   "key": [
+    "재분류불가능기타포괄손익",
+    "2017",
+    "OFS"
+   ],
+   "old": [
+    "dart_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax",
+    -97437832.0
+   ],
+   "new": null
+  },
+  {
+   "corp": "00159616",
+   "key": [
+    "기타자본변동",
+    "2018",
+    "CFS"
+   ],
+   "old": [
+    "dart_ChangesInConsolidatedCompanies",
+    -83626257721.0
+   ],
+   "new": [
+    "ifrs_IncreaseDecreaseThroughChangesInAccountingPolicies",
+    -90570952802.0
+   ]
+  },
+  {
+   "corp": "00159616",
+   "key": [
+    "기타자본변동",
+    "2018",
+    "OFS"
+   ],
+   "old": [
+    "dart_CompoundFinancialInstrumentRedemption",
+    96877734.0
+   ],
+   "new": [
+    "ifrs_IncreaseDecreaseThroughChangesInAccountingPolicies",
+    -4481758089.0
+   ]
+  },
+  {
+   "corp": "00161976",
+   "key": [
+    "기타자본변동",
+    "2023",
+    "CFS"
+   ],
+   "old": [
+    "dart_ChangesInConsolidatedCompanies",
+    27500000.0
+   ],
+   "new": [
+    "dart_IncreaseDecreaseThroughChangesInAccountingPolicies",
+    79316347726.0
+   ]
+  },
+  {
+   "corp": "00175173",
+   "key": [
+    "기타자본변동",
+    "2025",
+    "CFS"
+   ],
+   "old": [
+    "dart_ChangesInConsolidatedCompanies",
+    null
+   ],
+   "new": [
+    "dart_IncreaseDecreaseThroughChangesInAccountingPolicies",
+    1358053672.0
+   ]
+  },
+  {
+   "corp": "00249502",
+   "key": [
+    "비지배지분순이익",
+    "2020",
+    "CFS"
+   ],
+   "old": [
+    "-표준계정코드 미사용-",
+    null
+   ],
+   "new": [
+    "ifrs_ProfitLossAttributableToNoncontrollingInterests",
+    null
+   ]
+  },
+  {
+   "corp": "00309503",
+   "key": [
+    "계약부채",
+    "2016",
+    "CFS"
+   ],
+   "old": [
+    "ifrs_CurrentPortionOfLongtermBorrowings",
+    56805000000.0
+   ],
+   "new": null
+  },
+  {
+   "corp": "00309503",
+   "key": [
+    "계약부채",
+    "2016",
+    "OFS"
+   ],
+   "old": [
+    "ifrs_CurrentPortionOfLongtermBorrowings",
+    56805000000.0
+   ],
+   "new": null
+  },
+  {
+   "corp": "00351807",
+   "key": [
+    "기타자본변동",
+    "2023",
+    "CFS"
+   ],
+   "old": [
+    "dart_ChangesInConsolidatedCompanies",
+    null
+   ],
+   "new": [
+    "dart_IncreaseDecreaseThroughChangesInAccountingPolicies",
+    -39109198.0
+   ]
+  },
+  {
+   "corp": "00367844",
+   "key": [
+    "기타자본변동",
+    "2023",
+    "CFS"
+   ],
+   "old": [
+    "dart_ChangesInConsolidatedCompanies",
+    null
+   ],
+   "new": [
+    "dart_IncreaseDecreaseThroughChangesInAccountingPolicies",
+    -6947836908.0
+   ]
+  },
+  {
+   "corp": "00409681",
+   "key": [
+    "FVOCI금융자산",
+    "2018",
+    "CFS"
+   ],
+   "old": [
+    "ifrs_NoncurrentFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome",
+    225495713.0
+   ],
+   "new": null
+  },
+  {
+   "corp": "00409681",
+   "key": [
+    "FVOCI금융자산",
+    "2018",
+    "OFS"
+   ],
+   "old": [
+    "ifrs_NoncurrentFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome",
+    225495713.0
+   ],
+   "new": null
+  },
+  {
+   "corp": "00413046",
+   "key": [
+    "기타자본변동",
+    "2018",
+    "CFS"
+   ],
+   "old": [
+    "dart_ChangesInConsolidatedCompanies",
+    10365.0
+   ],
+   "new": [
+    "ifrs_IncreaseDecreaseThroughChangesInAccountingPolicies",
+    -14491089510.0
+   ]
+  },
+  {
+   "corp": "00449254",
+   "key": [
+    "종속기업투자",
+    "2018",
+    "OFS"
+   ],
+   "old": [
+    "ifrs_InvestmentsInSubsidiariesJointVenturesAndAssociates",
+    1145000000.0
+   ],
+   "new": null
+  },
+  {
+   "corp": "00526696",
+   "key": [
+    "관계기업투자",
+    "2017",
+    "OFS"
+   ],
+   "old": [
+    "-표준계정코드 미사용-",
+    1591773180.0
+   ],
+   "new": [
+    "ifrs_InvestmentsInSubsidiariesJointVenturesAndAssociates",
+    3740866678.0
+   ]
+  },
+  {
+   "corp": "00526696",
+   "key": [
+    "종속기업투자",
+    "2017",
+    "OFS"
+   ],
+   "old": [
+    "ifrs_InvestmentsInSubsidiariesJointVenturesAndAssociates",
+    3740866678.0
+   ],
+   "new": null
+  },
+  {
+   "corp": "00728638",
+   "key": [
+    "기타자본변동",
+    "2023",
+    "CFS"
+   ],
+   "old": [
+    "dart_ChangesInConsolidatedCompanies",
+    69334464.0
+   ],
+   "new": [
+    "dart_IncreaseDecreaseThroughChangesInAccountingPolicies",
+    8561494538.0
+   ]
+  },
+  {
+   "corp": "01091382",
+   "key": [
+    "이자비용",
+    "2017",
+    "OFS"
+   ],
+   "old": [
+    "dart_InterestExpenseFinanceExpense",
+    87577491.0
+   ],
+   "new": [
+    "ifrs_FinanceCosts",
+    109558814.0
+   ]
+  }
+ ]
+}

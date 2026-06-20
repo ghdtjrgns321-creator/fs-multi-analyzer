@@ -342,6 +342,32 @@ mapping_status:
 유의성이 큰 미매핑 계정을 누락하면 그 자체가 2종오류다. mapping_status는 Finding의
 confidence에 전파한다.
 
+### 신규 회사 온보딩 게이트 (L1→L2 진입 관문)
+
+회사마다 라벨·확장계정이 무한 변주하므로, 전역 별칭으로 일괄 매핑하면 이중계상·오분류
+위험이 크다. 처음 보는 회사는 정규화 직후 **온보딩 게이트**를 거쳐야 분석(L2)에 진입한다.
+구현: `src/normalize/onboarding_gate.py`(게이트 러너) · `src/report/alias_suggest.py`(별칭
+제안기) · `dashboard/onboarding.py`(UI 휴먼인더루프).
+
+**(1) 결정론 검문 G1~G5** — 기존 감사 스크립트를 **재사용**(재구현 금지)해 정규화 품질을 검문.
+통과 기준: G1 완결성 OK + BS 항등식 잔차 tol(100만원) 이내 + G3 산술검산 경성 위반 0 +
+G5 신호 무결성 dangling 0. (G2 충돌 인벤토리·G6 dump는 보고용, 최종 판정은 G6 LLM.)
+
+**(2) G6 LLM 전문 통독** — `_p1_company_review.py` 전체 dump를 LLM(gpt-5.4, 9렌즈 홀리스틱)이
+통독한다. L3 역할 에이전트와 별개의 온보딩 전용 통독이다.
+
+**(3) 무표준코드 계정 별칭 제안 — 3단 분업** (원칙 1·4의 온보딩 적용):
+
+```
+후보 검색 = 코드   candidate_canonicals: 같은 표(statement) 안에서 라벨 2-gram 유사도순 후보
+분류 선택 = LLM    candidate 목록 안에서만 1개 선택(밖이면 '기타 중요 계정' 강등 = 환각 차단, _anchor)
+적용     = 사람    UI에서 확인 클릭해야만 등록(자동적용 금지). 부정 확정 아님(제안은 후보).
+```
+
+**(4) quirk 등록 + 재게이트** — 사람이 확정하면 `config/company_quirks.yaml`의 `alias_additions`
+/`account_overrides`로 등록된다. 다음 정규화 때 `_apply_company_quirks`가 corp_code/year를
+**데이터 키**로 그 회사·연도에만 적용(하드코딩 분기 아님), 매칭 없는 회사는 무변경(무회귀).
+
 ---
 
 ## 10. 주석 인덱서 (L1.5)

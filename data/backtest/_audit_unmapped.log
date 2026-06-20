@@ -1,0 +1,46 @@
+companies=1667 files=9319 rows(dedup)=1,181,691 mapped=577,523 unmapped=604,168(51.1%)
+raw(guard)=1,575,557 → stmt_dedup 붕괴=393,866 (차원행 raw=488,108)
+미분류 분해: {'has_id': 484822, 'blank_id': 119346}
+
+sj_div별 미분류:
+  BS: 136,380/406,642 (33.5%)
+  CF: 342,801/446,568 (76.8%)
+  CIS: 48,787/215,023 (22.7%)
+  IS: 3,948/16,834 (23.5%)
+  SCE: 72,252/96,624 (74.8%)
+
+분류후보(표준ID 보유·미매핑) 상위 30 / 총 2106종:
+     n    amax(억)  account_id  | label
+ 12142 115,872,704  ifrs-full_ProfitLoss                           | 당기순이익(손실)
+  9285 418,425,930  dart_CashAndCashEquivalentsAtBeginningOfPeriodCf | 기초현금및현금성자산
+  9244 789,251,126  ifrs-full_Equity                               | 자본총계
+  9085 370,488,403  dart_CashAndCashEquivalentsAtEndOfPeriodCf     | 기말현금및현금성자산
+  7167  6,653,991  dart_ElementsOfOtherStockholdersEquity         | 기타자본구성요소
+  7028  9,163,867  ifrs-full_EffectOfExchangeRateChangesOnCashAndCashEquivalents | 현금및현금성자산에 대한 환율변동효과
+  6956 311,327,346  dart_CapitalSurplus                            | 자본잉여금
+  6678 47,937,527  ifrs-full_IncreaseDecreaseInCashAndCashEquivalents | 현금및현금성자산의순증가(감소)
+  5915    252,735  ifrs-full_CurrentTaxAssets                     | 당기법인세자산
+  5840    753,100  dart_ProceedsFromShortTermBorrowings           | 단기차입금의 증가
+  5796    187,238  ifrs-full_OtherNoncurrentFinancialAssets       | 기타비유동금융자산
+  5705    726,100  dart_RepaymentsOfShortTermBorrowings           | 단기차입금의 상환
+  5445 70,551,532  ifrs-full_AdjustmentsForReconcileProfitLoss    | 당기순이익조정을 위한 가감
+  5423    183,774  ifrs-full_OtherCurrentFinancialAssets          | 기타유동금융자산
+  5152    824,000  dart_IncreaseInGuaranteeDeposits               | 임차보증금의 증가
+  5126    300,000  dart_DecreaseInGuaranteeDeposits               | 임차보증금의 감소
+  5075 207,054,642  dart_ProceedsFromSalesOfShortTermFinancialInstruments | 단기금융상품의 처분
+  4975 140,069,337  dart_PurchaseOfShortTermFinancialInstruments   | 단기금융상품의 취득
+  4922    294,978  ifrs-full_DividendsReceivedClassifiedAsOperatingActivities | 배당금수취(영업)
+  4826    185,257  ifrs-full_OtherCurrentLiabilities              | 기타 유동부채
+  4812 10,995,979  dart_OtherComprehensiveIncomeLossAccumulatedAmount | 기타포괄손익누계액
+  4652    411,397  ifrs-full_OtherCurrentFinancialLiabilities     | 기타유동금융부채
+  4542     35,650  ifrs-full_ProceedsFromSalesOfIntangibleAssetsClassifiedAsInvestingActivities | 무형자산의 처분
+  4207    983,341  ifrs-full_OtherNoncurrentFinancialLiabilities  | 기타비유동금융부채
+  3606    110,365  ifrs-full_IncreaseDecreaseInCashAndCashEquivalentsBeforeEffectOfExchangeRateChanges | 환율변동효과 반영전 현금및현금성자산의 순증가(감소)
+  3416     16,831  dart_LongTermDepositsNotClassifiedAsCashEquivalents | 장기금융상품
+  3358  5,122,200  dart_LongTermTradeAndOtherNonCurrentReceivablesGross | 장기매출채권 및 기타비유동채권
+  3350 18,979,809  dart_OtherCurrentLiabilities                   | 기타유동부채
+  3239    200,124  ifrs-full_OtherNoncurrentAssets                | 기타비유동자산
+  3117    148,360  dart_PurchaseOfLongTermFinancialInstruments    | 장기금융상품의 취득
+
+JSON -> data\backtest\_audit_unmapped.json
+EXIT=0

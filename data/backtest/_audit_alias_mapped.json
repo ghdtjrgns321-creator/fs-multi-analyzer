@@ -1,0 +1,5053 @@
+{
+ "coverage": {
+  "companies": 1667,
+  "rows_total": 1575557,
+  "mapped_rows": 682205,
+  "alias_with_id_rows": 30847,
+  "blank_alias_rows": 22398,
+  "distinct_id_canonical": 540
+ },
+ "items": [
+  {
+   "account_id": "dart_OtherCurrentAssets",
+   "canonical": "기타유동자산",
+   "n": 3172,
+   "amax": 6316834000000.0,
+   "labels": [
+    "기타유동자산"
+   ]
+  },
+  {
+   "account_id": "dart_ShortTermTradePayables",
+   "canonical": "매입채무",
+   "n": 1678,
+   "amax": 6523538225000000.0,
+   "labels": [
+    "매입채무"
+   ]
+  },
+  {
+   "account_id": "dart_AnnualDividendsPaid",
+   "canonical": "배당변동",
+   "n": 1525,
+   "amax": 1662952000000.0,
+   "labels": [
+    "연차배당"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_SaleOrIssueOfTreasuryShares",
+   "canonical": "자기주식변동",
+   "n": 940,
+   "amax": 5028098000000.0,
+   "labels": [
+    "자기주식의 처분",
+    "자기주식처분"
+   ]
+  },
+  {
+   "account_id": "dart_ProceedsFromPaidinCapitalIncrease",
+   "canonical": "자본금변동",
+   "n": 788,
+   "amax": 1540999986760.0,
+   "labels": [
+    "유상증자"
+   ]
+  },
+  {
+   "account_id": "dart_IncreaseDecreaseThroughChangesInAccountingPolicies",
+   "canonical": "기타자본변동",
+   "n": 734,
+   "amax": 15682543298.0,
+   "labels": [
+    "회계정책변경에 따른 증가(감소)"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NoncurrentFinancialAssetsAtFairValueThroughProfitOrLossDesignatedUponInitialRecognition",
+   "canonical": "FVPL금융자산",
+   "n": 641,
+   "amax": 920889852000000.0,
+   "labels": [
+    "당기손익-공정가치 측정  금융자산",
+    "당기손익-공정가치 측정 금융자산",
+    "당기손익-공정가치측정금융자산",
+    "당기손익공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_ShortTermOtherPayables",
+   "canonical": "미지급금",
+   "n": 614,
+   "amax": 9731378000000.0,
+   "labels": [
+    "미지급금"
+   ]
+  },
+  {
+   "account_id": "dart_DispositionOfTreasuryShares",
+   "canonical": "자기주식변동",
+   "n": 599,
+   "amax": 45788659945.0,
+   "labels": [
+    "자기주식의 처분"
+   ]
+  },
+  {
+   "account_id": "dart_StockDividends",
+   "canonical": "이익잉여금변동",
+   "n": 572,
+   "amax": 8762584500.0,
+   "labels": [
+    "주식배당"
+   ]
+  },
+  {
+   "account_id": "dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+   "canonical": "재분류불가능기타포괄손익",
+   "n": 540,
+   "amax": 5477248882747.0,
+   "labels": [
+    "후속적으로 당기손익으로 재분류 되지 않는 항목",
+    "후속적으로 당기손익으로 재분류되지 않는 항목",
+    "후속적으로 당기손익으로 재분류되지 않는항목"
+   ]
+  },
+  {
+   "account_id": "dart_OtherIntangibleAssetsGross",
+   "canonical": "무형자산",
+   "n": 538,
+   "amax": 12709019000000.0,
+   "labels": [
+    "무형자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NoncurrentRecognisedLiabilitiesDefinedBenefitPlan",
+   "canonical": "순확정급여부채",
+   "n": 434,
+   "amax": 1824402092011.0,
+   "labels": [
+    "순확정급여부채"
+   ]
+  },
+  {
+   "account_id": "dart_ShortTermAccruedExpenses",
+   "canonical": "미지급비용",
+   "n": 420,
+   "amax": 2531338705000.0,
+   "labels": [
+    "미지급비용"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentFinancialAssetsAtFairValueThroughProfitOrLossMandatorilyMeasuredAtFairValue",
+   "canonical": "FVPL금융자산",
+   "n": 409,
+   "amax": 651060825000.0,
+   "labels": [
+    "당기손익-공정가치 측정 금융자산",
+    "당기손익-공정가치측정 금융자산",
+    "당기손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_CompoundFinancialInstrumentConversion",
+   "canonical": "자본잉여금변동",
+   "n": 363,
+   "amax": 69904687596.0,
+   "labels": [
+    "전환권 행사"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_LongtermBorrowings",
+   "canonical": "장기차입금",
+   "n": 323,
+   "amax": 16374578210992.0,
+   "labels": [
+    "장기차입금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_FinancialAssetsAtFairValueThroughProfitOrLoss",
+   "canonical": "FVPL금융자산",
+   "n": 319,
+   "amax": 77038267000000.0,
+   "labels": [
+    "당기손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_RecognisedLiabilitiesDefinedBenefitPlan",
+   "canonical": "순확정급여부채",
+   "n": 309,
+   "amax": 2286504000000.0,
+   "labels": [
+    "순확정급여부채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NoncurrentFinancialAssetsAtFairValueThroughProfitOrLossMandatorilyMeasuredAtFairValue",
+   "canonical": "FVPL금융자산",
+   "n": 308,
+   "amax": 285204184000000.0,
+   "labels": [
+    "당기손익-공정가치 측정 금융자산",
+    "당기손익-공정가치측정 금융자산",
+    "당기손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentFinancialAssetsAtFairValueThroughProfitOrLossDesignatedUponInitialRecognition",
+   "canonical": "FVPL금융자산",
+   "n": 284,
+   "amax": 1224479390259.0,
+   "labels": [
+    "당기손익-공정가치 측정 금융자산",
+    "당기손익-공정가치측정 금융자산",
+    "당기손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_FinancialAssetsAtFairValueThroughOtherComprehensiveIncome",
+   "canonical": "FVOCI금융자산",
+   "n": 259,
+   "amax": 167664679000000.0,
+   "labels": [
+    "기타포괄손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_SubscriptionOnNewStocks",
+   "canonical": "자본금변동",
+   "n": 250,
+   "amax": 97615592443.0,
+   "labels": [
+    "유상증자"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_SellingGeneralAndAdministrativeExpense",
+   "canonical": "판매비와관리비",
+   "n": 242,
+   "amax": 4923101232000.0,
+   "labels": [
+    "판매비와관리비"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NoncurrentFinancialAssetsAtFairValueThroughProfitOrLoss",
+   "canonical": "FVPL금융자산",
+   "n": 239,
+   "amax": 31887472000000.0,
+   "labels": [
+    "당기손익-공정가치 측정 금융자산",
+    "당기손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_ProfitsOfAssociatesAndJointVenturesAccountedForUsingEquityMethod",
+   "canonical": "지분법이익",
+   "n": 237,
+   "amax": 375713845427.0,
+   "labels": [
+    "지분법이익"
+   ]
+  },
+  {
+   "account_id": "dart_LongTermTradeAndOtherNonCurrentReceivablesGross",
+   "canonical": "매출채권및기타유동채권",
+   "n": 236,
+   "amax": 1491046000000.0,
+   "labels": [
+    "매출채권 및 기타채권",
+    "매출채권및기타채권"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_InterestPaidClassifiedAsFinancingActivities",
+   "canonical": "이자지급",
+   "n": 236,
+   "amax": 1388308000000.0,
+   "labels": [
+    "이자의 지급"
+   ]
+  },
+  {
+   "account_id": "dart_PresentValueOfDefinedBenefitObligation",
+   "canonical": "확정급여부채",
+   "n": 234,
+   "amax": 96327896000.0,
+   "labels": [
+    "확정급여부채",
+    "확정급여채무"
+   ]
+  },
+  {
+   "account_id": "dart_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax",
+   "canonical": "재분류가능기타포괄손익",
+   "n": 231,
+   "amax": 4827801000000.0,
+   "labels": [
+    "후속적으로 당기손익으로 재분류되는 포괄손익",
+    "후속적으로 당기손익으로 재분류될 수 있는 항목"
+   ]
+  },
+  {
+   "account_id": "dart_NonCurrentFairValueFinancialAsset",
+   "canonical": "FVPL금융자산",
+   "n": 225,
+   "amax": 2227335975392.0,
+   "labels": [
+    "당기손익-공정가치 측정 금융자산",
+    "당기손익-공정가치측정금융자산",
+    "당기손익공정가치측정금융자산",
+    "당기손익인식금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_InterestExpenseFinanceExpense",
+   "canonical": "이자비용",
+   "n": 216,
+   "amax": 489672629000.0,
+   "labels": [
+    "이자비용"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NetDeferredTaxAssets",
+   "canonical": "이연법인세자산",
+   "n": 212,
+   "amax": 3520898000000.0,
+   "labels": [
+    "이연법인세자산"
+   ]
+  },
+  {
+   "account_id": "dart_LongTermTradeAndOtherNonCurrentPayables",
+   "canonical": "매입채무및기타유동채무",
+   "n": 210,
+   "amax": 1338781000000.0,
+   "labels": [
+    "매입채무 및 기타채무",
+    "매입채무및기타채무"
+   ]
+  },
+  {
+   "account_id": "dart_OtherComprehensiveIncomeNetOfTaxChangeInFairValueOfFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome",
+   "canonical": "FVOCI평가손익",
+   "n": 201,
+   "amax": 5580985297574.0,
+   "labels": [
+    "기타포괄손익-공정가치금융자산평가손익",
+    "기타포괄손익-공정가치측정금융자산평가손익"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NoncurrentFinancialAssetsAtAmortisedCost",
+   "canonical": "상각후원가금융자산",
+   "n": 195,
+   "amax": 26762840000000.0,
+   "labels": [
+    "상각후원가 측정 금융자산",
+    "상각후원가측정금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherComprehensiveIncomeNetOfTaxExchangeDifferencesOnTranslation",
+   "canonical": "해외사업환산손익",
+   "n": 190,
+   "amax": 1111292448000.0,
+   "labels": [
+    "해외사업환산손익"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_Provisions",
+   "canonical": "충당부채",
+   "n": 186,
+   "amax": 1444418000000.0,
+   "labels": [
+    "충당부채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_InterestExpense",
+   "canonical": "이자비용",
+   "n": 185,
+   "amax": 17003362000000.0,
+   "labels": [
+    "이자비용"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NetDeferredTaxLiabilities",
+   "canonical": "이연법인세부채",
+   "n": 171,
+   "amax": 2285274853807.0,
+   "labels": [
+    "이연법인세부채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentLoansReceivedAndCurrentPortionOfNoncurrentLoansReceived",
+   "canonical": "단기차입금",
+   "n": 169,
+   "amax": 5167109866827.0,
+   "labels": [
+    "단기차입금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentFinancialAssetsAtAmortisedCost",
+   "canonical": "상각후원가금융자산",
+   "n": 167,
+   "amax": 18557570000000.0,
+   "labels": [
+    "상각후원가 측정 금융자산",
+    "상각후원가측정금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_CurrentFirmCommitmentLiabilities",
+   "canonical": "계약부채",
+   "n": 164,
+   "amax": 275560263880.0,
+   "labels": [
+    "계약부채",
+    "유동확정계약부채",
+    "확정계약부채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_InterestReceivedClassifiedAsInvestingActivities",
+   "canonical": "이자수취",
+   "n": 163,
+   "amax": 336120000000.0,
+   "labels": [
+    "이자의 수취"
+   ]
+  },
+  {
+   "account_id": "dart_StockDividends",
+   "canonical": "배당변동",
+   "n": 162,
+   "amax": 68118240061.0,
+   "labels": [
+    "연차배당"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentFinancialAssetsAtFairValueThroughProfitOrLoss",
+   "canonical": "FVPL금융자산",
+   "n": 159,
+   "amax": 26057107000000.0,
+   "labels": [
+    "당기손익-공정가치 측정 금융자산",
+    "당기손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_BondsIssuedNominalValue",
+   "canonical": "사채",
+   "n": 147,
+   "amax": 7106299000000.0,
+   "labels": [
+    "사채"
+   ]
+  },
+  {
+   "account_id": "dart_PresentValueOfDefinedBenefitObligation",
+   "canonical": "순확정급여부채",
+   "n": 147,
+   "amax": 468800020299.0,
+   "labels": [
+    "순확정급여부채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_BondsIssued",
+   "canonical": "사채",
+   "n": 146,
+   "amax": 203390126000000.0,
+   "labels": [
+    "사채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NoncurrentRecognisedLiabilitiesDefinedBenefitPlan",
+   "canonical": "확정급여부채",
+   "n": 143,
+   "amax": 109726723661.0,
+   "labels": [
+    "확정급여부채",
+    "확정급여채무"
+   ]
+  },
+  {
+   "account_id": "dart_CurrentFirmCommitmentAsset",
+   "canonical": "계약자산",
+   "n": 130,
+   "amax": 1192312019000.0,
+   "labels": [
+    "계약자산",
+    "유동확정계약자산",
+    "확정계약자산"
+   ]
+  },
+  {
+   "account_id": "dart_BonusIssue",
+   "canonical": "자본금변동",
+   "n": 126,
+   "amax": 115977028091.0,
+   "labels": [
+    "유상증자"
+   ]
+  },
+  {
+   "account_id": "dart_SubscriptionOnNewStocks",
+   "canonical": "기타자본변동",
+   "n": 122,
+   "amax": 6076801845.0,
+   "labels": [
+    "신주인수권 행사"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherComprehensiveIncomeBeforeTaxGainsLossesOnRemeasurementsOfDefinedBenefitPlans",
+   "canonical": "확정급여재측정손익",
+   "n": 122,
+   "amax": 418419000000.0,
+   "labels": [
+    "확정급여제도의 재측정요소"
+   ]
+  },
+  {
+   "account_id": "dart_StockRedemption",
+   "canonical": "자본금변동",
+   "n": 119,
+   "amax": 3299760799400.0,
+   "labels": [
+    "유상증자"
+   ]
+  },
+  {
+   "account_id": "dart_PurchaseDisposalsOfOddShares",
+   "canonical": "자기주식변동",
+   "n": 116,
+   "amax": 170519707158.0,
+   "labels": [
+    "자기주식 처분"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentBondsIssuedAndCurrentPortionOfNoncurrentBondsIssued",
+   "canonical": "유동성사채",
+   "n": 113,
+   "amax": 1313396319430.0,
+   "labels": [
+    "유동성 사채",
+    "유동성사채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_GainsLossesOnFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncomeNetOfTax",
+   "canonical": "FVOCI평가손익",
+   "n": 113,
+   "amax": 5579107559094.0,
+   "labels": [
+    "기타포괄손익-공정가치 측정 금융자산 평가손익",
+    "기타포괄손익-공정가치측정 금융자산평가손익",
+    "기타포괄손익-공정가치측정금융자산 평가손익",
+    "기타포괄손익-공정가치측정금융자산평가손익"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_RevenueFromSaleOfGoods",
+   "canonical": "매출",
+   "n": 112,
+   "amax": 1699315845004.0,
+   "labels": [
+    "재화의 판매로 인한 수익(매출액)"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NoncurrentInvestmentsInEquityInstrumentsDesignatedAtFairValueThroughOtherComprehensiveIncome",
+   "canonical": "FVOCI금융자산",
+   "n": 109,
+   "amax": 16295005000000.0,
+   "labels": [
+    "기타포괄손익-공정가치 금융자산",
+    "기타포괄손익-공정가치금융 자산",
+    "기타포괄손익-공정가치금융자산",
+    "기타포괄손익-공정가치측정 금융자산",
+    "기타포괄손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NoncurrentFinancialAssetsAtFairValueThroughProfitOrLossDesignatedUponInitialRecognition",
+   "canonical": "비유동FVPL금융자산",
+   "n": 105,
+   "amax": 249194000000.0,
+   "labels": [
+    "비유동 당기손익-공정가치 측정 금융자산",
+    "비유동당기손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRevaluation",
+   "canonical": "FVOCI평가손익",
+   "n": 104,
+   "amax": 152436416237.0,
+   "labels": [
+    "기타포괄손익 -공정가치 금융자산평가손익",
+    "기타포괄손익-공정가치 측정 금융자산 평가손익",
+    "기타포괄손익-공정가치 측정 금융자산평가손익",
+    "기타포괄손익-공정가치금융자산평가손익",
+    "기타포괄손익-공정가치측정 금융자산 평가손익"
+   ]
+  },
+  {
+   "account_id": "dart_NonOperatingExpense",
+   "canonical": "기타비용",
+   "n": 102,
+   "amax": 132920041414.0,
+   "labels": [
+    "기타비용"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_IncreaseDecreaseThroughTransfersAndOtherChangesEquity",
+   "canonical": "이익잉여금변동",
+   "n": 98,
+   "amax": 60000000000.0,
+   "labels": [
+    "결손금보전"
+   ]
+  },
+  {
+   "account_id": "ifrs_ProfitLoss",
+   "canonical": "당기순이익",
+   "n": 98,
+   "amax": 1750899329509.0,
+   "labels": [
+    "당기순이익(손실)"
+   ]
+  },
+  {
+   "account_id": "dart_NonOperatingIncome",
+   "canonical": "기타수익",
+   "n": 95,
+   "amax": 86147046693.0,
+   "labels": [
+    "기타수익"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_FinancialAssetsAtAmortisedCost",
+   "canonical": "상각후원가금융자산",
+   "n": 95,
+   "amax": 82774703000000.0,
+   "labels": [
+    "상각후원가측정금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_InventoriesTotal",
+   "canonical": "재고자산",
+   "n": 91,
+   "amax": 1309807342000.0,
+   "labels": [
+    "재고자산"
+   ]
+  },
+  {
+   "account_id": "dart_NonCurrentFinanceLeaseLiabilities",
+   "canonical": "리스부채",
+   "n": 89,
+   "amax": 5401988026854.0,
+   "labels": [
+    "리스부채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NoncurrentFinancialAssetsAtFairValueThroughOtherComprehensiveIncome",
+   "canonical": "FVOCI금융자산",
+   "n": 89,
+   "amax": 60439142000000.0,
+   "labels": [
+    "기타포괄손익-공정가치 측정 금융자산",
+    "기타포괄손익-공정가치금융자산",
+    "기타포괄손익-공정가치측정 금융자산",
+    "기타포괄손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_PurchaseOfIntangibleAssetsOtherThanGoodwill",
+   "canonical": "무형자산취득",
+   "n": 87,
+   "amax": 30721865325.0,
+   "labels": [
+    "무형자산의 취득"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentBorrowingsAndCurrentPortionOfNoncurrentBorrowings",
+   "canonical": "단기차입금",
+   "n": 87,
+   "amax": 32119392614335.0,
+   "labels": [
+    "단기차입금",
+    "단기차입부채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentLoansReceivedAndCurrentPortionOfNoncurrentLoansReceived",
+   "canonical": "유동성장기차입금",
+   "n": 84,
+   "amax": 1680071093286.0,
+   "labels": [
+    "유동성장기부채",
+    "유동성장기차입금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NoncurrentFinancialAssetsAtAmortisedCost",
+   "canonical": "비유동상각후원가금융자산",
+   "n": 83,
+   "amax": 4414496858635.0,
+   "labels": [
+    "비유동 상각후원가 측정 금융자산",
+    "비유동 상각후원가측정금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_CurrentFinancialAssetDesignationAsAtFairValueThroughProfitOrLoss",
+   "canonical": "FVPL금융자산",
+   "n": 80,
+   "amax": 697743584418.0,
+   "labels": [
+    "당기손익-공정가치측정금융자산",
+    "당기손익인식금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_TradeAndOtherPayablesToTradeSuppliers",
+   "canonical": "매입채무",
+   "n": 79,
+   "amax": 671496738000.0,
+   "labels": [
+    "매입채무"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NoncurrentReceivables",
+   "canonical": "매출채권및기타유동채권",
+   "n": 78,
+   "amax": 989602000000.0,
+   "labels": [
+    "매출채권및기타채권"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_IncreaseDecreaseThroughConversionOfConvertibleInstruments",
+   "canonical": "자본잉여금변동",
+   "n": 76,
+   "amax": 52280298505.0,
+   "labels": [
+    "전환권 행사",
+    "전환권행사"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentFinancialAssetsAtFairValueThroughProfitOrLossDesignatedUponInitialRecognition",
+   "canonical": "유동FVPL금융자산",
+   "n": 75,
+   "amax": 43509157689.0,
+   "labels": [
+    "유동 당기손익-공정가치 측정 금융자산",
+    "유동당기손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_IncreaseDecreaseThroughTreasuryShareTransactions",
+   "canonical": "자기주식변동",
+   "n": 74,
+   "amax": 22237045457.0,
+   "labels": [
+    "자기주식"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_DividendsPaidOrdinaryShares",
+   "canonical": "배당변동",
+   "n": 73,
+   "amax": 88757700748.0,
+   "labels": [
+    "연차배당"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_GainsLossesOnExchangeDifferencesOnTranslationBeforeTax",
+   "canonical": "해외사업환산손익",
+   "n": 72,
+   "amax": 3369790000000.0,
+   "labels": [
+    "해외사업장환산외환차이",
+    "해외사업환산손익"
+   ]
+  },
+  {
+   "account_id": "ifrs_Equity",
+   "canonical": "자본총계",
+   "n": 71,
+   "amax": 7026107672132.0,
+   "labels": [
+    "자본총계"
+   ]
+  },
+  {
+   "account_id": "ifrs_EquityAndLiabilities",
+   "canonical": "자본과부채총계",
+   "n": 71,
+   "amax": 27260140610258.0,
+   "labels": [
+    "자본과부채총계"
+   ]
+  },
+  {
+   "account_id": "ifrs_Liabilities",
+   "canonical": "부채총계",
+   "n": 71,
+   "amax": 20234032938126.0,
+   "labels": [
+    "부채총계"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentFinancialAssetsAtAmortisedCost",
+   "canonical": "유동상각후원가금융자산",
+   "n": 69,
+   "amax": 13880108918766.0,
+   "labels": [
+    "유동 상각후원가 측정 금융자산",
+    "유동 상각후원가측정금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs_Assets",
+   "canonical": "자산총계",
+   "n": 69,
+   "amax": 27260140610258.0,
+   "labels": [
+    "자산총계"
+   ]
+  },
+  {
+   "account_id": "ifrs_CostOfSales",
+   "canonical": "매출원가",
+   "n": 69,
+   "amax": 13646660617300.0,
+   "labels": [
+    "매출원가"
+   ]
+  },
+  {
+   "account_id": "ifrs_CurrentAssets",
+   "canonical": "유동자산",
+   "n": 69,
+   "amax": 10724405644031.0,
+   "labels": [
+    "유동자산"
+   ]
+  },
+  {
+   "account_id": "ifrs_CurrentLiabilities",
+   "canonical": "유동부채",
+   "n": 69,
+   "amax": 12455495879242.0,
+   "labels": [
+    "유동부채"
+   ]
+  },
+  {
+   "account_id": "ifrs_FinanceIncome",
+   "canonical": "금융수익",
+   "n": 69,
+   "amax": 1236190085496.0,
+   "labels": [
+    "금융수익"
+   ]
+  },
+  {
+   "account_id": "ifrs_GrossProfit",
+   "canonical": "매출총이익",
+   "n": 69,
+   "amax": 2568473621938.0,
+   "labels": [
+    "매출총이익"
+   ]
+  },
+  {
+   "account_id": "ifrs_Inventories",
+   "canonical": "재고자산",
+   "n": 69,
+   "amax": 2196491764508.0,
+   "labels": [
+    "재고자산"
+   ]
+  },
+  {
+   "account_id": "ifrs_NoncurrentAssets",
+   "canonical": "비유동자산",
+   "n": 69,
+   "amax": 16535734966227.0,
+   "labels": [
+    "비유동자산"
+   ]
+  },
+  {
+   "account_id": "ifrs_NoncurrentLiabilities",
+   "canonical": "비유동부채",
+   "n": 69,
+   "amax": 7778537058884.0,
+   "labels": [
+    "비유동부채"
+   ]
+  },
+  {
+   "account_id": "ifrs_PropertyPlantAndEquipment",
+   "canonical": "유형자산",
+   "n": 69,
+   "amax": 7206578365565.0,
+   "labels": [
+    "유형자산"
+   ]
+  },
+  {
+   "account_id": "ifrs_Revenue",
+   "canonical": "매출",
+   "n": 69,
+   "amax": 16204318150763.0,
+   "labels": [
+    "매출액",
+    "수익(매출액)"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_InvestmentsInAssociatesAccountedForUsingEquityMethod",
+   "canonical": "관계기업투자",
+   "n": 68,
+   "amax": 1602981406500.0,
+   "labels": [
+    "관계기업 투자",
+    "관계기업및공동기업투자",
+    "관계기업투자",
+    "관계기업투자주식"
+   ]
+  },
+  {
+   "account_id": "ifrs_IncomeTaxExpenseContinuingOperations",
+   "canonical": "법인세비용",
+   "n": 68,
+   "amax": 227116568262.0,
+   "labels": [
+    "법인세비용",
+    "법인세비용 (수익)",
+    "법인세비용(수익)",
+    "법인세비용(이익)"
+   ]
+  },
+  {
+   "account_id": "ifrs_ProfitLossBeforeTax",
+   "canonical": "법인세비용차감전순이익",
+   "n": 67,
+   "amax": 1557862716748.0,
+   "labels": [
+    "법인세비용차감전순이익(손실)"
+   ]
+  },
+  {
+   "account_id": "ifrs_CashAndCashEquivalents",
+   "canonical": "현금및현금성자산",
+   "n": 65,
+   "amax": 2075328693318.0,
+   "labels": [
+    "현금및현금성자산"
+   ]
+  },
+  {
+   "account_id": "dart_CompoundFinancialInstrumentConversion",
+   "canonical": "기타자본변동",
+   "n": 64,
+   "amax": 9972371156.0,
+   "labels": [
+    "신주인수권 행사"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossBeforeTax",
+   "canonical": "재분류불가능기타포괄손익",
+   "n": 62,
+   "amax": 7108910081957.0,
+   "labels": [
+    "후속적으로 당기손익으로 재분류되지 않는 항목"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_IncreaseDecreaseThroughChangesInOwnershipInterestsInSubsidiariesThatDoNotResultInLossOfControl",
+   "canonical": "기타자본변동",
+   "n": 60,
+   "amax": 8849241147.0,
+   "labels": [
+    "연결실체내 자본거래 등"
+   ]
+  },
+  {
+   "account_id": "ifrs_ProceedsFromSalesOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities",
+   "canonical": "유형자산처분",
+   "n": 59,
+   "amax": 69257010540.0,
+   "labels": [
+    "유형자산의 처분"
+   ]
+  },
+  {
+   "account_id": "ifrs_PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities",
+   "canonical": "유형자산취득",
+   "n": 59,
+   "amax": 388747759099.0,
+   "labels": [
+    "유형자산의 취득"
+   ]
+  },
+  {
+   "account_id": "dart_OtherComprehensiveIncomeBeforeTaxGainsLossesOnRemeasurementsOfDefinedBenefitPlans",
+   "canonical": "확정급여재측정손익",
+   "n": 58,
+   "amax": 80154670492.0,
+   "labels": [
+    "순확정급여부채의 재측정요소",
+    "확정급여제도의 재측정요소"
+   ]
+  },
+  {
+   "account_id": "dart_ProfitLossForStatementOfCashFlows",
+   "canonical": "영업창출현금흐름",
+   "n": 58,
+   "amax": 49589897000000.0,
+   "labels": [
+    "영업에서 창출된 현금흐름"
+   ]
+  },
+  {
+   "account_id": "dart_TransferFromSharePremiumToAccumulatedDeficit",
+   "canonical": "이익잉여금변동",
+   "n": 58,
+   "amax": 175000000000.0,
+   "labels": [
+    "결손금 보전",
+    "결손금보전"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherComprehensiveIncomeNetOfTaxCashFlowHedges",
+   "canonical": "현금흐름위험회피손익",
+   "n": 58,
+   "amax": 860543000000.0,
+   "labels": [
+    "현금흐름위험회피파생상품평가손익"
+   ]
+  },
+  {
+   "account_id": "dart_IssuedCapitalOfCommonStock",
+   "canonical": "자본금",
+   "n": 57,
+   "amax": 3209820000000.0,
+   "labels": [
+    "자본금"
+   ]
+  },
+  {
+   "account_id": "ifrs_IssuedCapital",
+   "canonical": "자본금",
+   "n": 57,
+   "amax": 650255065000.0,
+   "labels": [
+    "자본금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherComprehensiveIncomeNetOfTaxFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome",
+   "canonical": "FVOCI평가손익",
+   "n": 56,
+   "amax": 1167373000000.0,
+   "labels": [
+    "기타포괄손익-공정가치 금융자산 평가손익",
+    "기타포괄손익-공정가치금융자산평가손익",
+    "기타포괄손익-공정가치측정금융자산 평가손익",
+    "기타포괄손익-공정가치측정금융자산평가손익"
+   ]
+  },
+  {
+   "account_id": "ifrs_CashFlowsFromUsedInFinancingActivities",
+   "canonical": "재무활동현금흐름",
+   "n": 56,
+   "amax": 2251618951835.0,
+   "labels": [
+    "재무활동현금흐름"
+   ]
+  },
+  {
+   "account_id": "ifrs_CashFlowsFromUsedInInvestingActivities",
+   "canonical": "투자활동현금흐름",
+   "n": 56,
+   "amax": 964783537802.0,
+   "labels": [
+    "투자활동현금흐름"
+   ]
+  },
+  {
+   "account_id": "ifrs_CashFlowsFromUsedInOperatingActivities",
+   "canonical": "영업활동현금흐름",
+   "n": 56,
+   "amax": 967566785961.0,
+   "labels": [
+    "영업활동현금흐름"
+   ]
+  },
+  {
+   "account_id": "dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossBeforeTax",
+   "canonical": "재분류불가능기타포괄손익",
+   "n": 55,
+   "amax": 735066648149.0,
+   "labels": [
+    "후속적으로 당기손익으로 재분류되지 않는 항목",
+    "후속적으로당기손익으로재분류되지않는항목"
+   ]
+  },
+  {
+   "account_id": "ifrs_PurchaseOfIntangibleAssetsClassifiedAsInvestingActivities",
+   "canonical": "무형자산취득",
+   "n": 55,
+   "amax": 309784390949.0,
+   "labels": [
+    "무형자산의 취득"
+   ]
+  },
+  {
+   "account_id": "dart_DebtForEquitySwaps",
+   "canonical": "자본잉여금변동",
+   "n": 54,
+   "amax": 37568027291.0,
+   "labels": [
+    "전환권 행사"
+   ]
+  },
+  {
+   "account_id": "dart_ShortTermDueFromCustomersForContractWorkNet",
+   "canonical": "계약자산",
+   "n": 53,
+   "amax": 314156403164.0,
+   "labels": [
+    "단기미청구공사",
+    "미청구공사"
+   ]
+  },
+  {
+   "account_id": "ifrs_BasicEarningsLossPerShare",
+   "canonical": "기본주당이익",
+   "n": 53,
+   "amax": 10631.0,
+   "labels": [
+    "기본주당이익(손실)"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NoncurrentFinancialAssetsAtFairValueThroughProfitOrLossMandatorilyMeasuredAtFairValue",
+   "canonical": "비유동FVPL금융자산",
+   "n": 51,
+   "amax": 64088161098.0,
+   "labels": [
+    "비유동 당기손익-공정가치 측정 금융자산",
+    "비유동 당기손익-공정가치측정 금융자산",
+    "비유동당기손익-공정가치측정 금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_OtherTransactions",
+   "canonical": "기타자본변동",
+   "n": 50,
+   "amax": 3240035000.0,
+   "labels": [
+    "신주인수권행사",
+    "연결실체내 자본거래 등"
+   ]
+  },
+  {
+   "account_id": "dart_CompoundFinancialInstrumentRedemption",
+   "canonical": "기타자본변동",
+   "n": 49,
+   "amax": 312910109.0,
+   "labels": [
+    "전환사채 조기상환"
+   ]
+  },
+  {
+   "account_id": "dart_CurentPortionOfFinanceLeaseLiabilities",
+   "canonical": "리스부채",
+   "n": 49,
+   "amax": 750262843999.0,
+   "labels": [
+    "리스부채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentFinancialAssetsAtFairValueThroughProfitOrLossMandatorilyMeasuredAtFairValue",
+   "canonical": "유동FVPL금융자산",
+   "n": 49,
+   "amax": 35505812034.0,
+   "labels": [
+    "유동 당기손익-공정가치 측정 금융자산",
+    "유동 당기손익-공정가치측정 금융자산",
+    "유동당기손익-공정가치 측정 금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_AppropriationTransferReservationOfRetainedEarnings",
+   "canonical": "이익잉여금변동",
+   "n": 48,
+   "amax": 66274672701.0,
+   "labels": [
+    "결손금 보전",
+    "결손금보전"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_Borrowings",
+   "canonical": "단기차입금",
+   "n": 48,
+   "amax": 172796457377.0,
+   "labels": [
+    "단기차입금",
+    "단기차입부채"
+   ]
+  },
+  {
+   "account_id": "dart_NonCurrentFirmCommitmentAsset",
+   "canonical": "계약자산",
+   "n": 47,
+   "amax": 1702190498000.0,
+   "labels": [
+    "확정계약자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NoncurrentFinancialAssetsAtFairValueThroughProfitOrLoss",
+   "canonical": "비유동FVPL금융자산",
+   "n": 47,
+   "amax": 727268575539.0,
+   "labels": [
+    "비유동 당기손익-공정가치 측정 금융자산",
+    "비유동 당기손익-공정가치측정금융자산",
+    "비유동당기손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs_IntangibleAssetsOtherThanGoodwill",
+   "canonical": "무형자산",
+   "n": 46,
+   "amax": 6683116364942.0,
+   "labels": [
+    "무형자산"
+   ]
+  },
+  {
+   "account_id": "dart_NonCurrentFirmCommitmentLiabilities",
+   "canonical": "계약부채",
+   "n": 45,
+   "amax": 324974480000.0,
+   "labels": [
+    "확정계약부채"
+   ]
+  },
+  {
+   "account_id": "dart_ShareOfOtherComprehensiveIncomeOfAssociatesAndJointVenturesAccountedForUsingEquityMethodThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+   "canonical": "FVOCI평가손익",
+   "n": 45,
+   "amax": 63441071755.0,
+   "labels": [
+    "기타포괄손익-공정가치 금융자산 평가손익",
+    "기타포괄손익-공정가치 측정 금융자산  평가손익",
+    "기타포괄손익-공정가치금융자산평가손익",
+    "기타포괄손익-공정가치측정 금융자산평가손익",
+    "기타포괄손익-공정가치측정금융자산 평가손익"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentFinancialAssetsAtFairValueThroughProfitOrLoss",
+   "canonical": "유동FVPL금융자산",
+   "n": 44,
+   "amax": 130373459453.0,
+   "labels": [
+    "유동 당기손익-공정가치 측정 금융자산",
+    "유동 당기손익-공정가치측정금융자산",
+    "유동당기손익-공정가치측정 금융자산",
+    "유동당기손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_IncreaseDecreaseThroughExerciseOfWarrantsEquity",
+   "canonical": "기타자본변동",
+   "n": 44,
+   "amax": 2358671350.0,
+   "labels": [
+    "신주인수권 행사",
+    "신주인수권행사"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherComprehensiveIncomeBeforeTaxGainsLossesFromInvestmentsInEquityInstruments",
+   "canonical": "FVOCI평가손익",
+   "n": 42,
+   "amax": 17927868596.0,
+   "labels": [
+    "기타포괄손익-공정가치 금융자산 평가손익",
+    "기타포괄손익-공정가치 측정 금융자산 평가손익",
+    "기타포괄손익-공정가치 측정 금융자산평가손익"
+   ]
+  },
+  {
+   "account_id": "ifrs_DeferredTaxAssets",
+   "canonical": "이연법인세자산",
+   "n": 42,
+   "amax": 782988943041.0,
+   "labels": [
+    "이연법인세자산"
+   ]
+  },
+  {
+   "account_id": "dart_ProceedsFromExerciseOfConvertibleRightOrWarrant",
+   "canonical": "자본잉여금변동",
+   "n": 40,
+   "amax": 6500278822.0,
+   "labels": [
+    "전환권 행사",
+    "전환권행사"
+   ]
+  },
+  {
+   "account_id": "dart_ShortTermTradePayables",
+   "canonical": "매입채무및기타유동채무",
+   "n": 39,
+   "amax": 912743301000.0,
+   "labels": [
+    "매입채무 및 기타채무",
+    "매입채무및기타채무"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NoncurrentProvisionsForEmployeeBenefits",
+   "canonical": "확정급여부채",
+   "n": 39,
+   "amax": 24635560226.0,
+   "labels": [
+    "확정급여부채",
+    "확정급여채무"
+   ]
+  },
+  {
+   "account_id": "dart_GoodwillGross",
+   "canonical": "무형자산",
+   "n": 38,
+   "amax": 1481423637125.0,
+   "labels": [
+    "무형자산"
+   ]
+  },
+  {
+   "account_id": "dart_LongTermTradePayablesGross",
+   "canonical": "비유동매입채무",
+   "n": 38,
+   "amax": 547500727134.0,
+   "labels": [
+    "장기매입채무"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_InterestPaidClassifiedAsInvestingActivities",
+   "canonical": "이자지급",
+   "n": 38,
+   "amax": 85130803598.0,
+   "labels": [
+    "이자의 지급"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_TradeReceivables",
+   "canonical": "매출채권",
+   "n": 38,
+   "amax": 1018926417007.0,
+   "labels": [
+    "매출채권"
+   ]
+  },
+  {
+   "account_id": "ifrs_DilutedEarningsLossPerShare",
+   "canonical": "희석주당이익",
+   "n": 38,
+   "amax": 10631.0,
+   "labels": [
+    "희석주당이익(손실)"
+   ]
+  },
+  {
+   "account_id": "ifrs_DividendsPaid",
+   "canonical": "배당변동",
+   "n": 38,
+   "amax": 70696040963.0,
+   "labels": [
+    "연차배당"
+   ]
+  },
+  {
+   "account_id": "ifrs_InvestmentProperty",
+   "canonical": "투자부동산",
+   "n": 37,
+   "amax": 270299018663.0,
+   "labels": [
+    "투자부동산"
+   ]
+  },
+  {
+   "account_id": "dart_AdjustmentsForOtherRevenue",
+   "canonical": "기타수익",
+   "n": 36,
+   "amax": 93769000000.0,
+   "labels": [
+    "기타수익"
+   ]
+  },
+  {
+   "account_id": "dart_Payables",
+   "canonical": "미지급금",
+   "n": 36,
+   "amax": 646828951000.0,
+   "labels": [
+    "미지급금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NoncurrentPayables",
+   "canonical": "매입채무및기타유동채무",
+   "n": 35,
+   "amax": 28005231911.0,
+   "labels": [
+    "매입채무및기타채무"
+   ]
+  },
+  {
+   "account_id": "dart_LongTermTradeAndOtherNonCurrentReceivablesGross",
+   "canonical": "비유동매출채권",
+   "n": 34,
+   "amax": 14191047997.0,
+   "labels": [
+    "비유동매출채권",
+    "장기매출채권"
+   ]
+  },
+  {
+   "account_id": "dart_RepaymentsOfBondWithWarrant",
+   "canonical": "기타자본변동",
+   "n": 34,
+   "amax": 9267509773.0,
+   "labels": [
+    "신주인수권 행사"
+   ]
+  },
+  {
+   "account_id": "dart_AppropriationTransferReservationOfRetainedEarnings",
+   "canonical": "배당변동",
+   "n": 33,
+   "amax": 6586571000.0,
+   "labels": [
+    "연차배당"
+   ]
+  },
+  {
+   "account_id": "dart_PrepaidExpenses",
+   "canonical": "선급비용",
+   "n": 33,
+   "amax": 10896062000.0,
+   "labels": [
+    "선급비용"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_Accruals",
+   "canonical": "미지급비용",
+   "n": 33,
+   "amax": 144265512000.0,
+   "labels": [
+    "미지급비용"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NoncurrentProvisionsForEmployeeBenefits",
+   "canonical": "순확정급여부채",
+   "n": 33,
+   "amax": 674264222128.0,
+   "labels": [
+    "순확정급여부채"
+   ]
+  },
+  {
+   "account_id": "ifrs_CurrentTaxLiabilities",
+   "canonical": "당기법인세부채",
+   "n": 33,
+   "amax": 63399841666.0,
+   "labels": [
+    "당기법인세부채"
+   ]
+  },
+  {
+   "account_id": "ifrs_DeferredTaxLiabilities",
+   "canonical": "이연법인세부채",
+   "n": 31,
+   "amax": 373209052064.0,
+   "labels": [
+    "이연법인세부채"
+   ]
+  },
+  {
+   "account_id": "ifrs_FinanceCosts",
+   "canonical": "이자비용",
+   "n": 31,
+   "amax": 1652463152369.0,
+   "labels": [
+    "금융비용"
+   ]
+  },
+  {
+   "account_id": "ifrs_ProfitLossAttributableToNoncontrollingInterests",
+   "canonical": "비지배지분순이익",
+   "n": 31,
+   "amax": 712356108865.0,
+   "labels": [
+    "비지배지분",
+    "비지배지분에 귀속되는 당기순이익(손실)"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NoncurrentPortionOfOtherNoncurrentBorrowings",
+   "canonical": "장기차입금",
+   "n": 30,
+   "amax": 3242408246667.0,
+   "labels": [
+    "장기차입금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossBeforeTax",
+   "canonical": "재분류가능기타포괄손익",
+   "n": 30,
+   "amax": 11272238108.0,
+   "labels": [
+    "후속적으로 당기손익으로 재분류될 수 있는 항목"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_IncreaseDecreaseThroughChangesInOwnershipInterestsInSubsidiariesThatDoNotResultInLossOfControl",
+   "canonical": "자본금변동",
+   "n": 29,
+   "amax": 15000000000.0,
+   "labels": [
+    "유상증자"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherIncomeExpenseFromSubsidiariesJointlyControlledEntitiesAndAssociates",
+   "canonical": "지분법이익",
+   "n": 29,
+   "amax": 97143639802.0,
+   "labels": [
+    "지분법이익",
+    "지분법이익(손실)"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_RecognisedLiabilitiesDefinedBenefitPlan",
+   "canonical": "확정급여부채",
+   "n": 29,
+   "amax": 9736653719.0,
+   "labels": [
+    "확정급여부채",
+    "확정급여채무"
+   ]
+  },
+  {
+   "account_id": "dart_NetCashflowsFromUsedInOperations",
+   "canonical": "영업창출현금흐름",
+   "n": 28,
+   "amax": 3169950000000.0,
+   "labels": [
+    "영업에서 창출된 현금흐름"
+   ]
+  },
+  {
+   "account_id": "ifrs_CurrentPortionOfLongtermBorrowings",
+   "canonical": "유동성장기차입금",
+   "n": 28,
+   "amax": 2049828436541.0,
+   "labels": [
+    "유동성장기부채",
+    "유동성장기차입금"
+   ]
+  },
+  {
+   "account_id": "dart_OtherTransactions",
+   "canonical": "자기주식변동",
+   "n": 27,
+   "amax": 829324556.0,
+   "labels": [
+    "자기주식의 처분"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_Advances",
+   "canonical": "선수금",
+   "n": 26,
+   "amax": 212283976877.0,
+   "labels": [
+    "선수금"
+   ]
+  },
+  {
+   "account_id": "ifrs_IssueOfEquity",
+   "canonical": "자본금변동",
+   "n": 26,
+   "amax": 20274172589.0,
+   "labels": [
+    "유상증자"
+   ]
+  },
+  {
+   "account_id": "ifrs_ShorttermBorrowings",
+   "canonical": "단기차입금",
+   "n": 26,
+   "amax": 3765146758496.0,
+   "labels": [
+    "단기차입금"
+   ]
+  },
+  {
+   "account_id": "dart_CapitalSurplus",
+   "canonical": "주식발행초과금",
+   "n": 25,
+   "amax": 59781168332.0,
+   "labels": [
+    "주식발행초과금"
+   ]
+  },
+  {
+   "account_id": "dart_CompoundFinancialInstrumentIssue",
+   "canonical": "자본잉여금변동",
+   "n": 25,
+   "amax": 0.0,
+   "labels": [
+    "전환권 행사",
+    "전환권행사"
+   ]
+  },
+  {
+   "account_id": "dart_DepositsReceived",
+   "canonical": "예수금",
+   "n": 25,
+   "amax": 41960982180.0,
+   "labels": [
+    "예수금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_IncreaseDecreaseThroughTransfersAndOtherChangesEquity",
+   "canonical": "기타자본변동",
+   "n": 25,
+   "amax": 121345937555.0,
+   "labels": [
+    "연결실체내 자본거래등",
+    "연결실체의 변동"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ShareOfOtherComprehensiveIncomeOfAssociatesAndJointVenturesAccountedForUsingEquityMethodThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+   "canonical": "FVOCI평가손익",
+   "n": 25,
+   "amax": 96158830290.0,
+   "labels": [
+    "기타포괄손익 - 공정가치측정 금융자산 평가손익",
+    "기타포괄손익-공정가치 측정 금융자산  평가손익",
+    "기타포괄손익-공정가치 측정 금융자산평가손익",
+    "기타포괄손익-공정가치금융자산평가손익",
+    "기타포괄손익-공정가치측정 금융자산 평가손익"
+   ]
+  },
+  {
+   "account_id": "dart_CurrentPortionOfLongtermOtherPayables",
+   "canonical": "유동성장기차입금",
+   "n": 24,
+   "amax": 16177522747.0,
+   "labels": [
+    "유동성장기부채",
+    "유동성장기차입금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentBorrowingsAndCurrentPortionOfNoncurrentBorrowings",
+   "canonical": "유동성장기차입금",
+   "n": 24,
+   "amax": 125279000000.0,
+   "labels": [
+    "유동성장기부채",
+    "유동성장기차입금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_DividendsRecognisedAsDistributionsToOwnersOfParent",
+   "canonical": "배당변동",
+   "n": 24,
+   "amax": 849259000000.0,
+   "labels": [
+    "배당",
+    "연차배당",
+    "현금배당"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_IncreaseDecreaseThroughOtherContributionsByOwners",
+   "canonical": "자본금변동",
+   "n": 24,
+   "amax": 443408200679.0,
+   "labels": [
+    "유상증자"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherCurrentBorrowingsAndCurrentPortionOfOtherNoncurrentBorrowings",
+   "canonical": "유동성장기차입금",
+   "n": 24,
+   "amax": 144200000000.0,
+   "labels": [
+    "유동성 장기부채",
+    "유동성장기부채",
+    "유동성장기차입금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherProvisions",
+   "canonical": "충당부채",
+   "n": 24,
+   "amax": 796879000000.0,
+   "labels": [
+    "충당부채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherRevenue",
+   "canonical": "기타수익",
+   "n": 24,
+   "amax": 306792132354.0,
+   "labels": [
+    "기타수익"
+   ]
+  },
+  {
+   "account_id": "dart_LongTermDepositsNotClassifiedAsCashEquivalents",
+   "canonical": "FVPL금융자산",
+   "n": 23,
+   "amax": 36859365366.0,
+   "labels": [
+    "당기손익-공정가치 측정 금융자산",
+    "당기손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_Receivables",
+   "canonical": "미수금",
+   "n": 23,
+   "amax": 41156306424.0,
+   "labels": [
+    "미수금"
+   ]
+  },
+  {
+   "account_id": "ifrs_IncreaseDecreaseThroughChangesInAccountingPolicies",
+   "canonical": "기타자본변동",
+   "n": 23,
+   "amax": 33162407140.0,
+   "labels": [
+    "회계정책변경에 따른 증가(감소)"
+   ]
+  },
+  {
+   "account_id": "dart_CurrentProvisionsForProductWarranties",
+   "canonical": "충당부채",
+   "n": 21,
+   "amax": 2377181355.0,
+   "labels": [
+    "충당부채"
+   ]
+  },
+  {
+   "account_id": "dart_NonCurrentAvailableForSaleFinancialAssets",
+   "canonical": "FVOCI금융자산",
+   "n": 20,
+   "amax": 3800000000.0,
+   "labels": [
+    "기타포괄손익-공정가치금융자산",
+    "기타포괄손익-공정가치측정금융자산",
+    "기타포괄손익공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherExpenseByNature",
+   "canonical": "기타비용",
+   "n": 20,
+   "amax": 386684000000.0,
+   "labels": [
+    "기타 비용",
+    "기타비용"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ReclassificationAdjustmentsOnExchangeDifferencesOnTranslationNetOfTax",
+   "canonical": "해외사업환산손익",
+   "n": 20,
+   "amax": 76442000000.0,
+   "labels": [
+    "해외사업환산손익"
+   ]
+  },
+  {
+   "account_id": "dart_LongTermTradeAndOtherNonCurrentPayables",
+   "canonical": "장기차입금",
+   "n": 19,
+   "amax": 48337409998.0,
+   "labels": [
+    "장기차입금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_DividendsPaidToEquityHoldersOfParentClassifiedAsFinancingActivities",
+   "canonical": "배당금지급",
+   "n": 19,
+   "amax": 1352524000000.0,
+   "labels": [
+    "배당금의 지급"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherCurrentBorrowingsAndCurrentPortionOfOtherNoncurrentBorrowings",
+   "canonical": "단기차입금",
+   "n": 19,
+   "amax": 1215935236760.0,
+   "labels": [
+    "단기차입금",
+    "단기차입부채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ProceedsFromIssueOfOrdinaryShares",
+   "canonical": "자본금변동",
+   "n": 19,
+   "amax": 88157531500.0,
+   "labels": [
+    "유상증자"
+   ]
+  },
+  {
+   "account_id": "dart_NonCurrentAvailableForSaleFinancialAssets",
+   "canonical": "FVPL금융자산",
+   "n": 18,
+   "amax": 18944421814.0,
+   "labels": [
+    "당기손익-공정가치 측정 금융자산",
+    "당기손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_GainsLossesOnRemeasuringAvailableforsaleFinancialAssetsNetOfTax",
+   "canonical": "FVOCI평가손익",
+   "n": 18,
+   "amax": 8156510728.0,
+   "labels": [
+    "기타포괄손익-공정가치 금융자산 평가손익",
+    "기타포괄손익-공정가치 측정 금융자산 평가손익",
+    "기타포괄손익-공정가치금융자산 평가손익",
+    "기타포괄손익-공정가치측정 금융자산 평가손익",
+    "기타포괄손익-공정가치측정금융자산평가손익"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_IncomeTaxesPaidClassifiedAsOperatingActivities",
+   "canonical": "법인세납부",
+   "n": 18,
+   "amax": 68637745000.0,
+   "labels": [
+    "법인세 납부액"
+   ]
+  },
+  {
+   "account_id": "dart_CurrentProvisionsForConstructionWarranties",
+   "canonical": "충당부채",
+   "n": 17,
+   "amax": 1932796784.0,
+   "labels": [
+    "충당부채"
+   ]
+  },
+  {
+   "account_id": "dart_PaymentsOfIncomeTaxesPayable",
+   "canonical": "당기법인세부채",
+   "n": 17,
+   "amax": 254373000000.0,
+   "labels": [
+    "당기법인세부채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_DividendsPaidClassifiedAsOperatingActivities",
+   "canonical": "배당금지급",
+   "n": 17,
+   "amax": 112708537500.0,
+   "labels": [
+    "배당금의 지급",
+    "배당금의지급"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherNoncurrentFinancialAssets",
+   "canonical": "FVOCI금융자산",
+   "n": 17,
+   "amax": 39527126944.0,
+   "labels": [
+    "기타포괄손익-공정가치 측정 금융자산",
+    "기타포괄손익-공정가치금융자산",
+    "기타포괄손익-공정가치측정금융자산",
+    "기타포괄손익공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs_ProfitLossAttributableToOwnersOfParent",
+   "canonical": "지배기업귀속순이익",
+   "n": 17,
+   "amax": 368221994127.0,
+   "labels": [
+    "지배기업의 소유주에게 귀속되는 당기순이익(손실)"
+   ]
+  },
+  {
+   "account_id": "dart_OtherComprehensiveIncomeNetOfTaxChangeInFairValueOfInvestmentsInEquityInstruments",
+   "canonical": "FVOCI평가손익",
+   "n": 16,
+   "amax": 173185109339.0,
+   "labels": [
+    "기타포괄손익-공정가치 금융자산 평가손익",
+    "기타포괄손익-공정가치측정 금융자산 평가손익",
+    "기타포괄손익-공정가치측정 금융자산평가손익",
+    "기타포괄손익-공정가치측정금융자산 평가손익",
+    "기타포괄손익-공정가치측정금융자산평가손익"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_AdjustmentsForReconcileProfitLoss",
+   "canonical": "영업창출현금흐름",
+   "n": 16,
+   "amax": 20279042804.0,
+   "labels": [
+    "영업에서 창출된 현금흐름",
+    "영업에서 창출된현금흐름"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_BasicEarningsLossPerShareFromContinuingOperations",
+   "canonical": "기본주당이익",
+   "n": 16,
+   "amax": 55832.0,
+   "labels": [
+    "기본주당이익",
+    "기본주당이익(손실)"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_IncreaseDecreaseThroughChangeInEquityOfSubsidiaries",
+   "canonical": "기타자본변동",
+   "n": 16,
+   "amax": 350047500.0,
+   "labels": [
+    "연결실체 내 자본거래 등",
+    "연결실체내 자본거래등"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_LoansReceived",
+   "canonical": "단기차입금",
+   "n": 16,
+   "amax": 119330640031.0,
+   "labels": [
+    "단기차입금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_PaymentsToAcquireOrRedeemEntitysShares",
+   "canonical": "자기주식취득",
+   "n": 16,
+   "amax": 486919000000.0,
+   "labels": [
+    "자기주식의 취득"
+   ]
+  },
+  {
+   "account_id": "dart_ChangesInReserveOfGainsAndLossesOnFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome",
+   "canonical": "배당변동",
+   "n": 15,
+   "amax": 3735841500.0,
+   "labels": [
+    "현금배당"
+   ]
+  },
+  {
+   "account_id": "dart_OtherComprehensiveIncomeForStatementOfChangesInEquity",
+   "canonical": "배당변동",
+   "n": 15,
+   "amax": 2120279000.0,
+   "labels": [
+    "연차배당"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NoncurrentPortionOfNoncurrentNotesAndDebenturesIssued",
+   "canonical": "사채",
+   "n": 15,
+   "amax": 778522699482.0,
+   "labels": [
+    "사채"
+   ]
+  },
+  {
+   "account_id": "dart_CompoundFinancialInstrumentIssue",
+   "canonical": "기타자본변동",
+   "n": 14,
+   "amax": 0.0,
+   "labels": [
+    "신주인수권 행사"
+   ]
+  },
+  {
+   "account_id": "dart_DispositionOfCapitalAdjustments",
+   "canonical": "이익잉여금변동",
+   "n": 14,
+   "amax": 0.0,
+   "labels": [
+    "이익잉여금 처분"
+   ]
+  },
+  {
+   "account_id": "dart_OtherFinancialAssetsAtFairValueThroughProfitOrLoss",
+   "canonical": "FVPL금융자산",
+   "n": 14,
+   "amax": 10713496208.0,
+   "labels": [
+    "당기손익-공정가치 측정 금융자산",
+    "당기손익-공정가치측정금융자산",
+    "당기손익인식금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherCurrentReceivables",
+   "canonical": "미수금",
+   "n": 14,
+   "amax": 152866673446.0,
+   "labels": [
+    "미수금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ShareIssueRelatedCost",
+   "canonical": "자본금변동",
+   "n": 14,
+   "amax": 1002988860.0,
+   "labels": [
+    "신주발행"
+   ]
+  },
+  {
+   "account_id": "dart_NonCurrentFinanceLeaseLiabilities",
+   "canonical": "비유동리스부채",
+   "n": 13,
+   "amax": 92613656386.0,
+   "labels": [
+    "비유동리스부채"
+   ]
+  },
+  {
+   "account_id": "dart_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossBeforeTax",
+   "canonical": "재분류가능기타포괄손익",
+   "n": 13,
+   "amax": 2041238441.0,
+   "labels": [
+    "후속적으로 당기손익으로 재분류될 수 있는 항목"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_DeferredTaxLiabilityAsset",
+   "canonical": "이연법인세부채",
+   "n": 13,
+   "amax": 123253000000.0,
+   "labels": [
+    "이연법인세부채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_FinancialAssetsAtFairValueThroughProfitOrLossDesignatedAsUponInitialRecognition",
+   "canonical": "FVPL금융자산",
+   "n": 13,
+   "amax": 760466538331.0,
+   "labels": [
+    "당기손익-공정가치 측정 금융자산",
+    "당기손익-공정가치측정 금융자산",
+    "당기손익-공정가치측정금융자산",
+    "당기손익공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_GainsLossesOnHedgesOfNetInvestmentsInForeignOperationsNetOfTax",
+   "canonical": "해외사업환산손익",
+   "n": 13,
+   "amax": 583189000000.0,
+   "labels": [
+    "해외사업환산손익"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NoncurrentFinancialAssetsAtFairValueThroughOtherComprehensiveIncome",
+   "canonical": "비유동FVOCI금융자산",
+   "n": 13,
+   "amax": 85604946258.0,
+   "labels": [
+    "비유동 기타포괄손익-공정가치 측정 금융자산",
+    "비유동 기타포괄손익-공정가치측정금융자산",
+    "비유동기타포괄손익-공정가치측정 금융자산",
+    "비유동기타포괄손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherIncomeExpenseFromSubsidiariesJointlyControlledEntitiesAndAssociates",
+   "canonical": "기타수익",
+   "n": 13,
+   "amax": 6345936626.0,
+   "labels": [
+    "기타수익"
+   ]
+  },
+  {
+   "account_id": "dart_CopyrightsPatentsAndOtherIndustrialPropertyRightsServiceAndOperatingRightsGross",
+   "canonical": "무형자산",
+   "n": 12,
+   "amax": 281865688.0,
+   "labels": [
+    "무형자산"
+   ]
+  },
+  {
+   "account_id": "dart_MiscellaneousLosses",
+   "canonical": "기타비용",
+   "n": 12,
+   "amax": 38659886000.0,
+   "labels": [
+    "기타비용"
+   ]
+  },
+  {
+   "account_id": "dart_NonCurrentFairValueFinancialAsset",
+   "canonical": "비유동FVPL금융자산",
+   "n": 12,
+   "amax": 61187904635.0,
+   "labels": [
+    "비유동 당기손익-공정가치 측정 금융자산",
+    "비유동 당기손익-공정가치측정금융자산",
+    "비유동당기손익-공정가치측정금융자산",
+    "비유동당기손익공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_ProceedsFromShortTermBorrowings",
+   "canonical": "단기차입금순증감",
+   "n": 12,
+   "amax": 250057744997.0,
+   "labels": [
+    "단기차입금의 순증가(감소)"
+   ]
+  },
+  {
+   "account_id": "dart_PurchaseDispostionOfAssociatesOrJointVenture",
+   "canonical": "기타자본변동",
+   "n": 12,
+   "amax": 4135963396.0,
+   "labels": [
+    "연결실체 내 자본거래 등",
+    "연결실체내 자본거래 등"
+   ]
+  },
+  {
+   "account_id": "dart_SubscriptionOnNewStocks",
+   "canonical": "배당변동",
+   "n": 12,
+   "amax": 45303901720.0,
+   "labels": [
+    "현금배당"
+   ]
+  },
+  {
+   "account_id": "dart_UnissuedStockDividends",
+   "canonical": "배당변동",
+   "n": 12,
+   "amax": 3197791600.0,
+   "labels": [
+    "연차배당"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentNotesAndDebenturesIssuedAndCurrentPortionOfNoncurrentNotesAndDebenturesIssued",
+   "canonical": "유동성사채",
+   "n": 12,
+   "amax": 353895860300.0,
+   "labels": [
+    "유동성사채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_DividendsPaidClassifiedAsOperatingActivities",
+   "canonical": "배당변동",
+   "n": 12,
+   "amax": 1729401500.0,
+   "labels": [
+    "현금배당"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_IncreaseDecreaseThroughCorrectionsOfErrors",
+   "canonical": "배당변동",
+   "n": 12,
+   "amax": 199379000000.0,
+   "labels": [
+    "연차배당"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ProfitLossFromContinuingOperationsAttributableToNoncontrollingInterests",
+   "canonical": "비지배지분순이익",
+   "n": 12,
+   "amax": 24876351768.0,
+   "labels": [
+    "비지배지분"
+   ]
+  },
+  {
+   "account_id": "dart_IntangibleAssetsUnderDevelopmentGross",
+   "canonical": "무형자산",
+   "n": 11,
+   "amax": 74963894135.0,
+   "labels": [
+    "무형자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherCurrentFinancialAssets",
+   "canonical": "FVPL금융자산",
+   "n": 11,
+   "amax": 14982364312.0,
+   "labels": [
+    "당기손익-공정가치측정 금융자산",
+    "당기손익-공정가치측정금융자산",
+    "당기손익인식금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ShareOfProfitLossOfAssociatesAccountedForUsingEquityMethod",
+   "canonical": "지분법이익",
+   "n": 11,
+   "amax": 2563032452.0,
+   "labels": [
+    "지분법이익",
+    "지분법이익(손실)"
+   ]
+  },
+  {
+   "account_id": "ifrs_SharePremium",
+   "canonical": "주식발행초과금",
+   "n": 11,
+   "amax": 729423471164.0,
+   "labels": [
+    "주식발행초과금"
+   ]
+  },
+  {
+   "account_id": "dart_GoodwillGross",
+   "canonical": "사용권자산",
+   "n": 10,
+   "amax": 2778502079.0,
+   "labels": [
+    "사용권자산"
+   ]
+  },
+  {
+   "account_id": "dart_LongTermDepositsNotClassifiedAsCashEquivalents",
+   "canonical": "FVOCI금융자산",
+   "n": 10,
+   "amax": 714398206.0,
+   "labels": [
+    "기타포괄손익-공정가치측정금융자산",
+    "기타포괄손익공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_OtherOperatingIncomeInvestment",
+   "canonical": "기타수익",
+   "n": 10,
+   "amax": 401869000000.0,
+   "labels": [
+    "기타수익"
+   ]
+  },
+  {
+   "account_id": "dart_OtherTransactions",
+   "canonical": "배당변동",
+   "n": 10,
+   "amax": 4143871900.0,
+   "labels": [
+    "연차배당"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentContractLiabilitiesForPerformanceObligationsSatisfiedOverTime",
+   "canonical": "계약부채",
+   "n": 10,
+   "amax": 8852467633.0,
+   "labels": [
+    "계약부채",
+    "유동계약부채",
+    "초과청구공사"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_DividendsClassifiedAsExpense",
+   "canonical": "배당변동",
+   "n": 10,
+   "amax": 2024445660.0,
+   "labels": [
+    "현금배당"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_GainLossOnRemeasurementOfNetDefinedBenefitLiabilityAsset",
+   "canonical": "확정급여재측정손익",
+   "n": 10,
+   "amax": 3276364985.0,
+   "labels": [
+    "순확정급여부채의 재측정요소",
+    "순확정급여부채의재측정요소",
+    "확정급여제도의 재측정요소"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_GainsArisingFromDerecognitionOfFinancialAssetsMeasuredAtAmortisedCost",
+   "canonical": "지분법이익",
+   "n": 10,
+   "amax": 596401092499.0,
+   "labels": [
+    "지분법이익"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_IncreaseDecreaseThroughSharebasedPaymentTransactions",
+   "canonical": "자기주식변동",
+   "n": 10,
+   "amax": 354501202.0,
+   "labels": [
+    "자기주식처분",
+    "자기주식취득"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherFinanceCost",
+   "canonical": "이자비용",
+   "n": 10,
+   "amax": 4589773399.0,
+   "labels": [
+    "금융비용"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ParticipationInDefinedBenefitPlanThatSharesRisksBetweenGroupEntitiesRelatedPartyTransactions",
+   "canonical": "기타자본변동",
+   "n": 10,
+   "amax": 7903656206.0,
+   "labels": [
+    "연결실체의 변동"
+   ]
+  },
+  {
+   "account_id": "ifrs_InvestmentAccountedForUsingEquityMethod",
+   "canonical": "관계기업투자",
+   "n": 10,
+   "amax": 135606985098.0,
+   "labels": [
+    "관계기업및공동기업투자",
+    "관계기업투자",
+    "관계기업투자주식"
+   ]
+  },
+  {
+   "account_id": "dart_IssuedCapitalOfPreferredStock",
+   "canonical": "주식발행초과금",
+   "n": 9,
+   "amax": 36792029474.0,
+   "labels": [
+    "주식발행초과금"
+   ]
+  },
+  {
+   "account_id": "dart_MiscellaneousExpenses",
+   "canonical": "기타비용",
+   "n": 9,
+   "amax": 1107919716.0,
+   "labels": [
+    "기타비용"
+   ]
+  },
+  {
+   "account_id": "dart_MiscellaneousIncome",
+   "canonical": "기타수익",
+   "n": 9,
+   "amax": 5026030868.0,
+   "labels": [
+    "기타수익"
+   ]
+  },
+  {
+   "account_id": "dart_ShortTermBorrowings",
+   "canonical": "단기차입금",
+   "n": 9,
+   "amax": 3943165035852.0,
+   "labels": [
+    "단기차입금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_AdjustmentsForUndistributedProfitsOfInvestmentsAccountedForUsingEquityMethod",
+   "canonical": "지분법이익",
+   "n": 9,
+   "amax": 3183019973.0,
+   "labels": [
+    "지분법이익",
+    "지분법이익(손실)"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentFinancialAssetsAtFairValueThroughOtherComprehensiveIncome",
+   "canonical": "FVOCI금융자산",
+   "n": 9,
+   "amax": 2916130000000.0,
+   "labels": [
+    "기타포괄손익-공정가치 측정 금융자산",
+    "기타포괄손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherNoncurrentFinancialAssets",
+   "canonical": "FVPL금융자산",
+   "n": 9,
+   "amax": 28161760325.0,
+   "labels": [
+    "당기손익-공정가치 측정 금융자산",
+    "당기손익-공정가치측정 금융자산",
+    "당기손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_AdjustmentsForOtherExpenseByFunction",
+   "canonical": "기타비용",
+   "n": 8,
+   "amax": 15987696012.0,
+   "labels": [
+    "기타비용"
+   ]
+  },
+  {
+   "account_id": "dart_AppropriationTransferReservationOfRetainedEarnings",
+   "canonical": "자기주식변동",
+   "n": 8,
+   "amax": 0.0,
+   "labels": [
+    "자기주식취득"
+   ]
+  },
+  {
+   "account_id": "dart_CompoundFinancialInstrumentDividendInterest",
+   "canonical": "기타자본변동",
+   "n": 8,
+   "amax": 6833056948.0,
+   "labels": [
+    "연결실체내 자본거래 등"
+   ]
+  },
+  {
+   "account_id": "dart_CurrentFinancialAssetDesignationAsAtFairValueThroughProfitOrLoss",
+   "canonical": "유동FVPL금융자산",
+   "n": 8,
+   "amax": 54251786233.0,
+   "labels": [
+    "유동 당기손익-공정가치측정금융자산",
+    "유동당기손익-공정가치 측정 금융자산",
+    "유동당기손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_CurrentPortionOfLongtermOtherPayables",
+   "canonical": "미지급금",
+   "n": 8,
+   "amax": 5862024934.0,
+   "labels": [
+    "미지급금"
+   ]
+  },
+  {
+   "account_id": "dart_FinancialAssetsAtFairValueThroughProfitOrLossUndiscountedCashFlows",
+   "canonical": "FVPL금융자산",
+   "n": 8,
+   "amax": 7735205655.0,
+   "labels": [
+    "당기손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_NonCurrentFinancialAssetsHeldToMaturity",
+   "canonical": "FVOCI금융자산",
+   "n": 8,
+   "amax": 9328401165.0,
+   "labels": [
+    "기타포괄손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_OtherOperatingExpenseInvestment",
+   "canonical": "기타비용",
+   "n": 8,
+   "amax": 107481000000.0,
+   "labels": [
+    "기타비용"
+   ]
+  },
+  {
+   "account_id": "dart_OtherPropertyPlantAndEquipmentGross",
+   "canonical": "유형자산",
+   "n": 8,
+   "amax": 127762940839.0,
+   "labels": [
+    "유형자산"
+   ]
+  },
+  {
+   "account_id": "dart_ReclassificationAdjustments",
+   "canonical": "기타자본변동",
+   "n": 8,
+   "amax": 0.0,
+   "labels": [
+    "연결실체내 자본거래 등"
+   ]
+  },
+  {
+   "account_id": "dart_RepaymentsOfBonds",
+   "canonical": "비유동차입금상환",
+   "n": 8,
+   "amax": 10252688000000.0,
+   "labels": [
+    "사채 및 장기차입금의 상환",
+    "사채및장기차입금의 상환"
+   ]
+  },
+  {
+   "account_id": "dart_RetainedEarningsBeforeAppropriationsAccumulatedDeficitBeforeDisposition",
+   "canonical": "이익잉여금",
+   "n": 8,
+   "amax": 406297492880.0,
+   "labels": [
+    "이익잉여금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentFinancialAssetsAtFairValueThroughOtherComprehensiveIncome",
+   "canonical": "유동FVOCI금융자산",
+   "n": 8,
+   "amax": 40560150.0,
+   "labels": [
+    "유동기타포괄손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherNoncurrentFinancialLiabilities",
+   "canonical": "리스부채",
+   "n": 8,
+   "amax": 233126508.0,
+   "labels": [
+    "리스부채"
+   ]
+  },
+  {
+   "account_id": "ifrs_DividendsPaidClassifiedAsFinancingActivities",
+   "canonical": "배당금지급",
+   "n": 8,
+   "amax": 96327888513.0,
+   "labels": [
+    "배당금의 지급"
+   ]
+  },
+  {
+   "account_id": "ifrs_OtherCurrentNonfinancialAssets",
+   "canonical": "기타유동자산",
+   "n": 8,
+   "amax": 325035000000.0,
+   "labels": [
+    "기타유동자산"
+   ]
+  },
+  {
+   "account_id": "dart_CurrentPortionOfConvertibleBonds",
+   "canonical": "사채",
+   "n": 7,
+   "amax": 19219604251.0,
+   "labels": [
+    "사채"
+   ]
+  },
+  {
+   "account_id": "dart_OtherNonCurrentLiabilities",
+   "canonical": "리스부채",
+   "n": 7,
+   "amax": 40409251751.0,
+   "labels": [
+    "리스부채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentBondsIssuedAndCurrentPortionOfNoncurrentBondsIssued",
+   "canonical": "사채",
+   "n": 7,
+   "amax": 27957721260.0,
+   "labels": [
+    "사채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherComprehensiveIncomeBeforeTaxGainsLossesOnRevaluation",
+   "canonical": "FVOCI평가손익",
+   "n": 7,
+   "amax": 5560775404.0,
+   "labels": [
+    "기타포괄손익-공정가치금융자산평가손익",
+    "기타포괄손익-공정가치측정 금융자산평가손익",
+    "기타포괄손익-공정가치측정금융자산 평가손익"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherCurrentFinancialLiabilities",
+   "canonical": "단기차입금",
+   "n": 7,
+   "amax": 31000000000.0,
+   "labels": [
+    "단기차입금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherCurrentFinancialLiabilities",
+   "canonical": "유동성장기차입금",
+   "n": 7,
+   "amax": 1030835707886.0,
+   "labels": [
+    "유동성장기부채",
+    "유동성장기차입금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherInflowsOutflowsOfCashClassifiedAsOperatingActivities",
+   "canonical": "영업창출현금흐름",
+   "n": 7,
+   "amax": 21161549266.0,
+   "labels": [
+    "영업에서 창출된 현금흐름"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ProceedsFromIssuingShares",
+   "canonical": "자본금변동",
+   "n": 7,
+   "amax": 17556912649.0,
+   "labels": [
+    "유상증자"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ReclassificationAdjustmentsOnFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncomeNetOfTax",
+   "canonical": "FVOCI평가손익",
+   "n": 7,
+   "amax": 1016923543.0,
+   "labels": [
+    "기타포괄손익-공정가치 측정 금융자산 평가손익"
+   ]
+  },
+  {
+   "account_id": "ifrs_InvestmentsInAssociates",
+   "canonical": "관계기업투자",
+   "n": 7,
+   "amax": 26440057000.0,
+   "labels": [
+    "관계기업투자",
+    "관계기업투자주식"
+   ]
+  },
+  {
+   "account_id": "dart_AdjustmentsForProfitsOfAssociatesAndJointVenturesAccountedForUsingEquityMethod",
+   "canonical": "지분법이익",
+   "n": 6,
+   "amax": 3788544067.0,
+   "labels": [
+    "지분법이익",
+    "지분법이익(손실)"
+   ]
+  },
+  {
+   "account_id": "dart_CurrentPortionOfConvertibleBonds",
+   "canonical": "유동성사채",
+   "n": 6,
+   "amax": 60000000000.0,
+   "labels": [
+    "유동성사채"
+   ]
+  },
+  {
+   "account_id": "dart_CurrentPortionOfConvertibleBonds",
+   "canonical": "유동성장기차입금",
+   "n": 6,
+   "amax": 1.5262170935e+16,
+   "labels": [
+    "유동성장기부채"
+   ]
+  },
+  {
+   "account_id": "dart_IncreaseDecreaseThroughBusinessCombinations",
+   "canonical": "배당변동",
+   "n": 6,
+   "amax": 30365737200.0,
+   "labels": [
+    "연차배당"
+   ]
+  },
+  {
+   "account_id": "dart_LongTermTradeAndOtherNonCurrentPayables",
+   "canonical": "계약부채",
+   "n": 6,
+   "amax": 114816158891.0,
+   "labels": [
+    "계약부채"
+   ]
+  },
+  {
+   "account_id": "dart_LongTermTradeAndOtherNonCurrentReceivablesGross",
+   "canonical": "FVOCI금융자산",
+   "n": 6,
+   "amax": 443720662256.0,
+   "labels": [
+    "기타포괄손익-공정가치 측정 금융자산",
+    "기타포괄손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_MiscellaneousExpenses",
+   "canonical": "판매비와관리비",
+   "n": 6,
+   "amax": 20789399651.0,
+   "labels": [
+    "판매비와관리비"
+   ]
+  },
+  {
+   "account_id": "dart_OtherFinancialIncome",
+   "canonical": "금융수익",
+   "n": 6,
+   "amax": 1297290033.0,
+   "labels": [
+    "금융수익"
+   ]
+  },
+  {
+   "account_id": "dart_OtherNonCurrentAssets",
+   "canonical": "FVOCI금융자산",
+   "n": 6,
+   "amax": 36695480000.0,
+   "labels": [
+    "기타포괄손익-공정가치금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_ProceedsFromBonds",
+   "canonical": "비유동차입금차입",
+   "n": 6,
+   "amax": 43594078000000.0,
+   "labels": [
+    "사채 및 장기차입금의 차입"
+   ]
+  },
+  {
+   "account_id": "dart_PurchaseOfOtherIntangibleAssets",
+   "canonical": "무형자산취득",
+   "n": 6,
+   "amax": 3799192851.0,
+   "labels": [
+    "무형자산의 취득"
+   ]
+  },
+  {
+   "account_id": "dart_PurchaseOfOtherPropertyPlantAndEquipment",
+   "canonical": "유형자산취득",
+   "n": 6,
+   "amax": 112460493983.0,
+   "labels": [
+    "유형자산의 취득"
+   ]
+  },
+  {
+   "account_id": "dart_RevenueFromServices",
+   "canonical": "매출",
+   "n": 6,
+   "amax": 18624651000000.0,
+   "labels": [
+    "매출액"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_DefinedBenefitObligationAtPresentValue",
+   "canonical": "확정급여부채",
+   "n": 6,
+   "amax": 1232279153.0,
+   "labels": [
+    "확정급여부채",
+    "확정급여채무"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_LossesArisingFromDerecognitionOfFinancialAssetsMeasuredAtAmortisedCost",
+   "canonical": "이자비용",
+   "n": 6,
+   "amax": 4593244804.0,
+   "labels": [
+    "금융비용"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherNoncurrentAssets",
+   "canonical": "사용권자산",
+   "n": 6,
+   "amax": 4140477942.0,
+   "labels": [
+    "사용권자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherNoncurrentFinancialAssets",
+   "canonical": "비유동FVPL금융자산",
+   "n": 6,
+   "amax": 12623760520.0,
+   "labels": [
+    "비유동 당기손익-공정가치 측정 금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherNoncurrentFinancialLiabilities",
+   "canonical": "장기차입금",
+   "n": 6,
+   "amax": 2790333398.0,
+   "labels": [
+    "장기차입금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ProceedsFromSaleOrIssueOfTreasuryShares",
+   "canonical": "자기주식취득",
+   "n": 6,
+   "amax": 0.0,
+   "labels": [
+    "자기주식의 취득"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_RepaymentsOfBorrowingsClassifiedAsFinancingActivities",
+   "canonical": "비유동차입금상환",
+   "n": 6,
+   "amax": 7876926542000.0,
+   "labels": [
+    "사채 및 장기차입금의 상환"
+   ]
+  },
+  {
+   "account_id": "ifrs_InterestPaidClassifiedAsOperatingActivities",
+   "canonical": "이자지급",
+   "n": 6,
+   "amax": 450278642618.0,
+   "labels": [
+    "이자의 지급"
+   ]
+  },
+  {
+   "account_id": "ifrs_InterestReceivedClassifiedAsOperatingActivities",
+   "canonical": "이자수취",
+   "n": 6,
+   "amax": 48819579898.0,
+   "labels": [
+    "이자의 수취"
+   ]
+  },
+  {
+   "account_id": "dart_CompoundFinancialInstrumentDividendInterest",
+   "canonical": "배당변동",
+   "n": 5,
+   "amax": 5156094350.0,
+   "labels": [
+    "현금배당"
+   ]
+  },
+  {
+   "account_id": "dart_ContributedEquity",
+   "canonical": "자본금",
+   "n": 5,
+   "amax": 18695343500.0,
+   "labels": [
+    "자본금"
+   ]
+  },
+  {
+   "account_id": "dart_ConvertibleBonds",
+   "canonical": "사채",
+   "n": 5,
+   "amax": 3783719283.0,
+   "labels": [
+    "사채"
+   ]
+  },
+  {
+   "account_id": "dart_DividendfromFinancialGuaranteeContract",
+   "canonical": "배당변동",
+   "n": 5,
+   "amax": 0.0,
+   "labels": [
+    "현금배당"
+   ]
+  },
+  {
+   "account_id": "dart_GainsOnValuationOfLongTermFinancialInstruments",
+   "canonical": "기타수익",
+   "n": 5,
+   "amax": 8577753250.0,
+   "labels": [
+    "기타수익"
+   ]
+  },
+  {
+   "account_id": "dart_IncreaseDecreaseInLongtermBorrowings",
+   "canonical": "장기차입금차입",
+   "n": 5,
+   "amax": 2400000000.0,
+   "labels": [
+    "장기차입금의 차입"
+   ]
+  },
+  {
+   "account_id": "dart_LongTermTradeAndOtherNonCurrentPayables",
+   "canonical": "사채",
+   "n": 5,
+   "amax": 30000000000.0,
+   "labels": [
+    "사채"
+   ]
+  },
+  {
+   "account_id": "dart_LongTermTradeAndOtherNonCurrentReceivablesGross",
+   "canonical": "관계기업투자",
+   "n": 5,
+   "amax": 17713817124.0,
+   "labels": [
+    "관계기업투자"
+   ]
+  },
+  {
+   "account_id": "dart_LossesOnValuationOfLongTermFinancialInstruments",
+   "canonical": "기타비용",
+   "n": 5,
+   "amax": 11024001727.0,
+   "labels": [
+    "기타비용"
+   ]
+  },
+  {
+   "account_id": "dart_ReceivablesOnConstructionContracts",
+   "canonical": "계약자산",
+   "n": 5,
+   "amax": 123389141481.0,
+   "labels": [
+    "계약자산",
+    "미청구공사"
+   ]
+  },
+  {
+   "account_id": "dart_ShareBasedPaymentTransactions",
+   "canonical": "자기주식변동",
+   "n": 5,
+   "amax": 0.0,
+   "labels": [
+    "자기주식 취득"
+   ]
+  },
+  {
+   "account_id": "dart_ShortTermTradePayables",
+   "canonical": "단기차입금",
+   "n": 5,
+   "amax": 4000000000.0,
+   "labels": [
+    "단기차입금",
+    "단기차입부채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_FinancialAssetsAtFairValueThroughProfitOrLossMandatorilyMeasuredAtFairValue",
+   "canonical": "FVPL금융자산",
+   "n": 5,
+   "amax": 16575866345000.0,
+   "labels": [
+    "당기손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_InvestmentsInJointVentures",
+   "canonical": "관계기업투자",
+   "n": 5,
+   "amax": 335538072427.0,
+   "labels": [
+    "관계기업 및 공동기업투자",
+    "관계기업및공동기업투자"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherFinanceIncome",
+   "canonical": "금융수익",
+   "n": 5,
+   "amax": 7861966347.0,
+   "labels": [
+    "금융수익"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ProceedsFromBorrowingsClassifiedAsFinancingActivities",
+   "canonical": "비유동차입금차입",
+   "n": 5,
+   "amax": 12460482232000.0,
+   "labels": [
+    "사채 및 장기차입금의 차입"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ShareOfOtherComprehensiveIncomeOfAssociatesAndJointVenturesAccountedForUsingEquityMethodThatWillBeReclassifiedToProfitOrLossNetOfTax",
+   "canonical": "해외사업환산손익",
+   "n": 5,
+   "amax": 132556985.0,
+   "labels": [
+    "해외사업환산손익"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ShareOfOtherComprehensiveIncomeOfAssociatesAndJointVenturesAccountedForUsingEquityMethodThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+   "canonical": "재분류불가능기타포괄손익",
+   "n": 5,
+   "amax": 2056874295.0,
+   "labels": [
+    "후속적으로 당기손익으로 재분류되지 않는 항목"
+   ]
+  },
+  {
+   "account_id": "ifrs_InvestmentsInSubsidiaries",
+   "canonical": "종속기업투자",
+   "n": 5,
+   "amax": 9763162346.0,
+   "labels": [
+    "종속기업투자",
+    "종속기업투자주식"
+   ]
+  },
+  {
+   "account_id": "dart_AdjustmentsForInterestExpenses",
+   "canonical": "이자지급",
+   "n": 4,
+   "amax": 1299828351.0,
+   "labels": [
+    "이자의 지급",
+    "이자의지급"
+   ]
+  },
+  {
+   "account_id": "dart_AdvancesOnConstructionContracts",
+   "canonical": "계약부채",
+   "n": 4,
+   "amax": 192595382487.0,
+   "labels": [
+    "초과청구공사"
+   ]
+  },
+  {
+   "account_id": "dart_CompoundFinancialInstrumentIssue",
+   "canonical": "자본금변동",
+   "n": 4,
+   "amax": 5826431000.0,
+   "labels": [
+    "유상증자"
+   ]
+  },
+  {
+   "account_id": "dart_ExchangeableBonds",
+   "canonical": "사채",
+   "n": 4,
+   "amax": 14850311990.0,
+   "labels": [
+    "사채"
+   ]
+  },
+  {
+   "account_id": "dart_ExchangeableBondsNet",
+   "canonical": "사채",
+   "n": 4,
+   "amax": 8789086219.0,
+   "labels": [
+    "사채"
+   ]
+  },
+  {
+   "account_id": "dart_IncreaseDecreaseThroughCorrectionsOfErrors",
+   "canonical": "이익잉여금변동",
+   "n": 4,
+   "amax": 0.0,
+   "labels": [
+    "결손금보전"
+   ]
+  },
+  {
+   "account_id": "dart_LongTermTradeAndOtherNonCurrentPayables",
+   "canonical": "리스부채",
+   "n": 4,
+   "amax": 817458499.0,
+   "labels": [
+    "리스부채"
+   ]
+  },
+  {
+   "account_id": "dart_LongTermTradeAndOtherNonCurrentReceivablesGross",
+   "canonical": "FVPL금융자산",
+   "n": 4,
+   "amax": 11270979835.0,
+   "labels": [
+    "당기손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_LongTermTradeAndOtherNonCurrentReceivablesGross",
+   "canonical": "매출채권",
+   "n": 4,
+   "amax": 2945764147.0,
+   "labels": [
+    "매출채권"
+   ]
+  },
+  {
+   "account_id": "dart_LossesOfAssociatesAndJointVenturesAccountedForUsingEquityMethod",
+   "canonical": "지분법이익",
+   "n": 4,
+   "amax": 1301526849.0,
+   "labels": [
+    "지분법이익(손실)"
+   ]
+  },
+  {
+   "account_id": "dart_OtherInventoriesGross",
+   "canonical": "재고자산",
+   "n": 4,
+   "amax": 13925900140.0,
+   "labels": [
+    "재고자산"
+   ]
+  },
+  {
+   "account_id": "dart_OtherOperatingExpense",
+   "canonical": "기타비용",
+   "n": 4,
+   "amax": 370358773.0,
+   "labels": [
+    "기타비용"
+   ]
+  },
+  {
+   "account_id": "dart_OtherOperatingIncome",
+   "canonical": "기타수익",
+   "n": 4,
+   "amax": 1906803969.0,
+   "labels": [
+    "기타수익"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_BasicEarningsLossPerShareFromDiscontinuedOperations",
+   "canonical": "희석주당이익",
+   "n": 4,
+   "amax": 395.0,
+   "labels": [
+    "희석주당이익(손실)"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_Borrowings",
+   "canonical": "유동성장기차입금",
+   "n": 4,
+   "amax": 73336930000.0,
+   "labels": [
+    "유동성장기차입금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentRefundsProvision",
+   "canonical": "충당부채",
+   "n": 4,
+   "amax": 166420055.0,
+   "labels": [
+    "충당부채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_DilutedEarningsLossPerShareFromContinuingOperations",
+   "canonical": "기본주당이익",
+   "n": 4,
+   "amax": 4.0,
+   "labels": [
+    "기본주당이익(손실)"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_DilutedEarningsLossPerShareFromDiscontinuedOperations",
+   "canonical": "희석주당이익",
+   "n": 4,
+   "amax": 4.0,
+   "labels": [
+    "희석주당이익(손실)"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_FinancialAssetsAtFairValue",
+   "canonical": "FVPL금융자산",
+   "n": 4,
+   "amax": 1263626810.0,
+   "labels": [
+    "당기손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_FinancialAssetsAtFairValueThroughProfitOrLoss",
+   "canonical": "유동FVPL금융자산",
+   "n": 4,
+   "amax": 4611044162.0,
+   "labels": [
+    "유동당기손익공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_GainsLossesOnFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncomeBeforeTax",
+   "canonical": "FVOCI평가손익",
+   "n": 4,
+   "amax": 41703094.0,
+   "labels": [
+    "기타포괄손익-공정가치 측정 금융자산 평가손익",
+    "기타포괄손익-공정가치측정금융자산평가손익"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_IncreaseDecreaseThroughTransfersAndOtherChangesEquity",
+   "canonical": "자본금변동",
+   "n": 4,
+   "amax": 427619312.0,
+   "labels": [
+    "유상증자"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_LoansReceived",
+   "canonical": "장기차입금",
+   "n": 4,
+   "amax": 122552195152.0,
+   "labels": [
+    "장기차입금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherCurrentFinancialAssets",
+   "canonical": "FVOCI금융자산",
+   "n": 4,
+   "amax": 392443.0,
+   "labels": [
+    "기타포괄손익-공정가치 금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherNoncurrentLiabilities",
+   "canonical": "당기법인세부채",
+   "n": 4,
+   "amax": 0.0,
+   "labels": [
+    "당기법인세부채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherNoncurrentLiabilities",
+   "canonical": "사채",
+   "n": 4,
+   "amax": 67869627613.0,
+   "labels": [
+    "사채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ProceedsFromBorrowingsClassifiedAsFinancingActivities",
+   "canonical": "장기차입금차입",
+   "n": 4,
+   "amax": 15000000000.0,
+   "labels": [
+    "장기차입금의 차입"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ShorttermOnerousContractsProvision",
+   "canonical": "공사손실충당부채",
+   "n": 4,
+   "amax": 321119973.0,
+   "labels": [
+    "공사손실충당부채"
+   ]
+  },
+  {
+   "account_id": "ifrs_EquityAttributableToOwnersOfParent",
+   "canonical": "지배기업소유주지분",
+   "n": 4,
+   "amax": 3298546102855.0,
+   "labels": [
+    "지배기업 소유주지분",
+    "지배기업소유주지분"
+   ]
+  },
+  {
+   "account_id": "ifrs_GainsLossesOnExchangeDifferencesOnTranslationNetOfTax",
+   "canonical": "해외사업환산손익",
+   "n": 4,
+   "amax": 137747354101.0,
+   "labels": [
+    "해외사업장환산외환차이",
+    "해외사업환산손익"
+   ]
+  },
+  {
+   "account_id": "ifrs_InvestmentsInSubsidiariesJointVenturesAndAssociates",
+   "canonical": "관계기업투자",
+   "n": 4,
+   "amax": 4104123644192.0,
+   "labels": [
+    "관계기업 및 공동기업 투자"
+   ]
+  },
+  {
+   "account_id": "ifrs_NoncurrentProvisionsForEmployeeBenefits",
+   "canonical": "순확정급여부채",
+   "n": 4,
+   "amax": 678559199568.0,
+   "labels": [
+    "순확정급여부채"
+   ]
+  },
+  {
+   "account_id": "dart_AdjustmentsForIncreaseDecreaseInCumulativeEffectForeignCurrencyTranslation",
+   "canonical": "해외사업환산손익",
+   "n": 3,
+   "amax": 47544074000.0,
+   "labels": [
+    "해외사업환산손익"
+   ]
+  },
+  {
+   "account_id": "dart_CurentPortionOfFinanceLeaseLiabilities",
+   "canonical": "유동리스부채",
+   "n": 3,
+   "amax": 17353131017.0,
+   "labels": [
+    "유동 리스부채",
+    "유동리스부채"
+   ]
+  },
+  {
+   "account_id": "dart_CurrentFinancialLiabilitiesDesignationAsAtFairValueThroughProfitOrLoss",
+   "canonical": "미지급비용",
+   "n": 3,
+   "amax": 820646030.0,
+   "labels": [
+    "미지급비용"
+   ]
+  },
+  {
+   "account_id": "dart_GainLossFromFinancialInstrumentsAtFairValueThroughOtherComprehensiveIncome",
+   "canonical": "FVOCI평가손익",
+   "n": 3,
+   "amax": 334047439.0,
+   "labels": [
+    "기타포괄손익-공정가치측정금융자산평가손익"
+   ]
+  },
+  {
+   "account_id": "dart_LongTermAccruedExpensesGross",
+   "canonical": "미지급비용",
+   "n": 3,
+   "amax": 27013829.0,
+   "labels": [
+    "미지급비용"
+   ]
+  },
+  {
+   "account_id": "dart_NonCurrentProvisionForConstructionLosses",
+   "canonical": "공사손실충당부채",
+   "n": 3,
+   "amax": 1584348187.0,
+   "labels": [
+    "공사손실충당부채"
+   ]
+  },
+  {
+   "account_id": "dart_OtherCostOfSales",
+   "canonical": "매출원가",
+   "n": 3,
+   "amax": 1313569000000.0,
+   "labels": [
+    "매출원가"
+   ]
+  },
+  {
+   "account_id": "dart_OtherNonCurrentLiabilities",
+   "canonical": "충당부채",
+   "n": 3,
+   "amax": 24799296.0,
+   "labels": [
+    "충당부채"
+   ]
+  },
+  {
+   "account_id": "dart_PresentValueDiscountsLongTermBorrowingsGross",
+   "canonical": "장기차입금",
+   "n": 3,
+   "amax": 20097350000.0,
+   "labels": [
+    "장기차입금"
+   ]
+  },
+  {
+   "account_id": "dart_ProceedsFromConsolidatedCapitalTransactions",
+   "canonical": "기타자본변동",
+   "n": 3,
+   "amax": 0.0,
+   "labels": [
+    "연결실체 내 자본거래 등"
+   ]
+  },
+  {
+   "account_id": "dart_ShareOfOtherComprehensiveIncomeOfAssociatesAndJointVenturesAccountedForUsingEquityMethodThatWillNotBeReclassifiedToProfitOrLossBeforeTax",
+   "canonical": "FVOCI평가손익",
+   "n": 3,
+   "amax": 7937445160.0,
+   "labels": [
+    "기타포괄손익-공정가치 금융자산 평가손익"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CashEquivalents",
+   "canonical": "현금및현금성자산",
+   "n": 3,
+   "amax": 71485336917.0,
+   "labels": [
+    "현금및현금성자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ComprehensiveIncomeFromContinuingOperations",
+   "canonical": "총포괄손익",
+   "n": 3,
+   "amax": 8450926887.0,
+   "labels": [
+    "총포괄손익"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ComprehensiveIncomeFromDiscontinuedOperationsAttributableToNoncontrollingInterests",
+   "canonical": "비지배지분순이익",
+   "n": 3,
+   "amax": 0.0,
+   "labels": [
+    "비지배지분"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_DeferredTaxLiabilityAsset",
+   "canonical": "이연법인세자산",
+   "n": 3,
+   "amax": 61812583770.0,
+   "labels": [
+    "이연법인세자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_DilutedEarningsLossPerShareFromContinuingOperations",
+   "canonical": "희석주당이익",
+   "n": 3,
+   "amax": 34674.0,
+   "labels": [
+    "희석주당이익(손실)"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_DividendsReceivedClassifiedAsInvestingActivities",
+   "canonical": "배당변동",
+   "n": 3,
+   "amax": 270124400.0,
+   "labels": [
+    "연차배당"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_GainsLossesArisingFromDifferenceBetweenPreviousCarryingAmountAndFairValueOfFinancialAssetsReclassifiedAsMeasuredAtFairValue",
+   "canonical": "지분법이익",
+   "n": 3,
+   "amax": 402050012.0,
+   "labels": [
+    "지분법이익"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_IncomeTaxesPaidRefundClassifiedAsFinancingActivities",
+   "canonical": "법인세납부",
+   "n": 3,
+   "amax": 52552741924.0,
+   "labels": [
+    "법인세납부액"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_IncreaseDecreaseThroughSharebasedPaymentTransactions",
+   "canonical": "자본금변동",
+   "n": 3,
+   "amax": 0.0,
+   "labels": [
+    "유상증자"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_LongtermBorrowings",
+   "canonical": "유동성장기차입금",
+   "n": 3,
+   "amax": 1539165262119.0,
+   "labels": [
+    "유동성장기부채",
+    "유동성장기차입금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherAdjustmentsForWhichCashEffectsAreInvestingOrFinancingCashFlow",
+   "canonical": "영업창출현금흐름",
+   "n": 3,
+   "amax": 46092915912.0,
+   "labels": [
+    "영업에서 창출된 현금흐름"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRevaluation",
+   "canonical": "해외사업환산손익",
+   "n": 3,
+   "amax": 29876954000.0,
+   "labels": [
+    "해외사업장환산외환차이",
+    "해외사업환산손익"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherCurrentFinancialAssets",
+   "canonical": "기타유동자산",
+   "n": 3,
+   "amax": 884592893.0,
+   "labels": [
+    "기타유동자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherRevenue",
+   "canonical": "매출",
+   "n": 3,
+   "amax": 1440144000000.0,
+   "labels": [
+    "매출액"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ReclassificationAdjustmentsOnExchangeDifferencesOnTranslationBeforeTax",
+   "canonical": "해외사업환산손익",
+   "n": 3,
+   "amax": 24668494431.0,
+   "labels": [
+    "해외사업환산손익"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_TradeAndOtherReceivables",
+   "canonical": "매출채권및기타유동채권",
+   "n": 3,
+   "amax": 20368034948.0,
+   "labels": [
+    "매출채권 및 기타채권",
+    "매출채권및기타채권"
+   ]
+  },
+  {
+   "account_id": "ifrs_CurrentContractAssets",
+   "canonical": "계약자산",
+   "n": 3,
+   "amax": 12519682482.0,
+   "labels": [
+    "계약자산",
+    "유동계약자산"
+   ]
+  },
+  {
+   "account_id": "ifrs_CurrentContractLiabilities",
+   "canonical": "계약부채",
+   "n": 3,
+   "amax": 5826458797.0,
+   "labels": [
+    "계약부채",
+    "유동계약부채"
+   ]
+  },
+  {
+   "account_id": "ifrs_OtherCurrentFinancialAssets",
+   "canonical": "기타유동자산",
+   "n": 3,
+   "amax": 1625476710.0,
+   "labels": [
+    "기타유동자산"
+   ]
+  },
+  {
+   "account_id": "dart_AdjustmentsForInterestIncome",
+   "canonical": "이자수취",
+   "n": 2,
+   "amax": 2250338800.0,
+   "labels": [
+    "이자의수취"
+   ]
+  },
+  {
+   "account_id": "dart_ChangesInReserveOfGainsAndLossesOnFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome",
+   "canonical": "FVOCI평가손익",
+   "n": 2,
+   "amax": 5893838265.0,
+   "labels": [
+    "기타포괄손익-공정가치 측정 금융자산 평가손익",
+    "기타포괄손익-공정가치측정 금융자산평가손익"
+   ]
+  },
+  {
+   "account_id": "dart_ComputerSoftwareGross",
+   "canonical": "무형자산",
+   "n": 2,
+   "amax": 145284952.0,
+   "labels": [
+    "무형자산"
+   ]
+  },
+  {
+   "account_id": "dart_CumulativeGainPreviouslyRecognisedInOtherComprehensiveIncomeArisingFromReclassificationOfFinancialAssetsOutOfFairValueThroughOtherComprehensiveIncomeIntoFairValueThroughProfitOrLossMeasurementCategory",
+   "canonical": "FVOCI평가손익",
+   "n": 2,
+   "amax": 4000795583.0,
+   "labels": [
+    "기타포괄손익-공정가치금융자산평가손익"
+   ]
+  },
+  {
+   "account_id": "dart_CurrentAvailableForSaleFinancialAssets",
+   "canonical": "FVPL금융자산",
+   "n": 2,
+   "amax": 3176657592.0,
+   "labels": [
+    "당기손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_CurrentDerivativeAsset",
+   "canonical": "기타유동자산",
+   "n": 2,
+   "amax": 3620493189.0,
+   "labels": [
+    "기타유동자산"
+   ]
+  },
+  {
+   "account_id": "dart_CurrentEmissionRightNet",
+   "canonical": "무형자산",
+   "n": 2,
+   "amax": 24554600.0,
+   "labels": [
+    "무형자산"
+   ]
+  },
+  {
+   "account_id": "dart_CurrentFinancialAssetHeldForTrading",
+   "canonical": "단기금융상품",
+   "n": 2,
+   "amax": 30000000.0,
+   "labels": [
+    "단기금융상품"
+   ]
+  },
+  {
+   "account_id": "dart_CurrentFinancialAssetsHeldToMaturity",
+   "canonical": "단기금융상품",
+   "n": 2,
+   "amax": 84400000.0,
+   "labels": [
+    "단기금융상품"
+   ]
+  },
+  {
+   "account_id": "dart_CurrentFinancialAssetsHeldToMaturity",
+   "canonical": "상각후원가금융자산",
+   "n": 2,
+   "amax": 2814005006.0,
+   "labels": [
+    "상각후원가측정금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_CurrentPortionOfBondWithWarrant",
+   "canonical": "사채",
+   "n": 2,
+   "amax": 34785701007.0,
+   "labels": [
+    "사채"
+   ]
+  },
+  {
+   "account_id": "dart_CurrentPortionOfExchangeableBond",
+   "canonical": "사채",
+   "n": 2,
+   "amax": 15105816267.0,
+   "labels": [
+    "사채"
+   ]
+  },
+  {
+   "account_id": "dart_FinanceLeaseAssetGross",
+   "canonical": "사용권자산",
+   "n": 2,
+   "amax": 206387715.0,
+   "labels": [
+    "사용권자산"
+   ]
+  },
+  {
+   "account_id": "dart_InterestIncomeFinanceIncome",
+   "canonical": "금융수익",
+   "n": 2,
+   "amax": 3275688222.0,
+   "labels": [
+    "금융수익"
+   ]
+  },
+  {
+   "account_id": "dart_LongTermDueToCustomersForContractWork",
+   "canonical": "순확정급여부채",
+   "n": 2,
+   "amax": 554731178.0,
+   "labels": [
+    "순확정급여채무"
+   ]
+  },
+  {
+   "account_id": "dart_LongTermOtherPayablesNet",
+   "canonical": "미지급금",
+   "n": 2,
+   "amax": 8965636523.0,
+   "labels": [
+    "미지급금"
+   ]
+  },
+  {
+   "account_id": "dart_NonCurrentAvailableForSaleFinancialAssets",
+   "canonical": "종속기업투자",
+   "n": 2,
+   "amax": 30432895280.0,
+   "labels": [
+    "종속기업투자주식"
+   ]
+  },
+  {
+   "account_id": "dart_NonCurrentFinancialAssetsHeldToMaturity",
+   "canonical": "상각후원가금융자산",
+   "n": 2,
+   "amax": 1000000.0,
+   "labels": [
+    "상각후원가 측정 금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_OtherComprehensiveIncomeBeforeTaxChangeInFairValueOfFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome",
+   "canonical": "FVOCI평가손익",
+   "n": 2,
+   "amax": 74567635930.0,
+   "labels": [
+    "기타포괄손익-공정가치측정금융자산평가손익"
+   ]
+  },
+  {
+   "account_id": "dart_OtherComprehensiveIncomeNetOfTaxFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncomeTotal",
+   "canonical": "FVOCI평가손익",
+   "n": 2,
+   "amax": 7834998.0,
+   "labels": [
+    "기타포괄손익-공정가치측정 금융자산 평가손익"
+   ]
+  },
+  {
+   "account_id": "dart_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax",
+   "canonical": "재분류불가능기타포괄손익",
+   "n": 2,
+   "amax": 572748819.0,
+   "labels": [
+    "후속적으로 당기손익으로 재분류되지 않는 항목"
+   ]
+  },
+  {
+   "account_id": "dart_OtherExpensesTrust",
+   "canonical": "기타비용",
+   "n": 2,
+   "amax": 4501336029.0,
+   "labels": [
+    "기타비용"
+   ]
+  },
+  {
+   "account_id": "dart_OtherFinancialAssetsAtFairValueThroughOtherComprehensiveIncome",
+   "canonical": "FVOCI금융자산",
+   "n": 2,
+   "amax": 299999700.0,
+   "labels": [
+    "기타포괄손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_OtherNonCurrentAssets",
+   "canonical": "관계기업투자",
+   "n": 2,
+   "amax": 3265300970.0,
+   "labels": [
+    "관계기업투자주식"
+   ]
+  },
+  {
+   "account_id": "dart_PaymentsOfIncomeTaxesPayable",
+   "canonical": "단기차입금",
+   "n": 2,
+   "amax": 0.0,
+   "labels": [
+    "단기차입금"
+   ]
+  },
+  {
+   "account_id": "dart_PaymentsOfIncomeTaxesPayable",
+   "canonical": "미지급금",
+   "n": 2,
+   "amax": 4767166581.0,
+   "labels": [
+    "미지급금"
+   ]
+  },
+  {
+   "account_id": "dart_PurchaseOfComputerSoftware",
+   "canonical": "무형자산취득",
+   "n": 2,
+   "amax": 0.0,
+   "labels": [
+    "무형자산의 취득"
+   ]
+  },
+  {
+   "account_id": "dart_PurchaseOfMachinery",
+   "canonical": "유형자산취득",
+   "n": 2,
+   "amax": 0.0,
+   "labels": [
+    "유형자산의 취득"
+   ]
+  },
+  {
+   "account_id": "dart_RevenueFromSaleOfGoodsProduct",
+   "canonical": "매출",
+   "n": 2,
+   "amax": 260312614635.0,
+   "labels": [
+    "매출액"
+   ]
+  },
+  {
+   "account_id": "dart_SecuritiesAtFairValueThroughProfitOrLoss",
+   "canonical": "FVPL금융자산",
+   "n": 2,
+   "amax": 22152069981.0,
+   "labels": [
+    "당기손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_ShortTermCollectionWithholdings",
+   "canonical": "매입채무및기타유동채무",
+   "n": 2,
+   "amax": 443397728601.0,
+   "labels": [
+    "매입채무및기타채무"
+   ]
+  },
+  {
+   "account_id": "dart_StockRedemptionWithoutRefund",
+   "canonical": "자기주식변동",
+   "n": 2,
+   "amax": 0.0,
+   "labels": [
+    "자기주식 취득"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_AdjustmentsForReconcileProfitLoss",
+   "canonical": "이자수취",
+   "n": 2,
+   "amax": 161344117.0,
+   "labels": [
+    "이자의 수취"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_Borrowings",
+   "canonical": "장기차입금",
+   "n": 2,
+   "amax": 22360160.0,
+   "labels": [
+    "장기차입금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ComprehensiveIncomeFromContinuingOperationsAttributableToNoncontrollingInterests",
+   "canonical": "비지배지분순이익",
+   "n": 2,
+   "amax": 0.0,
+   "labels": [
+    "비지배지분"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ContractLiabilitiesForPerformanceObligationsSatisfiedOverTime",
+   "canonical": "계약부채",
+   "n": 2,
+   "amax": 27631917554.0,
+   "labels": [
+    "초과청구공사"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentBondsIssuedAndCurrentPortionOfNoncurrentBondsIssued",
+   "canonical": "유동성장기차입금",
+   "n": 2,
+   "amax": 1200000000.0,
+   "labels": [
+    "유동성장기부채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentBorrowingsAndCurrentPortionOfNoncurrentBorrowings",
+   "canonical": "사채",
+   "n": 2,
+   "amax": 319712704765.0,
+   "labels": [
+    "사채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentBorrowingsAndCurrentPortionOfNoncurrentBorrowings",
+   "canonical": "장기차입금",
+   "n": 2,
+   "amax": 903104096251.0,
+   "labels": [
+    "장기차입금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentSecuredBankLoansReceivedAndCurrentPortionOfNoncurrentSecuredBankLoansReceived",
+   "canonical": "유동성장기차입금",
+   "n": 2,
+   "amax": 3332120000.0,
+   "labels": [
+    "유동성장기차입금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentTaxAssets",
+   "canonical": "매출채권및기타유동채권",
+   "n": 2,
+   "amax": 974024927641.0,
+   "labels": [
+    "매출채권및기타채권"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_DeferredIncomeClassifiedAsCurrent",
+   "canonical": "충당부채",
+   "n": 2,
+   "amax": 290097022.0,
+   "labels": [
+    "충당부채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_DividendsPaidOtherShares",
+   "canonical": "배당변동",
+   "n": 2,
+   "amax": 28373179200.0,
+   "labels": [
+    "현금배당"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_DividendsReceived",
+   "canonical": "배당변동",
+   "n": 2,
+   "amax": 270124400.0,
+   "labels": [
+    "연차배당"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_FinanceCostsPaidClassifiedAsOperatingActivities",
+   "canonical": "이자지급",
+   "n": 2,
+   "amax": 1039830835.0,
+   "labels": [
+    "이자의 지급"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_FinancialAssetsAtFairValueThroughProfitOrLoss",
+   "canonical": "비유동FVPL금융자산",
+   "n": 2,
+   "amax": 200000.0,
+   "labels": [
+    "비유동당기손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_FinancialLiabilitiesAtFairValueThroughProfitOrLossClassifiedAsHeldForTrading",
+   "canonical": "단기차입금",
+   "n": 2,
+   "amax": 7344680046.0,
+   "labels": [
+    "단기차입금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_IntangibleAssetsOtherThanGoodwillCarryingAmountOfRevaluedAssets",
+   "canonical": "무형자산",
+   "n": 2,
+   "amax": 1383819070.0,
+   "labels": [
+    "무형자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_InterestRevenueForFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome",
+   "canonical": "FVOCI평가손익",
+   "n": 2,
+   "amax": 225854.0,
+   "labels": [
+    "기타포괄손익-공정가치측정금융자산 평가손익",
+    "기타포괄손익-공정가치측정금융자산평가손익"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_LongtermBorrowings",
+   "canonical": "사채",
+   "n": 2,
+   "amax": 599011716516.0,
+   "labels": [
+    "사채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NoncurrentAdvances",
+   "canonical": "선수금",
+   "n": 2,
+   "amax": 1102422207.0,
+   "labels": [
+    "선수금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NoncurrentFinancialAssetsAtFairValueThroughProfitOrLossMandatorilyMeasuredAtFairValue",
+   "canonical": "FVOCI금융자산",
+   "n": 2,
+   "amax": 3717113200.0,
+   "labels": [
+    "기타포괄손익공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NoncurrentInvestmentsInEquityInstrumentsDesignatedAtFairValueThroughOtherComprehensiveIncome",
+   "canonical": "비유동FVOCI금융자산",
+   "n": 2,
+   "amax": 456713426.0,
+   "labels": [
+    "비유동 기타포괄손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NoncurrentPortionOfNoncurrentSecuredBankLoansReceived",
+   "canonical": "장기차입금",
+   "n": 2,
+   "amax": 4000000000.0,
+   "labels": [
+    "장기차입금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NoncurrentReceivables",
+   "canonical": "비유동매출채권",
+   "n": 2,
+   "amax": 4204392617.0,
+   "labels": [
+    "장기매출채권"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OperatingExpense",
+   "canonical": "매출원가",
+   "n": 2,
+   "amax": 133925624147.0,
+   "labels": [
+    "매출원가"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherComprehensiveIncomeBeforeTaxFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome",
+   "canonical": "FVOCI평가손익",
+   "n": 2,
+   "amax": 537000000.0,
+   "labels": [
+    "기타포괄손익-공정가치 측정 금융자산평가손익"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherComprehensiveIncomeNetOfTaxHedgesOfNetInvestmentsInForeignOperations",
+   "canonical": "해외사업환산손익",
+   "n": 2,
+   "amax": 83584852283.0,
+   "labels": [
+    "해외사업환산손익"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherCurrentFinancialAssets",
+   "canonical": "단기금융상품",
+   "n": 2,
+   "amax": 2869800000.0,
+   "labels": [
+    "단기금융상품"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherCurrentFinancialLiabilities",
+   "canonical": "유동리스부채",
+   "n": 2,
+   "amax": 778314841.0,
+   "labels": [
+    "유동리스부채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherIntangibleAssets",
+   "canonical": "무형자산",
+   "n": 2,
+   "amax": 0.0,
+   "labels": [
+    "무형자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherNoncurrentFinancialAssets",
+   "canonical": "사용권자산",
+   "n": 2,
+   "amax": 1607618927.0,
+   "labels": [
+    "사용권자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherNoncurrentFinancialLiabilities",
+   "canonical": "비유동리스부채",
+   "n": 2,
+   "amax": 1404863403.0,
+   "labels": [
+    "비유동리스부채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherNoncurrentFinancialLiabilities",
+   "canonical": "충당부채",
+   "n": 2,
+   "amax": 76614287.0,
+   "labels": [
+    "충당부채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherNoncurrentLiabilities",
+   "canonical": "순확정급여부채",
+   "n": 2,
+   "amax": 1129518294.0,
+   "labels": [
+    "순확정급여부채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ProvisionForDecommissioningRestorationAndRehabilitationCosts",
+   "canonical": "충당부채",
+   "n": 2,
+   "amax": 54878192.0,
+   "labels": [
+    "충당부채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ShareOfOtherComprehensiveIncomeOfAssociatesAndJointVenturesAccountedForUsingEquityMethodThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+   "canonical": "해외사업환산손익",
+   "n": 2,
+   "amax": 51987798.0,
+   "labels": [
+    "해외사업환산손익"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ShorttermDepositsClassifiedAsCashEquivalents",
+   "canonical": "단기금융상품",
+   "n": 2,
+   "amax": 30915235000.0,
+   "labels": [
+    "단기금융상품"
+   ]
+  },
+  {
+   "account_id": "ifrs_CurrentFinancialAssetsAtFairValueThroughProfitOrLossDesignatedUponInitialRecognition",
+   "canonical": "FVPL금융자산",
+   "n": 2,
+   "amax": 5026317811.0,
+   "labels": [
+    "당기손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs_CurrentPortionOfLongtermBorrowings",
+   "canonical": "계약부채",
+   "n": 2,
+   "amax": 56805000000.0,
+   "labels": [
+    "초과청구공사"
+   ]
+  },
+  {
+   "account_id": "ifrs_InvestmentsInSubsidiariesJointVenturesAndAssociates",
+   "canonical": "종속기업투자",
+   "n": 2,
+   "amax": 3740866678.0,
+   "labels": [
+    "종속기업투자",
+    "종속기업투자주식"
+   ]
+  },
+  {
+   "account_id": "ifrs_NoncurrentFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome",
+   "canonical": "FVOCI금융자산",
+   "n": 2,
+   "amax": 225495713.0,
+   "labels": [
+    "기타포괄손익-공정가치 측정 금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs_NoncurrentFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome",
+   "canonical": "비유동FVOCI금융자산",
+   "n": 2,
+   "amax": 880770984.0,
+   "labels": [
+    "비유동 기타포괄손익-공정가치 측정 금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs_NoncurrentInvestmentsInEquityInstrumentsDesignatedAtFairValueThroughOtherComprehensiveIncome",
+   "canonical": "FVOCI금융자산",
+   "n": 2,
+   "amax": 159001000.0,
+   "labels": [
+    "기타포괄손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs_NoncurrentProvisionsForEmployeeBenefits",
+   "canonical": "확정급여부채",
+   "n": 2,
+   "amax": 4936417901.0,
+   "labels": [
+    "확정급여부채"
+   ]
+  },
+  {
+   "account_id": "ifrs_OtherComprehensiveIncomeNetOfTaxActuarialGainsLossesOnDefinedBenefitPlans",
+   "canonical": "확정급여재측정손익",
+   "n": 2,
+   "amax": 6530000000.0,
+   "labels": [
+    "순확정급여부채의 재측정요소"
+   ]
+  },
+  {
+   "account_id": "ifrs_OtherComprehensiveIncomeNetOfTaxExchangeDifferencesOnTranslation",
+   "canonical": "해외사업환산손익",
+   "n": 2,
+   "amax": 68926588413.0,
+   "labels": [
+    "해외사업환산손익"
+   ]
+  },
+  {
+   "account_id": "ifrs_OtherComprehensiveIncomeNetOfTaxGainsLossesFromInvestmentsInEquityInstruments",
+   "canonical": "FVOCI평가손익",
+   "n": 2,
+   "amax": 9000000.0,
+   "labels": [
+    "기타포괄손익-공정가치측정금융자산평가손익"
+   ]
+  },
+  {
+   "account_id": "ifrs_OtherCurrentFinancialAssets",
+   "canonical": "단기금융상품",
+   "n": 2,
+   "amax": 0.0,
+   "labels": [
+    "단기금융상품"
+   ]
+  },
+  {
+   "account_id": "ifrs_RetainedEarnings",
+   "canonical": "이익잉여금",
+   "n": 2,
+   "amax": 8270567734.0,
+   "labels": [
+    "이익잉여금"
+   ]
+  },
+  {
+   "account_id": "dart_AdjustmentsForGainLossOnForeignExchangeTranslations",
+   "canonical": "해외사업환산손익",
+   "n": 1,
+   "amax": 4777711.0,
+   "labels": [
+    "해외사업환산손익"
+   ]
+  },
+  {
+   "account_id": "dart_CurrentAvailableForSaleFinancialAssets",
+   "canonical": "FVOCI금융자산",
+   "n": 1,
+   "amax": 0.0,
+   "labels": [
+    "기타포괄손익-공정가치 측정 금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_CurrentFinancialAssetHeldForTrading",
+   "canonical": "FVPL금융자산",
+   "n": 1,
+   "amax": 343360000.0,
+   "labels": [
+    "당기손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_CurrentFinancialGuaranteeLiabilities",
+   "canonical": "유동성장기차입금",
+   "n": 1,
+   "amax": 0.0,
+   "labels": [
+    "유동성장기부채"
+   ]
+  },
+  {
+   "account_id": "dart_CurrentFinancialLiabilitiesHeldForTrading",
+   "canonical": "단기차입금",
+   "n": 1,
+   "amax": 20434322420.0,
+   "labels": [
+    "단기차입금"
+   ]
+  },
+  {
+   "account_id": "dart_CurrentFirmCommitmentLiabilities",
+   "canonical": "리스부채",
+   "n": 1,
+   "amax": 629173368.0,
+   "labels": [
+    "리스부채"
+   ]
+  },
+  {
+   "account_id": "dart_CurrentPortionOfConvertibleRedeemablePreferredStockLiabilities",
+   "canonical": "유동성장기차입금",
+   "n": 1,
+   "amax": 3282694767.0,
+   "labels": [
+    "유동성장기차입금"
+   ]
+  },
+  {
+   "account_id": "dart_CurrentPortionOfExchangeableBond",
+   "canonical": "유동성사채",
+   "n": 1,
+   "amax": 3344025030.0,
+   "labels": [
+    "유동성사채"
+   ]
+  },
+  {
+   "account_id": "dart_DebtSecuritiesAtAmortisedCost",
+   "canonical": "상각후원가금융자산",
+   "n": 1,
+   "amax": 19998210000.0,
+   "labels": [
+    "상각후원가측정금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_DebtSecuritiesAtFairValueThroughOtherComprehensiveIncome",
+   "canonical": "FVOCI금융자산",
+   "n": 1,
+   "amax": 0.0,
+   "labels": [
+    "기타포괄손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_DebtSecuritiesAtFairValueThroughOtherComprehensiveIncome",
+   "canonical": "FVPL금융자산",
+   "n": 1,
+   "amax": 777933963.0,
+   "labels": [
+    "당기손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_DebtSecuritiesAtFairValueThroughProfitOrLoss",
+   "canonical": "FVPL금융자산",
+   "n": 1,
+   "amax": 777933963.0,
+   "labels": [
+    "당기손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_FinancialAssetsAtFairValueThroughOtherComprehensiveIncomeUndiscountedCashFlows",
+   "canonical": "FVOCI금융자산",
+   "n": 1,
+   "amax": 332010000.0,
+   "labels": [
+    "기타포괄손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_GainsOnValuationOfFairValueFinancialAsset",
+   "canonical": "FVOCI평가손익",
+   "n": 1,
+   "amax": 11708384.0,
+   "labels": [
+    "기타포괄손익-공정가치금융자산 평가손익"
+   ]
+  },
+  {
+   "account_id": "dart_IncreaseDecreaseThroughBusinessCombinations",
+   "canonical": "사업결합순현금유출",
+   "n": 1,
+   "amax": 12961814523.0,
+   "labels": [
+    "사업결합으로 인한 순현금유출액"
+   ]
+  },
+  {
+   "account_id": "dart_InterestReceivedClassifiedAsFinancingActivities",
+   "canonical": "이자수취",
+   "n": 1,
+   "amax": 691519574.0,
+   "labels": [
+    "이자의 수취"
+   ]
+  },
+  {
+   "account_id": "dart_LongTermDepositsNotClassifiedAsCashEquivalents",
+   "canonical": "종속기업투자",
+   "n": 1,
+   "amax": 299525371.0,
+   "labels": [
+    "종속기업투자"
+   ]
+  },
+  {
+   "account_id": "dart_NonCurrentBiologicalAssetsGross",
+   "canonical": "사용권자산",
+   "n": 1,
+   "amax": 987569733.0,
+   "labels": [
+    "사용권자산"
+   ]
+  },
+  {
+   "account_id": "dart_OtherComprehensiveIncomeGainsLossesOnRemeasurementsOfDefinedBenefitPlans",
+   "canonical": "확정급여재측정손익",
+   "n": 1,
+   "amax": 8849032014.0,
+   "labels": [
+    "확정급여제도의재측정요소"
+   ]
+  },
+  {
+   "account_id": "dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+   "canonical": "재분류가능기타포괄손익",
+   "n": 1,
+   "amax": 0.0,
+   "labels": [
+    "후속적으로 당기손익으로 재분류될 수 있는 항목"
+   ]
+  },
+  {
+   "account_id": "dart_OtherCostOfSales",
+   "canonical": "기타비용",
+   "n": 1,
+   "amax": 314576908.0,
+   "labels": [
+    "기타비용"
+   ]
+  },
+  {
+   "account_id": "dart_OtherCurrentLiabilities",
+   "canonical": "유동성장기차입금",
+   "n": 1,
+   "amax": 0.0,
+   "labels": [
+    "유동성장기부채"
+   ]
+  },
+  {
+   "account_id": "dart_OtherNonCurrentAssets",
+   "canonical": "FVPL금융자산",
+   "n": 1,
+   "amax": 10220398112.0,
+   "labels": [
+    "당기손익-공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_PaymentsOfIncomeTaxesPayable",
+   "canonical": "리스부채",
+   "n": 1,
+   "amax": 240919141.0,
+   "labels": [
+    "리스부채"
+   ]
+  },
+  {
+   "account_id": "dart_PresentValueDiscountsLongTermBorrowingsGross",
+   "canonical": "유동성장기차입금",
+   "n": 1,
+   "amax": 79400000000.0,
+   "labels": [
+    "유동성장기차입금"
+   ]
+  },
+  {
+   "account_id": "dart_ProceedsFromConvertibleBonds",
+   "canonical": "장기차입금차입",
+   "n": 1,
+   "amax": 0.0,
+   "labels": [
+    "장기차입금의 차입"
+   ]
+  },
+  {
+   "account_id": "dart_ProceedsFromSalesOfOtherPropertyPlantAndEquipment",
+   "canonical": "유형자산처분",
+   "n": 1,
+   "amax": 1080000.0,
+   "labels": [
+    "유형자산의 처분"
+   ]
+  },
+  {
+   "account_id": "dart_ProceedsFromSalesOfVehicles",
+   "canonical": "유형자산처분",
+   "n": 1,
+   "amax": 0.0,
+   "labels": [
+    "유형자산의 처분"
+   ]
+  },
+  {
+   "account_id": "dart_RevenueFromSaleOfGoodsMerchandise",
+   "canonical": "매출",
+   "n": 1,
+   "amax": 35401545538.0,
+   "labels": [
+    "영업수익"
+   ]
+  },
+  {
+   "account_id": "dart_SeparateAccountDerivativeFinancialAssetsHeldForTrading",
+   "canonical": "상각후원가금융자산",
+   "n": 1,
+   "amax": 208146150.0,
+   "labels": [
+    "상각후원가측정금융자산"
+   ]
+  },
+  {
+   "account_id": "dart_ShortTermOtherPayables",
+   "canonical": "단기차입금",
+   "n": 1,
+   "amax": 7344484030.0,
+   "labels": [
+    "단기차입금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ActuarialGainsLossesArisingFromChangesInFinancialAssumptionsNetOfTaxDefinedBenefitPlans",
+   "canonical": "확정급여재측정손익",
+   "n": 1,
+   "amax": 0.0,
+   "labels": [
+    "확정급여제도의 재측정요소"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_AdjustmentsForIncreaseDecreaseInEmployeeBenefitLiabilities",
+   "canonical": "확정급여재측정손익",
+   "n": 1,
+   "amax": 565888134.0,
+   "labels": [
+    "순확정급여부채의 재측정요소"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CashFlowsFromLosingControlOfSubsidiariesOrOtherBusinessesClassifiedAsInvestingActivities",
+   "canonical": "사업결합순현금유출",
+   "n": 1,
+   "amax": 874703480643.0,
+   "labels": [
+    "사업결합으로 인한 순현금유출액"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentFinancialLiabilitiesAtAmortisedCost",
+   "canonical": "단기차입금",
+   "n": 1,
+   "amax": 1451101034.0,
+   "labels": [
+    "단기차입금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentFinancialLiabilitiesAtAmortisedCost",
+   "canonical": "유동성장기차입금",
+   "n": 1,
+   "amax": 24013947903.0,
+   "labels": [
+    "유동성장기부채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentNoncashAssetsPledgedAsCollateralForWhichTransfereeHasRightByContractOrCustomToSellOrRepledgeCollateral",
+   "canonical": "계약자산",
+   "n": 1,
+   "amax": 665531688.0,
+   "labels": [
+    "계약자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentPrepaymentsAndOtherCurrentAssets",
+   "canonical": "기타유동자산",
+   "n": 1,
+   "amax": 435122023.0,
+   "labels": [
+    "기타유동자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentSecuredBankLoansReceivedAndCurrentPortionOfNoncurrentSecuredBankLoansReceived",
+   "canonical": "단기차입금",
+   "n": 1,
+   "amax": 18300000000.0,
+   "labels": [
+    "단기차입금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentTaxExpenseIncome",
+   "canonical": "법인세비용",
+   "n": 1,
+   "amax": 2581128421.0,
+   "labels": [
+    "법인세비용(수익)"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_DividendsRecognisedForInvestmentsInEquityInstrumentsDesignatedAsMeasuredAtFairValueThroughOtherComprehensiveIncomeDerecognisedDuringPeriod",
+   "canonical": "배당금지급",
+   "n": 1,
+   "amax": 28373179200.0,
+   "labels": [
+    "배당금의 지급"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_GainsLossesOnCashFlowHedgesBeforeTax",
+   "canonical": "현금흐름위험회피손익",
+   "n": 1,
+   "amax": 401682125.0,
+   "labels": [
+    "현금흐름위험회피파생상품평가손익"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_IncomeTaxRelatingToComponentsOfOtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLoss",
+   "canonical": "재분류불가능기타포괄손익",
+   "n": 1,
+   "amax": 0.0,
+   "labels": [
+    "후속적으로당기손익으로재분류되지않는항목"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_IncomeTaxRelatingToExchangeDifferencesOnTranslationOfOtherComprehensiveIncome",
+   "canonical": "해외사업환산손익",
+   "n": 1,
+   "amax": 95068563.0,
+   "labels": [
+    "해외사업환산손익"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_InterestIncomeOnFinancialAssetsDesignatedAtFairValueThroughProfitOrLoss",
+   "canonical": "이자지급",
+   "n": 1,
+   "amax": 4769513963.0,
+   "labels": [
+    "이자의 지급"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_LoansReceived",
+   "canonical": "유동성장기차입금",
+   "n": 1,
+   "amax": 0.0,
+   "labels": [
+    "유동성장기차입금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherBorrowings",
+   "canonical": "단기차입금",
+   "n": 1,
+   "amax": 0.0,
+   "labels": [
+    "단기차입금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherBorrowings",
+   "canonical": "유동성장기차입금",
+   "n": 1,
+   "amax": 1850000000.0,
+   "labels": [
+    "유동성장기차입금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherComprehensiveIncomeAttributableToNoncontrollingInterests",
+   "canonical": "비지배지분순이익",
+   "n": 1,
+   "amax": 14712675.0,
+   "labels": [
+    "비지배지분"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherComprehensiveIncomeBeforeTaxExchangeDifferencesOnTranslationOfForeignOperationsAndHedgesOfNetInvestmentsInForeignOperations",
+   "canonical": "해외사업환산손익",
+   "n": 1,
+   "amax": 15981149288.0,
+   "labels": [
+    "해외사업환산손익"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherComprehensiveIncomeNetOfTaxExchangeDifferencesOnTranslationOfForeignOperationsAndHedgesOfNetInvestmentsInForeignOperations",
+   "canonical": "해외사업환산손익",
+   "n": 1,
+   "amax": 21822608.0,
+   "labels": [
+    "해외사업환산손익"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherCurrentFinancialAssets",
+   "canonical": "상각후원가금융자산",
+   "n": 1,
+   "amax": 3995000.0,
+   "labels": [
+    "상각후원가 측정 금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherCurrentFinancialAssets",
+   "canonical": "유동FVPL금융자산",
+   "n": 1,
+   "amax": 32328638282.0,
+   "labels": [
+    "유동당기손익공정가치측정금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherCurrentFinancialLiabilities",
+   "canonical": "계약부채",
+   "n": 1,
+   "amax": 34331662224.0,
+   "labels": [
+    "계약부채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherCurrentLiabilities",
+   "canonical": "유동성장기차입금",
+   "n": 1,
+   "amax": 1933333334.0,
+   "labels": [
+    "유동성장기부채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherNoncurrentFinancialAssets",
+   "canonical": "무형자산",
+   "n": 1,
+   "amax": 518632990.0,
+   "labels": [
+    "무형자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherNoncurrentFinancialAssets",
+   "canonical": "상각후원가금융자산",
+   "n": 1,
+   "amax": 206760000.0,
+   "labels": [
+    "상각후원가 측정 금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherNoncurrentFinancialLiabilities",
+   "canonical": "순확정급여부채",
+   "n": 1,
+   "amax": 523982287.0,
+   "labels": [
+    "순확정급여부채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherNoncurrentLiabilities",
+   "canonical": "매입채무및기타유동채무",
+   "n": 1,
+   "amax": 781113392.0,
+   "labels": [
+    "매입채무 및 기타채무"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherNoncurrentLiabilities",
+   "canonical": "비유동계약부채",
+   "n": 1,
+   "amax": 34286457209.0,
+   "labels": [
+    "비유동계약부채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherNoncurrentLiabilities",
+   "canonical": "장기차입금",
+   "n": 1,
+   "amax": 373000000.0,
+   "labels": [
+    "장기차입금"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ProfitLossFromContinuingOperations",
+   "canonical": "당기순이익",
+   "n": 1,
+   "amax": 11895346336.0,
+   "labels": [
+    "당기순이익(손실)"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ProfitLossFromDiscontinuedOperationsAttributableToNoncontrollingInterests",
+   "canonical": "비지배지분순이익",
+   "n": 1,
+   "amax": 0.0,
+   "labels": [
+    "비지배지분"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_RedesignatedFinancialAssetAtFairValueThroughProfitOrLoss",
+   "canonical": "FVPL금융자산",
+   "n": 1,
+   "amax": 0.0,
+   "labels": [
+    "당기손익인식금융자산"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ShareOfOtherComprehensiveIncomeOfAssociatesAndJointVenturesAccountedForUsingEquityMethod",
+   "canonical": "FVOCI평가손익",
+   "n": 1,
+   "amax": 11710692.0,
+   "labels": [
+    "기타포괄손익-공정가치측정금융자산평가손익"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ShareOfOtherComprehensiveIncomeOfAssociatesAndJointVenturesAccountedForUsingEquityMethodThatWillBeReclassifiedToProfitOrLossNetOfTax",
+   "canonical": "재분류가능기타포괄손익",
+   "n": 1,
+   "amax": 0.0,
+   "labels": [
+    "후속적으로 당기손익으로 재분류될 수 있는 항목"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ShareOfOtherComprehensiveIncomeOfAssociatesAndJointVenturesAccountedForUsingEquityMethodThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+   "canonical": "확정급여재측정손익",
+   "n": 1,
+   "amax": 114492420.0,
+   "labels": [
+    "순확정급여부채의 재측정요소"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_ShorttermLegalProceedingsProvision",
+   "canonical": "충당부채",
+   "n": 1,
+   "amax": 0.0,
+   "labels": [
+    "충당부채"
+   ]
+  },
+  {
+   "account_id": "ifrs-full_TradeAndOtherPayablesToTradeSuppliers",
+   "canonical": "매입채무및기타유동채무",
+   "n": 1,
+   "amax": 49313049991.0,
+   "labels": [
+    "매입채무 및 기타채무"
+   ]
+  },
+  {
+   "account_id": "ifrs_NoncurrentAssetsOrDisposalGroupsClassifiedAsHeldForSaleOrAsHeldForDistributionToOwners",
+   "canonical": "계약자산",
+   "n": 1,
+   "amax": 536602000000.0,
+   "labels": [
+    "미청구공사"
+   ]
+  },
+  {
+   "account_id": "ifrs_NoncurrentPayables",
+   "canonical": "사채",
+   "n": 1,
+   "amax": 199452000000.0,
+   "labels": [
+    "사채"
+   ]
+  },
+  {
+   "account_id": "ifrs_OtherComprehensiveIncomeNetOfTaxHedgesOfNetInvestmentsInForeignOperations",
+   "canonical": "해외사업환산손익",
+   "n": 1,
+   "amax": 12000000.0,
+   "labels": [
+    "해외사업 환산손익"
+   ]
+  },
+  {
+   "account_id": "ifrs_RevenueFromSaleOfGoods",
+   "canonical": "매출",
+   "n": 1,
+   "amax": 10237422516.0,
+   "labels": [
+    "재화의 판매로 인한 수익(매출액)"
+   ]
+  },
+  {
+   "account_id": "ifrs_ShareOfProfitLossOfAssociatesAndJointVenturesAccountedForUsingEquityMethod",
+   "canonical": "지분법이익",
+   "n": 1,
+   "amax": 134554982.0,
+   "labels": [
+    "지분법이익"
+   ]
+  }
+ ]
+}

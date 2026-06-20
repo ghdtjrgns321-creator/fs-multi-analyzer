@@ -8,7 +8,7 @@ import pandas as pd
 
 from src.analysis_tools import account_series, compare_growth, yoy_growth_pct
 from src.signals.config import load_l2_config
-from src.signals.sanity import exclude_asset_sanity_years
+from src.signals.sanity import exclude_asset_sanity_years, exclude_foreign_currency_years
 from src.signals.universal import scale_floors
 
 GROWTH_COLUMNS = [
@@ -121,6 +121,7 @@ def build_mvp1_signal_report(
     reference = config["reference_fs_div"]
     thresholds = config.get("signal_thresholds", {})
     frame = exclude_asset_sanity_years(frame, thresholds)
+    frame = exclude_foreign_currency_years(frame)  # 통화전환 cross-year 차단(최신 통화 기준)
     analysis_years = _analysis_years(frame, years)
     floors = scale_floors(frame, thresholds, primary)
     divergences = [
@@ -140,9 +141,7 @@ def build_mvp1_signal_report(
     growth_divergences = (
         pd.concat(divergences, ignore_index=True)
         if divergences
-        else pd.DataFrame(
-            columns=[*GROWTH_COLUMNS, "id", "name"]
-        )
+        else pd.DataFrame(columns=[*GROWTH_COLUMNS, "id", "name"])
     )
     return {
         "primary_fs_div": primary,
@@ -201,9 +200,7 @@ def _guarded_compare_growth(
 
 def _asset_totals(frame: pd.DataFrame, fs_div: str) -> dict[int, float]:
     matched = frame[
-        (frame["fs_div"] == fs_div)
-        & (frame["canonical"] == "자산총계")
-        & (frame["amount"].notna())
+        (frame["fs_div"] == fs_div) & (frame["canonical"] == "자산총계") & (frame["amount"].notna())
     ].copy()
     if matched.empty:
         return {}

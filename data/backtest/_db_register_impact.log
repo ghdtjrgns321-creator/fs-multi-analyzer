@@ -1,0 +1,23 @@
+companies=1667 files=9319 register=61쌍
+새매핑 행(미분류→canonical)=4,567
+대표행 동일=572,385  대표행변화=27  신규그룹=4,085
+
+[대표행 변화 예시 — 위험]
+  ('이자비용', '2016', 'CFS')  before=('dart_InterestExpenseFinanceExpense', 1271606556.0) → after=('ifrs_FinanceCosts', 1271606556.0)
+  ('이자지급', '2016', 'OFS')  before=('-표준계정코드 미사용-', None) → after=('ifrs_InterestPaidClassifiedAsOperatingActivities', 873614235.0)
+  ('이자비용', '2016', 'OFS')  before=('dart_InterestExpenseFinanceExpense', 996324258.0) → after=('ifrs_FinanceCosts', 996324258.0)
+  ('재분류가능기타포괄손익', '2020', 'OFS')  before=('dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax', None) → after=None
+  ('이자비용', '2017', 'CFS')  before=('dart_InterestExpenseFinanceExpense', 8640801731.0) → after=('ifrs_FinanceCosts', 17798664000.0)
+  ('이자비용', '2017', 'OFS')  before=('dart_InterestExpenseFinanceExpense', 4516602627.0) → after=('ifrs_FinanceCosts', 8862189932.0)
+  ('이자비용', '2018', 'CFS')  before=('dart_InterestExpenseFinanceExpense', 9782882110.0) → after=('ifrs_FinanceCosts', 15296592848.0)
+  ('이자비용', '2018', 'OFS')  before=('dart_InterestExpenseFinanceExpense', 5499521804.0) → after=('ifrs_FinanceCosts', 7542374362.0)
+  ('재분류불가능기타포괄손익', '2017', 'CFS')  before=('dart_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax', 572748819.0) → after=None
+  ('재분류불가능기타포괄손익', '2017', 'OFS')  before=('dart_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax', -97437832.0) → after=None
+  ('기타자본변동', '2018', 'CFS')  before=('dart_ChangesInConsolidatedCompanies', -83626257721.0) → after=('ifrs_IncreaseDecreaseThroughChangesInAccountingPolicies', -90570952802.0)
+  ('기타자본변동', '2018', 'OFS')  before=('dart_CompoundFinancialInstrumentRedemption', 96877734.0) → after=('ifrs_IncreaseDecreaseThroughChangesInAccountingPolicies', -4481758089.0)
+  ('기타자본변동', '2023', 'CFS')  before=('dart_ChangesInConsolidatedCompanies', 27500000.0) → after=('dart_IncreaseDecreaseThroughChangesInAccountingPolicies', 79316347726.0)
+  ('기타자본변동', '2025', 'CFS')  before=('dart_ChangesInConsolidatedCompanies', None) → after=('dart_IncreaseDecreaseThroughChangesInAccountingPolicies', 1358053672.0)
+  ('비지배지분순이익', '2020', 'CFS')  before=('-표준계정코드 미사용-', None) → after=('ifrs_ProfitLossAttributableToNoncontrollingInterests', None)
+
+JSON -> data\backtest\_db_register_impact.json
+EXIT=0

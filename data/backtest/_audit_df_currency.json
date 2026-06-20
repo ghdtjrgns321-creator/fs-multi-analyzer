@@ -1,0 +1,22 @@
+{
+  "total_rows": 1575557,
+  "currency_distribution": {
+    "KRW": 1569765,
+    "USD": 5792
+  },
+  "foreign_rows": 5792,
+  "foreign_currencies": {
+    "USD": 5792
+  },
+  "foreign_corp_count": 4,
+  "mixed_corp_count": 1,
+  "mixed_corps": {
+    "01032486": {
+      "name": "두산밥캣",
+      "currencies": [
+        "KRW",
+        "USD"
+      ]
+    }
+  }
+}

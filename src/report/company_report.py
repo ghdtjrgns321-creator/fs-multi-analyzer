@@ -7,8 +7,11 @@ import re
 from pathlib import Path
 from typing import Any
 
+from config.settings import settings
 from src.analysis_tools import load_normalized_financials
 from src.collect.opendart import DartCollector
+from src.db.normalized import db_path
+from src.normalize.mapper import OTHER_CANONICAL
 from src.report.integrated import (
     build_review_queue,
     payload_for_summary,
@@ -33,9 +36,13 @@ def build_company_report(
 ) -> dict[str, object]:
     """Assemble deterministic L4 report inputs for one company."""
 
-    target_years = years or DEFAULT_YEARS
-    target_year = max(target_years)
+    # 분석 윈도우·target은 데이터에서 도출(§3: 연도 리터럴로 계산 구동 금지).
+    # years 명시 시 그 윈도우를 존중하되, target은 항상 frame에 실재하는 최신 연도.
+    # 2025 리터럴 고정 시 2025 미제출사는 전 신호가 빈값→LLM에 0건이 넘어가던 회귀를 차단.
+    target_years = years or _available_norm_years(corp_code) or DEFAULT_YEARS
     frame = load_normalized_financials(corp_code, target_years)
+    present_years = _present_years(frame)
+    target_year = max(present_years) if present_years else max(target_years)
     company_profile = _company_profile(corp_code, company_provider)
     signal_report = build_mvp1_signal_report(frame, years=target_years)
     red_flags = extract_red_flags(signal_report, target_year)
@@ -71,6 +78,41 @@ def build_company_report(
         "unmapped_material_accounts": unmapped,
         "llm_payload": payload,
     }
+
+
+def _available_norm_years(corp_code: str) -> list[int]:
+    """정규화 DB가 존재하는 연도를 디스크에서 발견(최신 4개 윈도우).
+
+    연도 윈도우를 회사 데이터에서 도출해 리터럴 고정을 제거한다(§3).
+    """
+
+    root = settings.data_dir
+    cdir = root / corp_code
+    if not cdir.is_dir():
+        return []
+    years: list[int] = []
+    for path in cdir.iterdir():
+        if (
+            path.is_dir()
+            and path.name.isdigit()
+            and db_path(corp_code, int(path.name), root).exists()
+        ):
+            years.append(int(path.name))
+    return sorted(years)[-4:]
+
+
+def _present_years(frame: Any) -> list[int]:
+    """frame에 실제 행이 있는 연도(target 후보)."""
+
+    if frame is None or getattr(frame, "empty", True) or "year" not in frame.columns:
+        return []
+    out: list[int] = []
+    for value in frame["year"].dropna().unique():
+        try:
+            out.append(int(value))
+        except (TypeError, ValueError):
+            continue
+    return sorted(out)
 
 
 def _company_profile(corp_code: str, company_provider: Any | None = None) -> dict[str, object]:
@@ -140,8 +182,10 @@ def _account_level_series(
     frame: Any,
     years: list[int],
     target_year: int,
-    limit: int = 40,
 ) -> list[dict[str, object]]:
+    # 개수상한 없음(결함① 수정): 강등 많은 금융사의 유의성 큰 계정이 상위 N개 밖으로
+    # 밀려 LLM material에서 누락되던 갭. PLAN §3 — 코드가 개수로 미리 자르지 않고
+    # 금액>0 계정 시계열을 전부 전달, 유의성 판단은 관점 에이전트가 한다.
     if not hasattr(frame, "to_dict") or frame.empty:
         return []
     fs_div = _primary_fs_div(frame, target_year)
@@ -156,7 +200,11 @@ def _account_level_series(
     )
     latest = scoped[scoped["year"].astype(int) == int(target_year)].copy()
     latest["abs_amount"] = latest["amount"].abs()
-    keys = latest.sort_values("abs_amount", ascending=False)["series_key"].dropna().head(limit)
+    keys = (
+        latest[latest["abs_amount"] > 0]
+        .sort_values("abs_amount", ascending=False)["series_key"]
+        .dropna()
+    )
     result = scoped[
         (scoped["series_key"].isin(keys))
         & (scoped["year"].astype(int).isin([int(year) for year in years]))
@@ -175,20 +223,29 @@ def _primary_fs_div(frame: Any, target_year: int) -> str:
 def _top_unmapped_material_accounts(frame: Any, target_year: int) -> list[dict[str, object]]:
     if not hasattr(frame, "to_dict"):
         return []
+    # 연결 없는 단일실체(OFS 전용)도 미매핑을 게시한다(§3: fs_div 리터럴 금지).
+    # SCE(자본변동표)는 전용 2D 테이블이 담당(AGENDA_DD_SCE2D) → 합계행(기초·자본총계)이
+    # "기타 중요 계정" 노이즈로 새지 않게 메인 unmapped material에서 제외.
+    # 결함① 수정: ① mapping_status='unmapped_extension_account'만 보던 조건을
+    #   canonical=='기타 중요 계정' 전체로 확대 — id_label_conflict로 강등된 핵심 계정
+    #   (순이자손익 등 canonical='기타'인데 status가 달라 빠지던 케이스) 포함.
+    # ② head(5) 개수상한 제거 — 강등 많은 금융사의 유의성 큰 계정이 상위 5개 밖으로
+    #   밀려 누락되던 갭. 금액>0 전부 게시(유의성 판단은 관점 에이전트가 한다).
+    fs_div = _primary_fs_div(frame, target_year)
     scoped = frame[
         (frame["year"].astype(str) == str(target_year))
-        & (frame["fs_div"] == "CFS")
-        & (frame["mapping_status"] == "unmapped_extension_account")
+        & (frame["fs_div"] == fs_div)
+        & (frame["sj_div"] != "SCE")
+        & (
+            (frame["mapping_status"] == "unmapped_extension_account")
+            | (frame["canonical"] == OTHER_CANONICAL)
+        )
     ].copy()
     if scoped.empty:
         return []
     scoped["abs_amount"] = scoped["amount"].abs()
     scoped = scoped[scoped["abs_amount"] > 0].sort_values("abs_amount", ascending=False)
-    return (
-        scoped[["year", "fs_div", "sj_div", "label", "account_id", "amount"]]
-        .head(5)
-        .to_dict("records")
-    )
+    return scoped[["year", "fs_div", "sj_div", "label", "account_id", "amount"]].to_dict("records")
 
 
 def load_findings_from_report(path: Path) -> list[AccountFinding]:

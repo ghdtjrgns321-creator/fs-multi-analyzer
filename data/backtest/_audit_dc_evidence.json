@@ -1,0 +1,2698 @@
+{
+ "pair_count": 52,
+ "items": [
+  {
+   "account_id": "dart_LongTermTradeAndOtherNonCurrentReceivablesGross",
+   "canonical": "매출채권및기타유동채권",
+   "reason": "비유동 표준ID가 유동 canonical에 흡수",
+   "n_json": 236,
+   "n_found": 236,
+   "amax": 1491046000000.0,
+   "registered": [
+    "TradeAndOtherCurrentReceivables",
+    "TradeAndOtherCurrentReceivables"
+   ],
+   "distinct_corps": 62,
+   "examples": [
+    {
+     "corp": "00131832",
+     "year": "2023",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "매출채권및기타채권",
+     "detail": "-",
+     "amount": "nan",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00190321",
+     "year": "2022",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "매출채권및기타채권",
+     "detail": "-",
+     "amount": "1491046000000",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00160588",
+     "year": "2020",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "매출채권및기타채권",
+     "detail": "-",
+     "amount": "581272000000",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00838005",
+     "year": "2023",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "매출채권 및 기타채권",
+     "detail": "-",
+     "amount": "365564874283",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00162063",
+     "year": "2022",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "매출채권 및 기타채권",
+     "detail": "-",
+     "amount": "225430251642",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00128971",
+     "year": "2024",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "매출채권 및 기타채권",
+     "detail": "-",
+     "amount": "212274173788",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_LongTermTradeAndOtherNonCurrentPayables",
+   "canonical": "매입채무및기타유동채무",
+   "reason": "비유동 표준ID가 유동 canonical에 흡수",
+   "n_json": 210,
+   "n_found": 210,
+   "amax": 1338781000000.0,
+   "registered": [
+    "TradeAndOtherCurrentPayables",
+    "TradeAndOtherCurrentPayables"
+   ],
+   "distinct_corps": 58,
+   "examples": [
+    {
+     "corp": "00130763",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "매입채무 및 기타채무",
+     "detail": "-",
+     "amount": "nan",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00131832",
+     "year": "2023",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "매입채무및기타채무",
+     "detail": "-",
+     "amount": "nan",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00137207",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "매입채무 및 기타채무",
+     "detail": "-",
+     "amount": "nan",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00190321",
+     "year": "2021",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "매입채무 및 기타채무",
+     "detail": "-",
+     "amount": "1338781000000",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00160588",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "매입채무및기타채무",
+     "detail": "-",
+     "amount": "723547000000",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00877059",
+     "year": "2022",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "매입채무및기타채무",
+     "detail": "-",
+     "amount": "551366868613",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NoncurrentReceivables",
+   "canonical": "매출채권및기타유동채권",
+   "reason": "비유동 표준ID가 유동 canonical에 흡수",
+   "n_json": 78,
+   "n_found": 78,
+   "amax": 989602000000.0,
+   "registered": [
+    "TradeAndOtherCurrentReceivables",
+    "TradeAndOtherCurrentReceivables"
+   ],
+   "distinct_corps": 30,
+   "examples": [
+    {
+     "corp": "00160588",
+     "year": "2023",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "매출채권및기타채권",
+     "detail": "-",
+     "amount": "989602000000",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00838005",
+     "year": "2025",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "매출채권및기타채권",
+     "detail": "-",
+     "amount": "487567183866",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00161693",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "매출채권 및 기타채권",
+     "detail": "-",
+     "amount": "nan",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00162063",
+     "year": "2025",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "매출채권 및 기타채권",
+     "detail": "-",
+     "amount": "256944976417",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00164645",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "매출채권및기타채권",
+     "detail": "-",
+     "amount": "195668000000",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00145880",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "매출채권및기타채권",
+     "detail": "-",
+     "amount": "117997396467",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_NonCurrentFirmCommitmentAsset",
+   "canonical": "계약자산",
+   "reason": "비유동 표준ID가 유동 canonical에 흡수",
+   "n_json": 47,
+   "n_found": 47,
+   "amax": 1702190498000.0,
+   "registered": [
+    "ContractAssets",
+    "CurrentContractAssets",
+    "ShortTermDueFromCustomersForContractWork"
+   ],
+   "distinct_corps": 6,
+   "examples": [
+    {
+     "corp": "00126308",
+     "year": "2022",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "확정계약자산",
+     "detail": "-",
+     "amount": "nan",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00164609",
+     "year": "2020",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "확정계약자산",
+     "detail": "-",
+     "amount": "nan",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00164830",
+     "year": "2020",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "확정계약자산",
+     "detail": "-",
+     "amount": "nan",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "01390344",
+     "year": "2024",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "확정계약자산",
+     "detail": "-",
+     "amount": "994420031000",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00117212",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "확정계약자산",
+     "detail": "-",
+     "amount": "62653000000",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00159616",
+     "year": "2019",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "확정계약자산",
+     "detail": "-",
+     "amount": "18149165186",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_NonCurrentFirmCommitmentLiabilities",
+   "canonical": "계약부채",
+   "reason": "비유동 표준ID가 유동 canonical에 흡수",
+   "n_json": 45,
+   "n_found": 45,
+   "amax": 324974480000.0,
+   "registered": [
+    "CurrentContractLiabilities",
+    "ShortTermDueToCustomersForContractWork",
+    "ShortTermIncomeReceivedInAdvance"
+   ],
+   "distinct_corps": 6,
+   "examples": [
+    {
+     "corp": "00126308",
+     "year": "2020",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "확정계약부채",
+     "detail": "-",
+     "amount": "nan",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00164830",
+     "year": "2020",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "확정계약부채",
+     "detail": "-",
+     "amount": "nan",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "01390344",
+     "year": "2022",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "확정계약부채",
+     "detail": "-",
+     "amount": "229959123000",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00159616",
+     "year": "2017",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "확정계약부채",
+     "detail": "-",
+     "amount": "49450153167",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00117212",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "확정계약부채",
+     "detail": "-",
+     "amount": "35233000000",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00164609",
+     "year": "2022",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "확정계약부채",
+     "detail": "-",
+     "amount": "19316965000",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_ShortTermTradePayables",
+   "canonical": "매입채무및기타유동채무",
+   "reason": "통합(AndOther)↔순수 불일치",
+   "n_json": 39,
+   "n_found": 39,
+   "amax": 912743301000.0,
+   "registered": [
+    "TradeAndOtherCurrentPayables",
+    "TradeAndOtherCurrentPayables"
+   ],
+   "distinct_corps": 9,
+   "examples": [
+    {
+     "corp": "00428251",
+     "year": "2022",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "매입채무및기타채무",
+     "detail": "-",
+     "amount": "912743301000",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00216498",
+     "year": "2022",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "매입채무및기타채무",
+     "detail": "-",
+     "amount": "92427413798",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "01784394",
+     "year": "2024",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "매입채무및기타채무",
+     "detail": "-",
+     "amount": "49026405930",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00268118",
+     "year": "2023",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "매입채무및기타채무",
+     "detail": "-",
+     "amount": "42795354289",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00352718",
+     "year": "2021",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "매입채무및기타채무",
+     "detail": "-",
+     "amount": "8637417573",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00351375",
+     "year": "2024",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "매입채무 및 기타채무",
+     "detail": "-",
+     "amount": "8042475853",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NoncurrentPayables",
+   "canonical": "매입채무및기타유동채무",
+   "reason": "비유동 표준ID가 유동 canonical에 흡수",
+   "n_json": 35,
+   "n_found": 35,
+   "amax": 28005231911.0,
+   "registered": [
+    "TradeAndOtherCurrentPayables",
+    "TradeAndOtherCurrentPayables"
+   ],
+   "distinct_corps": 16,
+   "examples": [
+    {
+     "corp": "00162063",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "매입채무및기타채무",
+     "detail": "-",
+     "amount": "28005231911",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00108135",
+     "year": "2025",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "매입채무및기타채무",
+     "detail": "-",
+     "amount": "23338578800",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00195229",
+     "year": "2024",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "매입채무및기타채무",
+     "detail": "-",
+     "amount": "19669579886",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00141529",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "매입채무및기타채무",
+     "detail": "-",
+     "amount": "11157517893",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00628860",
+     "year": "2024",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "매입채무및기타채무",
+     "detail": "-",
+     "amount": "5969226967",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00103510",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "매입채무및기타채무",
+     "detail": "-",
+     "amount": "4034649920",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_LongTermTradeAndOtherNonCurrentReceivablesGross",
+   "canonical": "비유동매출채권",
+   "reason": "통합(AndOther)↔순수 불일치",
+   "n_json": 34,
+   "n_found": 34,
+   "amax": 14191047997.0,
+   "registered": [
+    "LongTermTradeReceivablesGross",
+    "NoncurrentTradeReceivables"
+   ],
+   "distinct_corps": 12,
+   "examples": [
+    {
+     "corp": "00126478",
+     "year": "2021",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "비유동매출채권",
+     "detail": "-",
+     "amount": "10411322284",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00146232",
+     "year": "2024",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "장기매출채권",
+     "detail": "-",
+     "amount": "14191047997",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00239514",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "장기매출채권",
+     "detail": "-",
+     "amount": "nan",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00516246",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "장기매출채권",
+     "detail": "-",
+     "amount": "nan",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00620558",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "장기매출채권",
+     "detail": "-",
+     "amount": "nan",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "01187494",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "장기매출채권",
+     "detail": "-",
+     "amount": "3010257251",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "ifrs-full_IncreaseDecreaseThroughTransfersAndOtherChangesEquity",
+   "canonical": "기타자본변동",
+   "reason": "통합(AndOther)↔순수 불일치",
+   "n_json": 25,
+   "n_found": 25,
+   "amax": 121345937555.0,
+   "registered": [
+    "ChangesInConsolidatedCompanies",
+    "IncreaseDecreaseThroughChangesInAccountingPolicies",
+    "IntercompanyAcquisition"
+   ],
+   "distinct_corps": 3,
+   "examples": [
+    {
+     "corp": "00120076",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "SCE",
+     "label": "연결실체의 변동",
+     "detail": "연결재무제표 [member]",
+     "amount": "121328562369",
+     "canon_stmt": "SCE"
+    },
+    {
+     "corp": "00161976",
+     "year": "2022",
+     "fs": "CFS",
+     "sj_div": "SCE",
+     "label": "연결실체내 자본거래등",
+     "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]|이익잉여금 [member]",
+     "amount": "-6860462771",
+     "canon_stmt": "SCE"
+    },
+    {
+     "corp": "01098792",
+     "year": "2023",
+     "fs": "CFS",
+     "sj_div": "SCE",
+     "label": "연결실체의 변동",
+     "detail": "연결재무제표 [member]",
+     "amount": "-1199659999",
+     "canon_stmt": "SCE"
+    },
+    {
+     "corp": "00120076",
+     "year": "2024",
+     "fs": "CFS",
+     "sj_div": "SCE",
+     "label": "연결실체의 변동",
+     "detail": "연결재무제표 [member]",
+     "amount": "57015913952",
+     "canon_stmt": "SCE"
+    },
+    {
+     "corp": "00120076",
+     "year": "2024",
+     "fs": "CFS",
+     "sj_div": "SCE",
+     "label": "연결실체의 변동",
+     "detail": "자본 [구성요소]|비지배지분 [구성요소]",
+     "amount": "56991655056",
+     "canon_stmt": "SCE"
+    },
+    {
+     "corp": "00120076",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "SCE",
+     "label": "연결실체의 변동",
+     "detail": "자본 [구성요소]|기타포괄손익누적액 [구성요소]",
+     "amount": "nan",
+     "canon_stmt": "SCE"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_NonCurrentAvailableForSaleFinancialAssets",
+   "canonical": "FVOCI금융자산",
+   "reason": "이종 측정종류(매도가능) ↔ 등록(['FVOCI'])",
+   "n_json": 20,
+   "n_found": 20,
+   "amax": 3800000000.0,
+   "registered": [
+    "FinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome"
+   ],
+   "distinct_corps": 5,
+   "examples": [
+    {
+     "corp": "01405390",
+     "year": "2024",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "기타포괄손익-공정가치금융자산",
+     "detail": "-",
+     "amount": "3800000000",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00218575",
+     "year": "2023",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "기타포괄손익-공정가치측정금융자산",
+     "detail": "-",
+     "amount": "2999998967",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00799177",
+     "year": "2021",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "기타포괄손익공정가치측정금융자산",
+     "detail": "-",
+     "amount": "2693121191",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00449254",
+     "year": "2024",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "기타포괄손익-공정가치측정금융자산",
+     "detail": "-",
+     "amount": "362500000",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00331016",
+     "year": "2022",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "기타포괄손익-공정가치금융자산",
+     "detail": "-",
+     "amount": "343745000",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "01405390",
+     "year": "2024",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "기타포괄손익-공정가치금융자산",
+     "detail": "-",
+     "amount": "3800000000",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_LongTermTradeAndOtherNonCurrentPayables",
+   "canonical": "장기차입금",
+   "reason": "통합(AndOther)↔순수 불일치",
+   "n_json": 19,
+   "n_found": 19,
+   "amax": 48337409998.0,
+   "registered": [
+    "LongTermBorrowingsGross",
+    "NoncurrentPortionOfNoncurrentLoansReceived"
+   ],
+   "distinct_corps": 14,
+   "examples": [
+    {
+     "corp": "00117577",
+     "year": "2023",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "장기차입금",
+     "detail": "-",
+     "amount": "nan",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00129235",
+     "year": "2023",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "장기차입금",
+     "detail": "-",
+     "amount": "48337409998",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00118521",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "장기차입금",
+     "detail": "-",
+     "amount": "20017807587",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00102618",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "장기차입금",
+     "detail": "-",
+     "amount": "15000000000",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00363592",
+     "year": "2024",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "장기차입금",
+     "detail": "-",
+     "amount": "6000000000",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00367455",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "장기차입금",
+     "detail": "-",
+     "amount": "3666420000",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_NonCurrentAvailableForSaleFinancialAssets",
+   "canonical": "FVPL금융자산",
+   "reason": "이종 측정종류(매도가능) ↔ 등록(['FVPL'])",
+   "n_json": 18,
+   "n_found": 18,
+   "amax": 18944421814.0,
+   "registered": [
+    "FinancialAssetsMeasuredAtFairValueThroughProfitOrLoss"
+   ],
+   "distinct_corps": 4,
+   "examples": [
+    {
+     "corp": "00264945",
+     "year": "2024",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "당기손익-공정가치측정금융자산",
+     "detail": "-",
+     "amount": "18944421814",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00390365",
+     "year": "2020",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "당기손익-공정가치측정금융자산",
+     "detail": "-",
+     "amount": "5926501034",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00426828",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "당기손익-공정가치측정금융자산",
+     "detail": "-",
+     "amount": "505470426",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00153278",
+     "year": "2024",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "당기손익-공정가치 측정 금융자산",
+     "detail": "-",
+     "amount": "300500000",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00264945",
+     "year": "2024",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "당기손익-공정가치측정금융자산",
+     "detail": "-",
+     "amount": "10996873540",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00390365",
+     "year": "2020",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "당기손익-공정가치측정금융자산",
+     "detail": "-",
+     "amount": "5926501034",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_CopyrightsPatentsAndOtherIndustrialPropertyRightsServiceAndOperatingRightsGross",
+   "canonical": "무형자산",
+   "reason": "통합(AndOther)↔순수 불일치",
+   "n_json": 12,
+   "n_found": 12,
+   "amax": 281865688.0,
+   "registered": [
+    "IntangibleAssetsAndGoodwill",
+    "IntangibleAssetsOtherThanGoodwill"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00151128",
+     "year": "2021",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "무형자산",
+     "detail": "-",
+     "amount": "281865688",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00151128",
+     "year": "2021",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "무형자산",
+     "detail": "-",
+     "amount": "281865688",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00151128",
+     "year": "2020",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "무형자산",
+     "detail": "-",
+     "amount": "278313865",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00151128",
+     "year": "2020",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "무형자산",
+     "detail": "-",
+     "amount": "278313865",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00151128",
+     "year": "2022",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "무형자산",
+     "detail": "-",
+     "amount": "246473592",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00151128",
+     "year": "2022",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "무형자산",
+     "detail": "-",
+     "amount": "246473592",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "ifrs-full_GainsArisingFromDerecognitionOfFinancialAssetsMeasuredAtAmortisedCost",
+   "canonical": "지분법이익",
+   "reason": "이종 측정종류(상각후원가) ↔ 등록(['지분법'])",
+   "n_json": 10,
+   "n_found": 10,
+   "amax": 596401092499.0,
+   "registered": [
+    "ShareOfProfitLossOfAssociatesAndJointVenturesAccountedForUsingEquityMethod"
+   ],
+   "distinct_corps": 6,
+   "examples": [
+    {
+     "corp": "00116426",
+     "year": "2020",
+     "fs": "CFS",
+     "sj_div": "CIS",
+     "label": "지분법이익",
+     "detail": "-",
+     "amount": "nan",
+     "canon_stmt": "IS"
+    },
+    {
+     "corp": "00258801",
+     "year": "2021",
+     "fs": "CFS",
+     "sj_div": "CIS",
+     "label": "지분법이익",
+     "detail": "-",
+     "amount": "596401092499",
+     "canon_stmt": "IS"
+    },
+    {
+     "corp": "00231363",
+     "year": "2022",
+     "fs": "CFS",
+     "sj_div": "IS",
+     "label": "지분법이익",
+     "detail": "-",
+     "amount": "3334000000",
+     "canon_stmt": "IS"
+    },
+    {
+     "corp": "00258102",
+     "year": "2025",
+     "fs": "OFS",
+     "sj_div": "CIS",
+     "label": "지분법이익",
+     "detail": "-",
+     "amount": "1373855473",
+     "canon_stmt": "IS"
+    },
+    {
+     "corp": "00520887",
+     "year": "2021",
+     "fs": "CFS",
+     "sj_div": "CIS",
+     "label": "지분법이익",
+     "detail": "-",
+     "amount": "328767561",
+     "canon_stmt": "IS"
+    },
+    {
+     "corp": "00204642",
+     "year": "2020",
+     "fs": "CFS",
+     "sj_div": "CIS",
+     "label": "지분법이익",
+     "detail": "-",
+     "amount": "0",
+     "canon_stmt": "IS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_NonCurrentFinancialAssetsHeldToMaturity",
+   "canonical": "FVOCI금융자산",
+   "reason": "이종 측정종류(만기보유) ↔ 등록(['FVOCI'])",
+   "n_json": 8,
+   "n_found": 8,
+   "amax": 9328401165.0,
+   "registered": [
+    "FinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00787057",
+     "year": "2020",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "기타포괄손익-공정가치측정금융자산",
+     "detail": "-",
+     "amount": "9328401165",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00787057",
+     "year": "2020",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "기타포괄손익-공정가치측정금융자산",
+     "detail": "-",
+     "amount": "9328401165",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00787057",
+     "year": "2021",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "기타포괄손익-공정가치측정금융자산",
+     "detail": "-",
+     "amount": "6234471053",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00787057",
+     "year": "2021",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "기타포괄손익-공정가치측정금융자산",
+     "detail": "-",
+     "amount": "6234471053",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00787057",
+     "year": "2022",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "기타포괄손익-공정가치측정금융자산",
+     "detail": "-",
+     "amount": "0",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00787057",
+     "year": "2022",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "기타포괄손익-공정가치측정금융자산",
+     "detail": "-",
+     "amount": "0",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_CurrentPortionOfConvertibleBonds",
+   "canonical": "사채",
+   "reason": "유동 표준ID가 비유동 canonical에 흡수",
+   "n_json": 7,
+   "n_found": 7,
+   "amax": 19219604251.0,
+   "registered": [
+    "BondsIssued",
+    "NoncurrentPortionOfNoncurrentBondsIssued"
+   ],
+   "distinct_corps": 2,
+   "examples": [
+    {
+     "corp": "00255105",
+     "year": "2021",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "사채",
+     "detail": "-",
+     "amount": "19219604251",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00105606",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "사채",
+     "detail": "-",
+     "amount": "0",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00255105",
+     "year": "2022",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "사채",
+     "detail": "-",
+     "amount": "10304283610",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00255105",
+     "year": "2022",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "사채",
+     "detail": "-",
+     "amount": "10304283610",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00255105",
+     "year": "2020",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "사채",
+     "detail": "-",
+     "amount": "9040213569",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00105606",
+     "year": "2025",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "사채",
+     "detail": "-",
+     "amount": "0",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentBondsIssuedAndCurrentPortionOfNoncurrentBondsIssued",
+   "canonical": "사채",
+   "reason": "유동 표준ID가 비유동 canonical에 흡수",
+   "n_json": 7,
+   "n_found": 7,
+   "amax": 27957721260.0,
+   "registered": [
+    "BondsIssued",
+    "NoncurrentPortionOfNoncurrentBondsIssued"
+   ],
+   "distinct_corps": 4,
+   "examples": [
+    {
+     "corp": "00117027",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "사채",
+     "detail": "-",
+     "amount": "3500000000",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00192499",
+     "year": "2024",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "사채",
+     "detail": "-",
+     "amount": "nan",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00225706",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "사채",
+     "detail": "-",
+     "amount": "nan",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00522007",
+     "year": "2025",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "사채",
+     "detail": "-",
+     "amount": "27957721260",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00117027",
+     "year": "2025",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "사채",
+     "detail": "-",
+     "amount": "0",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00192499",
+     "year": "2024",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "사채",
+     "detail": "-",
+     "amount": "nan",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_LongTermTradeAndOtherNonCurrentPayables",
+   "canonical": "계약부채",
+   "reason": "비유동 표준ID가 유동 canonical에 흡수",
+   "n_json": 6,
+   "n_found": 6,
+   "amax": 114816158891.0,
+   "registered": [
+    "CurrentContractLiabilities",
+    "ShortTermDueToCustomersForContractWork",
+    "ShortTermIncomeReceivedInAdvance"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00113410",
+     "year": "2020",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "계약부채",
+     "detail": "-",
+     "amount": "114816158891",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00113410",
+     "year": "2021",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "계약부채",
+     "detail": "-",
+     "amount": "110792162655",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00113410",
+     "year": "2020",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "계약부채",
+     "detail": "-",
+     "amount": "102976110628",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00113410",
+     "year": "2022",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "계약부채",
+     "detail": "-",
+     "amount": "102001936562",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00113410",
+     "year": "2021",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "계약부채",
+     "detail": "-",
+     "amount": "93557773728",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00113410",
+     "year": "2022",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "계약부채",
+     "detail": "-",
+     "amount": "83381398661",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_LongTermTradeAndOtherNonCurrentReceivablesGross",
+   "canonical": "FVOCI금융자산",
+   "reason": "통합(AndOther)↔순수 불일치",
+   "n_json": 6,
+   "n_found": 6,
+   "amax": 443720662256.0,
+   "registered": [
+    "FinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00113410",
+     "year": "2021",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "기타포괄손익-공정가치 측정 금융자산",
+     "detail": "-",
+     "amount": "443720662256",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00113410",
+     "year": "2021",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "기타포괄손익-공정가치 측정 금융자산",
+     "detail": "-",
+     "amount": "443719292701",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00113410",
+     "year": "2020",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "기타포괄손익-공정가치 측정 금융자산",
+     "detail": "-",
+     "amount": "308249015654",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00113410",
+     "year": "2020",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "기타포괄손익-공정가치 측정 금융자산",
+     "detail": "-",
+     "amount": "308247788010",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00113410",
+     "year": "2022",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "기타포괄손익-공정가치측정금융자산",
+     "detail": "-",
+     "amount": "204278562593",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00113410",
+     "year": "2022",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "기타포괄손익-공정가치측정금융자산",
+     "detail": "-",
+     "amount": "204227228479",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_LongTermTradeAndOtherNonCurrentPayables",
+   "canonical": "사채",
+   "reason": "통합(AndOther)↔순수 불일치",
+   "n_json": 5,
+   "n_found": 5,
+   "amax": 30000000000.0,
+   "registered": [
+    "BondsIssued",
+    "NoncurrentPortionOfNoncurrentBondsIssued"
+   ],
+   "distinct_corps": 3,
+   "examples": [
+    {
+     "corp": "00156150",
+     "year": "2020",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "사채",
+     "detail": "-",
+     "amount": "1446978588",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00599285",
+     "year": "2023",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "사채",
+     "detail": "-",
+     "amount": "30000000000",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "01436628",
+     "year": "2024",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "사채",
+     "detail": "-",
+     "amount": "21979501176",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00156150",
+     "year": "2021",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "사채",
+     "detail": "-",
+     "amount": "0",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00156150",
+     "year": "2022",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "사채",
+     "detail": "-",
+     "amount": "nan",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_LongTermTradeAndOtherNonCurrentReceivablesGross",
+   "canonical": "관계기업투자",
+   "reason": "통합(AndOther)↔순수 불일치",
+   "n_json": 5,
+   "n_found": 5,
+   "amax": 17713817124.0,
+   "registered": [
+    "InvestmentAccountedForUsingEquityMethod",
+    "InvestmentsInAssociates",
+    "InvestmentsInSubsidiariesJointVenturesAndAssociates"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00110750",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "관계기업투자",
+     "detail": "-",
+     "amount": "17713817124",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00110750",
+     "year": "2023",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "관계기업투자",
+     "detail": "-",
+     "amount": "7242537410",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00110750",
+     "year": "2024",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "관계기업투자",
+     "detail": "-",
+     "amount": "5337291490",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00110750",
+     "year": "2022",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "관계기업투자",
+     "detail": "-",
+     "amount": "4057084604",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00110750",
+     "year": "2021",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "관계기업투자",
+     "detail": "-",
+     "amount": "5000000",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_LongTermTradeAndOtherNonCurrentPayables",
+   "canonical": "리스부채",
+   "reason": "통합(AndOther)↔순수 불일치",
+   "n_json": 4,
+   "n_found": 4,
+   "amax": 817458499.0,
+   "registered": [
+    "LeaseLiabilities"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00398668",
+     "year": "2022",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "리스부채",
+     "detail": "-",
+     "amount": "817458499",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00398668",
+     "year": "2023",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "리스부채",
+     "detail": "-",
+     "amount": "585174281",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00398668",
+     "year": "2021",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "리스부채",
+     "detail": "-",
+     "amount": "425251247",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00398668",
+     "year": "2020",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "리스부채",
+     "detail": "-",
+     "amount": "296581871",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_LongTermTradeAndOtherNonCurrentReceivablesGross",
+   "canonical": "FVPL금융자산",
+   "reason": "통합(AndOther)↔순수 불일치",
+   "n_json": 4,
+   "n_found": 4,
+   "amax": 11270979835.0,
+   "registered": [
+    "FinancialAssetsMeasuredAtFairValueThroughProfitOrLoss"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00361381",
+     "year": "2021",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "당기손익-공정가치측정금융자산",
+     "detail": "-",
+     "amount": "11270979835",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00361381",
+     "year": "2023",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "당기손익-공정가치측정금융자산",
+     "detail": "-",
+     "amount": "11013711855",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00361381",
+     "year": "2022",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "당기손익-공정가치측정금융자산",
+     "detail": "-",
+     "amount": "10103320769",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00361381",
+     "year": "2020",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "당기손익-공정가치측정금융자산",
+     "detail": "-",
+     "amount": "9765431758",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_LongTermTradeAndOtherNonCurrentReceivablesGross",
+   "canonical": "매출채권",
+   "reason": "비유동 표준ID가 유동 canonical에 흡수",
+   "n_json": 4,
+   "n_found": 4,
+   "amax": 2945764147.0,
+   "registered": [
+    "CurrentTradeReceivables",
+    "ShortTermTradeReceivable"
+   ],
+   "distinct_corps": 2,
+   "examples": [
+    {
+     "corp": "00128175",
+     "year": "2024",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "매출채권",
+     "detail": "-",
+     "amount": "nan",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00140131",
+     "year": "2022",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "매출채권",
+     "detail": "-",
+     "amount": "2945764147",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00128175",
+     "year": "2024",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "매출채권",
+     "detail": "-",
+     "amount": "nan",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00140131",
+     "year": "2023",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "매출채권",
+     "detail": "-",
+     "amount": "0",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "ifrs-full_IncreaseDecreaseThroughTransfersAndOtherChangesEquity",
+   "canonical": "자본금변동",
+   "reason": "통합(AndOther)↔순수 불일치",
+   "n_json": 4,
+   "n_found": 4,
+   "amax": 427619312.0,
+   "registered": [
+    "IssueOfEquity"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00178851",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "SCE",
+     "label": "유상증자",
+     "detail": "자본 [구성요소]|비지배지분 [구성요소]",
+     "amount": "nan",
+     "canon_stmt": "SCE"
+    },
+    {
+     "corp": "00178851",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "SCE",
+     "label": "유상증자",
+     "detail": "연결재무제표 [member]",
+     "amount": "nan",
+     "canon_stmt": "SCE"
+    },
+    {
+     "corp": "00178851",
+     "year": "2025",
+     "fs": "OFS",
+     "sj_div": "SCE",
+     "label": "유상증자",
+     "detail": "자본 [구성요소]|기타포괄손익누계액 [구성요소]",
+     "amount": "-427619312",
+     "canon_stmt": "SCE"
+    },
+    {
+     "corp": "00178851",
+     "year": "2025",
+     "fs": "OFS",
+     "sj_div": "SCE",
+     "label": "유상증자",
+     "detail": "별도재무제표 [member]",
+     "amount": "-427619312",
+     "canon_stmt": "SCE"
+    }
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherNoncurrentLiabilities",
+   "canonical": "당기법인세부채",
+   "reason": "비유동 표준ID가 유동 canonical에 흡수",
+   "n_json": 4,
+   "n_found": 4,
+   "amax": 0.0,
+   "registered": [
+    "CurrentTaxLiabilities"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00144395",
+     "year": "2024",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "당기법인세부채",
+     "detail": "-",
+     "amount": "nan",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00144395",
+     "year": "2024",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "당기법인세부채",
+     "detail": "-",
+     "amount": "nan",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00144395",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "당기법인세부채",
+     "detail": "-",
+     "amount": "nan",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00144395",
+     "year": "2025",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "당기법인세부채",
+     "detail": "-",
+     "amount": "nan",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_LongTermAccruedExpensesGross",
+   "canonical": "미지급비용",
+   "reason": "비유동 표준ID가 유동 canonical에 흡수",
+   "n_json": 3,
+   "n_found": 3,
+   "amax": 27013829.0,
+   "registered": [
+    "AccrualsClassifiedAsCurrent"
+   ],
+   "distinct_corps": 2,
+   "examples": [
+    {
+     "corp": "00103547",
+     "year": "2022",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "미지급비용",
+     "detail": "-",
+     "amount": "27013829",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "01491607",
+     "year": "2023",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "미지급비용",
+     "detail": "-",
+     "amount": "19210648",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00103547",
+     "year": "2023",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "미지급비용",
+     "detail": "-",
+     "amount": "19210648",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_NonCurrentProvisionForConstructionLosses",
+   "canonical": "공사손실충당부채",
+   "reason": "비유동 표준ID가 유동 canonical에 흡수",
+   "n_json": 3,
+   "n_found": 3,
+   "amax": 1584348187.0,
+   "registered": [
+    "CurrentProvisionForConstructionLosses"
+   ],
+   "distinct_corps": 2,
+   "examples": [
+    {
+     "corp": "00144650",
+     "year": "2024",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "공사손실충당부채",
+     "detail": "-",
+     "amount": "1584348187",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00442154",
+     "year": "2020",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "공사손실충당부채",
+     "detail": "-",
+     "amount": "nan",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00144650",
+     "year": "2024",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "공사손실충당부채",
+     "detail": "-",
+     "amount": "1584348187",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_OtherNonCurrentLiabilities",
+   "canonical": "충당부채",
+   "reason": "비유동 표준ID가 유동 canonical에 흡수",
+   "n_json": 3,
+   "n_found": 3,
+   "amax": 24799296.0,
+   "registered": [
+    "CurrentProvisions",
+    "CurrentProvisions",
+    "OtherShorttermProvisions",
+    "ShorttermMiscellaneousOtherProvisions",
+    "ShorttermMiscellaneousOtherProvisions",
+    "ShorttermProvisionForDecommissioningRestorationAndRehabilitationCosts"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00491336",
+     "year": "2022",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "충당부채",
+     "detail": "-",
+     "amount": "24799296",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00491336",
+     "year": "2021",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "충당부채",
+     "detail": "-",
+     "amount": "23914150",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00491336",
+     "year": "2020",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "충당부채",
+     "detail": "-",
+     "amount": "23060599",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "ifrs-full_LongtermBorrowings",
+   "canonical": "유동성장기차입금",
+   "reason": "비유동 표준ID가 유동 canonical에 흡수",
+   "n_json": 3,
+   "n_found": 3,
+   "amax": 1539165262119.0,
+   "registered": [
+    "CurrentPortionOfLongtermBorrowings",
+    "CurrentPortionOfNoncurrentBorrowings"
+   ],
+   "distinct_corps": 3,
+   "examples": [
+    {
+     "corp": "00113526",
+     "year": "2023",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "유동성장기부채",
+     "detail": "-",
+     "amount": "1539165262119",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00672603",
+     "year": "2025",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "유동성장기차입금",
+     "detail": "-",
+     "amount": "4804920000",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00326731",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "유동성장기부채",
+     "detail": "-",
+     "amount": "2758959600",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_CurrentAvailableForSaleFinancialAssets",
+   "canonical": "FVPL금융자산",
+   "reason": "이종 측정종류(매도가능) ↔ 등록(['FVPL'])",
+   "n_json": 2,
+   "n_found": 2,
+   "amax": 3176657592.0,
+   "registered": [
+    "FinancialAssetsMeasuredAtFairValueThroughProfitOrLoss"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00264945",
+     "year": "2024",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "당기손익-공정가치측정금융자산",
+     "detail": "-",
+     "amount": "3176657592",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00264945",
+     "year": "2024",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "당기손익-공정가치측정금융자산",
+     "detail": "-",
+     "amount": "60008045",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_CurrentFinancialAssetsHeldToMaturity",
+   "canonical": "상각후원가금융자산",
+   "reason": "이종 측정종류(만기보유) ↔ 등록(['상각후원가'])",
+   "n_json": 2,
+   "n_found": 2,
+   "amax": 2814005006.0,
+   "registered": [
+    "FinancialAssetsMeasuredAtAmortisedCost"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00264945",
+     "year": "2024",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "상각후원가측정금융자산",
+     "detail": "-",
+     "amount": "2814005006",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00264945",
+     "year": "2024",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "상각후원가측정금융자산",
+     "detail": "-",
+     "amount": "1814005006",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_CurrentPortionOfBondWithWarrant",
+   "canonical": "사채",
+   "reason": "유동 표준ID가 비유동 canonical에 흡수",
+   "n_json": 2,
+   "n_found": 2,
+   "amax": 34785701007.0,
+   "registered": [
+    "BondsIssued",
+    "NoncurrentPortionOfNoncurrentBondsIssued"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00977650",
+     "year": "2024",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "사채",
+     "detail": "-",
+     "amount": "34785701007",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00977650",
+     "year": "2025",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "사채",
+     "detail": "-",
+     "amount": "nan",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_CurrentPortionOfExchangeableBond",
+   "canonical": "사채",
+   "reason": "유동 표준ID가 비유동 canonical에 흡수",
+   "n_json": 2,
+   "n_found": 2,
+   "amax": 15105816267.0,
+   "registered": [
+    "BondsIssued",
+    "NoncurrentPortionOfNoncurrentBondsIssued"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00159786",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "사채",
+     "detail": "-",
+     "amount": "15105816267",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00159786",
+     "year": "2025",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "사채",
+     "detail": "-",
+     "amount": "15105816267",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_LongTermOtherPayablesNet",
+   "canonical": "미지급금",
+   "reason": "비유동 표준ID가 유동 canonical에 흡수",
+   "n_json": 2,
+   "n_found": 2,
+   "amax": 8965636523.0,
+   "registered": [
+    "OtherCurrentPayables"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00992871",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "미지급금",
+     "detail": "-",
+     "amount": "8965636523",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00992871",
+     "year": "2025",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "미지급금",
+     "detail": "-",
+     "amount": "8965636523",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_NonCurrentAvailableForSaleFinancialAssets",
+   "canonical": "종속기업투자",
+   "reason": "이종 측정종류(매도가능) ↔ 등록(['지분법'])",
+   "n_json": 2,
+   "n_found": 2,
+   "amax": 30432895280.0,
+   "registered": [
+    "InvestmentsInSubsidiaries"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00483735",
+     "year": "2023",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "종속기업투자주식",
+     "detail": "-",
+     "amount": "30432895280",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00483735",
+     "year": "2022",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "종속기업투자주식",
+     "detail": "-",
+     "amount": "19509179468",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_NonCurrentFinancialAssetsHeldToMaturity",
+   "canonical": "상각후원가금융자산",
+   "reason": "이종 측정종류(만기보유) ↔ 등록(['상각후원가'])",
+   "n_json": 2,
+   "n_found": 2,
+   "amax": 1000000.0,
+   "registered": [
+    "FinancialAssetsMeasuredAtAmortisedCost"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "01231786",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "상각후원가 측정 금융자산",
+     "detail": "-",
+     "amount": "1000000",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "01231786",
+     "year": "2025",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "상각후원가 측정 금융자산",
+     "detail": "-",
+     "amount": "1000000",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_ShortTermCollectionWithholdings",
+   "canonical": "매입채무및기타유동채무",
+   "reason": "통합(AndOther)↔순수 불일치",
+   "n_json": 2,
+   "n_found": 2,
+   "amax": 443397728601.0,
+   "registered": [
+    "TradeAndOtherCurrentPayables",
+    "TradeAndOtherCurrentPayables"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00131832",
+     "year": "2020",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "매입채무및기타채무",
+     "detail": "-",
+     "amount": "443397728601",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00131832",
+     "year": "2021",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "매입채무및기타채무",
+     "detail": "-",
+     "amount": "306776046754",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentBorrowingsAndCurrentPortionOfNoncurrentBorrowings",
+   "canonical": "사채",
+   "reason": "유동 표준ID가 비유동 canonical에 흡수",
+   "n_json": 2,
+   "n_found": 2,
+   "amax": 319712704765.0,
+   "registered": [
+    "BondsIssued",
+    "NoncurrentPortionOfNoncurrentBondsIssued"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00877059",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "사채",
+     "detail": "-",
+     "amount": "319712704765",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00877059",
+     "year": "2025",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "사채",
+     "detail": "-",
+     "amount": "319712704765",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentBorrowingsAndCurrentPortionOfNoncurrentBorrowings",
+   "canonical": "장기차입금",
+   "reason": "유동 표준ID가 비유동 canonical에 흡수",
+   "n_json": 2,
+   "n_found": 2,
+   "amax": 903104096251.0,
+   "registered": [
+    "LongTermBorrowingsGross",
+    "NoncurrentPortionOfNoncurrentLoansReceived"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "01316245",
+     "year": "2023",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "장기차입금",
+     "detail": "-",
+     "amount": "903104096251",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "01316245",
+     "year": "2023",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "장기차입금",
+     "detail": "-",
+     "amount": "494571707004",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentTaxAssets",
+   "canonical": "매출채권및기타유동채권",
+   "reason": "통합(AndOther)↔순수 불일치",
+   "n_json": 2,
+   "n_found": 2,
+   "amax": 974024927641.0,
+   "registered": [
+    "TradeAndOtherCurrentReceivables",
+    "TradeAndOtherCurrentReceivables"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00131832",
+     "year": "2021",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "매출채권및기타채권",
+     "detail": "-",
+     "amount": "974024927641",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00131832",
+     "year": "2020",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "매출채권및기타채권",
+     "detail": "-",
+     "amount": "766787713232",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NoncurrentAdvances",
+   "canonical": "선수금",
+   "reason": "비유동 표준ID가 유동 canonical에 흡수",
+   "n_json": 2,
+   "n_found": 2,
+   "amax": 1102422207.0,
+   "registered": [
+    "CurrentAdvances",
+    "ShortTermAdvancesCustomers"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00992871",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "선수금",
+     "detail": "-",
+     "amount": "1102422207",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00992871",
+     "year": "2025",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "선수금",
+     "detail": "-",
+     "amount": "1102422207",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "ifrs-full_NoncurrentFinancialAssetsAtFairValueThroughProfitOrLossMandatorilyMeasuredAtFairValue",
+   "canonical": "FVOCI금융자산",
+   "reason": "이종 측정종류(FVPL) ↔ 등록(['FVOCI'])",
+   "n_json": 2,
+   "n_found": 2,
+   "amax": 3717113200.0,
+   "registered": [
+    "FinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00145738",
+     "year": "2020",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "기타포괄손익공정가치측정금융자산",
+     "detail": "-",
+     "amount": "3717113200",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00145738",
+     "year": "2020",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "기타포괄손익공정가치측정금융자산",
+     "detail": "-",
+     "amount": "3717113200",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherNoncurrentFinancialLiabilities",
+   "canonical": "충당부채",
+   "reason": "비유동 표준ID가 유동 canonical에 흡수",
+   "n_json": 2,
+   "n_found": 2,
+   "amax": 76614287.0,
+   "registered": [
+    "CurrentProvisions",
+    "CurrentProvisions",
+    "OtherShorttermProvisions",
+    "ShorttermMiscellaneousOtherProvisions",
+    "ShorttermMiscellaneousOtherProvisions",
+    "ShorttermProvisionForDecommissioningRestorationAndRehabilitationCosts"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00131832",
+     "year": "2021",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "충당부채",
+     "detail": "-",
+     "amount": "76614287",
+     "canon_stmt": "BS"
+    },
+    {
+     "corp": "00131832",
+     "year": "2020",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "충당부채",
+     "detail": "-",
+     "amount": "34625971",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_CurrentAvailableForSaleFinancialAssets",
+   "canonical": "FVOCI금융자산",
+   "reason": "이종 측정종류(매도가능) ↔ 등록(['FVOCI'])",
+   "n_json": 1,
+   "n_found": 1,
+   "amax": 0.0,
+   "registered": [
+    "FinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00614593",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "기타포괄손익-공정가치 측정 금융자산",
+     "detail": "-",
+     "amount": "nan",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_DebtSecuritiesAtFairValueThroughOtherComprehensiveIncome",
+   "canonical": "FVPL금융자산",
+   "reason": "이종 측정종류(FVOCI) ↔ 등록(['FVPL'])",
+   "n_json": 1,
+   "n_found": 1,
+   "amax": 777933963.0,
+   "registered": [
+    "FinancialAssetsMeasuredAtFairValueThroughProfitOrLoss"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00136004",
+     "year": "2024",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "당기손익-공정가치측정금융자산",
+     "detail": "-",
+     "amount": "777933963",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_PresentValueDiscountsLongTermBorrowingsGross",
+   "canonical": "유동성장기차입금",
+   "reason": "비유동 표준ID가 유동 canonical에 흡수",
+   "n_json": 1,
+   "n_found": 1,
+   "amax": 79400000000.0,
+   "registered": [
+    "CurrentPortionOfLongtermBorrowings",
+    "CurrentPortionOfNoncurrentBorrowings"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00146232",
+     "year": "2023",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "유동성장기차입금",
+     "detail": "-",
+     "amount": "-79400000000",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "dart_SeparateAccountDerivativeFinancialAssetsHeldForTrading",
+   "canonical": "상각후원가금융자산",
+   "reason": "이종 측정종류(FVPL) ↔ 등록(['상각후원가'])",
+   "n_json": 1,
+   "n_found": 1,
+   "amax": 208146150.0,
+   "registered": [
+    "FinancialAssetsMeasuredAtAmortisedCost"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00146232",
+     "year": "2023",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "상각후원가측정금융자산",
+     "detail": "-",
+     "amount": "208146150",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "ifrs-full_CurrentPrepaymentsAndOtherCurrentAssets",
+   "canonical": "기타유동자산",
+   "reason": "통합(AndOther)↔순수 불일치",
+   "n_json": 1,
+   "n_found": 1,
+   "amax": 435122023.0,
+   "registered": [
+    "OtherCurrentAssets"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00143226",
+     "year": "2025",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "기타유동자산",
+     "detail": "-",
+     "amount": "435122023",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "ifrs-full_OtherNoncurrentLiabilities",
+   "canonical": "매입채무및기타유동채무",
+   "reason": "비유동 표준ID가 유동 canonical에 흡수",
+   "n_json": 1,
+   "n_found": 1,
+   "amax": 781113392.0,
+   "registered": [
+    "TradeAndOtherCurrentPayables",
+    "TradeAndOtherCurrentPayables"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00373571",
+     "year": "2025",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "매입채무 및 기타채무",
+     "detail": "-",
+     "amount": "781113392",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "ifrs-full_TradeAndOtherPayablesToTradeSuppliers",
+   "canonical": "매입채무및기타유동채무",
+   "reason": "통합(AndOther)↔순수 불일치",
+   "n_json": 1,
+   "n_found": 1,
+   "amax": 49313049991.0,
+   "registered": [
+    "TradeAndOtherCurrentPayables",
+    "TradeAndOtherCurrentPayables"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00264945",
+     "year": "2024",
+     "fs": "CFS",
+     "sj_div": "BS",
+     "label": "매입채무 및 기타채무",
+     "detail": "-",
+     "amount": "49313049991",
+     "canon_stmt": "BS"
+    }
+   ]
+  },
+  {
+   "account_id": "ifrs_NoncurrentAssetsOrDisposalGroupsClassifiedAsHeldForSaleOrAsHeldForDistributionToOwners",
+   "canonical": "계약자산",
+   "reason": "비유동 표준ID가 유동 canonical에 흡수",
+   "n_json": 1,
+   "n_found": 1,
+   "amax": 536602000000.0,
+   "registered": [
+    "ContractAssets",
+    "CurrentContractAssets",
+    "ShortTermDueFromCustomersForContractWork"
+   ],
+   "distinct_corps": 1,
+   "examples": [
+    {
+     "corp": "00309503",
+     "year": "2016",
+     "fs": "OFS",
+     "sj_div": "BS",
+     "label": "미청구공사",
+     "detail": "-",
+     "amount": "536602000000",
+     "canon_stmt": "BS"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,21 @@
+{
+  "지분법기타포괄손익": [
+    "dart_ShareOfOtherComprehensiveIncomeOfAssociatesAndJointVenturesAccountedForUsingEquityMethodThatWillNotBeReclassifiedToProfitOrLossNetOfTax"
+  ],
+  "지분법적용 투자지분의 처분": [
+    "dart_ProceedsFromSalesOfInvestmentsAccountedForUsingEquityMethod"
+  ],
+  "오류수정에 따른 증가(감소)": [
+    "dart_IncreaseDecreaseThroughCorrectionsOfErrors"
+  ],
+  "유동금융리스채권": [
+    "dart_CurrentFinanceLeaseReceivables"
+  ],
+  "단기차입금": [
+    "dart_ShortTermBorrowings"
+  ],
+  "주식기준보상거래": [
+    "ifrs-full_SharebasedPaymentTransactions",
+    "ifrs_SharebasedPaymentTransactions"
+  ]
+}

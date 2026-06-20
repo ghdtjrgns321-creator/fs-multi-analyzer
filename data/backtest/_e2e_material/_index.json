@@ -1,0 +1,62 @@
+[
+ {
+  "dim": "대형다각화",
+  "corp": "00126380",
+  "target_year": 2024,
+  "status": "ok",
+  "review_queue_len": 39,
+  "note_CFS": 16,
+  "note_OFS": 16,
+  "chunks_CFS": 0
+ },
+ {
+  "dim": "금융지주",
+  "corp": "00688996",
+  "target_year": 2023,
+  "status": "ok",
+  "review_queue_len": 18,
+  "note_CFS": 10,
+  "note_OFS": 10,
+  "chunks_CFS": 0
+ },
+ {
+  "dim": "자본거래多",
+  "corp": "00258801",
+  "target_year": 2024,
+  "status": "ok",
+  "review_queue_len": 46,
+  "note_CFS": 15,
+  "note_OFS": 16,
+  "chunks_CFS": 0
+ },
+ {
+  "dim": "정정본",
+  "corp": "00117212",
+  "target_year": 2024,
+  "status": "ok",
+  "review_queue_len": 60,
+  "note_CFS": 14,
+  "note_OFS": 14,
+  "chunks_CFS": 0
+ },
+ {
+  "dim": "구포맷",
+  "corp": "00356361",
+  "target_year": 2017,
+  "status": "ok",
+  "review_queue_len": 58,
+  "note_CFS": 10,
+  "note_OFS": 10,
+  "chunks_CFS": 0
+ },
+ {
+  "dim": "소형단순",
+  "corp": "00160375",
+  "target_year": 2024,
+  "status": "ok",
+  "review_queue_len": 2,
+  "note_CFS": 10,
+  "note_OFS": 10,
+  "chunks_CFS": 0
+ }
+]

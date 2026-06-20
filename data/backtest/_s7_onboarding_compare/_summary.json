@@ -1,0 +1,201 @@
+[
+  {
+    "corp": "00624378",
+    "year": "2023",
+    "era": "new",
+    "status": "ok",
+    "input_chars": 18779,
+    "input_tokens": 13335,
+    "output_tokens": 1261,
+    "latency_s": 11.53,
+    "n_chunks": 10,
+    "types": [
+      "감사_내부통제",
+      "계속기업_상장위험",
+      "담보_보증",
+      "소송_분쟁",
+      "우발_약정",
+      "제재_규제",
+      "특수관계_대주주"
+    ]
+  },
+  {
+    "corp": "00560982",
+    "year": "2022",
+    "era": "new",
+    "status": "ok",
+    "input_chars": 18787,
+    "input_tokens": 13336,
+    "output_tokens": 1562,
+    "latency_s": 11.26,
+    "n_chunks": 12,
+    "types": [
+      "감사_내부통제",
+      "담보_보증",
+      "메자닌_자금조달",
+      "소송_분쟁",
+      "연결_지배구조",
+      "우발_약정",
+      "재작성_정정",
+      "제재_규제",
+      "특수관계_대주주",
+      "파생_시장위험"
+    ]
+  },
+  {
+    "corp": "00411446",
+    "year": "2023",
+    "era": "new",
+    "status": "ok",
+    "input_chars": 20972,
+    "input_tokens": 14453,
+    "output_tokens": 574,
+    "latency_s": 5.21,
+    "n_chunks": 5,
+    "types": [
+      "감사_내부통제",
+      "손상",
+      "연결_지배구조",
+      "우발_약정",
+      "특수관계_대주주"
+    ]
+  },
+  {
+    "corp": "01373709",
+    "year": "2023",
+    "era": "new",
+    "status": "ok",
+    "input_chars": 22157,
+    "input_tokens": 15206,
+    "output_tokens": 1429,
+    "latency_s": 14.32,
+    "n_chunks": 11,
+    "types": [
+      "감사_내부통제",
+      "계속기업_상장위험",
+      "담보_보증",
+      "메자닌_자금조달",
+      "손상",
+      "우발_약정",
+      "특수관계_대주주"
+    ]
+  },
+  {
+    "corp": "00524421",
+    "year": "2023",
+    "era": "new",
+    "status": "ok",
+    "input_chars": 22457,
+    "input_tokens": 15545,
+    "output_tokens": 1081,
+    "latency_s": 8.24,
+    "n_chunks": 8,
+    "types": [
+      "감사_내부통제",
+      "담보_보증",
+      "손상",
+      "연결_지배구조",
+      "우발_약정",
+      "제재_규제",
+      "특수관계_대주주"
+    ]
+  },
+  {
+    "corp": "00299358",
+    "year": "2022",
+    "era": "new",
+    "status": "ok",
+    "input_chars": 22969,
+    "input_tokens": 15752,
+    "output_tokens": 1522,
+    "latency_s": 11.37,
+    "n_chunks": 15,
+    "types": [
+      "감사_내부통제",
+      "계속기업_상장위험",
+      "담보_보증",
+      "메자닌_자금조달",
+      "소송_분쟁",
+      "손상",
+      "연결_지배구조",
+      "우발_약정",
+      "제재_규제",
+      "특수관계_대주주"
+    ]
+  },
+  {
+    "corp": "00474588",
+    "year": "2015",
+    "era": "old",
+    "status": "ok",
+    "input_chars": 12432,
+    "input_tokens": 9268,
+    "output_tokens": 1614,
+    "latency_s": 13.48,
+    "n_chunks": 17,
+    "types": [
+      "감사_내부통제",
+      "담보_보증",
+      "메자닌_자금조달",
+      "연결_지배구조",
+      "우발_약정",
+      "재작성_정정",
+      "특수관계_대주주"
+    ]
+  },
+  {
+    "corp": "01108442",
+    "year": "2015",
+    "era": "old",
+    "status": "ok",
+    "input_chars": 13579,
+    "input_tokens": 10052,
+    "output_tokens": 966,
+    "latency_s": 7.72,
+    "n_chunks": 7,
+    "types": [
+      "감사_내부통제",
+      "담보_보증",
+      "메자닌_자금조달",
+      "우발_약정",
+      "특수관계_대주주"
+    ]
+  },
+  {
+    "corp": "00545114",
+    "year": "2015",
+    "era": "old",
+    "status": "ok",
+    "input_chars": 14963,
+    "input_tokens": 10809,
+    "output_tokens": 1020,
+    "latency_s": 7.47,
+    "n_chunks": 10,
+    "types": [
+      "감사_내부통제",
+      "담보_보증",
+      "메자닌_자금조달",
+      "우발_약정",
+      "재작성_정정",
+      "특수관계_대주주"
+    ]
+  },
+  {
+    "corp": "00569646",
+    "year": "2015",
+    "era": "old",
+    "status": "ok",
+    "input_chars": 15019,
+    "input_tokens": 10876,
+    "output_tokens": 786,
+    "latency_s": 5.99,
+    "n_chunks": 8,
+    "types": [
+      "감사_내부통제",
+      "담보_보증",
+      "손상",
+      "우발_약정",
+      "특수관계_대주주"
+    ]
+  }
+]

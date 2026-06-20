@@ -1,0 +1,12 @@
+files=9319 새분류행=4,662 대표동일=572,385 대표변화=27 신규그룹=4,180
+
+핵심 분식계정 대표변화: 5건
+  ⚠ 00309503 계약부채 2016 CFS  ('ifrs_CurrentPortionOfLongtermBorrowings', 56805000000.0) -> None
+  ⚠ 00309503 계약부채 2016 OFS  ('ifrs_CurrentPortionOfLongtermBorrowings', 56805000000.0) -> None
+  ⚠ 00449254 종속기업투자 2018 OFS  ('ifrs_InvestmentsInSubsidiariesJointVenturesAndAssociates', 1145000000.0) -> None
+  ⚠ 00526696 관계기업투자 2017 OFS  ('-표준계정코드 미사용-', 1591773180.0) -> ('ifrs_InvestmentsInSubsidiariesJointVenturesAndAssociates', 3740866678.0)
+  ⚠ 00526696 종속기업투자 2017 OFS  ('ifrs_InvestmentsInSubsidiariesJointVenturesAndAssociates', 3740866678.0) -> None
+
+변화 canonical 분포: {'기타자본변동': 8, '이자비용': 7, '재분류불가능기타포괄손익': 2, '계약부채': 2, 'FVOCI금융자산': 2, '종속기업투자': 2, '이자지급': 1, '재분류가능기타포괄손익': 1, '비지배지분순이익': 1, '관계기업투자': 1}
+JSON -> data\backtest\_db_apply_verify.json
+EXIT=0

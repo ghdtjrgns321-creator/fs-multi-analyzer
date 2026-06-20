@@ -113,9 +113,7 @@ def test_universal_scan_groups_changed_account_id_by_canonical() -> None:
         ]
     )
 
-    signal = next(
-        item for item in scan_universal_signals(data, 2025) if item.account == "매출"
-    )
+    signal = next(item for item in scan_universal_signals(data, 2025) if item.account == "매출")
 
     assert signal.signal_type == "universal_yoy"
     assert signal.metric_value == 900.0
@@ -432,7 +430,8 @@ def test_universal_scan_excludes_asset_sanity_bad_year() -> None:
     assert signals == []
 
 
-def test_universal_scan_posts_two_track_quotas_without_losing_raw_option() -> None:
+def test_universal_scan_returns_all_material_signals_without_quota() -> None:
+    # ② 채점/랭킹(track quota·top-N) 제거: 스캔은 material 신호를 전부 반환한다(선택·할당 없음).
     rows = []
     for year in [2024, 2025]:
         rows.append(
@@ -477,8 +476,7 @@ def test_universal_scan_posts_two_track_quotas_without_losing_raw_option() -> No
     posted = scan_universal_signals(data, 2025)
     all_signals = scan_universal_signals(data, 2025, include_all=True)
 
-    assert len(posted) == 12
-    assert sum(1 for item in posted if item.track == "A") == 6
-    assert sum(1 for item in posted if item.track == "B") == 6
+    # quota/top-N 없이 material 신호 전부(=14) 반환. include_all 인자는 무시되어 동일.
+    assert len(posted) == 14
     assert len(all_signals) == 14
-    assert all(item.current_amount is not None for item in all_signals)
+    assert all(item.current_amount is not None for item in posted)

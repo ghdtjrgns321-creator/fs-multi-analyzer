@@ -1,0 +1,43 @@
+오매핑 쌍(분류기 재현): 52
+  ...300/1667 corps scanned
+  ...600/1667 corps scanned
+  ...900/1667 corps scanned
+  ...1200/1667 corps scanned
+  ...1500/1667 corps scanned
+
+쌍=52 -> data\backtest\_audit_dc_evidence.json
+distinct corp<2 쌍: 32
+  무형자산 <- dart_CopyrightsPatentsAndOtherIndustrialPropertyRightsServiceAndOperatingRightsGross (corps=1, n=12)
+  FVOCI금융자산 <- dart_NonCurrentFinancialAssetsHeldToMaturity (corps=1, n=8)
+  계약부채 <- dart_LongTermTradeAndOtherNonCurrentPayables (corps=1, n=6)
+  FVOCI금융자산 <- dart_LongTermTradeAndOtherNonCurrentReceivablesGross (corps=1, n=6)
+  관계기업투자 <- dart_LongTermTradeAndOtherNonCurrentReceivablesGross (corps=1, n=5)
+  리스부채 <- dart_LongTermTradeAndOtherNonCurrentPayables (corps=1, n=4)
+  FVPL금융자산 <- dart_LongTermTradeAndOtherNonCurrentReceivablesGross (corps=1, n=4)
+  자본금변동 <- ifrs-full_IncreaseDecreaseThroughTransfersAndOtherChangesEquity (corps=1, n=4)
+  당기법인세부채 <- ifrs-full_OtherNoncurrentLiabilities (corps=1, n=4)
+  충당부채 <- dart_OtherNonCurrentLiabilities (corps=1, n=3)
+  FVPL금융자산 <- dart_CurrentAvailableForSaleFinancialAssets (corps=1, n=2)
+  상각후원가금융자산 <- dart_CurrentFinancialAssetsHeldToMaturity (corps=1, n=2)
+  사채 <- dart_CurrentPortionOfBondWithWarrant (corps=1, n=2)
+  사채 <- dart_CurrentPortionOfExchangeableBond (corps=1, n=2)
+  미지급금 <- dart_LongTermOtherPayablesNet (corps=1, n=2)
+  종속기업투자 <- dart_NonCurrentAvailableForSaleFinancialAssets (corps=1, n=2)
+  상각후원가금융자산 <- dart_NonCurrentFinancialAssetsHeldToMaturity (corps=1, n=2)
+  매입채무및기타유동채무 <- dart_ShortTermCollectionWithholdings (corps=1, n=2)
+  사채 <- ifrs-full_CurrentBorrowingsAndCurrentPortionOfNoncurrentBorrowings (corps=1, n=2)
+  장기차입금 <- ifrs-full_CurrentBorrowingsAndCurrentPortionOfNoncurrentBorrowings (corps=1, n=2)
+  매출채권및기타유동채권 <- ifrs-full_CurrentTaxAssets (corps=1, n=2)
+  선수금 <- ifrs-full_NoncurrentAdvances (corps=1, n=2)
+  FVOCI금융자산 <- ifrs-full_NoncurrentFinancialAssetsAtFairValueThroughProfitOrLossMandatorilyMeasuredAtFairValue (corps=1, n=2)
+  충당부채 <- ifrs-full_OtherNoncurrentFinancialLiabilities (corps=1, n=2)
+  FVOCI금융자산 <- dart_CurrentAvailableForSaleFinancialAssets (corps=1, n=1)
+  FVPL금융자산 <- dart_DebtSecuritiesAtFairValueThroughOtherComprehensiveIncome (corps=1, n=1)
+  유동성장기차입금 <- dart_PresentValueDiscountsLongTermBorrowingsGross (corps=1, n=1)
+  상각후원가금융자산 <- dart_SeparateAccountDerivativeFinancialAssetsHeldForTrading (corps=1, n=1)
+  기타유동자산 <- ifrs-full_CurrentPrepaymentsAndOtherCurrentAssets (corps=1, n=1)
+  매입채무및기타유동채무 <- ifrs-full_OtherNoncurrentLiabilities (corps=1, n=1)
+  매입채무및기타유동채무 <- ifrs-full_TradeAndOtherPayablesToTradeSuppliers (corps=1, n=1)
+  계약자산 <- ifrs_NoncurrentAssetsOrDisposalGroupsClassifiedAsHeldForSaleOrAsHeldForDistributionToOwners (corps=1, n=1)
+
+n_json != n_found 쌍: 0

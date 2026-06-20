@@ -1,0 +1,65 @@
+[
+  {
+    "cell": "대금융신",
+    "corp": "00258801",
+    "year": "2023",
+    "placeholder": 36,
+    "asset": 25179968939321.0,
+    "fin": true,
+    "note": true
+  },
+  {
+    "cell": "대금융구",
+    "corp": "00159616",
+    "year": "2015",
+    "placeholder": 111,
+    "asset": 27260140610258.0,
+    "fin": true,
+    "note": true
+  },
+  {
+    "cell": "대비금융신",
+    "corp": "00148993",
+    "year": "2023",
+    "placeholder": 36,
+    "asset": 3979751148746.0,
+    "fin": false,
+    "note": true
+  },
+  {
+    "cell": "대비금융구",
+    "corp": "00413046",
+    "year": "2015",
+    "placeholder": 89,
+    "asset": 2748230541703.0,
+    "fin": false,
+    "note": true
+  },
+  {
+    "cell": "소금융신",
+    "corp": "00356389",
+    "year": "2025",
+    "placeholder": 63,
+    "asset": 41680469489.0,
+    "fin": true,
+    "note": true
+  },
+  {
+    "cell": "소비금융신",
+    "corp": "00129235",
+    "year": "2024",
+    "placeholder": 20,
+    "asset": 203950424754.0,
+    "fin": false,
+    "note": true
+  },
+  {
+    "cell": "소비금융구",
+    "corp": "00409681",
+    "year": "2016",
+    "placeholder": 46,
+    "asset": 224110365987.0,
+    "fin": false,
+    "note": true
+  }
+]

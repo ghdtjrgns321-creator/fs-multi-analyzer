@@ -29,39 +29,24 @@ def score_case(
     available_years: list[int] | None = None,
     legacy_signals: list[RedFlagSignal] | None = None,
 ) -> dict[str, object]:
+    # ② 채점/랭킹(strict top10·track quota) 제거: 분식계정이 신호에 떴는지(발굴 recall)만 본다.
+    # Phase2 LLM은 채점 결과를 권위로 소비하지 않으므로 순위·할당 채점을 두지 않는다.
+    # legacy_signals 인자는 하위호환용 무시.
     fraud_accounts = _split_accounts(label.get("accounts", ""))
     mapped = [_map_account(account, frame) for account in fraud_accounts]
     fired = [_signal_row(signal) for signal in signals]
-    legacy_fired = [_signal_row(signal) for signal in (legacy_signals or signals)]
-    legacy_scored = [row for row in legacy_fired if not row["excluded_from_scoring"]]
     scored = [row for row in fired if not row["excluded_from_scoring"]]
-    ranked = _dedupe_by_account(legacy_scored)
-    top10 = ranked[:10]
-    track_ranked = _rank_by_track(_dedupe_by_account(scored))
-    track_top = _track_quota_rows(track_ranked)
+    ranked = _dedupe_by_account(scored)
     account_scores = [
-        _account_score(item, ranked, top10, frame, available_years or years) for item in mapped
+        _account_score(item, ranked, frame, available_years or years) for item in mapped
     ]
-    track_account_scores = [
-        _account_score(item, track_ranked, track_top, frame, available_years or years)
-        for item in mapped
-    ]
-    hit = any(score["status"] == "포착" for score in account_scores)
-    track_hit = any(score["status"] == "포착" for score in track_account_scores)
     discovered = any(_is_discovered(score) for score in account_scores)
     miss_reason = None
-    if not hit:
+    if not discovered:
         miss_reason = (
             "해당없음"
             if not fraud_accounts
             else _miss_reason(available_years or years, mapped, account_scores)
-        )
-    track_miss_reason = None
-    if not track_hit:
-        track_miss_reason = (
-            "해당없음"
-            if not fraud_accounts
-            else _miss_reason(available_years or years, mapped, track_account_scores)
         )
     return {
         "corp_code": label["corp_code"],
@@ -71,20 +56,11 @@ def score_case(
         "available_years": available_years or years,
         "fraud_accounts": fraud_accounts,
         "mapped": mapped,
-        "mapped_account_ids": mapped,
         "fired_signals": fired,
-        "scoring_top10": top10,
-        "track_scoring_top": track_top,
-        "false_positive_profile": top10 if label["label"] == "clean" else [],
-        "track_false_positive_profile": track_top if label["label"] == "clean" else [],
+        "false_positive_profile": ranked if label["label"] == "clean" else [],
         "account_scores": account_scores,
-        "track_account_scores": track_account_scores,
         "discovered": discovered,
-        "hit": hit,
-        "legacy_hit": hit,
-        "track_hit": track_hit,
         "miss_reason": miss_reason,
-        "track_miss_reason": track_miss_reason,
     }
 
 
@@ -100,48 +76,9 @@ def _dedupe_by_account(signals: list[dict[str, object]]) -> list[dict[str, objec
     return list(best.values())
 
 
-def _rank_by_track(signals: list[dict[str, object]]) -> list[dict[str, object]]:
-    ranked: list[dict[str, object]] = []
-    for track in ("A", "B", None):
-        scoped = [row for row in signals if row.get("track") == track]
-        for rank, row in enumerate(
-            sorted(scoped, key=lambda item: item["normalized_strength"] or 0, reverse=True),
-            start=1,
-        ):
-            copied = dict(row)
-            copied["track_rank"] = rank
-            ranked.append(copied)
-    return ranked
-
-
-def _track_quota_rows(signals: list[dict[str, object]]) -> list[dict[str, object]]:
-    thresholds = load_l2_config()["signal_thresholds"]
-    quota = {
-        "A": int(thresholds.get("track_a_quota", 6)),
-        "B": int(thresholds.get("track_b_quota", 6)),
-    }
-    result = []
-    for track in ("A", "B"):
-        result.extend([row for row in signals if row.get("track") == track][: quota[track]])
-    return result
-
-
 def false_positive_count(result: dict[str, object]) -> int:
-    return len(result.get("scoring_top10", [])) if result["label"] == "clean" else 0
-
-
-def track_false_positive_count(result: dict[str, object]) -> int:
-    return len(result.get("track_scoring_top", [])) if result["label"] == "clean" else 0
-
-
-def positive_hit_rate(results: list[dict[str, object]]) -> tuple[int, int]:
-    positives = [row for row in results if row["label"] == "positive"]
-    return sum(1 for row in positives if row["hit"]), len(positives)
-
-
-def positive_track_hit_rate(results: list[dict[str, object]]) -> tuple[int, int]:
-    positives = [row for row in results if row["label"] == "positive"]
-    return sum(1 for row in positives if row.get("track_hit")), len(positives)
+    profile = result.get("false_positive_profile", [])
+    return len(profile) if result["label"] == "clean" and isinstance(profile, list) else 0
 
 
 def positive_discovery_rate(results: list[dict[str, object]]) -> tuple[int, int]:
@@ -150,7 +87,7 @@ def positive_discovery_rate(results: list[dict[str, object]]) -> tuple[int, int]
 
 
 def _is_discovered(score: dict[str, object]) -> bool:
-    return score.get("status") in {"포착", "상위10밖"}
+    return score.get("status") == "발굴"
 
 
 def _split_accounts(value: str) -> list[str]:
@@ -270,7 +207,6 @@ def _capped_strength_types() -> set[str]:
 def _account_score(
     mapped: dict[str, object],
     signals: list[dict[str, object]],
-    top10: list[dict[str, object]],
     frame: pd.DataFrame,
     years: list[int],
 ) -> dict[str, object]:
@@ -278,14 +214,12 @@ def _account_score(
     for rank, signal in enumerate(signals, start=1):
         haystack = normalize_label(str(signal["account"]))
         if any(normalize_label(item) and normalize_label(item) in haystack for item in candidates):
-            status = "포착" if any(signal is item for item in top10) else "상위10밖"
+            # 순위·트랙 없이 '신호에 떴다=발굴'만 판정.
             return {
                 "source": mapped["source"],
                 "best_strength": signal["normalized_strength"],
                 "rank": rank,
-                "track": signal.get("track"),
-                "track_rank": signal.get("track_rank"),
-                "status": status,
+                "status": "발굴",
             }
     status = _pre_signal_status(mapped, frame, years)
     return {"source": mapped["source"], "best_strength": None, "rank": None, "status": status}
@@ -298,7 +232,7 @@ def _miss_reason(
 ) -> str:
     if len(available_years) < 2:
         return "데이터부족"
-    priority = ["상위10밖", "변동미미", "규모미달", "계정부재"]
+    priority = ["변동미미", "규모미달", "계정부재"]
     statuses = {str(score["status"]) for score in account_scores}
     return next((status for status in priority if status in statuses), "계정부재")
 
@@ -318,9 +252,7 @@ def _pre_signal_status(
     if not _exists_in_frame(mapped, frame):
         return "계정부재"
     if any(
-        account_above_floor(frame, item, year)
-        for item in _candidates(mapped)
-        for year in years
+        account_above_floor(frame, item, year) for item in _candidates(mapped) for year in years
     ):
         return "변동미미"
     return "규모미달"

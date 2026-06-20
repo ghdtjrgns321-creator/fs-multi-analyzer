@@ -1,0 +1,166 @@
+{
+  "name": "round10",
+  "seed": 10,
+  "pool": 1602,
+  "strata_sizes": {
+    "S1_금융형": 43,
+    "S2_별도전용": 23,
+    "S3_blankid고비중": 401,
+    "S4_다년대형": 170,
+    "S5_단년소형": 222
+  },
+  "cases": [
+    {
+      "corp_code": "00264547",
+      "run_years": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "stratum": "S1_금융형",
+      "n_years": 6,
+      "ofs_only": false,
+      "blank_ratio": 0.058365758754863814,
+      "fin": true,
+      "assets": 1985094451263
+    },
+    {
+      "corp_code": "00116268",
+      "run_years": [
+        "2020",
+        "2021",
+        "2022",
+        "2023"
+      ],
+      "stratum": "S2_별도전용",
+      "n_years": 4,
+      "ofs_only": true,
+      "blank_ratio": 0.09248554913294797,
+      "fin": false,
+      "assets": 114973284037
+    },
+    {
+      "corp_code": "00537221",
+      "run_years": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "stratum": "S3_blankid고비중",
+      "n_years": 6,
+      "ofs_only": false,
+      "blank_ratio": 0.4,
+      "fin": false,
+      "assets": 82778281611
+    },
+    {
+      "corp_code": "00356361",
+      "run_years": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "stratum": "S4_다년대형",
+      "n_years": 6,
+      "ofs_only": false,
+      "blank_ratio": 0.06642066420664207,
+      "fin": false,
+      "assets": 101061661000000
+    },
+    {
+      "corp_code": "01089378",
+      "run_years": [
+        "2025"
+      ],
+      "stratum": "S5_단년소형",
+      "n_years": 1,
+      "ofs_only": false,
+      "blank_ratio": 0.2,
+      "fin": false,
+      "assets": 29944164009
+    },
+    {
+      "corp_code": "00101220",
+      "run_years": [
+        "2025"
+      ],
+      "stratum": "S1_금융형",
+      "n_years": 1,
+      "ofs_only": false,
+      "blank_ratio": 0.03754266211604096,
+      "fin": true,
+      "assets": 8343678242449
+    },
+    {
+      "corp_code": "00249502",
+      "run_years": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+      ],
+      "stratum": "S2_별도전용",
+      "n_years": 5,
+      "ofs_only": true,
+      "blank_ratio": 0.13559322033898305,
+      "fin": false,
+      "assets": 15859935324
+    },
+    {
+      "corp_code": "00571298",
+      "run_years": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "stratum": "S3_blankid고비중",
+      "n_years": 6,
+      "ofs_only": false,
+      "blank_ratio": 0.19310344827586207,
+      "fin": false,
+      "assets": 236036434496
+    },
+    {
+      "corp_code": "00401731",
+      "run_years": [
+        "2020",
+        "2021",
+        "2022",
+        "2023",
+        "2024",
+        "2025"
+      ],
+      "stratum": "S4_다년대형",
+      "n_years": 6,
+      "ofs_only": false,
+      "blank_ratio": 0.07380073800738007,
+      "fin": false,
+      "assets": 68620167000000
+    },
+    {
+      "corp_code": "01588189",
+      "run_years": [
+        "2025"
+      ],
+      "stratum": "S5_단년소형",
+      "n_years": 1,
+      "ofs_only": false,
+      "blank_ratio": 0.0,
+      "fin": false,
+      "assets": 68932584827
+    }
+  ]
+}

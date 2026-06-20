@@ -91,6 +91,8 @@ async def create_perspective_assessment(
         "industry 관점은 제공된 피어 지표 baseline만 사용한다.",
         "review_queue는 참고 후보일 뿐 정답이 아니다.",
         "제공된 계정 수준 시계열과 지표 시계열 전체를 능동적으로 검토한다.",
+        # 결함① 노이즈 완충: 개수상한 제거로 잡계정이 늘어난 입력에서 유의성 우선순위 가드(삭제 금지).
+        "계정은 금액 유의성이 큰 항목을 우선 검토하되, 금액이 작아도 추세·부호 변화가 두드러지면 함께 살핀다.",
         "큐에 없더라도 제공 material에 근거한 수준 이상이나 추세 이상은 제기할 수 있다.",
         "실제 account_series, ratio_series, queue, ratio, note evidence에 근거한다.",
         "주석 발췌는 일부일 수 있으므로 발췌 누락을 공시 누락으로 판단하지 않는다.",

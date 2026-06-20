@@ -6,8 +6,649 @@
 
 ## 현재 위치
 
+- **✅ 온보딩 alias 제안 개선 — 계획·결과: `docs/user/ONBOARDING_LLM_PLAN.md`** (2026-06-17). 검증서 발견한
+  alias 약점(적중~75%·confidence가 오답 못거름) 개선. **코드 반영**(`src/report/alias_suggest.py`): ②배치화
+  (계정당 N회→회사당 1회, 호출 72→4·반환형식 불변) + ③일반원칙 힌트(SYSTEM_PROMPT에 "불확실하면 기타보류"+10유형
+  예시). pytest 10 passed 무회귀. **수렴 사다리 라운드1**(무표준코드 ph≥10 7사): 신규 오답 4유형(특수상품
+  과일반화·폐기/처분·계속중단영업·자본거래방향) 발견 미수렴이나 저conf. **일반원칙 힌트로 확정** + 새 2사
+  (00143651·00261443) 테스트서 **고conf(>0.85) 오답 소멸·애매는 저conf**로 흡수 확인. 실험 누적 ~₩800(운영전수
+  금지). ①high는 gpt-5.4 Chat API가 pydantic+reasoning 동시 미지원으로 보류(Responses 전환 필요). **남은: ④UI
+  (confidence+reason 노출)·회사당 배치 호출 정식 적용은 코드에 반영됨**.
+- **✅ Phase1 E2E 충실도 재검증 완료 — 결과: `data/backtest/_p1e2e_VERDICT.md`** (2026-06-17). 4사 층화
+  (규모×금융업×양식세대 직교: 대신증권 26조·00125521 1.6조·대주산업 1114억·00108649 936억)를 **온보딩부터**
+  재실행(renormalize --force→신호→material→정성 재수집). DART raw 원문 전수항목(oracle)을 normalized와 1:1 추적
+  (추적표 행수==oracle 항목수 강제 → 통독 사각 차단). **저번 실패(통독 대충) 구조적 차단**: 플래그 행마다 원문·DB 인용.
+  - **재무 충실도 PASS**: 4사 소실 0·금액불일치 0(원문 1,736행). 초기 자동플래그 13~16건은 **전부 거짓양성**
+    (SCE 2D 별도테이블·CIS→IS 통합·배당 -abs 부호 = 추적표 도구 사각, §10 도구경계≠감사경계). 도구 보강 후 0 수렴.
+  - **결함① (진짜·정량) — ✅ 수정 완료(2026-06-19, A안=개수상한 제거)**: 유의성 큰 강등계정이 LLM material에 누락(2종오류).
+    근본원인=`_top_unmapped_material_accounts` head(5)·`_account_level_series` limit(40) **개수상한** + `unmapped_extension_account`만 게시(id_label_conflict 제외).
+    **수정**: PLAN §3(모든 정보 추출→에이전트가 가져감)에 따라 개수상한 둘 다 제거(금액>0 전부 게시) + unmapped 조건을
+    `canonical==OTHER_CANONICAL` 포함으로 확대(id_label_conflict 강등 회수). perspectives rules에 유의성 우선 가드 1줄.
+    비용 실측 +₩110~150/회사(상한 제거). 검증: 대신 순이자손익(-1,961억) 회수=True, unmapped 5→24건·금융구 58건, pytest 266 passed.
+    코드리뷰 P1(drop_duplicates) 반려(account_id 공유로 진짜계정 삭제=회귀 실증). series_key 뭉침 분리는 별도 백로그.
+  - **결함② (운영 갭·정성) — ✅ 수정 완료(2026-06-19, 온보딩 LLM 한버튼 필수화)**: 서술형 감사관심(소송·특수관계·우발)은
+    사업보고서 본문에 있고 S7 청크선별 실행해야 material 전달. 기존엔 LLM 3종(S7·alias·G6)이 전부 '선택'이라 미실행이 기본.
+    **수정**: `run_full_onboarding`(gate→S7→alias→G6 순차 graceful) + `can_enter_analysis`(게이트통과+S7·G6 완료해야 진입,
+    LLM실패는 경고+사람확인 강행) + UI 한버튼('온보딩 일괄 실행'). S7 키워드 fallback 제거(materials·review_chunks) +
+    note_material 미선별 경고(silent 0 금지). alias는 사람이 등록(자동등록 금지 유지). 비용 실측 회사당 ~₩200~660(S7 본문통독 80%+).
+    pytest 269 passed. 코드리뷰 P1(빈dump G6호출)·P2(absent/error 구분) 수정. S7 본문 축소는 별도 백로그.
+  - **검증 스크립트**(재현): `_p1e2e_profile.py`·`_p1e2e_select.py`·`_p1e2e_collect.py`·`_p1e2e_trace.py`·`_p1e2e_s7.py`.
+  - **🔍 입체 사각 탐색 결과(2026-06-19, 4영역 병렬 Explore) — 미수정, 우선순위 목록**:
+    서브에이전트 발견 무비판 수용 안 함(§9). 교차검증(여러 에이전트 독립발견)+§9·§10 부합한 것만 채택.
+    · **[높음] ①수집→게이트 silent 실패 사슬 — ✅ 핵심 수정(2026-06-19)**: (c)게이트 hollow-PASS **재현·차단 완료**.
+      재현: 대신 DB BS 75행 삭제 → 수정 전 gate_passed=True(BS 통째 결손도 통과). 수정: `_g1_verdict` 순수함수 —
+      BS 항등식 검산 0건이면 passed=False(검산불가≠통과, §9 바닥). 재현 후 gate_passed=False, 정상 DB는 True 유지(회귀0).
+      test_onboarding_gate 5개(게이트 첫 단위테스트). pytest 276 passed.
+      **하위갭 추가 수정(2026-06-19)**: SCE-dead(전행 unmatched·SCE표준화=FAIL) hollow-PASS도 재현·차단 —
+      `_g1_verdict`에 sce_std 파라미터(=='FAIL'이면 passed=False). 재현 gate_passed True→False, 정상 유지. pytest 277 passed.
+      부분수집 OFS결손은 재현결과 무영향([~]: primary fs로 정상분석·별도사는 BS바닥이 차단)이라 미수정.
+      **남은 하위갭(미수정·백로그)**: finstate_all 예외 명시기록(graceful은 silent 악화라 보류, 게이트 바닥이 하류 차단),
+      G2~G5 개별 단위테스트(G1만 추가됨).
+    · **②통화 — ✅ 진짜결함 확정·수정(2026-06-19, A안 게이트 차단)**: 측정 결과 단위혼재(천원) 아니라 **외화통화**가 진짜.
+      전 corpus grep USD 5,792행(39 회사연도, 전 표 USD). normalized가 USD 금액을 원 환산 없이 저장 → ~1300배 축소,
+      항등식 안 깨져 게이트도 못 잡던 silent. **수정**: run_currency_check + _currency_ok로 비KRW 재무를 게이트 차단(gate_passed=False),
+      _print_report 명시. 환율환산(B)은 정확도 위험이라 미채택. user 한계문서 docs/user/LIMITATIONS.md 작성. pytest 279 passed.
+    · **③CF 부호 — ✅ 거짓양성 판정(2026-06-19, 측정 후 수정 안 함)**: 300 DB 측정 — 취득 양수95%·처분 양수100%로
+      부호 뒤섞임 아니라 **일관 절대값**(DART가 투자활동 항목 부호없이 신고, 방향은 계정명). 투자활동현금흐름 소계 100% 직접존재(합산불필요)+
+      부호의존 코드 0건+CF 결정론 점수제외 → 무영향. 가설(뒤섞여 합산오류) 빗나감.
+    · **④절대임계 — ✅ 거짓양성 판정(2026-06-19, 측정 후 수정 안 함)**: 400 회사연도 자산 최소 330억·자산<100억 0건.
+      floor=max(자산1%,1억)에서 모든 회사 자산1%(≥3.3억)>1억 → 자산1%가 지배, 1억 절대바닥 미작동. §3 리터럴이나 상장corpus 규모상 실害0.
+      초소형사 유입 시 과민 가능성은 백로그(현 분석대상 아님).
+    · **입체탐색 종결(2026-06-19)**: ①통화=진짜·게이트차단 수정 / ③CF부호=거짓양성 / ④절대임계=거짓양성.
+      게이트 hollow-PASS(BS·SCE)·통화 차단이 핵심 수정. "재현/측정 먼저"가 진짜(통화)와 거짓(CF·절대임계)을 정확히 갈랐다.
+    · **[제외] 설계의도/기능확장**: flow 흐름지표만·numeric queue[:10](series는 결함①으로 전량전달), 법인세·자기주식 미구현신호(확장영역), 결함①②중복분.
+  - **S7 본문 축소 — 검토 후 현행유지 결정(2026-06-19)**: 측정 결과 PART선별 13%·재무제표본표 제거 3%로 효과 미미.
+    진짜 덩어리는 III(재무에 관한 사항)가 입력의 80%+이고, III의 94%가 주석의 대량 정형표(증권사 금융상품 종목평가표 등,
+    서술 문장은 6%뿐) — 금융사 집중(대신 III 26만tok vs 대주 5만). 대량표 압축/키워드청킹은 검토관심 누락 위험이라
+    누락0 우선해 현행 통째 유지(회사당 ₩200~660 수용). 재검토 시 타깃=대량 반복표, PART/본표 아님.
+  - **⏭ 다음(사용자 결정)**: ~~결함①~~(✅) / ~~결함② 온보딩 필수화~~(✅) / ~~S7 축소~~(검토후 현행유지) /
+    전체 corpus --force 재정규화(~30% stale) / 다른 샘플 확대. **온보딩 일괄실행 실제 화면 수동검증 미수행**.
+- **✅ E2E 충실도 감사 완료 — 결과: `data/backtest/_E2E_AUDIT_RESULTS.md`** (70차). 6사 층화(삼성·KB·카카오·
+  두산·LG·진양)를 최종 PHASE1에 태우고 DART 원본 통독 ↔ material 대조. **갭 4개**:
+  - **G1 [수정완료]** `company_report.py` target_year=2025 리터럴 고정(§3 위반) → 최신연도≠2025 회사 전 신호 빈값
+    (6사 중 3사 큐=0 재현). 데이터 구동(`_available_norm_years`/`_present_years`)으로 수정 + 회귀테스트.
+    **무회귀 243 passed·분식 target 불변**. 큐 복구(카카오46·KB18·진양2).
+  - **G2 [수정완료]** 원문 청크=0 → 키워드 baseline fallback 배선(note_material). 삼성8·두산11·LG7·진양6 도달.
+  - **G3 [수정완료]** 정정 이력 → change_material restatement_history 주입. 두산 11건 도달.
+  - **G4 [수정완료]** event terms → routed_timeline terms(발행총액·전환가·자금용도) + cap sentinel. 카카오 도달.
+  - **숫자/의미 정합(71차) [완료]**: 6사 핵심계정 raw==norm **정확 일치·소실 0**(account_id 대조). 큐 실신호.
+  - **G6 [수정완료]**(73차): 주석 발췌가 39% 헤더 집던 갭 → note_material 금액블록 우선+파일 fallback(방식B
+    격리). 미surface 갭 **59→1**, 실질발췌 25→83, 빈노트 67 무날조. account_finding·테스트 무변경.
+  - **SCE 노이즈 [수정완료]**(74차): unmapped material에서 sj_div='SCE' 제외(AGENDA_DD_SCE2D 결정을 해당 경로에 적용). KB SCE 57→0, 진짜계정 보존.
+  - **금융 미매핑 [진단정정+1단계 착수]**: "COA 제조업중심"은 틀림 — 실체는 무표준코드(온보딩 quirk 영역)+SCE노이즈+보험계정 소수. 무표준코드 라벨은 전역별칭 위험(이중계상)→
+    **온보딩 LLM 별칭 제안기**(75차 `src/report/alias_suggest.py`): 후보검색=코드·분류선택=LLM·적용=사람확인. 환각 앵커링·자동적용 금지.
+    **UI 배선 완료**(76차): render_quirk_form에 render_alias_suggestions 프리필 — 제안 표시→사람 확인 클릭 시에만 등록(_register_suggestion), 기타 제안 disabled.
+  - **금융 미매핑 근본수정 [완료]**(77·78차): "보험 9건"은 부정확 — 실측 원인=id→canonical 1:1이라 다중표 개념(OCI)이 등록 statement 밖서 강등(`_FINMAP_ROOTCAUSE.md`). **cross_statement_ids 다중표 매핑** 구현(config·mapper·pipeline 가산적 구제). KB OCI 4종 기타→정확 CIS canonical, 기존매핑·SCE·백테스트 5/6 불변. 격리 diff로 무회귀 증명.
+  - **남은 백로그**: A2 잔여(보험순금융손익 cross 등록)·B(재보험계약자산 신규 canonical 1)·A1(CF 당기순이익 statement처리)·**전체 corpus persist --force(stale 실재 확인됨 — 6사 재정규화서 SCE 매핑 변동 관측)**.
+- **⏭ (참고) 감사 계획 원본: `data/backtest/_HANDOFF_E2E_AUDIT.md`**.
+  ★PHASE1 S0~S11 종료(`PHASE1_EXIT_GATE.md`). 아래는 그간 진행이력.
+
+- **🔧 S7 구현 진행 중 — 설계: `data/backtest/_HANDOFF_S7.md`** (5단계). 진행:
+  - **Step1 [x] 수집기**(contract 53차): `DartCollector.document(rcept_no)`(전체 사업보고서 XML, ValueError→""흡수) +
+    `src/collect/report_doc.py`(collect_report_doc 단건 / collect_report_docs ThreadPool 동시 batch, 저장
+    `raw/report_doc/business_report.xml`). 신규 테스트 6 + pytest **214 passed**. mojibake 0.
+  - **Step2 [x] PART 추출기**(contract 55차): `src/notes/report_parts.py` — `extract_parts(xml)`가 TITLE 로마숫자
+    헤더로 PART 슬라이스(목차 TD 무시·표→행 텍스트·BeautifulSoup), `select_part(parts,patterns)`가 논리섹션을
+    시대 다중패턴으로 선택(`LOGICAL_PARTS` 7종). **실문서 재현**: 삼성2023=12파트(대주주→X·감사→V)·
+    삼성2015=11파트(XII없음·X=이해관계자·감사→IV), 두 시대 모두 적중. 신규 테스트 7 + pytest **221 passed**. mojibake 0.
+  - **Step3 [x] baseline 씨앗**(contract 56차): 외부 LLM 아닌 **내가(Opus) 직접** 층화 샘플 통독. `_s7_baseline_sample.py`로
+    301 회사연도(신112/구189) 원문 수집(`_s7_sample/`), 2건 전문 Read + 전수 Grep. ★**고빈도어=회계정책 보일러플레이트**
+    (우발부채96%·담보100% 변별력 없음), **저빈도 이벤트어가 변별**(과징금14%·자본잠식4%·리픽싱3%). 산출:
+    `config/playbooks/report_review_keywords.yaml` — 2단 모델(anchors/event_signals/null_markers) 13 공시유형, 빈도% 근거주석.
+    검증: 고위험 바이오사 12유형 발화 vs 평범 제조사 6일상유형(변별 작동). pytest **221 passed**, mojibake 0.
+  - **Step4 [x] 본체(B안) + GPT vs Opus 비교**(contract 57차): `src/report/review_chunks.py`(ReviewChunk 스키마·
+    build_chunk_agent gpt-5.4·select_review_chunks usage캡처·persist content_chunks) + onboarding.py 배선(버튼). 신규 테스트 5.
+    **GPT vs 나(Opus) 10사 비교**(`_S7_ONBOARDING_COMPARE.md`): 활성 공시유형 크게 일치, GPT 환각 0(grounding 103/103),
+    강점=전환사채 리픽싱·콜옵션 감독지침·공정위 제재·관리종목·계속기업 강조 다 포착, 약점=재작성 과발화 1~2건·SPAC 합병 미표면화 1사.
+    **비용**: 평균 in 12,863·out 1,181 토큰·9.7초, 회사당 약 ₩40~110(단가가정·식명시), 전체 5,129사 ₩20만~58만. 내용필터로 입력 ~1/9 압축.
+    판정: B안 채택 가능, baseline은 fallback. pytest **226 passed**, mojibake 0.
+  - **Step5 [x] Phase2 투입 — S7 전체 완료**(contract 58차): `review_chunks.load_content_chunks` + `materials.note_material`이
+    `report_review_chunks`(company_quirks content_chunks)를 note 관점 material로 실음 → `_note_material`→`perspectives` 경로.
+    선별 없으면 빈 리스트 graceful. 비교 user 문서화(`LLM_MODEL_COMPARE.md` 온보딩 청크선별 섹션). 백테스트 구조상 무영향
+    (run_backtest는 결정론 신호만, materials 미호출 grep 확정). pytest **228 passed**, mojibake 0.
+  - **✅ S7 완료(Step1~5)**: 원문수집(report_doc)→PART추출(report_parts)→baseline씨앗(report_review_keywords.yaml)→
+    온보딩 청크선별(review_chunks, GPT≈Opus·환각0·회사당 ₩40~110)→Phase2 note material 투입. **보정 권고(미적용)**:
+    ①재작성_정정 정상소급 가드(프롬프트) ②합병/SPAC 앵커 보강.
+  - **S8 [~] 비범위 마감**(contract 59차, 실측결정): 별첨 감사보고서를 50 회사연도로 측정(`_S8_KAM_COVERAGE.md`·
+    `_S8_ATTACHMENT_PROBE.md`). ★**2019+ 공시는 본문 PART V가 KAM 담음**(별첨에만 KAM=0), 별첨 유일출처는 FY2018
+    과도기 대형 분식사 2건(두산·셀트리온, KAM 도입 첫해)뿐·probe로 이미 추출. 운영엔 PART V로 충분 → S8 제품화 불필요.
+    수집경로(`document_all`) 확인됨, 백테스트 필요시 일회성 추출. `DATA_SCOPE.md`에 한계 1줄 기록.
+  - **잣대 교정(60~62차)**: S8/S9/S10을 "분식 변별"로 재던 게 틀림 → 목표는 "DART 유용정보 끄집어내기". S9/S10 미흡수분 측정
+    (`_S9_S10_ABSORPTION.md`): S9(정정이력)≈S7 미흡수·S10(event 스트림) 미흡수. S9 규모(`_S9_SCALE_COST.md`): 재무정정 ~6,600건·과거연도 28%.
+  - **S9-B [x] 구현**(contract 63차): `DartCollector.filings`(final=False) + `src/collect/correction.py`(parse_corrections A·
+    extract_correction_header B·collect_corrections 저장 corrections.json). 효용=**데이터 출처(원본/정정본)·무엇이 바뀜**(분식 아님).
+    실문서 검증: 셀트리온 5 과거연도 "재무제표 재작성"·두산 첨부정정 vs 재작성 분류. 신규 테스트 6, pytest **234 passed**, mojibake 0.
+  - **S9 배선 [x] — S9 완료**(contract 64차): 수집(collect_company_years→include_corrections→corp단위 corrections.json+summary
+    restated_years)→읽기(`restated_years`/`load_corrections`)→화면(`onboarding.render_restatement_badge`: 재작성 연도면 ⚠"정정본·비교주의"
+    배지, 아니면 출처 caption). **end-to-end 실데이터**: 셀트리온 재작성 {2016~2020}·소형사 {}. pytest **236 passed**, mojibake 0.
+    효용=데이터 출처(원본/정정본) 가시화(분식 아님).
+  - **S10 [x] 구현 — S10 완료**(contract 66차): event 36 + report 28 전수수집(`src/collect/events.py`·opendart event/report 어댑터·
+    spike include_events). **2경계**: ①별도 참조저장(raw/events.json·reports.json, 재무DB 미연결=오염차단) ②compact 라우팅 투입(토큰차단).
+    가치선별=코드(`event_routing.yaml` 타입→관점, 전 회사 동일)+관점 LLM. materials numeric/flow/change에 report_event_timeline 주입.
+    실데이터: 바이오(영업정지→numeric·CB/유증→flow)·두산(합병/분할→change). 신규 테스트 6, pytest **242 passed**, mojibake 0.
+  - **분석 근거**: `_S10_ANALYSIS.md`(report 중복·event 신규)·`_S9_S10_ABSORPTION.md`. event=시점+조건 신규차원, report=구조화(일부 신규).
+  - **S11 [x] 종료게이트 — Phase1 종료**(contract 67·68차): `docs/agent/PHASE1_EXIT_GATE.md`. ★**잣대 교정(68차)**:
+    분식 아니라 **일반 회사 재료 완전성**이 게이트. 정상 10/10이 review_queue 13~60·ratio·unmapped·flow/change 산출 →
+    Phase2 투입 가능. Phase1산출→관점 라우팅표(전 회사 동일). **정직한 갭**: 주석=0(미수집)·event/correction 미수집·
+    persist ~30% stale → 운영 전 수집 동반 필요. 분식 백테스트(recall 5/6·FP0)는 **회귀가드로 강등**(게이트 정의 아님).
+    문서정리: COVERAGE S7~S11 [x], README 등록, _S10_ANALYSIS 개수정정(28/36).
+  - **✅✅ PHASE1 마무리**: S0~S11 종료. 수집(S7~S10)·정규화·신호·종료게이트 완료. S6분기·S8별첨은 의도적 비범위.
+  - **⏭ 다음(사용자 예정)**: **10사 E2E 테스트** — 실제 Phase1 수집→정규화→신호→Phase2(6관점 LLM) 넘기기까지
+    잘 도는지. + 잔여 **전체 corpus persist --force**(~30% stale: _align제거·alias·신규 정규화 미반영).
+
+- **✅ 2026-06-15 세션 (S3·S4·S5·S6 마감 + 신규 신호 + 적대감사 수정)** — contract 41~49차:
+  - **S3 [x]**: 5종 신호 확장(df4e1c8) 완료기준 측정 — 분식16사 깔때기 sj_div별 CIS10·CF50·SCE9(0→양수). `COVERAGE_REMEDIATION` [x].
+  - **S5 [x]**: 결정론 절대임계 폐기(§3 업종무시=버그). 수준판단은 Phase2 perspectives가 이미 수행(ratio_time_series→material_board, "수준 이상" 지시, industry 피어). 추가코드 0.
+  - **S6 [~]**: 분기/반기 **의도적 비범위(연간전용)** — 누계환산·비감사 정합성노이즈·복잡도. `DATA_SCOPE.md §2`에 한계 문서화.
+  - **S4 [x] 종료**: IFRS16(유동/비유동리스부채 단기·장기·괄호 변주)·관계기업투자(어순/공백) alias 보강(mapper 8/8 재현). 01406618=원공시 XBRL 오태깅→기록보류. member-sign 닫힘.
+  - **신규: SCE 가로항등 anomaly 신호**(46차, `sce.py:sce_horizontal_identity`) — 총계=지배+비지배 모순(원공시 내부 부호모순)을 dump §F에 리스크 후보로 노출. 00141477·00260879 raw확증. materiality tol(100만/0.5%).
+  - **적대 자가감사(48차) + 수정(49차)**: ★발견 — `_align_member_signs_to_bare`가 차감 너머 **비차감 원공시모순을 'grand 진실' 추측으로 뒤집고 소계 방치**(overreach). **제거함**(차감은 _apply_sign 담당). 이제 비차감 모순은 충실 보존 + 가로항등/검산이 노출. label_priority·alias보강·00545716 quirk는 감사 CLEAN. (선재 alias 충돌 7건 별도 기록.)
+  - **member-sign 검증(41차)**: audit 334→0·non-audit 진짜결함 0·00141477=원공시모순(우리버그 아님, raw확증).
+  - **⏭ 다음**: S7~S10(원문주석·KAM·정정공시·report/event — S6처럼 비용효익 판단) 또는 **S11 종료게이트**. **보류**: 전체 corpus persist는 Phase1 마감 시 `renormalize_all --force` 1회(현재 ~30%는 _align제거·alias보강 미반영 stale, 코드는 정확).
+
+- **✅ member-sign 수정 검증 완료** (2026-06-15, `_P1_MEMBERSIGN_VERIFY_PROMPT.md`). audit 313 도메인에서 **member합≈-grand 시그니처 334→0**(전수 스캔·locked-skipped=0), pytest 203/1xfail, 백테스트 recall 5/6, 00131054/2023 이익잉여금 -5.51e9 — **4기준 전부 충족**. STATUS: DONE_WITH_CONCERNS.
+  - **보류1(사용자 지시 — 기록만)**: 전체 corpus persist 미완. `b490i6d9g`가 [1050]/~4777 company-year에서 중단(완료줄 없음). audit 313만 fresh, 나머지 ~3,700 stale member-sign. `is_fresh()`가 부호 아닌 테이블 존재만 보므로 `--force` 없는 재개로는 안 고쳐짐 → 전체 `renormalize_all --force` 재실행 필요(미적용 보류).
+  - **보류2 → 재판정: P1결함 아님(원공시 모순)**. `00141477/2023 연결대상범위의 변동`은 raw 대조 결과 **원공시 자체 부호 모순**(grand 연결재무제표=+2,126,881,891 vs 지배−12,867,283,357+비지배+10,740,401,465=−2,126,881,892). 정규화는 raw 4행을 100% 충실 재현(부호 안 건드림). `_align_member_signs_to_bare`가 안 발동한 게 **옳음** — 발동시켜 member를 뒤집으면 원공시 모순을 조작 정렬하는 셈. ⇒ `_amount_equal` 허용오차 완화는 오답. 도구가 가로항등(grand=지배+비지배) 모순을 anomaly로 노출할지는 별개 관찰(`sce_balance`는 세로검산만). non-audit new-schema 1046 전수 중 **진짜 정규화 결함 0**. 구스키마 107건은 `--force` persist로 재생성하면 해소(코드결함 아님). **메모리 `member-sign-residual-tolerance` 참조.**
+- **⏭ 컴팩트 후 이것부터: 핸드오프 `data/backtest/_HANDOFF_S4_CLOSE.md`** — 닫힌 것/할 것/검증 baseline/다음 진입점 정리. 다음 진입점: S5(절대수준 신호) 또는 위 보류1·2 재개.
+
+- **✅ Phase1 S4 수정 대량 완주** (2026-06-14). 발견 P1 높음결함 **11/13 FIXED**(pytest 203·백테스트 5/6 무회귀). 원장 `_P1_DEFECT_LEDGER.md` 수정후 표.
+  - **수정 완료**: 영업이익=매출(quirk)·자본금 소계점유(Fix A+label_priority+분해탐지, 27+사)·금융업 BS(canonical 신설, -52조→+0.08조)·
+    발행사채/만기보유/투자부동산(label_priority 일반규칙, 110+ 회사연도 부수교정)·dump÷1e6 착시제거·보험 canonical swap.
+  - **신규 메커니즘**: config `label_priority_ids`(모호 id는 라벨 채택, 충돌행만 작동)·`_enforce_capital_decomposition`(자본금≈보통주+주발초 분해, 자본잠식/우선주 무영향)·company_quirks 실가동.
+  - **의도적 보류 2**: 01406618(idiosyncratic 단일사, 올바른 매핑 모호)·00298687(member-sign 334건 systematic 트랙 `_P1_MEMBER_SIGN_FIX_PROMPT.md`).
+  - **자가 적대 감사(40-F) 완료**: label_priority에 **교차표 누수 버그 발견·수정**(CF id가 SCE canonical로 새던 것 → statement 가드, mapper.py). Fix A flip 112표본 0건·피팅 전수 1사·역검증 무회귀·decomposition 무결.
+  - **클린 클로즈(40-G)**: **클린 백테스트 실측 recall 5/6**(전 수정 무회귀 확정)·pytest 203·2케이스 재현(00545716·00428729). corpus persist 진행중(저장 duckdb refresh, async). S4는 `COVERAGE_REMEDIATION.md`에 **[~]부분**으로 정직 기록.
+  - **⏭ 다음 진입점**: S4 잔여(member-sign 334건 트랙 `_P1_MEMBER_SIGN_FIX_PROMPT.md`·01406618·IFRS16 alias·관계기업 16사) 또는 **S5(절대수준 이상신호: DIO·부채비율·이자보상배율)**. 그 뒤 S6~S10(수집 확장)·S11(종료게이트). Phase1 종료는 아직 멂.
+
+- **(이전) Phase1 S4 착수**: 그룹3 완료 시점 기록.
+  - **✅ 그룹3 00545716 영업이익=매출 수정·검증 완료**: ripple 단일사 확정 → company_quirks.yaml override 2개(영업수익→매출+영업이익 복원, 2021·2022).
+    매출 2.42조 생성·영업이익 0.245조 복원·live→FIXED·pytest 71·백테스트 무관. **quirk 메커니즘 첫 실전 가동(이전엔 빈 파일이라 미수정).**
+  - **그룹1 자본금 — 변종1 완료, 변종2 잔존**:
+    - 변종1(납입자본-라벨 27+사) **완료·검증**: ①Fix A(dedup 비충돌우선, pipeline.py) ②매퍼 `label_priority_ids:[ifrs-full_IssuedCapital]`(config+CanonicalAccount+mapper) → 납입자본→납입자본 canonical. 충돌 116행만 작용, 정상 8899행 무영향. pytest 71·**백테스트 분식 recall 5/6 무회귀**.
+    - 변종2(자본금-라벨 소계위장 8사) **잔존**(task#2): label까지 자본금 위장이라 값 탐지만 가능. ★자본잠식사는 자본금>자본총계 정상이라 단순 가드 금지 → 정밀 분해탐지('자본금≈보통주자본금+주식발행초과금') 별도 라운드.
+    - duckdb 재persist는 전체 그룹 후 일괄.
+  - **남은 수정**: 그룹2 금융업BS(task#3)·그룹4 id_label_conflict 4종(task#4)·그룹5 SCE부호(task#5)·사소(task#6 dump÷1e6·task#7 표시명묶음).
+  - duckdb 재persist는 그룹 전체 후 corpus 재정규화 1회로 일괄.
+- **다각도 분석(이전)**: 공식 S11 종료게이트 기준 S4~S11 미완(8/12), 원장 `_P1_DEFECT_LEDGER.md` 36행·높음 11 live·근본원인 4종.
+  - **S4 baseline 확정**: 원장 `data/backtest/_P1_DEFECT_LEDGER.md`(36행), live검사 `_p1_ledger_livecheck.py`(높음 13중 **LIVE=11**),
+    BS 미매핑율 38.3%(감사 48%서 하락). 그룹1 자본금leaf우선·그룹2 금융업BS·그룹3 영업이익=매출·그룹4 id_label_conflict(quirk).
+  - **수정 대상 live 결함**: 00545716 영업이익10배=매출 / 00428729·01573284 자본금>자본총계 / 00176914 BS항등식-52조 /
+    00148504 발행사채→주식발행 / 00264945 만기보유←FVPL / 01089378 투자부동산유령 / 01406618 CF가짜exact.
+
+- **✅ 내 홀리스틱 LLM vs gpt-5.4 비교 완료** (2026-06-14) — 산출 `data/backtest/_LLM_COMPARE_RESULTS.md`,
+  gpt findings `_llm_compare/<corp>_gpt.md`(10), 스크립트 `_run_gpt_compare.py`. 고위험 10개사(known분식6+P2후보4)에
+  gpt-5.4(run_llm_holistic) 같은 dump+9렌즈 실행 후 내 공장(chunk_N.md)과 대조.
+  - **결론: gpt-5.4 UI 온보딩 채택 권장.** 분식신호 포착 대등이상 — 연결범위(00118345 비지배귀속이상)·재고과대(00409681 재고3배)
+    2건은 B가 A보다 직접 포착(A 놓침, duckdb 검증), 매출재작성(00159616) 1건 A우위, 2 tie.
+  - **B 약점=거짓 P1결함**: dump 원/백만 혼재 표시를 스케일 결함으로 반복 오독(검증4건 전부 정상 매핑). **보정 권장: dump 렌더러
+    sj_div 무관 일괄 ÷1e6 통일** → 거짓 스케일경보 원천 제거. (또는 9렌즈 §G에 원-단위 표시 주의 1줄.)
+  - **다음 후보**(선택): 위 dump 렌더러 ÷1e6 보정으로 gpt-5.4 거짓 P1 제거 → 온보딩 LLM 품질 확정.
+
+- **유형A 근본해결 구현 완료 — 회귀 통과** (2026-06-14, 위 비교의 선행 완료물).
+  - **구현 완료물**(3 단계로 유형A 의미 오매핑 처리):
+    1. **표 호환성 심판** `src/normalize/pipeline.py:_arbitrate_conflicts` — 충돌 시 sj_div 맞는 canonical 채택(cross-statement 자동교정).
+    2. **company_quirks** `config/company_quirks.yaml`+`config.py:load_company_quirks`+`pipeline.py:_apply_company_quirks` —
+       within-category 진짜오매핑(mechanical 분리 불가 측정확정)을 회사별 데이터로 교정. corp_code=데이터키(하드코딩 아님).
+    3. **동의어 canonical dedup** — config 중복(FVPL↔당기손익공정가치 등) 15쌍 통합(canonical 2028→2013). 충돌 719→704 소멸.
+  - **온보딩 QA 게이트** `src/normalize/onboarding_gate.py:run_gate(corp,year)` — 신규회사 정규화 후 분석 전 G1~G6(기계검사·충돌·
+    산술검산·F1·LLM홀리스틱 dump) 부품화 검문. `_quirk_promote_scan.py`(3회+ 반복 quirk 전사 승격). **UI**: `dashboard/onboarding.py`
+    (입력→게이트→이탈 표시→quirk 등록→재검사→Phase1/2 진입). **G6 LLM 통독=gpt-5.4 추론모델**
+    (OpenAIModel+reasoning_effort, Phase2 perspectives.py 정합 — Gemini Flash 아님). 실호출 성공 확인.
+  - **회귀 전부 통과**(직접 재현): 백테스트 recall 5/6·IS/CF 11=11 악화0·F1 dangling 0·pytest 203 passed·corpus 재정규화 error0·세분화 보존·CF 무회귀.
+  - **남은 운영 후속**(별개): 동의어 dedup 벌크(635 synonym 큐는 게이트 주도 점진)·within 진짜오매핑(9 mistag)은 quirk/게이트로 흡수·LLM홀리스틱 실호출은 API키 환경에서.
+  - 설계: `dev/active/synonym-dedup-onboarding-gate/`. 측정 근거(범주·lexical·영문id 3종 실패→case불가피)=`_idlabel_precision_probe.py`. 폐기 설계 `id-label-conflict-category-arbiter`(범주 arbiter는 cross만 잡아 채택 안 함).
+  - **전수 홀리스틱 재검(선행 완료)**: 34/34 묶음 `_HOLISTIC_SYNTHESIS.md`. 글로벌 F1(PASS)·IS/CF=`_GLOBAL_CHECKS_RESULTS.md`. 유형B/C/D/E·member부호 별개 트랙.
+  - **글로벌 검사 2종 완료(영구 회귀 스크립트)** — `_GLOBAL_CHECKS_RESULTS.md`:
+    - **F1 신호 dangling: PASS** (`_f1_signal_dangling.py`). 신호엔진 참조 56 canonical 전부 살아있음.
+    - **IS/CF 산술검산: 302/313 통과** (`_is_cf_arithmetic.py`). 11 잔차=계속/중단영업 소계 미매핑 P1후보
+      (config에 `계속영업손익`·`중단영업손익` alias 보강 시 0 수렴). 부호규약 회사별 상이를 magnitude 흡수.
+  - **wave 1~2 주요 P1 패턴**: ①영문코드↔한글 의미 오매핑(사채발행→주식발행 1.4조·유동차입금→비유동)
+    ②미매핑 대형계정 기타로(금융업자산 52조·유형자산 1.3조) ③금융기관 주석 0건. 상세 `_HOLISTIC_SYNTHESIS.md`.
+  - **이유**: 라운드1~12가 기계 flag만 역추적하고 감사관 통독을 사실상 안 한 사각(사용자 지적)을 메움.
+    member부호 수정·라운드13은 별개 트랙. 방법론 전환 기록 `docs/user/P1_AUDIT_HARNESS.md §5`.
+
+- **라운드12 구조 규칙 수정 완료 (2026-06-13, `_P1_ROUND12_FIX_PROMPT.md` 실행)**:
+  SCE 소계/스톡-as-leaf 재발을 라벨 신규 등록 없이 구조 규칙으로 처리했다. 부모소계 retag는
+  일반 집계 라벨 패턴과 detail parent 신호를 보되, bare subset 합 또는 기존 벡터 매칭 후보를
+  모두 제외한 trial frame이 strict `기초+Σleaf=기말` 검산을 통과할 때만 subtotal로 확정한다.
+  스톡 retag는 begin/restated_begin의 현재 공시 component 벡터와 후보 현재 벡터가 일치하면
+  `restated_begin`으로 격리해 전기 값 NaN/부분 공시 사각을 줄였다. A/B 충돌은 처리 순서상
+  스톡 벡터 일치가 우선한다.
+  - **검증**: R12 targeted RED 4 failed·2 passed → GREEN. `r12 or structural or r11 or r10`
+    10 passed, ruff 대상 파일 통과. 최종 102사 합집합(round1~12+known) force 재정규화
+    `처리 399 | renorm=327 skip=0 empty=72 error=0 | 행 95,675`. round12 핵심
+    00382199/2023 `자기주식 거래 합계`와 00526951/2020 `회계정책변경에 따른 증가(감소)` SCE검산
+    OK 전환, 소실 0·전기소실 0. known+round1~11은 기존 허용 잔여만 유지. 전체 pytest
+    199 passed·1 xfailed, 백테스트 recall 5/6 유지.
+  - **직접 증거**: 00382199/2023 `자기주식 거래 합계` rows are `change_role='subtotal'`,
+    `sce_balance` diff=0. 00526951/2020 CFS `회계정책변경에 따른 증가(감소)` 현재 공시 rows are
+    `change_role='restated_begin'`, `sce_balance` diff=0. 00101752 5개년 잔여는
+    `자본 증가(감소) 합계`가 이미 subtotal로 제외된 뒤에도 남는 소액 잔차라 R12 구조 A 미적용
+    잔여로 보지 않는다.
+  - **과수축 감사**: known+round1~12의 387 회사연도 재계산에서 초기 leaf였으나 구조 규칙 후
+    subtotal/restated_begin으로 격리된 행은 327개(`subtotal` 154, `restated_begin` 173).
+    상위 라벨은 `소계` 57, `회계정책변경에 따른 증가(감소)` 33, `수정 후 금액` 28,
+    `자기주식 거래 합계` 16 등이다. 과수축 가드는 후보 제외 후 strict 검산이 깨지는 합성 케이스를
+    leaf로 유지하는 테스트로 고정했다.
+  - **남은 잔여**: round12에는 01147487/2025 `FAIL(-3,083)`(자기주식취득 부호 별도 축),
+    00351579/2020~2021, 00148832/2023, 00101752 5개년, 00130772/2023~2024 등 11건이 남는다.
+    이 중 00351579/00148832는 원공시모순 동반, 00101752는 subtotal 제외 후 소액 잔차, 01147487은
+    프롬프트 부록의 별도 분류 대상이다.
+  - **다음**: 라운드13은 구조 규칙 적용 후 20사 재검(seed=13)으로 신규 라벨 변주 0 여부를 확인한다.
+- **과거 수정 과수축 독립 감사 (2026-06-13, 사용자 "뭉갠 것 아니냐" 의심)**: 우리 검산(grand-total)으로
+  과거 OK를 확인하면 자기참조라, 독립 오라클(`_sce_overcollapse_audit.py`)로 전수 재검. **오라클을
+  3회 만들며 2회 스스로 false-positive 잡아냄(§9 자기도구 의심)**: ①합계컬럼(지배기업소유주지분)을
+  leaf로 오집계 ②"grand vs member 부호 다름"을 결함으로 오인(정상). 정밀(변동행 member합 vs grand)에서
+  **결정적 발견**: 313 회사연도 중 **334건이 member합≈-grand**(연차배당·신종자본증권 등 차감변동) =
+  **-abs 부호 정규화가 grand('-') 셀만 뒤집고 member 구성요소 셀은 raw 부호로 방치**. **판정: 뭉개기·
+  마스킹 무혐의**(grand 검산·recall 5/6 유효), **얕은 수정 유죄**(라운드1~12 내내 검사하는 축만 고치고
+  안 보는 member 셀 방치 — 공통 사각, Phase2가 member 읽으면 배당 +로 보임). 증거: 00131054/2023
+  현금배당금 grand=-5,510·이익잉여금=+5,510. **다음:
+  [data/backtest/_P1_MEMBER_SIGN_FIX_PROMPT.md](../../data/backtest/_P1_MEMBER_SIGN_FIX_PROMPT.md) 실행
+  (부호 전 셀 일관 적용, 334→0, member합==grand 불변식 영구 편입) → 그 후 라운드12 구조규칙 수정 재개.**
+- **라운드12(20사 재검) 감사: 수렴 미달 + 전략 전환 결정 (2026-06-13)**: 라운드11 수정 실재
+  확인·무회귀(타깃 3사 OK). 라운드12(seed=12, 20사 77 회사연도, **691조 초대형 금융 포함**)
+  재검 — 기계 floor가 64개 깨끗·13개 flag, 2분할 감사 + 게이트 PASS 77×6. **신규 결함 재발
+  (사다리 20사 단계 미통과)**: ①00526951/2020 `회계정책변경에 따른 증가(감소)` 스톡 행이
+  당기 벡터만 begin과 일치(전기 NaN)라 라운드4 벡터동일성 사각 → leaf 이중계상 75,412(직접
+  재현) ②00382199/2023 `자기주식 거래 합계`(-486,028)가 자식(취득-485,947+소각-81)과 함께 leaf
+  이중계상(직접 재현 — **B조가 "원공시 0건"으로 오분류한 것을 설계자 §9 재현이 잡음**). **핵심
+  통찰: 결함 TYPE은 소계/스톡-as-leaf 2종으로 수렴했으나 한글 라벨이 회사마다 무한 변주(소계·
+  합계·자기주식 거래 합계·회계정책변경…) → 라벨 등록은 두더지잡기.** **전략 전환: 라벨 등록
+  중단, 구조 규칙(bare=형제합→subtotal / bare 벡터=begin벡터(공시축만)→restated)으로 일반화.**
+  **다음: [data/backtest/_P1_ROUND12_FIX_PROMPT.md](../../data/backtest/_P1_ROUND12_FIX_PROMPT.md)
+  실행(구조 규칙 A/B) → 20사 재검(seed=13)에서 라벨 변주가 또 나와도 신규 0이면 그게 진짜 수렴
+  신호 → 50사 → 100사.** 00101752 5/6년 소액 FAIL은 구조 규칙 적용 후 원공시 잔존 여부 재확인 대상.
+  직접 증거 조건을 실제 검증 기록과 맞췄다. `00153861/2020`은 derived 유령 leaf 제거 후 SCE 검산
+  OK이며, 직접 `sce_balance` diff가 `-1` 같은 원 단위 잔차로 남아도 tolerance 이내이면 성공으로
+  본다. 라운드11 구현·검증 결과 자체는 변경하지 않았다.
+- **라운드11 수정 완료 (2026-06-13, `_P1_ROUND11_FIX_PROMPT.md` 실행)**: R11-a/R11-b/R11-c
+  수정·검증 완료. `_retag_parent_subtotal_vectors`는 `(change_label, account_id)` 통합 그룹 대신
+  `source_order` 인접 블록 단위로 부모소계 매칭을 수행하고, 직전 subtotal boundary 이후 여러
+  자식 변동행 전체합과 일치하는 `소계`도 subtotal로 재태깅한다. `_add_derived_bare_totals`는
+  `detail_path`가 prefix-nested 관계인 부모/자식 member가 함께 있을 때 derived 합계 계산에서
+  child detail을 제외해 부모+자식 이중계상을 막는다. `총포괄손익 소계` alias도 등록해 id-label
+  모순 케이스가 `총포괄손익` subtotal로 들어간다.
+  - **검증**: targeted RED 3 failed → GREEN 3 passed. 최종 81사 합집합(known+round1~11)
+    force 재정규화 `처리 318 | renorm=255 skip=0 empty=63 error=0 | 행 76,807`. round11은
+    00631518/2020~2022, 00545716/2021~2022, 00153861/2020~2021 SCE검산 OK. 잔존은
+    prompt 허용 범위인 00631518/2025 `FAIL(-31)`, 00120216/2025 `FAIL(-1)`, 00153861/2022
+    `FAIL(3,555)`. known+round1~10 무회귀, 백테스트 recall 5/6 유지, 전체 pytest
+    193 passed·1 xfailed, ruff 대상 파일 통과.
+  - **직접 DB 증거**: 00631518/2021 `change_label='소계'` rows are all `change_role='subtotal'`
+    and SCE diff=0. 00153861/2020 is SCE OK after derived nested child exclusion; direct
+    `sce_balance` diff is `-1` within tolerance, so prompt의 `diff=0` 기대와는 원 단위 잔차 차이가
+    있다.
+  - **다음**: 수렴 카운터 리셋 후 라운드12는 20사 재검(seed=12, 신규 0 확인)으로 진행.
+- **라운드11(20사) 감사: 수렴 깨짐 — 신규 결함 2종 (2026-06-13)**: 라운드10 수정 게이트 통과.
+  **수렴 사다리 20사 단계**(seed=11, 20사 74 회사연도, 178조·105조 포함) — 기계 floor가 64개
+  회사연도를 깨끗 판정, **10개만 flag**(통독량=flag수 설계 입증) → 감사 2분할(A/B조) + 게이트
+  PASS 74×6. **신규 결함 2종 발견(추이 …→0→0→2) — 라운드9·10 연속 0은 표본 부족이었음이 입증
+  (사용자 §9 의심이 옳았다)**: **R11-a** 동명 '소계' 다중블록이 `(change_label, account_id)`
+  그룹화로 통합돼 leaf 잔존(00631518 105조 3개년 4.17조/3.62조 — 직접 재현, 세토 동명+blank id
+  친척) · **R11-b** `_add_derived_bare_totals`가 부모member+중첩자식member 동시 합산해 유령 leaf
+  (00153861 2020/2021 — 자본 내 대체 net 0이 깨짐, 직접 재현 diff=0) · R11-c id-label 모순
+  (00545716 유상증자 id에 '총포괄손익 소계' label — R11-a 마커로 동시 해결). **수렴 카운터
+  리셋.** **다음:
+  [data/backtest/_P1_ROUND11_FIX_PROMPT.md](../../data/backtest/_P1_ROUND11_FIX_PROMPT.md) 실행
+  → 갱신 사다리: 20사 재검(seed=12, 0 확인)→50사→100사, 각 단계 0이어야 진행, 100사까지 0이면
+  수렴 선언.**
+- **라운드10 수정 완료 (2026-06-13, `_P1_ROUND10_FIX_PROMPT.md` 실행)**: T1/T2 완료, T3는
+  선택 항목으로 축소. `총포괄이익 소계`를 `총포괄손익` alias로 등록하고
+  `parent_subtotal_label_markers`에 `소계`를 추가했다. SCE 부모소계 재태깅은 기존 수치 벡터
+  정합 가드를 유지하되 자식 후보에 기존 subtotal도 허용해 `총포괄손익 = 당기순이익 + 기타포괄손익`
+  구조를 처리한다. F-1 원공시모순 카운터는 차감 canonical의 bare/component 부호 비대칭을
+  절대값 비교로 흡수하고, unmatched 소계 컬럼은 sibling 부분합과 일치할 때 제외한다.
+  - **검증**: targeted RED 4 failed → GREEN 4 passed. 최종 61사 합집합(known+round1~10)
+    force 재정규화 `처리 244 | renorm=199 skip=0 empty=45 error=0 | 행 59,242`.
+    round10에서 00356361/2020~2022 SCE검산 OK로 전환, 00264547/2025·00537221/2025·
+    00249502/2020·00571298/2023·00401731/2021~2022의 원공시모순은 진단값으로 잔존.
+    known 및 round1~6 PASS, round7~9는 기존 허용 잔여만 유지. 백테스트 recall 5/6 유지.
+    전체 pytest 190 passed·1 xfailed, ruff 대상 파일 통과.
+  - **직접 DB 증거**: 00356361/2021 `총포괄이익 소계` rows are
+    `change_canonical='총포괄손익'`, `change_role='subtotal'` for bare and component cells.
+  - **축소**: T3 bare 기초자본 vs 전기 기말 교차검사는 §6 성공 기준에 없는 선택 항목이라
+    새 출력 필드·게이트를 만들지 않고 보류했다.
+  - **다음**: 라운드11은 20사(seed=11)로 수렴 사다리 다음 단계 진행.
+- **라운드10(10사 배증) 감사 + 수렴 기준 상향 (2026-06-13)**: 라운드9 수정 게이트 통과. 샘플러
+  n>5 라운드로빈 버그 수정 후 **10사 42 회사연도**(101조·68.6조 대형, seed=10) — 감사 2분할
+  (A/B조) + 게이트 PASS 42×6. **파이프라인 신규 결함 0(라운드9·10 연속, 추이
+  5→5→2→1→2→3→2→1→0→0)**, 소실·전기소실·부호반전 전수 0. 잔존: 소계 변형 '총포괄이익 소계'
+  (00356361 3개년, 직접 재현 — '소계' 접미 마커감) + 하니스 F-1 오탐 2메커니즘(오탐 39건) +
+  **진짜 원공시 모순 5건**(기초 셀에 기말값 오태깅 2.4조 등 — 정직 노출, Phase2 확인질문).
+  **⚠ 수렴 선언 철회(사용자 §9 지시)**: 라운드9·10 연속 0은 "수렴 가능성"일 뿐. **수렴 사다리
+  = 10사(완료)→20사→50사→100사, 전 단계 통과해야만 수렴**. **다음:
+  [data/backtest/_P1_ROUND10_FIX_PROMPT.md](../../data/backtest/_P1_ROUND10_FIX_PROMPT.md) 실행
+  → 라운드11=20사(seed=11)·라운드12=50사·라운드13=100사 순. 각 라운드는 직전 수정 적용 후
+  새 표본. 100사까지 신규 0이면 그때 수렴 선언 + 잔여 전수 스캔 전환.** 50·100사 라운드는
+  기계 floor가 전수 판정하고 LLM은 flag(검산 FAIL·소실>0·원공시모순·사유미상) 회사연도만
+  정밀 통독(p1-auditor 다분할) — 통독량은 회사 수가 아니라 flag 수에 비례.
+  SCE 변동행 매칭에서만 `당기` 접두를 제거해 `당기총포괄손익`을 `총포괄손익` subtotal로 분류하고,
+  본문 `map_row`의 `당기~` 매핑은 그대로 유지했다. CFS/OFS 같은 label이 서로 다른 account_id로
+  공시된 경우 mapping은 바꾸지 않고 양쪽 `mapping_status='id_label_conflict'`만 표시한다.
+  하니스는 SCE raw bare 합계행과 구성요소 컬럼합 불일치를 `원공시모순=N`으로 표기한다.
+  - **검증**: targeted RED 3 failed → GREEN 3 passed. 52사 합집합(known+round1~9) force
+    재정규화 완료(`처리 206 | renorm=165 skip=0 empty=41 error=0 | 행 49,767`). 본문
+    `label like '당기%'` canonical 분포는 재정규화 전후 동일(`diff={}`). round9는
+    00927558/2021~2023 SCE검산 OK, 00927558/2024는 원공시모순 2와 함께 `FAIL(1,375)` 잔존,
+    00428729/2020~2021은 원공시모순 1과 함께 원천 결함 FAIL 잔존. known 및 round1~6 PASS,
+    round7·round8은 기존 허용 잔여만 유지. 전체 pytest 186 passed·1 xfailed, 백테스트 recall
+    5/6 유지.
+  - **직접 DB 증거**: 00927558/2021 `당기총포괄손익` rows are
+    `change_canonical='총포괄손익'`, `change_role='subtotal'`.
+  - **다음**: 라운드10은 10사 배증(seed=10, 배증 규칙 발동). 라운드10도 신규 0이면 수렴 선언과
+    잔여 기계 floor 전수 스캔 전환을 검토한다.
+- **라운드7 수정 완료 (2026-06-12, `_P1_ROUND7_FIX_PROMPT.md` 실행)**: N2-d·N2-e 수정·검증.
+  차감 `-abs`는 `component_std='-'` bare 셀과 도출 bare 합계에만 적용하고, 구성요소 셀은 원부호를
+  보존한다. 도출 bare 합계도 구성요소 부호가 양·음 혼재하면 `-abs`를 적용하지 않아 자본 내 대체
+  거래의 순액 방향을 보존한다. `sce_deduction_changes`에는 `비지배지분에 대한 배당금`을 config
+  데이터로 등록했다.
+  - **검증**: N2-d/N2-e TDD RED 3 failed → N2-d 후 1 failed·2 passed → GREEN 3 passed.
+    round7은 00469799/2025 SCE검산이 -68,878에서 **-2,841**로 축소, 00147295/2023 OK,
+    00147295/2024 **FAIL(-1)**은 백만원 granularity 잔존으로 허용. known 및 round1~6은 기존
+    미제공 표기 외 모두 기계검사 PASS, 소실 0·전기소실 0. 전체 pytest 178 passed·1 xfailed,
+    백테스트 recall 5/6 유지.
+  - **직접 DB 증거**: 00469799/2025 `무상감자` `자본잉여금` component amount
+    `+33,018,628,500`, 00147295/2023 `비지배지분에 대한 배당금` bare amount
+    `-1,293,000,000`.
+  - **남은 데이터 특성**: 00469799/2025 잔여 -2,841은 원공시 NCI 열 미정합, 00147295/2024
+    -1은 공시 단위 granularity로 판단. 다음은 라운드8 5사 유지(신규 2종 — 배증 보류 지속).
+- **수집 부재 manifest + 하니스 미제공 표기 구현 완료 (2026-06-12,
+  `_P1_COLLECT_GAP_FIX_PROMPT.md` 실행)**: `collection_summary.json`에
+  `absence: {fs, xbrl_zip}`를 추가하고, 하니스가 DB/주석 부재를 `FAIL`과 `미제공(...)`으로
+  구분하도록 변경. `fs`는 `ok|no_report|dart_no_data`, `xbrl_zip`은
+  `ok|no_report|dart_no_xbrl`로 기록한다. 수집 spike는 XBRL zip 실패 경로에서도 summary를
+  남기며, 기존 summary 스키마는 필드 추가만 수행.
+  - **하니스 동작**: `_p1_review_all.py`는 DB 없음이 summary상 `no_report`/`dart_no_data`이면
+    `미제공(...)`으로 표기하고 사유미상만 `FAIL(DB없음·사유미상)`으로 남긴다. 주석 테이블 부재도
+    summary상 `no_report`/`dart_no_xbrl`이면 `OK(주석미제공(...))` 및 `주석행=미제공(...)`으로
+    표기한다. `_p1_company_review.py`도 동일 기준으로 단일 dump의 조기 종료/§0 완결성을 맞춘다.
+  - **백필**: `data/backtest/_backfill_absence.py`를 추가해 기존 `data/companies` 5,126 회사연도에
+    absence를 기록. 현재 디스크 기준 출력은 `fs_absence=353(no_report=166,dart_no_data=187)`,
+    `xbrl_absence=512(no_report=239,dart_no_xbrl=273)`로, 프롬프트 기준선 `본문 347·zip 163`과
+    불일치한다. 이는 전수 notes 수집 로그 전체 실패(512)를 반영한 결과로 보이며, 기준선 정의가
+    다르므로 완료 상태는 `DONE_WITH_CONCERNS`로 취급.
+  - **검증**: RED 4 failed+1 passed → GREEN 5 passed. round1~6 및 known 배치 모두
+    `기계검사 바닥 전수 PASS`, 사유미상 FAIL 0. 기존 갭은 `미제공(dart_no_data)`,
+    `미제공(no_report)`, `OK(주석미제공(dart_no_xbrl))`로 전환. 전체 pytest
+    175 passed·1 xfailed, ruff check/format 대상 파일 통과.
+- **라운드6 수정 리뷰게이트 통과 + 수집 레이어 점검 완료 (2026-06-12)**: 라운드6 수정(N1-f·
+  N1-g·N4-c) 게이트 통과 — round6 검산 OK·전기소실 컬럼 작동·전환사채 prior 6,395,852,761
+  보존·stock_balance 재지정·하드코딩 0. **수집 점검 결론: 수집 버그 0건** — 전수 측정(본문
+  부재 347건: 2020:121→2024:11 점감 / zip(주석) 부재 163건) 후 DART API 직접 대조로 3분류
+  확정: ①미제출(사업보고서 없음 — 신규상장 전, 01584183 유형) ②본문 미제공(보고서 있으나
+  finstate_all status 013 — 금융업 구 양식 2020~22, 00117267·00158909 실증) ③zip 미제공
+  (finstate_xml 013/014 — 00127158/2023 재수집 시도로 실증, no_zip). 즉 갭 전체가 DART측
+  부재 = 재수집 불가/불필요. 남은 관측 공백(부재 사유 미기록 → 미제공 vs 수집누락 구분 불가)은
+  [data/backtest/_P1_COLLECT_GAP_FIX_PROMPT.md](../../data/backtest/_P1_COLLECT_GAP_FIX_PROMPT.md)
+  발행(absence manifest + 하니스 '미제공' 구분 표기 + backfill). **다음: 수집 프롬프트 실행
+  (선택) → 라운드7 5사(seed=7) 계속.**
+- **라운드6 수정 완료 (2026-06-12, `_P1_ROUND6_FIX_PROMPT.md` 실행)**: N1-f·N1-g·N4-c와
+  하니스 전기 대조 수정 완료. TDD RED(3 failed·1 passed) → GREEN(4 passed), 전체 pytest
+  171 passed·1 xfailed, ruff check/format 대상 파일 통과. 36사 합집합(known+round1~6), 143
+  회사연도 force 재정규화 완료(renorm=117·empty=26·error=0).
+  - **N1-f restated delta/stock 분리**: `수정 후 금액`·`조정후금액` 등 잔액형은
+    `stock_balance`로 전체 label group 재지정하고 leaf 합산에서 제외. `재작성효과`처럼 begin
+    벡터와 다른 restated delta label은 잔액 대체가 아니라 movement에 더한다.
+  - **N1-g bare total 부재 보정**: 구성요소 열만 있고 `component_std='-'` bare 합계행이 없는
+    SCE 변동은 component sum으로 `component_role=derived_total`, `detail_path=[derived:component_sum]`
+    bare row를 생성해 검산이 볼 수 있게 했다.
+  - **N4-c 전기/전전기 비교치 소실 방지**: statement/canonical dedup 키와 값 차이 판정에
+    `prior_amount`·`prior2_amount`를 포함하고, pandas `groupby().first()`의 NaN skip 부작용을
+    피하도록 물리 첫 행 기준으로 대표값을 잡았다. 당기 NaN이라도 전기/전전기가 다른 동명 blank 행은
+    생존하고, 완전 동일 중복은 계속 dedup된다.
+  - **하니스 §D 보강**: raw `frmtrm_amount`를 normalized 본문+SCE `prior_amount`와 직접 대조해
+    `전기소실`을 집계하고 `_p1_review_all.py` 표/파서에도 노출.
+  - **검증**: known 19 PASS. round1~6은 기존 원천 DB 없음·주석 테이블 없음 갭 외 모든 runnable
+    회사연도 소실 0·전기소실 0·SCE검산 OK. Round6 핵심 직접 SQL:
+    00127158/2023 `전환사채 prior_amount=6,395,852,761` 생존, 00127158/2020 `수정 후 금액`
+    `change_role=('stock_balance')`. 백테스트 recall 5/6 유지(세토피아 변동미미).
+  - **남은 갭(기존/원천 문제)**: round1 00117267/2020~2022, round2 00688996/2020~2022·
+    01675421/2020~2022, round3 00126256/2020~2022·00124106/2020~2022, round4
+    00131850/2020~2022, round5 00158909/2020~2022는 DB 없음. round2 00121686/2025,
+    round5 00238782/2021, round6 00127158/2023은 `note_facts_classified` 없음. 라운드7은
+    5사 유지 권고.
+- **라운드5 수정 리뷰게이트 통과 + 라운드6 감사 완료 (2026-06-12)**: 라운드5 수정(N1-d·N1-e)
+  게이트 통과 — round5 검산 OK·stock_balance 재지정 DB 확인·src 라벨 하드코딩 0(config만).
+  **라운드6**(seed=6: 금융 83조·별도전용·blank고비중 6년·다년대형·단년소형, 23 회사연도) —
+  p1-auditor 게이트 PASS[round6], 핵심 주장 직접 재현. **신규 3종**(추이 5→5→2→1→2→3, 당기
+  값 소실 0): **N1-f** 조정후개시 '수정 후 금액' leaf 혼입 + restated 델타형(+2,572)을 잔액
+  매칭이 대체 처리해 어긋남(00127158/2020, 이중 결함) · **N1-g** 합계열 미공시 변동행(구성요소
+  열에만 -514M)을 bare 기반 검산이 못 봄(00127158/2023) · **N4-c** 당기 NaN blank-id 동명행
+  dedup으로 **전기/전전기 비교치 소실**(전환사채 전기 6,395,852,761 등 3건 — §D가 당기만
+  대조해 하니스도 사각). 부수: 00127158/2023 수집 누락(zip 자체 부재, 재수집 필요)·01584183
+  비금융 원천 부재(갭 패턴이 금융업이 아니라 "해당 연도 XBRL 미공시"일 가능성)·원공시 태깅
+  오류 9행(N5 자료 누적). **다음:
+  [data/backtest/_P1_ROUND6_FIX_PROMPT.md](../../data/backtest/_P1_ROUND6_FIX_PROMPT.md) 실행
+  (N1-f·N1-g·N4-c + 하니스 §D 전기 대조 추가) → 라운드7 5사 유지**(신규 3종 — 배증 보류.
+  수집 갭 과제(금융 7사+비금융 1사+수집누락 1건)는 라운드 루프와 분리해 별도 회차 권고).
+- **라운드5 수정 완료 (2026-06-11, `_P1_ROUND5_FIX_PROMPT.md` 실행)**: N1-d·N1-e 수정·검증. TDD(실패→GREEN).
+  - **N1-e restated marker 보강**: `restated_begin_markers`를 정규화 키로 비교하는 기존 경로에
+    `반영후자본` marker를 config 데이터로 추가해 `회계정책변경 효과반영후자본` 공백 변형을
+    `restated_begin`으로 분류.
+  - **N1-d stock_balance role**: SCE 추출 결과에 `source_order`를 보존하고, bare 합계열
+    `component_std='-'` 중 config marker(`소계`, `잔액`) 라벨이 누적 스톡 잔액 또는
+    `기말자본총계 - 공시 subtotal` 브릿지와 일치하면 신규 `stock_balance`로 재지정. leaf 합산과
+    R3 잔여보정 양쪽에서 제외한다. src/에는 회사·연도·금액·라벨 조건 하드코딩 없음.
+  - **재정규화**: round5·round1~4·known positive runnable 합집합 31사, 120 회사연도 `--force`
+    재정규화 완료(renorm=97·empty=23·error=0).
+  - **검증**: targeted RED 2 failed·2 passed(기존 stock 테스트 포함) → GREEN 4 passed /
+    round5 00158909/2023~2025·00164362/2020 SCE검산 OK·소실 0(기존 수집갭 3건+주석갭 1건 외 OK) /
+    known 기계검사 바닥 전수 PASS / round1~4 기존 수집·주석 갭 외 OK / 백테스트 recall 5/6 유지 /
+    pytest 167 passed·1 xfailed / 00158909/2023 `소계` bare 직접 SQL 결과 `stock_balance`.
+  - **다음**: 라운드6 5사 유지. 라운드6·7 연속 신규 0이면 10사 배증, 수렴 시 잔여 기계 floor 전수 전환.
+- **라운드4 수정 리뷰게이트 통과 + 라운드5 감사 완료 (2026-06-11)**: 라운드4 수정(N1-c) 게이트
+  통과 — round4 검산 OK·오류수정 행 restated_begin 재지정 확인·진짜 재작성(00413046) 무회귀·
+  src/ 라벨 하드코딩 0. **라운드5**(seed=5: 금융 83.6조·별도전용·blank고비중·**은행 557조**·
+  단년소형, 19 회사연도) — p1-auditor 게이트 PASS[round5], 핵심 수치 직접 재현. **신규 2종·값
+  소실 0**(신규 추이 5→5→2→1→2, 전부 SCE 스톡 혼입 계열로 협소화): **N1-d** 잔액형 `소계`
+  행(기초+소유주거래 반영 잔액)이 미등록 leaf로 Σleaf 혼입 — 은행 3개년 검산 FAIL 28~32조,
+  begin과 벡터가 달라 N1-c로 못 잡음, subtotal 등록 시 R3 잔여보정이 역흡수하므로 stock 계열
+  신규 role 필요. **N1-e** restated 마커 매칭이 공백 정규화 미적용 — 같은 표의 공백 변형 2행 중
+  1행만 잡힘(직접 재현: '효과 반영후자본' restated_begin vs '효과반영후자본' leaf 24,889).
+  부수: 수집 갭 금융 7사째·00238782/2021 주석만 부재(부분 갭 변형)·혼합형 BS(금융업자산
+  분리표시) 관찰.
+- **라운드4 수정 완료 (2026-06-11, `_P1_ROUND4_FIX_PROMPT.md` 실행)**: N1-c 수정·검증. TDD(실패→GREEN).
+  - **N1-c 스톡 재태깅 변동의 벡터 동일성 판별**: SCE 추출 후처리에서 같은 `fs_div` 내
+    `begin`/기존 `restated_begin` 그룹의 전체 component 벡터(`component_std`→`amount`·`prior_amount`)와
+    완전 동일한 변동행 그룹을 `restated_begin`으로 재지정. 라벨·corp·연도·금액 하드코딩 없음.
+    행은 보존하고 검산 leaf 합산에서만 제외한다. 부분 일치·벡터 불일치 correction concept은 leaf 유지.
+  - **재정규화**: round4·round1~3·known positive runnable 합집합 26사, 101 회사연도 `--force`
+    재정규화 완료(renorm=81·empty=20·error=0).
+  - **검증**: targeted RED 1 failed·1 passed → GREEN 2 passed, N1/D5/R3-b 주변 6 passed.
+    round4 00136776/2025 SCE검산 OK·소실 0(기존 수집갭 3건 외 OK) / known 기계검사 바닥 전수 PASS /
+    round1 기존 수집갭 3건 외 OK / round2 기존 수집갭 6건+주석갭 1건 외 OK / round3 기존 수집갭
+    6건 외 OK / 백테스트 recall 5/6 유지 / pytest 164 passed·1 xfailed.
+  - **다음**: 라운드5 5사 유지. 라운드5 신규 0이면 라운드6부터 10사 배증 검토.
+- **라운드3 수정 리뷰게이트 통과 + 라운드4 감사 완료 (2026-06-11)**: 라운드3 수정(R3-b·M1)을
+  work-prompt-authoring 리뷰게이트로 검증 — round3 검산 OK(00557933)·M1 분리(지분법이익잉여금변동
+  +32 별도)·테스트 약화 0(assert 변경은 N5 플래그 의도 반영)·하드코딩 0·4경로 무회귀. **라운드4**
+  (seed=4: 금융 6.5조·별도전용·blank고비중·다년대형·blank39% 소형, 16 회사연도) — p1-auditor
+  게이트 PASS[round4], **신규 1종·값 소실 0**(수렴 추세: 신규 유형 5→5→2→1): **N1-c** 스톡
+  재태깅 변동(`오류수정에 따른 증가(감소)` concept에 수정후 기초 스톡 — component 벡터가 begin과
+  당기·전기 전 셀 동일, 00136776/2025 검산 FAIL 29,636, 직접 재현 확인). 라벨 등록 불가(타사에선
+  진짜 델타) → 벡터 동일성 구조 판별 필요. 그 외 병합 다발은 전수 동질(parent-child 재태깅,
+  값 왜곡 0)·수집 갭 금융 6사째(00131850). **다음:
+  [data/backtest/_P1_ROUND4_FIX_PROMPT.md](../../data/backtest/_P1_ROUND4_FIX_PROMPT.md) 실행
+  (N1-c 단건, work-prompt-authoring 규약) → 라운드5 5사 유지, 라운드5 신규 0이면 라운드6부터
+  10사 배증.**
+- **라운드3 수정 완료 (2026-06-11, `_P1_ROUND3_FIX_PROMPT.md` 실행)**: R3-b·M1 수정·검증. TDD(실패→GREEN).
+  - **R3-b 부분자식 소계 잔여 보정**: `sce_change_roles.subtotal_children`에 `기타포괄손익` 구성 leaf
+    멤버십을 선언하고, `sce_balance`가 `소계 bare 값 - 공시된 구성 leaf 합` 잔여만 leaf 합산에 보정.
+    자식 0개면 기존 R3 소계 채택과 동치, 자식 전부 공시면 잔여 0으로 D5 무회귀.
+  - **M1 alias 오염 분리**: `지분법이익잉여금`을 `지분법기타포괄손익재분류가능` alias에서 제거하고
+    전용 SCE leaf `지분법이익잉여금변동` alias로 이동. 동류 오염 스캔 결과 조치 대상 0건
+    (별도 SCE leaf `기타포괄손익지분증권처분이익잉여금대체`는 이미 분리된 전용 canonical).
+  - **재정규화**: round3·round1·round2·known positive runnable 합집합 21사, 85 회사연도 `--force`
+    재정규화 완료(renorm=68·empty=17·error=0).
+  - **검증**: targeted RED 2 failed → GREEN 2 passed / round3 00557933/2023 SCE검산 OK·소실 0
+    (기존 수집갭 6건 외 OK) / known 기계검사 바닥 전수 PASS / round1 기존 수집갭 3건 외 OK /
+    round2 기존 수집갭 6건+주석갭 1건 외 OK / 백테스트 recall 5/6 유지 / pytest 162 passed·1 xfailed.
+  - **다음**: 라운드4 5사 유지. 라운드4·5 연속 신규 0이면 10사 배증 + 수렴 시 잔여 기계 floor 전수 스캔 전환.
+- **라운드2 수정 검증 + 라운드3 감사 완료 (2026-06-11)**: 라운드2 수정(R1~R5) 직접 재현 검증
+  통과(round2 검산 전건 OK·R2 처분 +720백만 양수 보존·R5 §I 병합 노출·round1/known 무회귀·
+  pytest 160). **라운드3**(seed=3: 금융 314조·별도전용·blank고비중·금융 83조·단년소형, 16
+  회사연도) — p1-auditor 게이트 PASS[round3], 핵심 주장 직접 재현. **파이프라인 값 소실 0**
+  (밀도 뚜렷한 하락 — 신규가 "값 손실"→"정밀도"로 이동). 발견: R3-b 부분자식 소계 잔여 누락
+  (검산 -5, 00557933) · M1 alias 오염(지분법이익잉여금이 OCI canonical에, 00791209) · N5 본문
+  CF 실증(00614593, 2단계 결정 자료 누적) · **하니스 H1(§D 절사vs반올림 — 소실 8건 전부 거짓
+  경보)·H2(§I 강등/SCE 생존을 ✗소실 오표기) 발견 즉시 수정·검증 완료**(소실 0 확인, 진짜 병합
+  소실은 유지 노출). 수집 갭 5사째(금융업 2020~22 일관) — 별도 수집 점검 과제로 분리. **다음:
+  [data/backtest/_P1_ROUND3_FIX_PROMPT.md](../../data/backtest/_P1_ROUND3_FIX_PROMPT.md) 실행
+  (R3-b·M1 — 경미 2건) → 라운드4 5사 유지**(신규 2건이라 배증 보류 — 라운드4·5 연속 신규 0이면
+  10사 배증 + 수렴 시 잔여 ~1,600사 기계 floor 전수 스캔 전환).
+- **라운드2 수정 완료 (2026-06-11, `_P1_ROUND2_FIX_PROMPT.md` 실행)**: R1~R5 수정·검증. TDD(실패→GREEN).
+  - **R1 소계 라벨 변형**: `총포괄이익`→총포괄손익 alias, `소유주와의 거래`(합계/등)→subtotal
+    (canonical + `subtotal_label_markers`, config). 00117577 6개년 leaf 이중계상 전부 해소.
+  - **R2 통합 canonical 부호 분기**: `자기주식변동`(취득·처분 양방향) 무조건 -abs 불가 → label 분기
+    (`sce_combined_deductions`: 취득/소각/감자→-abs, 처분/발행/재발행→+abs). `_apply_sign` 도입.
+    00688996/2023 검산 OK + **자기주식 처분(00102432/2025) +값 보존 확인**(역버그 방지, ripple).
+  - **R4 total 라벨 변형**: `기말자본`→자본총계 alias. 00121686/2025 total 식별→검산 OK.
+  - **R3 계층 보정(D5 역방향)**: `sce_balance`에서 leaf-only가 어긋나고 소계까지 더하면 맞으면 그
+    소계를 leaf로 채택(자식 있는 D5는 leaf-only가 이미 맞아 무회귀). 00169215/2025 검산 OK.
+  - **R5 하니스 §I 보강**: dedup 이전 raw 매퍼 매핑으로 병합 소실 label 노출(`✗소실`+기계요약 카운트).
+    01675421/2023 보통주자본금→자본금 collapse 가시화.
+  - **검증**: round2 검산 전건 OK(수집갭 6년·주석갭 1건 부수 기록 제외) / round1·known 무회귀
+    (D5·N1~N3 재발 0) / 백테스트 recall 5/6 / pytest 160 passed / 게이트 PASS[round1]·[round2].
+  - **다음**: 라운드3(5사 유지). 새 코드 룰은 R2 분기·R3 계층보정 2건뿐 — 2연속 신규 0이면 10사 배증.
+- **라운드1 수정 검증 + 라운드2 감사 완료 (2026-06-11)**: 라운드1 수정(N1~N5) 직접 재현 검증
+  통과 — round1 배치 소실 0·검산 전건 OK(수집갭 3연도 제외), **known-19 사상 첫 기계검사 전수
+  PASS**(셀트2018·세토2018 잔여 D5까지 해소), N4 생존(25,953,661,360 '기타' 보존)·N5 플래그
+  50건+측정 리포트(159,863건)·pytest 155. 이어 **라운드2**(seed=2, `_round_targets_round2.json`:
+  금융 715조·별도전용·blank금융·다년대형·단년소형, 16 회사연도) — 샘플러에 기감사 회사 제외+
+  라운드별 파일 분리 추가. p1-auditor 통독·게이트 PASS[round2], 핵심 주장 3건 직접 재현.
+  **신규 R1~R5**: R1 소계 라벨 변형(총포괄이익·소유주와의 거래)이 role 밖→leaf 이중계상
+  (00117577 6개년 전부) · R2 통합 canonical 자기주식변동 차감 미등록+양방향 label 분기 필요
+  (00688996 1.14조) · R3 leaf 부재 소계의 변동 누락=D5 역방향(00169215) · R4 기말자본 total
+  변형 미등록=검산 불가(00121686) · R5 하니스 §I dedup 후 집계라 동액 병합 사각(01675421).
+  수집 갭 반복(금융지주/신규상장 3사째, A6) + 00121686 주석 raw 부재. **다음:
+  [data/backtest/_P1_ROUND2_FIX_PROMPT.md](../../data/backtest/_P1_ROUND2_FIX_PROMPT.md) 실행 →
+  라운드3도 5사 유지**(신규 5종이되 대부분 config 변형 갈래 — 코드 룰 신규는 R2 분기·R3
+  계층보정 2건으로 좁아지는 중. 2연속 신규 0이면 배증).
+- **라운드1 수정 완료 (2026-06-11, `_P1_ROUND1_FIX_PROMPT.md` 실행)**: N1~N5 수정·검증. TDD(실패→GREEN).
+  - **N4 EXACT 소실**: `_dedupe_canonical_rows` 강등 보존 가드를 distinct account_id EXACT 중복까지 확장
+    (`_EXACT_GRADE`). 서로 다른 표준 id가 같은 canonical로 수렴해도 distinct line item이라 비대표를 드롭
+    대신 '기타'로 보존. 00120526 2024 CFS 25,953,661,360 + 2025 CFS 144,246M·OFS 100,000M 생존(소실 0).
+  - **N2/N3 차감 결정화**: `sce_deduction_changes`에 신종자본증권 상환/배당/이자·배당금지급 등록(-abs).
+    raw 부호 의존 비결정 제거(config 데이터 등록, 하드코딩 아님).
+  - **N1/D5 검산 leaf-only**: SCE 변동행 `change_role`(begin/total/subtotal/restated_begin/leaf) config
+    표준화(`sce_change_roles`) + sce_equity_components에 컬럼 추가. `sce_balance` helper(materiality 허용오차
+    1e-7+1000원)로 §F·`_sce_balance_check.py` 일치. 소계(총포괄손익·기타포괄손익)·조정후개시(기초자본(조정후)·
+    기초보고금액·재작성 브릿지) 제외, leaf만 합산. 8건 FAIL + 세토2018 + 00159616/2017·01091382/2018 +
+    00413046/2018(기초보고금액+재작성 reconciliation) 전부 해소.
+  - **N5(확정 범위)**: 본문 `map_row`에 id≠label 정확 alias면 `id_label_conflict` 플래그(매핑은 id-first
+    유지=무회귀, score·dedup서 EXACT 동급 취급). 전수 측정 `_audit_id_label_conflict.py` → `ID_LABEL_CONFLICT
+    _AUDIT.md`(4773 회사연도 159,863건·3패턴: ①폐지715 ②계열65,422 ③이질93,726). 매핑 규칙 변경은 2단계 별도 회차.
+  - **검증**: 라운드1 5사 소실 0·SCE검산 전건 OK(수집갭 00117267 2020~22 제외) / known 19 기계배치 전수 PASS
+    (소실 0·SCE OK) / 백테스트 recall 5/6 유지 / pytest 155 passed·1 xfailed / 매트릭스 게이트 PASS[round1] 22×6.
+  - **다음**: 라운드2(표본 5사 유지). N5 측정결과 검토 후 2단계(폐지개념 id→label 우선 등) 결정.
+- **라운드1 감사 완료 → 수정 프롬프트 발행 (2026-06-10)**: 반복 루프(층화 N사 재정규화→하니스→
+  수정→재검증) 1회차. `_round_sampler.py`(계정구조 5층: 금융형·별도전용·blank고비중·다년대형·
+  단년소형, seed=1 재현) + 러너/게이트 라운드 인자화(`_p1_review_all.py <targets.json>`, 산출물
+  접미사 격리). 5사 22 회사연도 감사 결과 **신규 결함 5종**(N1 조정후기초자본 변동합산 ~3조 ·
+  N2 신종자본증권 상환/배당/이자 차감 미등록=raw 부호 의존 비결정 · N3 배당 canonical 변형
+  `배당금지급` 미등록 · **N4 EXACT-EXACT canonical 충돌 시 비대표 드롭=진짜 소실 3건**(00120526
+  차입금상환 259.5억 등) · N5 id-label 모순 무검증) + D5 소계 이중계상 3사 재현(중첩 소계 포함)
+  + 수집 갭 실증(00117267 2020~22 raw 헤더만, A6). fresh-context 에이전트 통독·매트릭스 게이트
+  PASS[round1] 22×6, 핵심 주장 3건 직접 재현 검증. known-19 무회귀. **다음:
+  [data/backtest/_P1_ROUND1_FIX_PROMPT.md](../../data/backtest/_P1_ROUND1_FIX_PROMPT.md) 실행 →
+  라운드2도 5사 유지**(표본 5사에서 신규 5종 = 밀도 높음, 배증 보류). N5는 사용자 확정:
+  이번 회차는 플래그+전수 모순 측정 리포트까지만(매핑 변경 금지), 매핑 규칙 변경은 측정
+  결과를 보고 별도 결정.
+- **P1 소실·오매핑 수정 완료 (2026-06-10, `_P1_LOSS_FIX_PROMPT.md` 실행)**: 4개 타깃 수정·검증.
+  - **T1 (SCE account_detail 한글 복원)**: `_xbrl_to_finstate_csv.py`에 `_member_ko`(XBRL member→한글
+    라벨, 라벨없으면 코드 보존)·`resolve_sce_dimensions`(CSA축→fs+마커, 구성요소축→leaf) 추가. 마커행은
+    CSA 한글("연결재무제표 [member]"), 구성요소는 한글 leaf("이익잉여금 [member]")로 DART 정정본 형식
+    복원. `_regen_original_csv.py`(백업·주석·DB 미변경, finstate CSV만)로 19사 재생성 → SCE detail
+    100% 한글. `SceComponentMap.classify` 마커 component_std='-'로 정렬(§F 검산축). 결과: component_role
+    leaf/marker/subtotal 등장(unmatched 전소 해소), 행수=정정본 backup 일치.
+  - **T2 (CFS dedup 소실)**: 원인=CFS는 placeholder/회사 udf id라 generic 라벨(파생상품부채)이 같은
+    canonical(유동파생상품부채)로 묶여 canonical dedup 충돌, OFS는 distinct 표준 id라 분리 생존.
+    `pipeline.py` 수정 ①statement dedup: placeholder는 금액으로 분별 ②canonical dedup: 비대표 ALIAS
+    행이 대표와 금액 상이면 드롭 대신 '기타 중요 계정'으로 강등(이중계상 방지·소실 방지). 세토피아
+    2019 파생상품부채 944·리스부채 297 생존 확인.
+  - **T3 (id-label 모순, 사용자 결정=SCE 한정)**: 일반 label-우선은 본문 464행 회귀(법인세비용→조정 등)
+    측정 후 사용자가 SCE 한정 선택. `mapper.map_change_row`(SCE 변동행 전용, 모순 시 label 우선 +
+    `ID_LABEL_CONFLICT`)·`sce.py` change_status 컬럼 추가. 본문 `map_row`는 id-first 무변경(무회귀).
+    주식선택권(dart_StockDividends 슬롯) → 배당금의 지급(SCE)에서 제외, change_canonical=주식선택권.
+  - **T4 (하니스)**: §D abs 비교+부호반전 카운트, §F 검산 재작성(빈집합 명시 FAIL), funnel CIS→IS 주석은
+    외부에서 이미 구현돼 있어 검증·정렬만. classify 마커 component_std='-' 정렬로 §F 작동화.
+  - **검증**: `_p1_review_all` 전수 19 — 소실 0/19(거짓소실 7→0, 세토피아도 T2로 0), SCE표준화 OK 19/19,
+    SCE검산 17/19 OK. 검산 FAIL 2(셀트2018 미분류변동 2.4조·세토2018 자본증감합계 소계 이중계상)는
+    T4b가 hollow 없이 정직 노출→LLM verdict 라우팅(T1/T2/T3 회귀 아님). pytest 150 통과(1 xfail).
+    백테스트 positive recall 5/6 유지(두산·아스트·디아이·모델·셀트 discovered, 세토피아 변동미미),
+    삼성 clean·KAI negative 미발굴 — baseline 동일 무회귀. 세토피아는 T2로 데이터(944·297) 복원됐으나
+    신호 결과 불변(BW 손익영향 제한적). 변경 파일: `_xbrl_to_finstate_csv.py`·`_regen_original_csv.py`(신규)·
+    `pipeline.py`·`mapper.py`·`sce.py`·`config.py`·tests(`test_xbrl_converter.py` 신규·`test_normalize.py`).
+- **하니스 원문대조 보강 (2026-06-10)**: 리뷰 하니스가 "P1 산출물을 보여주기"만 하고 DART 원문과
+  대조하지 않던 구멍 3개 수정. ①`_p1_company_review.py` §D를 매퍼 미경유 원문 전수 대조로 교체
+  (기존은 같은 매퍼로 raw를 재매핑해 비교하는 순환 — 매퍼 버그 미탐): raw→norm 행수 funnel +
+  raw 금액 미출현(소실 후보) 목록. ②§I 병합 가시화 신설(1 canonical ← 2+ raw label 전시, LLM이
+  이질 판정). ③OFS 전용 회사 §A 빈 dump 수정(CFS→OFS fallback)·전 섹션 truncation 표기·주석
+  적재율(raw TSV 분모)·prior 결측률·§B 0값 truthiness 수정. ④`_p1_review_all.py` 자식 크래시
+  rc/stderr 보존 + [기계요약] 파싱(소실·병합 컬럼). **전수 재실행 결과: 19/19 중 9건 소실 후보**
+  (예: 00159616 SCE 주식선택권 3,292·종속기업 유상감자 572 — raw에 있는데 정규화 어디에도 없음,
+  대부분 SCE), 병합 0건(전 DB 스캔 0 + 합성테스트로 검출기 발화 증명 = 진성 0). 한계: 미출현
+  검사는 동일금액 우연일치 미탐(필요조건 floor).
+- **LLM 심층 탐색 완료 → 수정 프롬프트 발행 (2026-06-10)**: 소실 9건 해부 결과 ①7개 회사연도분
+  = -abs 차감 부호 정규화에 의한 **거짓 소실**(데이터 정상, 하니스 §D가 부호까지 일치 요구한 탓)
+  ②세토피아 01091382/2019 2건 = **진짜 소실**(CFS blank account_id 동명행 dedup — 파생상품부채
+  945·리스부채 298 증발, OFS는 정상 분리. BW 분식 핵심 계정). 추가 발견: ③**SCE 구성요소 표준화
+  전사 사망** — 원본 교체 컨버터가 account_detail에 XBRL member 코드 기록, 분류기는 한글 alias라
+  19건 전부 role=unmatched·marker 0행 → 하니스 §F 검산이 "기초 0+Σ0=0" hollow ④주식선택권
+  (dart_StockDividends)→"배당금의 지급(SCE)" id-label 모순 오매핑 ⑤CIS funnel 격차는 IS 재분류로
+  정상(손실 0). **다음: [data/backtest/_P1_LOSS_FIX_PROMPT.md](../../data/backtest/_P1_LOSS_FIX_PROMPT.md)
+  실행** (T1 컨버터 한글 라벨 복원 → T2 CFS dedup → T3 모순 매핑 → T4 하니스 보강, 검증 프로토콜 포함).
+- **하니스 최종본 — LLM 변동성 보완 구조 (2026-06-10)**: T4 선반영 + 변동성 장치 3종. ①기계화:
+  §D 절대값 비교(거짓 소실 제거)+부호반전 별도 카운트, §0b SCE 표준화 전멸 FAIL, §F 검산을 bare
+  합계행 기준으로 부활(빈 입력=명시 "검산 불가 FAIL", hollow 차단), funnel CIS 재분류 주석.
+  ②판정 매트릭스: 배치가 회사연도×6차원 템플릿(`_review_dumps/_VERDICT_MATRIX.md`) 생성,
+  `_p1_verdict_gate.py`가 전수 존재·전 칸 체크·근거 인용을 기계로 셈(FAIL/PASS 양방향 검증됨).
+  ③전용 에이전트 `.claude/agents/p1-auditor.md`(고정 절차+기만 패턴 7종 내장, fresh-context 실행).
+  전수 재실행: 소실 18건→0(거짓 경보 소멸)·세토피아/2019 진짜 소실 2 유지·SCE표준화 FAIL 18/19
+  노출·**부활한 검산이 신규 이상 3건 검출**(00413046/2018 차이 2.4조 등 — T1 수정 후 재평가).
+  사람용 정리: [docs/user/P1_AUDIT_HARNESS.md](../user/P1_AUDIT_HARNESS.md).
+- **진행 중 (2026-06-10): 분식사 정정본→원본(정정 전) 교체 완료.** 백테스트가 정정본(세탁
+  데이터) 위에서 도는 문제 해결. DART는 정정공시 시 원본 미삭제(영구보존)·정정본 별도 rcept
+  추가, finstate_all API는 최신(정정본)만 반환. 원본은 `list(final=False)`→원본 rcept→
+  finstate_xml로 수집. **XBRL→finstate_all CSV 컨버터**(`data/backtest/_xbrl_to_finstate_csv.py`)
+  작성, round-trip 검증(정정 변환=디스크 정정 97.8~98.7% 일치, 핵심계정 전부). 분식 19 회사연도
+  본문+주석 원본 교체(`_migrate_to_original.py --apply`), 정정본은 `data/_backup_corrected/` 백업.
+  순이익 전수 스캔값 일치(셀트2016 무형자산 848,323=분식값 확인). **원본=진짜 분식본 검증: 본문·
+  주석 값+내용+DART 출처 3중 확인**(셀트=개발비 자산화·두산=공사손실 은폐가 주석에 박힘).
+  세토피아2019만 원본 빈템플릿 skip. **원본 재정규화 완료**(6사 31 회사연도, 순이익 18/18 원본값 일치·
+  항등식 18/18 통과). 하니스(_p1_company_review) 검사: 셀트2016 무형자산 848,323(개발비 자산화)·두산2017
+  미청구공사 1,969,816(진행률 과대) 등 분식 단서가 원본 정규화 데이터에 드러남. **정답지 정리**: known_cases.json에서
+  참고용(runnable=false, pre-2015) 분식 7사 삭제→positive 6사(실행가능 전부)만 유지.
+- **하니스 보강 + 전수 재검사 (2026-06-10)**: "하니스 검사를 2개사만 보고 통과" 사고 후 근본수정. 원인=하니스가
+  주석 미읽기·필수테이블 MISSING 미FAIL·전수 미강제(LLM 양심 100% 의존) + 훅은 체크박스만 셈 + 내 "대표" 다운스코프.
+  수정: ①`_p1_company_review.py` §0 데이터완결성(normalized·sce·note_facts_classified MISSING/빈 FAIL) + 주석
+  섹션 H(차원축 분포) + docstring "전수 원칙" ②`_p1_review_all.py` 전수 배치(정답지 positive·runnable 19 전수
+  강제, 기계검사 PASS/FAIL + dump→_review_dumps/) ③PROTOCOL "전수 기본" 명문 ④원본 주석 재적재(load_notes_classified
+  6사·30회사연도·8,236행). 결과: **19/19 전수 기계검사 PASS + 분식단서 전수 드러남**(두산 미청구공사·아스트 재고·
+  셀트 무형자산·디아이 자본/지분법·모델 매출·세토피아 금융자산). 기계검사가 거짓양성 3건(별도/CIS) flag→확인→개선.
+- **원본 데이터 백테스트 재실행 (2026-06-10)**: 정정본→원본 교체 후 첫 백테스트. 안전성 확인(_ensure_raw=raw있으면
+  skip 원본보존·spike=현파이프라인). 결과: **분식 5/6 발굴**(두산·아스트·디아이·모델·셀트 discovered=True,
+  세토피아 미발굴=BW 손익영향제한적) + **대조군 정상**(삼성clean·KAI negative 미발굴). recall 5/6=정정본 baseline
+  동일(신호가 구조·괴리 기반이라 정정본에도 흔적). 발굴 근거가 실제 분식계정 정확히 가리킴(두산 미청구공사·
+  공사손실충당·종속기업투자 / 셀트 무형자산(개발비)·재고). **baseline 정량비교 교란 발견(§9)**: git HEAD(정정본)
+  vs 현재(원본) fired 두산125→343·삼성113→215인데, **삼성(미교체 clean)도 +102 = 파이프라인 개선(canonical
+  116→2,028) 효과 교란**. 단순 git비교로 "원본이 더 잡음" 단정 불가. 순수 원본효과는 백업 정정본(_backup_corrected)을
+  현 파이프라인으로 돌려 통제비교해야. **다음: (선택) 통제비교 또는 세토피아 미발굴 심층분석.**
 - 단계: 설계 확정 → 프로젝트 뼈대 구축 → L0 수집 → L1 정규화 → L2 신호엔진 →
   **S1 전기/전전기 금액 보존 + S2 소급재작성 신호 + S3 재무제표 5종 신호 완료**
+- **진행 중 (2026-06-07): Phase1 분류 품질 전수 감사 완료 → 분류 확장 설계 토의 대기.**
+  미분류 51.1%·신규분류후보 2080종·SCE 2D·오매핑 등 미토의 결정은
+  [PHASE1_CLASSIFY_AGENDA.md](PHASE1_CLASSIFY_AGENDA.md)에 항목화. 하나씩 토의해 확정 예정.
+- **Phase1 정합성 감사 2차 완료 (2026-06-09)**: 라벨 8사 B~F 이월항목 읽기전용 측정
+  ([../../data/backtest/_P1_INTEGRITY_AUDIT2.md](../../data/backtest/_P1_INTEGRITY_AUDIT2.md),
+  스크립트 `_p1_integrity_audit2.py`·산출 `_p1_audit2.json`). 결론: 자산=부채+자본·유동/비유동
+  =총계·당기순이익 4표(IS·CIS·CF·SCE) **35 회사연도 전부 일치**, 가짜exact 0·scale이상치
+  0·회사간 비교불가 0으로 본문 수치는 Phase2 적합. **결함 4종**: ①SCE roll-forward 단순검산
+  불성립(배당변동 양수 부호 + 미분류 변동 '기타 중요 계정' 적재), ②주석 concept↔본문 canonical
+  account_id 직접매칭 0건, ③raw 행 추적 컬럼(rcept_no/ord) 부재, ④법인세비용 부호 회사·연도
+  비일관(원천 특성·NI=세전±법인세로 판별). 손익항등식 ok21/중단영업5(두산,정상)/법인세부호5.
+  무음 empty 2건(모델솔루션 상장전, 정당). 분식 vs 정상 정합성 차이 없음(정합성≠판별기 재확인).
 - 최근 작업 (2026-06-03): BS 34개, IS 17개, CF 18개 canonical을 raw account_id 기반으로
   등록하고 L1 정규화를 재실행했다. `src/signals/universal.py`를 추가해 BS·IS·CF 모든
   account_id에 YoY, z-score, 구성비 급변, CFS/OFS 괴리 신호를 적용했다. relationship chain에는
@@ -566,6 +1207,32 @@
 - 미결(별도 결정): `relationship_chains.yaml` consolidation-structure 체인에 종속기업투자
   포함 여부는 흐름신호 설계 사항으로 보류.
 
+## D-D 구현: SCE 2D(자본구성요소) 보존 (2026-06-08)
+
+- 자본변동표(SCE)는 (변동행 x 자본구성요소) 2차원 표인데, 메인 `_dedupe_*`가 구성요소 열
+  차원을 붕괴시켜 변동행당 1행만 남기던 것(전수 39.4만행 손실)을 **별도 2D long 테이블**로
+  보존했다(옵션②). 메인 `normalized_financials`·`OUTPUT_COLUMNS`·signals·백테스트 입력 스키마는
+  무변경이라 회귀 표면이 0이다.
+- `src/normalize/sce.py`(신규): `account_detail` 파이프 경로에서 leaf(마지막 세그먼트)를
+  추출(`[구성요소]` 신형·`[member]` 구형 두 관습 모두), 표준으로 묶되 raw도 보존하는 2필드
+  방식이다. `component_raw`(원형 leaf — 어느 적립금인지 유지) + `component_std`(13표준 묶음) +
+  `component_role`(leaf/subtotal/total/marker). 셀 단위 정확 중복만 제거해 구성요소 차원은
+  붕괴시키지 않는다.
+- config `sce_equity_components`(13표준+6복합)·`sce_fs_total_markers` 섹션을 신설했다(데이터
+  외부화, 코드 하드코딩 없음). 적립금류는 명칭 성격대로 배정(준비금·법정적립금→이익잉여금,
+  주식보상·재평가·환산→자본조정/OCI), 미분리 합산열은 `복합_*` role=composite로 격리한다.
+  이 섹션은 메인 `AccountMapper`(canonical_accounts만 읽음)와 무관하다.
+- `sce_components_company_year`(pipeline) 신규 산출 + `write_sce_components`(db,
+  `sce_equity_components` 테이블) + `load_sce_equity_components`(data, SHOW TABLES 가드로 구 DB는
+  빈 프레임 하위호환). `spike.py`가 정규화 시 양 테이블을 함께 영속화한다.
+- 검증: pytest 128 passed·1 xfailed(baseline), ruff clean, 기본 백테스트 발굴 recall 5/6 유지
+  (두산·아스트·디아이동일·모델솔루션·셀트리온 discovered, 세토피아 변동미미, 삼성 clean, KAI
+  negative — 회귀 0), 편집 8파일 mojibake 0.
+- 보존 수치(2케이스): 삼성 00126380 SCE 428행(leaf 291·marker 81·subtotal 51·unmatched 5),
+  std 10종·변동행 18종, 변동행당 최대 8개 구성요소 보존(붕괴 전=1행). 두산 00266961(구형 member
+  변형) 134행, subtotal alias "의" 변형 보강 후 unmatched 0. 삼성 잔여 unmatched 5는 희귀
+  OCI/매각예정 긴 라벨(3+2행)로 `component_raw`에 완전 보존된다(정보손실 0).
+
 ## 다음 할 일 (우선순위)
 
 1. **S5 절대 수준 이상 신호(DIO 등)**: 변동률이 작아도 절대 수준이 비정상적인 재고·운전자본·
@@ -630,9 +1297,216 @@
   사업결합순현금유출 YoY 2102.89%, 장기차입금차입 YoY 593.17%, 자기주식취득 YoY 552.00%,
   운전자본변동 YoY -513.31%, 재무활동CF vs 장기차입금 괴리 -137.49pp다.
 
+## Phase1 분류 품질 전수 감사 (2026-06-07)
+
+- 목적: Phase1에서 숫자를 최대한 잘 분류해 Phase2(LLM)로 넘기기 위해, 무엇이 잘못/덜 분류되는지
+  전 회사(1667사)·전 연도(4773 회사연도)·CFS+OFS·5종 재무제표를 운영코드로 전수 측정.
+- 3개 전수 리포트 산출(`data/backtest/`):
+  - `MERGE_AUDIT.md` — 이질계정이 한 canonical 칸에 뭉개져 소실/오염(충돌 80 canonical). statement 가드 적용 전 측정.
+  - `ALIAS_MISMAP_AUDIT.md` — 표준ID 있는데 이름으로 엉뚱한 칸에 매핑(30,847행/540쌍 → 오매핑 후보 52).
+  - `UNMAPPED_AUDIT.md` — 미분류 잔여 51.1%·신규분류후보 2080종(CF/SCE 대량)·거시구조 인벤토리(SCE 2D 76구성요소,
+    USD 5792행, 기간3개, 주석 62/4773).
+- 검증: 기지 케이스 A/B/C 재현, 미분류 후보·SCE 2D raw 2케이스 교차확인. 금액 이상치(corp 00204226) caveat 명시.
+- 다음: 분류 확장·구조 보존은 **수정 전 토의**. 미토의 결정 항목 → [PHASE1_CLASSIFY_AGENDA.md](PHASE1_CLASSIFY_AGENDA.md).
+  하나씩 토의해 확정 시 DECISION.md로 이관.
+
+## Phase1 분류 확장 적용 — 진행 중 (2026-06-08)
+
+안건(PHASE1_CLASSIFY_AGENDA.md) 중 안전한 것부터 적용. **모든 변경에서 백테스트 baseline 유지(발굴 5/6·삼성 clean·KAI negative, 회귀 0).**
+
+- **D-B 완료**: `mapper.py` ifrs_≡ifrs-full_ 접두사 통일(근본해결) + config 5등록 → 미분류 4,662행 회수.
+- **D-F 완료**: `pipeline.py`/`data.py` currency 보존 + `sanity.py` `exclude_foreign_currency_years`(universal·mvp1 연결) → 두산밥캣 KRW→USD 가짜점프 차단.
+- **D-C 완료**: 비유동 채권/채무 4 표준ID → 비유동매출채권/비유동매입채무 등록.
+- **D-A 진행**(목표 CF+SCE+BS 고가치, chunk별): Chunk1~7 완료로 **canonical 116→214**.
+- **D-A ≥50사 일괄등록 완료 (2026-06-08)**: 16고가치 군집 내 미등록 신규개념 중 **≥50사 보편 223종**을
+  canonical 승격(사용자 결정=223종). 생성기 `_da_register_gen.py`(v3, **account_id stem 구동**)로
+  이질병합 차단: 라벨이 유동/비유동/총계를 구분 못하므로 stem으로 정체성 구동, 병합은 stem 일치만
+  (이름매칭 병합 제거 — 지분법 IS↔CF·배당금 영업↔투자 섹션-cross 방지). MERGE 2 + NEW 214.
+  alias 충돌 시 드롭(account_id 우선매칭으로 분류). **canonical 214→428**. 재스캔 ≥50사 잔여 80,677행→0.
+  <50사 장기꼬리(728종)는 "기타 중요 계정" 유지(설계대로·범위 외). 한글 보존(순수추가·mojibake0·LF).
+  검증: pytest 128 passed·1 xfailed, 백테스트 발굴 recall 5/6 유지(fired 불변=두산363·아스트349·삼성215,
+  신규 canonical은 CF/SCE라 결정론 점수 제외→신호엔진 무영향, Phase1 분류만 풍부). 회귀 0.
+- **부수**: 전역 `~/.claude/CLAUDE.md` §10(전수=사용자요청시만) 수정, hooks `post_write_check.py`(ruff F401 자동삭제 차단)·`guard_bash.sh`(폴링루프 차단) 수정.
+- **알려진 xfail 1건**: `test_financial_liability_label_does_not_map_to_subtotal` — 채점기 퍼지매칭이 '금융부채'→'기타유동금융부채' 매칭(백테스트 무해). **채점단계 제거 결정 후 정리**.
+- **② 채점/랭킹(strict·track quota) 제거 완료 (2026-06-08)**: 근거 = L4 LLM 프롬프트가 "review_queue는 참고일 뿐 의존 말고 전체 material 검토"라 명시(채점을 권위로 소비 안 함) + CF/CIS/SCE 부분채점 불일치. 변경:
+  - `universal.py`·`red_flags.py`: track quota·top-N 선택 제거 → 신호를 materiality 정렬로 **전부 반환**(선택·할당 없음). `_with_track`·`_asset_totals`·track_for_amount 삭제.
+  - `tracks.py` 삭제, config `track_*`·`universal_top_n` 제거(signal_strength_cap=정규화 캡은 유지).
+  - `backtest/score.py`: strict top10·track 채점 제거, **발굴 recall(discovered)만** 유지. `_account_score` 발굴/미발굴로 단순화.
+  - `run_backtest.py` 리포트: 발굴 recall만 출력.
+  - 신호 **계산**과 `review_queue`(단순 materiality 참고 정렬)는 유지. Phase1 출력 = 전체 신호 + 전체 시계열 → Phase2.
+  - 검증: 전체 116 passed·1 xfailed·ruff clean. 백테스트 발굴 recall 확인(실행중 bdffpx44d).
+
+## D-G 실행: 주석(notes) XBRL 수집 — O4 가용성 검증·표본수집 (2026-06-08, collect 서브시스템)
+- 결론: singlnote 웹뷰어(8종·소형사 빈응답) 대신 **XBRL 원본 zip + Arelle**가 분식 소형사에서도
+  비금융 주석(무형자산·차입금·관계기업·리스·충당부채·금융상품)을 추출·저장 가능. 표본 10/10 성공.
+- 가용성: 현재 보유 zip 4/4,773(삼성만). 표본 분식소형사 다운로드 사업보고서 10/10·zip 10/10·추출 10/10.
+- 함정 수정: 분식사 사업보고서는 정정(restatement)으로 수년 뒤 제출·상폐로 결측 → 기존
+  `opendart.annual_report()`(year+1·final) 누락. 신규 `find_annual_report()`가 year+1..+4 정정대응.
+- 신규 코드 `src/collect/notes_xbrl.py`(find_annual_report·extract_note_facts·save_note_facts) +
+  테스트 `tests/test_notes_xbrl.py`(2 passed). 저장: `raw/notes_xbrl/note_facts.tsv`(표본 10).
+- 전수 옵션·비용: API ~6k(회사단위list)~24k·1일+α·~3GB·Arelle 4~5h. O4a(분식만)/O4b(전수)/보류 = 사용자 결정(§8).
+- 산출물: `data/backtest/AGENDA_DG_NOTES.md §6` + 재현 `_dg_arelle_probe.py`·`_dg_pipeline_run.py`.
+- **전수 수집 완료 (2026-06-08, 사용자 결정=전수 직렬)**: 러너 `src/collect/collect_notes_all.py` +
+  회사단위 보고서탐색 `notes_xbrl.find_annual_reports_for_company`(list 1회로 API 절감). 196분 직렬.
+  - 처리 5,126 회사연도: **ok=4,579** · 보고서없음 239 · XBRL없음 273 · skip 35. 성공률 ~90%.
+  - 수집물 `raw/notes_xbrl/note_facts.tsv` **4,614개**(zip 1.30GB + TSV 1.55GB). 빈추출 0건(facts 중앙값 1,012).
+  - 실패 512건(10%)=실제 가용성 한계(비상장외감·신규상장·폐지=보고서없음 / 과거·소형 XBRL미제출).
+  - 재현 `_dg_timing.py`·`_dg_collect_all.jsonl`(회사연도별 status). 버그수정 `save_xbrl_zip` 014→False.
+
+## 주석 분류기 빌드 (2026-06-08, Option 2: 본문 canonical 재사용 + detail 토큰분류)
+신 XBRL `note_facts.tsv`(concept 26k종, 대부분 메타·본문중복)를 Phase2용으로 정제. 사용자 결정 = Option 2.
+- **측정(표본 400)**: concept을 3분류 — 흡수 42.3%(본문 canonical stem 일치=재무제표 본문 재게시)·
+  메타 14.3%(표지·감사·연락처)·detail 43.4%(주석 고유). detail의 **81.7%**가 28 IFRS 카테고리로 수렴.
+- **분류기** `src/normalize/notes_classify.py`: meta필터 → canonical stem 흡수 → note_categories 토큰
+  (우선순위 순, 특수관계자>채권·이연법인세>법인세) → 기타주석. 카테고리·토큰 전부 config 외부화.
+- **config** `config/playbooks/note_mappings.yaml`에 `meta_tokens`·`note_categories`(28)·`note_high_priority`
+  추가(기존 `account_notes` 구 웹스크랩용 보존 — indexer.py·materials.py 참조 무손상).
+- **검증**: 프로덕션 분류기 재집계가 survey 수치 정확 재현. 풍부연도(00102858/2024) 실증 = 차입금
+  만기·이자율(5.59%·0.75%)·특수관계자 자금대여(50억) 등 리스크 핵심 분류. pytest 136 passed(+8 신규)·
+  1 xfailed·ruff clean. 재현 `_dg_concept_survey.py`·`_dg_canonical_reuse.py`·`_dg_detail_cluster.py`·
+  `_dg_classify_reconcile.py`.
+- **남은 것**: 전수 분류 실행(수집 완료 후) → DuckDB 주석 테이블 적재. 본 단계는 분류기·검증까지.
+
+## 주석 차원(세그먼트) 보존 재추출 (2026-06-08, 사용자 결정=보존)
+적재범위 토의 중 발견: 현 note_facts.tsv가 XBRL `context.qnameDims`(SegmentsAxis·GeographicalAreasAxis·
+ComponentsOfEquityAxis·SegmentConsolidationItemsAxis)를 버려 흡수 concept이 라벨없는 숫자뭉치가 됨.
+- **실측 근거(00100939)**: "Assets" 14값이 실은 사업부문(도료·합성수지·복합성형재료)×지역(한국·중국·
+  베트남) 세그먼트 자산 + 내부거래제거(-203bn) + 자본구성요소. 산수검증: 영업부문합 1,177bn − 제거
+  203bn = 연결 974bn(본문 CFS 일치). 분식탐지 고가치(부문 자산이전·내부거래·지역집중) → 보존 결정.
+- **변경**: `notes_xbrl.py` `NoteFact.dimensions`("축=멤버|…") + `_context_dimensions()` 추가,
+  `extract_note_facts`가 qnameDims 보존. `save_note_facts`는 `__dict__`라 자동 7컬럼화.
+  `notes_classify` NOTE_FACT/CLASSIFIED_COLUMNS에 dimensions 추가(구 6컬럼 tsv 하위호환).
+- **재추출 러너** `src/collect/reextract_notes_dims.py`: 저장 zip 재처리(재다운로드·API 0), dimensions
+  컬럼 있으면 skip(재개 안전). 검증: 00100939 재추출 fact 99.7% 차원보유·세그먼트값 정확 라벨,
+  세그먼트 813.9bn(도료/한국) 등. pytest 10(notes)·ruff clean.
+- **전수 재추출 완료(2026-06-09)**: reextract 3,955 + skip 659 = 4,614, empty 0·error 0, 151분(2세션).
+  전수검증(`_dg_reextract_audit.py`): 7컬럼 4,614/4,614(100%)·빈추출 0·mojibake 0·차원보유 98.8%·
+  세그먼트축 15%. 보존축에 BorrowingsByName(차입건별)·CategoriesOfRelatedParties·CarryingAmount분해 등.
+- **재고 결정**: 차원 보존으로 흡수(본문중복)의 세그먼트·구성요소가 이제 해석가능 → DuckDB 적재범위
+  결정(흡수 제외)을 재검토해야 함. 흡수의 dimensioned 행은 본문에 없는 부문·차입건별 분해라 가치 있음.
+
+## 주석 분류 전수 적재 (2026-06-09, DuckDB note_facts_classified)
+적재범위 측정·확정(_dg_absorb_value): 흡수 행의 64.5%는 무차원(본문 총계 중복), 35.5%는 유차원
+(지역별매출·차입처별·부문손익·특수관계자·자산명세 = 본문에 없는 고가치). **사용자 결정 = detail +
+기타주석 + 유차원 흡수 적재, 메타·무차원흡수 제외.**
+- **변경**: `notes_classify` `is_dimensioned`(CFS/OFS 외 축 보유)·`select_for_load`(적재필터) 추가.
+  `db/normalized` `write_note_facts_classified`(회사연도 격리 테이블, D-D 패턴). 러너
+  `src/collect/load_notes_classified.py`(전수, 테이블 있으면 skip 재개). Arelle 불필요(빠름).
+- **검증**: 00100939(세그먼트152행)·아스트 9연도 적재 — **무차원흡수 0건**·유차원(자본구성·자산종류·
+  세그먼트) 보존 확인. pytest 139 passed(+3 신규)·1 xfailed·ruff clean.
+- **전수 적재 완료(2026-06-09)**: loaded 4,605 + skip 9 = 4,614, error 0, **5,767,592행**, 7.5분.
+  전수검증(`_dg_load_audit.py`): 테이블 4,614/4,614(100%)·총행 일치·**무차원흡수 누출 0**·메타 0·
+  세그먼트행 보존. 전체 fact 978만 중 **~59% 보존**(detail+기타+유차원흡수), ~41% 제거(메타+무차원흡수).
+- **테이블 스키마**: concept·label_ko·period·unit·value·dimensions·bucket·category·corp_code·year.
+- **다음**: Phase2 LLM이 회사연도별 `note_facts_classified`(차입조건·특수관계자·부문·자산명세 등)를
+  본문 신호와 함께 리뷰. 주석↔본문 연결·category 기반 조회는 Phase2 설계 단계.
+
+## 데이터 포함/제외 명세 + Phase1 완성테스트 프레임 문서화 (2026-06-09)
+- **신규** [DATA_PIPELINE_SCOPE.md](DATA_PIPELINE_SCOPE.md): DART→수집→정규화→주석→적재 전 단계
+  포함/제외+이유 단일출처(11011 연간·CFS/OFS·반기분기제외·2015+한계·canonical428·dedup·통화·주석 3분류·
+  적재범위 detail+기타+유차원흡수). 구 [DATA_CONTRACT.md](DATA_CONTRACT.md)는 삼성 스파이크 역사로 강등.
+- **신규** [PHASE1_INTEGRITY_PLAN.md](PHASE1_INTEGRITY_PLAN.md): 완성 정합성 테스트 프레임 A~F
+  (완전성·항등식·분류품질·차원·핸드오프·신뢰) + 분식5사 1급. 존재론적 3개=정정공시·금액가중·provenance.
+- **신규** 사람용 [../user/DATA_SCOPE.md](../user/DATA_SCOPE.md). README 링크 갱신.
+- **다음 작업**: 위 프레임으로 정합성 감사 하니스 작성→분식5사+20사 측정→LLM 판단 리포트(미착수).
+
+## Phase1 정합성 감사 1차 — LLM 판단 (2026-06-09, `_p1_integrity_audit.py`)
+감사대상 8사(백테스트 라벨) --force 재정규화(428 반영) 후 측정.
+- **합격**: 회계 항등식(자산=부채+자본) 전사·전연도·CFS/OFS diff=0~±1 / 이질병합 0 / 5표·CFS/OFS·연도연속 /
+  통화 일관. raw→norm 25~30% 감소는 SCE차원·소계 dedup(등식 유지가 손실 아님 방증).
+- **🔴 치명 발견 — 정정공시 오염**: 분식 5사 중 **4사(두산·셀트리온·아스트·모델솔루션)의 분식연도
+  데이터가 정정본**(rcept 신고일 FY+2~7, 예: 셀트리온 2016~2020 전부 2022-05-12, 두산 2017~19 전부
+  2024-03-27). finstate_all이 정정신고 시 정정본 반환. → 백테스트 발굴이 원본 분식 아닌 **정정 흔적**을
+  잡을 수 있음. **"실시간 원본 공시 분식탐지"는 미증명**(포지셔닝 직결). 디아이동일·세토피아만 원본(FY+1).
+- **🟠 중간**: 금액가중 미분류 高(셀트리온 12~18%·세토피아 22~27%, 행분류율과 별개) → Phase2가 기타버킷
+  필수 확인. 주석 컨텍스트 쏠림(삼성2023 6,191행 vs 세토피아2017 0행). 세토피아(미발굴) 데이터결손 의심.
+- **하니스 버그(§9)**: 정정공시 검사가 처음 전부 공백 — finstate CSV BOM(`﻿rcept_no`) 키조회 실패 →
+  utf-8-sig로 수정 후 정정공시 패턴 드러남.
+- **미측정(2차 이월)**: B 유동+비유동·순이익 표간, C 소계 이중계상·비교가능성, D 부호, E provenance·크기,
+  F 가짜exact·무음empty. 정정공시가 사활적이라 우선.
+- **다음 결정**: 원본 공시 수집 가능성(OpenDART 원본 rcept 지정) 조사 — 도구 사활. 사용자 대기.
+- **한계 메모**: 일부 회사 `analysis.duckdb`가 구 스키마(prior_amount 없음) — 본문 재정규화 별개 이슈.
+
+## 전수 매핑 감사 + 미등록 표준 전수 등록 (2026-06-09)
+- **매핑 정합성 감사**(`_mapping_correctness_audit.py`): 577 매핑을 IFRS 영문명 vs 한글 토큰 모순검사 →
+  **명백한 오매핑 사실상 0**(경계 2건=차입금상환→사채상환). 매핑은 정확. 진짜 갭은 미등록(coverage).
+- **금액가중 미분류 정체**: ①소계·총계 중복(착시) ②통합라벨 미등록 ③IS/CIS 세부 미등록(상품/제품/용역
+  매출·대손상각비·급여 등). **정정**: 세토피아 매출총액은 분류돼 있었음(어제 "매출 못봤다"는 내 오류).
+- **미등록 표준 전수 등록**(사용자 결정=전수): 표준ID 미등록 1,644종 전수. 생성기 P1_ALL=1(stem·충돌0).
+  MERGE6+NEW1,588 → **canonical 428→2,016**. 표준ID 미등록 1,644→**0**.
+- **검증**: pytest 140 passed·1 xfailed(notes test 갱신=본문개념 흡수전환 반영). 세토피아 재정규화 후
+  상품/제품/용역매출·대손상각비·급여 전부 exact. 백테스트 진행중(완료시 5/6).
+- **주석 재적재 완료**(2026-06-09, --force): 등록으로 본문개념 흡수전환 반영 → 4,614 테이블 전부 갱신,
+  543만행(무차원흡수 ~33만 정상제거, 누출0). 5,767,592→5,431,626.
+- **⚠ 후속**: 전수 본문 재정규화 미완(현재 8사+20테스트만 fresh, 나머지 ~5,000 stale).
+
+## Phase1 2차 정합성 감사 — 검사(서브에이전트 결과 재검증, 2026-06-09)
+2차 감사(별도 컨텍스트, `_P1_INTEGRITY_AUDIT2.md`)가 결함 4건 보고. §9로 직접 재검증:
+- **결함1 SCE 배당 부호 = 진짜 버그**: 삼성2024 이익잉여금 배당 +9.81조(음수여야). 차감변동(배당·자기주식
+  취득·감자)이 raw 양수로 보존돼 "기초+변동=기말" 안 맞음. 부호 정규화 필요(차감유형 config 외부화). 미수정.
+- **결함2 주석↔본문 연결 0건 = 오경보**: udf_ concept은 9/5519(0.16%)뿐. 주석 concept은 bare 표준명이고
+  prefix 벗기면 stem 매칭 120/612(20%) 연결됨(=흡수 분류 방식). 2차가 prefix 안벗겨 0건 오측정.
+- **결함3 provenance**(원본 행 식별자 없음) = 진짜·이월. **결함4 법인세 부호 회사별** = 원본 특성(보정불가).
+- **합격(2차)**: 항등식·순이익 4표 일치(35건)·비교가능성·가짜매핑0. 2차가 잡은 함정 2개(CF조정 오집·지배지분
+  오인)는 자가수정함. 본문 숫자는 Phase2 핸드오프 가능 결론.
+- **다음 결정**: 결함1(SCE 부호 정규화) 수정 여부 사용자 대기.
+
+## SCE 차감변동 부호 정규화 — 결함1 수정 (2026-06-09)
+- **원인**: 차감변동 raw 부호 혼재 — 배당은 +양수(크기), 자기주식취득은 -음수(이미 부호). 단순 ×-1이
+  이미 맞는 자기주식을 거꾸로 뒤집어 삼성 3.62조 잔차(=2×자기주식) 발생(§9가 잡음).
+- **수정**: `sce.py` `_as_deduction`=**-abs**(차감유형은 raw 부호 무관 무조건 음수). 차감유형 config
+  외부화 `sce_deduction_changes`(canonical_accounts.yaml) + `SceComponentMap.deductions`.
+- **검증**: 삼성2024·두산2018·셀트리온2019 **기초+Σ변동=기말 오차 0**(이전 19.6조·71억·0). 영속화 DB
+  배당-10.91조·자기주식-1.81조 음수 확인. pytest 140·ruff clean. SCE는 백테스트 점수 제외라 발굴 무관.
+- **후속**: 전수 본문 재정규화 시 전체 SCE에도 반영됨(현재 audit 8사+20테스트만 적용).
+
+## 50개 표본 재정규화 + 정합성 검증 — 전수 전 버그탐지 (2026-06-09)
+28개(8audit+20test) 제외 50개사 force 재정규화(152 회사연도) + 동일 검증(`_p1_sample50_audit.py`).
+- **새 데이터버그 0**: 항등식(자산=부채+자본)·이질병합·가짜exact·empty 전부 **0 실패**. 핵심 정합성 견고.
+- **SCE검산 48→8**: 첫 측정 48실패 중 대부분이 **검산식 오탐**(소계 자본증감합계·총포괄손익을 개별변동과
+  이중계상). 보정 후 8건. 그 8건도 검산식이 회사별 SCE구조(총포괄손익을 단일income으로 신고 등)를
+  일반화 못한 한계. **부호수정 회귀 아님**(audit-8 + 검산가능 케이스서 0오차 검증됨).
+- **SCE미검증 89건**: SCE 변동이 표준ID 공백(`-표준계정코드 미사용-`)인 커스텀 라벨(소계 포함) →
+  표준화·검산 불가(inherent). 등록으로 못 고침. 원라벨은 보존돼 Phase2가 봄.
+- **결론**: 전수 재정규화 진행 안전(새 버그 없음). SCE 자동검산은 구조 다양성으로 전수 자동화 어려움(별개).
+
+## 행별 전수 충실성 감사 — 본문 모든 과목 + 주석 (2026-06-09, `_p1_rowlevel_audit.py`)
+"50표본 검증 완료"가 구조검사 5개뿐이었음을 자백 → 행별 감사로 확장(과목 하나하나 + 주석).
+- **주석: clean** — 전 회사연도 누락이 정확히 메타+무차원흡수, 차원 보존, 오분류 0.
+- **본문**: 분식5사·KAI **소실 0**. 삼성/00103626/00150165에 소수 소실 — 2종:
+  - **benign**: 삼성 자본금 보통주/우선주 드롭하나 **총계(897억) 정확 보존**(구성은 SCE 2D에 있음).
+  - **진짜 손실**: 유동/비유동 기타금융자산취득이 한 canonical "기타금융자산취득"으로 묶여 dedup이 유동
+    흐름 소실. 원인=유동/비유동 lump. 전수측정 **3개**(기타금융자산취득/처분·유동성장기차입금)+지분법OCI(별축).
+- **판단**: 규모 작음(소실 ~10M, 분식사0, 주석clean)이나 진짜 fidelity 갭. 수정=lump canonical을 유동/비유동
+  분리(D-C식). **이전 "검증완료"는 과장**(자산총계 3과목·SCE marker만 봤지 과목별·주석 전수 아니었음).
+- **다음**: lump 분리 또는 전축 lump 전수탐지 후 전수 재정규화 — 사용자 대기.
+
+## 전 축 lump 전수 탐지 + 분리 (2026-06-09, 행별 소실 제거)
+사용자 "샅샅이 봤어?" 지적 → 행별 감사가 진짜 소실 발견 → 전 축 데이터기반 lump 탐지·분리.
+- **탐지**(`_p1_lump_detect.py`): 한 canonical에 여러 account_id가 다른 값 충돌+총계부재면 distinct lump.
+  131 회사연도/41사 측정 → **진짜 lump 9개**(유동비유동 외 종속관계·대손/기타대손·재분류가능불가능 등 전 축).
+- **판단**: 8개 진짜(관계기업투자4조 소실·대손상각비36사연도 등), 1개 benign(자본금=총계897억 보존, 탐지기 오탐).
+- **분리**(`_p1_lump_split.py`+`_p1_lump_aliasfix.py`): 8 lump→20 canonical(account_id별 정밀). alias는 대표
+  canonical에 복원(label-only fallback 유지). canonical 2,016→**2,028**.
+- **검증**: lump 재탐지 9→1(자본금만) / 00103626 행소실 4→**0** / pytest 140 passed(테스트 5개 갱신:
+  분리 새이름·account_id 정밀) / ruff·mojibake0. 백테스트 진행중.
+- **자백**: 이전 "검증완료"(자산총계 3과목·SCE marker만)는 과장. 행별 전수로 진짜 소실 잡음.
+
+## Phase1 LLM 감사 프로토콜 (2026-06-10)
+사용자 핵심 요구: 딱딱한 pass/fail이 아니라 **에이전트가 LLM으로서 데이터를 직접 보고 감사관처럼 판단**.
+- **문서** [PHASE1_VERIFICATION_PROTOCOL.md](PHASE1_VERIFICATION_PROTOCOL.md): 전 차원(A완전성·B항등식·
+  C값정확성·D분류·E주석·F신뢰하류) 카탈로그 — 각 차원에 "LLM이 무엇을 보고 무엇을 의심하나"+구현상태(✅14/
+  ◐4/⬜10)+재현. 발견 이력(lump·SCE부호·정정공시·금액가중). "검증완료 과장" 재발방지 SSOT.
+- **하니스** `data/backtest/_p1_company_review.py <corp> [year]`: 한 회사연도 전 차원 데이터 dump(본문
+  전과목·항등식·미분류상위·raw대조·시계열·SCE검산·이상신호) → 에이전트가 읽고 판단. 두산2018·삼성2024 시연:
+  항등식차이0·raw=norm일치·SCE검산0. ruff·mojibake0.
+- **미구현 1급**: C1 값정확성(전과목 raw=norm)·F1 신호 dangling(lump로 18개 개명, 신호엔진 옛이름 참조 위험).
+- **다음**: 위 프로토콜로 분식사+표본을 깊게 LLM 감사. 전수 본문 재정규화는 버그 다 잡은 뒤 마지막.
+
 ## 진입 포인트
 
 - 전체 흐름 → [OVERVIEW.md](OVERVIEW.md) → 상세 [PLAN.md](PLAN.md)
+- **Phase1 분류 설계 토의 → [PHASE1_CLASSIFY_AGENDA.md](PHASE1_CLASSIFY_AGENDA.md)**
 - Codex 작업 지침 → [../../AGENTS.md](../../AGENTS.md) → [CODEX.md](CODEX.md)
 - 할 일 → [ROADMAP.md](ROADMAP.md) · 결정·이유 → [DECISION.md](DECISION.md)
 - L1 측정 → [NORMALIZE_REPORT.md](NORMALIZE_REPORT.md)

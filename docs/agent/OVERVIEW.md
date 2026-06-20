@@ -15,6 +15,27 @@ L0 수집(OpenDART) → L1 정규화(XBRL→canonical) → L1.5 주석 인덱서
 → L2 신호엔진(결정론) → L3 역할 에이전트 5개 → L4 리포트 → L5 Human
 ```
 
+## 신규 회사 온보딩 (L1→L2 진입 전 관문)
+
+처음 보는 회사는 직선 파이프라인을 바로 타지 않는다. 정규화 직후 **온보딩 게이트**를
+거쳐 분석에 진입한다(`src/normalize/onboarding_gate.py`·`src/report/alias_suggest.py`·
+`dashboard/onboarding.py`). 회사별 라벨 변주(무표준코드 계정)를 quirk로 흡수하는 경로다.
+
+```
+raw 수집 → L1 정규화
+  → [온보딩 게이트]
+       G1~G5 결정론 검문(완결성·BS 항등식·산술검산·신호무결성)  ← 기존 감사 스크립트 재사용
+       G6 LLM 전문 통독(gpt-5.4 9렌즈 홀리스틱 dump)
+       무표준코드 계정 별칭 제안: 후보검색=코드 → 분류선택=LLM → 적용=사람 확인(자동적용 금지)
+  → 사람이 확정하면 config/company_quirks.yaml(alias_additions/account_overrides) 등록
+  → 재게이트 통과 시 L2 진입
+```
+
+- **자동적용 금지·앵커링**: LLM은 코드가 좁힌 candidate 안에서만 고르고(밖이면 '기타 중요
+  계정' 강등), 등록은 사람 확인 클릭으로만. 부정 확정 아님(제안은 후보).
+- quirk는 corp_code/year를 **데이터 키**로 그 회사·연도에만 적용(`_apply_company_quirks`,
+  하드코딩 분기 아님). 매칭 없는 회사는 무변경(무회귀).
+
 ## 데이터 흐름 (전수 읽기 → 관점 배분 → 독립 판단)
 
 ```

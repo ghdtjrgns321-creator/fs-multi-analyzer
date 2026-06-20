@@ -1,0 +1,4669 @@
+{
+ "00159616": {
+  "name": "두산에너빌리티(분식)",
+  "years": {
+   "2015": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 10724406,
+       "nonsub": 16535735,
+       "total": 27260141,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 12455496,
+       "nonsub": 7778537,
+       "total": 20234033,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": -1750899,
+        "CF": -1750899,
+        "SCE": -1750899,
+        "SCE_marker": -1750899
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": -1557863,
+       "tax": 167893,
+       "ni": -1750899,
+       "std_diff": 25143,
+       "verdict": "discontinued_or_other"
+      },
+      "SCE_rollforward": {
+       "begin": 7677002,
+       "moves": 7026108,
+       "end": 7026108,
+       "diff": -7677002,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 3937897,
+       "nonsub": 7747727,
+       "total": 11685624,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 4660425,
+       "nonsub": 2551208,
+       "total": 7211633,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": -451146,
+        "CF": -451146,
+        "SCE": -451146,
+        "SCE_marker": -451146
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": -394110,
+       "tax": 57036,
+       "ni": -451146,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 4740589,
+       "moves": -266597,
+       "end": 4473992,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "당기순이익조정가감",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 178,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 58
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 331,
+      "sce": 129,
+      "note": 410
+     },
+     "note_concept_match": {
+      "note_concepts": 125,
+      "matched_to_canonical": 0
+     }
+    }
+   },
+   "2016": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 9035152,
+       "nonsub": 15797416,
+       "total": 24832568,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 11581817,
+       "nonsub": 6427920,
+       "total": 18009737,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": -215525,
+        "CF": -215525,
+        "SCE": -215525,
+        "SCE_marker": -215525
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": -246097,
+       "tax": 131565,
+       "ni": -215525,
+       "std_diff": -162137,
+       "verdict": "discontinued_or_other"
+      },
+      "SCE_rollforward": {
+       "begin": 7026108,
+       "moves": 6822831,
+       "end": 6822831,
+       "diff": -7026108,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 3373832,
+       "nonsub": 8333872,
+       "total": 11707703,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 4743478,
+       "nonsub": 2672182,
+       "total": 7415661,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": -231495,
+        "CF": -231495,
+        "SCE": -231495,
+        "SCE_marker": -231495
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": -292191,
+       "tax": -60696,
+       "ni": -231495,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 4473992,
+       "moves": -181949,
+       "end": 4292043,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "음수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "당기순이익조정가감",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 178,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 58
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 333,
+      "sce": 132,
+      "note": 413
+     },
+     "note_concept_match": {
+      "note_concepts": 125,
+      "matched_to_canonical": 0
+     }
+    }
+   },
+   "2017": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 9197344,
+       "nonsub": 15732431,
+       "total": 24929775,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 11809510,
+       "nonsub": 6642579,
+       "total": 18452089,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": -197950,
+        "CF": -197950,
+        "SCE": -197950,
+        "SCE_marker": -197950
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 22413,
+       "tax": 194692,
+       "ni": -197950,
+       "std_diff": 25671,
+       "verdict": "discontinued_or_other"
+      },
+      "SCE_rollforward": {
+       "begin": 6822831,
+       "moves": -209394,
+       "end": 6477686,
+       "diff": -135751,
+       "positive_deductions": [
+        "배당변동=67875"
+       ]
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 2979312,
+       "nonsub": 8630844,
+       "total": 11610156,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 4999248,
+       "nonsub": 2270324,
+       "total": 7269572,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": -111838,
+        "CF": -111838,
+        "SCE": -111838,
+        "SCE_marker": -111838
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": -150002,
+       "tax": -38165,
+       "ni": -111838,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 4292043,
+       "moves": 189934,
+       "end": 4340585,
+       "diff": -141392,
+       "positive_deductions": [
+        "배당변동=70696"
+       ]
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "음수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "당기순이익조정가감",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 265,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 67
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 344,
+      "sce": 168,
+      "note": 329
+     },
+     "note_concept_match": {
+      "note_concepts": 60,
+      "matched_to_canonical": 0
+     }
+    }
+   },
+   "2018": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 9777536,
+       "nonsub": 15032667,
+       "total": 24810203,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 11522076,
+       "nonsub": 7166306,
+       "total": 18688382,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": -430071,
+        "CF": -430071,
+        "SCE": -430071,
+        "SCE_marker": -430071
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": -106331,
+       "tax": 227117,
+       "ni": -430071,
+       "std_diff": 96624,
+       "verdict": "discontinued_or_other"
+      },
+      "SCE_rollforward": {
+       "begin": 6477686,
+       "moves": -326055,
+       "end": 6121821,
+       "diff": -29810,
+       "positive_deductions": [
+        "배당변동=14905"
+       ]
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 3330187,
+       "nonsub": 7915463,
+       "total": 11245650,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 4751703,
+       "nonsub": 2649890,
+       "total": 7401593,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": -694070,
+        "CF": -694070,
+        "SCE": -694070,
+        "SCE_marker": -694070
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": -651814,
+       "tax": 42257,
+       "ni": -694070,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 4340585,
+       "moves": -461532,
+       "end": 3844057,
+       "diff": -34996,
+       "positive_deductions": [
+        "배당변동=17498"
+       ]
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "당기순이익조정가감",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 270,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 68
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 352,
+      "sce": 188,
+      "note": 362
+     },
+     "note_concept_match": {
+      "note_concepts": 64,
+      "matched_to_canonical": 0
+     }
+    }
+   },
+   "2019": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 9312489,
+       "nonsub": 15461723,
+       "total": 24774212,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 13873692,
+       "nonsub": 4914418,
+       "total": 18788110,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": -223650,
+        "CF": -223650,
+        "SCE": -223650,
+        "SCE_marker": -223650
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": -63347,
+       "tax": 170898,
+       "ni": -223650,
+       "std_diff": -10595,
+       "verdict": "discontinued_or_other"
+      },
+      "SCE_rollforward": {
+       "begin": 6121821,
+       "moves": -106939,
+       "end": 5986102,
+       "diff": -28780,
+       "positive_deductions": [
+        "배당변동=14390"
+       ]
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 3073148,
+       "nonsub": 8034017,
+       "total": 11107164,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 6736701,
+       "nonsub": 1184100,
+       "total": 7920801,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": -652935,
+        "CF": -652935,
+        "SCE": -652935,
+        "SCE_marker": -652935
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": -730803,
+       "tax": -77869,
+       "ni": -652935,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 3844057,
+       "moves": -622697,
+       "end": 3186363,
+       "diff": -34996,
+       "positive_deductions": [
+        "배당변동=17498"
+       ]
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "음수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "당기순이익조정가감",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 252,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 0
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 357,
+      "sce": 177,
+      "note": 343
+     },
+     "note_concept_match": {
+      "note_concepts": 77,
+      "matched_to_canonical": 0
+     }
+    }
+   }
+  }
+ },
+ "00409681": {
+  "name": "아스트(분식)",
+  "years": {
+   "2015": {
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 67818,
+       "nonsub": 66958,
+       "total": 134776,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 48226,
+       "nonsub": 28739,
+       "total": 76966,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 2500,
+        "CIS": 2500,
+        "SCE": 2500,
+        "SCE_marker": 2500
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 2810,
+       "tax": 310,
+       "ni": 2500,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 46557,
+       "moves": 11253,
+       "end": 57810,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 54,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 36
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 113,
+      "sce": 60,
+      "note": 219
+     },
+     "note_concept_match": {
+      "note_concepts": 58,
+      "matched_to_canonical": 0
+     }
+    }
+   },
+   "2016": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 111033,
+       "nonsub": 113077,
+       "total": 224110,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 75446,
+       "nonsub": 56368,
+       "total": 131814,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 6188,
+        "CIS": 6188,
+        "SCE": 6188,
+        "SCE_marker": 6188
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 5106,
+       "tax": -1082,
+       "ni": 6188,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 57810,
+       "moves": 34486,
+       "end": 92296,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "음수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 91641,
+       "nonsub": 75311,
+       "total": 166952,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 77408,
+       "nonsub": 9512,
+       "total": 86920,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 11479,
+        "CIS": 11479,
+        "SCE": 11479,
+        "SCE_marker": 11479
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 10409,
+       "tax": -1070,
+       "ni": 11479,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 57623,
+       "moves": 22409,
+       "end": 80032,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "음수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 146,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 45
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 250,
+      "sce": 109,
+      "note": 301
+     },
+     "note_concept_match": {
+      "note_concepts": 91,
+      "matched_to_canonical": 0
+     }
+    }
+   },
+   "2017": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 143167,
+       "nonsub": 167339,
+       "total": 310506,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 101699,
+       "nonsub": 93713,
+       "total": 195412,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 1466,
+        "SCE": 1466,
+        "SCE_marker": 1466
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 1073,
+       "tax": -393,
+       "ni": 1466,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 92296,
+       "moves": 22797,
+       "end": 115093,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "음수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 119849,
+       "nonsub": 110704,
+       "total": 230553,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 108389,
+       "nonsub": 19674,
+       "total": 128063,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 981,
+        "SCE": 981,
+        "SCE_marker": 981
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 1146,
+       "tax": 164,
+       "ni": 981,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 80032,
+       "moves": 22459,
+       "end": 102490,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 194,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 45
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 246,
+      "sce": 97,
+      "note": 150
+     },
+     "note_concept_match": {
+      "note_concepts": 25,
+      "matched_to_canonical": 0
+     }
+    }
+   },
+   "2018": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 191498,
+       "nonsub": 203555,
+       "total": 395053,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 107665,
+       "nonsub": 166826,
+       "total": 274490,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 4440,
+        "SCE": 4440,
+        "SCE_marker": 4440
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 6296,
+       "tax": 1856,
+       "ni": 4440,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 115093,
+       "moves": 5470,
+       "end": 120563,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 160919,
+       "nonsub": 123504,
+       "total": 284423,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 131126,
+       "nonsub": 46354,
+       "total": 177480,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 2894,
+        "SCE": 2894,
+        "SCE_marker": 2894
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 3867,
+       "tax": 973,
+       "ni": 2894,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 102490,
+       "moves": 4452,
+       "end": 106943,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 202,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 45
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 250,
+      "sce": 101,
+      "note": 186
+     },
+     "note_concept_match": {
+      "note_concepts": 27,
+      "matched_to_canonical": 0
+     }
+    }
+   },
+   "2019": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 216549,
+       "nonsub": 362207,
+       "total": 578756,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 145610,
+       "nonsub": 215079,
+       "total": 360689,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 499,
+        "SCE": 499,
+        "SCE_marker": 499
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 773,
+       "tax": -273,
+       "ni": 499,
+       "std_diff": 547,
+       "verdict": "tax_sign_inconsistent"
+      },
+      "SCE_rollforward": {
+       "begin": 120563,
+       "moves": 97504,
+       "end": 218067,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "음수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 164695,
+       "nonsub": 285433,
+       "total": 450129,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 147810,
+       "nonsub": 111090,
+       "total": 258900,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": -2744,
+        "SCE": -2744,
+        "SCE_marker": -2744
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": -3698,
+       "tax": -954,
+       "ni": -2744,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 106943,
+       "moves": 85569,
+       "end": 191229,
+       "diff": -1283,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "음수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 220,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 0
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 261,
+      "sce": 107,
+      "note": 181
+     },
+     "note_concept_match": {
+      "note_concepts": 30,
+      "matched_to_canonical": 0
+     }
+    }
+   },
+   "2020": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 132094,
+       "nonsub": 323352,
+       "total": 455445,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 170124,
+       "nonsub": 166113,
+       "total": 336237,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": -36020,
+        "SCE": -36020,
+        "SCE_marker": -36020
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": -55449,
+       "tax": 19429,
+       "ni": -36020,
+       "std_diff": -38859,
+       "verdict": "tax_sign_inconsistent"
+      },
+      "SCE_rollforward": {
+       "begin": 150077,
+       "moves": -30869,
+       "end": 119208,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 89433,
+       "nonsub": 242488,
+       "total": 331921,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 157664,
+       "nonsub": 65183,
+       "total": 222846,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": -22053,
+        "SCE": -22053,
+        "SCE_marker": -22053
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": -37603,
+       "tax": 15550,
+       "ni": -22053,
+       "std_diff": -31100,
+       "verdict": "tax_sign_inconsistent"
+      },
+      "SCE_rollforward": {
+       "begin": 133489,
+       "moves": -24414,
+       "end": 109075,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 227,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 0
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 263,
+      "sce": 134,
+      "note": 150
+     },
+     "note_concept_match": {
+      "note_concepts": 23,
+      "matched_to_canonical": 0
+     }
+    }
+   },
+   "2021": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 115493,
+       "nonsub": 270736,
+       "total": 386230,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 225370,
+       "nonsub": 115588,
+       "total": 340958,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": -67546,
+        "SCE": -67546,
+        "SCE_marker": -67546
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": -28502,
+       "tax": -39045,
+       "ni": -67546,
+       "std_diff": 78090,
+       "verdict": "tax_sign_inconsistent"
+      },
+      "SCE_rollforward": {
+       "begin": 119208,
+       "moves": -73937,
+       "end": 45272,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "음수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 72175,
+       "nonsub": 203661,
+       "total": 275837,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 149564,
+       "nonsub": 64952,
+       "total": 214516,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": -49777,
+        "SCE": -49777,
+        "SCE_marker": -49777
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": -16951,
+       "tax": -32826,
+       "ni": -49777,
+       "std_diff": 65652,
+       "verdict": "tax_sign_inconsistent"
+      },
+      "SCE_rollforward": {
+       "begin": 109075,
+       "moves": -47754,
+       "end": 61321,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "음수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 215,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 0
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 261,
+      "sce": 118,
+      "note": 156
+     },
+     "note_concept_match": {
+      "note_concepts": 30,
+      "matched_to_canonical": 0
+     }
+    }
+   },
+   "2022": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 118952,
+       "nonsub": 264995,
+       "total": 383947,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 281502,
+       "nonsub": 85915,
+       "total": 367416,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": -27828,
+        "SCE": -27828,
+        "SCE_marker": -27828
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": -28985,
+       "tax": 1157,
+       "ni": -27828,
+       "std_diff": -2315,
+       "verdict": "tax_sign_inconsistent"
+      },
+      "SCE_rollforward": {
+       "begin": 46949,
+       "moves": -28741,
+       "end": 16531,
+       "diff": -1678,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 75470,
+       "nonsub": 207263,
+       "total": 282734,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 187589,
+       "nonsub": 47756,
+       "total": 235345,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": -19628,
+        "SCE": -19628,
+        "SCE_marker": -19628
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": -20514,
+       "tax": 886,
+       "ni": -19628,
+       "std_diff": -1772,
+       "verdict": "tax_sign_inconsistent"
+      },
+      "SCE_rollforward": {
+       "begin": 61321,
+       "moves": -13932,
+       "end": 47389,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 224,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 0
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 247,
+      "sce": 94,
+      "note": 142
+     },
+     "note_concept_match": {
+      "note_concepts": 14,
+      "matched_to_canonical": 0
+     }
+    }
+   }
+  }
+ },
+ "00118345": {
+  "name": "디아이동일(분식)",
+  "years": {
+   "2015": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 289600,
+       "nonsub": 689118,
+       "total": 978718,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 287778,
+       "nonsub": 144322,
+       "total": 432100,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": -7463,
+        "CIS": -7463,
+        "CF": -7463,
+        "SCE": -7463,
+        "SCE_marker": -7463
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": -1661,
+       "tax": 5802,
+       "ni": -7463,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 560755,
+       "moves": -14137,
+       "end": 546617,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 116306,
+       "nonsub": 534799,
+       "total": 651105,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 122982,
+       "nonsub": 89902,
+       "total": 212884,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": -10055,
+        "CF": -10055,
+        "SCE": -10055,
+        "SCE_marker": -10055
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": -10385,
+       "tax": -329,
+       "ni": -10055,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 449119,
+       "moves": -10898,
+       "end": 438220,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "음수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "당기순이익조정가감",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 146,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 49
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 232,
+      "sce": 150,
+      "note": 600
+     },
+     "note_concept_match": {
+      "note_concepts": 70,
+      "matched_to_canonical": 0
+     }
+    }
+   },
+   "2016": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 321950,
+       "nonsub": 664931,
+       "total": 986881,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 302644,
+       "nonsub": 141846,
+       "total": 444490,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 1089,
+        "CIS": 1089,
+        "CF": 1089,
+        "SCE": 1089,
+        "SCE_marker": 1089
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 8968,
+       "tax": 7880,
+       "ni": 1089,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 546617,
+       "moves": -4227,
+       "end": 542391,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 130384,
+       "nonsub": 596065,
+       "total": 726450,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 162050,
+       "nonsub": 97362,
+       "total": 259412,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 662,
+        "CF": 662,
+        "SCE": 662,
+        "SCE_marker": 662
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 791,
+       "tax": 128,
+       "ni": 662,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 438220,
+       "moves": 28817,
+       "end": 467038,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "당기순이익조정가감",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 161,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 50
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 243,
+      "sce": 165,
+      "note": 624
+     },
+     "note_concept_match": {
+      "note_concepts": 61,
+      "matched_to_canonical": 0
+     }
+    }
+   },
+   "2017": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 286856,
+       "nonsub": 644264,
+       "total": 931120,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 292244,
+       "nonsub": 117716,
+       "total": 409960,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": -4102,
+        "CF": -4102,
+        "SCE": -4102,
+        "SCE_marker": -4102
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": -835,
+       "tax": 3267,
+       "ni": -4102,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 542391,
+       "moves": 4036,
+       "end": 521160,
+       "diff": -25267,
+       "positive_deductions": [
+        "배당변동=12633",
+        "자기주식변동=13"
+       ]
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 140764,
+       "nonsub": 574518,
+       "total": 715282,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 160789,
+       "nonsub": 95666,
+       "total": 256455,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": -5606,
+        "CF": -5606,
+        "SCE": -5606,
+        "SCE_marker": -5606
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": -6488,
+       "tax": -882,
+       "ni": -5606,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 467038,
+       "moves": -6551,
+       "end": 458828,
+       "diff": -1659,
+       "positive_deductions": [
+        "배당변동=830",
+        "자기주식변동=13"
+       ]
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "음수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "당기순이익조정가감",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 185,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 54
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 240,
+      "sce": 172,
+      "note": 372
+     },
+     "note_concept_match": {
+      "note_concepts": 30,
+      "matched_to_canonical": 0
+     }
+    }
+   },
+   "2018": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 318892,
+       "nonsub": 628742,
+       "total": 947634,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 322057,
+       "nonsub": 112953,
+       "total": 435009,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 13825,
+        "CF": 13825,
+        "SCE": 13825,
+        "SCE_marker": 13825
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 26573,
+       "tax": 12749,
+       "ni": 13825,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 521160,
+       "moves": 34372,
+       "end": 512625,
+       "diff": -42908,
+       "positive_deductions": [
+        "배당변동=21454"
+       ]
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 112993,
+       "nonsub": 602285,
+       "total": 715278,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 182773,
+       "nonsub": 86825,
+       "total": 269598,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 12124,
+        "CF": 12124,
+        "SCE": 12124,
+        "SCE_marker": 12124
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 13162,
+       "tax": 1038,
+       "ni": 12124,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 458828,
+       "moves": -11447,
+       "end": 445680,
+       "diff": -1701,
+       "positive_deductions": [
+        "배당변동=850"
+       ]
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "당기순이익조정가감",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 192,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 55
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 244,
+      "sce": 172,
+      "note": 396
+     },
+     "note_concept_match": {
+      "note_concepts": 27,
+      "matched_to_canonical": 0
+     }
+    }
+   },
+   "2019": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 327403,
+       "nonsub": 629578,
+       "total": 956980,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 309128,
+       "nonsub": 122347,
+       "total": 431475,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 26345,
+        "CF": 26345,
+        "SCE": 26345,
+        "SCE_marker": 26345
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 39463,
+       "tax": 13118,
+       "ni": 26345,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 512625,
+       "moves": 43574,
+       "end": 525506,
+       "diff": -30693,
+       "positive_deductions": [
+        "배당변동=15347"
+       ]
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 124033,
+       "nonsub": 594031,
+       "total": 718064,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 163140,
+       "nonsub": 102348,
+       "total": 265488,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 7325,
+        "CF": 7325,
+        "SCE": 7325,
+        "SCE_marker": 7325
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 5768,
+       "tax": -1557,
+       "ni": 7325,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 445680,
+       "moves": 12069,
+       "end": 452576,
+       "diff": -5173,
+       "positive_deductions": [
+        "배당변동=2587"
+       ]
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "음수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "당기순이익조정가감",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 208,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 0
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 257,
+      "sce": 182,
+      "note": 453
+     },
+     "note_concept_match": {
+      "note_concepts": 29,
+      "matched_to_canonical": 0
+     }
+    }
+   }
+  }
+ },
+ "00657783": {
+  "name": "모델솔루션(분식)",
+  "years": {
+   "2022": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 60118,
+       "nonsub": 29254,
+       "total": 89371,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 13290,
+       "nonsub": 14982,
+       "total": 28272,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 6274,
+        "CIS": 6274,
+        "CF": 6274,
+        "SCE": 6274,
+        "SCE_marker": 6274
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 8146,
+       "tax": 1872,
+       "ni": 6274,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 26633,
+       "moves": 34466,
+       "end": 61100,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 59451,
+       "nonsub": 29992,
+       "total": 89443,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 12921,
+       "nonsub": 14965,
+       "total": 27886,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 6384,
+        "CIS": 6384,
+        "CF": 6384,
+        "SCE": 6384,
+        "SCE_marker": 6384
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 8251,
+       "tax": 1867,
+       "ni": 6384,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 27034,
+       "moves": 34523,
+       "end": 61557,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "환율효과반영전현금증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 163,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 0
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 182,
+      "sce": 49,
+      "note": 97
+     },
+     "note_concept_match": {
+      "note_concepts": 14,
+      "matched_to_canonical": 0
+     }
+    }
+   },
+   "2023": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 57363,
+       "nonsub": 27750,
+       "total": 85113,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 20510,
+       "nonsub": 3081,
+       "total": 23591,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 2501,
+        "CIS": 2501,
+        "CF": 2501,
+        "SCE": 2501,
+        "SCE_marker": 2501
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 3459,
+       "tax": 958,
+       "ni": 2501,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 61100,
+       "moves": 4260,
+       "end": 61522,
+       "diff": -3838,
+       "positive_deductions": [
+        "배당변동=1919"
+       ]
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 57337,
+       "nonsub": 28156,
+       "total": 85492,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 20337,
+       "nonsub": 2977,
+       "total": 23314,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 2716,
+        "CIS": 2716,
+        "CF": 2716,
+        "SCE": 2716,
+        "SCE_marker": 2716
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 3672,
+       "tax": 956,
+       "ni": 2716,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 61557,
+       "moves": 4459,
+       "end": 62178,
+       "diff": -3838,
+       "positive_deductions": [
+        "배당변동=1919"
+       ]
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "환율효과반영전현금증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 162,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 0
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 182,
+      "sce": 56,
+      "note": 106
+     },
+     "note_concept_match": {
+      "note_concepts": 16,
+      "matched_to_canonical": 0
+     }
+    }
+   }
+  }
+ },
+ "00413046": {
+  "name": "셀트리온(분식)",
+  "years": {
+   "2015": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 1096837,
+       "nonsub": 1651393,
+       "total": 2748231,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 665751,
+       "nonsub": 272639,
+       "total": 938390,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 158282,
+        "CIS": 158282,
+        "SCE": 158282,
+        "SCE_marker": 158282
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 163111,
+       "tax": 4829,
+       "ni": 158282,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 1347781,
+       "moves": 462059,
+       "end": 1809841,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 945520,
+       "nonsub": 1572197,
+       "total": 2517717,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 607475,
+       "nonsub": 158498,
+       "total": 765973,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 202005,
+        "SCE": 202005,
+        "SCE_marker": 202005
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 223178,
+       "tax": 21173,
+       "ni": 202005,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 1259408,
+       "moves": 492337,
+       "end": 1751745,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 105,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 43
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 234,
+      "sce": 121,
+      "note": 520
+     },
+     "note_concept_match": {
+      "note_concepts": 127,
+      "matched_to_canonical": 0
+     }
+    }
+   },
+   "2016": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 1240250,
+       "nonsub": 1643598,
+       "total": 2883847,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 610253,
+       "nonsub": 212721,
+       "total": 822974,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 149419,
+        "SCE": 149419,
+        "SCE_marker": 149419
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 197433,
+       "tax": 48015,
+       "ni": 149419,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 1702780,
+       "moves": 358093,
+       "end": 2060873,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 1076603,
+       "nonsub": 1646144,
+       "total": 2722747,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 524272,
+       "nonsub": 125585,
+       "total": 649857,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 213236,
+        "SCE": 213236,
+        "SCE_marker": 213236
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 261445,
+       "tax": 48209,
+       "ni": 213236,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 1683884,
+       "moves": 389006,
+       "end": 2072890,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 104,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 43
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 228,
+      "sce": 111,
+      "note": 514
+     },
+     "note_concept_match": {
+      "note_concepts": 124,
+      "matched_to_canonical": 0
+     }
+    }
+   },
+   "2017": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 1614034,
+       "nonsub": 1680062,
+       "total": 3294096,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 616781,
+       "nonsub": 266817,
+       "total": 883598,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 377725,
+        "SCE": 377725,
+        "SCE_marker": 377725
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 483071,
+       "tax": 105346,
+       "ni": 377725,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 2060873,
+       "moves": 349624,
+       "end": 2410498,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 1421212,
+       "nonsub": 1716973,
+       "total": 3138185,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 491068,
+       "nonsub": 242174,
+       "total": 733242,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 362084,
+        "SCE": 362084,
+        "SCE_marker": 362084
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 468528,
+       "tax": 106444,
+       "ni": 362084,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 2072890,
+       "moves": 332052,
+       "end": 2404942,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 116,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 38
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 226,
+      "sce": 91,
+      "note": 303
+     },
+     "note_concept_match": {
+      "note_concepts": 87,
+      "matched_to_canonical": 0
+     }
+    }
+   },
+   "2018": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 1664281,
+       "nonsub": 1838827,
+       "total": 3503108,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 678087,
+       "nonsub": 229761,
+       "total": 907849,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 237476,
+        "SCE": 237476,
+        "SCE_marker": 237476
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 301639,
+       "tax": 64163,
+       "ni": 237476,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 2410498,
+       "moves": 184762,
+       "end": 2595259,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 1482310,
+       "nonsub": 1888329,
+       "total": 3370639,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 548121,
+       "nonsub": 218456,
+       "total": 766577,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 238274,
+        "SCE": 238274,
+        "SCE_marker": 238274
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 296188,
+       "tax": 57914,
+       "ni": 238274,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 2404942,
+       "moves": 199120,
+       "end": 2604062,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 119,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 39
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 229,
+      "sce": 112,
+      "note": 351
+     },
+     "note_concept_match": {
+      "note_concepts": 95,
+      "matched_to_canonical": 0
+     }
+    }
+   },
+   "2019": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 1785116,
+       "nonsub": 2074531,
+       "total": 3859647,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 657226,
+       "nonsub": 329508,
+       "total": 986733,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 301443,
+        "SCE": 301443,
+        "SCE_marker": 301443
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 382031,
+       "tax": 80589,
+       "ni": 301443,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 2595259,
+       "moves": 277654,
+       "end": 2872913,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 1610731,
+       "nonsub": 2063792,
+       "total": 3674523,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 517564,
+       "nonsub": 286291,
+       "total": 803856,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 289755,
+        "SCE": 289755,
+        "SCE_marker": 289755
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 369107,
+       "tax": 79352,
+       "ni": 289755,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 2604062,
+       "moves": 266605,
+       "end": 2870667,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 118,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 0
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 224,
+      "sce": 94,
+      "note": 352
+     },
+     "note_concept_match": {
+      "note_concepts": 97,
+      "matched_to_canonical": 0
+     }
+    }
+   },
+   "2020": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 2516495,
+       "nonsub": 2503626,
+       "total": 5020121,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 1056767,
+       "nonsub": 535774,
+       "total": 1592541,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 525703,
+        "SCE": 525703,
+        "SCE_marker": 525703
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 657152,
+       "tax": -131449,
+       "ni": 525703,
+       "std_diff": 262898,
+       "verdict": "tax_sign_inconsistent"
+      },
+      "SCE_rollforward": {
+       "begin": 2872913,
+       "moves": 554667,
+       "end": 3427580,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "음수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 2294204,
+       "nonsub": 2486921,
+       "total": 4781125,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 900572,
+       "nonsub": 459266,
+       "total": 1359837,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 514270,
+        "SCE": 514270,
+        "SCE_marker": 514270
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 649889,
+       "tax": 135619,
+       "ni": 514270,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 2870667,
+       "moves": 550621,
+       "end": 3421288,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 117,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 0
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 222,
+      "sce": 94,
+      "note": 356
+     },
+     "note_concept_match": {
+      "note_concepts": 93,
+      "matched_to_canonical": 0
+     }
+    }
+   }
+  }
+ },
+ "01091382": {
+  "name": "세토피아(분식·미발굴)",
+  "years": {
+   "2017": {
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 6829,
+       "nonsub": 11951,
+       "total": 18780,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 8440,
+       "nonsub": 418,
+       "total": 8858,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": -5310,
+        "CIS": -5310,
+        "CF": -5310,
+        "SCE": -5310,
+        "SCE_marker": -5310
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": -3034,
+       "tax": 2276,
+       "ni": -5310,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 14193,
+       "moves": -4270,
+       "end": 9923,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "당기순이익조정가감",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 99,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 46
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 197,
+      "sce": 24,
+      "note": 0
+     },
+     "note_concept_match": null
+    }
+   },
+   "2018": {
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 19554,
+       "nonsub": 29832,
+       "total": 49386,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 28705,
+       "nonsub": 246,
+       "total": 28951,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": -11832,
+        "CIS": -11832,
+        "CF": -11832,
+        "SCE": -11832,
+        "SCE_marker": -11832
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": -12216,
+       "tax": -383,
+       "ni": -11832,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 9923,
+       "moves": 21024,
+       "end": 20435,
+       "diff": -10512,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "음수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "당기순이익조정가감",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본증감합계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 111,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 49
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 129,
+      "sce": 38,
+      "note": 83
+     },
+     "note_concept_match": {
+      "note_concepts": 20,
+      "matched_to_canonical": 0
+     }
+    }
+   },
+   "2019": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 38577,
+       "nonsub": 17057,
+       "total": 55634,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 47641,
+       "nonsub": 5008,
+       "total": 52649,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": -36530,
+        "CIS": -36530,
+        "CF": -36530,
+        "SCE": -36530,
+        "SCE_marker": -36530
+       },
+       "max_diff": 0
+      },
+      "SCE_rollforward": {
+       "begin": 20435,
+       "moves": -17450,
+       "end": 2985,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 30746,
+       "nonsub": 16550,
+       "total": 47296,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 38957,
+       "nonsub": 4950,
+       "total": 43907,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": -35941,
+        "CIS": -35941,
+        "CF": -35941,
+        "SCE": -35941,
+        "SCE_marker": -35941
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": -37269,
+       "tax": 1328,
+       "ni": -35941,
+       "std_diff": -2655,
+       "verdict": "tax_sign_inconsistent"
+      },
+      "SCE_rollforward": {
+       "begin": 20435,
+       "moves": -17046,
+       "end": 3389,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "당기순이익조정가감",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 215,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 0
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 334,
+      "sce": 116,
+      "note": 211
+     },
+     "note_concept_match": {
+      "note_concepts": 79,
+      "matched_to_canonical": 0
+     }
+    }
+   }
+  }
+ },
+ "00126380": {
+  "name": "삼성전자(정상)",
+  "years": {
+   "2022": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 218470581,
+       "nonsub": 229953926,
+       "total": 448424507,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 78344852,
+       "nonsub": 15330051,
+       "total": 93674903,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 55654077,
+        "CF": 55654077,
+        "SCE": 55654077,
+        "SCE_marker": 55654077
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 46440474,
+       "tax": -9213603,
+       "ni": 55654077,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 304899931,
+       "moves": 69505379,
+       "end": 354749604,
+       "diff": -19655706,
+       "positive_deductions": [
+        "배당변동=9814960"
+       ]
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "음수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 59062658,
+       "nonsub": 201021092,
+       "total": 260083750,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 46086047,
+       "nonsub": 4581512,
+       "total": 50667559,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 25418778,
+        "CF": 25418778,
+        "SCE": 25418778,
+        "SCE_marker": 25418778
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 29691920,
+       "tax": 4273142,
+       "ni": 25418778,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 193193732,
+       "moves": 35841333,
+       "end": 209416191,
+       "diff": -19618874,
+       "positive_deductions": [
+        "배당변동=9809437"
+       ]
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 154,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 0
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 234,
+      "sce": 79,
+      "note": 327
+     },
+     "note_concept_match": {
+      "note_concepts": 69,
+      "matched_to_canonical": 0
+     }
+    }
+   },
+   "2023": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 195936557,
+       "nonsub": 259969423,
+       "total": 455905980,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 75719452,
+       "nonsub": 16508663,
+       "total": 92228115,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 15487100,
+        "CF": 15487100,
+        "SCE": 15487100,
+        "SCE_marker": 15487100
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 11006265,
+       "tax": -4480835,
+       "ni": 15487100,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 354749604,
+       "moves": 8928261,
+       "end": 363677865,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "음수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 68548442,
+       "nonsub": 228308847,
+       "total": 296857289,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 41775101,
+       "nonsub": 30294414,
+       "total": 72069515,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 25397099,
+        "CF": 25397099,
+        "SCE": 25397099,
+        "SCE_marker": 25397099
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 17531500,
+       "tax": -7865599,
+       "ni": 25397099,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 209416191,
+       "moves": 15371583,
+       "end": 224787774,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "음수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "당기순이익조정가감",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 202,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 0
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 231,
+      "sce": 73,
+      "note": 6191
+     },
+     "note_concept_match": {
+      "note_concepts": 530,
+      "matched_to_canonical": 0
+     }
+    }
+   },
+   "2024": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 227062266,
+       "nonsub": 287469682,
+       "total": 514531948,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 93326299,
+       "nonsub": 19013579,
+       "total": 112339878,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 34451351,
+        "CF": 34451351,
+        "SCE": 34451351,
+        "SCE_marker": 34451351
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 37529734,
+       "tax": 3078383,
+       "ni": 34451351,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 363677865,
+       "moves": 60338329,
+       "end": 402192070,
+       "diff": -21824124,
+       "positive_deductions": [
+        "배당변동=10912062"
+       ]
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 82320322,
+       "nonsub": 242645805,
+       "total": 324966127,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 80157976,
+       "nonsub": 8411494,
+       "total": 88569470,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 23582565,
+        "CF": 23582565,
+        "SCE": 23582565,
+        "SCE_marker": 23582565
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 21749578,
+       "tax": -1832987,
+       "ni": 23582565,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 224787774,
+       "moves": 31227757,
+       "end": 236396657,
+       "diff": -19618874,
+       "positive_deductions": [
+        "배당변동=9809437"
+       ]
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "음수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "당기순이익조정가감",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 200,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 0
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 232,
+      "sce": 126,
+      "note": 4490
+     },
+     "note_concept_match": {
+      "note_concepts": 461,
+      "matched_to_canonical": 0
+     }
+    }
+   },
+   "2025": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 247684612,
+       "nonsub": 319257498,
+       "total": 566942110,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 106411348,
+       "nonsub": 24210425,
+       "total": 130621773,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 45206805,
+        "CF": 45206805,
+        "SCE": 45206805,
+        "SCE_marker": 45206805
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 49481471,
+       "tax": 4274666,
+       "ni": 45206805,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 402192070,
+       "moves": 70299137,
+       "end": 436320337,
+       "diff": -36170870,
+       "positive_deductions": [
+        "배당변동=9896172"
+       ]
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 101439429,
+       "nonsub": 257462622,
+       "total": 358902051,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 72935381,
+       "nonsub": 31636587,
+       "total": 104571968,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 33686601,
+        "CF": 33686601,
+        "SCE": 33686601,
+        "SCE_marker": 33686601
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 33436082,
+       "tax": -250519,
+       "ni": 33686601,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 236396657,
+       "moves": 53929408,
+       "end": 254330083,
+       "diff": -35995982,
+       "positive_deductions": [
+        "배당변동=9808728"
+       ]
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "음수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "당기순이익조정가감",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 206,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 0
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 238,
+      "sce": 150,
+      "note": 4379
+     },
+     "note_concept_match": {
+      "note_concepts": 487,
+      "matched_to_canonical": 0
+     }
+    }
+   }
+  }
+ },
+ "00309503": {
+  "name": "KAI(정상)",
+  "years": {
+   "2016": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 2023912,
+       "nonsub": 956928,
+       "total": 2980840,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 939910,
+       "nonsub": 595354,
+       "total": 1535264,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 264801,
+        "CIS": 264801,
+        "CF": 264801,
+        "SCE": 264801,
+        "SCE_marker": 264801
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 317134,
+       "tax": 52333,
+       "ni": 264801,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 1214450,
+       "moves": 231125,
+       "end": 1445576,
+       "diff": 1,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 2023872,
+       "nonsub": 956496,
+       "total": 2980368,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 939891,
+       "nonsub": 595354,
+       "total": 1535245,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": 264486,
+        "CIS": 264486,
+        "CF": 264486,
+        "SCE": 264486,
+        "SCE_marker": 264486
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": 316775,
+       "tax": 52289,
+       "ni": 264486,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 1214325,
+       "moves": 230798,
+       "end": 1445123,
+       "diff": 0,
+       "positive_deductions": []
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "양수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "당기순이익조정가감",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 154,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 53
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 202,
+      "sce": 49,
+      "note": 157
+     },
+     "note_concept_match": {
+      "note_concepts": 26,
+      "matched_to_canonical": 0
+     }
+    }
+   },
+   "2017": {
+    "CFS": {
+     "B": {
+      "자산총계": {
+       "sub": 1974525,
+       "nonsub": 1191698,
+       "total": 3166223,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 1207795,
+       "nonsub": 818023,
+       "total": 2025818,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": -235186,
+        "CIS": -235186,
+        "CF": -235186,
+        "SCE": -235186,
+        "SCE_marker": -235186
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": -320282,
+       "tax": -85096,
+       "ni": -235186,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 1445576,
+       "moves": -172604,
+       "end": 1140405,
+       "diff": -132566,
+       "positive_deductions": [
+        "배당변동=66283"
+       ]
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "음수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "OFS": {
+     "B": {
+      "자산총계": {
+       "sub": 1974449,
+       "nonsub": 1190152,
+       "total": 3164601,
+       "diff": 0
+      },
+      "부채총계": {
+       "sub": 1207720,
+       "nonsub": 818023,
+       "total": 2025743,
+       "diff": 0
+      },
+      "당기순이익": {
+       "values": {
+        "IS": -235471,
+        "CIS": -235471,
+        "CF": -235471,
+        "SCE": -235471,
+        "SCE_marker": -235471
+       },
+       "max_diff": 0
+      },
+      "손익항등식": {
+       "pre_tax": -320593,
+       "tax": -85122,
+       "ni": -235471,
+       "std_diff": 0,
+       "verdict": "ok"
+      },
+      "SCE_rollforward": {
+       "begin": 1445123,
+       "moves": -173699,
+       "end": 1138858,
+       "diff": -132566,
+       "positive_deductions": [
+        "배당변동=66283"
+       ]
+      }
+     },
+     "D": {
+      "cost_signs": {
+       "매출원가": "양수",
+       "판매비와관리비": "양수",
+       "법인세비용": "음수",
+       "이자비용": "양수",
+       "기타비용": "양수"
+      },
+      "scale_outliers": []
+     }
+    },
+    "C": {
+     "subtotals_present": [
+      "기말현금및현금성자산",
+      "기초자본",
+      "기초현금및현금성자산",
+      "당기순이익조정가감",
+      "부채총계",
+      "비유동부채",
+      "비유동자산",
+      "유동부채",
+      "유동자산",
+      "자본과부채총계",
+      "자본총계",
+      "자산총계",
+      "현금및현금성자산순증감"
+     ],
+     "has_line_components": true
+    },
+    "F": {
+     "exact_total": 180,
+     "fake_exact_nonstd_id": [],
+     "fake_count": 0,
+     "exact_id_not_in_config": 54
+    },
+    "E": {
+     "provenance_cols": [],
+     "rows": {
+      "normalized": 202,
+      "sce": 55,
+      "note": 87
+     },
+     "note_concept_match": {
+      "note_concepts": 7,
+      "matched_to_canonical": 0
+     }
+    }
+   }
+  }
+ },
+ "_cross_incomparable": {},
+ "_silent_empty": [
+  "모델솔루션(분식) 2020(raw최대 5B)",
+  "모델솔루션(분식) 2021(raw최대 5B)"
+ ]
+}

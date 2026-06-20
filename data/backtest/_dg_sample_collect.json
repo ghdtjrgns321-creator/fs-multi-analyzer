@@ -1,0 +1,118 @@
+[
+  {
+    "corp": "00409681",
+    "name": "아스트",
+    "year": 2021,
+    "report_found": false
+  },
+  {
+    "corp": "00409681",
+    "name": "아스트",
+    "year": 2019,
+    "report_found": false
+  },
+  {
+    "corp": "00657783",
+    "name": "모델솔루션",
+    "year": 2021,
+    "report_found": false
+  },
+  {
+    "corp": "01091382",
+    "name": "세토피아",
+    "year": 2020,
+    "report_found": true,
+    "rcept_no": "20210319001121",
+    "downloaded": true,
+    "zip_bytes": 217380,
+    "probe": {
+      "loaded": true,
+      "fact_count": 847,
+      "note_hits": {
+        "무형자산": 13,
+        "차입금": 63,
+        "관계기업": 26,
+        "리스": 27,
+        "충당부채": 0,
+        "금융상품": 21
+      },
+      "note_hit_total": 150,
+      "text_facts": 1
+    }
+  },
+  {
+    "corp": "00127699",
+    "name": "유네코",
+    "year": 2020,
+    "report_found": true,
+    "rcept_no": "20210517002068",
+    "downloaded": true,
+    "zip_bytes": 208293,
+    "probe": {
+      "loaded": true,
+      "fact_count": 815,
+      "note_hits": {
+        "무형자산": 6,
+        "차입금": 72,
+        "관계기업": 4,
+        "리스": 2,
+        "충당부채": 11,
+        "금융상품": 6
+      },
+      "note_hit_total": 101,
+      "text_facts": 0
+    }
+  },
+  {
+    "corp": "00480756",
+    "name": "이트론",
+    "year": 2021,
+    "report_found": false
+  },
+  {
+    "corp": "00526696",
+    "name": "웨이브일렉트로닉스",
+    "year": 2021,
+    "report_found": true,
+    "rcept_no": "20220816000400",
+    "downloaded": true,
+    "zip_bytes": 214550,
+    "probe": {
+      "loaded": true,
+      "fact_count": 915,
+      "note_hits": {
+        "무형자산": 14,
+        "차입금": 71,
+        "관계기업": 32,
+        "리스": 21,
+        "충당부채": 3,
+        "금융상품": 46
+      },
+      "note_hit_total": 187,
+      "text_facts": 0
+    }
+  },
+  {
+    "corp": "00141273",
+    "name": "웰바이오텍",
+    "year": 2020,
+    "report_found": true,
+    "rcept_no": "20210322000872",
+    "downloaded": true,
+    "zip_bytes": 214374,
+    "probe": {
+      "loaded": true,
+      "fact_count": 1026,
+      "note_hits": {
+        "무형자산": 17,
+        "차입금": 68,
+        "관계기업": 31,
+        "리스": 8,
+        "충당부채": 1,
+        "금융상품": 59
+      },
+      "note_hit_total": 184,
+      "text_facts": 0
+    }
+  }
+]

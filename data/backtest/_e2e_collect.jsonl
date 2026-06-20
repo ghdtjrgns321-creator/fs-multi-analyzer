@@ -1,0 +1,6 @@
+{"dim": "대형다각화", "corp": "00126380", "years": [2024, 2023], "status": "ok", "corrections": {"count": 0, "restated_years": []}, "events": {"event_types": 4, "report_types": 28}, "secs": 18.5}
+{"dim": "금융지주", "corp": "00688996", "years": [2024, 2023], "status": "ok", "corrections": {"count": 32, "restated_years": []}, "events": {"event_types": 7, "report_types": 28}, "secs": 18.0}
+{"dim": "자본거래多", "corp": "00258801", "years": [2024, 2023], "status": "ok", "corrections": {"count": 15, "restated_years": [2020, 2021, 2022]}, "events": {"event_types": 11, "report_types": 28}, "secs": 17.2}
+{"dim": "정정본", "corp": "00117212", "years": [2024, 2023], "status": "ok", "corrections": {"count": 11, "restated_years": [2017, 2018, 2019, 2020]}, "events": {"event_types": 4, "report_types": 28}, "secs": 17.5}
+{"dim": "구포맷", "corp": "00356361", "years": [2017, 2016], "status": "ok", "corrections": {"count": 4, "restated_years": []}, "events": {"event_types": 4, "report_types": 25}, "secs": 13.3}
+{"dim": "소형단순", "corp": "00160375", "years": [2024, 2023], "status": "ok", "corrections": {"count": 2, "restated_years": []}, "events": {"event_types": 1, "report_types": 28}, "secs": 11.5}

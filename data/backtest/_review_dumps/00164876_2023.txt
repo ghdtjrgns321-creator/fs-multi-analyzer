@@ -1,0 +1,210 @@
+==============================================================================
+Phase1 감사 dump — 00164876/2023
+==============================================================================
+
+## 0. 데이터 완결성 (필수 테이블 — MISSING이면 FAIL)
+  [OK            ] normalized_financials (본문 정규화) 행=293
+  [OK            ] sce_equity_components (SCE 2D) 행=208
+  [OK            ] note_facts_classified (주석 분류적재) 행=540
+
+## 0b. SCE 구성요소 표준화 상태
+  role 분포: {'leaf': np.int64(152), 'marker': np.int64(24), 'unmatched': np.int64(16), 'subtotal': np.int64(16)}
+
+## A. 본문 분류 과목 전체 (백만원, CFS) — 표(sj_div)별
+
+[BS] 36과목
+                                                canonical                        label        amt       mapping_status
+                                                     자산총계                         자산총계 61,266,920 exact_taxonomy_match
+                                                  자본과부채총계                      자본과부채총계 61,266,920 exact_taxonomy_match
+                                                     부채총계                         부채총계 54,970,888 exact_taxonomy_match
+                                      당기손익-공정가치측정금융자산(유동)              당기손익-공정가치측정금융자산 35,948,949    id_label_conflict
+                                                     차입부채                         차입부채 30,640,156 exact_taxonomy_match
+                                        당기손익-공정가치측정지정금융부채                   당기손익인식금융부채 10,835,881 exact_taxonomy_match
+                                              상각후원가측정대출채권                  상각후원가측정대출채권 10,418,946 exact_taxonomy_match
+                                                     예수부채                         예수부채  7,122,595 exact_taxonomy_match
+                                                     자본총계                         자본총계  6,296,032 exact_taxonomy_match
+                                                지배기업소유주지분                   지배기업의 소유지분  6,224,684 exact_taxonomy_match
+                                    IV. 기타포괄손익-공정가치측정금융자산            기타포괄손익-공정가치측정금융자산  5,134,513    id_label_conflict
+                                                   기타금융자산                       기타금융자산  4,072,941 exact_taxonomy_match
+                                                   기타금융부채                       기타금융부채  3,894,409 exact_taxonomy_match
+                                                   현금및예치금                       현금및예치금  2,927,067 exact_taxonomy_match
+                                                    이익잉여금                        이익잉여금  2,304,303 exact_taxonomy_match
+                                                   파생상품부채                       파생상품부채  1,816,172    id_label_conflict
+                                                      자본금                          자본금  1,493,102 exact_taxonomy_match
+                                                   기타불입자본                       기타불입자본  1,478,688 exact_taxonomy_match
+                                                   파생상품자산                       파생상품자산  1,138,493    id_label_conflict
+                                                   신종자본증권                       신종자본증권    626,093 exact_taxonomy_match
+                                                    투자부동산                        투자부동산    616,922 exact_taxonomy_match
+                                                     기타부채                         기타부채    371,892 exact_taxonomy_match
+                                                 기타자본구성요소                     기타자본구성요소    322,498 exact_taxonomy_match
+                                                  지분법적용투자                       관계기업투자    311,590    id_label_conflict
+                                                     무형자산                         무형자산    272,296 exact_taxonomy_match
+                                                     유형자산                         유형자산    255,141 exact_taxonomy_match
+                                               VIII. 충당부채                         충당부채    212,988    id_label_conflict
+                                                     기타자산                         기타자산    156,475 exact_taxonomy_match
+                                                    비지배지분                        비지배지분     71,348    id_label_conflict
+                                                   퇴직급여부채                      순확정급여부채     62,564    id_label_conflict
+                                                  당기법인세자산                      당기법인세자산     12,563 exact_taxonomy_match
+                                                  이연법인세부채                      이연법인세부채     11,914 exact_taxonomy_match
+                                                  당기법인세부채                      당기법인세부채      2,315 exact_taxonomy_match
+                                                  이연법인세자산                      이연법인세자산      1,023 exact_taxonomy_match
+                                                매각예정비유동자산                   매각예정처분자산집단       0.00 exact_taxonomy_match
+매각예정으로 분류된 비유동자산 또는 처분자산집단과 관련하여 기타포괄손익으로 인식되어 자본에 누적된 금액 매각예정처분자산집단 관련 자본으로 직접 인식한 금액       0.00 exact_taxonomy_match
+
+[CIS] 34과목
+                  canonical                    label        amt       mapping_status
+                         매출                     영업수익 11,585,140 exact_taxonomy_match
+                       영업비용                     영업비용 10,904,986 exact_taxonomy_match
+                금융상품평가및처분이익              금융상품평가및처분이익  7,721,803 exact_taxonomy_match
+                금융상품평가및처분손실              금융상품평가및처분손실  7,488,880 exact_taxonomy_match
+                  이자수익(CIS)                     이자수익  1,763,585    id_label_conflict
+                 금융부채의 이자비용                     이자비용  1,148,794    id_label_conflict
+                유효이자율적용이자수익              유효이자율적용이자수익    952,872 exact_taxonomy_match
+                      수수료수익                    수수료수익    946,467 exact_taxonomy_match
+                     외화거래이익                   외환거래이익    929,983 exact_taxonomy_match
+                 판매 및 일반관리비                    판매관리비    903,560 exact_taxonomy_match
+                     외화거래손실                   외환거래손실    874,317 exact_taxonomy_match
+ 당기손익-공정가치로 측정하는 금융자산의 이자수익      당기손익-공정가치측정금융상품이자수익    810,713 exact_taxonomy_match
+                       영업이익                     영업이익    680,154 exact_taxonomy_match
+                법인세비용차감전순이익              법인세비용차감전순이익    492,761 exact_taxonomy_match
+                  지배기업귀속순이익                지배기업소유주지분    395,015    id_label_conflict
+                지배기업귀속총포괄손익                지배기업소유주지분    394,211    id_label_conflict
+                      당기순이익                    당기순이익    388,028 exact_taxonomy_match
+                      총포괄손익                  당기총포괄손익    387,829 exact_taxonomy_match
+                      영업외비용                    영업외비용    254,697 exact_taxonomy_match
+                      수수료비용                    수수료비용    239,341 exact_taxonomy_match
+                     기타영업수익                  기타의영업수익    214,316    id_label_conflict
+            상각후원가측정금융상품관련손실       상각후원가측정금융자산평가및처분손실    151,760 exact_taxonomy_match
+                      법인세비용                    법인세비용    104,734    id_label_conflict
+                     기타영업비용                   기타영업비용     98,332 exact_taxonomy_match
+                      영업외수익                    영업외수익     67,304 exact_taxonomy_match
+당기손익-공정가치측정지정금융부채의 자기신용위험조정 당기손익-공정가치지정금융부채 신용위험변동손익    -52,863 exact_taxonomy_match
+              FVOCI지분상품평가손익    기타포괄손익-공정가치측정지분상품평가손익     24,960 exact_taxonomy_match
+            상각후원가측정금융상품관련이익       상각후원가측정금융자산평가및처분이익      8,986 exact_taxonomy_match
+                   비지배지분순이익                    비지배지분     -6,988 exact_taxonomy_match
+                 비지배지분총포괄손익                    비지배지분     -6,382    id_label_conflict
+                  확정급여재측정손익           순확정급여부채의 재측정요소     -5,009 exact_taxonomy_match
+             지분법기타포괄손익재분류가능      관계기업 기타포괄손익 중 지분해당액     -4,014 exact_taxonomy_match
+                     기타포괄손익                 세후기타포괄손익       -199 exact_taxonomy_match
+                    자산재평가손익                유형자산재평가손익         84 exact_taxonomy_match
+
+[CF] 36과목
+                   canonical                 label        amt       mapping_status
+                    영업창출현금흐름         영업에서 창출된 현금흐름 -7,175,001 exact_taxonomy_match
+                      운전자본변동              자산부채의 증감 -7,088,767 exact_taxonomy_match
+                    영업활동현금흐름             영업활동순현금흐름 -6,576,758 exact_taxonomy_match
+                    재무활동현금흐름             재무활동순현금흐름  5,901,430 exact_taxonomy_match
+        기타포괄손익-공정가치측정금융자산의취득 기타포괄손익-공정가치측정금융자산의 취득  5,625,834 exact_taxonomy_match
+        기타포괄손익-공정가치측정금융자산의처분 기타포괄손익-공정가치측정금융자산의 처분  5,403,027 exact_taxonomy_match
+                        이자수취                이자의 수취  1,660,161 exact_taxonomy_match
+                  기초현금및현금성자산           기초 현금및현금성자산  1,244,629 exact_taxonomy_match
+                        이자지급                이자의 지급  1,115,515 exact_taxonomy_match
+                      사채의 발행                사채의 발행  1,014,245    id_label_conflict
+                 현금및현금성자산순증감         현금및현금성자산의 순증감   -629,879 exact_taxonomy_match
+                   당기순이익조정가감                손익조정사항   -474,262 exact_taxonomy_match
+                      사채의 상환                사채의 상환    340,000    id_label_conflict
+                     투자부동산취득             투자부동산의 취득    122,917 exact_taxonomy_match
+                  신종자본증권의 발행            신종자본증권의 발행    119,963    id_label_conflict
+                       배당금지급               배당금의 지급    100,000 exact_taxonomy_match
+                      무형자산취득              무형자산의 취득     84,072 exact_taxonomy_match
+                       배당금수취                배당금 수취     63,458 exact_taxonomy_match
+                    투자활동현금흐름             투자활동순현금흐름     46,018 exact_taxonomy_match
+                관계기업투자자산의 취득          관계기업투자자산의 취득     40,467 exact_taxonomy_match
+                      리스부채상환              리스부채의 증감     35,301 exact_taxonomy_match
+                  신종자본증권의 배당            신종자본증권의 배당     25,168 exact_taxonomy_match
+종속기업과 기타 사업의 지배력 상실에 따른 현금흐름        종속기업 처분 순현금유출입     20,018 exact_taxonomy_match
+                      유형자산취득              유형자산의 취득     16,960 exact_taxonomy_match
+                   사업결합순현금유출        종속기업 취득 순현금유출입     15,016 exact_taxonomy_match
+                관계기업투자자산의 처분          관계기업투자자산의 처분     15,007 exact_taxonomy_match
+                       법인세납부               법인세 납부액      9,861 exact_taxonomy_match
+                기타부채의 증가(감소)              기타부채의 증감      6,473 exact_taxonomy_match
+               임대보증금의 증가(감소)             임대보증금의 증감      3,002 exact_taxonomy_match
+                   투자부동산의 처분             투자부동산의 처분      2,204 exact_taxonomy_match
+                      무형자산처분              무형자산의 처분      2,027 exact_taxonomy_match
+                    현금환율변동효과 외화표시 현금및현금성자산의 환율변동효과       -569    id_label_conflict
+                 현금의기타유입(유출)                    기타        -77    id_label_conflict
+                        주식발행                  유상증자       0.00 exact_taxonomy_match
+           비유동매각예정자산의 처분(CF)        매각예정처분자산집단의 처분       0.00 exact_taxonomy_match
+                      유형자산처분              유형자산의 처분       0.00 exact_taxonomy_match
+
+[SCE] 10과목
+                        canonical                  label       amt       mapping_status
+                             기초자본                   기초자본 5,868,791 exact_taxonomy_match
+                         신종자본증권발행             신종자본증권의 발행   119,963    id_label_conflict
+                          배당금의 지급                배당금의 지급   100,000    id_label_conflict
+            기타포괄손익-공정가치측정금융자산관련손익 기타포괄손익-공정가치측정 금융상품평가손익    55,911    id_label_conflict
+         종속기업의 취득으로 인한 증가(감소), 자본               연결범위의 변동    48,612 exact_taxonomy_match
+                         신종자본증권배당             신종자본증권의 배당    29,163    id_label_conflict
+                    해외사업환산손익(SCE)               해외사업환산손익     3,394    id_label_conflict
+                 해외사업장순투자위험회피평가손익      해외사업장순투자에 대한 위험회피     2,298 exact_taxonomy_match
+재평가잉여금 및 이익잉여금 사이의 이전으로 인한 증가(감소)         유형자산재평가잉여금의 대체      0.00 exact_taxonomy_match
+           비유동매각예정처분자산집단 관련 자본 대체    매각예정처분자산집단 관련 자본 대체      0.00 exact_taxonomy_match
+
+## B. 항등식·검산
+  [CFS] 자산 61,266,920 = 부채 54,970,888+자본 6,296,032? 차이 0
+  [OFS] 자산 57,828,488 = 부채 51,671,276+자본 6,157,212? 차이 0
+
+## C. 미분류(기타 중요 계정) 금액 상위 20 — LLM 판단: 진짜 미등록 표준인가/소계인가
+sj_div fs_div    label                     account_id       amt
+   SCE    CFS     자본총계               ifrs-full_Equity 6,296,032
+   SCE    CFS     자본총계               ifrs-full_Equity 6,224,684
+   SCE    OFS     자본총계               ifrs-full_Equity 6,157,212
+   SCE    CFS     기초자본 dart_EquityAtBeginningOfPeriod 5,839,673
+    CF    CFS 차입부채의 증감                   -표준계정코드 미사용- 5,258,216
+    CF    OFS 차입부채의 증감                   -표준계정코드 미사용- 4,754,832
+   SCE    CFS     자본총계               ifrs-full_Equity 2,304,303
+   SCE    OFS     자본총계               ifrs-full_Equity 2,261,273
+   SCE    CFS     기초자본 dart_EquityAtBeginningOfPeriod 2,038,450
+   SCE    OFS     기초자본 dart_EquityAtBeginningOfPeriod 2,038,072
+   SCE    CFS     자본총계               ifrs-full_Equity 1,493,102
+   SCE    OFS     기초자본 dart_EquityAtBeginningOfPeriod 1,493,102
+   SCE    OFS     자본총계               ifrs-full_Equity 1,493,102
+   SCE    CFS     기초자본 dart_EquityAtBeginningOfPeriod 1,493,102
+   SCE    OFS     자본총계               ifrs-full_Equity 1,479,110
+   SCE    OFS     기초자본 dart_EquityAtBeginningOfPeriod 1,479,110
+   SCE    CFS     기초자본 dart_EquityAtBeginningOfPeriod 1,478,688
+   SCE    CFS     자본총계               ifrs-full_Equity 1,478,688
+   SCE    OFS     자본총계               ifrs-full_Equity 1,142,354
+   SCE    OFS     기초자본 dart_EquityAtBeginningOfPeriod 1,142,354
+  … (외 63건 생략 — 전수는 DB/raw에서 확인)
+
+## D. raw 원문 전수 대조 (DART CSV vs 정규화, 매퍼 미경유) — 미출현=소실/스케일 후보
+  (참고: CIS 행수 격차는 IS 재분류 포함 가능 — 미출현 0이면 손실 아님. SCE는 2D테이블로 셈)
+  [CFS] 행수 funnel(raw→norm, SCE는 2D테이블): BS:36→36  IS:0→0  CIS:37→37  CF:42→42  SCE:144→144
+  [CFS] 미출현 0건 — raw 금액 전수가 정규화에 생존(절대값 기준)
+  [CFS] 전기 미출현 0건 — raw 전기 금액 전수가 prior에 생존(절대값 기준)
+  [OFS] 행수 funnel(raw→norm, SCE는 2D테이블): BS:30→30  IS:0→0  CIS:30→30  CF:35→35  SCE:64→64
+  [OFS] 미출현 0건 — raw 금액 전수가 정규화에 생존(절대값 기준)
+  [OFS] 전기 미출현 0건 — raw 전기 금액 전수가 prior에 생존(절대값 기준)
+
+## E. 시계열 (당기·전기·전전기, 백만, CFS) — 급변·역전 판단
+  전기 결측 0% · 전전기 결측 0% (광범위 결측=시계열 정보 소실 의심)
+  자산총계         당기     61,266,920 전기     53,817,409 전전기     55,430,795
+  부채총계         당기     54,970,888 전기     47,948,619 전전기     49,995,240
+  자본총계         당기      6,296,032 전기      5,868,791 전전기      5,435,556
+  매출           당기     11,585,140 전기     14,270,023 전전기      8,549,550
+  당기순이익        당기        388,028 전기        194,828 전전기        600,291
+
+## F-1. SCE 원공시모순 (bare 합계행 vs 구성요소 컬럼합)
+  ⚠ 원공시모순 2건 — raw bare 값과 구성요소 합 불일치
+
+## F. SCE 검산 (기초+Σleaf변동=기말, change_role 기준)
+  기초 5,868,791 + Σleaf 427,241 = 6,296,032 vs 기말 6,296,032 차이 0 → OK  (leaf 14행, 소계·조정후개시 0행 제외)
+  leaf변동: {'당기순이익': '388,028', '신종자본증권의 발행': '119,963', '배당금지급': '-100,000', '기타포괄손익-공정가치측정 금융상품 평가손익': '55,911', '당기손익-공정가치측정지정금융부채의 자기신용위험조정': '-52,863', '종속기업의 취득으로 인한 증가(감소), 자본': '48,612', '신종자본증권의 배당': '-29,163', '확정급여재측정손익': '-5,009', '지분법기타포괄손익재분류가능': '-4,014', '해외사업환산손익': '3,394', '해외사업장순투자위험회피평가손익': '2,298', '자산재평가손익': '84', '비유동매각예정처분자산집단 관련 자본 대체': '0', '재평가잉여금 및 이익잉여금 사이의 이전으로 인한 증가(감소)': '0'}
+
+## G. 이상 신호
+  통화: ['KRW']
+
+## H. 주석 분류 (note_facts_classified) — 특수관계자·차입·만기·약정·보증 등
+  적재율 540/1324행 (41%) — 분모는 raw XBRL TSV
+  ⚠ 적재율 50% 미만 — 분류기가 다수 fact를 떨굼(의도된 흡수인지 LLM 판단)
+  bucket: {'흡수': np.int64(528), '기타주석': np.int64(6), 'detail': np.int64(6)}
+  category 상위: {'차입금조건': np.int64(3), '현금금융기관': np.int64(3)}
+  주석 차원축 분포: {'ConsolidatedAndSeparateFinancialStatementsAxis': 540, 'ComponentsOfEquityAxis': 528}
+  분식 고가치축 fact 0건 (샘플):
+
+## I. 병합 가시화 — 1 canonical ← 2+ raw label (dedup 이전 매퍼 매핑 기준)
+  다중 label canonical 없음 — 본문 병합 collapse 없음(raw 기준)
+
+[기계요약] 완결성=OK 소실후보=0 전기소실=0 부호반전=0 병합다중라벨=0 원공시모순=2 SCE표준화=OK SCE검산=OK 주석행=540/1324
+[감사 안내] 위 dump를 LLM이 읽고: 분식단서(급변·역전·미분류 큰계정)·소실(§D 미출현)·이질병합(§I label 묶음)·검산불일치·이상부호·주석분식(특수관계자·약정)을 감사관처럼 판단한다. §0 완결성 FAIL이면 데이터부터 고친다. PHASE1_VERIFICATION_PROTOCOL.md 참조.

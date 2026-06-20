@@ -1,0 +1,15 @@
+# 회사 고유 정규화 이탈 교정(데이터). corp_code/year는 데이터 키(코드 분기 아님).
+# 3개+ 회사 반복 시 canonical_accounts.yaml로 승격하고 여기서 제거(quirk=임시·예외).
+company_quirks:
+  # 00545716: 영업수익(매출)을 영업이익 id(dart_OperatingIncomeLoss)로 오태깅 → 영업이익 10배 과대 + 매출 부재.
+  # ripple-search: corpus 1만여 행 중 이 패턴은 이 회사뿐(타사 영업이익 정상) → 일반규칙 아닌 회사 quirk.
+  # override 2개: ①영업수익행→매출 ②dedup서 '기타'로 밀린 진짜 영업이익행 복원(quirk가 dedup 뒤라 복원 필요).
+  "00545716":
+    "2021":
+      account_overrides:
+        - {account_id: dart_OperatingIncomeLoss, label: 영업수익, force_canonical: 매출, reason: "영업수익(매출)을 영업이익 id로 오태깅"}
+        - {account_id: "-표준계정코드 미사용-", label: 영업이익, force_canonical: 영업이익, reason: "진짜 영업이익이 dedup서 기타로 강등 — 복원"}
+    "2022":
+      account_overrides:
+        - {account_id: dart_OperatingIncomeLoss, label: 영업수익, force_canonical: 매출, reason: "영업수익(매출)을 영업이익 id로 오태깅"}
+        - {account_id: "-표준계정코드 미사용-", label: 영업이익, force_canonical: 영업이익, reason: "진짜 영업이익이 dedup서 기타로 강등 — 복원"}

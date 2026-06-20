@@ -152,6 +152,212 @@ def test_numeric_material_includes_full_series_not_only_queue() -> None:
     assert "정답이 아니다" in material["queue_role"]
 
 
+def test_note_excerpt_anchors_on_amount_block_not_header() -> None:
+    """G6: 발췌가 머리말이 아니라 금액 블록에서 시작해야 한다(원본 금액이 LLM에 도달)."""
+
+    from src.report.materials import _amount_anchored_excerpt, _has_amounts
+
+    # 머리말이 앞 350자를 잠식하고 금액은 뒤에 있는 케이스
+    header = "재무제표 주요 주석 조회\n차입금에 대한 세부 정보 공시 [문장영역]\n" + ("설명 " * 120)
+    text = header + "단기차입금\n13,172,504,000,000\n원화차입금\n5,000,000,000"
+    assert _has_amounts(text) is True
+    excerpt = _amount_anchored_excerpt(text)
+    assert "13,172,504,000,000" in excerpt  # 실질 금액이 발췌에 포함
+
+    # 금액 없는 머리말뿐 섹션 = 앞부분 그대로(빈 노트 무날조)
+    boiler = "재무제표 주요 주석 조회"
+    assert _has_amounts(boiler) is False
+    assert _amount_anchored_excerpt(boiler) == boiler
+
+    # 날짜·코드(천단위 1그룹)는 금액으로 오인하지 않음
+    assert _has_amounts("2024-01-01 D82240 코드 1,234") is False
+
+
+def test_change_material_includes_s9_correction_history(tmp_path, monkeypatch) -> None:
+    """G3: S9 정정공시 이력(원본/정정본·재작성 연도)이 change_material에 도달해야 한다.
+
+    회귀 방지: 정정 이력이 UI 배지로만 가고 Phase2 LLM material엔 없던 갭.
+    """
+
+    import json as _json
+
+    from config.settings import settings as _settings
+    from src.report import materials as materials_module
+
+    corp = "00117212"
+    raw = tmp_path / corp / "raw"
+    raw.mkdir(parents=True)
+    (raw / "corrections.json").write_text(
+        _json.dumps(
+            {
+                "corp_code": corp,
+                "corrections": [
+                    {
+                        "period_year": 2019,
+                        "report_kind": "사업보고서",
+                        "is_past_year": True,
+                        "correction_reason": "재무제표 재작성",
+                        "change_summary": "매출 정정",
+                    },
+                    {
+                        "period_year": 2024,
+                        "report_kind": "반기보고서",
+                        "is_past_year": False,
+                        "correction_reason": "단순 오기",
+                        "change_summary": "",
+                    },
+                ],
+            },
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(_settings, "data_dir", tmp_path)
+
+    report = {
+        "corp_code": corp,
+        "review_queue": [],
+        "latest_signal_snapshot": {},
+        "target_year": 2024,
+    }
+    material = materials_module.change_material(report)
+    history = material["restatement_history"]
+    years = {h["year"] for h in history}
+    assert 2019 in years  # 과거연도 재작성 = 데이터 출처 신호
+    restated = next(h for h in history if h["year"] == 2019)
+    assert restated["restated"] is True
+    assert "사업보고서" in restated["report_kind"]
+
+
+def test_unmapped_material_excludes_sce_keeps_real_accounts() -> None:
+    """SCE(자본변동표) 합계행은 '기타 중요 계정'에서 제외, 진짜 미매핑 BS계정은 유지.
+
+    회귀 방지: SCE '기초'·'자본총계' 행이 unmapped material에 노이즈로 실리던 갭.
+    SCE는 전용 2D 테이블이 담당(AGENDA_DD_SCE2D) → 메인 unmapped material에서 빼야 함.
+    """
+
+    from src.report.company_report import _top_unmapped_material_accounts
+
+    frame = pd.DataFrame(
+        [
+            {  # 진짜 미매핑 BS 계정(무표준코드) — 유지돼야
+                "corp_code": "00688996",
+                "year": 2024,
+                "fs_div": "CFS",
+                "sj_div": "BS",
+                "canonical": "기타 중요 계정",
+                "account_id": "-표준계정코드 미사용-",
+                "label": "투자금융자산",
+                "amount": 131_000_000_000_000.0,
+                "mapping_status": "unmapped_extension_account",
+            },
+            {  # SCE 합계행 — 노이즈, 제외돼야
+                "corp_code": "00688996",
+                "year": 2024,
+                "fs_div": "CFS",
+                "sj_div": "SCE",
+                "canonical": "기타 중요 계정",
+                "account_id": "dart_EquityAtBeginningOfPeriod",
+                "label": "기초",
+                "amount": 56_000_000_000_000.0,
+                "mapping_status": "unmapped_extension_account",
+            },
+        ]
+    )
+    out = _top_unmapped_material_accounts(frame, 2024)
+    labels = {row["label"] for row in out}
+    assert "투자금융자산" in labels  # 진짜 계정 유지
+    assert "기초" not in labels  # SCE 노이즈 제외
+    assert all(row["sj_div"] != "SCE" for row in out)
+
+
+def test_unmapped_material_surfaces_for_ofs_only_company() -> None:
+    """별도(OFS)만 있는 단일실체 회사도 미매핑 '기타 중요 계정'이 게시돼야 한다.
+
+    회귀 방지: fs_div=='CFS' 하드코딩이라 OFS 전용사(연결 없는 중소기업)는 미매핑이
+    통째 누락됐다(설계: unmapped는 버리지 않고 게시).
+    """
+
+    from src.report.company_report import _top_unmapped_material_accounts
+
+    frame = pd.DataFrame(
+        [
+            {
+                "corp_code": "00160375",
+                "year": 2024,
+                "fs_div": "OFS",  # 연결 없음 = OFS 전용
+                "sj_div": "BS",
+                "canonical": "기타 중요 계정",
+                "account_id": "ext_SpecialAsset",
+                "label": "특수자산",
+                "amount": 5_000_000_000.0,
+                "mapping_status": "unmapped_extension_account",
+            }
+        ]
+    )
+    out = _top_unmapped_material_accounts(frame, 2024)
+    assert len(out) == 1
+    assert out[0]["label"] == "특수자산"
+
+
+def test_company_report_target_year_follows_data_not_literal(monkeypatch) -> None:
+    """최신 가용연도가 2024인 회사면 target도 2024여야 한다(리터럴 2025 구동 금지, §3).
+
+    회귀 방지: 과거엔 target=max(DEFAULT_YEARS)=2025 고정이라, 2025 미제출사는
+    전 신호가 빈값(review_queue=0)으로 LLM에 아무것도 안 넘어갔다.
+    """
+
+    from src.report import company_report as company_report_module
+
+    frame = pd.DataFrame(
+        [
+            {
+                "corp_code": "00258801",
+                "year": y,
+                "fs_div": "CFS",
+                "sj_div": "BS",
+                "canonical": "자산총계",
+                "account_id": "ifrs-full_Assets",
+                "label": "자산총계",
+                "amount": 100.0,
+                "mapping_status": "exact_taxonomy_match",
+            }
+            for y in (2022, 2023, 2024)  # 2025 부재(미제출)
+        ]
+    )
+    empty_signal_report = {
+        "growth_divergences": pd.DataFrame(columns=["year"]),
+        "direction_checks": pd.DataFrame(columns=["year"]),
+        "primary_yoy": pd.DataFrame(columns=["year"]),
+        "reference_yoy": pd.DataFrame(columns=["year"]),
+    }
+    monkeypatch.setattr(company_report_module, "load_normalized_financials", lambda *a: frame)
+    monkeypatch.setattr(
+        company_report_module, "build_mvp1_signal_report", lambda *a, **k: empty_signal_report
+    )
+    monkeypatch.setattr(company_report_module, "extract_red_flags", lambda *a, **k: [])
+    monkeypatch.setattr(company_report_module, "scan_universal_signals", lambda *a, **k: [])
+    monkeypatch.setattr(company_report_module, "scan_cfs_ofs_gaps", lambda *a, **k: [])
+    monkeypatch.setattr(company_report_module, "scan_restatement_signals", lambda *a, **k: [])
+    monkeypatch.setattr(
+        company_report_module,
+        "build_ratio_report",
+        lambda *a, **k: pd.DataFrame(
+            columns=["id", "category", "name", "year", "value", "status", "basis"]
+        ),
+    )
+    monkeypatch.setattr(company_report_module, "load_ratio_config", lambda: [])
+    monkeypatch.setattr(company_report_module, "load_findings_from_report", lambda *a: [])
+
+    # years를 명시(2025 포함)해도 데이터에 2025가 없으면 target은 2024
+    report = company_report_module.build_company_report(
+        corp_code="00258801",
+        years=[2022, 2023, 2024, 2025],
+        company_provider=lambda corp_code: {"stock_name": "카카오"},
+    )
+    assert report["target_year"] == 2024
+
+
 def test_company_report_keeps_restatements_out_of_review_queue_but_in_snapshot(monkeypatch) -> None:
     from src.report import company_report as company_report_module
     from src.schemas.findings import EvidenceRef
@@ -220,9 +426,7 @@ def test_company_report_keeps_restatements_out_of_review_queue_but_in_snapshot(m
         company_provider=lambda corp_code: {"stock_name": "셀트리온"},
     )
 
-    assert not any(
-        "restatement" in str(item["key_evidence"]) for item in report["review_queue"]
-    )
+    assert not any("restatement" in str(item["key_evidence"]) for item in report["review_queue"])
     assert report["latest_signal_snapshot"]["restatements"][0]["account"] == "무형자산"
 
 
@@ -815,9 +1019,7 @@ def test_query_generation_sanitizes_speculative_terms() -> None:
     class FakeAgent:
         async def run(self, prompt: str) -> SimpleNamespace:
             return SimpleNamespace(
-                output=SearchKeywords(
-                    queries=["회계부정", "삼성전자 2025 매출채권 DSO"]
-                )
+                output=SearchKeywords(queries=["회계부정", "삼성전자 2025 매출채권 DSO"])
             )
 
     material = {"company_name": "삼성전자", "target_year": 2025}
@@ -860,6 +1062,104 @@ def test_external_query_has_no_account_keyword_mapping_table() -> None:
     assert "account_query" not in source.lower()
     assert '"매출채권":' not in source
     assert "'매출채권':" not in source
+
+
+def test_account_level_series_keeps_all_accounts_no_count_cap() -> None:
+    """결함①: account_level_series가 개수상한(구 limit=40)으로 큰 계정을 떨구면 안 된다.
+
+    강등 많은 금융사는 유의성 큰 계정이 상한 밖으로 밀려 LLM material에 누락됐다.
+    PLAN §3(모든 정보 추출 → 에이전트가 가져감) — 코드가 개수로 미리 자르지 않는다.
+    """
+
+    from src.report.company_report import _account_level_series
+
+    frame = pd.DataFrame(
+        [
+            {
+                "corp_code": "00000000",
+                "year": 2024,
+                "fs_div": "CFS",
+                "sj_div": "BS",
+                "canonical": f"계정{i:03d}",
+                "account_id": f"id{i}",
+                "label": f"계정{i:03d}",
+                "amount": float(1000 - i),
+                "mapping_status": "exact_taxonomy_match",
+            }
+            for i in range(50)  # 구 상한 40 초과
+        ]
+    )
+    out = _account_level_series(frame, [2024], 2024)
+    keys = {row["series_key"] for row in out}
+    assert len(keys) == 50  # 40개로 잘리지 않고 전부 전달
+
+
+def test_unmapped_material_no_head_cap_and_includes_id_label_conflict() -> None:
+    """결함①: head(5) 제거 + id_label_conflict 강등(canonical='기타 중요 계정') 포함.
+
+    회귀 방지: 금융사 핵심 손익(순이자손익 등)이 id_label_conflict로 강등되면
+    canonical='기타 중요 계정'인데도 mapping_status 조건에서 빠져 누락됐다.
+    """
+
+    from src.report.company_report import _top_unmapped_material_accounts
+
+    rows = [
+        {  # 5건 초과 — head(5)로 잘리면 안 됨
+            "corp_code": "00000000",
+            "year": 2024,
+            "fs_div": "CFS",
+            "sj_div": "BS",
+            "canonical": "기타 중요 계정",
+            "account_id": "-표준계정코드 미사용-",
+            "label": f"확장계정{i}",
+            "amount": float(100 - i),
+            "mapping_status": "unmapped_extension_account",
+        }
+        for i in range(6)
+    ]
+    rows.append(
+        {  # id_label_conflict 강등 — canonical='기타'인데 구 조건에서 누락되던 케이스
+            "corp_code": "00000000",
+            "year": 2024,
+            "fs_div": "CFS",
+            "sj_div": "CF",
+            "canonical": "기타 중요 계정",
+            "account_id": "dart_NetInterestIncome",
+            "label": "순이자손익",
+            "amount": -196_100_000_000.0,
+            "mapping_status": "id_label_conflict",
+        }
+    )
+    out = _top_unmapped_material_accounts(pd.DataFrame(rows), 2024)
+    labels = {row["label"] for row in out}
+    assert "순이자손익" in labels  # id_label_conflict 강등 포함
+    assert sum(1 for row in out if row["label"].startswith("확장계정")) == 6  # head(5) 아님
+
+
+def test_perspective_rules_prioritize_materiality_without_ignoring_small(monkeypatch) -> None:
+    """가드: 큰 항목 우선 검토하되 작아도 추세·부호 이상이면 함께 본다('무시' 강표현 금지)."""
+
+    captured: dict[str, str] = {}
+
+    class FakeAgent:
+        async def run(self, prompt: str) -> SimpleNamespace:
+            captured["prompt"] = prompt
+            return SimpleNamespace(
+                output=PerspectiveAssessment(
+                    perspective="numeric",
+                    status="completed",
+                    risk_areas=[],
+                    risk_level="Low",
+                    summary="검토",
+                    evidence=[],
+                )
+            )
+
+    monkeypatch.setattr("src.report.perspectives.settings.openai_api_key", "fake")
+    asyncio.run(create_perspective_assessment("numeric", {}, FakeAgent, (0,)))
+
+    assert "유의성" in captured["prompt"]  # 큰 항목 우선 가드 도달
+    assert "무시" not in captured["prompt"]  # 강표현 금지(작은 잔액도 패턴 있으면 검토)
 
 
 def test_renderer_shows_external_source_url() -> None:

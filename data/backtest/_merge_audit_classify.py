@@ -48,6 +48,43 @@ def core_stem(aid: str) -> str:
     return detax(PRESENT_RE.sub("", stem(aid)))
 
 
+# 측정종류(회계 분류) 토큰: 같은 칸에 종류가 다르면 이종 혼합(유동/비유동과 무관한 본질 차이).
+# 우선순위 순서대로 첫 매칭 반환. 자기참조 금지: canonical이 아니라 account_id 표준명으로만 판정.
+_CLASS_PATTERNS = [
+    (
+        "지분법",
+        r"AccountedForUsingEquityMethod|InvestmentsInAssociates|InvestmentsInSubsidiaries|JointVentures",
+    ),
+    ("FVOCI", r"FairValueThroughOtherComprehensiveIncome"),
+    ("FVPL", r"FairValueThroughProfitOrLoss|FinancialAssetHeldForTrading|HeldForTrading"),
+    ("상각후원가", r"AmortisedCost"),
+    ("만기보유", r"HeldToMaturity"),
+    ("매도가능", r"AvailableForSale"),
+    ("파생", r"Derivative"),
+    ("예금", r"Deposits"),
+    ("리스", r"Lease"),
+    ("사채", r"Bond"),
+    ("차입", r"Borrowing"),
+    ("충당", r"Provision"),
+    ("투자부동산", r"InvestmentProperty"),
+    ("계약자산", r"ContractAsset|DueFromCustomers|FirmCommitmentAsset"),
+    ("계약부채", r"ContractLiabilit|DueToCustomers|FirmCommitmentLiabilit|IncomeReceivedInAdvance"),
+    ("매출채권", r"TradeReceivable|TradeAndOther\w*Receivable"),
+    ("매입채무", r"TradePayable|TradeAndOther\w*Payable"),
+    ("재고", r"Inventor"),
+]
+_CLASS_RES = [(name, re.compile(pat)) for name, pat in _CLASS_PATTERNS]
+
+
+def measurement_class(aid: str) -> str | None:
+    """account_id 표준명에서 회계 측정종류를 추출. 분류 불가는 None."""
+    s = stem(aid)
+    for name, rx in _CLASS_RES:
+        if rx.search(s):
+            return name
+    return None
+
+
 def classify(ids: list[str]) -> tuple[str, str, str]:
     """반환: (verdict, category, 근거). verdict ∈ {동질, 이질, 의심}.
 
@@ -85,6 +122,13 @@ def classify(ids: list[str]) -> tuple[str, str, str]:
     assoc = [s for s in uniq if "Associat" in s or "EquityMethod" in s or "JointVentures" in s]
     if subs and assoc:
         return "이질", "종속vs관계", f"지배(종속:{subs}) vs 유의적영향(관계:{assoc})"
+
+    # 이종 측정종류 혼합: 한 칸에 회계 종류가 다른 계정(매도가능↔FVPL, 예금↔FVPL 등)이 섞임.
+    # 유동/비유동보다 우선 — 유동/비유동으로 묶이면 본질 차이(종류)가 묻힌다.
+    classes = {measurement_class(i) for i in real}
+    classes.discard(None)
+    if len(classes) >= 2:
+        return "이질", "이종클래스혼합", f"측정종류 혼합: {sorted(classes)}"
 
     cur = [s for s in uniq if CUR_RE.search(s) and not NONCUR_RE.search(s)]
     noncur = [s for s in uniq if NONCUR_RE.search(s)]

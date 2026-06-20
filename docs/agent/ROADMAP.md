@@ -17,6 +17,7 @@
 ## 레이어 구현 순서
 
 - [x] L0 수집 (`src/collect`) — OpenDART 재무제표 + 주석 raw 저장
+  - [x] 수집 부재 manifest(`absence`) 기록 + 하니스 `미제공(...)` 표기 구분
 - [x] L1 정규화 (`src/normalize`) — canonical + mapping confidence
 - [x] L1.5 주석 인덱서 (`src/notes`) — 8개 주석 카테고리 매핑/섹션 파싱, note diff 보류
 - [x] L2 신호엔진 (`src/signals`) — MVP1 관계 사슬 결정론 계산
@@ -67,6 +68,12 @@
 - [x] S3 재무제표 5종 전수(CIS/SCE canonical 보강 + BS/IS/CIS/CF/SCE universal 스캔)
 - [x] S3 보완(CF/CIS/SCE 결정론 큐·strict 제외, LLM material 5종 유지)
 - [x] S4 미매핑 핵심계정 canonical 보강(IFRS16·투자부동산·관계기업·금융자산)
+- [x] P1 Round7 SCE 차감 정규화 보강(bare 한정 `-abs`, 혼재 부호 도출 합계 보존, 비지배 배당 차감 등록)
+- [x] P1 Round8 SCE 부모소계 이중계상 제거 + `sce_deduction_ids` 차감 판정 보강
+- [x] P1 Round9 SCE `당기` 접두 subtotal 매핑 + CFS/OFS 교차 id 충돌 플래그 + 원공시모순 하니스 표기
+- [x] P1 Round10 `총포괄이익 소계` subtotal 보강 + F-1 차감/소계컬럼 오탐 제거
+- [x] P1 Round11 동명 `소계` 인접블록 retag + derived 부모/자식 member 중첩 제외
+- [x] P1 Round12 SCE 소계/스톡-as-leaf 구조 규칙 일반화 + 과수축 self-verification 가드
 - [ ] 공시 변동 (watchlist 키워드 신규 등장)
 - [x] 첫 Finding 리포트 + 감사인 확인 질문 — Gemini 3.5 Flash 재시도 후 생성 완료
 

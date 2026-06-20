@@ -1,0 +1,5662 @@
+{
+  "pairs": [
+    {
+      "a": "유동단기차입금의 증가",
+      "b": "단기차입금증가",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "유동단기차입금의 증가",
+      "reason": "narrower·mistag 아님(범주 cf_financing/cf_financing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동차입금의 상환",
+      "b": "단기차입금상환",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "유동차입금의 상환",
+      "reason": "narrower·mistag 아님(범주 cf_financing/cf_financing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "무형자산",
+      "b": "무형자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "무형자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동 순확정급여부채",
+      "b": "순확정급여부채",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '비유동 순확정급여부채' vs '순확정급여부채' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "비유동 당기손익인식금융자산",
+      "b": "비유동당기손익인식금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "비유동 당기손익인식금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "순이연법인세부채",
+      "b": "이연법인세부채",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '순이연법인세부채' vs '이연법인세부채' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "무형자산취득",
+      "b": "무형자산취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "무형자산취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "순이연법인세자산",
+      "b": "이연법인세자산",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '순이연법인세자산' vs '이연법인세자산' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "유동 사채 및 비유동 사채의 유동성 대체 부분",
+      "b": "유동성사채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "유동 사채 및 비유동 사채의 유동성 대체 부분",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동리스부채",
+      "b": "유동성리스부채",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '유동리스부채' vs '유동성리스부채' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "장기금융상품(BS)",
+      "b": "장기금융상품",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "장기금융상품(BS)",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동파생상품자산(BS)",
+      "b": "유동파생상품자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "유동파생상품자산(BS)",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동파생상품부채(BS)",
+      "b": "유동파생상품부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "비유동파생상품부채(BS)",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "매각예정자산",
+      "b": "매각예정비유동자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "매각예정비유동자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "영업권 이외의 무형자산의 취득",
+      "b": "무형자산취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "무형자산취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "당기손익-공정가치측정금융자산(유동)",
+      "b": "FVPL금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "당기손익-공정가치측정금융자산(유동)",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "법인세납부",
+      "b": "법인세납부(환급)",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "법인세납부(환급)",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "순확정급여부채",
+      "b": "퇴직급여부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "퇴직급여부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동생산용생물자산",
+      "b": "비유동생물자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "비유동생물자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "회계정책변경효과",
+      "b": "연결대상범위변동",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "회계정책변경효과",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "법인세납부",
+      "b": "법인세환급(납부)",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "법인세환급(납부)",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "정부보조금의 수취",
+      "b": "정부보조금수취",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "정부보조금의 수취",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "계속영업이익",
+      "b": "계속영업이익",
+      "statement": "IS",
+      "klass": "synonym",
+      "survivor": "계속영업이익",
+      "reason": "narrower·mistag 아님(범주 pl_subtotal/pl_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "장기충당부채",
+      "b": "충당부채",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '장기충당부채' vs '충당부채' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "단기미지급비용",
+      "b": "미지급비용",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '단기미지급비용' vs '미지급비용' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "단기미지급금",
+      "b": "미지급금",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '단기미지급금' vs '미지급금' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "중단영업이익",
+      "b": "중단영업이익",
+      "statement": "IS",
+      "klass": "synonym",
+      "survivor": "중단영업이익",
+      "reason": "narrower·mistag 아님(범주 pl_subtotal/pl_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동기타금융자산취득",
+      "b": "기타비유동자산의 증가",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "기타비유동자산의 증가",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "계속영업기본주당이익",
+      "b": "계속영업이익",
+      "statement": "IS",
+      "klass": "synonym",
+      "survivor": "계속영업이익",
+      "reason": "narrower·mistag 아님(범주 pl_subtotal/pl_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "계속영업희석주당이익",
+      "b": "계속영업이익",
+      "statement": "IS",
+      "klass": "synonym",
+      "survivor": "계속영업이익",
+      "reason": "narrower·mistag 아님(범주 pl_subtotal/pl_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "중단영업기본주당이익",
+      "b": "중단영업이익",
+      "statement": "IS",
+      "klass": "synonym",
+      "survivor": "중단영업이익",
+      "reason": "narrower·mistag 아님(범주 pl_subtotal/pl_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "매도가능금융자산평가손익(세후기타포괄손익)",
+      "b": "매도가능금융자산평가손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "매도가능금융자산평가손익",
+      "reason": "narrower·mistag 아님(범주 pl_oci/pl_oci) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "임대보증금증가",
+      "b": "장기임대보증금의 증가",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "임대보증금증가",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동파생상품부채",
+      "b": "유동파생상품부채",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '비유동파생상품부채' vs '유동파생상품부채' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "비유동리스부채",
+      "b": "리스부채",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '비유동리스부채' vs '리스부채' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "당기손익-공정가치측정금융부채",
+      "b": "당기손익-공정가치측정금융부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "당기손익-공정가치측정금융부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "IV. 기타포괄손익-공정가치측정금융자산",
+      "b": "FVOCI금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "IV. 기타포괄손익-공정가치측정금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "사채의 발행",
+      "b": "사채발행",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "사채의 발행",
+      "reason": "narrower·mistag 아님(범주 cf_financing/cf_financing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "종속관계공동기업투자",
+      "b": "관계기업투자",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "관계기업투자",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "자본조정(BS)",
+      "b": "자본조정",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "자본조정",
+      "reason": "narrower·mistag 아님(범주 bs_equity/bs_equity) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "사채의 상환",
+      "b": "사채상환",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "사채의 상환",
+      "reason": "narrower·mistag 아님(범주 cf_financing/cf_financing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타영업수익",
+      "b": "기타의영업수익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "기타의영업수익",
+      "reason": "narrower·mistag 아님(범주 pl_revenue/pl_revenue) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "배당금의 지급",
+      "b": "배당변동",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "배당변동",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타영업비용",
+      "b": "기타의영업비용",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "기타의영업비용",
+      "reason": "narrower·mistag 아님(범주 pl_expense/pl_expense) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타영업손익(CF)",
+      "b": "기타손익",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "기타손익",
+      "reason": "narrower·mistag 아님(범주 cf_operating/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "외화환산손익",
+      "b": "외화환산손익",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "외화환산손익",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "VIII. 충당부채",
+      "b": "충당부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "충당부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "관계기업투자자산의 취득",
+      "b": "관계기업투자취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "관계기업투자자산의 취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "관계기업투자자산의 처분",
+      "b": "관계기업투자처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "관계기업투자자산의 처분",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "당기손익-공정가치측정금융자산의 취득",
+      "b": "FVPL금융자산취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "FVPL금융자산취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "배당금수익(CF)",
+      "b": "배당금수익",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "배당금수익",
+      "reason": "narrower·mistag 아님(범주 cf_financing/cf_financing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "신용손실충당금 환입액",
+      "b": "신용손실충당금 환입액",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "신용손실충당금 환입액",
+      "reason": "narrower·mistag 아님(범주 pl_expense/pl_expense) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "재분류불가능기타포괄손익",
+      "b": "재분류불가능기타포괄손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "재분류불가능기타포괄손익",
+      "reason": "narrower·mistag 아님(범주 pl_oci/pl_oci) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "매각예정비유동자산처분이익",
+      "b": "매각예정 비유동자산의 처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "매각예정 비유동자산의 처분",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타손익",
+      "b": "기타손익",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "기타손익",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "선급금의 감소(증가)",
+      "b": "선급금의 증가",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "선급금의 증가",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "순이자손익",
+      "b": "순이자손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "순이자손익",
+      "reason": "narrower·mistag 아님(범주 pl_subtotal/pl_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "파생상품관련손익",
+      "b": "파생상품관련손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "파생상품관련손익",
+      "reason": "narrower·mistag 아님(범주 pl_subtotal/pl_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타부채(BS)",
+      "b": "기타부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "배당금수익",
+      "b": "배당금수익",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "배당금수익",
+      "reason": "narrower·mistag 아님(범주 cf_financing/cf_financing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "당기손익으로 재분류되지 않는 항목(세전기타포괄손익)",
+      "b": "재분류불가능기타포괄손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "당기손익으로 재분류되지 않는 항목(세전기타포괄손익)",
+      "reason": "narrower·mistag 아님(범주 pl_oci/pl_oci) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "차입부채(BS)",
+      "b": "차입부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "차입부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타자산(BS)",
+      "b": "기타자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동매각예정자산의 처분(CF)",
+      "b": "매각예정 비유동자산의 처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "매각예정 비유동자산의 처분",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "파생상품자산",
+      "b": "유동파생상품자산",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '파생상품자산' vs '유동파생상품자산' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "이자비용(CF)",
+      "b": "이자비용조정",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "이자비용(CF)",
+      "reason": "narrower·mistag 아님(범주 cf?/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "파생상품부채",
+      "b": "유동파생상품부채",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '파생상품부채' vs '유동파생상품부채' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "기타포괄손익누계액(BS)",
+      "b": "기타포괄손익누계액",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타포괄손익누계액(BS)",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "전환사채의 발행(CF)",
+      "b": "상환전환우선주 발행",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "상환전환우선주 발행",
+      "reason": "narrower·mistag 아님(범주 cf_financing/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "판매 및 일반관리비",
+      "b": "기타판매비와관리비",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "판매 및 일반관리비",
+      "reason": "narrower·mistag 아님(범주 pl?/pl?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "단기매매금융부채",
+      "b": "당기손익-공정가치측정금융부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "당기손익-공정가치측정금융부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "퇴직급여부채",
+      "b": "순확정급여부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "퇴직급여부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "자기주식의 처분 및 발행 현금흐름",
+      "b": "자기주식처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "자기주식의 처분 및 발행 현금흐름",
+      "reason": "narrower·mistag 아님(범주 cf_financing/cf_financing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "V.상각후원가측정금융자산",
+      "b": "상각후원가금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "V.상각후원가측정금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "당기손익-공정가치측정금융자산의 처분",
+      "b": "FVPL금융자산처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "FVPL금융자산처분",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "재보험비용",
+      "b": "재보험비용",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "재보험비용",
+      "reason": "narrower·mistag 아님(범주 pl_expense/pl_expense) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "재보험수익",
+      "b": "재보험수익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "재보험수익",
+      "reason": "narrower·mistag 아님(범주 pl_revenue/pl_revenue) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "순확정급여자산(BS)",
+      "b": "순확정급여자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "순확정급여자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "지분법기타포괄손익재분류가능",
+      "b": "관계종속기업기타포괄손익지분",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "지분법기타포괄손익재분류가능",
+      "reason": "narrower·mistag 아님(범주 pl_oci/pl_oci) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "배당금지급",
+      "b": "배당금지급",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "배당금지급",
+      "reason": "narrower·mistag 아님(범주 cf_financing/cf_financing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "임차보증금증가",
+      "b": "예치보증금의 증가",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "예치보증금의 증가",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "배당금지급(영업)",
+      "b": "배당금지급",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "배당금지급(영업)",
+      "reason": "narrower·mistag 아님(범주 cf_financing/cf_financing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "상각후원가측정금융상품관련이익",
+      "b": "상각후원가측정금융상품관련이익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "상각후원가측정금융상품관련이익",
+      "reason": "narrower·mistag 아님(범주 pl_subtotal/pl_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타포괄손익누계액(BS)",
+      "b": "기타자본구성요소",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타포괄손익누계액(BS)",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_equity) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "지분법적용 투자지분의 취득",
+      "b": "관계기업투자자산의 취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "지분법적용 투자지분의 취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타유동금융부채",
+      "b": "기타금융부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타금융부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "미처분이익잉여금(미처리결손금)",
+      "b": "미처분이익잉여금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "미처분이익잉여금",
+      "reason": "narrower·mistag 아님(범주 bs_equity/bs_equity) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "확정급여채무의현재가치",
+      "b": "확정급여부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "확정급여부채",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "감가상각누계액(BS)",
+      "b": "감가상각누계액",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "감가상각누계액",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "감가상각누계액(BS2)",
+      "b": "감가상각누계액",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "감가상각누계액",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "장기임대보증금",
+      "b": "임대보증금",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '장기임대보증금' vs '임대보증금' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "순확정급여부채",
+      "b": "확정급여부채",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '순확정급여부채' vs '확정급여부채' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "감가상각누계액(BS3)",
+      "b": "감가상각누계액",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "감가상각누계액",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "감가상각누계액(BS4)",
+      "b": "감가상각누계액",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "감가상각누계액",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "파생금융자산평가손실",
+      "b": "파생상품평가손실",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "파생상품평가손실",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "감가상각누계액(BS7)",
+      "b": "감가상각누계액",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "감가상각누계액",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "파생금융자산거래이익",
+      "b": "파생상품거래이익",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "파생상품거래이익",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "수입수수료",
+      "b": "수수료수익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "수수료수익",
+      "reason": "narrower·mistag 아님(범주 pl?/pl_revenue) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "장기임차보증금",
+      "b": "보증금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "보증금",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "대손충당금(BS)",
+      "b": "대손충당금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "대손충당금",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "현재가치할인차금, 장기임차보증금",
+      "b": "현재가치할인차금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "현재가치할인차금",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동성신주인수권부사채",
+      "b": "신주인수권부사채",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '유동성신주인수권부사채' vs '신주인수권부사채' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "유동성전환사채",
+      "b": "전환사채",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '유동성전환사채' vs '전환사채' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "상각후원가측정금융상품제거이익",
+      "b": "상각후원가측정금융상품관련이익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "상각후원가측정금융상품제거이익",
+      "reason": "narrower·mistag 아님(범주 pl_subtotal/pl_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "상각후원가측정금융상품제거손실",
+      "b": "상각후원가측정금융상품관련손실",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "상각후원가측정금융상품제거손실",
+      "reason": "narrower·mistag 아님(범주 pl_expense/pl_expense) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "지분법적용투자",
+      "b": "관계기업투자",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "관계기업투자",
+      "reason": "narrower·mistag 아님(범주 bs_equity/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "지분법적용 투자지분의 처분",
+      "b": "관계기업투자자산의 처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "지분법적용 투자지분의 처분",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타충당부채",
+      "b": "충당부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "충당부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "자기주식의 처분 및 발행",
+      "b": "자기주식변동",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "자기주식의 처분 및 발행",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "관계기업투자처분",
+      "b": "관계기업투자자산의 처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "관계기업투자자산의 처분",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "관계기업투자취득",
+      "b": "관계기업투자자산의 취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "관계기업투자자산의 취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "매입채무 및 기타채무의 증가(감소)",
+      "b": "기타채무의 증가(감소)",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "매입채무 및 기타채무의 증가(감소)",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "매출채권 및 기타채권의 감소(증가)",
+      "b": "기타채권의 감소(증가)",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "매출채권 및 기타채권의 감소(증가)",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타비유동비금융자산의 감소(증가)",
+      "b": "기타비유동자산의 감소(증가)",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "기타비유동자산의 감소(증가)",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타비유동금융자산의 감소(증가)",
+      "b": "기타비유동자산의 감소(증가)",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "기타비유동자산의 감소(증가)",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "단기대여금증가",
+      "b": "단기대여금증가",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "단기대여금증가",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동매각예정자산의 처분",
+      "b": "매각예정 비유동자산의 처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "매각예정 비유동자산의 처분",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "종속기업, 조인트벤처와 관계기업에 대한 투자자산의 처분",
+      "b": "종속기업투자처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "종속기업투자처분",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "종속기업, 조인트벤처와 관계기업에 대한 투자자산의 취득",
+      "b": "종속기업투자취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "종속기업투자취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "매각예정자산처분",
+      "b": "매각예정 비유동자산의 처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "매각예정 비유동자산의 처분",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "장기성매입채무",
+      "b": "비유동매입채무",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "비유동매입채무",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "매입채무및기타유동채무",
+      "b": "매입채무",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "매입채무",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동 당기손익인식금융자산, 의무적으로 측정된 공정가치",
+      "b": "비유동FVPL금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "비유동 당기손익인식금융자산, 의무적으로 측정된 공정가치",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타금융자산처분",
+      "b": "기타포괄손익-공정가치측정금융자산의처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "기타금융자산처분",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "대여금증가",
+      "b": "단기대여금증가",
+      "statement": "CF",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '대여금증가' vs '단기대여금증가' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "대여금감소",
+      "b": "단기대여금감소",
+      "statement": "CF",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '대여금감소' vs '단기대여금감소' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "기타금융자산취득",
+      "b": "기타포괄손익-공정가치측정금융자산의취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "기타금융자산취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "자산재평가손익",
+      "b": "FVOCI지분상품평가손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "자산재평가손익",
+      "reason": "narrower·mistag 아님(범주 pl_oci/pl_oci) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동당기손익-공정가치금융자산",
+      "b": "유동FVPL금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "유동당기손익-공정가치금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동매입채무",
+      "b": "장기차입금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "비유동매입채무",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "금융자산처분이익",
+      "b": "당기손익-공정가치측정금융자산처분이익",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "금융자산처분이익",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "영업권(BS)",
+      "b": "영업권",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "영업권(BS)",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타자본",
+      "b": "자본조정",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타자본",
+      "reason": "narrower·mistag 아님(범주 bs_equity/bs_equity) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "매각예정비유동자산(BS)",
+      "b": "매각예정비유동자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "매각예정비유동자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "납입자본",
+      "b": "자본금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "자본금",
+      "reason": "narrower·mistag 아님(범주 bs_equity/bs_equity) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타유동금융자산",
+      "b": "단기금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "단기금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타유동부채(BS)",
+      "b": "기타유동부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타유동부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동매입채무",
+      "b": "장기기타채무",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "비유동매입채무",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동파생금융자산",
+      "b": "기타유동자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타유동자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타비유동부채(BS)",
+      "b": "기타비유동부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타비유동부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타비유동자산(BS)",
+      "b": "기타비유동자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타비유동자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타자본잉여금",
+      "b": "자본잉여금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "자본잉여금",
+      "reason": "narrower·mistag 아님(범주 bs_equity/bs_equity) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "매도가능금융자산평가손익",
+      "b": "매도가능금융자산 평가손익(평가)",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "매도가능금융자산평가손익",
+      "reason": "narrower·mistag 아님(범주 pl_oci/pl_oci) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "단기대여금감소",
+      "b": "대여금감소",
+      "statement": "CF",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '단기대여금감소' vs '대여금감소' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "현금의기타유입(유출)(CF)",
+      "b": "현금의기타유입(유출)",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "현금의기타유입(유출)",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "임대보증금감소",
+      "b": "보증금의 감소(증가)",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "임대보증금감소",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "현금의기타유입(유출)",
+      "b": "현금의기타유입(유출)",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "현금의기타유입(유출)",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "영업으로부터 창출된 현금",
+      "b": "현금의기타유입(유출)",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "현금의기타유입(유출)",
+      "reason": "narrower·mistag 아님(범주 cf_operating/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동기타금융자산처분",
+      "b": "기타금융자산처분",
+      "statement": "CF",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '비유동기타금융자산처분' vs '기타금융자산처분' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "매각예정자산",
+      "b": "매각예정자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "매각예정자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동기타금융자산취득",
+      "b": "기타금융자산취득",
+      "statement": "CF",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '비유동기타금융자산취득' vs '기타금융자산취득' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "비상위험준비금 적립액",
+      "b": "비상위험준비금 기적립액",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "비상위험준비금 기적립액",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "퇴직급여부채",
+      "b": "확정급여부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "퇴직급여부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "회계정책변경효과",
+      "b": "회계정책변경의 효과",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "회계정책변경효과",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "상각후원가측정금융자산의 취득",
+      "b": "상각후원가측정금융자산의 증가",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "상각후원가측정금융자산의 증가",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "회계정책변경의 효과",
+      "b": "회계정책변경의 효과",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "회계정책변경의 효과",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타유동금융자산",
+      "b": "기타금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타비유동금융자산",
+      "b": "기타금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "매출채권및기타유동채권",
+      "b": "매출채권및기타유동채권",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "매출채권및기타유동채권",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동리스부채",
+      "b": "리스부채",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '유동리스부채' vs '리스부채' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "환율효과반영전현금증감",
+      "b": "현금및현금성자산순증감",
+      "statement": "CF",
+      "klass": "mistag",
+      "survivor": null,
+      "reason": "거친범주 진짜충돌 구조: cf_adjust ↔ cf_subtotal (id='환율효과반영전현금증감', label='현금및현금성자산순증감') — 온보딩 게이트행"
+    },
+    {
+      "a": "비유동매각예정자산의 처분",
+      "b": "매각예정자산처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "매각예정자산처분",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동매출채권",
+      "b": "매출채권및기타유동채권",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "비유동매출채권",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "세전기타포괄손익, 지분상품에 대한 투자자산",
+      "b": "기타포괄손익-공정가치 지분상품 평가손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "세전기타포괄손익, 지분상품에 대한 투자자산",
+      "reason": "narrower·mistag 아님(범주 pl_oci/pl_oci) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "계약부채",
+      "b": "선수수익",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "계약부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타비유동금융부채",
+      "b": "기타금융부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타금융부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "확정급여제도의 재측정손익(세전기타포괄손익)",
+      "b": "확정급여재측정손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "확정급여제도의 재측정손익(세전기타포괄손익)",
+      "reason": "narrower·mistag 아님(범주 pl_oci/pl_oci) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동계약부채",
+      "b": "선수수익",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "선수수익",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "충당부채",
+      "b": "충당부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "충당부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "당기손익으로 재분류되지 않는 항목과 관련된 법인세",
+      "b": "법인세효과",
+      "statement": "CIS",
+      "klass": "mistag",
+      "survivor": null,
+      "reason": "거친범주 진짜충돌 구조: pl_oci ↔ pl_expense (id='당기손익으로 재분류되지 않는 항목과 관련된 법인세', label='법인세효과') — 온보딩 게이트행"
+    },
+    {
+      "a": "해외사업장환산외환차이(세전기타포괄이익)",
+      "b": "해외사업환산손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "해외사업장환산외환차이(세전기타포괄이익)",
+      "reason": "narrower·mistag 아님(범주 pl_oci/pl_oci) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "당기손익으로 재분류될수 있는 항목과 관련된 법인세",
+      "b": "법인세효과",
+      "statement": "CIS",
+      "klass": "mistag",
+      "survivor": null,
+      "reason": "거친범주 진짜충돌 구조: pl_oci ↔ pl_expense (id='당기손익으로 재분류될수 있는 항목과 관련된 법인세', label='법인세효과') — 온보딩 게이트행"
+    },
+    {
+      "a": "현금의기타유입(유출)(CF)",
+      "b": "파생상품거래의 정산으로 인한 현금유입",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "현금의기타유입(유출)(CF)",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "주식발행비용(CF)",
+      "b": "신종자본증권의 상환",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "주식발행비용(CF)",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동금융리스부채",
+      "b": "리스부채",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '비유동금융리스부채' vs '리스부채' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "유동성리스부채",
+      "b": "리스부채",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '유동성리스부채' vs '리스부채' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "비유동장기금융리스채권(BS)",
+      "b": "기타채권",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타채권",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "매각예정자산처분",
+      "b": "매각예정자산처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "매각예정자산처분",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "전환사채의 발행",
+      "b": "신종자본증권발행",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "전환사채의 발행",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "대여금감소",
+      "b": "장기대여금감소",
+      "statement": "CF",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '대여금감소' vs '장기대여금감소' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "매입채무및기타유동채무",
+      "b": "매입채무및기타유동채무",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "매입채무및기타유동채무",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동매입채무",
+      "b": "매입채무및기타유동채무",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "비유동매입채무",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타비유동부채",
+      "b": "기타채무",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타비유동부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동매입채무",
+      "b": "기타채무",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "비유동매입채무",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타포괄손익-공정가치 채무상품 평가손익(CIS)",
+      "b": "기타포괄손익-공정가치 채무상품 평가손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "기타포괄손익-공정가치 채무상품 평가손익",
+      "reason": "narrower·mistag 아님(범주 pl_oci/pl_oci) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "계속영업기본주당이익",
+      "b": "기본주당이익",
+      "statement": "IS",
+      "klass": "synonym",
+      "survivor": "기본주당이익",
+      "reason": "narrower·mistag 아님(범주 pl_subtotal/pl_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "계속영업희석주당이익",
+      "b": "희석주당이익",
+      "statement": "IS",
+      "klass": "synonym",
+      "survivor": "희석주당이익",
+      "reason": "narrower·mistag 아님(범주 pl_subtotal/pl_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기본주당이익",
+      "b": "기본주당이익",
+      "statement": "IS",
+      "klass": "synonym",
+      "survivor": "기본주당이익",
+      "reason": "narrower·mistag 아님(범주 pl_subtotal/pl_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타자본구성요소",
+      "b": "자본조정",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "자본조정",
+      "reason": "narrower·mistag 아님(범주 bs_equity/bs_equity) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "파생상품의 정산",
+      "b": "파생상품거래의 정산으로 인한 현금유입",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "파생상품의 정산",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "파생상품거래의 정산으로 인한 현금유입",
+      "b": "파생상품거래의 정산으로 인한 현금유입",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "파생상품거래의 정산으로 인한 현금유입",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "법인세 납부, 영업활동",
+      "b": "법인세납부(환급)",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "법인세 납부, 영업활동",
+      "reason": "narrower·mistag 아님(범주 cf_operating/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타자본구성요소",
+      "b": "기타자본",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타자본",
+      "reason": "narrower·mistag 아님(범주 bs_equity/bs_equity) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "파생상품평가이익(CF)",
+      "b": "파생상품평가이익",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "파생상품평가이익",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "정부보조금수취",
+      "b": "정부보조금의 수령",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "정부보조금수취",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "현금환율변동효과",
+      "b": "외화표시 현금및현금성자산의 환율변동효과",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "외화표시 현금및현금성자산의 환율변동효과",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "확정급여재측정손익",
+      "b": "확정급여재측정손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "확정급여재측정손익",
+      "reason": "narrower·mistag 아님(범주 pl_oci/pl_oci) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "현금흐름위험회피손익",
+      "b": "현금흐름위험회피손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "현금흐름위험회피손익",
+      "reason": "narrower·mistag 아님(범주 pl_oci/pl_oci) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "당기순이익조정을 위한 기타 가감",
+      "b": "기타",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "기타",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "이자지급(CF2)",
+      "b": "이자지급",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "이자지급(CF2)",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "파생상품평가손익(CIS)",
+      "b": "현금흐름위험회피손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "파생상품평가손익(CIS)",
+      "reason": "narrower·mistag 아님(범주 pl_oci/pl_oci) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "재평가잉여금",
+      "b": "법인세효과",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "법인세효과",
+      "reason": "narrower·mistag 아님(범주 pl?/pl_expense) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "법인세효과(CIS2)",
+      "b": "법인세효과",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "법인세효과",
+      "reason": "narrower·mistag 아님(범주 pl_expense/pl_expense) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타변동에 따른 증가(감소), 자본",
+      "b": "기타변동",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "기타변동",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타포괄손익-공정가치측정금융자산처분손익",
+      "b": "기타포괄손익-공정가치측정지분증권처분손익",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "기타포괄손익-공정가치측정지분증권처분손익",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타투자비용",
+      "b": "기타영업비용",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "기타투자비용",
+      "reason": "narrower·mistag 아님(범주 pl_expense/pl_expense) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "위험회피목적파생상품부채",
+      "b": "유동파생상품부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "위험회피목적파생상품부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "위험회피목적파생상품자산",
+      "b": "유동파생상품자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "위험회피목적파생상품자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타투자수익",
+      "b": "기타영업수익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "기타투자수익",
+      "reason": "narrower·mistag 아님(범주 pl_revenue/pl_revenue) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "보험계약자산(부채)순금융손익(SCE)",
+      "b": "보험계약자산(부채)순금융손익",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "보험계약자산(부채)순금융손익",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타포괄손익(SCE)",
+      "b": "보험수리적손익",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "보험수리적손익",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타유동부채",
+      "b": "기타유동부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타유동부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동배출부채",
+      "b": "기타유동부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타유동부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "단기차입금",
+      "b": "단기차입금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "단기차입금",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "복합금융상품 전환",
+      "b": "전환사채의 전환",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "전환사채의 전환",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "장기차입금",
+      "b": "장기차입금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "장기차입금",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "정부보조금의 수취",
+      "b": "정부보조금의 수령",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "정부보조금의 수취",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타금융자산취득",
+      "b": "기타유동금융자산의 증가",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "기타금융자산취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "전환사채",
+      "b": "전환사채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "전환사채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동성 금융기관 차입금(사채 제외)",
+      "b": "유동성장기차입금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "유동성장기차입금",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "전환사채(BS)",
+      "b": "전환사채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "전환사채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유상증자",
+      "b": "주식발행",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "주식발행",
+      "reason": "narrower·mistag 아님(범주 cf_financing/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "차입부채",
+      "b": "단기차입금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "차입부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "주식발행초과금의결손금보전",
+      "b": "이익잉여금변동",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "주식발행초과금의결손금보전",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동기타금융자산취득",
+      "b": "기타금융자산취득",
+      "statement": "CF",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '유동기타금융자산취득' vs '기타금융자산취득' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "유동기타금융자산처분",
+      "b": "기타금융자산처분",
+      "statement": "CF",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '유동기타금융자산처분' vs '기타금융자산처분' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "판매비와관리비",
+      "b": "판매비와관리비",
+      "statement": "IS",
+      "klass": "synonym",
+      "survivor": "판매비와관리비",
+      "reason": "narrower·mistag 아님(범주 pl?/pl?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "방송제작비(CIS)",
+      "b": "방송제작비",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "방송제작비(CIS)",
+      "reason": "narrower·mistag 아님(범주 pl?/pl?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "광고수익(CIS)",
+      "b": "광고수익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "광고수익(CIS)",
+      "reason": "narrower·mistag 아님(범주 pl_revenue/pl_revenue) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타유동금융자산",
+      "b": "유동 금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "유동 금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타비유동금융자산",
+      "b": "비유동금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "비유동금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "이연법인세자산",
+      "b": "이연법인세자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "이연법인세자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "이연법인세부채",
+      "b": "이연법인세부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "이연법인세부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동 순확정급여부채",
+      "b": "퇴직급여부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "퇴직급여부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "V.상각후원가측정금융자산",
+      "b": "상각후원가측정유가증권",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "V.상각후원가측정금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "리스부채상환",
+      "b": "리스료의 지급",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "리스부채상환",
+      "reason": "narrower·mistag 아님(범주 cf_financing/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "지분법기타포괄손익재분류불가능",
+      "b": "지분법기타포괄손익재분류가능",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "지분법기타포괄손익재분류가능",
+      "reason": "narrower·mistag 아님(범주 pl_oci/pl_oci) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "자기주식의 처분 및 발행 현금흐름",
+      "b": "자기주식취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "자기주식취득",
+      "reason": "narrower·mistag 아님(범주 cf_financing/cf_financing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "단기매매 파생금융자산",
+      "b": "유동파생상품자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "단기매매 파생금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "파생상품부채(CF)",
+      "b": "파생상품부채의 증가(감소)",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "파생상품부채(CF)",
+      "reason": "narrower·mistag 아님(범주 cf?/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타영업비용",
+      "b": "기타영업비용",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "기타영업비용",
+      "reason": "narrower·mistag 아님(범주 pl_expense/pl_expense) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타영업수익",
+      "b": "기타영업수익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "기타영업수익",
+      "reason": "narrower·mistag 아님(범주 pl_revenue/pl_revenue) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "금융리스채권",
+      "b": "리스자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "금융리스채권",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "IV. 상각후원가측정증권",
+      "b": "상각후원가금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "상각후원가금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타의영업비용",
+      "b": "기타영업비용",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "기타의영업비용",
+      "reason": "narrower·mistag 아님(범주 pl_expense/pl_expense) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타의영업수익",
+      "b": "기타영업수익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "기타의영업수익",
+      "reason": "narrower·mistag 아님(범주 pl_revenue/pl_revenue) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동매도가능금융자산",
+      "b": "매도가능금융자산",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '비유동매도가능금융자산' vs '매도가능금융자산' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "매도가능금융자산의 취득",
+      "b": "기타비유동자산의 증가",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "매도가능금융자산의 취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동기타금융자산취득",
+      "b": "종속기업투자취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "종속기업투자취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동기타금융자산처분",
+      "b": "관계기업투자처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "관계기업투자처분",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "순확정급여부채",
+      "b": "순확정급여부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "순확정급여부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동기타금융자산취득",
+      "b": "기타유동금융자산의 증가",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "유동기타금융자산취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "이자비용",
+      "b": "이자비용",
+      "statement": "IS",
+      "klass": "synonym",
+      "survivor": "이자비용",
+      "reason": "narrower·mistag 아님(범주 pl_expense/pl_expense) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "희석주당이익",
+      "b": "희석주당이익",
+      "statement": "IS",
+      "klass": "synonym",
+      "survivor": "희석주당이익",
+      "reason": "narrower·mistag 아님(범주 pl_subtotal/pl_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동FVOCI금융자산",
+      "b": "FVOCI금융자산",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '비유동FVOCI금융자산' vs 'FVOCI금융자산' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "자본잉여금",
+      "b": "자본잉여금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "자본잉여금",
+      "reason": "narrower·mistag 아님(범주 bs_equity/bs_equity) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "자본금",
+      "b": "자본금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "자본금",
+      "reason": "narrower·mistag 아님(범주 bs_equity/bs_equity) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "이익잉여금",
+      "b": "이익잉여금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "이익잉여금",
+      "reason": "narrower·mistag 아님(범주 bs_equity/bs_equity) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타포괄손익누계액",
+      "b": "기타포괄손익누계액",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타포괄손익누계액",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "주식발행초과금",
+      "b": "기타불입자본",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타불입자본",
+      "reason": "narrower·mistag 아님(범주 bs_equity/bs_equity) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "장기차입금",
+      "b": "차입금",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '장기차입금' vs '차입금' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "운전자본변동",
+      "b": "영업에서 창출된 현금",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "운전자본변동",
+      "reason": "narrower·mistag 아님(범주 cf_operating/cf_operating) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타유동금융부채",
+      "b": "기타지급채무",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타지급채무",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "지배력을 상실하지 않는 종속기업에 대한 소유지분의 변동으로 인한 현금유입",
+      "b": "비지배지분의 감소",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "지배력을 상실하지 않는 종속기업에 대한 소유지분의 변동으로 인한 현금유입",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동 당기손익인식금융자산, 의무적으로 측정된 공정가치",
+      "b": "FVPL금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "비유동 당기손익인식금융자산, 의무적으로 측정된 공정가치",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타무형자산",
+      "b": "무형자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "무형자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "FVPL금융자산취득",
+      "b": "당기손익-공정가치 측정 금융자산의 증가",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "당기손익-공정가치 측정 금융자산의 증가",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타비유동금융부채",
+      "b": "기타지급채무",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타지급채무",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "단기차입금",
+      "b": "차입금",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '단기차입금' vs '차입금' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "당기법인세자산",
+      "b": "당기법인세자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "당기법인세자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동당기손익인식금융자산",
+      "b": "FVPL금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "FVPL금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "퇴직급여채무증감",
+      "b": "퇴직금의지급",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "퇴직금의지급",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "투자자산평가이익",
+      "b": "FVPL금융자산평가이익조정",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "투자자산평가이익",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "다른 기업의 지분상품이나 채무상품의 처분에 따른 기타현금유입",
+      "b": "FVPL금융자산처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "다른 기업의 지분상품이나 채무상품의 처분에 따른 기타현금유입",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "다른 기업의 지분상품이나 채무상품의 취득에 따른 기타현금유출",
+      "b": "FVPL금융자산취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "다른 기업의 지분상품이나 채무상품의 취득에 따른 기타현금유출",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "투자자산처분이익",
+      "b": "당기손익-공정가치측정금융자산처분이익",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "투자자산처분이익",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "배당금수취(CF)",
+      "b": "배당금수취",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "배당금수취(CF)",
+      "reason": "narrower·mistag 아님(범주 cf_financing/cf_financing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동 당기손익-공정가치 측정 지정 금융자산",
+      "b": "비유동FVPL금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "비유동 당기손익-공정가치 측정 지정 금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "투자자산평가손실",
+      "b": "FVPL금융자산평가손실조정",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "투자자산평가손실",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동 당기손익-공정가치 측정 지정 금융자산",
+      "b": "유동FVPL금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "유동 당기손익-공정가치 측정 지정 금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "종속관계공동기업투자",
+      "b": "종속기업투자",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "종속기업투자",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동매각예정자산의 처분(CF)",
+      "b": "매각예정자산처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "비유동매각예정자산의 처분(CF)",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "순외환차익",
+      "b": "외환거래손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "외환거래손익",
+      "reason": "narrower·mistag 아님(범주 pl?/pl_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타포괄손익-공정가치측정금융자산처분손익(CF)",
+      "b": "기타포괄손익-공정가치측정금융자산처분이익",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "기타포괄손익-공정가치측정금융자산처분이익",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "후순위부채의 발행",
+      "b": "사채발행",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "후순위부채의 발행",
+      "reason": "narrower·mistag 아님(범주 cf?/cf_financing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "후순위부채의 상환",
+      "b": "사채상환",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "후순위부채의 상환",
+      "reason": "narrower·mistag 아님(범주 cf?/cf_financing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "자본잉여금",
+      "b": "기타불입자본",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타불입자본",
+      "reason": "narrower·mistag 아님(범주 bs_equity/bs_equity) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "당기순이익조정가감",
+      "b": "운전자본의 변동",
+      "statement": "CF",
+      "klass": "mistag",
+      "survivor": null,
+      "reason": "거친범주 진짜충돌 구조: cf_adjust ↔ cf_operating (id='당기순이익조정가감', label='운전자본의 변동') — 온보딩 게이트행"
+    },
+    {
+      "a": "영업권",
+      "b": "무형자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "무형자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "지분법기타포괄손익재분류불가능",
+      "b": "FVOCI지분상품평가손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "지분법기타포괄손익재분류불가능",
+      "reason": "narrower·mistag 아님(범주 pl_oci/pl_oci) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타장기성자산의 취득",
+      "b": "기타비유동자산의 취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "기타장기성자산의 취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "관계기업 및 공동기업 주식 취득 및 처분",
+      "b": "종속기업의 처분",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "종속기업의 처분",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "자산재평가손익",
+      "b": "법인세효과",
+      "statement": "CIS",
+      "klass": "mistag",
+      "survivor": null,
+      "reason": "거친범주 진짜충돌 구조: pl_oci ↔ pl_expense (id='자산재평가손익', label='법인세효과') — 온보딩 게이트행"
+    },
+    {
+      "a": "배당금의 지급(SCE)",
+      "b": "배당변동",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "배당변동",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동당기손익인식금융자산",
+      "b": "비유동FVPL금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "비유동FVPL금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "순확정급여자산",
+      "b": "순확정급여자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "순확정급여자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동 당기손익인식금융자산",
+      "b": "비유동FVPL금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "비유동 당기손익인식금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동 기타포괄손익인식금융자산",
+      "b": "비유동FVOCI금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "비유동 기타포괄손익인식금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동 당기손익인식금융자산",
+      "b": "유동FVPL금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "유동 당기손익인식금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "세전기타포괄손익, 지분상품에 대한 투자자산",
+      "b": "FVOCI지분상품평가손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "세전기타포괄손익, 지분상품에 대한 투자자산",
+      "reason": "narrower·mistag 아님(범주 pl_oci/pl_oci) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "해외사업환산손익(SCE)",
+      "b": "외화환산적립금",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "외화환산적립금",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "당기손익으로 재분류될 수 있는 항목(세전기타포괄손익)",
+      "b": "재분류가능기타포괄손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "당기손익으로 재분류될 수 있는 항목(세전기타포괄손익)",
+      "reason": "narrower·mistag 아님(범주 pl_oci/pl_oci) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동 기타포괄손익인식금융자산",
+      "b": "유동FVOCI금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "유동 기타포괄손익인식금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "지분법자본변동(CIS2)",
+      "b": "지분법기타포괄손익재분류가능",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "지분법자본변동(CIS2)",
+      "reason": "narrower·mistag 아님(범주 pl?/pl_oci) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "대손상각비(대손충당금환입), 판관비",
+      "b": "대손상각비(대손충당금환입)",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "대손상각비(대손충당금환입)",
+      "reason": "narrower·mistag 아님(범주 pl_expense/pl_expense) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "운전자본변동",
+      "b": "운전자본의 변동",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "운전자본의 변동",
+      "reason": "narrower·mistag 아님(범주 cf_operating/cf_operating) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타금융부채",
+      "b": "기타부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타금융자산",
+      "b": "기타자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "종속기업의 유상증자",
+      "b": "종속기업 유상증자",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "종속기업 유상증자",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "충당부채의 조정",
+      "b": "충당부채전입액",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "충당부채의 조정",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동종업원급여충당부채",
+      "b": "순확정급여부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "비유동종업원급여충당부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "상환우선주 상환",
+      "b": "신종자본증권의 상환",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "상환우선주 상환",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동매입채무",
+      "b": "장기유동화채무",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "비유동매입채무",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동반품환불부채",
+      "b": "계약부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "계약부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동확정계약부채",
+      "b": "계약부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "계약부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "자본금변동",
+      "b": "종속기업의 유상증자",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "종속기업의 유상증자",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동확정계약평가자산",
+      "b": "계약자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "계약자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동확정계약자산",
+      "b": "계약자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "계약자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동매각예정자산의 취득",
+      "b": "매각예정비유동자산의 취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "매각예정비유동자산의 취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "전환사채의 상환",
+      "b": "연결대상범위변동",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "전환사채의 상환",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "금융수익",
+      "b": "금융수익",
+      "statement": "IS",
+      "klass": "synonym",
+      "survivor": "금융수익",
+      "reason": "narrower·mistag 아님(범주 pl_revenue/pl_revenue) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "현금의기타유입(유출)",
+      "b": "기타",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "기타",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "계약자산",
+      "b": "계약자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "계약자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동계약자산",
+      "b": "계약자산",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '비유동계약자산' vs '계약자산' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "기타유동금융부채",
+      "b": "단기기타금융부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "단기기타금융부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "매각예정비유동자산",
+      "b": "매각예정자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "매각예정비유동자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "선급금의 증가",
+      "b": "대여금증가",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "선급금의 증가",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "대여금의 회수",
+      "b": "대여금감소",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "대여금의 회수",
+      "reason": "narrower·mistag 아님(범주 cf?/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동파생상품자산(BS)",
+      "b": "비유동파생상품자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "비유동파생상품자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "영업에서 창출된 현금",
+      "b": "영업으로부터 창출된 현금",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "영업으로부터 창출된 현금",
+      "reason": "narrower·mistag 아님(범주 cf_operating/cf_operating) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "충당부채",
+      "b": "기타충당부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "충당부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "장기대여금(BS)",
+      "b": "장기대여금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "장기대여금",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동선급금",
+      "b": "선급금",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '유동선급금' vs '선급금' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "미수수익(BS)",
+      "b": "미수수익",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "미수수익",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "보증금(BS)",
+      "b": "보증금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "보증금",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "지분법적용 투자지분의 취득",
+      "b": "관계기업주식의 취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "지분법적용 투자지분의 취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동파생상품자산",
+      "b": "유동파생상품자산",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '비유동파생상품자산' vs '유동파생상품자산' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "단기대여금(BS)",
+      "b": "단기대여금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "단기대여금",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "지분법손익",
+      "b": "관계기업투자손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "지분법손익",
+      "reason": "narrower·mistag 아님(범주 pl_subtotal/pl_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "신종자본증권의 발행",
+      "b": "신종자본증권의 발행",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "신종자본증권의 발행",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "관계기업투자",
+      "b": "관계기업투자",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "관계기업투자",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "감가상각누계액(BS8)",
+      "b": "감가상각누계액",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "감가상각누계액",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "평가충당금(BS2)",
+      "b": "평가충당금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "평가충당금",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "손상차손누계액(BS4)",
+      "b": "손상차손누계액",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "손상차손누계액",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "대손충당금",
+      "b": "대손충당금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "대손충당금",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "감가상각누계액",
+      "b": "감가상각누계액",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "감가상각누계액",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "감가상각누계액(BS5)",
+      "b": "감가상각누계액",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "감가상각누계액",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "손상차손누계액(BS6)",
+      "b": "손상차손누계액",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "손상차손누계액",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "평가충당금(BS3)",
+      "b": "평가충당금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "평가충당금",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "평가충당금, 저장품",
+      "b": "평가충당금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "평가충당금",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "대손충당금(BS6)",
+      "b": "대손충당금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "대손충당금",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "대손충당금(BS5)",
+      "b": "대손충당금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "대손충당금",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "손상차손누계액(BS3)",
+      "b": "손상차손누계액",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "손상차손누계액",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동성 금융기관 차입금(사채 제외)",
+      "b": "단기차입금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "단기차입금",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동기타채무",
+      "b": "기타지급채무",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타지급채무",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "사채",
+      "b": "사채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "사채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "지배기업의 소유주에게 지급된 배당금, 재무활동",
+      "b": "배당금지급",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "지배기업의 소유주에게 지급된 배당금, 재무활동",
+      "reason": "narrower·mistag 아님(범주 cf_financing/cf_financing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "사업결합순현금유출",
+      "b": "사업결합으로인한 현금유출액",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "사업결합으로인한 현금유출액",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "장기금융상품",
+      "b": "금융기관예치금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "금융기관예치금",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "지분법 이익잉여금 변동",
+      "b": "지분법이익잉여금변동",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "지분법이익잉여금변동",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "매출채권",
+      "b": "매출채권",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "매출채권",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "종속기업/관계기업/공동기업투자손상차손",
+      "b": "종속기업투자주식손상차손",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "종속기업투자주식손상차손",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타대손충당금 환입",
+      "b": "기타의 대손충당금환입",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "기타대손충당금 환입",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타 현금의 유출 없는 비용등",
+      "b": "기타",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "기타",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타 현금의 유입 없는 수익등",
+      "b": "기타",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "기타",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "당기손익으로 재분류되지 않는 항목과 관련된 법인세",
+      "b": "기타포괄손익의 법인세효과",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "당기손익으로 재분류되지 않는 항목과 관련된 법인세",
+      "reason": "narrower·mistag 아님(범주 pl_oci/pl_oci) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "예수금",
+      "b": "예수부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "예수부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "FVPL금융자산평가이익조정",
+      "b": "당기손익-공정가치측정금융상품평가이익",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "FVPL금융자산평가이익조정",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "FVPL금융자산평가손실조정",
+      "b": "당기손익-공정가치측정금융상품처분손익",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "FVPL금융자산평가손실조정",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "무형자산처분손실",
+      "b": "무형자산처분손익",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "무형자산처분손실",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동기타금융자산취득",
+      "b": "상각후원가측정금융자산의 취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "상각후원가측정금융자산의 취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "금융자산처분손실",
+      "b": "당기손익-공정가치측정금융자산처분손실",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "금융자산처분손실",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "종속기업/관계기업/공동기업투자손상차손",
+      "b": "관계기업투자주식손상차손",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "관계기업투자주식손상차손",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동기타금융자산처분",
+      "b": "기타비유동자산의 증가",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "기타비유동자산의 증가",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "투자부동산평가손실",
+      "b": "투자부동산손상차손",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "투자부동산손상차손",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "투자부동산처분이익",
+      "b": "투자부동산처분손익",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "투자부동산처분이익",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "장기차입금차입",
+      "b": "차입금증가",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "차입금증가",
+      "reason": "narrower·mistag 아님(범주 cf_financing/cf_financing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "투자부동산손상차손",
+      "b": "투자부동산손상차손",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "투자부동산손상차손",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "금융자산처분이익",
+      "b": "기타포괄손익-공정가치측정금융자산처분이익",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "금융자산처분이익",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "단기차입금증가",
+      "b": "차입금증가",
+      "statement": "CF",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '단기차입금증가' vs '차입금증가' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "무형자산처분이익",
+      "b": "무형자산처분손익",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "무형자산처분이익",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유형자산",
+      "b": "유형자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "유형자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "무형자산손상차손",
+      "b": "무형자산손상차손",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "무형자산손상차손",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "외화환산이익조정",
+      "b": "외화환산손익",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "외화환산손익",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "투자부동산",
+      "b": "투자부동산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "투자부동산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "당기법인세부채",
+      "b": "당기법인세부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "당기법인세부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "사용권자산",
+      "b": "사용권자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "사용권자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "미지급금증감",
+      "b": "계약부채의 증가(감소)",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "계약부채의 증가(감소)",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동차입금",
+      "b": "단기차입금",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '비유동차입금' vs '단기차입금' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "유동예수부채",
+      "b": "예수부채",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '유동예수부채' vs '예수부채' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "유동당기손익-공정가치측정금융부채",
+      "b": "당기손익-공정가치측정금융부채",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '유동당기손익-공정가치측정금융부채' vs '당기손익-공정가치측정금융부채' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "비유동차입금(사채 포함)의 비유동성 부분",
+      "b": "장기차입금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "장기차입금",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동파생상품부채(BS)",
+      "b": "유동파생상품부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "유동파생상품부채(BS)",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "신용손실충당금 전입액(CF)",
+      "b": "대손상각비",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "신용손실충당금 전입액(CF)",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동금융리스부채",
+      "b": "비유동리스부채",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '비유동금융리스부채' vs '비유동리스부채' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "유동성리스부채",
+      "b": "유동리스부채",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '유동성리스부채' vs '유동리스부채' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "기타손익",
+      "b": "기타",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "기타",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "자기주식취득",
+      "b": "자기주식취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "자기주식취득",
+      "reason": "narrower·mistag 아님(범주 cf_financing/cf_financing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "영업창출현금흐름",
+      "b": "영업에서 창출된 현금",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "영업창출현금흐름",
+      "reason": "narrower·mistag 아님(범주 cf_operating/cf_operating) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "현금및현금성자산순증감",
+      "b": "현금및현금성자산순증감",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "현금및현금성자산순증감",
+      "reason": "narrower·mistag 아님(범주 cf_subtotal/cf_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "매입채무",
+      "b": "매입채무",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "매입채무",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "장기충당부채",
+      "b": "기타충당부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "장기충당부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "리스변경손실",
+      "b": "리스해지손실",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "리스변경손실",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동 당기손익인식금융자산",
+      "b": "FVPL금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "비유동 당기손익인식금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "상각후원가로 측정하는 유동 금융자산",
+      "b": "유동상각후원가금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "상각후원가로 측정하는 유동 금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "상각후원가로 측정하는 비유동 금융자산",
+      "b": "비유동상각후원가금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "상각후원가로 측정하는 비유동 금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "선급금의 증가",
+      "b": "선급금의 증가",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "선급금의 증가",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "예수부채",
+      "b": "예수부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "예수부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "지분법을 사용하여 회계처리하는 관계기업 투자",
+      "b": "관계기업투자",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "지분법을 사용하여 회계처리하는 관계기업 투자",
+      "reason": "narrower·mistag 아님(범주 bs_equity/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "배당금지급(SCE2)",
+      "b": "배당변동",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "배당금지급(SCE2)",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "이연법인세부채(자산)",
+      "b": "이연법인세부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "이연법인세부채(자산)",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "지분법손익(CIS)",
+      "b": "지분법손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "지분법손익",
+      "reason": "narrower·mistag 아님(범주 pl_subtotal/pl_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타장기성자산의 취득",
+      "b": "기타비유동자산의 증가",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "기타장기성자산의 취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "해외사업장환산외환차이 세후재분류조정",
+      "b": "해외사업환산손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "해외사업장환산외환차이 세후재분류조정",
+      "reason": "narrower·mistag 아님(범주 pl_oci/pl_oci) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "순확정급여자산(BS2)",
+      "b": "순확정급여자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "순확정급여자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "경상개발비, 판관비",
+      "b": "경상개발비",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "경상개발비",
+      "reason": "narrower·mistag 아님(범주 pl?/pl?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "복리후생비, 판관비",
+      "b": "복리후생비",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "복리후생비",
+      "reason": "narrower·mistag 아님(범주 pl?/pl?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "지급수수료, 판관비",
+      "b": "지급수수료",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "지급수수료",
+      "reason": "narrower·mistag 아님(범주 pl?/pl?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "접대비, 판관비",
+      "b": "접대비",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "접대비",
+      "reason": "narrower·mistag 아님(범주 pl?/pl?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "여비교통비, 판관비",
+      "b": "여비교통비",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "여비교통비",
+      "reason": "narrower·mistag 아님(범주 pl?/pl?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "금융상품처분손실",
+      "b": "단기매매금융자산처분손실",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "금융상품처분손실",
+      "reason": "narrower·mistag 아님(범주 pl_expense/pl_expense) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "보험료, 판관비",
+      "b": "보험료",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "보험료",
+      "reason": "narrower·mistag 아님(범주 pl?/pl?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "차량유지비, 판관비",
+      "b": "차량유지비",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "차량유지비",
+      "reason": "narrower·mistag 아님(범주 pl?/pl?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동만기보유금융자산",
+      "b": "장기금융상품",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "장기금융상품",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "소모품비, 판관비",
+      "b": "소모품비",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "소모품비",
+      "reason": "narrower·mistag 아님(범주 pl?/pl?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "세금과공과, 판관비",
+      "b": "세금과공과",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "세금과공과",
+      "reason": "narrower·mistag 아님(범주 pl?/pl?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "순외환차익",
+      "b": "외환차익",
+      "statement": "CIS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '순외환차익' vs '외환차익' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "광고선전비, 판관비",
+      "b": "광고선전비",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "광고선전비",
+      "reason": "narrower·mistag 아님(범주 pl?/pl?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "임차료, 판관비",
+      "b": "임차료",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "임차료",
+      "reason": "narrower·mistag 아님(범주 pl?/pl?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "순외환차손",
+      "b": "외환차손",
+      "statement": "CIS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '순외환차손' vs '외환차손' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "통신비, 판관비",
+      "b": "통신비",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "통신비",
+      "reason": "narrower·mistag 아님(범주 pl?/pl?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "도서인쇄비, 판관비",
+      "b": "도서인쇄비",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "도서인쇄비",
+      "reason": "narrower·mistag 아님(범주 pl?/pl?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "수도광열비, 판관비",
+      "b": "수도광열비",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "수도광열비",
+      "reason": "narrower·mistag 아님(범주 pl?/pl?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "운반비, 판관비",
+      "b": "운반비",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "운반비",
+      "reason": "narrower·mistag 아님(범주 pl?/pl?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "교육훈련비, 판관비",
+      "b": "교육훈련비",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "교육훈련비",
+      "reason": "narrower·mistag 아님(범주 pl?/pl?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "수선비, 판관비",
+      "b": "수선비",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "수선비",
+      "reason": "narrower·mistag 아님(범주 pl?/pl?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "수출제비용, 판관비",
+      "b": "수출제비용",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "수출제비용",
+      "reason": "narrower·mistag 아님(범주 pl_expense/pl_expense) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "판매촉진비, 판관비",
+      "b": "판매촉진비",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "판매촉진비",
+      "reason": "narrower·mistag 아님(범주 pl?/pl?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "보관료, 판관비",
+      "b": "보관료",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "보관료",
+      "reason": "narrower·mistag 아님(범주 pl?/pl?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "매도가능금융자산처분손실(금융원가)",
+      "b": "매도가능금융자산처분손실",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "매도가능금융자산처분손실",
+      "reason": "narrower·mistag 아님(범주 pl_expense/pl_expense) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타포괄손익누계액",
+      "b": "기타자본구성요소",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타자본구성요소",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_equity) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "파생금융상품평가손익",
+      "b": "파생금융상품평가손실",
+      "statement": "CIS",
+      "klass": "mistag",
+      "survivor": null,
+      "reason": "거친범주 진짜충돌 구조: pl_oci ↔ pl_expense (id='파생금융상품평가손익', label='파생금융상품평가손실') — 온보딩 게이트행"
+    },
+    {
+      "a": "유동파생상품부채",
+      "b": "파생금융부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "파생금융부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "파생금융상품평가손익",
+      "b": "파생금융상품평가이익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "파생금융상품평가손익",
+      "reason": "narrower·mistag 아님(범주 pl_oci/pl_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "현금환율변동효과",
+      "b": "현금및현금성자산의 환율변동효과",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "현금및현금성자산의 환율변동효과",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동 당기손익-공정가치 측정 지정 금융부채",
+      "b": "당기손익-공정가치측정금융부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "당기손익-공정가치측정금융부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "장기대여금감소",
+      "b": "장기대여금감소",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "장기대여금감소",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동 당기손익-공정가치 측정 지정 금융자산",
+      "b": "FVPL금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "유동 당기손익-공정가치 측정 지정 금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "FVPL금융자산평가이익조정",
+      "b": "당기손익-공정가치금융자산평가이익",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "당기손익-공정가치금융자산평가이익",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "FVOCI지분상품평가손익",
+      "b": "FVOCI지분상품평가손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "FVOCI지분상품평가손익",
+      "reason": "narrower·mistag 아님(범주 pl_oci/pl_oci) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타포괄손익-공정가치로 측정되는 금융자산의 세후차손익",
+      "b": "FVOCI지분상품평가손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "기타포괄손익-공정가치로 측정되는 금융자산의 세후차손익",
+      "reason": "narrower·mistag 아님(범주 pl_oci/pl_oci) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "연결자본거래로 인한 현금유입",
+      "b": "비지배지분의 증가",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "비지배지분의 증가",
+      "reason": "narrower·mistag 아님(범주 cf?/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "연결자본거래로 인한 현금유출",
+      "b": "비지배지분의 감소",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "비지배지분의 감소",
+      "reason": "narrower·mistag 아님(범주 cf?/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "관계기업투자처분",
+      "b": "관계기업투자처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "관계기업투자처분",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "종속기업, 조인트벤처와 관계기업에 대한 투자자산의 처분",
+      "b": "관계기업투자처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "관계기업투자처분",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타유형자산의 취득",
+      "b": "유형자산취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "유형자산취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타무형자산의 취득",
+      "b": "무형자산취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "무형자산취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타유형자산의 처분",
+      "b": "유형자산처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "유형자산처분",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "개발 중인 무형자산",
+      "b": "무형자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "무형자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "단기금융상품",
+      "b": "금융기관예치금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "금융기관예치금",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "미지급법인세",
+      "b": "기타지급채무",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타지급채무",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타유동부채",
+      "b": "기타부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "이연법인세부채",
+      "b": "기타금융부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타금융부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타비유동부채",
+      "b": "기타부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타유동자산",
+      "b": "기타자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "자본조정",
+      "b": "자본조정",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "자본조정",
+      "reason": "narrower·mistag 아님(범주 bs_equity/bs_equity) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "주식발행",
+      "b": "주식발행",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "주식발행",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "사업결합순현금유출",
+      "b": "종속기업의 취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "종속기업의 취득",
+      "reason": "narrower·mistag 아님(범주 cf?/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동성장기차입금",
+      "b": "차입금",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '유동성장기차입금' vs '차입금' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "재분류가능기타포괄손익",
+      "b": "재분류가능기타포괄손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "재분류가능기타포괄손익",
+      "reason": "narrower·mistag 아님(범주 pl_oci/pl_oci) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기말현금및현금성자산",
+      "b": "기말현금및현금성자산",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "기말현금및현금성자산",
+      "reason": "narrower·mistag 아님(범주 cf_subtotal/cf_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기초현금및현금성자산",
+      "b": "기초현금및현금성자산",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "기초현금및현금성자산",
+      "reason": "narrower·mistag 아님(범주 cf_subtotal/cf_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "당기순이익",
+      "b": "당기순이익",
+      "statement": "IS",
+      "klass": "synonym",
+      "survivor": "당기순이익",
+      "reason": "narrower·mistag 아님(범주 pl_subtotal/pl_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "미지급금",
+      "b": "기타지급채무",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타지급채무",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타금융부채",
+      "b": "기타금융부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타금융부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타금융부채(BS)",
+      "b": "기타금융부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타금융부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동장기미지급금",
+      "b": "기타지급채무",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타지급채무",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타금융자산",
+      "b": "기타금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타비유동자산",
+      "b": "기타자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동성전환상환우선주부채",
+      "b": "전환상환우선주부채",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '유동성전환상환우선주부채' vs '전환상환우선주부채' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "장기기타채무",
+      "b": "기타지급채무",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타지급채무",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동차입금",
+      "b": "차입금",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '비유동차입금' vs '차입금' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "비유동차입금(사채 포함)의 비유동성 부분",
+      "b": "차입금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "비유동차입금(사채 포함)의 비유동성 부분",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "지분법적용투자",
+      "b": "종속기업투자",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "종속기업투자",
+      "reason": "narrower·mistag 아님(범주 bs_equity/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동매출채권",
+      "b": "기타 비유동채권",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "비유동매출채권",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "리스부채상환",
+      "b": "리스부채상환",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "리스부채상환",
+      "reason": "narrower·mistag 아님(범주 cf_financing/cf_financing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "현금및현금성자산",
+      "b": "현금및현금성자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "현금및현금성자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타비유동금융자산",
+      "b": "기타 비유동채권",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타 비유동채권",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "만기보유금융자산의 취득",
+      "b": "FVPL금융자산취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "FVPL금융자산취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동매도가능금융자산의 취득",
+      "b": "기타포괄손익-공정가치측정금융자산의취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "기타포괄손익-공정가치측정금융자산의취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타유형자산의 취득",
+      "b": "금형의 취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "금형의 취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "단기차입금상환",
+      "b": "단기차입금증가",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "단기차입금상환",
+      "reason": "narrower·mistag 아님(범주 cf_financing/cf_financing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "단기금융상품",
+      "b": "단기금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "단기금융상품",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "종속기업소유지분변동",
+      "b": "종속기업의 유상증자",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "종속기업의 유상증자",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동 당기손익-공정가치 측정 지정 금융자산",
+      "b": "FVPL금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "비유동 당기손익-공정가치 측정 지정 금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "자산재평가손익(세전기타포괄손익)",
+      "b": "FVOCI지분상품평가손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "자산재평가손익(세전기타포괄손익)",
+      "reason": "narrower·mistag 아님(범주 pl_oci/pl_oci) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동만기보유금융자산의 취득",
+      "b": "상각후원가측정금융자산의 취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "상각후원가측정금융자산의 취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "상각후원가로 측정하는 유동 금융자산",
+      "b": "상각후원가금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "상각후원가로 측정하는 유동 금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "금융자산처분손실",
+      "b": "FVPL금융자산평가손실조정",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "금융자산처분손실",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "지분법자본변동(CIS)",
+      "b": "지분법기타포괄손익재분류가능",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "지분법자본변동(CIS)",
+      "reason": "narrower·mistag 아님(범주 pl?/pl_oci) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "잡이익",
+      "b": "기타",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "기타",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동매도가능금융자산의 처분",
+      "b": "FVPL금융자산처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "FVPL금융자산처분",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "현금의기타유입(유출)",
+      "b": "임대보증금증가",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "현금의기타유입(유출)",
+      "reason": "narrower·mistag 아님(범주 cf?/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "보증금의 감소(증가)",
+      "b": "예치보증금의 증가",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "예치보증금의 증가",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "충당부채의 증가(감소)",
+      "b": "복구충당부채의 증가(감소)",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "충당부채의 증가(감소)",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "장기투자자산처분손실",
+      "b": "당기손익-공정가치측정금융자산처분손실",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "장기투자자산처분손실",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "단기차입금증가",
+      "b": "단기차입금증가",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "단기차입금증가",
+      "reason": "narrower·mistag 아님(범주 cf_financing/cf_financing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "FVPL금융자산평가손실조정",
+      "b": "FVPL금융자산평가손실조정",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "FVPL금융자산평가손실조정",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "FVPL금융자산처분",
+      "b": "FVPL금융자산처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "FVPL금융자산처분",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "상각후원가로 측정하는 비유동 금융자산",
+      "b": "상각후원가금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "상각후원가로 측정하는 비유동 금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "FVPL금융자산평가이익조정",
+      "b": "FVPL금융자산평가이익조정",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "FVPL금융자산평가이익조정",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유형자산취득",
+      "b": "금형의 취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "유형자산취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동당기손익-공정가치금융자산",
+      "b": "FVPL금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "유동당기손익-공정가치금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타유동금융부채",
+      "b": "기타유동부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타유동부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동매도가능금융자산",
+      "b": "FVPL금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "FVPL금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "법인세비용조정",
+      "b": "법인세비용조정",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "법인세비용조정",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "리스부채의 상환",
+      "b": "리스부채상환",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "리스부채상환",
+      "reason": "narrower·mistag 아님(범주 cf_financing/cf_financing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "무형자산상각비",
+      "b": "무형자산상각비",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "무형자산상각비",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "FVOCI적립금변동",
+      "b": "FVOCI지분상품평가손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "FVOCI지분상품평가손익",
+      "reason": "narrower·mistag 아님(범주 pl?/pl_oci) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동매도가능금융자산",
+      "b": "FVPL금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "FVPL금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동만기보유금융자산",
+      "b": "상각후원가금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "상각후원가금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "외화환산이익조정",
+      "b": "외화환산이익조정",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "외화환산이익조정",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "매도가능금융자산의 처분",
+      "b": "FVPL금융자산처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "FVPL금융자산처분",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "만기보유금융자산의 취득",
+      "b": "상각후원가측정금융자산의 취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "만기보유금융자산의 취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "매도가능금융자산의 취득",
+      "b": "FVPL금융자산취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "매도가능금융자산의 취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "이자비용조정",
+      "b": "이자비용조정",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "이자비용조정",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "무형자산처분이익",
+      "b": "무형자산처분이익",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "무형자산처분이익",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "외화환산손실조정",
+      "b": "외화환산손실조정",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "외화환산손실조정",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "임차보증금의 감소(증가)",
+      "b": "임차보증금증가",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "임차보증금증가",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동 기타포괄손익인식금융자산",
+      "b": "FVOCI금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "비유동 기타포괄손익인식금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타포괄손익-공정가치측정금융자산관련손익 총손익",
+      "b": "기타포괄손익-공정가치측정금융자산관련손익",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "기타포괄손익-공정가치측정금융자산관련손익",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동 당기손익인식금융자산",
+      "b": "FVPL금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "유동 당기손익인식금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "무형자산처분",
+      "b": "회원권의 처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "무형자산처분",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "무형자산취득",
+      "b": "회원권의 취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "무형자산취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동성사채",
+      "b": "사채",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '유동성사채' vs '사채' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "기타포괄손익(SCE)",
+      "b": "기타포괄손익-공정가치측정금융자산처분손익",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "기타포괄손익(SCE)",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "당기순이익(손실)",
+      "b": "영업에서 창출된 현금",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "영업에서 창출된 현금",
+      "reason": "narrower·mistag 아님(범주 cf_operating/cf_operating) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "주식발행",
+      "b": "리스부채상환",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "리스부채상환",
+      "reason": "narrower·mistag 아님(범주 cf?/cf_financing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "단기대여금증가",
+      "b": "단기대여금감소",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "단기대여금증가",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "이자비용조정",
+      "b": "이자지급",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "이자지급",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유형자산처분",
+      "b": "유형자산처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "유형자산처분",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "배당금수취",
+      "b": "배당금수익",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "배당금수익",
+      "reason": "narrower·mistag 아님(범주 cf_financing/cf_financing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동당기손익인식금융자산의 취득",
+      "b": "FVPL금융자산취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "FVPL금융자산취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "복합금융상품 전환",
+      "b": "자본잉여금변동",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "복합금융상품 전환",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "관계기업투자취득",
+      "b": "관계기업주식의 취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "관계기업투자취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "대여금의 회수",
+      "b": "단기대여금감소",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "대여금의 회수",
+      "reason": "narrower·mistag 아님(범주 cf?/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "상각후원가로 측정하는 비유동 금융자산",
+      "b": "상각후원가측정유가증권",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "상각후원가로 측정하는 비유동 금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동파생상품부채",
+      "b": "파생금융부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "파생금융부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "장기충당부채",
+      "b": "복구충당부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "장기충당부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "매입채무및기타유동채무",
+      "b": "기타지급채무",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타지급채무",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "당기법인세부채",
+      "b": "미지급법인세",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "당기법인세부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "투자활동 현금흐름이나 재무활동 현금흐름으로 분류되는 기타 모든 항목",
+      "b": "기타",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "기타",
+      "reason": "narrower·mistag 아님(범주 cf_subtotal/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타비유동금융자산",
+      "b": "FVPL금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "FVPL금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "집기의 취득",
+      "b": "비품의 취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "집기의 취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "매도가능금융자산의 취득",
+      "b": "기타포괄손익-공정가치측정금융자산의취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "매도가능금융자산의 취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "매도가능금융자산의 처분",
+      "b": "기타포괄손익-공정가치측정금융자산의처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "매도가능금융자산의 처분",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "집기의 처분",
+      "b": "비품의 처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "집기의 처분",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "영업권 이외의 무형자산의 처분",
+      "b": "회원권의 처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "회원권의 처분",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "영업권의 취득",
+      "b": "사업결합으로인한 현금유출액",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "사업결합으로인한 현금유출액",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "영업권 이외의 무형자산의 취득",
+      "b": "회원권의 취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "회원권의 취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타거래",
+      "b": "종속기업의 유상증자",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "종속기업의 유상증자",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타변동에 따른 증가(감소), 자본",
+      "b": "종속기업의 유상증자",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "종속기업의 유상증자",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비지배지분의 증가",
+      "b": "비지배지분의 취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "비지배지분의 취득",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "자기주식",
+      "b": "기타자본",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "자기주식",
+      "reason": "narrower·mistag 아님(범주 bs_equity/bs_equity) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "예치금",
+      "b": "상각후원가측정예치금",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "예치금",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "주식발행비용(CF)",
+      "b": "자기주식취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "자기주식취득",
+      "reason": "narrower·mistag 아님(범주 cf?/cf_financing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "상각후원가측정유가증권상환손익",
+      "b": "상각후원가측정유가증권처분손익",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "상각후원가측정유가증권상환손익",
+      "reason": "narrower·mistag 아님(범주 cf?/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "보험손익(CIS)",
+      "b": "보험손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "보험손익",
+      "reason": "narrower·mistag 아님(범주 pl_subtotal/pl_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "보험영업수익",
+      "b": "보험수익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "보험수익",
+      "reason": "narrower·mistag 아님(범주 pl_revenue/pl_revenue) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동매입채무",
+      "b": "기타지급채무",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "비유동매입채무",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "계약부채",
+      "b": "계약부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "계약부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "매입채무 외의 비유동채무",
+      "b": "기타지급채무",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타지급채무",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동계약부채",
+      "b": "계약부채",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '비유동계약부채' vs '계약부채' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "지배기업의 소유주에게 귀속될 계속영업손익",
+      "b": "계속영업당기순이익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "지배기업의 소유주에게 귀속될 계속영업손익",
+      "reason": "narrower·mistag 아님(범주 pl_subtotal/pl_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비지배지분에 귀속될 계속영업이익(손실)",
+      "b": "계속영업당기순이익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "계속영업당기순이익",
+      "reason": "narrower·mistag 아님(범주 pl_subtotal/pl_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "지배기업의 소유주에게 귀속될 중단영업손익",
+      "b": "중단영업당기순이익(손실)",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "지배기업의 소유주에게 귀속될 중단영업손익",
+      "reason": "narrower·mistag 아님(범주 pl_subtotal/pl_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비지배지분에 귀속될 중단영업이익(손실)",
+      "b": "중단영업당기순이익(손실)",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "중단영업당기순이익(손실)",
+      "reason": "narrower·mistag 아님(범주 pl_subtotal/pl_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "영업창출현금흐름",
+      "b": "영업으로부터 창출된 현금",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "영업으로부터 창출된 현금",
+      "reason": "narrower·mistag 아님(범주 cf_operating/cf_operating) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동매출채권",
+      "b": "매출채권",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '비유동매출채권' vs '매출채권' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "기타거래",
+      "b": "연결대상범위변동",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "기타거래",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "장기임차보증금",
+      "b": "임차보증금",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '장기임차보증금' vs '임차보증금' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "유상증자(CF)",
+      "b": "신종자본증권의 발행",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "유상증자(CF)",
+      "reason": "narrower·mistag 아님(범주 cf_financing/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "주식기준보상거래",
+      "b": "주식기준보상",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "주식기준보상거래",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "매출채권",
+      "b": "매출채권및기타유동채권",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "매출채권",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동파생상품자산(BS)",
+      "b": "유동파생상품자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "유동파생상품자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "사채",
+      "b": "비유동사채",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '사채' vs '비유동사채' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "관계기업투자",
+      "b": "종속기업투자",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "관계기업투자",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "매출채권및기타유동채권",
+      "b": "매출채권",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "매출채권",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "배당금의 지급(SCE)",
+      "b": "이익잉여금변동",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "배당금의 지급(SCE)",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "파생금융부채평가손실",
+      "b": "파생상품평가손실",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "파생상품평가손실",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타비금융부채의 증가(감소)",
+      "b": "기타부채의 증가(감소)",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "기타부채의 증가(감소)",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "당기손익-공정가치측정금융자산평가이익",
+      "b": "FVPL금융자산평가이익조정",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "FVPL금융자산평가이익조정",
+      "reason": "narrower·mistag 아님(범주 cf?/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "자기주식 소각",
+      "b": "자기주식 소각",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "자기주식 소각",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "출자전환",
+      "b": "전환사채의 전환",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "전환사채의 전환",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "충당부채전입액",
+      "b": "기타충당부채전입액",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "충당부채전입액",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타비유동금융자산",
+      "b": "FVOCI금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "FVOCI금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "확정급여채무의현재가치",
+      "b": "순확정급여부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "확정급여채무의현재가치",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동성장기미지급금",
+      "b": "유동성장기차입금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "유동성장기차입금",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동성장기유동화채무",
+      "b": "단기차입금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "단기차입금",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "운전자본변동",
+      "b": "영업창출현금흐름",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "영업창출현금흐름",
+      "reason": "narrower·mistag 아님(범주 cf_operating/cf_operating) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "사채, 명목금액",
+      "b": "사채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "사채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "단기미지급금",
+      "b": "단기차입금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "단기차입금",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "정부보조금수취",
+      "b": "정부보조금수취",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "정부보조금수취",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "영업이익",
+      "b": "매출",
+      "statement": "IS",
+      "klass": "mistag",
+      "survivor": null,
+      "reason": "거친범주 진짜충돌 구조: pl_subtotal ↔ pl_revenue (id='영업이익', label='매출') — 온보딩 게이트행"
+    },
+    {
+      "a": "부채총계",
+      "b": "부채총계",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "부채총계",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "자본총계",
+      "b": "자본총계",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "자본총계",
+      "reason": "narrower·mistag 아님(범주 bs_equity/bs_equity) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "주식발행초과금",
+      "b": "주식발행초과금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "주식발행초과금",
+      "reason": "narrower·mistag 아님(범주 bs_equity/bs_equity) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "지분법적용투자",
+      "b": "순확정급여자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "순확정급여자산",
+      "reason": "narrower·mistag 아님(범주 bs_equity/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타수익",
+      "b": "기타수익",
+      "statement": "IS",
+      "klass": "synonym",
+      "survivor": "기타수익",
+      "reason": "narrower·mistag 아님(범주 pl_revenue/pl_revenue) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동금융리스채권",
+      "b": "금융리스채권",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '유동금융리스채권' vs '금융리스채권' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "법인세납부(환급)(CF)",
+      "b": "법인세납부",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "법인세납부(환급)(CF)",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타비용",
+      "b": "기타비용",
+      "statement": "IS",
+      "klass": "synonym",
+      "survivor": "기타비용",
+      "reason": "narrower·mistag 아님(범주 pl_expense/pl_expense) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "금융손익(CIS)",
+      "b": "금융손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "금융손익",
+      "reason": "narrower·mistag 아님(범주 pl_subtotal/pl_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "법인세납부",
+      "b": "법인세납부",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "법인세납부",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "금융상품의 처분",
+      "b": "기타금융자산처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "금융상품의 처분",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "지분법적용 투자지분의 처분",
+      "b": "관계기업투자처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "지분법적용 투자지분의 처분",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "지분법적용 투자지분의 취득",
+      "b": "관계기업투자취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "지분법적용 투자지분의 취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타유동금융부채",
+      "b": "유동파생상품부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타유동금융부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동파생상품부채",
+      "b": "유동파생상품부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "유동파생상품부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "지분법자본변동(SCE2)",
+      "b": "지분법이익잉여금변동",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "지분법이익잉여금변동",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "자기주식변동",
+      "b": "자기주식 소각",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "자기주식 소각",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "종속기업투자취득",
+      "b": "종속기업의 취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "종속기업의 취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "무형자산취득",
+      "b": "소프트웨어의 취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "무형자산취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타비유동금융자산",
+      "b": "무형자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "무형자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "FVPL금융자산취득",
+      "b": "FVPL금융자산취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "FVPL금융자산취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "당기법인세부채",
+      "b": "단기기타금융부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "단기기타금융부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "매입채무 및 기타유동채무의 증가(감소)",
+      "b": "기타채무의 증가(감소)",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "기타채무의 증가(감소)",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "하자보수비",
+      "b": "하자보수충당부채전입액",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "하자보수충당부채전입액",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "주식발행",
+      "b": "재무활동으로 인한 현금유입액",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "재무활동으로 인한 현금유입액",
+      "reason": "narrower·mistag 아님(범주 cf?/cf_financing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "당기순이익조정가감",
+      "b": "영업창출현금흐름",
+      "statement": "CF",
+      "klass": "mistag",
+      "survivor": null,
+      "reason": "거친범주 진짜충돌 구조: cf_adjust ↔ cf_operating (id='당기순이익조정가감', label='영업창출현금흐름') — 온보딩 게이트행"
+    },
+    {
+      "a": "차입금증가",
+      "b": "단기차입금증가",
+      "statement": "CF",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '차입금증가' vs '단기차입금증가' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "유동매도가능금융자산",
+      "b": "FVOCI금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "FVOCI금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "관계기업투자손익",
+      "b": "지분법손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "지분법손익",
+      "reason": "narrower·mistag 아님(범주 pl_subtotal/pl_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동성장기차입금",
+      "b": "유동성장기차입금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "유동성장기차입금",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "장기차입금차입",
+      "b": "비유동차입금차입",
+      "statement": "CF",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '장기차입금차입' vs '비유동차입금차입' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "비유동차입금상환",
+      "b": "비유동차입금상환",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "비유동차입금상환",
+      "reason": "narrower·mistag 아님(범주 cf_financing/cf_financing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타자본구성요소",
+      "b": "기타불입자본",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타불입자본",
+      "reason": "narrower·mistag 아님(범주 bs_equity/bs_equity) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "차입금상환",
+      "b": "비유동차입금상환",
+      "statement": "CF",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '차입금상환' vs '비유동차입금상환' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "유동선급금(BS)",
+      "b": "선급금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "유동선급금(BS)",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동 순확정급여부채",
+      "b": "확정급여부채",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '비유동 순확정급여부채' vs '확정급여부채' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "유동미수수익",
+      "b": "미수수익",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '유동미수수익' vs '미수수익' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "비유동장기미지급금",
+      "b": "장기미지급금",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '비유동장기미지급금' vs '장기미지급금' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "차입금증가",
+      "b": "비유동차입금차입",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "차입금증가",
+      "reason": "narrower·mistag 아님(범주 cf_financing/cf_financing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "장기대여금증가",
+      "b": "장기대여금증가",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "장기대여금증가",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "종속기업과 기타 사업의 지배력 상실에 따른 현금흐름",
+      "b": "종속기업투자처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "종속기업과 기타 사업의 지배력 상실에 따른 현금흐름",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "장기미수금(BS)",
+      "b": "장기미수금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "장기미수금",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "지분법손익(CIS3)",
+      "b": "지분법손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "지분법손익",
+      "reason": "narrower·mistag 아님(범주 pl_subtotal/pl_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "보험서비스비용",
+      "b": "보험비용",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "보험비용",
+      "reason": "narrower·mistag 아님(범주 pl_expense/pl_expense) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "보험비용",
+      "b": "보험서비스비용",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "보험비용",
+      "reason": "narrower·mistag 아님(범주 pl_expense/pl_expense) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "당기순이익조정을 위한 기타 가감",
+      "b": "기타손익",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "당기순이익조정을 위한 기타 가감",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "현금의기타유입(유출)(CF)",
+      "b": "기타",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "기타",
+      "reason": "narrower·mistag 아님(범주 cf?/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "사업결합순현금유출",
+      "b": "종속기업투자취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "사업결합순현금유출",
+      "reason": "narrower·mistag 아님(범주 cf?/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타유동금융자산",
+      "b": "유동성 관계기업투자",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "유동성 관계기업투자",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동기타금융자산취득",
+      "b": "기타포괄손익-공정가치측정금융자산의취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "기타포괄손익-공정가치측정금융자산의취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동금융보증부채",
+      "b": "기타금융부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타금융부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동기타금융자산처분",
+      "b": "기타포괄손익-공정가치측정금융자산의처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "기타포괄손익-공정가치측정금융자산의처분",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "종속기업, 조인트벤처와 관계기업에 대한 투자자산의 취득",
+      "b": "관계기업투자취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "관계기업투자취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동FVOCI금융자산",
+      "b": "FVOCI금융자산",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '유동FVOCI금융자산' vs 'FVOCI금융자산' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "유동 기타포괄손익인식금융자산",
+      "b": "FVOCI금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "유동 기타포괄손익인식금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타포괄손익에 포함되는, 기타포괄손익-공정가치 측정 금융자산에 관련되는 법인세",
+      "b": "기타포괄손익의 법인세효과",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "기타포괄손익의 법인세효과",
+      "reason": "narrower·mistag 아님(범주 pl_oci/pl_oci) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타포괄손익의 법인세효과",
+      "b": "기타포괄손익의 법인세효과",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "기타포괄손익의 법인세효과",
+      "reason": "narrower·mistag 아님(범주 pl_oci/pl_oci) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "고객에 대한 대여금 및 선급금의 감소(증가)",
+      "b": "선급금의 증가",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "선급금의 증가",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동당기손익인식금융자산의 취득",
+      "b": "FVPL금융자산취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "FVPL금융자산취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동당기손익인식금융자산의 처분",
+      "b": "FVPL금융자산처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "FVPL금융자산처분",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "단기차입금",
+      "b": "유동성장기차입금",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '단기차입금' vs '유동성장기차입금' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "복구충당부채",
+      "b": "복구충당부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "복구충당부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타비유동부채(BS2)",
+      "b": "기타비유동부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타비유동부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "보증금의 감소(증가)",
+      "b": "기타보증금의 증가",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "기타보증금의 증가",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf_adjust) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "복합금융상품 전환",
+      "b": "연결대상범위변동",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "연결대상범위변동",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "종속기업소유지분변동",
+      "b": "지분법이익잉여금변동",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "지분법이익잉여금변동",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "전환권대가",
+      "b": "전환권대가",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "전환권대가",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "영업활동현금흐름",
+      "b": "영업활동현금흐름",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "영업활동현금흐름",
+      "reason": "narrower·mistag 아님(범주 cf_subtotal/cf_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "매출채권및기타유동채권",
+      "b": "기타채권",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타채권",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타거래",
+      "b": "주식선택권행사",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "기타거래",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "대여금증가",
+      "b": "장기대여금증가",
+      "statement": "CF",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '대여금증가' vs '장기대여금증가' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "미처분이익잉여금(미처리결손금)",
+      "b": "미처분이익잉여금(미처리결손금)",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "미처분이익잉여금(미처리결손금)",
+      "reason": "narrower·mistag 아님(범주 bs_equity/bs_equity) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "신주청약",
+      "b": "연결대상범위변동",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "신주청약",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "재분류가능기타포괄손익",
+      "b": "재분류불가능기타포괄손익",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "재분류가능기타포괄손익",
+      "reason": "narrower·mistag 아님(범주 pl_oci/pl_oci) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "운전자본변동",
+      "b": "영업으로부터 창출된 현금",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "영업으로부터 창출된 현금",
+      "reason": "narrower·mistag 아님(범주 cf_operating/cf_operating) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "투자부동산취득",
+      "b": "단기금융상품취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "투자부동산취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "전환사채의 발행",
+      "b": "자본잉여금변동",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "전환사채의 발행",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타영업외수익",
+      "b": "지분법손익",
+      "statement": "CIS",
+      "klass": "mistag",
+      "survivor": null,
+      "reason": "거친범주 진짜충돌 구조: pl_revenue ↔ pl_subtotal (id='기타영업외수익', label='지분법손익') — 온보딩 게이트행"
+    },
+    {
+      "a": "사채발행",
+      "b": "사채발행",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "사채발행",
+      "reason": "narrower·mistag 아님(범주 cf_financing/cf_financing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "희석주당이익",
+      "b": "계속영업희석주당이익",
+      "statement": "IS",
+      "klass": "synonym",
+      "survivor": "희석주당이익",
+      "reason": "narrower·mistag 아님(범주 pl_subtotal/pl_subtotal) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "단기금융상품취득",
+      "b": "단기금융상품취득",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "단기금융상품취득",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "단기금융상품처분",
+      "b": "단기금융상품처분",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "단기금융상품처분",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "자본금",
+      "b": "보통주자본금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "자본금",
+      "reason": "narrower·mistag 아님(범주 bs_equity/bs_equity) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동성교환사채",
+      "b": "교환사채",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '유동성교환사채' vs '교환사채' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "자본조정",
+      "b": "기타자본",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타자본",
+      "reason": "narrower·mistag 아님(범주 bs_equity/bs_equity) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "공동기업투자",
+      "b": "관계기업투자",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "공동기업투자",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "금융기관 차입금(사채 제외)",
+      "b": "단기차입금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "단기차입금",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "지배기업귀속총포괄손익",
+      "b": "지배주주지분",
+      "statement": "CIS",
+      "klass": "synonym",
+      "survivor": "지배주주지분",
+      "reason": "narrower·mistag 아님(범주 pl_subtotal/pl?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "유동성 금융기관 차입금(사채 제외)",
+      "b": "차입금",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "유동성 금융기관 차입금(사채 제외)",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "선수금의 증가(감소)",
+      "b": "선수금의 수취",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "선수금의 수취",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "당기순이익(손실)",
+      "b": "영업창출현금흐름",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "영업창출현금흐름",
+      "reason": "narrower·mistag 아님(범주 cf_operating/cf_operating) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "당기순이익조정가감",
+      "b": "이자수취",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "이자수취",
+      "reason": "narrower·mistag 아님(범주 cf_adjust/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "운전자본변동",
+      "b": "이자지급",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "이자지급",
+      "reason": "narrower·mistag 아님(범주 cf_operating/cf?) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "다른 기업의 지분상품이나 채무상품의 취득에 따른 기타현금유출",
+      "b": "유형자산의 감소",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "유형자산의 감소",
+      "reason": "narrower·mistag 아님(범주 cf_investing/cf_investing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "장기차입금차입",
+      "b": "리스부채상환",
+      "statement": "CF",
+      "klass": "synonym",
+      "survivor": "리스부채상환",
+      "reason": "narrower·mistag 아님(범주 cf_financing/cf_financing) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "장기금융상품",
+      "b": "종속기업투자",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "종속기업투자",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "기타비유동금융부채",
+      "b": "리스부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "리스부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "종속기업소유지분변동",
+      "b": "종속기업 유상증자",
+      "statement": "SCE",
+      "klass": "synonym",
+      "survivor": "종속기업 유상증자",
+      "reason": "narrower·mistag 아님(범주 sce_change/sce_change) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "자본금",
+      "b": "납입자본",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "자본금",
+      "reason": "narrower·mistag 아님(범주 bs_equity/bs_equity) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "비유동종업원급여충당부채",
+      "b": "기타부채",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "기타부채",
+      "reason": "narrower·mistag 아님(범주 bs_liability/bs_liability) — 통합 후보, 사람검수 큐"
+    }
+  ],
+  "_self_check": [
+    {
+      "a": "유동리스부채",
+      "b": "리스부채",
+      "statement": "BS",
+      "klass": "narrower",
+      "survivor": null,
+      "reason": "세분화 관계(수식어 차이만): '유동리스부채' vs '리스부채' — 통합 금지(정보손실)"
+    },
+    {
+      "a": "FVPL금융자산",
+      "b": "당기손익-공정가치측정금융자산",
+      "statement": "BS",
+      "klass": "synonym",
+      "survivor": "FVPL금융자산",
+      "reason": "narrower·mistag 아님(범주 bs_asset/bs_asset) — 통합 후보, 사람검수 큐"
+    },
+    {
+      "a": "영업이익",
+      "b": "매출",
+      "statement": "IS",
+      "klass": "mistag",
+      "survivor": null,
+      "reason": "거친범주 진짜충돌 구조: pl_subtotal ↔ pl_revenue (id='영업이익', label='매출') — 온보딩 게이트행"
+    }
+  ]
+}

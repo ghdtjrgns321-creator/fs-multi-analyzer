@@ -1,0 +1,61 @@
+C:\Users\ghdtj\workspace\portfolio\fs-multi-analyzer\data\backtest\_xbrl_to_finstate_csv.py:148: FutureWarning: Truth-testing of elements was a source of confusion and will always return True in future versions. Use specific 'len(elem)' or 'elem is not None' test instead.
+  {f.context.endDatetime for f in model.facts if f.context and f.context.endDatetime},
+C:\Users\ghdtj\workspace\portfolio\fs-multi-analyzer\data\backtest\_xbrl_to_finstate_csv.py:148: FutureWarning: Truth-testing of elements was a source of confusion and will always return True in future versions. Use specific 'len(elem)' or 'elem is not None' test instead.
+  {f.context.endDatetime for f in model.facts if f.context and f.context.endDatetime},
+C:\Users\ghdtj\workspace\portfolio\fs-multi-analyzer\data\backtest\_xbrl_to_finstate_csv.py:148: FutureWarning: Truth-testing of elements was a source of confusion and will always return True in future versions. Use specific 'len(elem)' or 'elem is not None' test instead.
+  {f.context.endDatetime for f in model.facts if f.context and f.context.endDatetime},
+C:\Users\ghdtj\workspace\portfolio\fs-multi-analyzer\data\backtest\_xbrl_to_finstate_csv.py:148: FutureWarning: Truth-testing of elements was a source of confusion and will always return True in future versions. Use specific 'len(elem)' or 'elem is not None' test instead.
+  {f.context.endDatetime for f in model.facts if f.context and f.context.endDatetime},
+C:\Users\ghdtj\workspace\portfolio\fs-multi-analyzer\data\backtest\_xbrl_to_finstate_csv.py:148: FutureWarning: Truth-testing of elements was a source of confusion and will always return True in future versions. Use specific 'len(elem)' or 'elem is not None' test instead.
+  {f.context.endDatetime for f in model.facts if f.context and f.context.endDatetime},
+C:\Users\ghdtj\workspace\portfolio\fs-multi-analyzer\data\backtest\_xbrl_to_finstate_csv.py:148: FutureWarning: Truth-testing of elements was a source of confusion and will always return True in future versions. Use specific 'len(elem)' or 'elem is not None' test instead.
+  {f.context.endDatetime for f in model.facts if f.context and f.context.endDatetime},
+C:\Users\ghdtj\workspace\portfolio\fs-multi-analyzer\data\backtest\_xbrl_to_finstate_csv.py:148: FutureWarning: Truth-testing of elements was a source of confusion and will always return True in future versions. Use specific 'len(elem)' or 'elem is not None' test instead.
+  {f.context.endDatetime for f in model.facts if f.context and f.context.endDatetime},
+C:\Users\ghdtj\workspace\portfolio\fs-multi-analyzer\data\backtest\_xbrl_to_finstate_csv.py:148: FutureWarning: Truth-testing of elements was a source of confusion and will always return True in future versions. Use specific 'len(elem)' or 'elem is not None' test instead.
+  {f.context.endDatetime for f in model.facts if f.context and f.context.endDatetime},
+C:\Users\ghdtj\workspace\portfolio\fs-multi-analyzer\data\backtest\_xbrl_to_finstate_csv.py:148: FutureWarning: Truth-testing of elements was a source of confusion and will always return True in future versions. Use specific 'len(elem)' or 'elem is not None' test instead.
+  {f.context.endDatetime for f in model.facts if f.context and f.context.endDatetime},
+C:\Users\ghdtj\workspace\portfolio\fs-multi-analyzer\data\backtest\_xbrl_to_finstate_csv.py:148: FutureWarning: Truth-testing of elements was a source of confusion and will always return True in future versions. Use specific 'len(elem)' or 'elem is not None' test instead.
+  {f.context.endDatetime for f in model.facts if f.context and f.context.endDatetime},
+C:\Users\ghdtj\workspace\portfolio\fs-multi-analyzer\data\backtest\_xbrl_to_finstate_csv.py:148: FutureWarning: Truth-testing of elements was a source of confusion and will always return True in future versions. Use specific 'len(elem)' or 'elem is not None' test instead.
+  {f.context.endDatetime for f in model.facts if f.context and f.context.endDatetime},
+C:\Users\ghdtj\workspace\portfolio\fs-multi-analyzer\data\backtest\_xbrl_to_finstate_csv.py:148: FutureWarning: Truth-testing of elements was a source of confusion and will always return True in future versions. Use specific 'len(elem)' or 'elem is not None' test instead.
+  {f.context.endDatetime for f in model.facts if f.context and f.context.endDatetime},
+C:\Users\ghdtj\workspace\portfolio\fs-multi-analyzer\data\backtest\_xbrl_to_finstate_csv.py:148: FutureWarning: Truth-testing of elements was a source of confusion and will always return True in future versions. Use specific 'len(elem)' or 'elem is not None' test instead.
+  {f.context.endDatetime for f in model.facts if f.context and f.context.endDatetime},
+C:\Users\ghdtj\workspace\portfolio\fs-multi-analyzer\data\backtest\_xbrl_to_finstate_csv.py:148: FutureWarning: Truth-testing of elements was a source of confusion and will always return True in future versions. Use specific 'len(elem)' or 'elem is not None' test instead.
+  {f.context.endDatetime for f in model.facts if f.context and f.context.endDatetime},
+C:\Users\ghdtj\workspace\portfolio\fs-multi-analyzer\data\backtest\_xbrl_to_finstate_csv.py:148: FutureWarning: Truth-testing of elements was a source of confusion and will always return True in future versions. Use specific 'len(elem)' or 'elem is not None' test instead.
+  {f.context.endDatetime for f in model.facts if f.context and f.context.endDatetime},
+C:\Users\ghdtj\workspace\portfolio\fs-multi-analyzer\data\backtest\_xbrl_to_finstate_csv.py:148: FutureWarning: Truth-testing of elements was a source of confusion and will always return True in future versions. Use specific 'len(elem)' or 'elem is not None' test instead.
+  {f.context.endDatetime for f in model.facts if f.context and f.context.endDatetime},
+C:\Users\ghdtj\workspace\portfolio\fs-multi-analyzer\data\backtest\_xbrl_to_finstate_csv.py:148: FutureWarning: Truth-testing of elements was a source of confusion and will always return True in future versions. Use specific 'len(elem)' or 'elem is not None' test instead.
+  {f.context.endDatetime for f in model.facts if f.context and f.context.endDatetime},
+C:\Users\ghdtj\workspace\portfolio\fs-multi-analyzer\data\backtest\_xbrl_to_finstate_csv.py:148: FutureWarning: Truth-testing of elements was a source of confusion and will always return True in future versions. Use specific 'len(elem)' or 'elem is not None' test instead.
+  {f.context.endDatetime for f in model.facts if f.context and f.context.endDatetime},
+C:\Users\ghdtj\workspace\portfolio\fs-multi-analyzer\data\backtest\_xbrl_to_finstate_csv.py:148: FutureWarning: Truth-testing of elements was a source of confusion and will always return True in future versions. Use specific 'len(elem)' or 'elem is not None' test instead.
+  {f.context.endDatetime for f in model.facts if f.context and f.context.endDatetime},
+=== 분식사 원본 교체 APPLY(실제 교체) ===
+  [done] 두산에너빌리티/2017: 순이익=-1,097억 CFS=327 OFS=184 주석=1362 백업=data\_backup_corrected\00159616\2017
+  [done] 두산에너빌리티/2018: 순이익=-4,217억 CFS=348 OFS=194 주석=1388 백업=data\_backup_corrected\00159616\2018
+  [done] 두산에너빌리티/2019: 순이익=-1,044억 CFS=334 OFS=202 주석=1382 백업=data\_backup_corrected\00159616\2019
+  [done] 아스트/2018: 순이익=44억 CFS=193 OFS=161 주석=905 백업=data\_backup_corrected\00409681\2018
+  [done] 아스트/2019: 순이익=5억 CFS=207 OFS=164 주석=938 백업=data\_backup_corrected\00409681\2019
+  [done] 아스트/2020: 순이익=-377억 CFS=218 OFS=169 주석=953 백업=data\_backup_corrected\00409681\2020
+  [done] 아스트/2021: 순이익=-337억 CFS=205 OFS=161 주석=921 백업=data\_backup_corrected\00409681\2021
+  [done] 디아이동일/2016: 순이익=11억 CFS=241 OFS=177 주석=1268 백업=data\_backup_corrected\00118345\2016
+  [done] 디아이동일/2017: 순이익=-41억 CFS=261 OFS=185 주석=1286 백업=data\_backup_corrected\00118345\2017
+  [done] 디아이동일/2018: 순이익=138억 CFS=260 OFS=188 주석=1295 백업=data\_backup_corrected\00118345\2018
+  [done] 디아이동일/2019: 순이익=263억 CFS=286 OFS=187 주석=1367 백업=data\_backup_corrected\00118345\2019
+  [done] 모델솔루션/2022: 순이익=77억 CFS=130 OFS=113 주석=702 백업=data\_backup_corrected\00657783\2022
+  [done] 모델솔루션/2023: 순이익=11억 CFS=119 OFS=102 주석=680 백업=data\_backup_corrected\00657783\2023
+  [done] 셀트리온/2016: 순이익=1,805억 CFS=199 OFS=146 주석=964 백업=data\_backup_corrected\00413046\2016
+  [done] 셀트리온/2017: 순이익=4,007억 CFS=184 OFS=139 주석=944 백업=data\_backup_corrected\00413046\2017
+  [done] 셀트리온/2018: 순이익=2,536억 CFS=216 OFS=151 주석=1018 백업=data\_backup_corrected\00413046\2018
+  [done] 셀트리온/2019: 순이익=2,980억 CFS=207 OFS=147 주석=1000 백업=data\_backup_corrected\00413046\2019
+  [done] 셀트리온/2020: 순이익=5,192억 CFS=202 OFS=143 주석=988 백업=data\_backup_corrected\00413046\2020
+  [done] 세토피아/2018: 순이익=— CFS=0 OFS=169 주석=519 백업=data\_backup_corrected\01091382\2018
+  [skip] 세토피아/2019: 원본 XBRL 빈/변환실패
+
+합계: {'done': 19, 'dry': 0, 'skip': 1}

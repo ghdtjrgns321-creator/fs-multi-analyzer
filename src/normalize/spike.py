@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from src.db.normalized import write_normalized_financials
-from src.normalize.pipeline import normalize_company_year
+from src.db.normalized import write_normalized_financials, write_sce_components
+from src.normalize.pipeline import normalize_company_year, sce_components_company_year
 from src.normalize.report import build_report
 
 DEFAULT_CORP_CODE = "00126380"
@@ -24,6 +24,9 @@ def normalize_company_years(
     for year in years:
         frame = normalize_company_year(corp_code, year, data_dir=data_dir)
         db_paths[str(year)] = str(write_normalized_financials(frame, corp_code, year, data_dir))
+        # SCE 2D 구성요소(별도 테이블)도 같은 회사/연도 DB에 영속화.
+        sce = sce_components_company_year(corp_code, year, data_dir=data_dir)
+        write_sce_components(sce, corp_code, year, data_dir)
         frames.append(frame)
 
     return {"corp_code": corp_code, "db_paths": db_paths, "report": build_report(frames)}

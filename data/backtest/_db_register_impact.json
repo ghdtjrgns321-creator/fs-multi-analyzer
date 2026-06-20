@@ -1,0 +1,1180 @@
+{
+ "coverage": {
+  "companies": 1667,
+  "files": 9319
+ },
+ "register_pairs": [
+  {
+   "account_id": "dart_IncreaseDecreaseThroughChangesInAccountingPolicies",
+   "canonical": "기타자본변동"
+  },
+  {
+   "account_id": "dart_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax",
+   "canonical": "재분류가능기타포괄손익"
+  },
+  {
+   "account_id": "dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+   "canonical": "재분류불가능기타포괄손익"
+  },
+  {
+   "account_id": "dart_OtherCurrentAssets",
+   "canonical": "기타유동자산"
+  },
+  {
+   "account_id": "ifrs-full_BondsIssued",
+   "canonical": "사채"
+  },
+  {
+   "account_id": "ifrs_Assets",
+   "canonical": "자산총계"
+  },
+  {
+   "account_id": "ifrs_BasicEarningsLossPerShare",
+   "canonical": "기본주당이익"
+  },
+  {
+   "account_id": "ifrs_CashAndCashEquivalents",
+   "canonical": "현금및현금성자산"
+  },
+  {
+   "account_id": "ifrs_CashFlowsFromUsedInFinancingActivities",
+   "canonical": "재무활동현금흐름"
+  },
+  {
+   "account_id": "ifrs_CashFlowsFromUsedInInvestingActivities",
+   "canonical": "투자활동현금흐름"
+  },
+  {
+   "account_id": "ifrs_CashFlowsFromUsedInOperatingActivities",
+   "canonical": "영업활동현금흐름"
+  },
+  {
+   "account_id": "ifrs_CostOfSales",
+   "canonical": "매출원가"
+  },
+  {
+   "account_id": "ifrs_CurrentAssets",
+   "canonical": "유동자산"
+  },
+  {
+   "account_id": "ifrs_CurrentContractAssets",
+   "canonical": "계약자산"
+  },
+  {
+   "account_id": "ifrs_CurrentContractLiabilities",
+   "canonical": "계약부채"
+  },
+  {
+   "account_id": "ifrs_CurrentLiabilities",
+   "canonical": "유동부채"
+  },
+  {
+   "account_id": "ifrs_CurrentPortionOfLongtermBorrowings",
+   "canonical": "유동성장기차입금"
+  },
+  {
+   "account_id": "ifrs_CurrentTaxLiabilities",
+   "canonical": "당기법인세부채"
+  },
+  {
+   "account_id": "ifrs_DeferredTaxAssets",
+   "canonical": "이연법인세자산"
+  },
+  {
+   "account_id": "ifrs_DeferredTaxLiabilities",
+   "canonical": "이연법인세부채"
+  },
+  {
+   "account_id": "ifrs_DilutedEarningsLossPerShare",
+   "canonical": "희석주당이익"
+  },
+  {
+   "account_id": "ifrs_DividendsPaid",
+   "canonical": "배당변동"
+  },
+  {
+   "account_id": "ifrs_DividendsPaidClassifiedAsFinancingActivities",
+   "canonical": "배당금지급"
+  },
+  {
+   "account_id": "ifrs_Equity",
+   "canonical": "자본총계"
+  },
+  {
+   "account_id": "ifrs_EquityAndLiabilities",
+   "canonical": "자본과부채총계"
+  },
+  {
+   "account_id": "ifrs_EquityAttributableToOwnersOfParent",
+   "canonical": "지배기업소유주지분"
+  },
+  {
+   "account_id": "ifrs_FinanceCosts",
+   "canonical": "이자비용"
+  },
+  {
+   "account_id": "ifrs_FinanceIncome",
+   "canonical": "금융수익"
+  },
+  {
+   "account_id": "ifrs_GainsLossesOnExchangeDifferencesOnTranslationNetOfTax",
+   "canonical": "해외사업환산손익"
+  },
+  {
+   "account_id": "ifrs_GrossProfit",
+   "canonical": "매출총이익"
+  },
+  {
+   "account_id": "ifrs_IncomeTaxExpenseContinuingOperations",
+   "canonical": "법인세비용"
+  },
+  {
+   "account_id": "ifrs_IncreaseDecreaseThroughChangesInAccountingPolicies",
+   "canonical": "기타자본변동"
+  },
+  {
+   "account_id": "ifrs_IntangibleAssetsOtherThanGoodwill",
+   "canonical": "무형자산"
+  },
+  {
+   "account_id": "ifrs_InterestPaidClassifiedAsOperatingActivities",
+   "canonical": "이자지급"
+  },
+  {
+   "account_id": "ifrs_InterestReceivedClassifiedAsOperatingActivities",
+   "canonical": "이자수취"
+  },
+  {
+   "account_id": "ifrs_Inventories",
+   "canonical": "재고자산"
+  },
+  {
+   "account_id": "ifrs_InvestmentAccountedForUsingEquityMethod",
+   "canonical": "관계기업투자"
+  },
+  {
+   "account_id": "ifrs_InvestmentProperty",
+   "canonical": "투자부동산"
+  },
+  {
+   "account_id": "ifrs_InvestmentsInAssociates",
+   "canonical": "관계기업투자"
+  },
+  {
+   "account_id": "ifrs_InvestmentsInSubsidiaries",
+   "canonical": "종속기업투자"
+  },
+  {
+   "account_id": "ifrs_InvestmentsInSubsidiariesJointVenturesAndAssociates",
+   "canonical": "관계기업투자"
+  },
+  {
+   "account_id": "ifrs_IssueOfEquity",
+   "canonical": "자본금변동"
+  },
+  {
+   "account_id": "ifrs_IssuedCapital",
+   "canonical": "자본금"
+  },
+  {
+   "account_id": "ifrs_Liabilities",
+   "canonical": "부채총계"
+  },
+  {
+   "account_id": "ifrs_NoncurrentAssets",
+   "canonical": "비유동자산"
+  },
+  {
+   "account_id": "ifrs_NoncurrentFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome",
+   "canonical": "비유동FVOCI금융자산"
+  },
+  {
+   "account_id": "ifrs_NoncurrentLiabilities",
+   "canonical": "비유동부채"
+  },
+  {
+   "account_id": "ifrs_OtherComprehensiveIncomeNetOfTaxGainsLossesFromInvestmentsInEquityInstruments",
+   "canonical": "FVOCI평가손익"
+  },
+  {
+   "account_id": "ifrs_ProceedsFromSalesOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities",
+   "canonical": "유형자산처분"
+  },
+  {
+   "account_id": "ifrs_ProfitLoss",
+   "canonical": "당기순이익"
+  },
+  {
+   "account_id": "ifrs_ProfitLossAttributableToNoncontrollingInterests",
+   "canonical": "비지배지분순이익"
+  },
+  {
+   "account_id": "ifrs_ProfitLossAttributableToOwnersOfParent",
+   "canonical": "지배기업귀속순이익"
+  },
+  {
+   "account_id": "ifrs_ProfitLossBeforeTax",
+   "canonical": "법인세비용차감전순이익"
+  },
+  {
+   "account_id": "ifrs_PropertyPlantAndEquipment",
+   "canonical": "유형자산"
+  },
+  {
+   "account_id": "ifrs_PurchaseOfIntangibleAssetsClassifiedAsInvestingActivities",
+   "canonical": "무형자산취득"
+  },
+  {
+   "account_id": "ifrs_PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities",
+   "canonical": "유형자산취득"
+  },
+  {
+   "account_id": "ifrs_RetainedEarnings",
+   "canonical": "이익잉여금"
+  },
+  {
+   "account_id": "ifrs_Revenue",
+   "canonical": "매출"
+  },
+  {
+   "account_id": "ifrs_ShareOfProfitLossOfAssociatesAndJointVenturesAccountedForUsingEquityMethod",
+   "canonical": "지분법이익"
+  },
+  {
+   "account_id": "ifrs_SharePremium",
+   "canonical": "주식발행초과금"
+  },
+  {
+   "account_id": "ifrs_ShorttermBorrowings",
+   "canonical": "단기차입금"
+  }
+ ],
+ "register_count": 61,
+ "impact": {
+  "new_mapped_rows": 4567,
+  "groups_same": 572385,
+  "groups_changed": 27,
+  "groups_new": 4085
+ },
+ "changed_examples": [
+  {
+   "corp": "00108649",
+   "key": [
+    "이자비용",
+    "2016",
+    "CFS"
+   ],
+   "before": [
+    "dart_InterestExpenseFinanceExpense",
+    1271606556.0
+   ],
+   "after": [
+    "ifrs_FinanceCosts",
+    1271606556.0
+   ]
+  },
+  {
+   "corp": "00108649",
+   "key": [
+    "이자지급",
+    "2016",
+    "OFS"
+   ],
+   "before": [
+    "-표준계정코드 미사용-",
+    null
+   ],
+   "after": [
+    "ifrs_InterestPaidClassifiedAsOperatingActivities",
+    873614235.0
+   ]
+  },
+  {
+   "corp": "00108649",
+   "key": [
+    "이자비용",
+    "2016",
+    "OFS"
+   ],
+   "before": [
+    "dart_InterestExpenseFinanceExpense",
+    996324258.0
+   ],
+   "after": [
+    "ifrs_FinanceCosts",
+    996324258.0
+   ]
+  },
+  {
+   "corp": "00110750",
+   "key": [
+    "재분류가능기타포괄손익",
+    "2020",
+    "OFS"
+   ],
+   "before": [
+    "dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+    null
+   ],
+   "after": null
+  },
+  {
+   "corp": "00118345",
+   "key": [
+    "이자비용",
+    "2017",
+    "CFS"
+   ],
+   "before": [
+    "dart_InterestExpenseFinanceExpense",
+    8640801731.0
+   ],
+   "after": [
+    "ifrs_FinanceCosts",
+    17798664000.0
+   ]
+  },
+  {
+   "corp": "00118345",
+   "key": [
+    "이자비용",
+    "2017",
+    "OFS"
+   ],
+   "before": [
+    "dart_InterestExpenseFinanceExpense",
+    4516602627.0
+   ],
+   "after": [
+    "ifrs_FinanceCosts",
+    8862189932.0
+   ]
+  },
+  {
+   "corp": "00118345",
+   "key": [
+    "이자비용",
+    "2018",
+    "CFS"
+   ],
+   "before": [
+    "dart_InterestExpenseFinanceExpense",
+    9782882110.0
+   ],
+   "after": [
+    "ifrs_FinanceCosts",
+    15296592848.0
+   ]
+  },
+  {
+   "corp": "00118345",
+   "key": [
+    "이자비용",
+    "2018",
+    "OFS"
+   ],
+   "before": [
+    "dart_InterestExpenseFinanceExpense",
+    5499521804.0
+   ],
+   "after": [
+    "ifrs_FinanceCosts",
+    7542374362.0
+   ]
+  },
+  {
+   "corp": "00127699",
+   "key": [
+    "재분류불가능기타포괄손익",
+    "2017",
+    "CFS"
+   ],
+   "before": [
+    "dart_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax",
+    572748819.0
+   ],
+   "after": null
+  },
+  {
+   "corp": "00127699",
+   "key": [
+    "재분류불가능기타포괄손익",
+    "2017",
+    "OFS"
+   ],
+   "before": [
+    "dart_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax",
+    -97437832.0
+   ],
+   "after": null
+  },
+  {
+   "corp": "00159616",
+   "key": [
+    "기타자본변동",
+    "2018",
+    "CFS"
+   ],
+   "before": [
+    "dart_ChangesInConsolidatedCompanies",
+    -83626257721.0
+   ],
+   "after": [
+    "ifrs_IncreaseDecreaseThroughChangesInAccountingPolicies",
+    -90570952802.0
+   ]
+  },
+  {
+   "corp": "00159616",
+   "key": [
+    "기타자본변동",
+    "2018",
+    "OFS"
+   ],
+   "before": [
+    "dart_CompoundFinancialInstrumentRedemption",
+    96877734.0
+   ],
+   "after": [
+    "ifrs_IncreaseDecreaseThroughChangesInAccountingPolicies",
+    -4481758089.0
+   ]
+  },
+  {
+   "corp": "00161976",
+   "key": [
+    "기타자본변동",
+    "2023",
+    "CFS"
+   ],
+   "before": [
+    "dart_ChangesInConsolidatedCompanies",
+    27500000.0
+   ],
+   "after": [
+    "dart_IncreaseDecreaseThroughChangesInAccountingPolicies",
+    79316347726.0
+   ]
+  },
+  {
+   "corp": "00175173",
+   "key": [
+    "기타자본변동",
+    "2025",
+    "CFS"
+   ],
+   "before": [
+    "dart_ChangesInConsolidatedCompanies",
+    null
+   ],
+   "after": [
+    "dart_IncreaseDecreaseThroughChangesInAccountingPolicies",
+    1358053672.0
+   ]
+  },
+  {
+   "corp": "00249502",
+   "key": [
+    "비지배지분순이익",
+    "2020",
+    "CFS"
+   ],
+   "before": [
+    "-표준계정코드 미사용-",
+    null
+   ],
+   "after": [
+    "ifrs_ProfitLossAttributableToNoncontrollingInterests",
+    null
+   ]
+  },
+  {
+   "corp": "00309503",
+   "key": [
+    "계약부채",
+    "2016",
+    "CFS"
+   ],
+   "before": [
+    "ifrs_CurrentPortionOfLongtermBorrowings",
+    56805000000.0
+   ],
+   "after": null
+  },
+  {
+   "corp": "00309503",
+   "key": [
+    "계약부채",
+    "2016",
+    "OFS"
+   ],
+   "before": [
+    "ifrs_CurrentPortionOfLongtermBorrowings",
+    56805000000.0
+   ],
+   "after": null
+  },
+  {
+   "corp": "00351807",
+   "key": [
+    "기타자본변동",
+    "2023",
+    "CFS"
+   ],
+   "before": [
+    "dart_ChangesInConsolidatedCompanies",
+    null
+   ],
+   "after": [
+    "dart_IncreaseDecreaseThroughChangesInAccountingPolicies",
+    -39109198.0
+   ]
+  },
+  {
+   "corp": "00367844",
+   "key": [
+    "기타자본변동",
+    "2023",
+    "CFS"
+   ],
+   "before": [
+    "dart_ChangesInConsolidatedCompanies",
+    null
+   ],
+   "after": [
+    "dart_IncreaseDecreaseThroughChangesInAccountingPolicies",
+    -6947836908.0
+   ]
+  },
+  {
+   "corp": "00409681",
+   "key": [
+    "FVOCI금융자산",
+    "2018",
+    "CFS"
+   ],
+   "before": [
+    "ifrs_NoncurrentFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome",
+    225495713.0
+   ],
+   "after": null
+  },
+  {
+   "corp": "00409681",
+   "key": [
+    "FVOCI금융자산",
+    "2018",
+    "OFS"
+   ],
+   "before": [
+    "ifrs_NoncurrentFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome",
+    225495713.0
+   ],
+   "after": null
+  },
+  {
+   "corp": "00413046",
+   "key": [
+    "기타자본변동",
+    "2018",
+    "CFS"
+   ],
+   "before": [
+    "dart_ChangesInConsolidatedCompanies",
+    10365.0
+   ],
+   "after": [
+    "ifrs_IncreaseDecreaseThroughChangesInAccountingPolicies",
+    -14491089510.0
+   ]
+  },
+  {
+   "corp": "00449254",
+   "key": [
+    "종속기업투자",
+    "2018",
+    "OFS"
+   ],
+   "before": [
+    "ifrs_InvestmentsInSubsidiariesJointVenturesAndAssociates",
+    1145000000.0
+   ],
+   "after": null
+  },
+  {
+   "corp": "00526696",
+   "key": [
+    "종속기업투자",
+    "2017",
+    "OFS"
+   ],
+   "before": [
+    "ifrs_InvestmentsInSubsidiariesJointVenturesAndAssociates",
+    3740866678.0
+   ],
+   "after": null
+  },
+  {
+   "corp": "00526696",
+   "key": [
+    "관계기업투자",
+    "2017",
+    "OFS"
+   ],
+   "before": [
+    "-표준계정코드 미사용-",
+    1591773180.0
+   ],
+   "after": [
+    "ifrs_InvestmentsInSubsidiariesJointVenturesAndAssociates",
+    3740866678.0
+   ]
+  },
+  {
+   "corp": "00728638",
+   "key": [
+    "기타자본변동",
+    "2023",
+    "CFS"
+   ],
+   "before": [
+    "dart_ChangesInConsolidatedCompanies",
+    69334464.0
+   ],
+   "after": [
+    "dart_IncreaseDecreaseThroughChangesInAccountingPolicies",
+    8561494538.0
+   ]
+  },
+  {
+   "corp": "01091382",
+   "key": [
+    "이자비용",
+    "2017",
+    "OFS"
+   ],
+   "before": [
+    "dart_InterestExpenseFinanceExpense",
+    87577491.0
+   ],
+   "after": [
+    "ifrs_FinanceCosts",
+    109558814.0
+   ]
+  }
+ ],
+ "new_examples": [
+  {
+   "corp": "00100601",
+   "key": [
+    "재분류불가능기타포괄손익",
+    "2020",
+    "CFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+    5999770394.0
+   ]
+  },
+  {
+   "corp": "00100601",
+   "key": [
+    "재분류불가능기타포괄손익",
+    "2020",
+    "OFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+    5999770394.0
+   ]
+  },
+  {
+   "corp": "00101628",
+   "key": [
+    "재분류불가능기타포괄손익",
+    "2020",
+    "CFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+    -198713258.0
+   ]
+  },
+  {
+   "corp": "00101628",
+   "key": [
+    "재분류가능기타포괄손익",
+    "2020",
+    "CFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax",
+    -5364745914.0
+   ]
+  },
+  {
+   "corp": "00101628",
+   "key": [
+    "재분류불가능기타포괄손익",
+    "2020",
+    "OFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+    -198713258.0
+   ]
+  },
+  {
+   "corp": "00101628",
+   "key": [
+    "재분류가능기타포괄손익",
+    "2020",
+    "OFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax",
+    11042477.0
+   ]
+  },
+  {
+   "corp": "00101628",
+   "key": [
+    "재분류가능기타포괄손익",
+    "2021",
+    "CFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax",
+    4348513555.0
+   ]
+  },
+  {
+   "corp": "00101628",
+   "key": [
+    "재분류불가능기타포괄손익",
+    "2021",
+    "CFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+    148767723.0
+   ]
+  },
+  {
+   "corp": "00101628",
+   "key": [
+    "재분류가능기타포괄손익",
+    "2021",
+    "OFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax",
+    353130760.0
+   ]
+  },
+  {
+   "corp": "00101628",
+   "key": [
+    "재분류불가능기타포괄손익",
+    "2021",
+    "OFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+    148767723.0
+   ]
+  },
+  {
+   "corp": "00101628",
+   "key": [
+    "재분류불가능기타포괄손익",
+    "2022",
+    "CFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+    -82738557.0
+   ]
+  },
+  {
+   "corp": "00101628",
+   "key": [
+    "재분류가능기타포괄손익",
+    "2022",
+    "CFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax",
+    3405755991.0
+   ]
+  },
+  {
+   "corp": "00101628",
+   "key": [
+    "재분류불가능기타포괄손익",
+    "2022",
+    "OFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+    -82738557.0
+   ]
+  },
+  {
+   "corp": "00101628",
+   "key": [
+    "재분류가능기타포괄손익",
+    "2022",
+    "OFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax",
+    null
+   ]
+  },
+  {
+   "corp": "00101752",
+   "key": [
+    "재분류불가능기타포괄손익",
+    "2020",
+    "CFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+    -110402446.0
+   ]
+  },
+  {
+   "corp": "00101752",
+   "key": [
+    "재분류불가능기타포괄손익",
+    "2020",
+    "OFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+    -110402446.0
+   ]
+  },
+  {
+   "corp": "00101752",
+   "key": [
+    "재분류불가능기타포괄손익",
+    "2021",
+    "CFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+    44732093.0
+   ]
+  },
+  {
+   "corp": "00101752",
+   "key": [
+    "재분류불가능기타포괄손익",
+    "2021",
+    "OFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+    44732093.0
+   ]
+  },
+  {
+   "corp": "00101752",
+   "key": [
+    "재분류불가능기타포괄손익",
+    "2022",
+    "CFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+    149138626.0
+   ]
+  },
+  {
+   "corp": "00101752",
+   "key": [
+    "재분류불가능기타포괄손익",
+    "2022",
+    "OFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+    149138626.0
+   ]
+  },
+  {
+   "corp": "00102113",
+   "key": [
+    "재분류불가능기타포괄손익",
+    "2020",
+    "CFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+    -526555450.0
+   ]
+  },
+  {
+   "corp": "00102113",
+   "key": [
+    "재분류가능기타포괄손익",
+    "2020",
+    "CFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax",
+    -831570172.0
+   ]
+  },
+  {
+   "corp": "00102113",
+   "key": [
+    "재분류불가능기타포괄손익",
+    "2020",
+    "OFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+    307832217.0
+   ]
+  },
+  {
+   "corp": "00102113",
+   "key": [
+    "재분류가능기타포괄손익",
+    "2020",
+    "OFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax",
+    0.0
+   ]
+  },
+  {
+   "corp": "00102113",
+   "key": [
+    "재분류가능기타포괄손익",
+    "2021",
+    "CFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax",
+    -1771294689.0
+   ]
+  },
+  {
+   "corp": "00102113",
+   "key": [
+    "재분류불가능기타포괄손익",
+    "2021",
+    "CFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+    -231751622.0
+   ]
+  },
+  {
+   "corp": "00102113",
+   "key": [
+    "재분류가능기타포괄손익",
+    "2021",
+    "OFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax",
+    0.0
+   ]
+  },
+  {
+   "corp": "00102113",
+   "key": [
+    "재분류불가능기타포괄손익",
+    "2021",
+    "OFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+    14157870.0
+   ]
+  },
+  {
+   "corp": "00102113",
+   "key": [
+    "재분류가능기타포괄손익",
+    "2022",
+    "CFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax",
+    -393445247.0
+   ]
+  },
+  {
+   "corp": "00102113",
+   "key": [
+    "재분류불가능기타포괄손익",
+    "2022",
+    "CFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+    -204338974.0
+   ]
+  },
+  {
+   "corp": "00102113",
+   "key": [
+    "재분류불가능기타포괄손익",
+    "2022",
+    "OFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+    -898338718.0
+   ]
+  },
+  {
+   "corp": "00102113",
+   "key": [
+    "재분류가능기타포괄손익",
+    "2022",
+    "OFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax",
+    0.0
+   ]
+  },
+  {
+   "corp": "00102432",
+   "key": [
+    "재분류불가능기타포괄손익",
+    "2020",
+    "CFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+    5200679283.0
+   ]
+  },
+  {
+   "corp": "00102432",
+   "key": [
+    "재분류가능기타포괄손익",
+    "2020",
+    "CFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax",
+    1036318018.0
+   ]
+  },
+  {
+   "corp": "00102432",
+   "key": [
+    "재분류불가능기타포괄손익",
+    "2020",
+    "OFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+    6077259173.0
+   ]
+  },
+  {
+   "corp": "00102432",
+   "key": [
+    "재분류가능기타포괄손익",
+    "2020",
+    "OFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax",
+    1024468764.0
+   ]
+  },
+  {
+   "corp": "00102432",
+   "key": [
+    "재분류가능기타포괄손익",
+    "2021",
+    "CFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax",
+    -2346710844.0
+   ]
+  },
+  {
+   "corp": "00102432",
+   "key": [
+    "재분류가능기타포괄손익",
+    "2021",
+    "OFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax",
+    -2265387704.0
+   ]
+  },
+  {
+   "corp": "00102432",
+   "key": [
+    "재분류불가능기타포괄손익",
+    "2021",
+    "OFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+    -2194503469.0
+   ]
+  },
+  {
+   "corp": "00102432",
+   "key": [
+    "재분류가능기타포괄손익",
+    "2022",
+    "CFS"
+   ],
+   "after": [
+    "dart_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax",
+    -2373420755.0
+   ]
+  }
+ ],
+ "canon_new_group_delta": {
+  "재분류불가능기타포괄손익": 1968,
+  "재분류가능기타포괄손익": 1410,
+  "기타유동자산": 224,
+  "기타자본변동": 73,
+  "이익잉여금": 62,
+  "이자수취": 48,
+  "이자지급": 47,
+  "이자비용": 31,
+  "사채": 29,
+  "관계기업투자": 28,
+  "지배기업소유주지분": 26,
+  "배당금지급": 19,
+  "지배기업귀속순이익": 16,
+  "기본주당이익": 15,
+  "지분법이익": 10,
+  "무형자산": 10,
+  "자본금변동": 10,
+  "배당변동": 8,
+  "영업활동현금흐름": 8,
+  "재무활동현금흐름": 8,
+  "투자활동현금흐름": 8,
+  "단기차입금": 6,
+  "희석주당이익": 5,
+  "비유동FVOCI금융자산": 4,
+  "해외사업환산손익": 3,
+  "FVOCI평가손익": 2,
+  "비지배지분순이익": 2,
+  "유동성장기차입금": 2,
+  "주식발행초과금": 2,
+  "종속기업투자": 1
+ }
+}

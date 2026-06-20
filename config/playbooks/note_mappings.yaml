@@ -49,3 +49,49 @@ account_notes:
     note_name: 주당이익
     keywords: [주당이익, 기본주당이익, 희석주당이익]
     analysis_priority: low
+
+# === 신 XBRL 주석 분류 (Option 2: 본문 canonical 재사용 + detail 토큰분류) ===
+# note_facts.tsv의 concept(namespace 없는 local name)을 3분류한다:
+#  1) 흡수  = 본문 canonical_accounts account_id의 stem과 일치 → 본문 중복(canonical 연결)
+#  2) 메타  = meta_tokens 포함 → 표지·감사·연락처 노이즈(분석 제외)
+#  3) detail = note_categories 토큰(우선순위 순, 먼저 매칭 승) → IFRS 주석 카테고리, 미매칭은 기타주석
+# 토큰은 concept 소문자에 대한 부분일치. 카테고리·토큰을 코드에 하드코딩하지 않는다(여기 외부화).
+# 표본 400 회사연도 측정: 흡수 42%·메타 14%·detail 44%, detail 중 81.7%가 아래 카테고리로 분류.
+meta_tokens: [auditor, audit, identif, indentif, opinion, reportdate, author,
+  contact, entity, document, exchange, homepage, address, currency, industry,
+  unitinfo, amendment, title, centralindexkey, fiscalmonth, restatement,
+  numberof, statementof, personnel, registrant]
+
+note_categories:   # 우선순위 순서(먼저 매칭 승): 특수관계자>채권, 이연법인세>법인세 등 다중매칭 방지
+  특수관계자거래: [relatedparty, relatedpartie, keymanagement]
+  주식기준보상: [sharebasedpayment, shareoption, stockoption]
+  리스: [lease, rightofuse]
+  확정급여_퇴직: [definedbenefit, postemployment, retirement, severance, employeebenefit]
+  이연법인세: [deferredtax]
+  법인세: [incometax, taxexpense, currenttax, taxrelating]
+  파생_위험회피: [derivative, hedge, swap, forwardcontract, optioncontract]
+  사채: [bond, debenture, convertible, warrant]
+  차입금조건: [borrowing, loanspayable, maturity, interestrate, collateral, pledge, secured, liabilitiesarisingfromfinancing]
+  종속관계기업투자: [subsidiar, associate, jointventure, jointarrangement, equitymethod]
+  정부보조금: [governmentgrant]
+  외화환산: [foreignexchange, foreigncurrency, exchangerate, translationof]
+  손상: [impairment, recoverableamount, cashgeneratingunit]
+  무형자산명세: [intangibleasset, amortisation, goodwill]
+  유형자산명세: [propertyplantandequipment, depreciation]
+  투자부동산: [investmentproperty]
+  재고자산: [inventor, rawmaterial, finishedgood, merchandise, workinprogress, workinprocess, goodsintransit, suppliesinventory, semifinished]
+  매출채권_대손: [tradereceivable, tradeandotherreceivable, doubtful, allowanceforcredit, creditloss, lossallowance, otherreceivable, baddebt, constructioncontract]
+  매입채무: [tradepayable, tradeandotherpayable, otherpayable]
+  수익_고객계약: [revenue, contractswithcustomers, contractasset, contractliabilit, duefromcustomers, duetocustomers, contractwork, billings]
+  이자배당손익: [interestincome, interestexpense, financeincome, financeexpense, financecost, dividendincome]
+  금융상품: [financialasset, financialliabilit, financialinstrument, fairvalue, availableforsale, amortisedcost, loansreceived, loanreceivable, loansreceivable, loansnet]
+  위험관리공시: [creditrisk, marketrisk, liquidityrisk, currencyrisk, interestraterisk, sensitivityanalysis, exposuretorisk, managingrisk, riskvariable, maximumexposure, notionalamount, riskmanagement]
+  약정_우발: [commitment, contingent, guarantee]
+  현금금융기관: [cashandcashequivalent, deposit, shortterminvestment]
+  자본적립금: [retainedearning, treasuryshare, capitalsurplus, reserve, capitalstock, sharecapital, sharepremium, dividendspaid, dividendsproposed]
+  주당이익: [earningspershare, pershare, weightedaverageshare, weightedaveragenumber]
+  충당부채: [provision, litigation, warrant]
+
+# Phase2 리스크 리뷰 우선 카테고리(분식 단서 밀집)
+note_high_priority: [차입금조건, 사채, 특수관계자거래, 충당부채, 약정_우발, 재고자산,
+  매출채권_대손, 위험관리공시, 손상, 종속관계기업투자]

@@ -1,0 +1,29 @@
+companies=1667 files=9319 cy=4773 rows=1,575,557
+
+fs/sj 행렬:
+  CFS/BS     208,916
+  CFS/CF     228,379
+  CFS/CIS    120,306
+  CFS/IS     9,072
+  CFS/SCE    306,009
+  OFS/BS     198,812
+  OFS/CF     218,474
+  OFS/CIS    95,678
+  OFS/IS     7,812
+  OFS/SCE    182,099
+
+detail_kind by sj:
+  BS    {'plain': 407728}
+  CF    {'plain': 446853}
+  CIS   {'plain': 215984}
+  IS    {'plain': 16884}
+  SCE   {'member': 240561, '구성요소': 247175, '기타detail': 372}
+
+currency: {'KRW': 1569765, 'USD': 5792}
+reprt_code: {'11011': 1575557}
+period_fill_pct: {'thstrm': 93.4, 'frmtrm': 93.0, 'bfefrmtrm': 92.3, 'thstrm_add': 0.0}
+
+SCE 구성요소 distinct=76, 상위: ['자본', '지배기업의 소유주에게 귀속되는 지분', '이익잉여금', '자본금', '기타자본구성요소', '자본잉여금', '비지배지분', '기타포괄손익누계액', '기타포괄손익누적액', '주식발행초과금', '자본조정', '신종자본증권']
+notes: {'company_years_with_notes': 62, 'by_fs': {'CFS': 62, 'OFS': 62}, 'files_per_dir_bucket': {16: 124}}
+
+JSON -> data\backtest\_audit_macro_structure.json

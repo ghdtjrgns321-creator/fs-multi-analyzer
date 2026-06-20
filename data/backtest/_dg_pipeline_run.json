@@ -1,0 +1,202 @@
+[
+  {
+    "corp": "00409681",
+    "name": "아스트(정정)",
+    "year": 2018,
+    "report_found": true,
+    "report_name": "[기재정정]사업보고서 (2018.12)",
+    "downloaded": true,
+    "zip_kb": 179,
+    "fact_count": 905,
+    "distinct_concepts": 183,
+    "note_categories": {
+      "무형자산": 14,
+      "차입금": 75,
+      "관계기업": 25,
+      "리스": 10,
+      "충당부채": 0,
+      "금융상품": 24
+    },
+    "note_total": 148
+  },
+  {
+    "corp": "00409681",
+    "name": "아스트(정정)",
+    "year": 2019,
+    "report_found": true,
+    "report_name": "[기재정정]사업보고서 (2019.12)",
+    "downloaded": true,
+    "zip_kb": 181,
+    "fact_count": 938,
+    "distinct_concepts": 192,
+    "note_categories": {
+      "무형자산": 12,
+      "차입금": 94,
+      "관계기업": 22,
+      "리스": 10,
+      "충당부채": 2,
+      "금융상품": 34
+    },
+    "note_total": 174
+  },
+  {
+    "corp": "01091382",
+    "name": "세토피아",
+    "year": 2020,
+    "report_found": true,
+    "report_name": "사업보고서 (2020.12)",
+    "downloaded": true,
+    "zip_kb": 212,
+    "fact_count": 847,
+    "distinct_concepts": 199,
+    "note_categories": {
+      "무형자산": 13,
+      "차입금": 63,
+      "관계기업": 26,
+      "리스": 27,
+      "충당부채": 0,
+      "금융상품": 21
+    },
+    "note_total": 150
+  },
+  {
+    "corp": "00127699",
+    "name": "유네코",
+    "year": 2020,
+    "report_found": true,
+    "report_name": "사업보고서 (2020.12)",
+    "downloaded": true,
+    "zip_kb": 203,
+    "fact_count": 815,
+    "distinct_concepts": 170,
+    "note_categories": {
+      "무형자산": 6,
+      "차입금": 72,
+      "관계기업": 4,
+      "리스": 2,
+      "충당부채": 11,
+      "금융상품": 6
+    },
+    "note_total": 101
+  },
+  {
+    "corp": "00526696",
+    "name": "웨이브일렉트로닉스",
+    "year": 2021,
+    "report_found": true,
+    "report_name": "[기재정정]사업보고서 (2021.12)",
+    "downloaded": true,
+    "zip_kb": 209,
+    "fact_count": 915,
+    "distinct_concepts": 196,
+    "note_categories": {
+      "무형자산": 14,
+      "차입금": 71,
+      "관계기업": 32,
+      "리스": 21,
+      "충당부채": 3,
+      "금융상품": 46
+    },
+    "note_total": 187
+  },
+  {
+    "corp": "00141273",
+    "name": "웰바이오텍",
+    "year": 2020,
+    "report_found": true,
+    "report_name": "사업보고서 (2020.12)",
+    "downloaded": true,
+    "zip_kb": 209,
+    "fact_count": 1026,
+    "distinct_concepts": 202,
+    "note_categories": {
+      "무형자산": 17,
+      "차입금": 68,
+      "관계기업": 31,
+      "리스": 8,
+      "충당부채": 1,
+      "금융상품": 59
+    },
+    "note_total": 184
+  },
+  {
+    "corp": "00116426",
+    "name": "이렘",
+    "year": 2019,
+    "report_found": true,
+    "report_name": "사업보고서 (2019.12)",
+    "downloaded": true,
+    "zip_kb": 187,
+    "fact_count": 834,
+    "distinct_concepts": 189,
+    "note_categories": {
+      "무형자산": 8,
+      "차입금": 23,
+      "관계기업": 29,
+      "리스": 5,
+      "충당부채": 1,
+      "금융상품": 38
+    },
+    "note_total": 104
+  },
+  {
+    "corp": "00163716",
+    "name": "한창",
+    "year": 2019,
+    "report_found": true,
+    "report_name": "사업보고서 (2019.12)",
+    "downloaded": true,
+    "zip_kb": 239,
+    "fact_count": 1736,
+    "distinct_concepts": 445,
+    "note_categories": {
+      "무형자산": 35,
+      "차입금": 32,
+      "관계기업": 6,
+      "리스": 16,
+      "충당부채": 11,
+      "금융상품": 64
+    },
+    "note_total": 164
+  },
+  {
+    "corp": "00118345",
+    "name": "디아이동일",
+    "year": 2020,
+    "report_found": true,
+    "report_name": "사업보고서 (2020.12)",
+    "downloaded": true,
+    "zip_kb": 201,
+    "fact_count": 1198,
+    "distinct_concepts": 169,
+    "note_categories": {
+      "무형자산": 18,
+      "차입금": 35,
+      "관계기업": 15,
+      "리스": 20,
+      "충당부채": 0,
+      "금융상품": 125
+    },
+    "note_total": 213
+  },
+  {
+    "corp": "00657783",
+    "name": "모델솔루션",
+    "year": 2022,
+    "report_found": true,
+    "report_name": "[기재정정]사업보고서 (2022.12)",
+    "downloaded": true,
+    "zip_kb": 193,
+    "fact_count": 702,
+    "distinct_concepts": 137,
+    "note_categories": {
+      "무형자산": 12,
+      "차입금": 14,
+      "관계기업": 6,
+      "리스": 18,
+      "충당부채": 6,
+      "금융상품": 18
+    },
+    "note_total": 74
+  }
+]

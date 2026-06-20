@@ -1,0 +1,10 @@
+{
+ "files_scanned": 9319,
+ "total_account_ids": 2106,
+ "new_concept_candidates": 2080,
+ "repeat_other_stmt": 26,
+ "cluster_count": 64,
+ "cluster_ids_sum": 2106
+}
+JSON -> data\backtest\_da_cluster.json
+EXIT=0

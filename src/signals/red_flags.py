@@ -10,7 +10,6 @@ from config.settings import settings
 from src.normalize.config import load_canonical_accounts, subtotal_account_names
 from src.schemas.findings import EvidenceRef
 from src.signals.config import load_l2_config
-from src.signals.tracks import apply_track_quota, track_for_amount
 
 
 @dataclass(frozen=True)
@@ -62,9 +61,8 @@ def extract_red_flags(
     signals.extend(
         _direction_flags(report, target_year, thresholds, asset_totals, account_statements)
     )
-    if include_all:
-        return signals
-    return apply_track_quota(signals, thresholds, _score)
+    # ② 채점/랭킹(track quota) 제거: 신호를 materiality 순으로 전부 반환(선택·할당 없음).
+    return sorted(signals, key=_score, reverse=True)
 
 
 def _growth_divergence_flags(
@@ -89,17 +87,11 @@ def _growth_divergence_flags(
         return []
     divergence = pd.to_numeric(frame["divergence_pp"], errors="coerce")
     flagged = frame[
-        (frame["year"] == year)
-        & (divergence.abs() >= float(thresholds["divergence_pp_abs"]))
+        (frame["year"] == year) & (divergence.abs() >= float(thresholds["divergence_pp_abs"]))
     ]
     signals = []
     for row in flagged.itertuples():
         current_amount = _numeric_or_none(row.current_amount_b)
-        track, magnitude_ratio = track_for_amount(
-            current_amount,
-            asset_totals.get(int(year)),
-            thresholds,
-        )
         signals.append(
             RedFlagSignal(
                 id=f"divergence:{row.id}:{year}",
@@ -113,8 +105,6 @@ def _growth_divergence_flags(
                     _evidence(row.account_b, year, f"YoY {row.growth_b_pct:.2f}%"),
                     _evidence(row.id, year, f"divergence {row.divergence_pp:.2f}pp"),
                 ],
-                track=track,
-                magnitude_ratio=magnitude_ratio,
                 current_amount=current_amount,
                 sj_div=account_statements.get(str(row.account_b)),
             )
@@ -145,11 +135,6 @@ def _single_yoy_flags(
     signals = []
     for row in flagged.itertuples():
         current_amount = _numeric_or_none(row.amount)
-        track, magnitude_ratio = track_for_amount(
-            current_amount,
-            asset_totals.get(int(year)),
-            thresholds,
-        )
         signals.append(
             RedFlagSignal(
                 id=f"yoy:{row.canonical}:{year}",
@@ -162,8 +147,6 @@ def _single_yoy_flags(
                     _evidence(row.canonical, year, f"amount {int(row.amount):,}"),
                     _evidence(row.canonical, year, f"YoY {row.yoy_growth_pct:.2f}%"),
                 ],
-                track=track,
-                magnitude_ratio=magnitude_ratio,
                 current_amount=current_amount,
                 sj_div=account_statements.get(str(row.canonical), getattr(row, "sj_div", None)),
             )
@@ -189,11 +172,6 @@ def _direction_flags(
         right = _direction_for(yoy, rule["account_b"], year)
         if left == rule["direction_a"] and right == rule["direction_b"]:
             current_amount = _amount_for(yoy, rule["account_b"], year)
-            track, magnitude_ratio = track_for_amount(
-                current_amount,
-                asset_totals.get(int(year)),
-                thresholds,
-            )
             rows.append(
                 RedFlagSignal(
                     id=f"direction:{rule['id']}:{year}",
@@ -206,8 +184,6 @@ def _direction_flags(
                         _evidence(rule["account_a"], year, f"direction {left}"),
                         _evidence(rule["account_b"], year, f"direction {right}"),
                     ],
-                    track=track,
-                    magnitude_ratio=magnitude_ratio,
                     current_amount=current_amount,
                     sj_div=account_statements.get(str(rule["account_b"])),
                 )

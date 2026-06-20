@@ -1,0 +1,332 @@
+[
+ {
+  "dim": "대형다각화",
+  "corp": "00126380",
+  "year": 2024,
+  "primary": "CFS",
+  "raw_rows_primary": 213,
+  "raw_body_unique": 122,
+  "norm_rows_primary": 173,
+  "recon": [
+   {
+    "acct": "자산총계",
+    "id": "ifrs-full_Assets",
+    "raw": 514531948000000.0,
+    "norm": 514531948000000.0,
+    "status": "match"
+   },
+   {
+    "acct": "부채총계",
+    "id": "ifrs-full_Liabilities",
+    "raw": 112339878000000.0,
+    "norm": 112339878000000.0,
+    "status": "match"
+   },
+   {
+    "acct": "자본총계",
+    "id": "ifrs-full_Equity",
+    "raw": 402192070000000.0,
+    "norm": 402192070000000.0,
+    "status": "match"
+   },
+   {
+    "acct": "매출액",
+    "id": "ifrs-full_Revenue",
+    "raw": 300870903000000.0,
+    "norm": 300870903000000.0,
+    "status": "match"
+   },
+   {
+    "acct": "영업이익",
+    "id": "dart_OperatingIncomeLoss",
+    "raw": 32725961000000.0,
+    "norm": 32725961000000.0,
+    "status": "match"
+   },
+   {
+    "acct": "당기순이익",
+    "id": "ifrs-full_ProfitLoss",
+    "raw": 34451351000000.0,
+    "norm": 34451351000000.0,
+    "status": "match"
+   }
+  ],
+  "missing_count": 0,
+  "missing_top": []
+ },
+ {
+  "dim": "금융지주",
+  "corp": "00688996",
+  "year": 2024,
+  "primary": "CFS",
+  "raw_rows_primary": 390,
+  "raw_body_unique": 159,
+  "norm_rows_primary": 250,
+  "recon": [
+   {
+    "acct": "자산총계",
+    "id": "ifrs-full_Assets",
+    "raw": 757845532000000.0,
+    "norm": 757845532000000.0,
+    "status": "match"
+   },
+   {
+    "acct": "부채총계",
+    "id": "ifrs-full_Liabilities",
+    "raw": 698030351000000.0,
+    "norm": 698030351000000.0,
+    "status": "match"
+   },
+   {
+    "acct": "자본총계",
+    "id": "ifrs-full_Equity",
+    "raw": 59815181000000.0,
+    "norm": 59815181000000.0,
+    "status": "match"
+   },
+   {
+    "acct": "매출액",
+    "id": "ifrs-full_Revenue",
+    "raw": null,
+    "norm": null,
+    "status": "n/a"
+   },
+   {
+    "acct": "영업이익",
+    "id": "dart_OperatingIncomeLoss",
+    "raw": null,
+    "norm": null,
+    "status": "n/a"
+   },
+   {
+    "acct": "당기순이익",
+    "id": "ifrs-full_ProfitLoss",
+    "raw": 5028606000000.0,
+    "norm": 5028606000000.0,
+    "status": "match"
+   }
+  ],
+  "missing_count": 0,
+  "missing_top": []
+ },
+ {
+  "dim": "자본거래多",
+  "corp": "00258801",
+  "year": 2024,
+  "primary": "CFS",
+  "raw_rows_primary": 231,
+  "raw_body_unique": 134,
+  "norm_rows_primary": 221,
+  "recon": [
+   {
+    "acct": "자산총계",
+    "id": "ifrs-full_Assets",
+    "raw": 25773028304462.0,
+    "norm": 25773028304462.0,
+    "status": "match"
+   },
+   {
+    "acct": "부채총계",
+    "id": "ifrs-full_Liabilities",
+    "raw": 11830134144725.0,
+    "norm": 11830134144725.0,
+    "status": "match"
+   },
+   {
+    "acct": "자본총계",
+    "id": "ifrs-full_Equity",
+    "raw": 13942894159737.0,
+    "norm": 13942894159737.0,
+    "status": "match"
+   },
+   {
+    "acct": "매출액",
+    "id": "ifrs-full_Revenue",
+    "raw": 7871692199887.0,
+    "norm": 7871692199887.0,
+    "status": "match"
+   },
+   {
+    "acct": "영업이익",
+    "id": "dart_OperatingIncomeLoss",
+    "raw": 460212161525.0,
+    "norm": 460212161525.0,
+    "status": "match"
+   },
+   {
+    "acct": "당기순이익",
+    "id": "ifrs-full_ProfitLoss",
+    "raw": -161870567171.0,
+    "norm": -161870567171.0,
+    "status": "match"
+   }
+  ],
+  "missing_count": 0,
+  "missing_top": []
+ },
+ {
+  "dim": "정정본",
+  "corp": "00117212",
+  "year": 2024,
+  "primary": "CFS",
+  "raw_rows_primary": 360,
+  "raw_body_unique": 168,
+  "norm_rows_primary": 270,
+  "recon": [
+   {
+    "acct": "자산총계",
+    "id": "ifrs-full_Assets",
+    "raw": 30143063000000.0,
+    "norm": 30143063000000.0,
+    "status": "match"
+   },
+   {
+    "acct": "부채총계",
+    "id": "ifrs-full_Liabilities",
+    "raw": 18253581000000.0,
+    "norm": 18253581000000.0,
+    "status": "match"
+   },
+   {
+    "acct": "자본총계",
+    "id": "ifrs-full_Equity",
+    "raw": 11889482000000.0,
+    "norm": 11889482000000.0,
+    "status": "match"
+   },
+   {
+    "acct": "매출액",
+    "id": "ifrs-full_Revenue",
+    "raw": 18132874000000.0,
+    "norm": 18132874000000.0,
+    "status": "match"
+   },
+   {
+    "acct": "영업이익",
+    "id": "dart_OperatingIncomeLoss",
+    "raw": 1003759000000.0,
+    "norm": 1003759000000.0,
+    "status": "match"
+   },
+   {
+    "acct": "당기순이익",
+    "id": "ifrs-full_ProfitLoss",
+    "raw": 302227000000.0,
+    "norm": 302227000000.0,
+    "status": "match"
+   }
+  ],
+  "missing_count": 0,
+  "missing_top": []
+ },
+ {
+  "dim": "구포맷",
+  "corp": "00356361",
+  "year": 2017,
+  "primary": "CFS",
+  "raw_rows_primary": 184,
+  "raw_body_unique": 112,
+  "norm_rows_primary": 169,
+  "recon": [
+   {
+    "acct": "자산총계",
+    "id": "ifrs-full_Assets",
+    "raw": 25041221000000.0,
+    "norm": 25041221000000.0,
+    "status": "match"
+   },
+   {
+    "acct": "부채총계",
+    "id": "ifrs-full_Liabilities",
+    "raw": 8702644000000.0,
+    "norm": 8702644000000.0,
+    "status": "match"
+   },
+   {
+    "acct": "자본총계",
+    "id": "ifrs-full_Equity",
+    "raw": 16338577000000.0,
+    "norm": 16338577000000.0,
+    "status": "match"
+   },
+   {
+    "acct": "매출액",
+    "id": "ifrs-full_Revenue",
+    "raw": 25698014000000.0,
+    "norm": 25698014000000.0,
+    "status": "match"
+   },
+   {
+    "acct": "영업이익",
+    "id": "dart_OperatingIncomeLoss",
+    "raw": 2928457000000.0,
+    "norm": 2928457000000.0,
+    "status": "match"
+   },
+   {
+    "acct": "당기순이익",
+    "id": "ifrs-full_ProfitLoss",
+    "raw": 2021973000000.0,
+    "norm": 2021973000000.0,
+    "status": "match"
+   }
+  ],
+  "missing_count": 0,
+  "missing_top": []
+ },
+ {
+  "dim": "소형단순",
+  "corp": "00160375",
+  "year": 2024,
+  "primary": "OFS",
+  "raw_rows_primary": 90,
+  "raw_body_unique": 76,
+  "norm_rows_primary": 87,
+  "recon": [
+   {
+    "acct": "자산총계",
+    "id": "ifrs-full_Assets",
+    "raw": 57413480032.0,
+    "norm": 57413480032.0,
+    "status": "match"
+   },
+   {
+    "acct": "부채총계",
+    "id": "ifrs-full_Liabilities",
+    "raw": 24679368630.0,
+    "norm": 24679368630.0,
+    "status": "match"
+   },
+   {
+    "acct": "자본총계",
+    "id": "ifrs-full_Equity",
+    "raw": 32734111402.0,
+    "norm": 32734111402.0,
+    "status": "match"
+   },
+   {
+    "acct": "매출액",
+    "id": "ifrs-full_Revenue",
+    "raw": 54038232041.0,
+    "norm": 54038232041.0,
+    "status": "match"
+   },
+   {
+    "acct": "영업이익",
+    "id": "dart_OperatingIncomeLoss",
+    "raw": 3970306773.0,
+    "norm": 3970306773.0,
+    "status": "match"
+   },
+   {
+    "acct": "당기순이익",
+    "id": "ifrs-full_ProfitLoss",
+    "raw": 3163716225.0,
+    "norm": 3163716225.0,
+    "status": "match"
+   }
+  ],
+  "missing_count": 0,
+  "missing_top": []
+ }
+]

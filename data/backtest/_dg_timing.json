@@ -1,0 +1,117 @@
+[
+  {
+    "corp": "00101628",
+    "year": 2024,
+    "t_find": 0.38,
+    "t_download": 0.16,
+    "zip_bytes": 749651,
+    "t_extract": 2.67,
+    "facts": 5177,
+    "tsv_bytes": 878321,
+    "ok": true,
+    "t_total": 3.21
+  },
+  {
+    "corp": "00123143",
+    "year": 2024,
+    "t_find": 0.37,
+    "t_download": 0.18,
+    "zip_bytes": 932460,
+    "t_extract": 3.2,
+    "facts": 6638,
+    "tsv_bytes": 1277046,
+    "ok": true,
+    "t_total": 3.75
+  },
+  {
+    "corp": "00143314",
+    "year": 2024,
+    "t_find": 0.37,
+    "t_download": 0.09,
+    "zip_bytes": 88587,
+    "t_extract": 0.62,
+    "facts": 802,
+    "tsv_bytes": 97728,
+    "ok": true,
+    "t_total": 1.08
+  },
+  {
+    "corp": "00163673",
+    "year": 2024,
+    "t_find": 0.38,
+    "t_download": 0.1,
+    "zip_bytes": 80208,
+    "t_extract": 0.54,
+    "facts": 838,
+    "tsv_bytes": 99302,
+    "ok": true,
+    "t_total": 1.02
+  },
+  {
+    "corp": "00249034",
+    "year": 2024,
+    "t_find": 0.36,
+    "t_download": 0.1,
+    "zip_bytes": 96217,
+    "t_extract": 0.59,
+    "facts": 1067,
+    "tsv_bytes": 145047,
+    "ok": true,
+    "t_total": 1.05
+  },
+  {
+    "corp": "00363592",
+    "year": 2024,
+    "t_find": 0.35,
+    "t_download": 0.09,
+    "zip_bytes": 101915,
+    "t_extract": 0.58,
+    "facts": 1269,
+    "tsv_bytes": 183947,
+    "ok": true,
+    "t_total": 1.02
+  },
+  {
+    "corp": "00537221",
+    "year": 2024,
+    "t_find": 0.33,
+    "t_download": 0.09,
+    "zip_bytes": 74439,
+    "t_extract": 0.51,
+    "facts": 810,
+    "tsv_bytes": 96779,
+    "ok": true,
+    "t_total": 0.93
+  },
+  {
+    "corp": "00808022",
+    "year": 2024,
+    "t_find": 0.36,
+    "t_download": 0.1,
+    "zip_bytes": 69793,
+    "t_extract": 0.51,
+    "facts": 746,
+    "tsv_bytes": 88135,
+    "ok": true,
+    "t_total": 0.97
+  },
+  {
+    "corp": "01141942",
+    "year": 2023,
+    "t_find": 0.37,
+    "t_download": 0.09,
+    "zip_bytes": 64623,
+    "t_extract": 0.49,
+    "facts": 692,
+    "tsv_bytes": 81073,
+    "ok": true,
+    "t_total": 0.95
+  },
+  {
+    "corp": "01786958",
+    "year": 2024,
+    "t_find": 0.33,
+    "ok": false,
+    "reason": "no_report"
+  }
+]

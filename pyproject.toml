@@ -40,6 +40,8 @@ dev = [
 [tool.ruff]
 line-length = 100
 target-version = "py311"
+# data/backtest는 일회성 분석·감사 하니스(운영코드 아님) → lint 게이트 제외.
+extend-exclude = ["data/backtest"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]

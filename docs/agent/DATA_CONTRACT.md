@@ -1,4 +1,9 @@
-# DATA_CONTRACT — L0 OpenDART Raw 관찰 기록
+# DATA_CONTRACT — L0 OpenDART Raw 관찰 기록 (초기 스파이크·역사)
+
+> ⚠️ **이 문서는 초기(2026-06-01) 삼성 1사 스파이크 관찰이다.** 주석은 구 HTML 웹스크랩(8코드)
+> 방식이며 현재는 XBRL+Arelle로 대체됐다. 유니버스·정규화·주석 분류·적재의 **현재 포함/제외
+> 명세는 [DATA_PIPELINE_SCOPE.md](DATA_PIPELINE_SCOPE.md)** 를 단일 출처로 본다. 본 문서는
+> raw API 응답 구조(컬럼·sj_div·fs_div 주입 등)의 역사 기록으로 유지한다.
 
 > 목적: L1 정규화 설계 전에 OpenDART 실제 응답 구조를 기록한다.
 > 범위: 삼성전자(`corp_code=00126380`) 2022~2025 사업보고서, 연결(CFS)·별도(OFS).

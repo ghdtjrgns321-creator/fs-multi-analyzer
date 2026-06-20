@@ -296,10 +296,6 @@ l2_mvp1:
     universal_min_pct_of_assets: 1.0
     universal_min_abs_amount: 100000000
     asset_sanity_jump_multiple: 100
-    track_split_pct_of_assets: 5.0
-    track_a_quota: 6
-    track_b_quota: 6
-    universal_top_n: 12
     direction_red_flags:
       - id: revenue-down-receivable-up
         name: 매출 감소 + 매출채권 증가

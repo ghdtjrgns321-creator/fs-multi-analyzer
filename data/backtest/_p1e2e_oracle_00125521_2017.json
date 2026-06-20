@@ -1,0 +1,2342 @@
+[
+ {
+  "fs_div": "CFS",
+  "row": 0,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_NoncurrentAssets",
+  "label": "비유동자산",
+  "amount": 806359114065,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 1,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_PropertyPlantAndEquipment",
+  "label": "유형자산",
+  "amount": 376174963661,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 2,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_InvestmentProperty",
+  "label": "투자부동산",
+  "amount": 27576107474,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 3,
+  "sj_div": "BS",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "무형자산",
+  "amount": 28876067914,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 4,
+  "sj_div": "BS",
+  "account_id": "dart_LongTermTradeAndOtherNonCurrentReceivablesGross",
+  "label": "기타비유동채권",
+  "amount": 2569850688,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 5,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_InvestmentAccountedForUsingEquityMethod",
+  "label": "관계기업투자",
+  "amount": 338755460865,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 6,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_DeferredTaxAssets",
+  "label": "이연법인세자산",
+  "amount": 1289874471,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 7,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_OtherNoncurrentFinancialAssets",
+  "label": "비유동금융자산",
+  "amount": 31116788992,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 8,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_CurrentAssets",
+  "label": "유동자산",
+  "amount": 793899783677,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 9,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_Inventories",
+  "label": "재고자산",
+  "amount": 142917886284,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 10,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_TradeAndOtherCurrentReceivables",
+  "label": "매출채권 및 기타유동채권",
+  "amount": 253763879104,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 11,
+  "sj_div": "BS",
+  "account_id": "dart_ShortTermDepositsNotClassifiedAsCashEquivalents",
+  "label": "단기금융자산",
+  "amount": 199512775938,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 12,
+  "sj_div": "BS",
+  "account_id": "dart_OtherCurrentAssets",
+  "label": "기타유동자산",
+  "amount": 88806905813,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 13,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_CurrentTaxAssets",
+  "label": "당기법인세자산",
+  "amount": null,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 14,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_CashAndCashEquivalents",
+  "label": "현금및현금성자산",
+  "amount": 108898336538,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 15,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_Assets",
+  "label": "자산총계",
+  "amount": 1600258897742,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 16,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_EquityAttributableToOwnersOfParent",
+  "label": "지배기업의 소유주에게 귀속되는 자본",
+  "amount": 1007923775967,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 17,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_IssuedCapital",
+  "label": "자본금",
+  "amount": 16932545000,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 18,
+  "sj_div": "BS",
+  "account_id": "dart_CapitalSurplus",
+  "label": "자본잉여금",
+  "amount": 143886416428,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 19,
+  "sj_div": "BS",
+  "account_id": "dart_OtherComprehensiveIncomeLossAccumulatedAmount",
+  "label": "기타포괄손익누계액",
+  "amount": -18111703885,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 20,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_RetainedEarnings",
+  "label": "이익잉여금(결손금)",
+  "amount": 865216518424,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 21,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_NoncontrollingInterests",
+  "label": "비지배지분",
+  "amount": 15261351986,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 22,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_Equity",
+  "label": "자본총계",
+  "amount": 1023185127953,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 23,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_NoncurrentLiabilities",
+  "label": "비유동부채",
+  "amount": 146004839372,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 24,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_NoncurrentProvisions",
+  "label": "비유동충당부채",
+  "amount": 3928702953,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 25,
+  "sj_div": "BS",
+  "account_id": "dart_OtherNonCurrentLiabilities",
+  "label": "기타비유동부채",
+  "amount": 5056145817,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 26,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_OtherNoncurrentFinancialLiabilities",
+  "label": "장기금융부채",
+  "amount": 34001019942,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 27,
+  "sj_div": "BS",
+  "account_id": "dart_PostemploymentBenefitObligations",
+  "label": "확정급여부채",
+  "amount": 18172208527,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 28,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_DeferredTaxLiabilities",
+  "label": "이연법인세부채",
+  "amount": 84846762133,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 29,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_CurrentLiabilities",
+  "label": "유동부채",
+  "amount": 431068930417,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 30,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_CurrentProvisions",
+  "label": "충당부채",
+  "amount": 2720378960,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 31,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_TradeAndOtherCurrentPayables",
+  "label": "매입채무 및 기타유동채무",
+  "amount": 191126045214,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 32,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_OtherCurrentFinancialLiabilities",
+  "label": "단기금융부채",
+  "amount": 186223686579,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 33,
+  "sj_div": "BS",
+  "account_id": "dart_OtherCurrentLiabilities",
+  "label": "기타유동부채",
+  "amount": 45579808444,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 34,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_CurrentTaxLiabilities",
+  "label": "당기법인세부채",
+  "amount": 5419011220,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 35,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_Liabilities",
+  "label": "부채총계",
+  "amount": 577073769789,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 36,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_EquityAndLiabilities",
+  "label": "자본과부채총계",
+  "amount": 1600258897742,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 37,
+  "sj_div": "IS",
+  "account_id": "ifrs-full_Revenue",
+  "label": "수익(매출액)",
+  "amount": 1489427600601,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 38,
+  "sj_div": "IS",
+  "account_id": "ifrs-full_CostOfSales",
+  "label": "매출원가",
+  "amount": 1321406611058,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 39,
+  "sj_div": "IS",
+  "account_id": "ifrs-full_GrossProfit",
+  "label": "매출총이익",
+  "amount": 168020989543,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 40,
+  "sj_div": "IS",
+  "account_id": "dart_TotalSellingGeneralAdministrativeExpenses",
+  "label": "판매비와관리비",
+  "amount": 104661580470,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 41,
+  "sj_div": "IS",
+  "account_id": "dart_OperatingIncomeLoss",
+  "label": "영업이익(손실)",
+  "amount": 63359409073,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 42,
+  "sj_div": "IS",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "관계기업투자손익",
+  "amount": 31235884359,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 43,
+  "sj_div": "IS",
+  "account_id": "ifrs-full_FinanceIncome",
+  "label": "금융수익",
+  "amount": 6616311419,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 44,
+  "sj_div": "IS",
+  "account_id": "dart_OtherGains",
+  "label": "기타이익",
+  "amount": 53967064987,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 45,
+  "sj_div": "IS",
+  "account_id": "ifrs-full_FinanceCosts",
+  "label": "금융원가",
+  "amount": 7266639556,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 46,
+  "sj_div": "IS",
+  "account_id": "dart_OtherLosses",
+  "label": "기타비용",
+  "amount": 28024638610,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 47,
+  "sj_div": "IS",
+  "account_id": "ifrs-full_ProfitLossBeforeTax",
+  "label": "법인세비용차감전순이익(손실)",
+  "amount": 119887391672,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 48,
+  "sj_div": "IS",
+  "account_id": "ifrs-full_IncomeTaxExpenseContinuingOperations",
+  "label": "법인세비용",
+  "amount": 19865726056,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 49,
+  "sj_div": "IS",
+  "account_id": "ifrs-full_ProfitLoss",
+  "label": "당기순이익(손실)",
+  "amount": 100021665616,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 50,
+  "sj_div": "IS",
+  "account_id": "ifrs-full_ProfitLossAttributableToOwnersOfParent",
+  "label": "지배기업의 소유주에게 귀속되는 당기순이익(손실)",
+  "amount": 97201562976,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 51,
+  "sj_div": "IS",
+  "account_id": "ifrs-full_ProfitLossAttributableToNoncontrollingInterests",
+  "label": "비지배지분에 귀속되는 당기순이익(손실)",
+  "amount": 2820102640,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 52,
+  "sj_div": "IS",
+  "account_id": "ifrs-full_BasicEarningsLossPerShare",
+  "label": "기본및희석주당이익",
+  "amount": 2870,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 53,
+  "sj_div": "CIS",
+  "account_id": "ifrs-full_ProfitLoss",
+  "label": "당기순이익(손실)",
+  "amount": 100021665616,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 54,
+  "sj_div": "CIS",
+  "account_id": "ifrs-full_OtherComprehensiveIncome",
+  "label": "기타포괄손익",
+  "amount": -22763999195,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 55,
+  "sj_div": "CIS",
+  "account_id": "ifrs-full_GainsLossesOnRemeasuringAvailableforsaleFinancialAssetsNetOfTax",
+  "label": "매도가능금융자산평가손익(세후기타포괄손익)",
+  "amount": 68078537,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 56,
+  "sj_div": "CIS",
+  "account_id": "dart_ShareOfOtherComprehensiveIncomeOfAssociatesAndJointVenturesAccountedForUsingEquityMethodThatWillBeReclassifiedToProfitOrLossNetOfTax",
+  "label": "관계기업자본변동",
+  "amount": -10300103935,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 57,
+  "sj_div": "CIS",
+  "account_id": "ifrs-full_GainsLossesOnExchangeDifferencesOnTranslationNetOfTax",
+  "label": "해외사업장환산외환차이(세후기타포괄손익)",
+  "amount": -17307409580,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 58,
+  "sj_div": "CIS",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "법인세효과",
+  "amount": 6664543264,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 59,
+  "sj_div": "CIS",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "법인세효과 차감후 금액",
+  "amount": -20874891714,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 60,
+  "sj_div": "CIS",
+  "account_id": "dart_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRemeasurementsOfDefinedBenefitPlans",
+  "label": "확정급여제도의 재측정손익(세후기타포괄손익)",
+  "amount": -493753489,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 61,
+  "sj_div": "CIS",
+  "account_id": "dart_ShareOfOtherComprehensiveIncomeOfAssociatesAndJointVenturesAccountedForUsingEquityMethodThatWillNotBeReclassifiedToProfitOrLossNetOfTax",
+  "label": "관계기업잉여금변동",
+  "amount": -787218788,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 62,
+  "sj_div": "CIS",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "해외사업장환산외환차이",
+  "amount": -918130495,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 63,
+  "sj_div": "CIS",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "법인세효과",
+  "amount": 309995291,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 64,
+  "sj_div": "CIS",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "법인세효과 차감후 금액",
+  "amount": -1889107481,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 65,
+  "sj_div": "CIS",
+  "account_id": "ifrs-full_ComprehensiveIncome",
+  "label": "총포괄손익",
+  "amount": 77257666421,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 66,
+  "sj_div": "CIS",
+  "account_id": "ifrs-full_ComprehensiveIncomeAttributableToOwnersOfParent",
+  "label": "총 포괄손익, 지배기업의 소유주에게 귀속되는 지분",
+  "amount": 75355694276,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 67,
+  "sj_div": "CIS",
+  "account_id": "ifrs-full_ComprehensiveIncomeAttributableToNoncontrollingInterests",
+  "label": "총 포괄손익, 비지배지분",
+  "amount": 1901972145,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 68,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_CashFlowsFromUsedInOperatingActivities",
+  "label": "영업활동현금흐름",
+  "amount": 151218718678,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 69,
+  "sj_div": "CF",
+  "account_id": "dart_ProfitLossForStatementOfCashFlows",
+  "label": "당기순이익(손실)",
+  "amount": 100021665616,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 70,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_AdjustmentsForReconcileProfitLoss",
+  "label": "당기순이익조정을 위한 가감",
+  "amount": 51508248983,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 71,
+  "sj_div": "CF",
+  "account_id": "dart_AdjustmentsForAssetsLiabilitiesOfOperatingActivities",
+  "label": "영업활동으로인한자산ㆍ부채의변동",
+  "amount": -6522455265,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 72,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_InterestReceivedClassifiedAsOperatingActivities",
+  "label": "이자수취(영업)",
+  "amount": 5277736174,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 73,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_DividendsReceivedClassifiedAsOperatingActivities",
+  "label": "배당금수취(영업)",
+  "amount": 11005296177,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 74,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_InterestPaidClassifiedAsOperatingActivities",
+  "label": "이자지급(영업)",
+  "amount": 7266639556,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 75,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_IncomeTaxesPaidRefundClassifiedAsOperatingActivities",
+  "label": "법인세납부(환급)",
+  "amount": 2805133451,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 76,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_CashFlowsFromUsedInInvestingActivities",
+  "label": "투자활동현금흐름",
+  "amount": -123745888431,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 77,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities",
+  "label": "유형자산의 취득",
+  "amount": 64063818577,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 78,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_ProceedsFromSalesOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities",
+  "label": "유형자산의 처분",
+  "amount": 4131212120,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 79,
+  "sj_div": "CF",
+  "account_id": "dart_PurchaseOfInvestmentProperty",
+  "label": "투자부동산의 취득",
+  "amount": 2215925844,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 80,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_PurchaseOfIntangibleAssetsClassifiedAsInvestingActivities",
+  "label": "무형자산의 취득",
+  "amount": 11368316205,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 81,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_ProceedsFromSalesOfIntangibleAssetsClassifiedAsInvestingActivities",
+  "label": "무형자산의 처분",
+  "amount": 91214400,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 82,
+  "sj_div": "CF",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "기타비유동채권의 증가",
+  "amount": 320989691,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 83,
+  "sj_div": "CF",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "기타비유동채권의 감소",
+  "amount": 390430000,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 84,
+  "sj_div": "CF",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "관계기업주식의 취득",
+  "amount": 6177240000,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 85,
+  "sj_div": "CF",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "관계기업주식의 처분",
+  "amount": null,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 86,
+  "sj_div": "CF",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "비유동금융자산의 취득",
+  "amount": 6093117853,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 87,
+  "sj_div": "CF",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "비유동금융자산의 처분",
+  "amount": 5702182027,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 88,
+  "sj_div": "CF",
+  "account_id": "dart_PurchaseOfFinancialInstruments",
+  "label": "단기금융자산의 증가",
+  "amount": 54564505215,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 89,
+  "sj_div": "CF",
+  "account_id": "dart_ProceedsFromSalesOfFinancialInstruments",
+  "label": "단기금융자산의 감소",
+  "amount": 10742986407,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 90,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_CashFlowsFromUsedInFinancingActivities",
+  "label": "재무활동현금흐름",
+  "amount": -35263067281,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 91,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_ProceedsFromBorrowingsClassifiedAsFinancingActivities",
+  "label": "차입금의 차입",
+  "amount": 5478974949,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 92,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_RepaymentsOfBorrowingsClassifiedAsFinancingActivities",
+  "label": "차입금의 상환",
+  "amount": 31808055923,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 93,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_ProceedsFromGovernmentGrantsClassifiedAsFinancingActivities",
+  "label": "국고보조금의 수령",
+  "amount": 32474257,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 94,
+  "sj_div": "CF",
+  "account_id": "dart_RepaymentForGovernmentGrantsClassifiedAsFinancingActivities",
+  "label": "국고보조금의 사용",
+  "amount": null,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 95,
+  "sj_div": "CF",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "예수보증금의 증가",
+  "amount": 503600000,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 96,
+  "sj_div": "CF",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "예수보증금의 감소",
+  "amount": null,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 97,
+  "sj_div": "CF",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "배당금의 지급",
+  "amount": 9470060564,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 98,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_EffectOfExchangeRateChangesOnCashAndCashEquivalents",
+  "label": "현금및현금성자산에 대한 환율변동효과",
+  "amount": -3732300368,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 99,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_IncreaseDecreaseInCashAndCashEquivalents",
+  "label": "현금및현금성자산의순증가(감소)",
+  "amount": -11522537402,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 100,
+  "sj_div": "CF",
+  "account_id": "dart_CashAndCashEquivalentsAtBeginningOfPeriodCf",
+  "label": "기초현금및현금성자산",
+  "amount": 120420873940,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 101,
+  "sj_div": "CF",
+  "account_id": "dart_CashAndCashEquivalentsAtEndOfPeriodCf",
+  "label": "기말현금및현금성자산",
+  "amount": 108898336538,
+  "detail": "-"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 102,
+  "sj_div": "SCE",
+  "account_id": "dart_EquityAtBeginningOfPeriod",
+  "label": "기초자본",
+  "amount": 16932545000,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]|자본금 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 103,
+  "sj_div": "SCE",
+  "account_id": "dart_EquityAtBeginningOfPeriod",
+  "label": "기초자본",
+  "amount": 773284489443,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]|이익잉여금 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 104,
+  "sj_div": "SCE",
+  "account_id": "dart_EquityAtBeginningOfPeriod",
+  "label": "기초자본",
+  "amount": 2634189674,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]|기타포괄손익누계액 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 105,
+  "sj_div": "SCE",
+  "account_id": "dart_EquityAtBeginningOfPeriod",
+  "label": "기초자본",
+  "amount": 143886416428,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]|자본잉여금 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 106,
+  "sj_div": "SCE",
+  "account_id": "dart_EquityAtBeginningOfPeriod",
+  "label": "기초자본",
+  "amount": 949188270960,
+  "detail": "연결재무제표 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 107,
+  "sj_div": "SCE",
+  "account_id": "dart_EquityAtBeginningOfPeriod",
+  "label": "기초자본",
+  "amount": 12450630415,
+  "detail": "자본 [member]|비지배지분 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 108,
+  "sj_div": "SCE",
+  "account_id": "dart_EquityAtBeginningOfPeriod",
+  "label": "기초자본",
+  "amount": 936737640545,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 109,
+  "sj_div": "SCE",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "전기오류수정",
+  "amount": 1573886590,
+  "detail": "자본 [member]|비지배지분 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 110,
+  "sj_div": "SCE",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "전기오류수정",
+  "amount": 4635364546,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 111,
+  "sj_div": "SCE",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "전기오류수정",
+  "amount": 4506366391,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]|이익잉여금 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 112,
+  "sj_div": "SCE",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "전기오류수정",
+  "amount": 128998155,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]|기타포괄손익누계액 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 113,
+  "sj_div": "SCE",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "전기오류수정",
+  "amount": 6209251136,
+  "detail": "연결재무제표 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 114,
+  "sj_div": "SCE",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "수정후 전기초",
+  "amount": 143886416428,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]|자본잉여금 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 115,
+  "sj_div": "SCE",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "수정후 전기초",
+  "amount": 16932545000,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]|자본금 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 116,
+  "sj_div": "SCE",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "수정후 전기초",
+  "amount": 777790855834,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]|이익잉여금 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 117,
+  "sj_div": "SCE",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "수정후 전기초",
+  "amount": 2763187829,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]|기타포괄손익누계액 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 118,
+  "sj_div": "SCE",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "수정후 전기초",
+  "amount": 941373005091,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 119,
+  "sj_div": "SCE",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "수정후 전기초",
+  "amount": 14024517005,
+  "detail": "자본 [member]|비지배지분 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 120,
+  "sj_div": "SCE",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "수정후 전기초",
+  "amount": 955397522096,
+  "detail": "연결재무제표 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 121,
+  "sj_div": "SCE",
+  "account_id": "ifrs-full_ProfitLoss",
+  "label": "당기순이익(손실)",
+  "amount": 97201562976,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 122,
+  "sj_div": "SCE",
+  "account_id": "ifrs-full_ProfitLoss",
+  "label": "당기순이익(손실)",
+  "amount": 97201562976,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]|이익잉여금 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 123,
+  "sj_div": "SCE",
+  "account_id": "ifrs-full_ProfitLoss",
+  "label": "당기순이익(손실)",
+  "amount": 2820102640,
+  "detail": "자본 [member]|비지배지분 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 124,
+  "sj_div": "SCE",
+  "account_id": "ifrs-full_ProfitLoss",
+  "label": "당기순이익(손실)",
+  "amount": 100021665616,
+  "detail": "연결재무제표 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 125,
+  "sj_div": "SCE",
+  "account_id": "dart_PurchaseDispostionOfAssociatesOrJointVenture",
+  "label": "관계기업자본변동",
+  "amount": -7807478783,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 126,
+  "sj_div": "SCE",
+  "account_id": "dart_PurchaseDispostionOfAssociatesOrJointVenture",
+  "label": "관계기업자본변동",
+  "amount": -7807478783,
+  "detail": "연결재무제표 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 127,
+  "sj_div": "SCE",
+  "account_id": "dart_PurchaseDispostionOfAssociatesOrJointVenture",
+  "label": "관계기업자본변동",
+  "amount": -7807478783,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]|기타포괄손익누계액 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 128,
+  "sj_div": "SCE",
+  "account_id": "dart_ChangesInForeignExchangeRates",
+  "label": "해외사업장환산외환차이",
+  "amount": -14037146957,
+  "detail": "연결재무제표 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 129,
+  "sj_div": "SCE",
+  "account_id": "dart_ChangesInForeignExchangeRates",
+  "label": "해외사업장환산외환차이",
+  "amount": -13119016462,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 130,
+  "sj_div": "SCE",
+  "account_id": "dart_ChangesInForeignExchangeRates",
+  "label": "해외사업장환산외환차이",
+  "amount": -13119016462,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]|기타포괄손익누계액 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 131,
+  "sj_div": "SCE",
+  "account_id": "dart_ChangesInForeignExchangeRates",
+  "label": "해외사업장환산외환차이",
+  "amount": -918130495,
+  "detail": "자본 [member]|비지배지분 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 132,
+  "sj_div": "SCE",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "매도가능금융자산평가손익",
+  "amount": 51603531,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]|기타포괄손익누계액 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 133,
+  "sj_div": "SCE",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "매도가능금융자산평가손익",
+  "amount": 51603531,
+  "detail": "연결재무제표 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 134,
+  "sj_div": "SCE",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "매도가능금융자산평가손익",
+  "amount": 51603531,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 135,
+  "sj_div": "SCE",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "확정급여제도 재측정요소",
+  "amount": -374265145,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 136,
+  "sj_div": "SCE",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "확정급여제도 재측정요소",
+  "amount": -374265145,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]|이익잉여금 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 137,
+  "sj_div": "SCE",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "확정급여제도 재측정요소",
+  "amount": -374265145,
+  "detail": "연결재무제표 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 138,
+  "sj_div": "SCE",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "관계기업이익잉여금변동",
+  "amount": -596711841,
+  "detail": "연결재무제표 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 139,
+  "sj_div": "SCE",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "관계기업이익잉여금변동",
+  "amount": -596711841,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 140,
+  "sj_div": "SCE",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "관계기업이익잉여금변동",
+  "amount": -596711841,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]|이익잉여금 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 141,
+  "sj_div": "SCE",
+  "account_id": "ifrs-full_DividendsPaid",
+  "label": "배당금지급",
+  "amount": 8804923400,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 142,
+  "sj_div": "SCE",
+  "account_id": "ifrs-full_DividendsPaid",
+  "label": "배당금지급",
+  "amount": 8804923400,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]|이익잉여금 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 143,
+  "sj_div": "SCE",
+  "account_id": "ifrs-full_DividendsPaid",
+  "label": "배당금지급",
+  "amount": 9470060564,
+  "detail": "연결재무제표 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 144,
+  "sj_div": "SCE",
+  "account_id": "ifrs-full_DividendsPaid",
+  "label": "배당금지급",
+  "amount": 665137164,
+  "detail": "자본 [member]|비지배지분 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 145,
+  "sj_div": "SCE",
+  "account_id": "ifrs-full_Equity",
+  "label": "기말자본",
+  "amount": 865216518424,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]|이익잉여금 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 146,
+  "sj_div": "SCE",
+  "account_id": "ifrs-full_Equity",
+  "label": "기말자본",
+  "amount": 143886416428,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]|자본잉여금 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 147,
+  "sj_div": "SCE",
+  "account_id": "ifrs-full_Equity",
+  "label": "기말자본",
+  "amount": -18111703885,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]|기타포괄손익누계액 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 148,
+  "sj_div": "SCE",
+  "account_id": "ifrs-full_Equity",
+  "label": "기말자본",
+  "amount": 1007923775967,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 149,
+  "sj_div": "SCE",
+  "account_id": "ifrs-full_Equity",
+  "label": "기말자본",
+  "amount": 15261351986,
+  "detail": "자본 [member]|비지배지분 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 150,
+  "sj_div": "SCE",
+  "account_id": "ifrs-full_Equity",
+  "label": "기말자본",
+  "amount": 1023185127953,
+  "detail": "연결재무제표 [member]"
+ },
+ {
+  "fs_div": "CFS",
+  "row": 151,
+  "sj_div": "SCE",
+  "account_id": "ifrs-full_Equity",
+  "label": "기말자본",
+  "amount": 16932545000,
+  "detail": "자본 [member]|지배기업의 소유주에게 귀속되는 자본 [member]|자본금 [member]"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 0,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_NoncurrentAssets",
+  "label": "비유동자산",
+  "amount": 450997552364,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 1,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_PropertyPlantAndEquipment",
+  "label": "유형자산",
+  "amount": 132086910805,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 2,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_InvestmentProperty",
+  "label": "투자부동산",
+  "amount": 27576107474,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 3,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_IntangibleAssetsOtherThanGoodwill",
+  "label": "무형자산",
+  "amount": 22945027075,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 4,
+  "sj_div": "BS",
+  "account_id": "dart_LongTermTradeAndOtherNonCurrentReceivablesGross",
+  "label": "기타비유동채권",
+  "amount": 637480130,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 5,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_InvestmentsInSubsidiariesJointVenturesAndAssociates",
+  "label": "종속기업및관계기업투자",
+  "amount": 236546211304,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 6,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_DeferredTaxAssets",
+  "label": "이연법인세자산",
+  "amount": 89026584,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 7,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_OtherNoncurrentFinancialAssets",
+  "label": "비유동금융자산",
+  "amount": 31116788992,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 8,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_CurrentAssets",
+  "label": "유동자산",
+  "amount": 455671557507,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 9,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_Inventories",
+  "label": "재고자산",
+  "amount": 58184958424,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 10,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_TradeAndOtherCurrentReceivables",
+  "label": "매출채권 및 기타유동채권",
+  "amount": 142892742565,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 11,
+  "sj_div": "BS",
+  "account_id": "dart_ShortTermDepositsNotClassifiedAsCashEquivalents",
+  "label": "단기금융자산",
+  "amount": 181368196268,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 12,
+  "sj_div": "BS",
+  "account_id": "dart_OtherCurrentAssets",
+  "label": "기타유동자산",
+  "amount": 10458818093,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 13,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_CurrentTaxAssets",
+  "label": "당기법인세자산",
+  "amount": null,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 14,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_CashAndCashEquivalents",
+  "label": "현금및현금성자산",
+  "amount": 62766842157,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 15,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_Assets",
+  "label": "자산총계",
+  "amount": 906669109871,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 16,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_IssuedCapital",
+  "label": "자본금",
+  "amount": 16932545000,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 17,
+  "sj_div": "BS",
+  "account_id": "dart_CapitalSurplus",
+  "label": "자본잉여금",
+  "amount": 143886416428,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 18,
+  "sj_div": "BS",
+  "account_id": "dart_OtherComprehensiveIncomeLossAccumulatedAmount",
+  "label": "기타포괄손익누계액",
+  "amount": -40165963,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 19,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_RetainedEarnings",
+  "label": "이익잉여금(결손금)",
+  "amount": 593590286830,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 20,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_Equity",
+  "label": "자본총계",
+  "amount": 754369082295,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 21,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_NoncurrentLiabilities",
+  "label": "비유동부채",
+  "amount": 24363262743,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 22,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_NoncurrentProvisions",
+  "label": "비유동충당부채",
+  "amount": 2684212491,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 23,
+  "sj_div": "BS",
+  "account_id": "dart_OtherNonCurrentLiabilities",
+  "label": "기타비유동부채",
+  "amount": 5056145817,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 24,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_OtherNoncurrentFinancialLiabilities",
+  "label": "장기금융부채",
+  "amount": 67531350,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 25,
+  "sj_div": "BS",
+  "account_id": "dart_PostemploymentBenefitObligations",
+  "label": "확정급여부채",
+  "amount": 16555373085,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 26,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_CurrentLiabilities",
+  "label": "유동부채",
+  "amount": 127936764833,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 27,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_CurrentProvisions",
+  "label": "충당부채",
+  "amount": 2636778962,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 28,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_TradeAndOtherCurrentPayables",
+  "label": "매입채무 및 기타유동채무",
+  "amount": 93312492349,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 29,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_OtherCurrentFinancialLiabilities",
+  "label": "단기금융부채",
+  "amount": 32757000,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 30,
+  "sj_div": "BS",
+  "account_id": "dart_OtherCurrentLiabilities",
+  "label": "기타유동부채",
+  "amount": 28727438440,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 31,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_CurrentTaxLiabilities",
+  "label": "당기법인세부채",
+  "amount": 3227298082,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 32,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_Liabilities",
+  "label": "부채총계",
+  "amount": 152300027576,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 33,
+  "sj_div": "BS",
+  "account_id": "ifrs-full_EquityAndLiabilities",
+  "label": "자본과부채총계",
+  "amount": 906669109871,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 34,
+  "sj_div": "IS",
+  "account_id": "ifrs-full_Revenue",
+  "label": "수익(매출액)",
+  "amount": 720851054785,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 35,
+  "sj_div": "IS",
+  "account_id": "ifrs-full_CostOfSales",
+  "label": "매출원가",
+  "amount": 640014027342,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 36,
+  "sj_div": "IS",
+  "account_id": "ifrs-full_GrossProfit",
+  "label": "매출총이익",
+  "amount": 80837027443,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 37,
+  "sj_div": "IS",
+  "account_id": "dart_TotalSellingGeneralAdministrativeExpenses",
+  "label": "판매비와관리비",
+  "amount": 47990558736,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 38,
+  "sj_div": "IS",
+  "account_id": "dart_OperatingIncomeLoss",
+  "label": "영업이익(손실)",
+  "amount": 32846468707,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 39,
+  "sj_div": "IS",
+  "account_id": "ifrs-full_FinanceIncome",
+  "label": "금융수익",
+  "amount": 37228714553,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 40,
+  "sj_div": "IS",
+  "account_id": "dart_OtherGains",
+  "label": "기타이익",
+  "amount": 80253139621,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 41,
+  "sj_div": "IS",
+  "account_id": "ifrs-full_FinanceCosts",
+  "label": "금융원가",
+  "amount": 2519250,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 42,
+  "sj_div": "IS",
+  "account_id": "dart_OtherLosses",
+  "label": "기타비용",
+  "amount": 7464222937,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 43,
+  "sj_div": "IS",
+  "account_id": "ifrs-full_ProfitLossBeforeTax",
+  "label": "법인세비용차감전순이익(손실)",
+  "amount": 142861580694,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 44,
+  "sj_div": "IS",
+  "account_id": "ifrs-full_IncomeTaxExpenseContinuingOperations",
+  "label": "법인세비용",
+  "amount": 10785531966,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 45,
+  "sj_div": "IS",
+  "account_id": "ifrs-full_ProfitLoss",
+  "label": "당기순이익(손실)",
+  "amount": 132076048728,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 46,
+  "sj_div": "IS",
+  "account_id": "ifrs-full_BasicEarningsLossPerShare",
+  "label": "기본및희석주당이익",
+  "amount": 3900,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 47,
+  "sj_div": "CIS",
+  "account_id": "ifrs-full_ProfitLoss",
+  "label": "당기순이익(손실)",
+  "amount": 132076048728,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 48,
+  "sj_div": "CIS",
+  "account_id": "ifrs-full_OtherComprehensiveIncome",
+  "label": "기타포괄손익",
+  "amount": -322661614,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 49,
+  "sj_div": "CIS",
+  "account_id": "ifrs-full_GainsLossesOnRemeasuringAvailableforsaleFinancialAssetsNetOfTax",
+  "label": "매도가능금융자산평가손익(세후기타포괄손익)",
+  "amount": 68078537,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 50,
+  "sj_div": "CIS",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "법인세효과",
+  "amount": -16475006,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 51,
+  "sj_div": "CIS",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "법인세효과 차감후 금액",
+  "amount": 51603531,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 52,
+  "sj_div": "CIS",
+  "account_id": "dart_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRemeasurementsOfDefinedBenefitPlans",
+  "label": "확정급여제도의 재측정손익(세후기타포괄손익)",
+  "amount": -493753489,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 53,
+  "sj_div": "CIS",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "법인세효과",
+  "amount": 119488344,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 54,
+  "sj_div": "CIS",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "법인세효과 차감후 금액",
+  "amount": -374265145,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 55,
+  "sj_div": "CIS",
+  "account_id": "ifrs-full_ComprehensiveIncome",
+  "label": "총포괄손익",
+  "amount": 131753387114,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 56,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_CashFlowsFromUsedInOperatingActivities",
+  "label": "영업활동현금흐름",
+  "amount": 93680085487,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 57,
+  "sj_div": "CF",
+  "account_id": "dart_ProfitLossForStatementOfCashFlows",
+  "label": "당기순이익(손실)",
+  "amount": 132076048728,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 58,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_AdjustmentsForReconcileProfitLoss",
+  "label": "당기순이익조정을 위한 가감",
+  "amount": -62820718119,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 59,
+  "sj_div": "CF",
+  "account_id": "dart_AdjustmentsForAssetsLiabilitiesOfOperatingActivities",
+  "label": "영업활동으로인한자산ㆍ부채의변동",
+  "amount": 11979968442,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 60,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_InterestReceivedClassifiedAsOperatingActivities",
+  "label": "이자수취(영업)",
+  "amount": 3992983238,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 61,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_DividendsReceivedClassifiedAsOperatingActivities",
+  "label": "배당금수취(영업)",
+  "amount": 13465803582,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 62,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_InterestPaidClassifiedAsOperatingActivities",
+  "label": "이자지급(영업)",
+  "amount": 2519250,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 63,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_IncomeTaxesPaidRefundClassifiedAsOperatingActivities",
+  "label": "법인세납부(환급)",
+  "amount": 5011481134,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 64,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_CashFlowsFromUsedInInvestingActivities",
+  "label": "투자활동현금흐름",
+  "amount": -96112273998,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 65,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities",
+  "label": "유형자산의 취득",
+  "amount": 31062212326,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 66,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_ProceedsFromSalesOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities",
+  "label": "유형자산의 처분",
+  "amount": 3099240991,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 67,
+  "sj_div": "CF",
+  "account_id": "dart_PurchaseOfInvestmentProperty",
+  "label": "투자부동산의 취득",
+  "amount": 2215925844,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 68,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_PurchaseOfIntangibleAssetsClassifiedAsInvestingActivities",
+  "label": "무형자산의 취득",
+  "amount": 9847946480,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 69,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_ProceedsFromSalesOfIntangibleAssetsClassifiedAsInvestingActivities",
+  "label": "무형자산의 처분",
+  "amount": 1892709,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 70,
+  "sj_div": "CF",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "기타비유동채권의 증가",
+  "amount": 335764200,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 71,
+  "sj_div": "CF",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "기타비유동채권의 감소",
+  "amount": 390430000,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 72,
+  "sj_div": "CF",
+  "account_id": "dart_PurchaseOfInvestmentsInAssociates",
+  "label": "관계기업 및 종속기업투자주식의 추가 취득",
+  "amount": 12753040000,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 73,
+  "sj_div": "CF",
+  "account_id": "dart_PurchaseOfInvestmentsInSubsidiariesJointVenturesAndAssociates",
+  "label": "관계기업투자주식의 처분",
+  "amount": null,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 74,
+  "sj_div": "CF",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "비유동금융자산의 취득",
+  "amount": 6093117853,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 75,
+  "sj_div": "CF",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "비유동금융자산의 처분",
+  "amount": 5702182027,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 76,
+  "sj_div": "CF",
+  "account_id": "dart_PurchaseOfShortTermFinancialInstruments",
+  "label": "유동금융자산의 취득",
+  "amount": 53740999429,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 77,
+  "sj_div": "CF",
+  "account_id": "dart_ProceedsFromSalesOfShortTermFinancialInstruments",
+  "label": "유동금융자산의 처분",
+  "amount": 10742986407,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 78,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_CashFlowsFromUsedInFinancingActivities",
+  "label": "재무활동현금흐름",
+  "amount": -8283166193,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 79,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_RepaymentsOfBorrowingsClassifiedAsFinancingActivities",
+  "label": "차입금의 상환",
+  "amount": 14317050,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 80,
+  "sj_div": "CF",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "종속기업투자주식의 추가취득",
+  "amount": null,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 81,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_ProceedsFromGovernmentGrantsClassifiedAsFinancingActivities",
+  "label": "국고보조금의 수령",
+  "amount": 32474257,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 82,
+  "sj_div": "CF",
+  "account_id": "dart_RepaymentForGovernmentGrantsClassifiedAsFinancingActivities",
+  "label": "국고보조금의 사용",
+  "amount": null,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 83,
+  "sj_div": "CF",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "예수보증금의 증가",
+  "amount": 503600000,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 84,
+  "sj_div": "CF",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "예수보증금의 감소",
+  "amount": null,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 85,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_DividendsPaidClassifiedAsFinancingActivities",
+  "label": "배당금지급",
+  "amount": 8804923400,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 86,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_EffectOfExchangeRateChangesOnCashAndCashEquivalents",
+  "label": "현금및현금성자산에 대한 환율변동효과",
+  "amount": -257537905,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 87,
+  "sj_div": "CF",
+  "account_id": "ifrs-full_IncreaseDecreaseInCashAndCashEquivalents",
+  "label": "현금및현금성자산의순증가(감소)",
+  "amount": -10972892609,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 88,
+  "sj_div": "CF",
+  "account_id": "dart_CashAndCashEquivalentsAtBeginningOfPeriodCf",
+  "label": "기초현금및현금성자산",
+  "amount": 73739734766,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 89,
+  "sj_div": "CF",
+  "account_id": "dart_CashAndCashEquivalentsAtEndOfPeriodCf",
+  "label": "기말현금및현금성자산",
+  "amount": 62766842157,
+  "detail": "-"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 90,
+  "sj_div": "SCE",
+  "account_id": "dart_EquityAtBeginningOfPeriod",
+  "label": "기초자본",
+  "amount": 470693426647,
+  "detail": "자본 [member]|이익잉여금 [member]"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 91,
+  "sj_div": "SCE",
+  "account_id": "dart_EquityAtBeginningOfPeriod",
+  "label": "기초자본",
+  "amount": 143886416428,
+  "detail": "자본 [member]|자본잉여금 [member]"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 92,
+  "sj_div": "SCE",
+  "account_id": "dart_EquityAtBeginningOfPeriod",
+  "label": "기초자본",
+  "amount": 16932545000,
+  "detail": "자본 [member]|자본금 [member]"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 93,
+  "sj_div": "SCE",
+  "account_id": "dart_EquityAtBeginningOfPeriod",
+  "label": "기초자본",
+  "amount": -91769494,
+  "detail": "자본 [member]|기타포괄손익누계액 [member]"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 94,
+  "sj_div": "SCE",
+  "account_id": "dart_EquityAtBeginningOfPeriod",
+  "label": "기초자본",
+  "amount": 631420618581,
+  "detail": "별도재무제표 [member]"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 95,
+  "sj_div": "SCE",
+  "account_id": "ifrs-full_ProfitLoss",
+  "label": "당기순이익(손실)",
+  "amount": 132076048728,
+  "detail": "자본 [member]|이익잉여금 [member]"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 96,
+  "sj_div": "SCE",
+  "account_id": "ifrs-full_ProfitLoss",
+  "label": "당기순이익(손실)",
+  "amount": 132076048728,
+  "detail": "별도재무제표 [member]"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 97,
+  "sj_div": "SCE",
+  "account_id": "dart_ChangesInReserveOfGainsAndLossesOnFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome",
+  "label": "매도가능금융자산평가손익",
+  "amount": 51603531,
+  "detail": "자본 [member]|기타포괄손익누계액 [member]"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 98,
+  "sj_div": "SCE",
+  "account_id": "dart_ChangesInReserveOfGainsAndLossesOnFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome",
+  "label": "매도가능금융자산평가손익",
+  "amount": 51603531,
+  "detail": "별도재무제표 [member]"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 99,
+  "sj_div": "SCE",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "확정급여제도의 재측정요소",
+  "amount": -374265145,
+  "detail": "자본 [member]|이익잉여금 [member]"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 100,
+  "sj_div": "SCE",
+  "account_id": "-표준계정코드 미사용-",
+  "label": "확정급여제도의 재측정요소",
+  "amount": -374265145,
+  "detail": "별도재무제표 [member]"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 101,
+  "sj_div": "SCE",
+  "account_id": "ifrs-full_DividendsPaid",
+  "label": "배당금지급",
+  "amount": 8804923400,
+  "detail": "별도재무제표 [member]"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 102,
+  "sj_div": "SCE",
+  "account_id": "ifrs-full_DividendsPaid",
+  "label": "배당금지급",
+  "amount": 8804923400,
+  "detail": "자본 [member]|이익잉여금 [member]"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 103,
+  "sj_div": "SCE",
+  "account_id": "ifrs-full_Equity",
+  "label": "기말자본",
+  "amount": 593590286830,
+  "detail": "자본 [member]|이익잉여금 [member]"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 104,
+  "sj_div": "SCE",
+  "account_id": "ifrs-full_Equity",
+  "label": "기말자본",
+  "amount": 16932545000,
+  "detail": "자본 [member]|자본금 [member]"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 105,
+  "sj_div": "SCE",
+  "account_id": "ifrs-full_Equity",
+  "label": "기말자본",
+  "amount": -40165963,
+  "detail": "자본 [member]|기타포괄손익누계액 [member]"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 106,
+  "sj_div": "SCE",
+  "account_id": "ifrs-full_Equity",
+  "label": "기말자본",
+  "amount": 143886416428,
+  "detail": "자본 [member]|자본잉여금 [member]"
+ },
+ {
+  "fs_div": "OFS",
+  "row": 107,
+  "sj_div": "SCE",
+  "account_id": "ifrs-full_Equity",
+  "label": "기말자본",
+  "amount": 754369082295,
+  "detail": "별도재무제표 [member]"
+ }
+]

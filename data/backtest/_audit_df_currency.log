@@ -1,0 +1,6 @@
+[scan] finstate csv files: 10228
+[scan] read ok=9319 err=909
+[scan] total rows=1575557
+[foreign] rows=5792 currencies=['USD']
+[mixed] corps with KRW+foreign mix = 1
+[name] pkl cols=['corp_code', 'corp_name', 'corp_eng_name', 'stock_code', 'modify_date'] code=corp_code name=corp_name mapped=118253
