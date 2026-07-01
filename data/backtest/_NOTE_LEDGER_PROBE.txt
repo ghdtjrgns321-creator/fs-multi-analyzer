@@ -1,0 +1,15 @@
+# 주석 차원 원장 + 비용 probe
+
+## 삼성전자 (00126380)
+- 모집단 N=4312 = surfaced 4312 + 제외 0 + 미설명 0
+- 항등식 reconciled=True / 제외사유 {}
+- surfaced compact 729,102자 ≈ 입력토큰 291,640~364,551
+- note 관점 증분비용 ≈ 1006~1258원
+- SCE 2D: surfaced 126/126 reconciled=True · compact 14,075자
+
+## 대주산업 (00112457)
+- 모집단 N=132 = surfaced 132 + 제외 0 + 미설명 0
+- 항등식 reconciled=True / 제외사유 {}
+- surfaced compact 15,760자 ≈ 입력토큰 6,304~7,880
+- note 관점 증분비용 ≈ 22~27원
+- SCE 2D: surfaced 61/61 reconciled=True · compact 6,888자

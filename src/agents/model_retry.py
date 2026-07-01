@@ -21,6 +21,10 @@ def make_agent(agent_factory: Callable[..., Any], model_name: str) -> Any:
 
 def is_temporary_model_error(exc: Exception) -> bool:
     if isinstance(exc, ModelHTTPError):
+        # 크레딧 소진(insufficient_quota)은 429지만 재시도해도 영구 실패 — 일시적 아님.
+        # 이것을 일시적으로 오판하면 헛재시도 후 조용히 빈 결과로 둔갑한다(hollow-PASS).
+        if "INSUFFICIENT_QUOTA" in repr(getattr(exc, "body", "")).upper():
+            return False
         if exc.status_code == 429 or exc.status_code >= 500:
             return True
         if 400 <= exc.status_code < 500:

@@ -23,17 +23,17 @@
 
 ## Quick Reference
 
-| 항목 | 값 |
-|------|---|
-| Python | 3.11+ |
-| 패키지 관리 | uv + pyproject.toml (dependency-groups) |
-| DB | DuckDB (회사/연도 격리) |
-| 에이전트 | PydanticAI + 순수 Python async (D2) |
-| 데이터 | OpenDART (재무제표 JSON + 주석 XBRL TSV) |
-| XBRL 처리 | Arelle |
-| UI | Streamlit + plotly |
-| 테스트 | pytest (`uv run pytest tests/ -v`) |
-| 실행 | `uv run streamlit run dashboard/app.py` |
+| 항목        | 값                                       |
+| ----------- | ---------------------------------------- |
+| Python      | 3.11+                                    |
+| 패키지 관리 | uv + pyproject.toml (dependency-groups)  |
+| DB          | DuckDB (회사/연도 격리)                  |
+| 에이전트    | PydanticAI + 순수 Python async (D2)      |
+| 데이터      | OpenDART (재무제표 JSON + 주석 XBRL TSV) |
+| XBRL 처리   | Arelle                                   |
+| UI          | Streamlit + plotly                       |
+| 테스트      | pytest (`uv run pytest tests/ -v`)       |
+| 실행        | `uv run streamlit run dashboard/app.py`  |
 
 ## 핵심 설계 원칙 (PLAN §3)
 
@@ -68,24 +68,24 @@ GOOGLE_API_KEY=xxxxx        # LLM 대안 (선택)
 
 ## Skill 활용 맵
 
-| 레이어 / 상황 | 활용 Skill |
-|---------------|-----------|
-| 전 작업 공통 | `tdd`, `verification-before-completion`, `systematic-debugging` |
-| 파급 변경 (계정·playbook·DSL) | `ripple-search` |
-| L1 정규화 / L2 신호엔진 | `pandera-validation`, `accounting-precision` |
-| L3 에이전트 설계 | `subagent-orchestration` |
-| L4/L5 리포트·UI | `developing-with-streamlit`, `mermaid` |
-| 도메인 코드 리뷰 | `disclosure-review` (프로젝트 스코프) |
-| 도메인 테스트·완료 검증 | `disclosure-testing` (프로젝트 스코프) |
+| 레이어 / 상황                 | 활용 Skill                                                      |
+| ----------------------------- | --------------------------------------------------------------- |
+| 전 작업 공통                  | `tdd`, `verification-before-completion`, `systematic-debugging` |
+| 파급 변경 (계정·playbook·DSL) | `ripple-search`                                                 |
+| L1 정규화 / L2 신호엔진       | `pandera-validation`, `accounting-precision`                    |
+| L3 에이전트 설계              | `subagent-orchestration`                                        |
+| L4/L5 리포트·UI               | `developing-with-streamlit`, `mermaid`                          |
+| 도메인 코드 리뷰              | `disclosure-review` (프로젝트 스코프)                           |
+| 도메인 테스트·완료 검증       | `disclosure-testing` (프로젝트 스코프)                          |
 
 ## Agent 활용 가이드
 
-| Agent | 용도 |
-|-------|------|
-| `planner` | 새 레이어/단계 시작 시 구현 계획 수립 |
-| `code-reviewer` | 모듈 구현 완료 후 코드 리뷰 |
-| `documentation-architect` | 문서 작성/리뷰/품질 검증 |
-| `Explore` / `Plan` | 코드베이스 탐색 / 아키텍처 설계 |
+| Agent                     | 용도                                  |
+| ------------------------- | ------------------------------------- |
+| `planner`                 | 새 레이어/단계 시작 시 구현 계획 수립 |
+| `code-reviewer`           | 모듈 구현 완료 후 코드 리뷰           |
+| `documentation-architect` | 문서 작성/리뷰/품질 검증              |
+| `Explore` / `Plan`        | 코드베이스 탐색 / 아키텍처 설계       |
 
 ## dependency-groups
 
@@ -102,14 +102,28 @@ MVP 설치: `uv sync --group core --group agent --group dashboard --group dev`
 
 전체 안내는 [docs/README.md](docs/README.md). 핵심:
 
-| 문서 | 분류 | 내용 |
-|------|------|------|
-| [docs/agent/STATE.md](docs/agent/STATE.md) | 🤖 AI | **현재 상태·다음 할 일** (세션 진입점, 작업 종료마다 갱신) |
-| [docs/agent/OVERVIEW.md](docs/agent/OVERVIEW.md) | 🤖 AI | 전체 흐름·아키텍처 요약 |
-| [docs/agent/ROADMAP.md](docs/agent/ROADMAP.md) | 🤖 AI | 단계별 할 일 체크리스트 |
-| [docs/agent/DECISION.md](docs/agent/DECISION.md) | 🤖 AI | 의사결정 + 이유 (D1~D4 이후) |
-| [docs/agent/PLAN.md](docs/agent/PLAN.md) | 🤖 AI | 설계 단일 출처 (상세) |
-| [docs/agent/SETUP.md](docs/agent/SETUP.md) | 🤖 AI | 스킬·구조 자산 정리 |
-| [docs/user/TROUBLESHOOT.md](docs/user/TROUBLESHOOT.md) | 👤 사람 | 문제 해결 과정 (시간순 누적) |
+| 문서                                                   | 분류    | 내용                                                       |
+| ------------------------------------------------------ | ------- | ---------------------------------------------------------- |
+| [docs/agent/STATE.md](docs/agent/STATE.md)             | 🤖 AI   | **현재 상태·다음 할 일** (세션 진입점, 작업 종료마다 갱신) |
+| [docs/agent/OVERVIEW.md](docs/agent/OVERVIEW.md)       | 🤖 AI   | 전체 흐름·아키텍처 요약                                    |
+| [docs/agent/ROADMAP.md](docs/agent/ROADMAP.md)         | 🤖 AI   | 단계별 할 일 체크리스트                                    |
+| [docs/agent/DECISION.md](docs/agent/DECISION.md)       | 🤖 AI   | 의사결정 + 이유 (D1~D4 이후)                               |
+| [docs/agent/PLAN.md](docs/agent/PLAN.md)               | 🤖 AI   | 설계 단일 출처 (상세)                                      |
+| [docs/agent/SETUP.md](docs/agent/SETUP.md)             | 🤖 AI   | 스킬·구조 자산 정리                                        |
+| [docs/user/TROUBLESHOOT.md](docs/user/TROUBLESHOOT.md) | 👤 사람 | 문제 해결 과정 (시간순 누적)                               |
 
 작업 전 STATE를 읽고, 완료 후 STATE·관련 docs를 갱신한다.
+
+## Agent skills
+
+### Issue tracker
+
+이슈는 GitHub Issues(`ghdtjrgns321-creator/fs-multi-analyzer`)에서 추적하며 `gh` CLI로 처리한다. 외부 PR은 triage 대상이 아니다. `docs/agents/issue-tracker.md` 참조.
+
+### Triage labels
+
+5개 표준 역할(needs-triage / needs-info / ready-for-agent / ready-for-human / wontfix)을 기본 문자열 그대로 사용한다. `docs/agents/triage-labels.md` 참조.
+
+### Domain docs
+
+단일 컨텍스트(루트 `CONTEXT.md` + `docs/adr/`). `docs/agents/domain.md` 참조.

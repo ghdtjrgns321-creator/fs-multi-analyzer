@@ -1,0 +1,202 @@
+{
+  "scope_by_perspective": {
+    "numeric": {
+      "account": 11
+    },
+    "note": {
+      "company": 7
+    },
+    "flow": {
+      "relationship": 6
+    },
+    "change": {
+      "account": 8
+    },
+    "industry": {
+      "company": 3
+    }
+  },
+  "flow_items": [
+    {
+      "scope": "relationship",
+      "account_id": "CFS:당기순이익",
+      "related_accounts": [
+        "CFS:영업이익",
+        "CFS:당기순이익",
+        "CFS:법인세비용차감전순이익",
+        "CFS:법인세비용"
+      ],
+      "cited_value": null,
+      "grounded": true,
+      "desc": "2024년 영업이익은 10,025,103,418원으로 전년 대비 30.46% 증가했지만, 당기순이익은 8,315,526,894원으로 18.07% 감소했다. 같은 기간 법인세비용차감전순이익도 8,797,040,556원으로 7.84% 감소했고, 법인세비용은 2023년 -604,137,720원에서 2024년 481,513,662원으로 부호가 바뀌었다. 영업단 성"
+    },
+    {
+      "scope": "relationship",
+      "account_id": "CFS:영업활동현금흐름",
+      "related_accounts": [
+        "CFS:당기순이익",
+        "CFS:영업활동현금흐름",
+        "CFS:운전자본변동"
+      ],
+      "cited_value": null,
+      "grounded": true,
+      "desc": "2024년 당기순이익은 8,315,526,894원으로 전년 대비 18.07% 감소했지만 영업활동현금흐름은 11,330,064,730원으로 2.44% 감소에 그쳤고, 영업CF/순이익은 1.36이다. 다만 운전자본변동은 2023년 1,696,615,727원에서 2024년 -3,030,836,983원으로 크게 반전되어, 이익과 현금흐름의 연결은 양호해 보이더라도"
+    },
+    {
+      "scope": "relationship",
+      "account_id": "CFS:매출채권및기타유동채권",
+      "related_accounts": [
+        "CFS:매출",
+        "CFS:매출채권및기타유동채권",
+        "CFS:매출채권증감",
+        "CFS:대손상각비",
+        "CFS:매출채권처분손실"
+      ],
+      "cited_value": null,
+      "grounded": true,
+      "desc": "2024년 매출은 106,038,654,753원으로 0.98% 증가에 그쳤고, 매출채권및기타유동채권은 11,998,712,425원으로 3.29% 감소했다. 같은 해 현금흐름표상 매출채권증감은 -273,321,133원이며, 대손상각비는 712,155,622원, 매출채권처분손실은 310,369,294원이다. 단순히 매출 증가에 따라 채권이 누적되는 모습은 아니"
+    },
+    {
+      "scope": "relationship",
+      "account_id": "CFS:재무활동현금흐름",
+      "related_accounts": [
+        "CFS:재무활동현금흐름",
+        "CFS:단기차입금",
+        "CFS:장기차입금",
+        "CFS:유동단기차입금의 증가",
+        "CFS:유동차입금의 상환",
+        "CFS:장기차입금차입",
+        "CFS:배당금지급"
+      ],
+      "cited_value": null,
+      "grounded": true,
+      "desc": "2024년 재무활동현금흐름은 -7,186,142,192원으로 전년 -2,708,492,166원 대비 유출이 크게 확대됐다. 같은 기간 단기차입금은 6,889,945,366원에서 3,105,125,786원으로 54.93% 감소했고, 장기차입금은 1,726,760,000원에서 1,300,000,000원으로 24.71% 감소했다. 반면 현금흐름표에는 유동단기차입"
+    },
+    {
+      "scope": "relationship",
+      "account_id": "CFS:유형자산취득",
+      "related_accounts": [
+        "CFS:유형자산취득",
+        "CFS:투자활동현금흐름",
+        "CFS:유형자산",
+        "CFS:감가상각비"
+      ],
+      "cited_value": null,
+      "grounded": true,
+      "desc": "2024년 유형자산취득은 2,849,071,648원으로 전년 1,027,157,497원 대비 177.37% 증가했고, 투자활동현금흐름도 -2,548,740,883원으로 전년 -1,055,671,576원보다 유출이 확대됐다. 그러나 재무상태표의 유형자산은 64,918,346,216원에서 65,617,605,789원으로 1.08% 증가에 그친다. 감가상각비 2"
+    },
+    {
+      "scope": "relationship",
+      "account_id": "CFS:현금및현금성자산순증감",
+      "related_accounts": [
+        "CFS:현금및현금성자산순증감",
+        "OFS:현금및현금성자산순증감",
+        "CFS:영업활동현금흐름",
+        "OFS:영업활동현금흐름"
+      ],
+      "cited_value": null,
+      "grounded": true,
+      "desc": "2024년 현금및현금성자산 순증감은 연결(CFS) 1,597,610,415원, 별도(OFS) 1,116,868,777원으로 30.09% 괴리가 있다. 같은 해 영업활동현금흐름도 연결 11,330,064,730원, 별도 10,792,613,092원으로 차이가 존재한다. 연결과 별도 간 현금창출·유출 구조 차이가 있어 자회사 영향 또는 연결조정 항목 확인이 필"
+    }
+  ],
+  "relationship_cards": [
+    {
+      "account": "CFS:대손상각비 ↔ CFS:매출 ↔ CFS:매출채권및기타유동채권 ↔ CFS:매출채권증감 ↔ CFS:매출채권처분손실",
+      "related_accounts": [
+        "CFS:대손상각비",
+        "CFS:매출",
+        "CFS:매출채권및기타유동채권",
+        "CFS:매출채권증감",
+        "CFS:매출채권처분손실"
+      ],
+      "issue_type": "revenue_receivables",
+      "vote_count": 1,
+      "materiality": 1.0,
+      "confidence": "Low",
+      "risk": "Medium",
+      "rebuttal_verdict": "suspicion_dominant"
+    },
+    {
+      "account": "CFS:단기차입금 ↔ CFS:배당금지급 ↔ CFS:유동단기차입금의 증가 ↔ CFS:유동차입금의 상환 ↔ CFS:장기차입금 ↔ CFS:장기차입금차입 ↔ CFS:재무활동현금흐름",
+      "related_accounts": [
+        "CFS:단기차입금",
+        "CFS:배당금지급",
+        "CFS:유동단기차입금의 증가",
+        "CFS:유동차입금의 상환",
+        "CFS:장기차입금",
+        "CFS:장기차입금차입",
+        "CFS:재무활동현금흐름"
+      ],
+      "issue_type": "liability_liquidity",
+      "vote_count": 1,
+      "materiality": 0.27,
+      "confidence": "Low",
+      "risk": "Medium",
+      "rebuttal_verdict": "mixed"
+    },
+    {
+      "account": "CFS:당기순이익 ↔ CFS:영업활동현금흐름 ↔ CFS:운전자본변동",
+      "related_accounts": [
+        "CFS:당기순이익",
+        "CFS:영업활동현금흐름",
+        "CFS:운전자본변동"
+      ],
+      "issue_type": "cash_flow",
+      "vote_count": 1,
+      "materiality": 0.11,
+      "confidence": "Low",
+      "risk": "Medium",
+      "rebuttal_verdict": "mixed"
+    },
+    {
+      "account": "CFS:당기순이익 ↔ CFS:법인세비용 ↔ CFS:법인세비용차감전순이익 ↔ CFS:영업이익",
+      "related_accounts": [
+        "CFS:당기순이익",
+        "CFS:법인세비용",
+        "CFS:법인세비용차감전순이익",
+        "CFS:영업이익"
+      ],
+      "issue_type": "earnings_tax",
+      "vote_count": 1,
+      "materiality": 0.09,
+      "confidence": "Low",
+      "risk": "Medium",
+      "rebuttal_verdict": "mixed"
+    },
+    {
+      "account": "CFS:감가상각비 ↔ CFS:유형자산 ↔ CFS:유형자산취득 ↔ CFS:투자활동현금흐름",
+      "related_accounts": [
+        "CFS:감가상각비",
+        "CFS:유형자산",
+        "CFS:유형자산취득",
+        "CFS:투자활동현금흐름"
+      ],
+      "issue_type": "asset_valuation",
+      "vote_count": 1,
+      "materiality": 0.62,
+      "confidence": "Low",
+      "risk": "Low",
+      "rebuttal_verdict": "normal_dominant"
+    },
+    {
+      "account": "CFS:영업활동현금흐름 ↔ CFS:현금및현금성자산순증감 ↔ OFS:영업활동현금흐름 ↔ OFS:현금및현금성자산순증감",
+      "related_accounts": [
+        "CFS:영업활동현금흐름",
+        "CFS:현금및현금성자산순증감",
+        "OFS:영업활동현금흐름",
+        "OFS:현금및현금성자산순증감"
+      ],
+      "issue_type": "cash_flow",
+      "vote_count": 1,
+      "materiality": 0.11,
+      "confidence": "Low",
+      "risk": "Low",
+      "rebuttal_verdict": "normal_dominant"
+    }
+  ],
+  "counts": {
+    "account_cards": 15,
+    "company_cards": 5,
+    "relationship_cards": 6
+  }
+}

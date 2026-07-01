@@ -1,0 +1,62 @@
+{
+  "scope_by_perspective": {
+    "numeric": {
+      "account": 14
+    },
+    "note": {
+      "company": 8
+    },
+    "flow": {
+      "relationship": 6
+    },
+    "trend": {
+      "account": 10
+    },
+    "industry": {
+      "company": 3
+    }
+  },
+  "numeric_accounts": [
+    "CFS:기타비용",
+    "CFS:기타수익",
+    "CFS:기타포괄손익",
+    "CFS:단기금융상품취득",
+    "CFS:단기차입금",
+    "CFS:당기순이익",
+    "CFS:당기순이익조정가감",
+    "CFS:대손상각비",
+    "CFS:매출채권처분손실",
+    "CFS:무형자산취득",
+    "CFS:법인세비용",
+    "CFS:운전자본변동",
+    "CFS:유형자산취득",
+    "CFS:재무활동현금흐름"
+  ],
+  "trend_accounts": [
+    "CFS:관계기업투자",
+    "CFS:단기차입금",
+    "CFS:매출채권및기타유동채권",
+    "CFS:매출총이익",
+    "CFS:영업이익",
+    "CFS:영업활동현금흐름",
+    "CFS:유동부채",
+    "CFS:유형자산",
+    "CFS:재무활동현금흐름",
+    "CFS:판매비와관리비"
+  ],
+  "overlap_accounts": [
+    "CFS:단기차입금",
+    "CFS:재무활동현금흐름"
+  ],
+  "trend_only_accounts": [
+    "CFS:관계기업투자",
+    "CFS:매출채권및기타유동채권",
+    "CFS:매출총이익",
+    "CFS:영업이익",
+    "CFS:영업활동현금흐름",
+    "CFS:유동부채",
+    "CFS:유형자산",
+    "CFS:판매비와관리비"
+  ],
+  "overlap_rate": 0.2
+}

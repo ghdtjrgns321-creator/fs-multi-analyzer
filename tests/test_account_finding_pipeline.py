@@ -10,7 +10,7 @@ from tests.test_analysis_tools import fixture_frame
 def inventory_finding() -> AccountFinding:
     return AccountFinding(
         account="재고자산",
-        issue_type=IssueType.INVENTORY_OBSOLESCENCE,
+        issue_type=IssueType.COST_INVENTORY,
         materiality_score=0.5,
         anomaly_score=0.6,
         confidence="Medium",

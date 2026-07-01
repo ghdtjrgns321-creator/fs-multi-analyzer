@@ -13,21 +13,34 @@ from pydantic import BaseModel, Field
 
 
 class IssueType(StrEnum):
-    """통제된 이슈 유형. 자유 문자열 금지 — 집계·필터 가능하도록 enum 고정(원칙: #1 분기 강제)."""
+    """통제된 이슈 유형 — **재무제표 영역 축**(중립·목적정렬). 집계·필터 가능하도록 enum 고정.
 
-    RECEIVABLES_QUALITY = "receivables_quality"
-    INVENTORY_OBSOLESCENCE = "inventory_obsolescence"
-    GOING_CONCERN = "going_concern"
-    CONTINGENT_LIABILITY_UNDERSTATEMENT = "contingent_liability_understatement"
-    RELATED_PARTY_CONCENTRATION = "related_party_concentration"
-    EARNINGS_QUALITY = "earnings_quality"
-    LIQUIDITY_RISK = "liquidity_risk"
-    DISCLOSURE_CHANGE = "disclosure_change"
-    UNMAPPED_MATERIAL_ACCOUNT = "unmapped_material_account"
+    분식 가설 축(receivables_quality 등)이 아니라 재무제표 구조를 따르는 중립 영역 축이다:
+    도구 목적은 '분식 탐지'가 아니라 '이상 변화·감사 검토 큐'이므로, 라벨은 부정을 전제하지 않고
+    "어느 재무제표 영역의 우려인가"만 표시한다. 6관점이 이 공유 목록에서 각자 고른다(관점별 배분 아님).
+    구체 위험(계속기업·이익의질·매출채권부실 등)은 enum이 아니라 subtype 자유서술로 보존한다.
+    영역은 재무제표 구조(표준·유한)를 따르므로 새 유형이 계속 생기지 않는다(닫힌 축, '기타'는 극소수).
+    """
+
+    REVENUE_RECEIVABLES = "revenue_receivables"  # 수익·채권
+    COST_INVENTORY = "cost_inventory"  # 원가·재고
+    ASSET_VALUATION = "asset_valuation"  # 자산 평가·손상·취득(유형·무형·투자자산)
+    LIABILITY_LIQUIDITY = "liability_liquidity"  # 부채·차입·유동성
+    EQUITY_CAPITAL = "equity_capital"  # 자본·자본거래(자기주식·배당·유증·기타자본)
+    CONTINGENCY_RELATED_PARTY = "contingency_related_party"  # 우발·특수관계·보증·약정·공시
+    EARNINGS_TAX = "earnings_tax"  # 손익·세무(이익 변동·법인세·이연법인세)
+    CASH_FLOW = "cash_flow"  # 현금흐름(영업·투자·재무 흐름 이상)
+    UNMAPPED_MATERIAL_ACCOUNT = "unmapped_material_account"  # 표준분류 못한 큰 계정(기술)
+    # 위 영역 어디에도 안 맞는 극소수 안전판. 실제 성격은 subtype 자유부제로 보존.
+    OTHER = "기타"
 
 
 RiskLevel = Literal["High", "Medium", "Low"]
 Confidence = Literal["High", "Medium", "Low"]
+
+# Phase2 반박 에이전트 판정 (PHASE2_DESIGN #17). 반박은 위험도 숫자를 직접 바꾸지 않고
+# 이 플래그만 부여한다(§9 — AI가 위험을 임의로 깎아 은폐하는 것 차단). 코드가 표시·정렬 보정.
+RebuttalVerdict = Literal["normal_dominant", "mixed", "suspicion_dominant"]
 
 
 class EvidenceRef(BaseModel):
@@ -44,6 +57,8 @@ class AccountFinding(BaseModel):
 
     account: str = Field(description="분석 대상 계정 (신호엔진이 동적 선정)")
     issue_type: IssueType
+    # issue_type='기타'(OTHER)일 때 실제 성격을 보존하는 자유부제(#14). 코드가 의심건에서 집계.
+    subtype: str = Field(default="", description="기타 유형의 자유부제(예: 설비투자급증)")
     materiality_score: float = Field(description="유의성: 절대금액 + 총계 대비 비율")
     anomaly_score: float = Field(description="이상 정도: 변동·항등식 위반 등")
     confidence: Confidence = Field(description="매핑·근거 강도 반영")
@@ -60,6 +75,24 @@ class AccountFinding(BaseModel):
     confirm_question: list[str] = Field(default_factory=list, description="사용자 확인 질문")
     next_procedure: list[str] = Field(default_factory=list, description="다음 감사 절차")
     risk_level: RiskLevel
+    # Phase2 카드 메타 (PHASE2_DESIGN §3). 코드가 클러스터 후 채운다(관점 LLM 출력 아님).
+    # 전부 optional 기본값 — 기존 단일관점 Finding 생성 경로는 무영향.
+    vote_count: int = Field(default=0, description="내부 4관점 중 이 카드를 지적한 수(N/4)")
+    internal_total: int = Field(default=4, description="내부 관점 총수(분모)")
+    reference_badges: list[str] = Field(
+        default_factory=list, description="외부·동종 등 참고 신호 배지(카운트 외)"
+    )
+    rebuttal_verdict: RebuttalVerdict | None = Field(
+        default=None, description="반박 에이전트 판정(없으면 미반박)"
+    )
+    cluster_key: str | None = Field(default=None, description="클러스터 키(계정 카드면 locator)")
+    # 관계(relationship) 카드의 엮인 계정 다리들. 흐름 관점 관계 모순을 단일계정으로 붕괴시키지
+    # 않고 카드가 다리를 보유한다(死필드 부활). 계정·회사 카드는 빈값 → 기존 경로 무회귀.
+    related_accounts: list[str] = Field(default_factory=list, description="관계 카드의 엮인 계정들")
+    # 추세(trend) 카드의 전기값·전기연도(死필드 부활 2탄). 카드가 "전기 X→당기 Y"를 구조로 보유해
+    # 산문에만 묻히지 않게 한다. 추세 외 카드는 None → 무회귀.
+    prior_value: str | None = Field(default=None, description="추세 카드: 전기 값")
+    prior_year: str | None = Field(default=None, description="추세 카드: 전기 연도")
 
 
 class ChangeRef(BaseModel):

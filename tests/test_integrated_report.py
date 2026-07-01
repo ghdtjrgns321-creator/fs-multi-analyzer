@@ -7,7 +7,6 @@ import pandas as pd
 import src.peers.benchmark as benchmark_module
 import src.report.external as external_module
 from src.agents.gemini_retry import MODEL_NAME
-from src.report.crosscheck import cross_check_assessments
 from src.report.external import create_external_assessment
 from src.report.external_agentic import (
     EXTERNAL_MODEL_NAME,
@@ -16,10 +15,8 @@ from src.report.external_agentic import (
 )
 from src.report.industry import create_industry_assessment, industry_material
 from src.report.integrated import build_review_queue, summarize_ratio_categories
-from src.report.multi_agent import build_multi_agent_report, render_multi_agent_markdown
 from src.report.perspectives import OPENAI_MODEL_NAME as PERSPECTIVE_MODEL_NAME
 from src.report.perspectives import PerspectiveAssessment, create_perspective_assessment
-from src.report.synthesis import create_integrated_summary
 from src.schemas.context import ContextBrief, ContextItem
 from src.schemas.findings import AccountFinding, EvidenceRef, IssueType
 
@@ -27,7 +24,7 @@ from src.schemas.findings import AccountFinding, EvidenceRef, IssueType
 def sample_finding(account: str, risk: str, score: float) -> AccountFinding:
     return AccountFinding(
         account=account,
-        issue_type=IssueType.RECEIVABLES_QUALITY,
+        issue_type=IssueType.REVENUE_RECEIVABLES,
         materiality_score=score,
         anomaly_score=0.4,
         confidence="Medium",
@@ -107,33 +104,37 @@ def test_review_queue_exposes_unmapped_material_accounts() -> None:
     assert item.issue == "미등록 중요 계정"
 
 
-def test_flow_material_includes_is_cf_flow_items() -> None:
+def test_flow_material_no_queue_keeps_relational_inputs() -> None:
+    # 큐(등수 힌트) 제거 후에도 흐름 관점은 관계신호(snapshot)·미매핑·시계열을 받는다.
     from src.report.materials import flow_material
 
     material = flow_material(
         {
-            "review_queue": [
-                {
-                    "subject": "투자활동현금흐름",
-                    "key_evidence": "single_account_yoy: -80",
-                },
-                {
-                    "subject": "영업이익",
-                    "key_evidence": "growth_divergence: 20",
-                },
-            ],
+            "review_queue": [{"subject": "영업이익", "key_evidence": "growth_divergence: 20"}],
             "ratio_summary": {"이익의 질": {"영업CF/순이익": 1.2}},
-            "latest_signal_snapshot": {},
+            "ratio_time_series": [
+                {"name": "DIO", "year": 2019, "value": 1.0, "category": "activity"}
+            ],
+            "latest_signal_snapshot": {"growth_divergences": []},
+            "account_metrics_panel": [{"account": "유형자산취득"}],
             "unmapped_material_accounts": [{"label": "확장"}],
         }
     )
 
-    subjects = {item["subject"] for item in material["flow_queue_reference"]}
-    assert {"투자활동현금흐름", "영업이익"}.issubset(subjects)
+    assert "flow_queue_reference" not in material
+    assert "review_queue_reference" not in material
+    assert "latest_signal_snapshot" in material
+    # panel은 컬럼형({columns, rows})으로 전달 — 계정은 rows에 보존(중복 series는 제거).
+    assert "account_level_series" not in material
+    panel = material["account_metrics_panel"]
+    assert panel["columns"][0] == "account"
+    assert panel["rows"][0][0] == "유형자산취득"
     assert material["unmapped_material_accounts"] == [{"label": "확장"}]
 
 
-def test_numeric_material_includes_full_series_not_only_queue() -> None:
+def test_numeric_material_full_series_no_queue() -> None:
+    # 등수 힌트(review_queue) 없이 전 계정 계산값(panel)·시계열을 받는다.
+    # 중복 account_level_series는 board에서 제거(panel이 같은 계정·금액을 압축 보유).
     from src.report.materials import numeric_material
 
     material = numeric_material(
@@ -142,14 +143,18 @@ def test_numeric_material_includes_full_series_not_only_queue() -> None:
             "ratio_summary": {"활동성": {"DIO": 432.0}},
             "ratio_time_series": [{"name": "DIO", "year": 2019, "value": 432.0}],
             "account_level_series": [{"series_key": "재고자산", "year": 2019, "amount": 100.0}],
+            "account_metrics_panel": [{"account": "재고자산"}],
             "latest_signal_snapshot": {},
         }
     )
 
-    assert material["review_queue_reference"] == [{"subject": "매출채권"}]
+    assert "review_queue_reference" not in material
     assert material["ratio_time_series"][0]["name"] == "DIO"
-    assert material["account_level_series"][0]["series_key"] == "재고자산"
-    assert "정답이 아니다" in material["queue_role"]
+    # 중복 series 제거 + panel 컬럼형으로 계정 보존.
+    assert "account_level_series" not in material
+    panel = material["account_metrics_panel"]
+    assert panel["rows"][0][0] == "재고자산"
+    assert "후보 목록은 제공하지 않는다" in material["judgment_role"]
 
 
 def test_note_excerpt_anchors_on_amount_block_not_header() -> None:
@@ -171,62 +176,6 @@ def test_note_excerpt_anchors_on_amount_block_not_header() -> None:
 
     # 날짜·코드(천단위 1그룹)는 금액으로 오인하지 않음
     assert _has_amounts("2024-01-01 D82240 코드 1,234") is False
-
-
-def test_change_material_includes_s9_correction_history(tmp_path, monkeypatch) -> None:
-    """G3: S9 정정공시 이력(원본/정정본·재작성 연도)이 change_material에 도달해야 한다.
-
-    회귀 방지: 정정 이력이 UI 배지로만 가고 Phase2 LLM material엔 없던 갭.
-    """
-
-    import json as _json
-
-    from config.settings import settings as _settings
-    from src.report import materials as materials_module
-
-    corp = "00117212"
-    raw = tmp_path / corp / "raw"
-    raw.mkdir(parents=True)
-    (raw / "corrections.json").write_text(
-        _json.dumps(
-            {
-                "corp_code": corp,
-                "corrections": [
-                    {
-                        "period_year": 2019,
-                        "report_kind": "사업보고서",
-                        "is_past_year": True,
-                        "correction_reason": "재무제표 재작성",
-                        "change_summary": "매출 정정",
-                    },
-                    {
-                        "period_year": 2024,
-                        "report_kind": "반기보고서",
-                        "is_past_year": False,
-                        "correction_reason": "단순 오기",
-                        "change_summary": "",
-                    },
-                ],
-            },
-            ensure_ascii=False,
-        ),
-        encoding="utf-8",
-    )
-    monkeypatch.setattr(_settings, "data_dir", tmp_path)
-
-    report = {
-        "corp_code": corp,
-        "review_queue": [],
-        "latest_signal_snapshot": {},
-        "target_year": 2024,
-    }
-    material = materials_module.change_material(report)
-    history = material["restatement_history"]
-    years = {h["year"] for h in history}
-    assert 2019 in years  # 과거연도 재작성 = 데이터 출처 신호
-    restated = next(h for h in history if h["year"] == 2019)
-    assert restated["restated"] is True
-    assert "사업보고서" in restated["report_kind"]
 
 
 def test_unmapped_material_excludes_sce_keeps_real_accounts() -> None:
@@ -338,7 +287,6 @@ def test_company_report_target_year_follows_data_not_literal(monkeypatch) -> Non
     monkeypatch.setattr(company_report_module, "extract_red_flags", lambda *a, **k: [])
     monkeypatch.setattr(company_report_module, "scan_universal_signals", lambda *a, **k: [])
     monkeypatch.setattr(company_report_module, "scan_cfs_ofs_gaps", lambda *a, **k: [])
-    monkeypatch.setattr(company_report_module, "scan_restatement_signals", lambda *a, **k: [])
     monkeypatch.setattr(
         company_report_module,
         "build_ratio_report",
@@ -356,78 +304,6 @@ def test_company_report_target_year_follows_data_not_literal(monkeypatch) -> Non
         company_provider=lambda corp_code: {"stock_name": "카카오"},
     )
     assert report["target_year"] == 2024
-
-
-def test_company_report_keeps_restatements_out_of_review_queue_but_in_snapshot(monkeypatch) -> None:
-    from src.report import company_report as company_report_module
-    from src.schemas.findings import EvidenceRef
-    from src.signals.red_flags import RedFlagSignal
-
-    restatement = RedFlagSignal(
-        id="restatement:account_id_label:ifrs-full_IntangibleAssets|무형자산:CFS:BS:2024",
-        year=2024,
-        account="무형자산",
-        signal_type="restatement",
-        description="전기 비교표시 금액과 전년도 공시 당기 금액 괴리",
-        metric_value=-108_537_593_133.0,
-        evidence=[EvidenceRef(source="financial_statement", locator="x", year="2024")],
-    )
-
-    frame = pd.DataFrame(
-        [
-            {
-                "corp_code": "00413046",
-                "year": 2024,
-                "fs_div": "CFS",
-                "sj_div": "BS",
-                "canonical": "무형자산",
-                "account_id": "ifrs-full_IntangibleAssets",
-                "label": "무형자산",
-                "amount": 100.0,
-                "mapping_status": "exact_taxonomy_match",
-            }
-        ]
-    )
-    empty_signal_report = {
-        "growth_divergences": pd.DataFrame(columns=["year"]),
-        "direction_checks": pd.DataFrame(columns=["year"]),
-        "primary_yoy": pd.DataFrame(columns=["year"]),
-        "reference_yoy": pd.DataFrame(columns=["year"]),
-    }
-    ratio_frame = pd.DataFrame(
-        columns=["id", "category", "name", "year", "value", "status", "basis"]
-    )
-
-    monkeypatch.setattr(company_report_module, "load_normalized_financials", lambda *args: frame)
-    monkeypatch.setattr(
-        company_report_module,
-        "build_mvp1_signal_report",
-        lambda *args, **kwargs: empty_signal_report,
-    )
-    monkeypatch.setattr(company_report_module, "extract_red_flags", lambda *args, **kwargs: [])
-    monkeypatch.setattr(company_report_module, "scan_universal_signals", lambda *args, **kwargs: [])
-    monkeypatch.setattr(company_report_module, "scan_cfs_ofs_gaps", lambda *args, **kwargs: [])
-    monkeypatch.setattr(
-        company_report_module,
-        "scan_restatement_signals",
-        lambda *args, **kwargs: [restatement],
-    )
-    monkeypatch.setattr(
-        company_report_module,
-        "build_ratio_report",
-        lambda *args, **kwargs: ratio_frame,
-    )
-    monkeypatch.setattr(company_report_module, "load_ratio_config", lambda: [])
-    monkeypatch.setattr(company_report_module, "load_findings_from_report", lambda *args: [])
-
-    report = company_report_module.build_company_report(
-        corp_code="00413046",
-        years=[2024],
-        company_provider=lambda corp_code: {"stock_name": "셀트리온"},
-    )
-
-    assert not any("restatement" in str(item["key_evidence"]) for item in report["review_queue"])
-    assert report["latest_signal_snapshot"]["restatements"][0]["account"] == "무형자산"
 
 
 def test_company_report_keeps_non_bs_is_universal_out_of_queue_but_in_material(
@@ -518,11 +394,6 @@ def test_company_report_keeps_non_bs_is_universal_out_of_queue_but_in_material(
     monkeypatch.setattr(company_report_module, "scan_cfs_ofs_gaps", lambda *args, **kwargs: [])
     monkeypatch.setattr(
         company_report_module,
-        "scan_restatement_signals",
-        lambda *args, **kwargs: [],
-    )
-    monkeypatch.setattr(
-        company_report_module,
         "build_ratio_report",
         lambda *args, **kwargs: ratio_frame,
     )
@@ -545,7 +416,10 @@ def test_company_report_keeps_non_bs_is_universal_out_of_queue_but_in_material(
     assert "영업활동현금흐름" not in queue_subjects
     assert "총포괄손익" not in queue_subjects
     assert {"영업활동현금흐름", "총포괄손익", "재고자산"} <= snapshot_accounts
-    assert {"BS", "CF", "CIS", "SCE"} <= material_sj_divs
+    # SCE(2D 격자)는 평면 account_level_series에서 제외 — 전용 sce_components 테이블이 전담.
+    # 평면서 합계·member 셀이 뭉개져 거짓 재작성 신호를 내던 근본원인 차단(phase3).
+    assert {"BS", "CF", "CIS"} <= material_sj_divs
+    assert "SCE" not in material_sj_divs
 
 
 def test_ratio_summary_groups_latest_values_by_category() -> None:
@@ -553,116 +427,6 @@ def test_ratio_summary_groups_latest_values_by_category() -> None:
 
     assert summary["수익성"]["ROE"] == 9.0
     assert "ROI" not in summary["수익성"]
-
-
-def test_integrated_summary_accepts_mock_agent(monkeypatch) -> None:
-    class FakeAgent:
-        async def run(self, prompt: str) -> SimpleNamespace:
-            assert "review_queue" in prompt
-            return SimpleNamespace(output="실제 데이터에 근거한 가능성 중심 종합 문단")
-
-    monkeypatch.setattr("src.report.synthesis.settings.openai_api_key", "fake")
-    result = asyncio.run(
-        create_integrated_summary({"review_queue": []}, agent_factory=FakeAgent, retry_delays=(0,))
-    )
-
-    assert "가능성" in result
-
-
-def test_cross_check_marks_agreement_for_shared_risk_area() -> None:
-    numeric = PerspectiveAssessment(
-        perspective="numeric",
-        status="completed",
-        risk_areas=["매출채권 회수"],
-        risk_level="Medium",
-        summary="수치상 회수 둔화 가능성",
-        evidence=["DSO"],
-    )
-    note = PerspectiveAssessment(
-        perspective="note",
-        status="completed",
-        risk_areas=["매출채권 회수"],
-        risk_level="Medium",
-        summary="주석상 신용위험 언급",
-        evidence=["D82242"],
-    )
-
-    result = cross_check_assessments([numeric, note])
-
-    assert result[0].verdict == "agreement"
-    assert "신호 강화" in result[0].comment
-
-
-def test_cross_check_marks_conflict_when_numeric_risk_note_quiet() -> None:
-    numeric = PerspectiveAssessment(
-        perspective="numeric",
-        status="completed",
-        risk_areas=["재고 보유기간"],
-        risk_level="Medium",
-        summary="DIO 상승",
-        evidence=["DIO"],
-    )
-    note = PerspectiveAssessment(
-        perspective="note",
-        status="completed",
-        risk_areas=[],
-        risk_level="Low",
-        summary="주석 위험 언급 없음",
-        evidence=[],
-    )
-
-    result = cross_check_assessments([numeric, note])
-
-    assert result[0].verdict == "conflict"
-    assert "주석 잠잠" in result[0].comment
-
-
-def test_cross_check_normalizes_korean_english_risk_area() -> None:
-    numeric = PerspectiveAssessment(
-        perspective="numeric",
-        status="completed",
-        risk_areas=["Revenue Recognition", "Inventory Management"],
-        risk_level="Medium",
-        summary="numeric",
-        evidence=[],
-    )
-    note = PerspectiveAssessment(
-        perspective="note",
-        status="completed",
-        risk_areas=["매출채권 회수"],
-        risk_level="Medium",
-        summary="note",
-        evidence=[],
-    )
-
-    result = cross_check_assessments([numeric, note])
-
-    assert result[0].verdict == "agreement"
-    assert result[0].risk_area == "매출채권/수익"
-
-
-def test_cross_check_external_agreement_is_not_exculpatory() -> None:
-    numeric = PerspectiveAssessment(
-        perspective="numeric",
-        status="completed",
-        risk_areas=["매출채권"],
-        risk_level="Medium",
-        summary="매출채권 검토 필요",
-        evidence=[],
-    )
-    external = PerspectiveAssessment(
-        perspective="external",
-        status="completed",
-        risk_areas=["매출채권/수익"],
-        risk_level="Low",
-        summary="출처 기반 외부 맥락",
-        evidence=["기사: https://example.com"],
-    )
-
-    result = cross_check_assessments([numeric, external])
-
-    assert result[0].verdict == "agreement"
-    assert "약화하지 않는다" in result[0].comment
 
 
 def test_perspective_assessment_accepts_mock_agent(monkeypatch) -> None:
@@ -689,19 +453,10 @@ def test_perspective_assessment_accepts_mock_agent(monkeypatch) -> None:
     assert result.status == "completed"
 
 
-def test_multi_agent_report_has_six_independent_perspectives() -> None:
-    result = asyncio.run(build_multi_agent_report(run_llm=False))
-
-    perspectives = {item["perspective"] for item in result["perspective_assessments"]}
-
-    assert perspectives == {"numeric", "note", "flow", "change", "external", "industry"}
-    assert set(result["materials"]) == {"numeric", "note", "flow", "change", "external", "industry"}
-
-
-def test_flow_and_change_perspectives_accept_mock_agent(monkeypatch) -> None:
+def test_flow_and_trend_perspectives_accept_mock_agent(monkeypatch) -> None:
     class FakeAgent:
         async def run(self, prompt: str) -> SimpleNamespace:
-            perspective = "flow" if '"perspective": "flow"' in prompt else "change"
+            perspective = "flow" if '"perspective": "flow"' in prompt else "trend"
             return SimpleNamespace(
                 output=PerspectiveAssessment(
                     perspective=perspective,
@@ -716,52 +471,10 @@ def test_flow_and_change_perspectives_accept_mock_agent(monkeypatch) -> None:
     monkeypatch.setattr("src.report.perspectives.settings.openai_api_key", "fake")
 
     flow = asyncio.run(create_perspective_assessment("flow", {}, FakeAgent, (0,)))
-    change = asyncio.run(create_perspective_assessment("change", {}, FakeAgent, (0,)))
+    trend = asyncio.run(create_perspective_assessment("trend", {}, FakeAgent, (0,)))
 
     assert flow.perspective == "flow"
-    assert change.perspective == "change"
-
-
-def test_change_perspective_prompt_guides_restatement_as_context_not_queue(monkeypatch) -> None:
-    captured: dict[str, str] = {}
-
-    class FakeAgent:
-        async def run(self, prompt: str) -> SimpleNamespace:
-            captured["prompt"] = prompt
-            return SimpleNamespace(
-                output=PerspectiveAssessment(
-                    perspective="change",
-                    status="completed",
-                    risk_areas=[],
-                    risk_level="Low",
-                    summary="정상 소급 가능성을 우선 검토한다.",
-                    evidence=[],
-                )
-            )
-
-    monkeypatch.setattr("src.report.perspectives.settings.openai_api_key", "fake")
-
-    asyncio.run(
-        create_perspective_assessment(
-            "change",
-            {
-                "review_queue_reference": [],
-                "restatement_signals": [
-                    {
-                        "account": "무형자산",
-                        "signal_type": "restatement",
-                        "metric_value": -108_537_593_133.0,
-                    }
-                ],
-            },
-            FakeAgent,
-            (0,),
-        )
-    )
-
-    assert "소급재작성은 회계정책 변경" in captured["prompt"]
-    assert "정상 소급은 위험으로 보지 말고" in captured["prompt"]
-    assert "이익·자산을 과대계상했다가 하향 재작성" in captured["prompt"]
+    assert trend.perspective == "trend"
 
 
 def test_external_perspective_runs_query_search_and_eval_mocks() -> None:
@@ -991,30 +704,6 @@ def test_industry_perspective_defers_when_peer_config_missing(tmp_path) -> None:
         raise AssertionError("missing peer config should defer/fail gracefully")
 
 
-def test_cross_check_industry_reference_does_not_mutate_internal_judgment() -> None:
-    numeric = PerspectiveAssessment(
-        perspective="numeric",
-        status="completed",
-        risk_areas=["수익성"],
-        risk_level="Medium",
-        summary="수익성 검토 필요",
-        evidence=[],
-    )
-    industry = PerspectiveAssessment(
-        perspective="industry",
-        status="completed",
-        risk_areas=["수익성"],
-        risk_level="Low",
-        summary="업종 대비 낮은 위치이나 참고 신호다.",
-        evidence=["ISA/KSA 520"],
-    )
-
-    result = cross_check_assessments([numeric, industry])
-
-    assert result[0].verdict == "agreement"
-    assert "판단 필드" in result[0].comment
-
-
 def test_query_generation_sanitizes_speculative_terms() -> None:
     class FakeAgent:
         async def run(self, prompt: str) -> SimpleNamespace:
@@ -1094,6 +783,50 @@ def test_account_level_series_keeps_all_accounts_no_count_cap() -> None:
     assert len(keys) == 50  # 40개로 잘리지 않고 전부 전달
 
 
+def test_slim_dimensions_lossless_compression() -> None:
+    """XBRL 축 문자열 무손실 축약 — 변별 토큰 보존, boilerplate만 제거."""
+    from src.report.company_report import _slim_dimensions
+
+    raw = "ConsolidatedAndSeparateFinancialStatementsAxis=SeparateMember|CategoriesOfRelatedPartiesAxis=SubsidiariesMember"
+    assert _slim_dimensions(raw) == "Separate·Subsidiaries"
+    assert _slim_dimensions("") == ""
+    assert _slim_dimensions(None) == ""
+    # 연결/별도 변별 보존(stage#1 이질병합 방지와 일관)
+    assert "Consolidated" in _slim_dimensions(
+        "ConsolidatedAndSeparateFinancialStatementsAxis=ConsolidatedMember"
+    )
+
+
+def test_account_level_series_includes_ofs_and_separates_fs_div() -> None:
+    """OFS 개방: account_level_series가 CFS만이 아니라 OFS 계정도 싣고,
+    동명계정(차입금)이 CFS/OFS에서 series_key 접두로 분리돼 합산되지 않는다."""
+    from src.report.company_report import _account_level_series
+
+    frame = pd.DataFrame(
+        [
+            {
+                "corp_code": "00000000",
+                "year": year,
+                "fs_div": fs,
+                "sj_div": "BS",
+                "canonical": "차입금",
+                "account_id": "id",
+                "label": "차입금",
+                "amount": amt,
+                "mapping_status": "exact_taxonomy_match",
+            }
+            for fs, base in (("CFS", 100.0), ("OFS", 30.0))
+            for year, amt in ((2023, base), (2024, base * 2))
+        ]
+    )
+    out = _account_level_series(frame, [2023, 2024], 2024)
+    assert {row["fs_div"] for row in out} == {"CFS", "OFS"}  # OFS 포함(누락 0)
+    keys = {row["series_key"] for row in out}
+    assert len(keys) == 2  # CFS 차입금·OFS 차입금이 별개 키(합산 X)
+    assert any(k.startswith("CFS") for k in keys)
+    assert any(k.startswith("OFS") for k in keys)
+
+
 def test_unmapped_material_no_head_cap_and_includes_id_label_conflict() -> None:
     """결함①: head(5) 제거 + id_label_conflict 강등(canonical='기타 중요 계정') 포함.
 
@@ -1160,26 +893,3 @@ def test_perspective_rules_prioritize_materiality_without_ignoring_small(monkeyp
 
     assert "유의성" in captured["prompt"]  # 큰 항목 우선 가드 도달
     assert "무시" not in captured["prompt"]  # 강표현 금지(작은 잔액도 패턴 있으면 검토)
-
-
-def test_renderer_shows_external_source_url() -> None:
-    rendered = render_multi_agent_markdown(
-        {
-            "review_queue": [],
-            "ratio_summary": {},
-            "perspective_assessments": [
-                PerspectiveAssessment(
-                    perspective="external",
-                    status="completed",
-                    risk_areas=["현금흐름"],
-                    risk_level="Low",
-                    summary="출처 기반 맥락",
-                    evidence=["기사: https://example.com/news"],
-                ).model_dump(mode="json")
-            ],
-            "cross_check": [],
-            "summary": None,
-        }
-    )
-
-    assert "https://example.com/news" in rendered

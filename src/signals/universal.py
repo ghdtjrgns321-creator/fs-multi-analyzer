@@ -16,7 +16,10 @@ from src.signals.red_flags import RedFlagSignal
 from src.signals.sanity import exclude_asset_sanity_years, exclude_foreign_currency_years
 
 MIN_Z_HISTORY = 4
-UNIVERSAL_STATEMENTS = ("BS", "IS", "CIS", "CF", "SCE")
+# SCE(자본변동표)는 2D 격자표 — 메인 프레임에선 구성요소 열이 소실돼 label만으로 1D 뭉개진다.
+# 평면 스캔(YoY·z·restatement)은 합계와 member 셀을 같은 시계열로 오비교해 거짓신호를 낸다.
+# SCE는 전용 2D 테이블(sce_components)이 전담하므로 평면 파이프라인에서 제외한다.
+UNIVERSAL_STATEMENTS = ("BS", "IS", "CIS", "CF")
 CFS_OFS_GAP_STATEMENTS = ("BS", "IS", "CF")
 
 

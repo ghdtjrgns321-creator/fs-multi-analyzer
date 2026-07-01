@@ -6,20 +6,20 @@ from src.schemas import AccountFinding, DisclosureChangeFinding, IssueType
 def test_account_finding_minimal() -> None:
     finding = AccountFinding(
         account="매출채권",
-        issue_type=IssueType.RECEIVABLES_QUALITY,
+        issue_type=IssueType.REVENUE_RECEIVABLES,
         materiality_score=0.0,
         anomaly_score=0.0,
         confidence="Low",
         risk_level="Low",
     )
-    assert finding.issue_type is IssueType.RECEIVABLES_QUALITY
+    assert finding.issue_type is IssueType.REVENUE_RECEIVABLES
     assert finding.numeric_evidence == []
 
 
 def test_disclosure_change_finding_minimal() -> None:
     finding = DisclosureChangeFinding(
         target="우발부채",
-        issue_type=IssueType.DISCLOSURE_CHANGE,
+        issue_type=IssueType.CONTINGENCY_RELATED_PARTY,
         materiality_score=0.0,
         confidence="Low",
         risk_level="Low",

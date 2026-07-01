@@ -1,0 +1,13 @@
+...........................x............................................ [ 19%]
+........................................................................ [ 39%]
+........................................................................ [ 59%]
+........................................................................ [ 79%]
+........................................................................ [ 98%]
+....                                                                     [100%]
+============================== warnings summary ===============================
+tests/test_card_pipeline.py::test_pipeline_builds_account_and_company_cards
+  C:\Users\ghdtj\workspace\portfolio\fs-multi-analyzer\src\report\rebuttal.py:39: DeprecationWarning: `OpenAIModel` was renamed to `OpenAIChatModel` to clearly distinguish it from `OpenAIResponsesModel` which uses OpenAI's newer Responses API. Use that unless you're using an OpenAI Chat Completions-compatible API, or require a feature that the Responses API doesn't support yet like audio.
+    model = OpenAIModel(model_name, provider=OpenAIProvider(api_key=settings.openai_api_key))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+363 passed, 1 xfailed, 1 warning in 153.33s (0:02:33)

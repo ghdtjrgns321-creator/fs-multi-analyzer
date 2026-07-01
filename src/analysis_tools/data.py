@@ -50,6 +50,46 @@ def load_normalized_financials(
     return pd.concat(frames, ignore_index=True)[TOOL_COLUMNS]
 
 
+NOTE_FACT_COLUMNS = [
+    "concept",
+    "label_ko",
+    "period",
+    "unit",
+    "value",
+    "dimensions",
+    "bucket",
+    "category",
+    "corp_code",
+    "year",
+]
+
+
+def load_notes_classified(
+    corp_code: str,
+    years: list[int] | tuple[int, ...],
+    data_dir: Path | None = None,
+) -> pd.DataFrame:
+    """Load classified note facts (XBRL 주석). 테이블 없는 구 DB는 빈 DF로 graceful."""
+
+    frames: list[pd.DataFrame] = []
+    for year in years:
+        path = db_path(corp_code, year, data_dir or settings.data_dir)
+        if not path.exists():
+            continue
+        with duckdb.connect(str(path), read_only=True) as con:
+            tables = {row[0] for row in con.execute("SHOW TABLES").fetchall()}
+            if "note_facts_classified" not in tables:
+                continue
+            frame = con.execute("SELECT * FROM note_facts_classified").fetchdf()
+        for column in NOTE_FACT_COLUMNS:
+            if column not in frame:
+                frame[column] = None
+        frames.append(frame)
+    if not frames:
+        return pd.DataFrame(columns=NOTE_FACT_COLUMNS)
+    return pd.concat(frames, ignore_index=True)[NOTE_FACT_COLUMNS]
+
+
 def load_sce_equity_components(
     corp_code: str,
     years: list[int] | tuple[int, ...],

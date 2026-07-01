@@ -6,6 +6,257 @@
 
 ## 현재 위치
 
+- **✅ issue_type B 재편 — 재무제표 영역 축으로 전면 교체** (2026-07-01). 사용자 대화로 설계 교정:
+  처음 제안한 축(수준/변화/관계)은 perspective와 중복이라 기각 → issue_type은 "누가 찾았나"(perspective)와
+  별개인 "무엇에 대한 우려인가"(공유 라벨, 관점별 배분 아님). **재무제표 영역 축**(revenue_receivables·
+  cost_inventory·asset_valuation·liability_liquidity·equity_capital·contingency_related_party·earnings_tax·
+  cash_flow·unmapped_material_account·기타)으로 enum 교체. 분식프레임(receivables_quality·going_concern 등)
+  제거, 구체 위험은 subtype 자유서술로 내림. 재무제표 구조라 닫힘(전수커버, "기타" 극소수).
+  - 파급: findings.py enum + tests ~30곳(sed, 옛 멤버 잔존0) + perspective_prompts.yaml output + PLAN.md.
+    값문자열 grep 8건은 다른 네임스페이스(비율category·워치리스트·관계사슬)라 비대상. pytest 394 무회귀.
+  - 커버 증명: 실 E2E "기타" 카드 표본 13/13 매핑(분모명시, 전수아님) + 구조적 전수성(재무제표 표준구조 권위,
+    음의공간=공시+OTHER). `_ISSUETYPE_B_MAPPING.md`. 한계: 런타임 "기타"비율 실감소는 실LLM 재측정 필요(비범위).
+  - 메모리 `[[issuetype-fs-area-axis]]`.
+- **✅ 실 LLM Phase2 E2E 최초 측정** (2026-07-01, `_E2E_PHASE2_LIVE.md`). 근본구조(OFS·주석전량·SCE·
+  occurrence·중립라벨)를 처음 실 6관점+반박에 태움. **비용**: 삼성 ₩1,884(478k입력·87초·7호출, note관점이
+  250k=₩899로 지배)·대주 ₩1,037(245k·71초). 단가가정 $2.5/$10·₩1380(실단가 미확정). **사각 검증**: 주석
+  특수관계자·지급보증·우발, SCE 자본거래가 **grounded로 실제 도달**(환각 미탈락) — 근거색인 작업 실증.
+  핵심 사각 I(특수관계자·우발) **카드화 성공**(충당부채 card + 회사카드 contingent_liability·related_party).
+  OFS F·자기주식 G는 grounded되나 top카드 미부상(LLM 우선순위·비결정). **부수 실측: B(어휘 비대칭) 확인** —
+  비-분식 이상이 "기타/subtype"로 대량(대주 계정카드 12중 ~7 기타: 유형자산급증·투자부동산급증·자산재평가 등).
+  중립라벨 A수정 반영됨(카드에 contingent_liability, understatement 없음).
+  - **⏭ 다음(사용자 결정)**: B(issue_type 중립·목적정렬 축 재편) — 이제 증거 있음 / 다른 회사 확대 / UI 배선.
+- **✅ issue_type 분식프레임 분석 + A수정(방향라벨 중립화)** (2026-07-01). 사용자 "issue_type 분식프레임
+  분석" 요청. **분석 결론**: "6관점 분식프레임 수렴" 진단은 대체로 낡음(수렴 원인=데이터 동일성, OFS·주석·
+  SCE·occurrence로 해소. 프롬프트는 OTHER·"억지로 욱여넣지 마"·관점별 focus로 반-쏠림. 계정카드는
+  cluster_key로 묶지 issue_type 아님). **진짜 문제 2**: (A) `CONTINGENT_LIABILITY_UNDERSTATEMENT`가
+  '과소계상' 방향 확정 = 최우선 포지셔닝(부정 확정 안 함) 위반 — **수정**: `CONTINGENT_LIABILITY`로 중립화
+  (findings.py·PLAN.md 2/2, 라이브 잔존 0). (B) 어휘 비대칭(분식 4종 구체 vs 비분식 전체 '기타' 1종, 목적
+  '이상변화 큐'와 불일치) — 실재하나 **행동영향 미측정** → 실 E2E로 크기 잰 뒤 결정(이번 비범위, 증거 없이
+  큰 재편 금지). 다른 분식성 라벨(earnings_quality 등)은 표준 감사범주라 유지.
+  - **⏭ 다음(사용자 결정)**: B(중립·목적정렬 축 재편) 여부는 실 LLM 2+사 E2E 후 / 실 E2E 자체(주석195조·SCE
+    카드화 확인, 비용발생).
+- **✅ 근본 뒤집기 — 포함-기본값(제외는 정당 2종만) + SCE 2D 편입 완료** (2026-07-01). 사용자 통찰:
+  "차원을 하나씩 추가하는 게 또 두더지잡기 아니냐 → 아예 처음부터 제외를 안 시키고 정당한 것만 제외하면
+  되잖아." 기본값 뒤집음: **분석 모집단 = 전 fact, 정당제외 = 완전중복 OR 비fact 2종뿐**(그 외 "모양/낯섦"
+  핑계 제외 금지).
+  - **주석 규칙 교정**: 직전 주석차원이 차원흡수(삼성 2003·대주 106 = 부문/지역 breakdown=net-new)를 통째
+    잘못 제외했음을 발견(적재된 흡수는 전부 유차원 — load가 무차원흡수·메타는 이미 제외). `surfaced_note_facts`
+    가 적재본 전량 반환으로 교정. note 원장 surfaced==population.
+  - **SCE 2D 편입**: `build_sce_ledger`·`_compact_sce_cells`·`load_sce_equity_components` 배선. 본문 ledger의
+    SCE 제외사유를 "SCE 2D가 상위 포함(superseded, 정당)"로. payload `sce_cells`·`coverage_ledger["sce"]`,
+    change_material에 투입(자본변동=change 관점), grounding `sce:{change}`·`sce:{component}` 색인.
+  - **검증**: probe(`_NOTE_LEDGER_PROBE.txt`) 삼성 note 4312/4312·sce 126/126·대주 132/132·61/61 전량 surface·
+    reconciled·미설명0. 비용 라이브(target2025) 삼성 ~1,098원(전량4215note+150sce)·대주 ~84원. 신규 테스트 5
+    (coverage sce1·note규칙2·grounding sce1·materials sce1), touched 35 passed. 백테스트 무관.
+  - **분기**: DB 미수집 → **이 프로젝트 비범위 한계로 확정**(DATA_SCOPE §2). 제외규칙 아닌 데이터 부재.
+  - **⏭ 다음(사용자 결정)**: 별개 과제 issue_type 분식프레임 수렴(③ 교란) / 실 LLM 2+사 E2E(주석195조·SCE가
+    실제 카드로 뜨는지, 비용발생). 메모리 `[[include-by-default-inversion]]`.
+- **✅ 근본구조 차원확장 #1 — 주석(note) 차원을 원장·분석·검증에 끌어옴 완료** (2026-06-30).
+  사각 #3(주석 우발 미카드화) 해결. 결정: **A(주석 전량 투입)** — 임계·카테고리 컷은 또 다른
+  두더지잡기(사용자 지적)라 금지. dedup도 실측결과 안전절감 0(특수관계자 906건 전부 연결별도×
+  거래상대×기간으로 distinct, 완전중복 0)이라 제외.
+  - **reader**: `load_notes_classified(corp, years)`(data.py, note_facts_classified 읽기. 그간 write-only
+    dead-end이던 테이블). 삼성 4312행·대주 132행.
+  - **주석 원장**: `build_note_ledger`(coverage.py) — population=전 fact, 흡수(본문중복 stem일치)·메타만
+    사실기반 제외, detail+기타주석 surfaced 전량. payload `coverage_ledger["notes"]`. 삼성 4312=surfaced2309
+    +흡수2003+미설명0·대주 132=26+106+0(`_NOTE_LEDGER_PROBE.txt`).
+  - **material**: note 관점에 surfaced fact 전량 compact 투입(`note_material` note_facts 인자·`_compact_note_facts`).
+    특수관계자195조·지급보증·소송이 이제 들어옴(기존 10계정 HTML 파이프 공백 메움).
+  - **grounding**: `build_account_index`에 note 색인(`note:{label}`·`note:{category}` namespaced, 본문 비충돌).
+    금액형 value 유효숫자·서술형 빈 풀. verify가 perspective==note면 note 키 조회 → note-only 우발 환각탈락 차단.
+  - **비용**: dimensions XBRL 축 문자열 무손실 축약(`_slim_dimensions`, member 토큰 보존·boilerplate 제거)으로
+    34% 절감 → 삼성 note 증분 **610~762원**, 대주 3~4원. 대부분 회사 무시 수준, 초대형사만 유의(줄일 수 없는 실정보).
+  - **검증**: pytest 신규 8(coverage2·grounding5·materials2·integrated slim1 일부)·타깃 66 passed. 백테스트 무관
+    (주석은 run_backtest 경로 아님). 메모리 `[[note-dimension-full-surface]]`.
+  - **⏭ 다음 차원(같은 원장에 추가)**: SCE 2D 셀·분기·세그먼트. + 별개: issue_type 분식프레임 수렴(③ 교란).
+- **✅ 근본구조 씨앗 — 커버리지 원장 + 신규/소멸 신호 완료** (2026-06-30). 사용자 지적("두더지잡기 그만,
+  근본 해결")에 따라 사각 #2(신규발생)를 개별 패치가 아니라 **구조적 불변식**으로 전환. 근본원인 =
+  분석 명단을 "기본 슬라이스(올해·연결·본문)에서 골라 담기(positive selection)" → 슬라이스 밖은 조용히
+  드롭. 원칙(§3 전수추출·§10 population-first)이 차원마다 사후 적용돼 새 차원마다 또 터짐.
+  - **A 명단=합집합**: `_account_level_series` 키 선정을 "target_year 잔액>0"→"윈도우 내 어느 해든 잔액>0".
+    소멸(작년만)·신규(올해만) 동시 포함.
+  - **B 신규/소멸 신호**: metrics_panel entry에 `occurrence_state`(present/appeared/resumed/disappeared)
+    +columnar. delta_score 불변(별도 칸). `occurrence_state()` in metrics_panel.py.
+  - **C 대조 원장(핵심)**: `src/report/coverage.py` `build_coverage_ledger` — 본문 셀 모집단(normalized_financials
+    전 행)=분석셀+제외사유셀+미설명셀 항등식. payload `coverage_ledger` 키 + render "미분석 N건" 경고.
+    **★원장이 실작동 입증**: 1차에 대주 미설명 24건(NaN placeholder 거짓드롭) 자동 포착 → `_real_amount`
+    필터 수정. 삼성 N=847(분석803+제외44SCE+미설명0)·대주 N=892(862+30+0). 산출물 `_LEDGER_PROBE.txt`.
+  - **D 자가테스트**: OFS전용·appeared·disappeared·SCE 합성셀 심어 명단포함·occurrence·미설명0 단언.
+  - **회귀**: 1차 full서 2건(columnar stale 샘플·build_account_profile 모집단 격리 불완전, fix A가 suspended
+    Phase1 profiler 분포 흔듦) 발견·수정(target_year 잔액 제한 격리). 백테스트 5/6·삼성 FP 14 불변.
+    pytest **382 passed**(376+신규6). 메모리 `[[coverage-ledger-root-structure]]`.
+  - **⏭ 다음 차원(같은 원장에 추가)**: 주석 파이프(현재 10계정·CFS·target만 → 원장 "제외:주석파이프" 기록만)
+    를 분석 명단에 끌어오기 / SCE 2D 셀 / 분기·세그먼트. + 별개: issue_type 분식프레임 수렴(③ 교란).
+- **✅ 멀티에이전트 사각 #1 — 별도재무제표(OFS) 전면 개방 완료** (2026-06-30, 설계 `HANDOFF_ROOT_REDESIGN.md`).
+  근본진단(3사각=한 뿌리: 도구가 "연결 본문·전년대비변화" 한 축만 봄) 중 **B안(데이터층 전면개방)·단계적**
+  채택. grill로 핸드오프 A안(관점별 차원분할) 기각: §3.2(계정은 데이터로 흐른다) 위반 + 1:1매핑이 사각
+  재생산("OFS이면서 level/change형 이상"은 다시 무주공산) + 핸드오프의 "연결과 차이 큰 OFS만" 선택기준이
+  자기동기 예시 F(OFS 내부 YoY급증, 횡단차이 아님)조차 못 잡음. **B = OFS를 공통 패널에 전부 싣고 6관점
+  전부가 봄.**
+  - **구현**: `_account_level_series`·`_top_unmapped_material_accounts`(company_report) → CFS+OFS 둘 다 게시,
+    series_key에 fs_div 접두(`CFS:차입금`/`OFS:차입금`)로 동명계정 이질병합 차단. 분모 fs_div격리:
+    `statement_totals` 키 (fs_div,sj_div,year)·`compute_self_axes`/metrics_panel 룩업·`_asset_by_fs_div`(OFS
+    계정은 OFS 자산총계로 정규화). 패널 entry에 fs_div 노출(+columnar). `build_account_profile`은 CFS-only
+    필터로 격리(Phase1 suspended 재설계 baseline 보존). `_primary_fs_div` 제거(죽음).
+  - **검증**: 삼성 OFS 89계정 패널 진입, F(별도 유동성장기차입금) amounts에 2024 spike 22.26조·변화축 살아남
+    (`_OFS_STAGE_SAMSUNG_PROBE.txt`). 백테스트 **회귀 0**(recall 5/6·삼성 FP 14·분식강도순위 유지 — 백테스트는
+    scan_universal/cfs_ofs_gap만 써 변경 무관). 신규 테스트 3(metrics_panel·integrated·grounding 교차환각).
+    pytest 무회귀(변경 전 375 passed).
+  - **⏭ 다음(단계적)**: 사각 #2 신규발생(delta_score prior=None→0 = 변화축 사망, "신규발생 flag" 별도 타입),
+    사각 #3 주석 grounding(note_facts 색인). §3 교란변수(issue_type 9종 전부 분식프레임→관점 수렴)는 별개 손봄.
+- **🎯 목적 재정의(사용자, 2026-06-21): 이 도구는 "분식 탐지"가 아니라 "이상 변화·감사인이 볼
+  검토 큐"를 정한다.** 백테스트 분식 recall은 회귀가드일 뿐 목적 잣대가 아님. → capex 급증(+177%)
+  같은 비-분식 이상변화도 큐에 있어야 마땅. **현재 구조적 괴리 발견**: `IssueType` enum 9종이 전부
+  분식 리스크 유형(earnings_quality·liquidity_risk·going_concern·receivables_quality 등)이라, capex·
+  관계기업 같은 "단순 이상변화"를 담을 유형이 없음 → 관점 LLM이 분식 프레임으로만 큐를 내고 비-분식
+  이상변화 누락. **eval#2 큐 정당성 판정**(대주, `_E2E_EVAL_00112457_2024.json`): account_cards 16 중
+  정당 이상변화 13(당기순이익·단기차입·법인세·매출채권·운전자본 등) + **SCE 거짓양성 3**(자본총계·
+  기초자본·배당변동, change 관점의 자본변동표 오해, 순위 12·15·16). capex/관계기업 0표(큐밖). 사용자
+  조건①(정당한 것만 capex보다 위)은 정당 13은 충족하나 **거짓양성 3건이 capex보다 큐 우위=부분위반**
+  (SCE는 다른 컨텍스트서 수정 예정). **⏭ 다음(사용자 결정)**: 삼성 측정 진행 vs issue_type/관점
+  재프레임(이상변화 큐 목적 정합). metrics_panel(사용자 추가)은 §3 정합·정상 작동(카드 10→16).
+- **⏸ 다축 재설계 일시중단·이관 — 핸드오프: `docs/agent/HANDOFF_SIGNAL_REDESIGN.md`** (2026-06-21).
+  사용자 판단: **스코프 과대**(경미 누락 2개[capex 2.6%·관계기업 0.8%, 분식 아님] 위해 검증된 신호엔진
+  recall 5/6 통째 재설계). fitting 점검서 갈수록 새 갭(mix·OR구멍·분식 미포착) 누적 → 일시중단.
+  S1~S3 구현·테스트·발견은 핸드오프 문서에 전량 인계(새 컨텍스트가 이어감). **재개 시 §9 규모 재평가
+  먼저**(대안: 병행추가 vs capex만 최소수정 vs 전체재설계). 코드 자산은 `profiler.py`·`test_signal_profiler.py`
+  유지(347 passed). → **원래 목표(전과정 파이프라인 측정 #2 삼성·#3 금융사)로 복귀.**
+- **🔨 Phase1 신호엔진 근본 재설계 진행 — 설계: `docs/agent/PHASE1_SIGNAL_REDESIGN.md`** (2026-06-21).
+  E2E 평가#1서 capex 급증·관계기업 추세감소를 신호엔진이 강조 못 해 6관점 전부 놓침 → 근본=
+  "룰 열거 패러다임"(사람이 변화율 룰+임계 리터럴 열거, 안 한 이상은 영원히 사각). **다축 이상
+  프로파일러로 전환**: 전 계정에 self(자기 시계열)+peer(동종 분포) 기준 5축(수준·변화금액·추세·
+  변동성·구성비) 원점수 전수 계산 → 분포 꼬리를 후보. floor 이진컷·valid_yoy_base 폐기. A(Δ금액)=
+  ②축·B(추세)=③축으로 흡수. grill 확정: 기준선 self+peer / D1 OR+가중합 / D2 하이브리드(universal만
+  대체, 관계사슬·비율·정정 유지) / D3 분포 분위(개수상한 없음).
+  - **회귀 baseline 고정**: `data/backtest/_REDESIGN_BASELINE.txt` — recall 5/6(세토피아만 미발굴)·
+    삼성 FP 14·핵심분식 강도순위. 재설계 후 악화 0 필수.
+  - **✅ S1 완료(self 4축 계산기)**: `src/signals/profiler.py`(delta/trend/volatility/mix_score +
+    compute_self_axes). trend=단조성×|당기-최초|/자산(비율 아닌 금액, 기저폭발 없음). TDD,
+    `tests/test_signal_profiler.py` 11 — capex delta>자본금, 관계기업 trend(단조1.0)>자본금 단언.
+    전체 **338 passed·1 xfailed**(회귀 0).
+  - **✅ S2 완료(정규화+통합강도)**: profiler.py `normalize_axes`(mid-rank 분위 [0,1])·`compute_strength`
+    (OR플래그 어느 축이든 분위≥tail 0.8 + 가중합 strength 정렬 + tail_axes). 신규 6테스트(합성분포:
+    capex류 delta flag·관계기업류 trend flag·정상 변화축 0 flag). 전체 **344 passed·1 xfailed**(회귀 0).
+    **구현 중 발견(문서 §11b)**: mix 보완효과(관계기업 감소분 흡수 계정이 mix 2위로 co-flag) — 실데이터
+    희석되나 mix calibration은 백로그. peer 수준축(①)은 S3 benchmark 연동서.
+  - **✅ S3 완료(build_account_profile + 실데이터 실증)**: `build_account_profile(report)`(subtotal 제외·
+    자산총계 자동추출→self 프로파일). probe `_e2e_profile_probe.py`. 신규 3테스트(실데이터 fixture).
+    전체 **347 passed·1 xfailed**(회귀 0). ★**실데이터 발견(대주산업 leaf 105·flagged 37)**:
+    **유형자산취득(capex) flagged=True**(순위15·delta+vol축) — 설계대로 잡힘 ✅. **관계기업투자 flagged=False**
+    (순위39·trend_q 0.72 상위28%이나 tail 0.8 미달) — 단조감소 감지하나 **금액 작아(자산0.8%) trend score가
+    깎임**. 사용자 "완만추세도 중요" 지적의 정확한 지점 — self축(금액기반)만으론 작은 단조추세 미달.
+    → S4 peer 수준축 or 단조성 가중 보강 필요(문서 §11b 연장).
+  - **⏭ 다음**: S4 — ①peer 수준축(benchmark 연동, 관계기업 회복 시도) + ②review_queue 통합·universal 흡수
+    (관계사슬 유지) → S5 materials 프로파일표 → S6 백테스트 회귀(recall 5/6 유지+capex/관계기업 회복).
+- **✅ 전과정 파이프라인 실측 #1 완료 — 리포트: `data/backtest/_E2E_MEASURE_00112457_2024.md`** (2026-06-20).
+  하니스 `data/backtest/_e2e_measure.py`(corp·year 인자화·3개사 재사용). 운영 경로 그대로
+  수집→정규화→온보딩(gate+S7+alias+G6)→Phase1→Phase2 실행, 단계별 시간·LLM 토큰·비용 실측.
+  비용 캡처=`pydantic_ai.Agent.run` 래핑(운영 무수정). **회사 #1 대주산업(00112457/2024, 소형비금융)**:
+  - **총 158초 · ₩1,365 · LLM 10호출**(S7 1+alias 1+G6 1+Phase2 6관점+반박 1). 입력 313,178·출력 20,608토큰.
+    단가가정 $2.5/$10·₩1,380(gpt-5.4 실단가 미확정).
+  - 단계 시간: collect 18s·normalize 9s·gate 5s·S7 10s·alias 4s·G6 13s·phase1 5s·**phase2 93s**(병목).
+    비용 비중: **phase2 ₩976(72%)** > S7 ₩329 > G6 ₩47 > alias ₩13.
+  - 산출물: 게이트 통과·S7 청크 10·queue 18·account_series 525행·Phase2 카드 계정13+회사6·반박 19.
+  - **자가발견·수정**: 1차 run_sync 이중카운트(동기경로 S7/alias/G6 토큰 ×2, ₩1,699 과대) 발견 →
+    run만 패치(run_sync가 내부 run 호출)로 수정·재실행. 캡처 10==실제 10·S7 90,698=자체보고값 일치로 확정.
+  - **⏭ 다음(사용자 예정)**: 회사 #2 삼성전자(00126380)·#3 금융사(예 대신증권) 동일 하니스 측정
+    (`uv run python data/backtest/_e2e_measure.py <corp> <year>`). 금융사는 S7 본문·관점 토큰 급증 예상.
+- **✅ docs/user 최신화 — 전처리·Phase1·Phase2 반영** (2026-06-20). 구현(특히 Phase2 새 파이프라인)과
+  사람용 문서의 stale 제거. 편집: `MULTI_AGENT.md`(6관점 모델 전부 GPT-5.4로·반박 에이전트 부활
+  섹션 재작성·다이어그램 최종 산출물=의심건 카드 목록), `FEATURES.md`(5개 역할→6관점+별도 반박·
+  산출물 카드), `UI.md`/`UX.md`(6관점·반박·카드 필드 표수N/4·반박판정·온보딩 필수 화면), `LIMITATIONS.md`
+  (§6 Phase2 실호출 E2E 미검증 한계 추가), `ONBOARDING_LLM_PLAN.md`(확정 운영정책=온보딩 필수화·별칭
+  사람 수동), `LLM_MODEL_COMPARE.md`(Phase2 6관점·반박도 gpt-5.4). grep 검증: Gemini(관점)·"5개
+  에이전트"·"반박 관점은 왜 없나" 0건, mojibake U+FFFD 0건. BACKTEST/VERIFICATION 류는 Phase1 검증
+  기록이라 비범위(Phase2 실 E2E 미실행이라 거짓 "검증완료" 표기 회피). **주의: Phase2는 구현·단위
+  테스트 완료지만 실 LLM 2+사 E2E는 미실행**(문서에 그대로 명시).
+  - **후속 보강(실험 결과 반영)**: `P1_AUDIT_HARNESS.md`(§6 E2E 충실도=원문 1,736행 소실 0·불일치 0
+    신규, 실행방법 §7로 이동), `VERIFICATION.md`("검증이 실제로 고친 것" 표=BS −52조→+0.08조·member-sign
+    334→0·USD 게이트차단·hollow-PASS 차단), `DATA_SCOPE.md §6`(정정공시 S9 가시화·정합성 E2E를 검증완료로
+    이동, provenance·손익CF 검산만 잔존). mojibake 0.
+- **🎯 Phase2 단단설계 확정 — 문서: `docs/agent/PHASE2_DESIGN.md`** (2026-06-20, grill with docs).
+  Phase1(거의 완료, UI 제외) 후 Phase2(L3/L4 멀티에이전트 교차검증)를 기초 MVP → 단단설계로.
+  grill 17개 결정 합의. 핵심: 산출물=**의심건 카드 목록**(계정 섹션+회사레벨 섹션), 교차검증=
+  **코드 결정론 클러스터**(하드코딩 키워드 crosscheck 폐기), 근거=**EvidenceRef 코드검증**(환각 탈락),
+  반박=**전용 반박 에이전트 1회 일괄**(제거 금지·강등 플래그만, §9), 점수·확신도·표수=코드 산정,
+  개수상한 없음(결함① 교훈). 기존 코드 처분: crosscheck 폐기/perspectives 교체+병렬/synthesis→반박
+  전환/AccountFinding 재사용. 구현=결정론 골격 먼저 TDD(S1~S7, PHASE2_DESIGN §7).
+  - **✅ S1 완료(2026-06-20, 스키마)**: `src/schemas/suspicion.py`(SuspicionItem·scope account/company·
+    grounding validator: account면 account_id·cited_value 필수, 빈 description 거부·locator build/parse
+    round-trip·cluster_key 분기·INTERNAL_PERSPECTIVES 4) + `findings.py` AccountFinding 카드 메타
+    (vote_count·internal_total=4·reference_badges·rebuttal_verdict·cluster_key, 전부 optional). TDD
+    RED→GREEN, `tests/test_suspicion_schema.py` 10 + 전체 **289 passed·1 xfailed**(회귀 0).
+  - **✅ S2 완료(2026-06-20, 근거검증)**: `src/report/grounding.py`(build_account_index·
+    verify_account/company_suspicion·verify_suspicions·GroundedSuspicion). 환각 탈락=유효숫자
+    동일성 대조(원·백만·억 스케일 무관, float 직접비교 회피) — 계정 미존재·금액 불일치=grounded
+    False, 추세/비율 비금액 인용=계정존재 grounding(value_verified False), 외부 URL 없으면 탈락,
+    탈락도 reason 동반 전부 반환(silent drop 0). TDD, `tests/test_grounding.py` 8 + 전체
+    **297 passed·1 xfailed**(회귀 0).
+  - **✅ S3 완료(2026-06-20, 카드조립)**: `src/report/card_builder.py`(cluster_suspicions·build_cards).
+    grounded만 계정 cluster_key로 묶고(회사레벨=issue_type 버킷 별도), vote_count=내부 4관점 distinct
+    (외부·동종은 reference_badges만, 미가산), materiality=절대금액 0..1 정규화·anomaly=신호참조 존재·
+    confidence=value_verified+표수+매핑강도 결정론, risk_level=클러스터 최대. 카드=AccountFinding 재사용.
+    버그 1건(key 미정의 가능) self-발견·수정. TDD, `tests/test_card_builder.py` 11 + 전체
+    **308 passed·1 xfailed**(회귀 0).
+  - **✅ S4 완료(2026-06-20, 정렬·렌더) — 결정론 골격 4단계 종료**: `src/report/card_report.py`
+    (order_account_cards·order_company_cards·build_card_report·render_card_markdown). 정렬=표수 내림→
+    동점 시 금액 내림, normal_dominant는 하단 강등(제거 X), 회사레벨 별도 섹션, 0건은 검토범위(계정·관점
+    수) 명시(빈 화면 금지). TDD, `tests/test_card_report.py` 7 + 전체 **315 passed·1 xfailed**(회귀 0).
+    ★**S1~S4로 LLM 없이 "검증 의심건→카드 markdown"까지 결정론으로 완결**.
+  - **🎯 S5 설계 확정(2026-06-20, grill) — PHASE2_DESIGN §9**: 관점 출력=`PerspectiveOutput{status,
+    suspicions:list[SuspicionItem]}`(봉투 1개), SuspicionItem에 선택칸 3개 추가(related_accounts·
+    prior_value·prior_year), perspective 라벨 코드 재주입, 프롬프트=공통 system(코드)+관점별 focus
+    (`config/playbooks/perspective_prompts.yaml`), 검사=양식 PydanticAI/환각 S2 단일. 관점별 스키마(3안)는
+    비용 대비 손해라 기각.
+  - **✅ S5 완료(2026-06-20, 관점 구조화·병렬) — additive 무회귀**: 신규 경로 추가, 구 PerspectiveAssessment·
+    crosscheck·multi_agent 무수정(제거는 S7). `SuspicionItem`+선택칸3·`PerspectiveOutput`(suspicion.py),
+    `config/playbooks/perspective_prompts.yaml`(공통+6관점 focus), `perspective_runner.py`(playbook 로딩·
+    system prompt 합성·PydanticAI 출력강제·perspective 코드재주입·키없음/에러 deferred·material 수집),
+    `card_pipeline.py`(6관점 asyncio.gather→verify S2→build_cards S3→report+render S4). 환각검사=S2 단일.
+    TDD, 신규 9(runner6+pipeline4, schema 보완분 포함) + 전체 **324 passed·1 xfailed**(회귀 0, 기존
+    test_integrated_report 전부 유지로 additive 입증).
+  - **✅ S6 완료(2026-06-20, 반박 에이전트)**: `src/report/rebuttal.py`(build_rebuttal_agent·
+    build_rebuttal_input·run_rebuttal·apply_rebuttal) + `RebuttalEntry`/`RebuttalOutput`(suspicion.py) +
+    playbook `rebuttal` 섹션 + card_pipeline 반박 배선(build_cards→반박→정렬). 균형 반박(과도 적대 금지),
+    입력=카드+그 카드 의심근거, cluster_key 매칭(회사레벨 cluster_key=company:{issue} 보완), 위험도 숫자
+    불변·verdict 플래그만, 카드 제거 0, 반박 없는 카드는 "반박 미수행" 명시, 키없음/에러 빈 출력(카드 생존).
+    TDD, 신규 10 + 전체 **334 passed·1 xfailed**(회귀 0).
+  - **✅ S7 완료(2026-06-20, 구경로 청소) — Phase2 신규 파이프라인 S1~S7 종료**: `crosscheck.py`(§3 위반
+    키워드 매칭)·`synthesis.py`·`multi_agent.py` 삭제 + test_integrated_report 의존 테스트 8개 정리.
+    src 구경로 참조 0(grep). 전체 **326 passed·1 xfailed**(334−삭제8, 신규 실패 0). card_pipeline이 유일 경로.
+  - **🎯 Phase2 새 파이프라인 완성(S1~S7)**: SuspicionItem·EvidenceRef 검증→근거검증(환각 탈락)→
+    계정 클러스터·N/4·점수·확신도→6관점 병렬(playbook)→반박(균형·미수행 명시)→정렬·카드 렌더.
+    설계 단일출처 `PHASE2_DESIGN.md`. 누적 신규 테스트 ~67, 회귀 0.
+  - **🔍 code-reviewer 리뷰 후속(2026-06-20) — §9 검증 후 선별 반영**: 무비판 수용 안 함.
+    - **수정 완료**: **P2-1** grounding index에 sj_div 한정 키 추가(`{sj_div}:{key}`)+verify 우선조회 →
+      동명이계(IS/CF 같은 계정명·다른 금액) 타 표 금액 환각 통과 차단. 회귀테스트 추가(9 passed).
+      **P1-2** apply_rebuttal in-place mutation docstring 명시.
+    - **기각/보류(사유)**: **P1-1**(grounding 유효숫자) — 리뷰어 `_sig_match` 자릿수차≤4 패치는 **기각**
+      (의도적 억/조 스케일 관용을 깨 거짓탈락↑ = §9상 더 나쁨). 단 **라운드 숫자 붕괴**(예 30,000,000,000
+      →유효숫자"3"<3자리→금액검사 우회, 환각도 통과도 안 됨)는 진짜 갭. 올바른 수정=단위(억/조/백만) 인식
+      값 파싱이나 스케일 모호성(메모리 gpt 백만 오독) 때문에 precision/recall 트레이드오프 → 별도 설계 백로그.
+    - **✅ 해결(change→trend 재편)**: change·numeric 단위중복(63%)을 역할분리로 해결. change 식별자를
+      trend(추세)로 개명, numeric=당해 급변(yoy) 전담·trend=다년 단조방향(↑↑/↓↓·완만 드리프트) 전담.
+      소급재작성은 추세와 무관(신뢰성 신호)이라 관점 경로 삭제(엔진은 dormant 보존). 대주 실LLM E2E:
+      numeric∩trend 중복 **63%→20%**, trend 고유 8계정 신규(관계기업투자 등 다년드리프트 흡수, overfit 아님).
+      파급: suspicion·perspectives·perspective_runner·grounding·materials·findings·event_routing.yaml·
+      perspective_prompts.yaml. 전체 398 passed(소급-관점 테스트 4종 삭제 반영).
+    - **✅ 해결(flow 관계 근본수리)**: SuspicionItem.related_accounts 카드 미전파 = **해결**. scope에
+      "relationship" 3번째 단위 신설(계정 쌍·교차재무제표) → build_cards가 relationship_cards 별도 산출,
+      cluster_key `rel:`+정렬다리(A↔B==B↔A·교차FS 동일규칙). 대주 실LLM E2E: flow 6/6 전부
+      scope=relationship, 연결↔별도 현금 관계 부활(진단 시 소실). change의 prior_value/prior_year
+      부활은 후속(사용자: 결과 확인 후 진행). 산출물 `data/backtest/_E2E_FLOW_REL_00112457.json`.
+    - **백로그(P3 등)**: P1-2 model_copy 불변 리팩터 / 이중 timeout(perspective_runner·rebuttal wait_for) /
+      note_material KeyError 방어 / 회사레벨 카드 materiality=0 반박입력 표기 / deferred 관점 리턴 노출 /
+      industry scope=account 가이드 / **change prior_value·prior_year 死필드 부활(死필드 부활 2탄)**.
+  - **⏭ 다음(사용자 결정) — Phase2 잔여 백로그**:
+    1. **UI 배선**(dashboard에서 build_suspicion_cards 호출·카드 렌더, Phase1·Phase2 통틀어 UI 미완).
+    2. **실 LLM 2+사 E2E**(비용 발생, run_llm=True 실측 — 관점·반박 실호출 품질·토큰 확인).
+    3. **assessment 클러스터 완전 제거**([~] 보류분): perspectives.py·external/industry assessment 함수·
+       external_agentic — dead이나 결정론·external/industry 테스트와 얽힘. external_material/industry_material만 유지.
+    4. OpenAIModel→OpenAIChatModel 마이그(전 파일 공통 DeprecationWarning).
+    + Phase1 잔여: 전체 corpus --force 재정규화(~30% stale)·온보딩 일괄실행 수동검증.
 - **✅ 온보딩 alias 제안 개선 — 계획·결과: `docs/user/ONBOARDING_LLM_PLAN.md`** (2026-06-17). 검증서 발견한
   alias 약점(적중~75%·confidence가 오답 못거름) 개선. **코드 반영**(`src/report/alias_suggest.py`): ②배치화
   (계정당 N회→회사당 1회, 호출 72→4·반환형식 불변) + ③일반원칙 힌트(SYSTEM_PROMPT에 "불확실하면 기타보류"+10유형

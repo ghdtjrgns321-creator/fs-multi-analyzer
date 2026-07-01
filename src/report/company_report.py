@@ -8,20 +8,30 @@ from pathlib import Path
 from typing import Any
 
 from config.settings import settings
-from src.analysis_tools import load_normalized_financials
+from src.analysis_tools import (
+    load_normalized_financials,
+    load_notes_classified,
+    load_sce_equity_components,
+)
 from src.collect.opendart import DartCollector
 from src.db.normalized import db_path
 from src.normalize.mapper import OTHER_CANONICAL
+from src.report.coverage import (
+    build_coverage_ledger,
+    build_note_ledger,
+    build_sce_ledger,
+    surfaced_note_facts,
+)
 from src.report.integrated import (
     build_review_queue,
     payload_for_summary,
     summarize_ratio_categories,
 )
 from src.schemas.findings import AccountFinding
+from src.signals.metrics_panel import account_metrics_panel
 from src.signals.mvp1 import build_mvp1_signal_report
 from src.signals.ratios import build_ratio_report, load_ratio_config
 from src.signals.red_flags import extract_red_flags
-from src.signals.restatement import scan_restatement_signals
 from src.signals.universal import UNIVERSAL_STATEMENTS, scan_cfs_ofs_gaps, scan_universal_signals
 
 DEFAULT_CORP_CODE = "00126380"
@@ -48,7 +58,6 @@ def build_company_report(
     red_flags = extract_red_flags(signal_report, target_year)
     universal_signals = scan_universal_signals(frame, target_year)
     cfs_ofs_signals = scan_cfs_ofs_gaps(frame, target_year)
-    restatement_signals = scan_restatement_signals(frame, target_year)
     ratios = build_ratio_report(frame, target_years)
     ratio_config = load_ratio_config()
     unmapped = _top_unmapped_material_accounts(frame, target_year)
@@ -58,12 +67,27 @@ def build_company_report(
     )
     all_signals = red_flags + universal_signals + cfs_ofs_signals
     queue = build_review_queue(findings, ratios, ratio_config, target_year, all_signals, unmapped)
+    # phase2: 전 계정 계산값(YoY·추세·변동성·비중·z 등)을 하나도 안 고르고 패널로 전달.
+    # 코드는 순위를 정하지 않는다 — 무엇이 이상인지는 관점 LLM이 직접 판단한다(PLAN §3).
+    account_series = _account_level_series(frame, target_years, target_year)
+    metrics_panel = account_metrics_panel(
+        account_series, _asset_by_fs_div(account_series, target_year), target_year
+    )
+    # 근본구조 C: 본문 셀 모집단 대조. 이유 없이 빠진 셀(unaccounted)=조용한 드롭 → 표면화.
+    coverage_ledger = build_coverage_ledger(frame, account_series, target_years)
+    # 주석 차원: detail+기타주석 전량을 분석 투입(흡수=본문중복·메타=비fact만 사실기반 제외).
+    note_facts_raw = load_notes_classified(corp_code, [target_year]).to_dict("records")
+    coverage_ledger["notes"] = build_note_ledger(note_facts_raw)
+    note_facts = _compact_note_facts(surfaced_note_facts(note_facts_raw))
+    # SCE 2D: 본문 ledger가 'SCE 2D가 상위 대체'로 미룬 실데이터를 전량 편입(자본변동×구성요소 셀).
+    sce_raw = load_sce_equity_components(corp_code, [target_year]).to_dict("records")
+    coverage_ledger["sce"] = build_sce_ledger(sce_raw)
+    sce_cells = _compact_sce_cells(sce_raw)
     ratio_summary = summarize_ratio_categories(ratios, target_year)
     payload = payload_for_summary(queue, ratio_summary)
     latest_snapshot = _latest_signal_snapshot(signal_report, target_year)
     latest_snapshot["universal_scan"] = _signal_rows(universal_signals)
     latest_snapshot["cfs_ofs_gaps"] = _signal_rows(cfs_ofs_signals)
-    latest_snapshot["restatements"] = _signal_rows(restatement_signals)
     return {
         "corp_code": corp_code,
         "company_name": _company_name(company_profile, corp_code),
@@ -73,9 +97,13 @@ def build_company_report(
         "review_queue": [item.to_dict() for item in queue],
         "ratio_summary": ratio_summary,
         "ratio_time_series": _ratio_time_series(ratios),
-        "account_level_series": _account_level_series(frame, target_years, target_year),
+        "account_level_series": account_series,
+        "account_metrics_panel": metrics_panel,
         "latest_signal_snapshot": latest_snapshot,
         "unmapped_material_accounts": unmapped,
+        "coverage_ledger": coverage_ledger,
+        "note_facts": note_facts,
+        "sce_cells": sce_cells,
         "llm_payload": payload,
     }
 
@@ -188,26 +216,33 @@ def _account_level_series(
     # 금액>0 계정 시계열을 전부 전달, 유의성 판단은 관점 에이전트가 한다.
     if not hasattr(frame, "to_dict") or frame.empty:
         return []
-    fs_div = _primary_fs_div(frame, target_year)
+    # OFS 개방(B안): 연결(CFS)·별도(OFS)를 둘 다 1급 series로 싣는다. _primary_fs_div로
+    # 연결만 통과하던 사각(별도 큰 변화 통째 누락)을 닫음. fs_div를 series_key에 접두해
+    # 동명계정(차입금 등)이 연결·별도에서 한 시계열로 합산되는 이질병합을 차단한다.
     scoped = frame[
-        (frame["fs_div"] == fs_div) & (frame["sj_div"].isin(UNIVERSAL_STATEMENTS))
+        (frame["fs_div"].isin(["CFS", "OFS"])) & (frame["sj_div"].isin(UNIVERSAL_STATEMENTS))
     ].copy()
     if scoped.empty:
         return []
-    scoped["series_key"] = scoped["canonical"].where(
+    base_key = scoped["canonical"].where(
         scoped["canonical"].notna() & (scoped["canonical"] != ""),
         scoped["label"],
     )
-    latest = scoped[scoped["year"].astype(int) == int(target_year)].copy()
-    latest["abs_amount"] = latest["amount"].abs()
+    scoped["series_key"] = scoped["fs_div"].astype(str) + ":" + base_key.astype(str)
+    # 명단=합집합(근본구조 A): target_year 잔액으로만 키를 뽑으면 "작년 컸다가 올해 사라진"
+    # 계정이 통째 누락(소멸 사각). 윈도우 내 **어느 해든** 잔액>0이면 명단에 넣어, 신규·소멸을
+    # 둘 다 살린다. 정렬은 연도별 최대 절대금액 내림차순(규모 큰 계정 우선).
+    window_years = [int(year) for year in years]
+    in_window = scoped[scoped["year"].astype(int).isin(window_years)].copy()
+    in_window["abs_amount"] = in_window["amount"].abs()
     keys = (
-        latest[latest["abs_amount"] > 0]
+        in_window[in_window["abs_amount"] > 0]
         .sort_values("abs_amount", ascending=False)["series_key"]
         .dropna()
+        .drop_duplicates()
     )
     result = scoped[
-        (scoped["series_key"].isin(keys))
-        & (scoped["year"].astype(int).isin([int(year) for year in years]))
+        (scoped["series_key"].isin(keys)) & (scoped["year"].astype(int).isin(window_years))
     ].copy()
     result = result.sort_values(["sj_div", "series_key", "year"])
     return result[
@@ -215,9 +250,74 @@ def _account_level_series(
     ].to_dict("records")
 
 
-def _primary_fs_div(frame: Any, target_year: int) -> str:
-    latest = frame[frame["year"].astype(int) == int(target_year)]
-    return "CFS" if (latest["fs_div"] == "CFS").any() else "OFS"
+def _slim_dimensions(dimensions: object) -> str:
+    """XBRL 축 문자열을 무손실 축약 — '...Axis=SeparateMember|...=SubsidiariesMember'
+    → 'Separate·Subsidiaries'. 변별 토큰(member)은 보존, boilerplate(Axis=·Member)만 제거
+    (panel_columnar식 표현 압축, 정보 손실 0). 대형사 note 토큰 ~34% 절감."""
+
+    text = str(dimensions or "").strip()
+    if not text:
+        return ""
+    parts: list[str] = []
+    for segment in text.split("|"):
+        token = segment.split("=", 1)[1] if "=" in segment else segment
+        token = token.strip()
+        if token.endswith("Member"):
+            token = token[: -len("Member")]
+        if token:
+            parts.append(token)
+    return "·".join(parts)
+
+
+def _compact_note_facts(facts: list[dict]) -> list[dict[str, object]]:
+    """주석 fact를 관점 LLM·근거검증용 compact 형태로(label·value·category·dimensions).
+    concept(영문 local name)는 label_ko가 있어 제외 — 토큰 절감. dimensions는 무손실 축약."""
+
+    compact: list[dict[str, object]] = []
+    for fact in facts:
+        compact.append(
+            {
+                "label": str(fact.get("label_ko", "")),
+                "value": str(fact.get("value", "")),
+                "category": str(fact.get("category", "")),
+                "dimensions": _slim_dimensions(fact.get("dimensions")),
+            }
+        )
+    return compact
+
+
+def _compact_sce_cells(cells: list[dict]) -> list[dict[str, object]]:
+    """SCE 2D 셀을 관점·검증용 compact로(변동×구성요소×금액×fs_div). change=자본변동 사건
+    (당기순이익·배당·유상증자·자기주식 등), component=자본 구성요소(자본금·이익잉여금 등)."""
+
+    compact: list[dict[str, object]] = []
+    for cell in cells:
+        amount = cell.get("amount")
+        if amount is None:
+            continue
+        compact.append(
+            {
+                "fs_div": str(cell.get("fs_div", "")),
+                "change": str(cell.get("change_canonical") or cell.get("change_label") or ""),
+                "component": str(cell.get("component_std") or cell.get("component_raw") or ""),
+                "amount": amount,
+                "prior_amount": cell.get("prior_amount"),
+            }
+        )
+    return compact
+
+
+def _asset_by_fs_div(rows: list[dict[str, object]], target_year: int) -> dict[str, float]:
+    """fs_div별 자산총계(target 연도). OFS 계정 delta를 OFS 자산으로 나누기 위함
+    (별도 계정을 연결 자산으로 정규화하는 스케일 오류 차단)."""
+
+    out: dict[str, float] = {}
+    for row in rows:
+        if str(row.get("canonical")) == "자산총계" and int(row.get("year")) == int(target_year):  # type: ignore[arg-type]
+            amount = row.get("amount")
+            if amount is not None:
+                out[str(row.get("fs_div", ""))] = abs(float(amount))  # type: ignore[arg-type]
+    return out
 
 
 def _top_unmapped_material_accounts(frame: Any, target_year: int) -> list[dict[str, object]]:
@@ -231,10 +331,10 @@ def _top_unmapped_material_accounts(frame: Any, target_year: int) -> list[dict[s
     #   (순이자손익 등 canonical='기타'인데 status가 달라 빠지던 케이스) 포함.
     # ② head(5) 개수상한 제거 — 강등 많은 금융사의 유의성 큰 계정이 상위 5개 밖으로
     #   밀려 누락되던 갭. 금액>0 전부 게시(유의성 판단은 관점 에이전트가 한다).
-    fs_div = _primary_fs_div(frame, target_year)
+    # OFS 개방(B안): 별도(OFS) 미매핑 핵심계정도 게시한다(연결만 보던 사각 차단).
     scoped = frame[
         (frame["year"].astype(str) == str(target_year))
-        & (frame["fs_div"] == fs_div)
+        & (frame["fs_div"].isin(["CFS", "OFS"]))
         & (frame["sj_div"] != "SCE")
         & (
             (frame["mapping_status"] == "unmapped_extension_account")

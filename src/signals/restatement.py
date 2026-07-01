@@ -27,6 +27,12 @@ def scan_restatement_signals(
     scoped = _scan_frame(frame)
     if scoped.empty:
         return []
+    # SCE 2D 격자는 메인 프레임에서 구성요소 열이 소실돼 합계·member 셀이 label만으로 뭉개진다.
+    # 평면 비교 시 자본잉여금 셀을 자본총계 전기값으로 오인해 거짓 재작성 신호를 낸다.
+    # 자본 계정 재작성은 BS(자본총계 등)의 prior_amount로 정상 탐지된다 → SCE는 제외.
+    scoped = scoped[scoped["sj_div"] != "SCE"]
+    if scoped.empty:
+        return []
     if target_year is not None:
         scoped = scoped[scoped["year"].isin([int(target_year), int(target_year) - 1])]
     floors = _asset_floors(scoped, thresholds, abs_min)

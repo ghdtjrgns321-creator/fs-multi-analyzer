@@ -7,6 +7,7 @@ from pathlib import Path
 
 from src.notes.indexer import find_account_note_sections, load_account_note_mappings
 from src.report.review_chunks import QUIRKS_PATH, load_content_chunks
+from src.signals.metrics_panel import panel_columnar
 
 
 def _routed_events(report: dict[str, object], perspective: str) -> list[dict]:
@@ -70,56 +71,23 @@ def _note_file_amount_excerpt(notes_root: Path, fs_div: str, locator: str) -> st
     return _amount_anchored_excerpt(text) if _AMOUNT.search(text) else ""
 
 
-def _correction_history(report: dict[str, object]) -> list[dict]:
-    """S9: 이 회사의 정정공시 이력(원본/정정본·재작성 연도) compact.
-
-    데이터 출처 신호(과거연도 재작성 = 비교 주의). UI 배지뿐 아니라 LLM material에도
-    전달해 change 관점이 "FS 소급흔적"과 "정정공시로 재작성됨"을 함께 보게 한다.
-    미수집·corp 부재는 빈 리스트(graceful).
-    """
-
-    from config.settings import settings
-    from src.collect.correction import load_corrections
-
-    corp = str(report.get("corp_code", ""))
-    if not corp:
-        return []
-    try:
-        rows = load_corrections(corp, settings.data_dir)
-    except Exception:
-        return []
-    history: list[dict] = []
-    for row in rows:
-        year = row.get("period_year")
-        if not year:
-            continue
-        reason = str(row.get("correction_reason", ""))
-        history.append(
-            {
-                "year": year,
-                "report_kind": str(row.get("report_kind", "")),
-                "restated": "재작성" in reason,
-                "is_past_year": bool(row.get("is_past_year")),
-                "reason": reason[:80],
-            }
-        )
-    # 재작성·과거연도 우선
-    history.sort(key=lambda h: (not h["restated"], not h["is_past_year"], -int(h["year"])))
-    return history[:20]
-
-
 def numeric_material(report: dict[str, object]) -> dict[str, object]:
     """Inputs for numeric perspective only."""
 
     return {
-        "review_queue_reference": report["review_queue"][:10],
+        # 코드가 추린 등수 힌트(review_queue)는 주지 않는다 — 전 계정 계산값을 전부 주고
+        # 무엇이 유의한지는 관점이 직접 고른다(PLAN §3: 발견=LLM, 주의 편향 제거).
+        # account_level_series는 싣지 않는다 — panel이 같은 계정·금액을 압축 보유(중복 제거).
         "ratio_summary": report["ratio_summary"],
         "ratio_time_series": report.get("ratio_time_series", []),
-        "account_level_series": report.get("account_level_series", []),
+        "account_metrics_panel": panel_columnar(report.get("account_metrics_panel", [])),
         "latest_signal_snapshot": report.get("latest_signal_snapshot", {}),
         "report_event_timeline": _routed_events(report, "numeric"),
         "scope": "numeric perspective only",
-        "queue_role": "review_queue_reference는 변화율 중심 참고 후보이며 정답이 아니다.",
+        "judgment_role": (
+            "코드가 추린 후보 목록은 제공하지 않는다. 무엇이 이상한지는 account_metrics_panel"
+            "(전 계정 계산값, columns/rows 컬럼형)을 직접 훑어 스스로 판단한다."
+        ),
     }
 
 
@@ -128,11 +96,15 @@ def note_material(
     year: int = 2024,
     fs_div: str = "CFS",
     quirks_path: Path = QUIRKS_PATH,
+    note_facts: list[dict] | None = None,
 ) -> dict[str, object]:
     """Inputs for note perspective only.
 
     주석 섹션 외에, 온보딩이 사업보고서 원문에서 선별한 검토관심 청크(content_chunks,
     S7 Step4)를 함께 싣는다. 선별이 없는 회사는 빈 리스트로 graceful(정상 경로 무영향).
+
+    note_facts: XBRL 주석 fact 전량(detail+기타주석, 흡수·메타 제외). 특수관계자·지급보증·
+    우발 등 본문 10계정 HTML 파이프가 못 보던 것을 전부 싣는다(자의적 컷 없음, 비용 수용).
     """
 
     notes_root = Path("data/companies") / corp_code / str(year) / "raw" / "notes"
@@ -176,10 +148,20 @@ def note_material(
             "[경고] S7 검토관심 청크 미선별 — 사업보고서 본문의 소송·특수관계·우발·약정 등 "
             "서술형 감사관심사항이 이 분석에 포함되지 않았다. 온보딩에서 S7 청크선별을 실행해야 한다."
         )
+    facts = note_facts or []
+    note_facts_role = (
+        "note_facts는 XBRL 주석에서 추출한 정량·서술 fact 전량이다(흡수=본문중복·메타 제외). "
+        "특수관계자 거래·지급보증·약정·우발(소송 등)이 여기 포함된다. value가 숫자면 금액, "
+        "문장이면 서술형 공시다. dimensions로 연결/별도·거래상대를 구분한다."
+        if facts
+        else "[주석 fact 없음] 이 회사-연도는 분류된 주석 fact가 적재되지 않았다."
+    )
     return {
         "note_sections": sections,
         "report_review_chunks": review_chunks,
         "report_review_role": report_review_role,
+        "note_facts": facts,
+        "note_facts_role": note_facts_role,
         "scope": "note perspective only",
     }
 
@@ -199,78 +181,57 @@ def _priority(account: str) -> str:
 def flow_material(report: dict[str, object]) -> dict[str, object]:
     """Inputs for BS-IS-CF flow perspective only."""
 
-    flow_keywords = (
-        "현금흐름",
-        "차입",
-        "사채",
-        "이자",
-        "법인세",
-        "순이익",
-        "영업이익",
-        "투자",
-        "유형자산",
-        "사업결합",
-        "배당",
-        "매출채권",
-        "재고",
-        "매입채무",
-    )
-    flow_items = [
-        item
-        for item in report["review_queue"]
-        if any(keyword in str(item["subject"]) for keyword in flow_keywords)
-        or str(item["subject"]) in {"영업CF/순이익", "발생액 비율"}
-        or "growth_divergence" in str(item["key_evidence"])
-        or "direction_mismatch" in str(item["key_evidence"])
-    ]
+    # 큐(등수 힌트)는 주지 않는다. 흐름 관점에 필요한 관계신호(growth_divergences·
+    # direction_checks·cfs_ofs_gaps)는 latest_signal_snapshot에 전수로 들어 있다.
+    ratio_summary = report["ratio_summary"]
+    ratio_summary = ratio_summary if isinstance(ratio_summary, dict) else {}
     return {
-        "flow_queue_reference": flow_items[:10],
-        "review_queue_reference": report["review_queue"][:10],
+        # account_level_series는 싣지 않는다 — panel이 같은 계정·금액을 압축 보유(중복 제거).
         "latest_signal_snapshot": report.get("latest_signal_snapshot", {}),
-        "account_level_series": report.get("account_level_series", []),
+        "account_metrics_panel": panel_columnar(report.get("account_metrics_panel", [])),
         "unmapped_material_accounts": report.get("unmapped_material_accounts", []),
         "ratio_summary": {
-            key: value
-            for key, value in report["ratio_summary"].items()
-            if key in {"활동성", "이익의 질"}
+            key: value for key, value in ratio_summary.items() if key in {"활동성", "이익의 질"}
         },
         "ratio_time_series": [
             row
-            for row in report.get("ratio_time_series", [])
+            for row in report.get("ratio_time_series", [])  # type: ignore[union-attr]
             if row.get("category") in {"activity", "earnings_quality"}
         ],
         "report_event_timeline": _routed_events(report, "flow"),
         "scope": "flow perspective only",
-        "queue_role": "flow_queue_reference는 참고 후보이며, 계정/지표 시계열도 직접 검토한다.",
+        "judgment_role": (
+            "코드가 추린 후보 목록은 제공하지 않는다. 무엇이 이상한지는 account_metrics_panel"
+            "(전 계정 계산값, columns/rows 컬럼형)·관계신호(latest_signal_snapshot)·지표 시계열에서"
+            " 직접 판단한다."
+        ),
     }
 
 
-def change_material(report: dict[str, object]) -> dict[str, object]:
-    """Inputs for prior/current change perspective only."""
+def trend_material(report: dict[str, object]) -> dict[str, object]:
+    """Inputs for the trend(추세) perspective only.
+
+    당해 급변(yoy 튐)은 numeric 전담. 추세 관점은 account_metrics_panel의 trend(다년 기울기)로
+    다년 단조 방향(점점 증가/감소·완만 드리프트·가속)만 본다. 소급재작성은 추세와 무관해 제거됨."""
 
     latest_snapshot = report.get("latest_signal_snapshot", {})
-    restatements = (
-        latest_snapshot.get("restatements", []) if isinstance(latest_snapshot, dict) else []
-    )
-    change_items = [
-        item
-        for item in report["review_queue"]
-        if "single_account_yoy" in str(item["key_evidence"])
-        or "growth_divergence" in str(item["key_evidence"])
-        or "restatement" in str(item["key_evidence"])
-    ]
     return {
-        "change_queue_reference": change_items[:10],
-        "restatement_signals": restatements[:20] if isinstance(restatements, list) else [],
-        "review_queue_reference": report["review_queue"][:10],
+        # account_level_series는 싣지 않는다 — panel이 같은 계정·금액을 압축 보유(중복 제거).
         "latest_signal_snapshot": latest_snapshot,
-        "account_level_series": report.get("account_level_series", []),
+        "account_metrics_panel": panel_columnar(report.get("account_metrics_panel", [])),
         "ratio_time_series": report.get("ratio_time_series", []),
         "target_year": report["target_year"],
-        "report_event_timeline": _routed_events(report, "change"),
-        "restatement_history": _correction_history(report),
-        "scope": "change perspective only",
-        "queue_role": (
-            "change_queue_reference는 참고 후보이며, 수준/추세 시계열 전체를 직접 검토한다."
+        "report_event_timeline": _routed_events(report, "trend"),
+        # 자본변동표(SCE) 2D 셀 — 자본 변동(배당·유상증자·자기주식·순이익)은 추세 관점 소관.
+        "sce_cells": report.get("sce_cells", []),
+        "sce_role": (
+            "sce_cells는 자본변동표 2D(변동×구성요소). 배당·유상증자·자기주식취득·기타자본변동 등 "
+            "본문 패널에 없는 자본거래를 담는다. change=변동사건, component=자본 구성요소."
+        ),
+        "scope": "trend perspective only",
+        "judgment_role": (
+            "코드가 추린 후보 목록은 제공하지 않는다. 당해 급변(yoy 튐)은 numeric 소관이다. "
+            "추세 관점은 account_metrics_panel(전 계정 계산값, columns/rows 컬럼형)의 trend(다년 기울기)로 "
+            "여러 해에 걸쳐 점점 증가/감소하거나 완만히 드리프트·가속하는 계정을 직접 골라 판단한다."
         ),
     }

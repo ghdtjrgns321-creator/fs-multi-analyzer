@@ -16,7 +16,7 @@ from tests.test_analysis_tools import fixture_frame
 def valid_finding() -> AccountFinding:
     return AccountFinding(
         account="매출채권",
-        issue_type=IssueType.RECEIVABLES_QUALITY,
+        issue_type=IssueType.REVENUE_RECEIVABLES,
         materiality_score=0.6,
         anomaly_score=0.7,
         confidence="Medium",

@@ -1,6 +1,5 @@
 import pandas as pd
 
-from src.report.materials import change_material
 from src.signals.restatement import scan_restatement_signals
 
 
@@ -10,7 +9,7 @@ def test_restatement_scan_compares_reported_prior_to_original_prior_year_amount(
             {
                 "year": 2023,
                 "fs_div": "CFS",
-                "sj_div": "SCE",
+                "sj_div": "BS",
                 "canonical": "기타 중요 계정",
                 "account_id": "ext_RetainedEarnings",
                 "label": "이익잉여금변동",
@@ -21,7 +20,7 @@ def test_restatement_scan_compares_reported_prior_to_original_prior_year_amount(
             {
                 "year": 2024,
                 "fs_div": "CFS",
-                "sj_div": "SCE",
+                "sj_div": "BS",
                 "canonical": "기타 중요 계정",
                 "account_id": "ext_RetainedEarnings",
                 "label": "이익잉여금변동",
@@ -44,6 +43,39 @@ def test_restatement_scan_compares_reported_prior_to_original_prior_year_amount(
     assert "prior_amount 15,000,000,000" in str(signal.evidence[0].value)
     assert signal.evidence[1].year == "2023"
     assert "amount 20,000,000,000" in str(signal.evidence[1].value)
+
+
+def test_restatement_scan_excludes_sce_2d_cells() -> None:
+    # phase3: SCE 2D 격자는 메인 프레임에서 구성요소 열이 소실돼 합계·member 셀이 label만으로
+    # 뭉개진다. 평면 비교 시 거짓 재작성 신호를 내므로 restatement는 SCE를 제외한다.
+    frame = pd.DataFrame(
+        [
+            {
+                "year": 2023,
+                "fs_div": "CFS",
+                "sj_div": "SCE",
+                "canonical": "기타 중요 계정",
+                "account_id": "ifrs-full_Equity",
+                "label": "자본총계",
+                "amount": 76_679_356_737.0,
+                "prior_amount": None,
+                "mapping_status": "unmapped_extension_account",
+            },
+            {
+                "year": 2024,
+                "fs_div": "CFS",
+                "sj_div": "SCE",
+                "canonical": "기타 중요 계정",
+                "account_id": "ifrs-full_Equity",
+                "label": "자본총계",
+                "amount": 83_509_903_825.0,
+                "prior_amount": 3_252_537_587.0,  # 자본잉여금 member 셀이 합계로 오인됐던 값
+                "mapping_status": "unmapped_extension_account",
+            },
+        ]
+    )
+
+    assert scan_restatement_signals(frame, 2024) == []
 
 
 def test_restatement_scan_applies_absolute_and_relative_thresholds() -> None:
@@ -231,25 +263,3 @@ def test_restatement_scan_dedupes_same_account_year_and_diff() -> None:
     )
 
     assert len(scan_restatement_signals(frame, 2024)) == 1
-
-
-def test_change_material_exposes_restatement_signals() -> None:
-    material = change_material(
-        {
-            "review_queue": [],
-            "latest_signal_snapshot": {
-                "restatements": [
-                    {
-                        "account": "재고자산",
-                        "signal_type": "restatement",
-                        "metric_value": -68_400_000_000.0,
-                    }
-                ]
-            },
-            "account_level_series": [],
-            "ratio_time_series": [],
-            "target_year": 2024,
-        }
-    )
-
-    assert material["restatement_signals"][0]["account"] == "재고자산"

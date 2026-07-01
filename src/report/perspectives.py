@@ -16,7 +16,7 @@ from config.settings import settings
 from src.agents.model_retry import DEFAULT_RETRY_DELAYS, make_agent, run_with_retry
 from src.schemas.findings import RiskLevel
 
-PerspectiveName = Literal["numeric", "note", "flow", "change", "external", "industry"]
+PerspectiveName = Literal["numeric", "note", "flow", "trend", "external", "industry"]
 
 SYSTEM_PROMPT = """
 You are one independent perspective agent for a disclosure review tool.
@@ -65,16 +65,6 @@ def build_perspective_agent(
     )
 
 
-CHANGE_RESTATEMENT_GUIDANCE = (
-    "소급재작성은 회계정책 변경·중단영업(IFRS5) 재분류·EPS 소급재계산"
-    "(주식분할·무상증자)·오류수정·사업결합 잠정조정·연결범위 변동 등 정상 사유가 다수다. "
-    "이런 정상 소급은 위험으로 보지 말고, 이익·자산을 과대계상했다가 하향 재작성한 "
-    "분식성 패턴만 검토 후보로 제기하라. restatement 단서만으로 risk_level을 High로 올리지 말고, "
-    "금융자산·차입금·현금 등 광범위한 재분류나 연결범위 변동으로 설명 가능한 패턴은 정상 소급 "
-    "후보로 낮춰 보라."
-)
-
-
 async def create_perspective_assessment(
     perspective: PerspectiveName,
     material_board: dict[str, object],
@@ -98,8 +88,6 @@ async def create_perspective_assessment(
         "주석 발췌는 일부일 수 있으므로 발췌 누락을 공시 누락으로 판단하지 않는다.",
         "출력은 한국어로 작성한다.",
     ]
-    if perspective == "change":
-        rules.append(CHANGE_RESTATEMENT_GUIDANCE)
     prompt = json.dumps(
         {
             "perspective": perspective,

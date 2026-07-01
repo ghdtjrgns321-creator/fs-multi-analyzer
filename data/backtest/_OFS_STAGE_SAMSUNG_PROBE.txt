@@ -1,0 +1,22 @@
+# OFS 개방 probe — 삼성 00126380 (target_year=2025)
+패널 계정수: 총 203 / fs_div별 {'CFS': 114, 'OFS': 89}
+
+## OFS 유동성 계열 계정 (1건)
+- OFS:유동성장기차입금 | sj=BS fs=OFS | yoy[2025]=-98.79267754468536 | delta/asset=0.0613 | amounts={2022: 135753000000.0, 2023: 228491000000.0, 2024: 22264226000000.0, 2025: 268801000000.0}
+
+## OFS 계정 89개 중 yoy[2025] 산출 87개
+- OFS:장기차입금 | yoy=2840.7% | delta/asset=0.0630
+- OFS:기타비유동부채 | yoy=2247.4% | delta/asset=0.0021
+- OFS:비유동차입금상환 | yoy=931.2% | delta/asset=0.0056
+- OFS:기타포괄손익-공정가치측정금융자산의처분 | yoy=804.3% | delta/asset=0.0001
+- OFS:현금및현금성자산 | yoy=660.8% | delta/asset=0.0304
+- OFS:기말현금및현금성자산 | yoy=660.8% | delta/asset=0.0304
+- OFS:자기주식취득 | yoy=552.0% | delta/asset=0.0279
+- OFS:FVOCI지분상품평가손익 | yoy=544.7% | delta/asset=0.0036
+- OFS:기타포괄손익 | yoy=535.0% | delta/asset=0.0053
+- OFS:재분류불가능기타포괄손익 | yoy=535.0% | delta/asset=0.0053
+- OFS:운전자본변동 | yoy=-519.3% | delta/asset=0.0110
+- OFS:현금및현금성자산순증감 | yoy=347.9% | delta/asset=0.0427
+- OFS:비유동부채 | yoy=276.1% | delta/asset=0.0647
+- OFS:종속기업, 조인트벤처와 관계기업에 대한 투자자산의 취득 | yoy=252.6% | delta/asset=0.0024
+- OFS:당기법인세부채 | yoy=176.1% | delta/asset=0.0068

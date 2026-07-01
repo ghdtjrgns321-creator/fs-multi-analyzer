@@ -1,0 +1,5 @@
+전처리 대조: 25건 중 불일치 0건
+Phase1 queue: 18건 · unmapped: 6건
+Phase2 grounded: 35 · 관점별: { numeric:10, note:7, flow:6, change:9, industry:3 }
+  account_cards: 16 · company_cards: 4 · dropped: 3
+저장: data\backtest\_E2E_EVAL_00112457_2024.json

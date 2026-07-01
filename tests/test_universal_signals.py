@@ -222,7 +222,7 @@ def test_universal_scan_uses_ofs_when_cfs_series_is_incomplete() -> None:
     assert any(item.account == "현금" and item.metric_value == 900.0 for item in signals)
 
 
-def test_universal_scan_includes_all_five_statements_with_existing_floor_guards() -> None:
+def test_universal_scan_includes_four_statements_excludes_sce_with_floor_guards() -> None:
     rows = []
     for year in [2024, 2025]:
         rows.append(
@@ -272,7 +272,9 @@ def test_universal_scan_includes_all_five_statements_with_existing_floor_guards(
 
     assert ("영업활동현금흐름", "universal_yoy") in flagged
     assert ("총포괄손익", "universal_yoy") in flagged
-    assert ("이익잉여금변동", "universal_yoy") in flagged
+    # SCE(2D 격자)는 평면 스캔에서 제외 — 메인 프레임에서 구성요소 열이 소실돼 합계·member 셀이
+    # 뭉개지므로 거짓신호를 낸다. 전용 sce_components 테이블이 전담(phase3).
+    assert not any(item.account == "이익잉여금변동" for item in signals)
     assert not any(item.account == "작은기저CF" for item in signals)
 
 

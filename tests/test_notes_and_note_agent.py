@@ -25,7 +25,7 @@ FIXTURE_HTML = """
 def base_finding() -> AccountFinding:
     return AccountFinding(
         account="매출채권",
-        issue_type=IssueType.RECEIVABLES_QUALITY,
+        issue_type=IssueType.REVENUE_RECEIVABLES,
         materiality_score=80.0,
         anomaly_score=75.0,
         confidence="High",

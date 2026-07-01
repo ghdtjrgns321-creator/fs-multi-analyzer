@@ -61,9 +61,9 @@ def test_load_routing_flattens_to_keyword_perspective() -> None:
     routing = load_routing()
 
     assert routing["전환사채발행"] == "flow"
-    assert routing["회사합병"] == "change"
+    assert routing["회사합병"] == "trend"
     assert routing["부도발생"] == "numeric"
-    assert routing["최대주주변동"] == "change"
+    assert routing["최대주주변동"] == "trend"
 
 
 def test_routed_timeline_groups_by_perspective_with_terms(tmp_path: Path) -> None:
@@ -80,9 +80,9 @@ def test_routed_timeline_groups_by_perspective_with_terms(tmp_path: Path) -> Non
                     "corp_name": "테스트",  # 메타 — 제외돼야
                 }
             ],  # → flow
-            "회사합병": [{"bddd": "2019-03-01"}],  # → change, terms 없음
+            "회사합병": [{"bddd": "2019-03-01"}],  # → trend, terms 없음
         },
-        reports={"최대주주변동": [{"foo": "2022-05-01"}]},  # → change
+        reports={"최대주주변동": [{"foo": "2022-05-01"}]},  # → trend
     )
     collect_events(collector, "00100", data_dir=tmp_path)
     collect_reports(collector, "00100", (2022,), data_dir=tmp_path)
@@ -90,7 +90,7 @@ def test_routed_timeline_groups_by_perspective_with_terms(tmp_path: Path) -> Non
     timeline = routed_timeline("00100", tmp_path)
 
     flow_types = {e["type"] for e in timeline.get("flow", [])}
-    change_types = {e["type"] for e in timeline.get("change", [])}
+    change_types = {e["type"] for e in timeline.get("trend", [])}
     assert flow_types == {"전환사채발행"}
     assert change_types == {"회사합병", "최대주주변동"}
     cb = next(e for e in timeline["flow"] if e["type"] == "전환사채발행")
@@ -105,7 +105,7 @@ def test_routed_timeline_groups_by_perspective_with_terms(tmp_path: Path) -> Non
     # 메타(corp_name)는 terms에 섞이면 안 됨(토큰 bounded whitelist)
     assert "corp_name" not in terms and "테스트" not in terms.values()
     # terms 없는 이벤트는 빈 dict(키는 항상 존재)
-    mg = next(e for e in timeline["change"] if e["type"] == "회사합병")
+    mg = next(e for e in timeline["trend"] if e["type"] == "회사합병")
     assert mg["terms"] == {}
 
 
