@@ -30,6 +30,7 @@ agent = [
 dashboard = [
     "streamlit",
     "plotly",
+    "streamlit-searchbox>=0.1.24",
 ]
 dev = [
     "pytest",
@@ -53,3 +54,6 @@ ignore_missing_imports = true
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+markers = [
+    "integration: DART API·네트워크가 필요한 통합 테스트(미구성 시 skip)",
+]

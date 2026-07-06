@@ -226,7 +226,9 @@ def trend_material(report: dict[str, object]) -> dict[str, object]:
         "sce_cells": report.get("sce_cells", []),
         "sce_role": (
             "sce_cells는 자본변동표 2D(변동×구성요소). 배당·유상증자·자기주식취득·기타자본변동 등 "
-            "본문 패널에 없는 자본거래를 담는다. change=변동사건, component=자본 구성요소."
+            "본문 패널에 없는 자본거래를 담는다. change=변동사건, component=자본 구성요소. "
+            "occurrence_state는 이 변동종류의 신규/소멸: appeared=올해 신규 발생(예: 자기주식 첫 취득), "
+            "disappeared=과거 있다 당기 소멸, present=매년 반복. 신규(appeared) 자본거래를 우선 검토한다."
         ),
         "scope": "trend perspective only",
         "judgment_role": (

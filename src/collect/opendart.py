@@ -43,6 +43,15 @@ class DartCollector:
 
         return dict(self._dart.company(corp_code))
 
+    def corp_code_table(self) -> pd.DataFrame:
+        """전체 등록회사 명단(corp_code·corp_name·stock_code 등) 원본 DataFrame.
+
+        회사명 검색(첫 화면 typeahead)의 데이터 원천. OpenDartReader가 corpCode.zip을
+        최초 1회 내려받아 캐시하므로 여기선 그 DataFrame을 그대로 노출만 한다(raw 조회).
+        """
+
+        return self._dart.corp_codes
+
     def document(self, rcept_no: str) -> str:
         """Fetch the full business report document as structured XML text.
 

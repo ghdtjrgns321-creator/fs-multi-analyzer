@@ -49,6 +49,29 @@ def occurrence_state(ts: dict[int, float], target_year: int) -> str:
     return "disappeared" if prior_nonzero else "present"
 
 
+def sce_occurrence_states(window_rows: list[dict], target_year: int) -> dict[tuple[str, str], str]:
+    """SCE 변동종류(change_canonical)별 신규/소멸 상태(사각#2·D18).
+
+    정체성=표준 변동라벨. leaf(component·차원)는 연도간 불안정해 안 쓰고, (fs_div, change_canonical)
+    층위로 구성요소 abs금액을 연도별 합산해 occurrence_state를 판정한다. 자기주식취득이 올해만 있으면
+    appeared → LLM이 '올해 신규 자본거래'로 본다."""
+
+    series: dict[tuple[str, str], dict[int, float]] = {}
+    for row in window_rows or []:
+        change = str(row.get("change_canonical") or row.get("change_label") or "").strip()
+        if not change:
+            continue
+        fs = str(row.get("fs_div", ""))
+        try:
+            year = int(row.get("year"))  # type: ignore[arg-type]
+            amount = abs(float(row.get("amount")))  # type: ignore[arg-type]
+        except (TypeError, ValueError):
+            continue
+        key = (fs, change)
+        series.setdefault(key, {})[year] = series.setdefault(key, {}).get(year, 0.0) + amount
+    return {key: occurrence_state(ts, target_year) for key, ts in series.items()}
+
+
 def _z_score(vals_by_year: dict[int, float], target_year: int) -> float | None:
     """과거(target 이전) 대비 z. 이력<MIN_Z_HISTORY면 None."""
 

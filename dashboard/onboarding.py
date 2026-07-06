@@ -2,10 +2,10 @@
 
 흐름: corp/year 입력 → [전처리 검사](run_gate) → gate_report 단계별 표시 → 이탈 등록 폼
       (company_quirks.yaml 안전 append) → [재검사] → 통과 시 [Phase1/2 진입] 활성.
-LLM 전수검사(G6)는 게이트가 만든 dump + 홀리스틱 9렌즈 프롬프트를 LLM에 보내 findings 산출.
+온보딩 LLM = S7 청크선별 + 별칭 제안. 감사 소견은 Phase2(의심건 카드)가 전담한다(G6 홀리스틱 제거).
 API 미설정 시 안내만(크래시 금지). corp_code/year/계정명은 모두 입력·데이터(하드코딩 금지).
 
-run_gate·load_company_quirks·홀리스틱 프롬프트 로직은 재구현하지 않고 호출/로드만 한다.
+run_gate·load_company_quirks 로직은 재구현하지 않고 호출/로드만 한다.
 """
 
 from __future__ import annotations
@@ -21,7 +21,6 @@ from src.report.alias_suggest import suggest_aliases
 
 ROOT = Path(__file__).resolve().parents[1]
 QUIRKS_PATH = ROOT / "config" / "company_quirks.yaml"
-HOLISTIC_PROMPT_PATH = ROOT / "data" / "backtest" / "_HOLISTIC_AUDIT_PROMPT.md"
 
 
 # ──────────────────────────────────────────────────────────────────────────
@@ -63,53 +62,6 @@ def append_quirk(
     body = yaml.safe_dump(payload, allow_unicode=True, sort_keys=False, default_flow_style=False)
     path.write_text(header + body, encoding="utf-8")
     return load_company_quirks(path)
-
-
-# ──────────────────────────────────────────────────────────────────────────
-# G6 LLM 전수검사 — dump + 홀리스틱 9렌즈 프롬프트를 LLM에 통독시켜 findings 산출
-# ──────────────────────────────────────────────────────────────────────────
-def run_llm_holistic(dump_text: str) -> dict:
-    """게이트 dump를 홀리스틱 9렌즈 프롬프트로 LLM 통독 → findings(텍스트) 반환.
-
-    API 미설정/패키지 부재/호출 실패 시 status='skipped'|'error'로 graceful 반환(크래시 금지).
-    홀리스틱 프롬프트 로직은 파일에서 로드만 한다(재구현 아님).
-    """
-
-    from config.settings import settings
-
-    if not settings.openai_api_key:
-        return {
-            "status": "skipped",
-            "message": "OPENAI_API_KEY 미설정 — LLM 전수검사 생략.",
-            "findings": "",
-        }
-
-    lens_prompt = (
-        HOLISTIC_PROMPT_PATH.read_text(encoding="utf-8") if HOLISTIC_PROMPT_PATH.exists() else ""
-    )
-    try:
-        # Phase2 내부 판단(src/report/perspectives.py)과 동일 — GPT 추론모델(reasoning_effort).
-        # 홀리스틱 9렌즈 통독은 추론이 필요해 Gemini Flash가 아니라 gpt-5.4를 쓴다.
-        from pydantic_ai import Agent
-        from pydantic_ai.models.openai import OpenAIModel, OpenAIModelSettings
-        from pydantic_ai.providers.openai import OpenAIProvider
-
-        model = OpenAIModel(
-            settings.openai_model, provider=OpenAIProvider(api_key=settings.openai_api_key)
-        )
-        model_settings = OpenAIModelSettings(timeout=settings.openai_timeout_seconds)
-        if settings.openai_reasoning_effort:
-            model_settings["openai_reasoning_effort"] = settings.openai_reasoning_effort
-        agent = Agent(model, system_prompt=lens_prompt, model_settings=model_settings, retries=1)
-        # 동기 컨텍스트(streamlit)에서 호출 — run_sync 사용.
-        result = agent.run_sync(dump_text)
-        return {"status": "ok", "message": "", "findings": str(result.output)}
-    except Exception as exc:  # noqa: BLE001 (UI는 어떤 LLM 오류도 안내로 흡수)
-        return {
-            "status": "error",
-            "message": f"LLM 호출 실패(안내만 — 크래시 금지): {type(exc).__name__}: {exc}",
-            "findings": "",
-        }
 
 
 # ──────────────────────────────────────────────────────────────────────────
@@ -356,10 +308,11 @@ def render_quirk_form(corp_code: str, year: str) -> None:
 # 페이지 본체
 # ──────────────────────────────────────────────────────────────────────────
 def run_full_onboarding(corp_code: str, year: str) -> dict:
-    """온보딩 일괄 실행 — 전처리검사→S7청크선별→alias제안→G6통독을 순차 실행(결함② 필수화).
+    """온보딩 일괄 실행 — 전처리검사(게이트)→S7 청크선별→alias 제안을 순차 실행.
 
     한 단계 실패가 전체를 막지 않게 각 단계를 graceful 흡수한다(LLM 실패 시 경고 후 사람이 강행).
     alias는 제안만 — 등록/제외는 사람 몫(자동등록 금지 설계 유지).
+    G6 홀리스틱 통독은 제거했다 — 감사 소견은 Phase2(의심건 카드)가 전담한다(역할 중복 차단).
     """
 
     result: dict = {"corp": corp_code, "year": year}
@@ -373,44 +326,25 @@ def run_full_onboarding(corp_code: str, year: str) -> dict:
     _stage("gate", lambda: run_gate(corp_code, year))
     _stage("review_chunks", lambda: run_review_chunk_selection(corp_code, year))
     _stage("alias", lambda: suggest_aliases(corp_code, int(year)))
-
-    def _holistic() -> dict:
-        gate = result.get("gate") or {}
-        dump_path = (gate.get("G6_dump") or {}).get("dump_path")
-        # gate 실패·dump 미생성 시 빈 입력으로 LLM 호출하지 않는다(비용·무의미 방지).
-        if not dump_path or not Path(dump_path).exists():
-            return {
-                "status": "skipped",
-                "message": "G6 dump 없음 — 게이트 실패 또는 미생성",
-                "findings": "",
-            }
-        return run_llm_holistic(Path(dump_path).read_text(encoding="utf-8"))
-
-    _stage("holistic", _holistic)
     return result
 
 
-def can_enter_analysis(gate_report: dict, s7_status: str, g6_status: str) -> dict:
+def can_enter_analysis(gate_report: dict, s7_status: str) -> dict:
     """분석 진입 가능 여부 판정(순수). 게이트 미통과면 차단, 통과면 진입 허용.
 
-    LLM(S7·G6) 실패 시에도 게이트 통과면 진입은 허용하되 needs_override로 경고를 강제한다
+    S7(청크선별) 실패 시에도 게이트 통과면 진입은 허용하되 needs_override로 경고를 강제한다
     (API 장애로 영구 차단 방지 + silent 누락 금지 §9 — 사람이 확인 후 강행).
     """
 
     if not gate_report.get("gate_passed"):
         return {"can_enter": False, "needs_override": False, "reason": "결정론 게이트 미통과"}
-    if s7_status == "ok" and g6_status == "ok":
+    if s7_status == "ok":
         return {"can_enter": True, "needs_override": False, "reason": ""}
-    # 어느 단계가 왜 미완인지 status를 그대로 노출(absent=원문없음 vs error=LLM실패 구분 — §9).
-    missing = []
-    if s7_status != "ok":
-        missing.append(f"S7={s7_status or '미실행'}")
-    if g6_status != "ok":
-        missing.append(f"G6={g6_status or '미실행'}")
+    # absent(원문없음) vs error(LLM실패)를 status로 구분 노출(§9).
     return {
         "can_enter": True,
         "needs_override": True,
-        "reason": f"{' · '.join(missing)} 미완 — 본문 위험·정규화 통독 누락 가능(사람 확인 후 강행)",
+        "reason": f"S7={s7_status or '미실행'} 미완 — 본문 검토관심 공시 누락 가능(사람 확인 후 강행)",
     }
 
 
@@ -419,19 +353,18 @@ def render() -> None:
 
     st.title("신규회사 온보딩 전처리")
     st.caption(
-        "Phase1/2 분석 진입 전, 한 번에 [전처리검사+S7 청크선별+별칭 제안+G6 통독]을 실행해 "
-        "이탈을 잡고 quirk로 교정한다. 별칭 제안은 사람이 확인 후 등록한다(LLM 통독 포함, 수 분 소요)."
+        "Phase1/2 분석 진입 전, 한 번에 [전처리검사+S7 청크선별+별칭 제안]을 실행해 "
+        "이탈을 잡고 quirk로 교정한다. 별칭 제안은 사람이 확인 후 등록한다(수 분 소요)."
     )
 
     col1, col2 = st.columns(2)
     corp_code = col1.text_input("corp_code (8자리)", key="onb_corp").strip()
     year = col2.text_input("year (YYYY)", key="onb_year").strip()
 
-    if st.button("온보딩 일괄 실행 (전처리+S7+별칭+G6)", disabled=not (corp_code and year)):
-        with st.spinner(f"{corp_code}/{year} 온보딩 일괄 실행 중 (LLM 통독 포함)..."):
+    if st.button("온보딩 일괄 실행 (전처리+S7+별칭)", disabled=not (corp_code and year)):
+        with st.spinner(f"{corp_code}/{year} 온보딩 일괄 실행 중..."):
             result = run_full_onboarding(corp_code, year)
         st.session_state["gate_report"] = result.get("gate")
-        st.session_state["llm_findings"] = result.get("holistic")
         st.session_state["review_chunks"] = result.get("review_chunks")
         alias_res = result.get("alias") or {}
         if alias_res.get("status") == "ok" and alias_res.get("result") is not None:
@@ -451,16 +384,6 @@ def render() -> None:
 
     # S9: 데이터 출처(원본/정정본) 배지
     render_restatement_badge(run_corp, run_year)
-
-    # G6 LLM 전수검사 결과(일괄 실행에서 채워짐)
-    st.markdown("---")
-    st.markdown("##### G6 LLM 전수검사 (정규화 통독)")
-    llm = st.session_state.get("llm_findings")
-    if llm:
-        if llm.get("status") == "ok":
-            st.markdown(llm.get("findings") or "_(빈 응답)_")
-        else:
-            st.info(llm.get("message", "G6 미실행"))
 
     # S7 검토관심 청크(일괄 실행에서 채워짐)
     st.markdown("---")
@@ -500,10 +423,9 @@ def render() -> None:
             st.session_state["gate_report"] = run_gate(run_corp, run_year)
         st.rerun()
 
-    # 진입 판정: 게이트 통과 + S7·G6 완료. LLM 실패는 경고 후 사람이 강행(§9).
+    # 진입 판정: 게이트 통과 + S7 완료. S7 실패는 경고 후 사람이 강행(§9).
     s7_status = (st.session_state.get("review_chunks") or {}).get("status", "")
-    g6_status = (st.session_state.get("llm_findings") or {}).get("status", "")
-    verdict = can_enter_analysis(report, s7_status, g6_status)
+    verdict = can_enter_analysis(report, s7_status)
     if not verdict["can_enter"]:
         st.button("Phase1/2 분석 진입", disabled=True)
         st.caption(f"진입 불가 — {verdict['reason']}. 이탈 해소 후 [게이트 재검사]로 통과시키세요.")
@@ -511,7 +433,7 @@ def render() -> None:
         st.warning(f"⚠ {verdict['reason']}")
         st.button("경고 확인 후 Phase1/2 강행 진입", type="primary")
     else:
-        st.success("게이트 통과 + S7·G6 완료 — Phase1/2 분석 진입 가능.")
+        st.success("게이트 통과 + S7 완료 — Phase1/2 분석 진입 가능.")
         st.button("Phase1/2 분석 진입", type="primary")
 
 

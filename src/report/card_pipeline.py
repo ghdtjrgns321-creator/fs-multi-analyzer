@@ -27,6 +27,25 @@ def _accounts_reviewed(report: dict[str, object]) -> int:
     return len({str(row.get("series_key")) for row in rows if row.get("series_key")})  # type: ignore[union-attr]
 
 
+def _note_disclosures(note_material: dict) -> list[dict]:
+    """note material의 서술형 공시(note_sections·report_review_chunks)를 grounding 색인용으로 정규화.
+
+    각 공시를 {tokens, text}로 — tokens는 앵커 후보(계정·키워드·공시종류), text는 금액 추출 대상.
+    담보·특수관계 등 XBRL fact에 없는 서술형 공시를 grounding에 닿게 한다(사각#3)."""
+
+    out: list[dict] = []
+    for sec in note_material.get("note_sections", []) or []:
+        tokens = [sec.get("account", ""), *(sec.get("matched_keywords", []) or [])]
+        text = f"{sec.get('title', '')} {sec.get('excerpt', '')}"
+        out.append({"tokens": [t for t in tokens if t], "text": text})
+    for chunk in note_material.get("report_review_chunks", []) or []:
+        dtype = str(chunk.get("disclosure_type", ""))
+        tokens = [dtype, *dtype.replace("_", " ").split()]
+        text = " ".join(str(chunk.get(k, "")) for k in ("evidence", "summary", "text", "part"))
+        out.append({"tokens": [t for t in tokens if t], "text": text})
+    return out
+
+
 def _rebuttal_context(grounded: list) -> dict[str, list[dict]]:
     """카드 cluster_key → 그 카드를 만든 의심근거(관점·설명·인용수치). 반박 입력용."""
 
@@ -46,6 +65,13 @@ def _rebuttal_context(grounded: list) -> dict[str, list[dict]]:
     return context
 
 
+async def _default_external_runner(report: dict[str, object]) -> PerspectiveOutput:
+    # external은 내부 5관점과 달리 실제 구글검색(Gemini)으로 출처 있는 SuspicionItem을 만든다.
+    from src.report.external import run_external_suspicions
+
+    return await run_external_suspicions(report)
+
+
 async def build_suspicion_cards(
     report: dict[str, object],
     run_llm: bool = True,
@@ -53,6 +79,7 @@ async def build_suspicion_cards(
     rebuttal_runner: Callable[..., Awaitable[Any]] = run_rebuttal,
     materials: dict[str, dict] | None = None,
     peer_keys: set[str] | None = None,
+    external_runner: Callable[..., Awaitable[PerspectiveOutput]] = _default_external_runner,
 ) -> dict[str, Any]:
     """6관점 병렬 → 근거검증 → 카드 클러스터·집계 → 반박 → 정렬·렌더."""
 
@@ -69,8 +96,15 @@ async def build_suspicion_cards(
         return {**empty, "rendered": render_card_markdown(empty), "grounded": [], "dropped": []}
 
     materials = materials or collect_perspective_materials(report)
+
+    async def _run_one(name: str) -> PerspectiveOutput:
+        # external만 실검색 경로(Gemini+구글검색), 나머지는 구조화 관점 에이전트(OpenAI).
+        if name == "external":
+            return await external_runner(report)
+        return await agent_runner(name, materials.get(name, {}))
+
     outputs: list[PerspectiveOutput] = await asyncio.gather(
-        *[agent_runner(name, materials.get(name, {})) for name in ALL_PERSPECTIVES]
+        *[_run_one(name) for name in ALL_PERSPECTIVES]
     )
     suspicions: list[SuspicionItem] = []
     completed = 0
@@ -87,6 +121,7 @@ async def build_suspicion_cards(
         report.get("unmapped_material_accounts", []),  # type: ignore[arg-type]
         report.get("note_facts", []),  # type: ignore[arg-type]
         report.get("sce_cells", []),  # type: ignore[arg-type]
+        note_disclosures=_note_disclosures(materials.get("note", {})),
     )
     grounded = verify_suspicions(suspicions, index, peer_keys)
     cards = build_cards(grounded, report)

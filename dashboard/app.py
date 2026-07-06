@@ -1,24 +1,19 @@
-"""Streamlit 진입점 (스캐폴딩). import smoke 통과용 최소 구현.
+"""Streamlit 진입점 — 첫 화면이 곧 분석 리포트다(탭 없음).
 
-실행: uv run streamlit run dashboard/app.py
+실행: uv run python -m streamlit run dashboard/app.py
+온보딩 전처리는 별도 실행: uv run python -m streamlit run dashboard/onboarding.py
 """
 
 from __future__ import annotations
 
 import streamlit as st
 
-from dashboard import onboarding
+from dashboard import report_view
 
 
 def main() -> None:
     st.set_page_config(page_title="Disclosure Review Agent", layout="wide")
-    page = st.sidebar.radio("페이지", ["개요", "신규회사 온보딩 전처리"])
-    if page == "신규회사 온보딩 전처리":
-        onboarding.render()
-        return
-    st.title("Disclosure Review Agent")
-    st.caption("공시 재무제표·주석 변화 리뷰 — 감사인 검토 후보 제시 (스캐폴딩)")
-    st.info("뼈대 단계입니다. L0~L4 파이프라인 구현 후 리포트가 표시됩니다.")
+    report_view.render()
 
 
 if __name__ == "__main__":

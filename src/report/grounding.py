@@ -66,16 +66,24 @@ def _note_value_sig(value: object) -> str | None:
     return _sig_amount(number)
 
 
+_NOTE_DISCLOSURE_KEY = "note:__disclosure__"
+
+
 def build_account_index(
     account_series: list[dict],
     unmapped: list[dict] | None = None,
     note_facts: list[dict] | None = None,
     sce_cells: list[dict] | None = None,
+    note_disclosures: list[dict] | None = None,
 ) -> dict[str, set[str]]:
     """계정 식별자(series_key/canonical/label/account_id) → 그 계정 금액들의 유효숫자 집합.
 
     note_facts는 `note:{label}`·`note:{category}` 네임스페이스로 색인(본문 키와 비충돌). 금액형은
-    value 유효숫자, 서술형은 빈 풀(존재만) → note-only 우발 항목이 환각 탈락하지 않게 한다."""
+    value 유효숫자, 서술형은 빈 풀(존재만) → note-only 우발 항목이 환각 탈락하지 않게 한다.
+
+    note_disclosures는 서술형 공시(note_sections·report_review_chunks 담보·특수관계·소송 등)로,
+    각 항목 {tokens, text}의 금액을 note:{token}별 + 전역 note:__disclosure__ 풀에 색인한다(사각#3).
+    XBRL fact에 없는 서술형 공시가 grounding에서 허위탈락하던 것을 막는다."""
 
     index: dict[str, set[str]] = {}
 
@@ -109,6 +117,17 @@ def build_account_index(
             pool = index.setdefault(f"note:{token}", set())
             if sig is not None:
                 pool.add(sig)
+    # 서술형 공시(사각#3): 담보·특수관계·소송 등은 XBRL fact가 아니라 HTML 발췌·사업보고서 청크에
+    # 산다. 각 공시 텍스트의 금액을 token별 + 전역(__disclosure__) 풀에 색인해 값 기반 grounding.
+    for disc in note_disclosures or []:
+        text = str(disc.get("text", ""))
+        sigs = {sig for tok in _AMOUNT_TOKEN.findall(text) if len(sig := _sig(tok)) >= 3}
+        for token in disc.get("tokens", []) or []:
+            token = str(token).strip()
+            if token:
+                index.setdefault(f"note:{token}", set()).update(sigs)
+        if sigs:
+            index.setdefault(_NOTE_DISCLOSURE_KEY, set()).update(sigs)
     # SCE 2D 셀: sce:{change}·sce:{component} 네임스페이스(본문 비충돌). change 관점이 조회.
     for cell in sce_cells or []:
         sig = _note_value_sig(cell.get("amount"))
@@ -121,16 +140,57 @@ def build_account_index(
     return index
 
 
+def _verify_note_suspicion(item: SuspicionItem, index: dict[str, set[str]]) -> GroundedSuspicion:
+    """note 계정 의심건: 주석 라벨 키 + 서술형 공시 값 기반 grounding(사각#3).
+
+    XBRL fact 라벨(note:{account_id})이 있으면 그 풀로, 없으면 note:__disclosure__(서술형 공시 전체
+    금액 풀)로 값 검증한다. LLM이 담보를 다른 라벨로 앵커링해도 인용 금액이 실제 공시에 있으면
+    grounded — 진짜 공시를 환각으로 죽이던 허위탈락 차단. 공시에 없는 금액은 여전히 탈락(환각가드)."""
+
+    pool = index.get(f"note:{item.account_id}")
+    if pool is None and item.related_accounts:
+        pool = index.get(f"note:{item.related_accounts[0]}")
+    disclosure = index.get(_NOTE_DISCLOSURE_KEY, set())
+    claims = _amount_claim_sigs(item.cited_value or "")
+    if pool is None:
+        # 라벨 미매칭이라도 인용 금액이 실제 공시 텍스트에 있으면 grounded(허위탈락 방지).
+        if claims and any(claim in disclosure for claim in claims):
+            return GroundedSuspicion(
+                item=item,
+                grounded=True,
+                value_verified=True,
+                reason="주석 공시 텍스트에 인용 금액 실재",
+            )
+        return GroundedSuspicion(
+            item=item,
+            grounded=False,
+            value_verified=False,
+            reason="주석 라벨·금액 모두 데이터에 없음(환각)",
+        )
+    if not claims:
+        return GroundedSuspicion(
+            item=item, grounded=True, value_verified=False, reason="주석 존재·수치 비교불가(서술형)"
+        )
+    if any(claim in pool or claim in disclosure for claim in claims):
+        return GroundedSuspicion(
+            item=item, grounded=True, value_verified=True, reason="인용 금액이 주석 실값과 일치"
+        )
+    return GroundedSuspicion(
+        item=item,
+        grounded=False,
+        value_verified=False,
+        reason="인용 수치가 주석 실값과 불일치(환각)",
+    )
+
+
 def verify_account_suspicion(item: SuspicionItem, index: dict[str, set[str]]) -> GroundedSuspicion:
     """계정 의심건: 계정 존재 + 인용 금액 유효숫자 대조."""
 
+    # note 관점은 전용 grounding(서술형 공시 값 기반 fallback 포함, 사각#3).
+    if item.perspective == "note":
+        return _verify_note_suspicion(item, index)
     # sj_div 한정 키 우선(동명이계 오매칭 차단), 없으면 account_id만으로 fallback.
     pool: set[str] | None = None
-    # note 관점은 note: 네임스페이스만 조회(본문↔주석 교차환각 차단). account_id가 주석 라벨.
-    if item.perspective == "note":
-        pool = index.get(f"note:{item.account_id}")
-        if pool is None and item.related_accounts:
-            pool = index.get(f"note:{item.related_accounts[0]}")
     # trend(추세) 관점은 본문 키 외에 sce: 네임스페이스(자본변동표)도 조회 가능.
     if pool is None and item.perspective == "trend":
         pool = index.get(f"sce:{item.account_id}")

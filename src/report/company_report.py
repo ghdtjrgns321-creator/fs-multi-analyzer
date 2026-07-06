@@ -28,7 +28,7 @@ from src.report.integrated import (
     summarize_ratio_categories,
 )
 from src.schemas.findings import AccountFinding
-from src.signals.metrics_panel import account_metrics_panel
+from src.signals.metrics_panel import account_metrics_panel, sce_occurrence_states
 from src.signals.mvp1 import build_mvp1_signal_report
 from src.signals.ratios import build_ratio_report, load_ratio_config
 from src.signals.red_flags import extract_red_flags
@@ -80,9 +80,12 @@ def build_company_report(
     coverage_ledger["notes"] = build_note_ledger(note_facts_raw)
     note_facts = _compact_note_facts(surfaced_note_facts(note_facts_raw))
     # SCE 2D: 본문 ledger가 'SCE 2D가 상위 대체'로 미룬 실데이터를 전량 편입(자본변동×구성요소 셀).
-    sce_raw = load_sce_equity_components(corp_code, [target_year]).to_dict("records")
+    # SCE는 window 전체 로드(occurrence 판정에 다년 필요). ledger·compact는 target연도 셀 대상.
+    sce_window = load_sce_equity_components(corp_code, target_years).to_dict("records")
+    sce_raw = [r for r in sce_window if str(r.get("year")) == str(target_year)]
     coverage_ledger["sce"] = build_sce_ledger(sce_raw)
-    sce_cells = _compact_sce_cells(sce_raw)
+    sce_occ = sce_occurrence_states(sce_window, target_year)
+    sce_cells = _compact_sce_cells(sce_raw, sce_occ)
     ratio_summary = summarize_ratio_categories(ratios, target_year)
     payload = payload_for_summary(queue, ratio_summary)
     latest_snapshot = _latest_signal_snapshot(signal_report, target_year)
@@ -96,7 +99,7 @@ def build_company_report(
         "target_year": target_year,
         "review_queue": [item.to_dict() for item in queue],
         "ratio_summary": ratio_summary,
-        "ratio_time_series": _ratio_time_series(ratios),
+        "ratio_time_series": _ratio_time_series(frame, target_years, ["CFS", "OFS"]),
         "account_level_series": account_series,
         "account_metrics_panel": metrics_panel,
         "latest_signal_snapshot": latest_snapshot,
@@ -108,10 +111,10 @@ def build_company_report(
     }
 
 
-def _available_norm_years(corp_code: str) -> list[int]:
-    """정규화 DB가 존재하는 연도를 디스크에서 발견(최신 4개 윈도우).
+def available_norm_years(corp_code: str) -> list[int]:
+    """정규화 DB가 존재하는 사업연도 전체를 오름차순으로 발견(상한 없음).
 
-    연도 윈도우를 회사 데이터에서 도출해 리터럴 고정을 제거한다(§3).
+    UI 연도 드롭다운의 데이터 원천. 연도를 회사 데이터에서 도출해 리터럴 고정을 제거한다(§3).
     """
 
     root = settings.data_dir
@@ -126,7 +129,13 @@ def _available_norm_years(corp_code: str) -> list[int]:
             and db_path(corp_code, int(path.name), root).exists()
         ):
             years.append(int(path.name))
-    return sorted(years)[-4:]
+    return sorted(years)
+
+
+def _available_norm_years(corp_code: str) -> list[int]:
+    """분석 기본 윈도우 — 정규화 DB 존재 연도 중 최신 4개(build_company_report 기본값)."""
+
+    return available_norm_years(corp_code)[-4:]
 
 
 def _present_years(frame: Any) -> list[int]:
@@ -198,12 +207,35 @@ def _signal_rows(signals: list[Any]) -> list[dict[str, object]]:
     ]
 
 
-def _ratio_time_series(ratios: Any) -> list[dict[str, object]]:
-    if not hasattr(ratios, "to_dict") or ratios.empty:
-        return []
-    scoped = ratios[ratios["status"] == "computed"].copy()
-    scoped = scoped.sort_values(["category", "id", "year"])
-    return scoped[["id", "category", "name", "year", "value", "basis"]].to_dict("records")
+def _ratio_time_series(
+    frame: Any,
+    years: list[int],
+    fs_divs: list[str],
+    ratio_fn: Any = None,
+) -> list[dict[str, object]]:
+    """비율 시계열을 fs_div별로 계산·태그(①②). 연결(CFS)만 내던 것을 별도(OFS)까지 열어,
+    관점이 '연결 유동비율 vs 별도 유동비율'을 구분해 본다. computed 행만 싣는다."""
+
+    if ratio_fn is None:
+        from src.signals.ratios import build_ratio_report
+
+        ratio_fn = build_ratio_report
+    rows: list[dict[str, object]] = []
+    for fs in fs_divs:
+        report = ratio_fn(frame, years, None, fs)
+        if not hasattr(report, "to_dict") or report.empty:
+            continue
+        scoped = report[report["status"] == "computed"].copy()
+        if scoped.empty:
+            continue
+        scoped["fs_div"] = fs
+        rows.extend(
+            scoped[["fs_div", "id", "category", "name", "year", "value", "basis"]].to_dict(
+                "records"
+            )
+        )
+    rows.sort(key=lambda r: (str(r["fs_div"]), str(r["category"]), str(r["id"]), r["year"]))
+    return rows
 
 
 def _account_level_series(
@@ -286,24 +318,48 @@ def _compact_note_facts(facts: list[dict]) -> list[dict[str, object]]:
     return compact
 
 
-def _compact_sce_cells(cells: list[dict]) -> list[dict[str, object]]:
+def _compact_sce_cells(
+    cells: list[dict], occurrence: dict[tuple[str, str], str] | None = None
+) -> list[dict[str, object]]:
     """SCE 2D 셀을 관점·검증용 compact로(변동×구성요소×금액×fs_div). change=자본변동 사건
-    (당기순이익·배당·유상증자·자기주식 등), component=자본 구성요소(자본금·이익잉여금 등)."""
+    (당기순이익·배당·유상증자·자기주식 등), component=자본 구성요소(자본금·이익잉여금 등).
 
+    occurrence: (fs_div, change)별 신규/소멸 상태(사각#2·D18). 각 셀에 occurrence_state 부착하고,
+    소멸(disappeared)한 변동종류는 target 셀이 없으므로 synthetic 셀로 표면화한다(§9 silent drop 금지)."""
+
+    occ = occurrence or {}
     compact: list[dict[str, object]] = []
+    present_keys: set[tuple[str, str]] = set()
     for cell in cells:
         amount = cell.get("amount")
         if amount is None:
             continue
+        fs = str(cell.get("fs_div", ""))
+        change = str(cell.get("change_canonical") or cell.get("change_label") or "")
+        present_keys.add((fs, change))
         compact.append(
             {
-                "fs_div": str(cell.get("fs_div", "")),
-                "change": str(cell.get("change_canonical") or cell.get("change_label") or ""),
+                "fs_div": fs,
+                "change": change,
                 "component": str(cell.get("component_std") or cell.get("component_raw") or ""),
                 "amount": amount,
                 "prior_amount": cell.get("prior_amount"),
+                "occurrence_state": occ.get((fs, change), "present"),
             }
         )
+    # 소멸 변동종류(과거엔 있었으나 당기 셀 없음)를 synthetic으로 표면화 — 조용히 드롭 금지.
+    for (fs, change), state in occ.items():
+        if state == "disappeared" and (fs, change) not in present_keys:
+            compact.append(
+                {
+                    "fs_div": fs,
+                    "change": change,
+                    "component": "(당기 소멸)",
+                    "amount": 0.0,
+                    "prior_amount": None,
+                    "occurrence_state": "disappeared",
+                }
+            )
     return compact
 
 

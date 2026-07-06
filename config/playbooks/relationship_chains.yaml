@@ -291,8 +291,6 @@ l2_mvp1:
     universal_z_score_cap: 10
     signal_strength_cap: 10
     cfs_ofs_gap_pct_abs: 30
-    restatement_abs_amount: 100000000
-    restatement_rel_pct: 1.0
     universal_min_pct_of_assets: 1.0
     universal_min_abs_amount: 100000000
     asset_sanity_jump_multiple: 100

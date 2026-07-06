@@ -21,6 +21,7 @@ G2 충돌·G6 dump는 보고용(최종 판정은 G6 LLM이 R4에서).
 
 from __future__ import annotations
 
+import os
 import re
 import subprocess
 import sys
@@ -79,12 +80,17 @@ def run_g1(corp_code: str, year: str) -> dict:
     스크립트가 print하는 [기계요약] 라인(완결성·SCE검산 등)과 §B BS 항등식 '차이 N' 라인을
     파싱한다. dump 전문은 stdout으로 반환해 G6가 재사용한다(이중 실행 방지).
     """
+    # PYTHONPATH=ROOT 주입 — _p1_company_review.py가 `from data.backtest...`를 import하므로
+    # 리포지토리 루트가 sys.path에 있어야 한다. Streamlit 등 PYTHONPATH 없는 컨텍스트에서
+    # subprocess가 ModuleNotFoundError로 죽어 [기계요약]이 안 나오면 게이트가 전건 FAIL하던 버그.
+    env = {**os.environ, "PYTHONPATH": str(ROOT)}
     proc = subprocess.run(  # noqa: S603 (고정 인터프리터·고정 스크립트 경로)
         [sys.executable, str(P1_REVIEW), corp_code, year],
         capture_output=True,
         text=True,
         encoding="utf-8",
         cwd=str(ROOT),
+        env=env,
     )
     out = proc.stdout or ""
 

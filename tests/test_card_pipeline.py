@@ -39,6 +39,14 @@ def _canned_runner(canned):
     return runner
 
 
+def _canned_external(canned=None):
+    # external은 별도 경로(실검색)라 테스트에선 canned으로 주입(실 API 미호출).
+    async def runner(report):
+        return (canned or {}).get("external", PerspectiveOutput(status="completed"))
+
+    return runner
+
+
 def _materials():
     return {name: {} for name in ALL_PERSPECTIVES}
 
@@ -74,7 +82,10 @@ def test_pipeline_builds_account_and_company_cards() -> None:
     }
     result = asyncio.run(
         build_suspicion_cards(
-            _report(), agent_runner=_canned_runner(canned), materials=_materials()
+            _report(),
+            agent_runner=_canned_runner(canned),
+            external_runner=_canned_external(canned),
+            materials=_materials(),
         )
     )
     assert [c.account for c in result["account_cards"]] == ["매출채권"]
@@ -102,7 +113,10 @@ def test_pipeline_drops_ungrounded() -> None:
     }
     result = asyncio.run(
         build_suspicion_cards(
-            _report(), agent_runner=_canned_runner(canned), materials=_materials()
+            _report(),
+            agent_runner=_canned_runner(canned),
+            external_runner=_canned_external(canned),
+            materials=_materials(),
         )
     )
     assert result["account_cards"] == []
@@ -113,7 +127,10 @@ def test_pipeline_counts_completed_perspectives() -> None:
     canned = {"numeric": PerspectiveOutput(status="completed")}
     result = asyncio.run(
         build_suspicion_cards(
-            _report(), agent_runner=_canned_runner(canned), materials=_materials()
+            _report(),
+            agent_runner=_canned_runner(canned),
+            external_runner=_canned_external(canned),
+            materials=_materials(),
         )
     )
     # numeric completed + 나머지 5개도 기본 completed(빈 의심건) → 6
@@ -132,7 +149,10 @@ def test_pipeline_surfaces_failed_perspectives() -> None:
     canned = {name: PerspectiveOutput(status="failed") for name in ALL_PERSPECTIVES}
     result = asyncio.run(
         build_suspicion_cards(
-            _report(), agent_runner=_canned_runner(canned), materials=_materials()
+            _report(),
+            agent_runner=_canned_runner(canned),
+            external_runner=_canned_external(canned),
+            materials=_materials(),
         )
     )
     assert result["has_findings"] is False
@@ -199,6 +219,7 @@ def test_rebuttal_normal_dominant_sinks_after_pipeline() -> None:
             _two_account_report(),
             agent_runner=_two_card_runner(),
             rebuttal_runner=fake_rebuttal,
+            external_runner=_canned_external(),
             materials=_materials(),
         )
     )
@@ -236,6 +257,7 @@ def test_pipeline_unrebutted_card_shows_marker() -> None:
             _report(),
             agent_runner=_canned_runner(canned),
             rebuttal_runner=empty_rebuttal,
+            external_runner=_canned_external(canned),
             materials=_materials(),
         )
     )

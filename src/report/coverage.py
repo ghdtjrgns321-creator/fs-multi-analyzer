@@ -152,4 +152,92 @@ def build_sce_ledger(sce_cells: list[dict]) -> dict[str, object]:
     }
 
 
-__all__ = ["build_coverage_ledger", "build_note_ledger", "build_sce_ledger", "surfaced_note_facts"]
+# ── 파생 계산층 fs_div 커버리지 원장(③) ─────────────────────────────────────
+# raw 계정층은 CFS+OFS 열렸는데(사각#1) 파생층(비율·주석)이 fs_div="CFS" 고정으로 빠졌다.
+# "fs_div에 계정이 있으면 비율도 산출·표면화돼야 한다"는 음의공간 대조로 CFS-고정 누락을 전수 포착.
+
+
+def _is_number(value: Any) -> bool:
+    """None/NaN이 아닌 실수인가(비율 0도 유효하므로 _real_amount와 달리 0 허용)."""
+
+    if value is None:
+        return False
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return False
+    return number == number  # not NaN
+
+
+def build_fs_div_coverage(
+    frame: Any,
+    account_series: list[dict],
+    years: list[int],
+    target_year: int,
+    report_ratio_fs_divs: set[str] | None = None,
+    ratio_fn: Any = None,
+) -> dict[str, object]:
+    """파생층(비율) fs_div 커버리지. 각 fs_div에 계정이 있고 비율이 산출 가능(computable)한데
+    리포트가 표면화 안 하면(surfaced=False) = gap. report_ratio_fs_divs=현재 리포트가 비율을 낸
+    fs_div 집합(현재 파이프라인은 {CFS}). ratio_fn 주입으로 테스트."""
+
+    if ratio_fn is None:
+        from src.signals.ratios import build_ratio_report
+
+        ratio_fn = build_ratio_report
+    surfaced = report_ratio_fs_divs if report_ratio_fs_divs is not None else {"CFS"}
+    target = int(target_year)
+
+    population: set[str] = set()
+    if hasattr(frame, "to_dict") and not frame.empty:
+        for row in frame.to_dict("records"):
+            fs = str(row.get("fs_div"))
+            if fs in _FS_DIVS and _real_amount(row.get("amount")) is not None:
+                population.add(fs)
+
+    accounts_by_fs: dict[str, int] = {}
+    for row in account_series or []:
+        if _real_amount(row.get("amount")) is None:
+            continue
+        try:
+            if int(row.get("year")) != target:  # type: ignore[arg-type]
+                continue
+        except (TypeError, ValueError):
+            continue
+        fs = str(row.get("fs_div"))
+        accounts_by_fs[fs] = accounts_by_fs.get(fs, 0) + 1
+
+    per: dict[str, dict] = {}
+    gaps: list[dict] = []
+    for fs in sorted(population):
+        report = ratio_fn(frame, years, fs_div=fs)
+        computable = 0
+        if hasattr(report, "to_dict"):
+            for row in report.to_dict("records"):
+                try:
+                    if int(row.get("year", -1)) != target:
+                        continue
+                except (TypeError, ValueError):
+                    continue
+                if _is_number(row.get("value")):
+                    computable += 1
+        accounts_n = accounts_by_fs.get(fs, 0)
+        surfaced_fs = fs in surfaced
+        per[fs] = {
+            "accounts_n": accounts_n,
+            "ratios_computable_n": computable,
+            "ratios_surfaced": surfaced_fs,
+        }
+        if accounts_n > 0 and computable > 0 and not surfaced_fs:
+            gaps.append({"fs_div": fs, "engine": "ratios", "computable": computable})
+
+    return {"population_fs_div": sorted(population), "per_fs_div": per, "gaps": gaps}
+
+
+__all__ = [
+    "build_coverage_ledger",
+    "build_fs_div_coverage",
+    "build_note_ledger",
+    "build_sce_ledger",
+    "surfaced_note_facts",
+]
