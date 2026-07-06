@@ -165,7 +165,7 @@
 - **✅ docs/user 최신화 — 전처리·Phase1·Phase2 반영** (2026-06-20). 구현(특히 Phase2 새 파이프라인)과
   사람용 문서의 stale 제거. 편집: `MULTI_AGENT.md`(6관점 모델 전부 GPT-5.4로·반박 에이전트 부활
   섹션 재작성·다이어그램 최종 산출물=의심건 카드 목록), `FEATURES.md`(5개 역할→6관점+별도 반박·
-  산출물 카드), `UI.md`/`UX.md`(6관점·반박·카드 필드 표수N/4·반박판정·온보딩 필수 화면), `LIMITATIONS.md`
+  산출물 카드), `UI.md`(6관점·반박·카드 필드 표수N/4·반박판정·온보딩 필수 화면; 구 UX 문서 통합), `LIMITATIONS.md`
   (§6 Phase2 실호출 E2E 미검증 한계 추가), `ONBOARDING_LLM_PLAN.md`(확정 운영정책=온보딩 필수화·별칭
   사람 수동), `LLM_MODEL_COMPARE.md`(Phase2 6관점·반박도 gpt-5.4). grep 검증: Gemini(관점)·"5개
   에이전트"·"반박 관점은 왜 없나" 0건, mojibake U+FFFD 0건. BACKTEST/VERIFICATION 류는 Phase1 검증
@@ -236,6 +236,25 @@
       (의도적 억/조 스케일 관용을 깨 거짓탈락↑ = §9상 더 나쁨). 단 **라운드 숫자 붕괴**(예 30,000,000,000
       →유효숫자"3"<3자리→금액검사 우회, 환각도 통과도 안 됨)는 진짜 갭. 올바른 수정=단위(억/조/백만) 인식
       값 파싱이나 스케일 모호성(메모리 gpt 백만 오독) 때문에 precision/recall 트레이드오프 → 별도 설계 백로그.
+    - **✅ 해결(①② 별도 비율 표면화)**: 파생층 fs_div 불완전개방(비율 CFS고정) = **해결**. `_ratio_time_series`가
+      fs_div별 build_ratio_report 후 fs_div 태그(queue·summary는 CFS 유지 무회귀). 삼성 112행(CFS56+OFS56)·
+      대주 96행, build_fs_div_coverage gaps==[](gap 찾은 원장이 닫힘 실증). 주석은 측정상 gap 아니라 미변경.
+      전체 404. `build_fs_div_coverage`는 영구 가드로 향후 fs_div-고정 누락 자동 포착.
+    - **✅ 해결(SCE 자기주식 신규발생 사각#2)**: occurrence_state가 계정층에만 있고 SCE엔 없어 자기주식 신규
+      취득이 raw로만 흐르던 것 = **해결**. `metrics_panel.sce_occurrence_states`(change_canonical 단위=D18
+      정체성, leaf 불안정 회피)로 신규/소멸 판정, sce_cells에 occurrence_state 부착 + 소멸 synthetic 표면화.
+      삼성 자기주식취득 appeared 실측 확인. trend 관점이 신규 자본거래 우선 검토(sce_role 프롬프트). 전체 402.
+      **미완(D18 백로그)**: 주석 XBRL 숫자표 occurrence는 정체성 불안정으로 온톨로지 전까지 제외.
+    - **✅ 해결(주석 grounding 사각#3)**: 담보·특수관계 등 서술형 공시가 note_sections·report_review_chunks
+      (HTML)에 사는데 grounding 인덱스는 XBRL fact만 커버 → 진짜 공시를 "환각"으로 죽이던 허위탈락 = **해결**.
+      `build_account_index(note_disclosures=...)` + `_verify_note_suspicion`(공시 텍스트 금액 실재시 grounded,
+      허위금액은 탈락). card_pipeline이 materials[note] 서술형 공시를 정규화 전달. 대주 실측: 담보 54,345·
+      특수관계 233,546 둘 다 탈락→grounded 부활, 허위 99,999 탈락 유지. 전체 397 passed.
+    - **✅ 해결(external 실검색 배선)**: external 검색 파이프라인(create_external_assessment)이 카드
+      파이프라인에 미연결(死코드)이라 구조적 0건이던 것 = **해결**. `run_external_suspicions` 어댑터 신설
+      (Gemini 검색어생성→구글 grounding 검색→출처 URL 단 company SuspicionItem). card_pipeline `_run_one`이
+      external만 실검색 경로로 분기. 2케이스 E2E로 死코드 0 vs 실검색 0 구분: 삼성 grounded 3건(영업이익
+      398%↑ 원인)·대주 0건(소기업 뉴스 없음, 정상). GOOGLE_API_KEY 필요. 전체 400 passed.
     - **✅ 해결(change→trend 재편)**: change·numeric 단위중복(63%)을 역할분리로 해결. change 식별자를
       trend(추세)로 개명, numeric=당해 급변(yoy) 전담·trend=다년 단조방향(↑↑/↓↓·완만 드리프트) 전담.
       소급재작성은 추세와 무관(신뢰성 신호)이라 관점 경로 삭제(엔진은 dormant 보존). 대주 실LLM E2E:
@@ -257,7 +276,7 @@
        external_agentic — dead이나 결정론·external/industry 테스트와 얽힘. external_material/industry_material만 유지.
     4. OpenAIModel→OpenAIChatModel 마이그(전 파일 공통 DeprecationWarning).
     + Phase1 잔여: 전체 corpus --force 재정규화(~30% stale)·온보딩 일괄실행 수동검증.
-- **✅ 온보딩 alias 제안 개선 — 계획·결과: `docs/user/ONBOARDING_LLM_PLAN.md`** (2026-06-17). 검증서 발견한
+- **✅ 온보딩 alias 제안 개선 — 계획·결과: `docs/agent/ONBOARDING_LLM_PLAN.md`** (2026-06-17). 검증서 발견한
   alias 약점(적중~75%·confidence가 오답 못거름) 개선. **코드 반영**(`src/report/alias_suggest.py`): ②배치화
   (계정당 N회→회사당 1회, 호출 72→4·반환형식 불변) + ③일반원칙 힌트(SYSTEM_PROMPT에 "불확실하면 기타보류"+10유형
   예시). pytest 10 passed 무회귀. **수렴 사다리 라운드1**(무표준코드 ph≥10 7사): 신규 오답 4유형(특수상품
@@ -456,7 +475,7 @@
   - **wave 1~2 주요 P1 패턴**: ①영문코드↔한글 의미 오매핑(사채발행→주식발행 1.4조·유동차입금→비유동)
     ②미매핑 대형계정 기타로(금융업자산 52조·유형자산 1.3조) ③금융기관 주석 0건. 상세 `_HOLISTIC_SYNTHESIS.md`.
   - **이유**: 라운드1~12가 기계 flag만 역추적하고 감사관 통독을 사실상 안 한 사각(사용자 지적)을 메움.
-    member부호 수정·라운드13은 별개 트랙. 방법론 전환 기록 `docs/user/P1_AUDIT_HARNESS.md §5`.
+    member부호 수정·라운드13은 별개 트랙. 방법론 전환 기록 `docs/agent/P1_AUDIT_HARNESS.md §5`.
 
 - **라운드12 구조 규칙 수정 완료 (2026-06-13, `_P1_ROUND12_FIX_PROMPT.md` 실행)**:
   SCE 소계/스톡-as-leaf 재발을 라벨 신규 등록 없이 구조 규칙으로 처리했다. 부모소계 retag는
@@ -858,7 +877,7 @@
   ③전용 에이전트 `.claude/agents/p1-auditor.md`(고정 절차+기만 패턴 7종 내장, fresh-context 실행).
   전수 재실행: 소실 18건→0(거짓 경보 소멸)·세토피아/2019 진짜 소실 2 유지·SCE표준화 FAIL 18/19
   노출·**부활한 검산이 신규 이상 3건 검출**(00413046/2018 차이 2.4조 등 — T1 수정 후 재평가).
-  사람용 정리: [docs/user/P1_AUDIT_HARNESS.md](../user/P1_AUDIT_HARNESS.md).
+  하니스 정리: [docs/agent/P1_AUDIT_HARNESS.md](P1_AUDIT_HARNESS.md).
 - **진행 중 (2026-06-10): 분식사 정정본→원본(정정 전) 교체 완료.** 백테스트가 정정본(세탁
   데이터) 위에서 도는 문제 해결. DART는 정정공시 시 원본 미삭제(영구보존)·정정본 별도 rcept
   추가, finstate_all API는 최신(정정본)만 반환. 원본은 `list(final=False)`→원본 rcept→

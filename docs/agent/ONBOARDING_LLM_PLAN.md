@@ -2,7 +2,7 @@
 
 > 신규 회사 온보딩에서 LLM이 하는 일(계정 별칭 제안·사업보고서 청크선별·전수통독)의
 > 신뢰성과 비용을 개선하기 위한 실험 기록. 무엇을 바꿨고 결과가 어땠는지 시간순으로 남긴다.
-> 검증 근거: `data/backtest/_p1e2e_VERDICT.md`. 모델 선택 배경: [LLM_MODEL_COMPARE.md](LLM_MODEL_COMPARE.md).
+> 검증 근거: `data/backtest/_p1e2e_VERDICT.md`. 모델 선택 배경: [LLM_MODEL_COMPARE.md](../user/LLM_MODEL_COMPARE.md).
 
 ## 1. 배경 — 검증에서 나온 문제
 
@@ -172,4 +172,4 @@
 - 검증 종합: `data/backtest/_p1e2e_VERDICT.md`
 - 별칭 제안 로그(baseline): `data/backtest/_p1e2e_alias_log.json`
 - 별칭 제안 코드: `src/report/alias_suggest.py` / 청크선별: `src/report/review_chunks.py`
-- 모델 비교 배경: [LLM_MODEL_COMPARE.md](LLM_MODEL_COMPARE.md)
+- 모델 비교 배경: [LLM_MODEL_COMPARE.md](../user/LLM_MODEL_COMPARE.md)

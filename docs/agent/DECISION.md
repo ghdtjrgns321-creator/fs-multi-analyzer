@@ -215,3 +215,18 @@
 - **영향**: `config/industry_peers.yaml`은 72개 중분류, 601개 피어를 담는다. 표본 대상 업종
   73개 중 `266`은 피어 후보가 없어 config에 쓰지 않았다. 피어는 재무지표 baseline 계산에만
   쓰며 주석·외부·6축 분석은 피어에 적용하지 않는다.
+
+## D18. 신규/소멸(occurrence) 딱지의 정체성 키 = 안정적 표준 라벨, 주석 XBRL은 온톨로지 백로그
+
+- **결정**: 연도별 신규/소멸 판정은 **각 층에서 안정적인 표준 라벨 층위**로 계산한다. 계정은 계정명,
+  SCE는 `change_canonical`(변동종류), 주석 서술공시는 `disclosure_type`. **주석 XBRL 숫자표는
+  신규/소멸을 계산하지 않는다**(정체성 불안정) — 필요해지면 주석 온톨로지(`canonical_accounts.yaml`의
+  주석 확장)로 처리하되 지금은 백로그.
+- **측정 근거**(삼성 00126380·대주 00112457, `data/backtest/_SCE_NOTE_SIGNAL_FIT.txt`): 주석 XBRL은
+  개념+차원 기준 신규 **64%**, 개념만 기준 **34%**, 소멸 49% — 분류축이 매년 바뀌어(2023 CategoriesAxis
+  →2024 ClassesAxis) 어떤 키로도 신뢰 불가. udf_ 확장개념은 0~7%뿐이라 원인은 확장ID가 아니라 표준
+  분류 재편. 반면 SCE를 `change_canonical`로 보면 삼성 신규 **2건**(그중 자기주식취득=진짜 사각#2)로 클린.
+- **지금 대안(온톨로지 없이)**: SCE occurrence(change_canonical 단위)로 자기주식 신규발생 사각#2 해결,
+  note_sections occurrence(disclosure_type)로 담보·소송 신규 공시 탐지. 둘 다 표준 라벨이 안정적이라 가능.
+- **온톨로지 트리거**: "주석 XBRL 숫자표의 연도별 신규/소멸 추적이 실제 검토 가치를 낸다"가 확인될 때만
+  착수(YAGNI). 주석 숫자표는 이미 surface·grounding 되므로 신규딱지는 한계효용이 작다.

@@ -26,7 +26,7 @@
 - [x] L4 리포트 (`src/report`) — 6관점 독립 평가 + 교차 + 종합 live 완료
 - [ ] L5 대시보드 (`dashboard`)
   - [ ] (필수) 못 맞춘 계정 → 사전 보강 인터랙션: 사용자가 계정 지정 시
-    `config/canonical_accounts.yaml` 자동 확장 (Human-in-the-Loop). 상세: [../user/UX.md](../user/UX.md)
+    `config/canonical_accounts.yaml` 자동 확장 (Human-in-the-Loop). 상세: [../user/UI.md](../user/UI.md)
 
 ## MVP1 — 유동성·운전자본 + 공시 변동
 

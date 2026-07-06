@@ -68,21 +68,21 @@ GOOGLE_API_KEY=xxxxx        # LLM 대안 (선택)
 
 ## Skill 활용 맵
 
-| 레이어 / 상황                 | 활용 Skill                                                      |
-| ----------------------------- | --------------------------------------------------------------- |
-| 전 작업 공통                  | `tdd`, `verification-before-completion`, `systematic-debugging` |
-| 파급 변경 (계정·playbook·DSL) | `ripple-search`                                                 |
-| L1 정규화 / L2 신호엔진       | `pandera-validation`, `accounting-precision`                    |
-| L3 에이전트 설계              | `subagent-orchestration`                                        |
-| L4/L5 리포트·UI               | `developing-with-streamlit`, `mermaid`                          |
-| 도메인 코드 리뷰              | `disclosure-review` (프로젝트 스코프)                           |
-| 도메인 테스트·완료 검증       | `disclosure-testing` (프로젝트 스코프)                          |
+| 레이어 / 상황                 | 활용 Skill                                   |
+| ----------------------------- | -------------------------------------------- |
+| 전 작업 공통                  | `superpowers` 플러그인 (TDD·완료검증·디버깅) |
+| 파급 변경 (계정·playbook·DSL) | `ripple-search`                              |
+| L1 정규화 / L2 신호엔진       | `pandera-validation`, `accounting-precision` |
+| L3 에이전트 설계              | `subagent-orchestration`                     |
+| L4/L5 리포트·UI               | `developing-with-streamlit`, `mermaid`       |
+| 도메인 코드 리뷰              | `disclosure-review` (프로젝트 스코프)        |
+| 도메인 테스트·완료 검증       | `disclosure-testing` (프로젝트 스코프)       |
 
 ## Agent 활용 가이드
 
 | Agent                     | 용도                                  |
 | ------------------------- | ------------------------------------- |
-| `planner`                 | 새 레이어/단계 시작 시 구현 계획 수립 |
+| `Plan` (빌트인)           | 새 레이어/단계 시작 시 구현 계획 수립 |
 | `code-reviewer`           | 모듈 구현 완료 후 코드 리뷰           |
 | `documentation-architect` | 문서 작성/리뷰/품질 검증              |
 | `Explore` / `Plan`        | 코드베이스 탐색 / 아키텍처 설계       |
