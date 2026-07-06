@@ -1,0 +1,8 @@
+=== 삼성 00126380 (target 2024) — fs_div 분모=2 : ['CFS', 'OFS']
+   CFS: 계정 117 | 비율산출가능 14 | 표면화 True | 주석섹션 16
+   OFS: 계정  91 | 비율산출가능 14 | 표면화 False | 주석섹션 16
+   >> gaps: [{'fs_div': 'OFS', 'engine': 'ratios', 'computable': 14}]
+=== 대주 00112457 (target 2024) — fs_div 분모=2 : ['CFS', 'OFS']
+   CFS: 계정 121 | 비율산출가능 12 | 표면화 True | 주석섹션 10
+   OFS: 계정 116 | 비율산출가능 12 | 표면화 False | 주석섹션 10
+   >> gaps: [{'fs_div': 'OFS', 'engine': 'ratios', 'computable': 12}]

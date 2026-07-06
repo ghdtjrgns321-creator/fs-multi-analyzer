@@ -1,0 +1,10 @@
+=== 삼성 00126380 — SCE 셀 128 · 변동종류 21 ===
+  occurrence 분포: {'present': 114, 'appeared': 12, 'disappeared': 2}
+  신규(appeared) 변동종류: ['자기주식취득', '자기주식취득']
+  소멸(disappeared): ['관계기업 및 공동기업 주식 취득 및 처분', '기타 중요 계정']
+  자기주식 셀 occurrence: [('자기주식취득', 'appeared'), ('자기주식취득', 'appeared'), ('자기주식취득', 'appeared')]
+=== 대주 00112457 — SCE 셀 67 · 변동종류 25 ===
+  occurrence 분포: {'present': 35, 'appeared': 26, 'disappeared': 6}
+  신규(appeared) 변동종류: ['FVOCI지분상품평가손익', 'FVOCI지분상품평가손익', '기타포괄손익', '기타포괄손익', '자산재평가손익', '자산재평가손익', '종속기업소유지분변동', '지분법기타포괄손익재분류가능']
+  소멸(disappeared): ['FVOCI적립금변동', 'FVOCI적립금변동', '기타 중요 계정', '기타 중요 계정', '자본증감합계', '자본증감합계']
+  자기주식 셀 occurrence: []

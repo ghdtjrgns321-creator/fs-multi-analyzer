@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import sys
 from pathlib import Path
 
 import duckdb
@@ -22,7 +23,8 @@ from src.db.normalized import db_path
 from src.report.card_pipeline import build_suspicion_cards
 from src.report.company_report import build_company_report
 
-CORP, YEAR = "00112457", 2024
+CORP = sys.argv[1] if len(sys.argv) > 1 else "00112457"  # 대상 corp(인자화)
+YEAR = int(sys.argv[2]) if len(sys.argv) > 2 else 2024
 ROOT = settings.data_dir
 OUT = Path(f"data/backtest/_E2E_EVAL_{CORP}_{YEAR}.json")
 
@@ -121,8 +123,12 @@ def main() -> None:
         "account_series_count": len(report.get("account_level_series", [])),  # type: ignore[arg-type]
     }
 
-    # ③ 전처리 1:1 대조
-    preprocess = _preprocess_check()
+    # ③ 전처리 1:1 대조 — ORACLE은 대주(00112457) 전용. 타 corp는 스킵.
+    preprocess = (
+        _preprocess_check()
+        if CORP == "00112457"
+        else {"checked": 0, "mismatches": 0, "rows": [], "skipped": f"ORACLE 없음(corp={CORP})"}
+    )
 
     # ⑤ Phase2 관점별 의심건 + 카드
     result = asyncio.run(build_suspicion_cards(report, run_llm=True))

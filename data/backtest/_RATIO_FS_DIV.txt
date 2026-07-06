@@ -1,0 +1,2 @@
+삼성: ratio_time_series 112행 fs_div분포 {'CFS': 56, 'OFS': 56} | 표면화 ['CFS', 'OFS'] | 커버리지 gaps []
+대주: ratio_time_series 96행 fs_div분포 {'CFS': 48, 'OFS': 48} | 표면화 ['CFS', 'OFS'] | 커버리지 gaps []

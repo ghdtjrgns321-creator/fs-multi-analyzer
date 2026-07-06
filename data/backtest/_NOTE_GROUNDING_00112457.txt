@@ -1,0 +1,4 @@
+note_disclosures 정규화: 20건
+담보 543억              grounded=True verified=True | 주석 공시 텍스트에 인용 금액 실재
+특수관계자 채권 대손          grounded=True verified=True | 주석 공시 텍스트에 인용 금액 실재
+허위금액(가드)             grounded=False verified=False | 인용 수치가 주석 실값과 불일치(환각)

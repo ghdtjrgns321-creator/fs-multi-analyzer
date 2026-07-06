@@ -1,0 +1,1948 @@
+{
+  "preprocess": {
+    "checked": 25,
+    "mismatches": 0,
+    "rows": [
+      {
+        "year": 2024,
+        "sj_div": "BS",
+        "canonical": "자산총계",
+        "raw_oracle": 111411700508,
+        "db_amount": 111411700508,
+        "match": true
+      },
+      {
+        "year": 2024,
+        "sj_div": "BS",
+        "canonical": "부채총계",
+        "raw_oracle": 27901796683,
+        "db_amount": 27901796683,
+        "match": true
+      },
+      {
+        "year": 2024,
+        "sj_div": "BS",
+        "canonical": "자본총계",
+        "raw_oracle": 83509903825,
+        "db_amount": 83509903825,
+        "match": true
+      },
+      {
+        "year": 2024,
+        "sj_div": "BS",
+        "canonical": "유동자산",
+        "raw_oracle": 34391894547,
+        "db_amount": 34391894547,
+        "match": true
+      },
+      {
+        "year": 2024,
+        "sj_div": "BS",
+        "canonical": "비유동자산",
+        "raw_oracle": 77019805961,
+        "db_amount": 77019805961,
+        "match": true
+      },
+      {
+        "year": 2024,
+        "sj_div": "BS",
+        "canonical": "유동부채",
+        "raw_oracle": 15352456641,
+        "db_amount": 15352456641,
+        "match": true
+      },
+      {
+        "year": 2024,
+        "sj_div": "BS",
+        "canonical": "비유동부채",
+        "raw_oracle": 12549340042,
+        "db_amount": 12549340042,
+        "match": true
+      },
+      {
+        "year": 2024,
+        "sj_div": "BS",
+        "canonical": "현금및현금성자산",
+        "raw_oracle": 10958272295,
+        "db_amount": 10958272295,
+        "match": true
+      },
+      {
+        "year": 2024,
+        "sj_div": "BS",
+        "canonical": "이익잉여금",
+        "raw_oracle": 51280618150,
+        "db_amount": 51280618150,
+        "match": true
+      },
+      {
+        "year": 2024,
+        "sj_div": "BS",
+        "canonical": "단기차입금",
+        "raw_oracle": 3105125786,
+        "db_amount": 3105125786,
+        "match": true
+      },
+      {
+        "year": 2024,
+        "sj_div": "CIS",
+        "canonical": "매출",
+        "raw_oracle": 106038654753,
+        "db_amount": 106038654753,
+        "match": true
+      },
+      {
+        "year": 2024,
+        "sj_div": "CIS",
+        "canonical": "매출원가",
+        "raw_oracle": 81134897169,
+        "db_amount": 81134897169,
+        "match": true
+      },
+      {
+        "year": 2024,
+        "sj_div": "CIS",
+        "canonical": "매출총이익",
+        "raw_oracle": 24903757584,
+        "db_amount": 24903757584,
+        "match": true
+      },
+      {
+        "year": 2024,
+        "sj_div": "CIS",
+        "canonical": "영업이익",
+        "raw_oracle": 10025103418,
+        "db_amount": 10025103418,
+        "match": true
+      },
+      {
+        "year": 2024,
+        "sj_div": "CIS",
+        "canonical": "당기순이익",
+        "raw_oracle": 8315526894,
+        "db_amount": 8315526894,
+        "match": true
+      },
+      {
+        "year": 2024,
+        "sj_div": "CF",
+        "canonical": "영업활동현금흐름",
+        "raw_oracle": 11330064730,
+        "db_amount": 11330064730,
+        "match": true
+      },
+      {
+        "year": 2024,
+        "sj_div": "CF",
+        "canonical": "투자활동현금흐름",
+        "raw_oracle": -2548740883,
+        "db_amount": -2548740883,
+        "match": true
+      },
+      {
+        "year": 2024,
+        "sj_div": "CF",
+        "canonical": "재무활동현금흐름",
+        "raw_oracle": -7186142192,
+        "db_amount": -7186142192,
+        "match": true
+      },
+      {
+        "year": 2023,
+        "sj_div": "BS",
+        "canonical": "자산총계",
+        "raw_oracle": 111337641407,
+        "db_amount": 111337641407,
+        "match": true
+      },
+      {
+        "year": 2023,
+        "sj_div": "BS",
+        "canonical": "부채총계",
+        "raw_oracle": 34658284670,
+        "db_amount": 34658284670,
+        "match": true
+      },
+      {
+        "year": 2023,
+        "sj_div": "BS",
+        "canonical": "자본총계",
+        "raw_oracle": 76679356737,
+        "db_amount": 76679356737,
+        "match": true
+      },
+      {
+        "year": 2023,
+        "sj_div": "CIS",
+        "canonical": "매출",
+        "raw_oracle": 105014557386,
+        "db_amount": 105014557386,
+        "match": true
+      },
+      {
+        "year": 2023,
+        "sj_div": "CIS",
+        "canonical": "영업이익",
+        "raw_oracle": 7684213963,
+        "db_amount": 7684213963,
+        "match": true
+      },
+      {
+        "year": 2023,
+        "sj_div": "CIS",
+        "canonical": "당기순이익",
+        "raw_oracle": 10149663332,
+        "db_amount": 10149663332,
+        "match": true
+      },
+      {
+        "year": 2023,
+        "sj_div": "CF",
+        "canonical": "영업활동현금흐름",
+        "raw_oracle": 11613190263,
+        "db_amount": 11613190263,
+        "match": true
+      }
+    ]
+  },
+  "phase1": {
+    "company_name": "대주산업",
+    "target_year": 2024,
+    "review_queue": [
+      {
+        "subject": "장기차입금",
+        "item_type": "relationship_signal",
+        "issue": "재무활동CF vs 장기차입금 증가율 괴리",
+        "risk_level": "Medium",
+        "materiality_score": 140.61,
+        "key_evidence": "growth_divergence: -140.61",
+        "audit_basis": [
+          "ISA/KSA 315",
+          "ISA/KSA 520"
+        ],
+        "source_url": null
+      },
+      {
+        "subject": "기타수익",
+        "item_type": "relationship_signal",
+        "issue": "기타수익 YoY 절대값 기준 초과",
+        "risk_level": "Medium",
+        "materiality_score": 85.36,
+        "key_evidence": "single_account_yoy: -85.36",
+        "audit_basis": [
+          "ISA/KSA 315",
+          "ISA/KSA 520"
+        ],
+        "source_url": null
+      },
+      {
+        "subject": "단기차입금",
+        "item_type": "relationship_signal",
+        "issue": "단기차입금 YoY 절대값 기준 초과",
+        "risk_level": "Medium",
+        "materiality_score": 54.93,
+        "key_evidence": "single_account_yoy: -54.93",
+        "audit_basis": [
+          "ISA/KSA 315",
+          "ISA/KSA 520"
+        ],
+        "source_url": null
+      },
+      {
+        "subject": "단기차입금",
+        "item_type": "relationship_signal",
+        "issue": "전 계정 보편 스캔: 단기차입금",
+        "risk_level": "Medium",
+        "materiality_score": 54.93,
+        "key_evidence": "universal_yoy: -54.93",
+        "audit_basis": [
+          "ISA/KSA 315",
+          "ISA/KSA 520"
+        ],
+        "source_url": null
+      },
+      {
+        "subject": "당기순이익",
+        "item_type": "relationship_signal",
+        "issue": "영업이익 vs 당기순이익 증가율 괴리",
+        "risk_level": "Medium",
+        "materiality_score": 48.53,
+        "key_evidence": "growth_divergence: 48.53",
+        "audit_basis": [
+          "ISA/KSA 315",
+          "ISA/KSA 520"
+        ],
+        "source_url": null
+      },
+      {
+        "subject": "당기순이익",
+        "item_type": "relationship_signal",
+        "issue": "영업활동현금흐름 vs 당기순이익 증가율 괴리",
+        "risk_level": "Medium",
+        "materiality_score": 15.63,
+        "key_evidence": "growth_divergence: 15.63",
+        "audit_basis": [
+          "ISA/KSA 315",
+          "ISA/KSA 520"
+        ],
+        "source_url": null
+      },
+      {
+        "subject": "DIO",
+        "item_type": "financial_ratio",
+        "issue": "활동성 지표",
+        "risk_level": "Low",
+        "materiality_score": 50.31,
+        "key_evidence": "2024: 50.31",
+        "audit_basis": [
+          "ISA/KSA 501",
+          "ISA/KSA 520",
+          "K-IFRS 1002"
+        ],
+        "source_url": "https://corporatefinanceinstitute.com/resources/accounting/days-inventory-outstanding-dio/"
+      },
+      {
+        "subject": "부채비율",
+        "item_type": "financial_ratio",
+        "issue": "안정성 지표",
+        "risk_level": "Low",
+        "materiality_score": 33.41,
+        "key_evidence": "2024: 33.41",
+        "audit_basis": [
+          "ISA/KSA 520",
+          "ISA/KSA 570"
+        ],
+        "source_url": "https://corporatefinanceinstitute.com/resources/knowledge/finance/debt-to-equity-ratio-formula/"
+      },
+      {
+        "subject": "매출총이익률",
+        "item_type": "financial_ratio",
+        "issue": "수익성 지표",
+        "risk_level": "Low",
+        "materiality_score": 23.49,
+        "key_evidence": "2024: 23.49",
+        "audit_basis": [
+          "ISA/KSA 520",
+          "K-IFRS 1115",
+          "K-IFRS 1002"
+        ],
+        "source_url": "https://corporatefinanceinstitute.com/resources/accounting/profitability-ratios/"
+      },
+      {
+        "subject": "이자보상배율",
+        "item_type": "financial_ratio",
+        "issue": "안정성 지표",
+        "risk_level": "Low",
+        "materiality_score": 11.43,
+        "key_evidence": "2024: 11.43",
+        "audit_basis": [
+          "ISA/KSA 520",
+          "ISA/KSA 570"
+        ],
+        "source_url": "https://corporatefinanceinstitute.com/resources/knowledge/finance/interest-coverage-ratio/"
+      },
+      {
+        "subject": "ROE",
+        "item_type": "financial_ratio",
+        "issue": "수익성 지표",
+        "risk_level": "Low",
+        "materiality_score": 10.38,
+        "key_evidence": "2024: 10.38",
+        "audit_basis": [
+          "ISA/KSA 520"
+        ],
+        "source_url": "https://corporatefinanceinstitute.com/resources/accounting/what-is-return-on-equity-roe/"
+      },
+      {
+        "subject": "영업이익률",
+        "item_type": "financial_ratio",
+        "issue": "수익성 지표",
+        "risk_level": "Low",
+        "materiality_score": 9.45,
+        "key_evidence": "2024: 9.45",
+        "audit_basis": [
+          "ISA/KSA 520"
+        ],
+        "source_url": "https://corporatefinanceinstitute.com/resources/accounting/operating-profit-margin/"
+      },
+      {
+        "subject": "ROA",
+        "item_type": "financial_ratio",
+        "issue": "수익성 지표",
+        "risk_level": "Low",
+        "materiality_score": 7.47,
+        "key_evidence": "2024: 7.47",
+        "audit_basis": [
+          "ISA/KSA 520"
+        ],
+        "source_url": "https://corporatefinanceinstitute.com/resources/accounting/return-on-assets-roa-formula/"
+      },
+      {
+        "subject": "재고회전율",
+        "item_type": "financial_ratio",
+        "issue": "활동성 지표",
+        "risk_level": "Low",
+        "materiality_score": 7.25,
+        "key_evidence": "2024: 7.25",
+        "audit_basis": [
+          "ISA/KSA 501",
+          "ISA/KSA 520",
+          "K-IFRS 1002"
+        ],
+        "source_url": "https://corporatefinanceinstitute.com/resources/accounting/inventory-turnover-ratio/"
+      },
+      {
+        "subject": "발생액 비율",
+        "item_type": "financial_ratio",
+        "issue": "이익의 질 지표",
+        "risk_level": "Low",
+        "materiality_score": 2.71,
+        "key_evidence": "2024: -2.71",
+        "audit_basis": [
+          "ISA/KSA 520",
+          "K-IFRS 1007"
+        ],
+        "source_url": "https://www.stockopedia.com/ratios/accrual-ratio-555/"
+      },
+      {
+        "subject": "유동비율",
+        "item_type": "financial_ratio",
+        "issue": "안정성 지표",
+        "risk_level": "Low",
+        "materiality_score": 2.24,
+        "key_evidence": "2024: 2.24",
+        "audit_basis": [
+          "ISA/KSA 520",
+          "ISA/KSA 570"
+        ],
+        "source_url": "https://corporatefinanceinstitute.com/resources/accounting/current-ratio-formula/"
+      },
+      {
+        "subject": "영업CF/순이익",
+        "item_type": "financial_ratio",
+        "issue": "이익의 질 지표",
+        "risk_level": "Low",
+        "materiality_score": 1.36,
+        "key_evidence": "2024: 1.36",
+        "audit_basis": [
+          "ISA/KSA 520",
+          "K-IFRS 1007"
+        ],
+        "source_url": "https://www.wallstreetprep.com/knowledge/quality-of-earnings-ratio/"
+      },
+      {
+        "subject": "총자산회전율",
+        "item_type": "financial_ratio",
+        "issue": "활동성 지표",
+        "risk_level": "Low",
+        "materiality_score": 0.95,
+        "key_evidence": "2024: 0.95",
+        "audit_basis": [
+          "ISA/KSA 520"
+        ],
+        "source_url": "https://corporatefinanceinstitute.com/resources/accounting/asset-turnover-ratio/"
+      }
+    ],
+    "ratio_summary": {
+      "수익성": {
+        "ROE": 10.38,
+        "ROA": 7.47,
+        "매출총이익률": 23.49,
+        "영업이익률": 9.45
+      },
+      "활동성": {
+        "재고회전율": 7.25,
+        "DIO": 50.31,
+        "총자산회전율": 0.95
+      },
+      "안정성": {
+        "부채비율": 33.41,
+        "유동비율": 2.24,
+        "이자보상배율": 11.43
+      },
+      "이익의 질": {
+        "영업CF/순이익": 1.36,
+        "발생액 비율": -2.71
+      }
+    },
+    "ratio_time_series": [
+      {
+        "id": "dio",
+        "category": "activity",
+        "name": "DIO",
+        "year": 2021,
+        "value": 57.65,
+        "basis": "ending_value_proxy"
+      },
+      {
+        "id": "dio",
+        "category": "activity",
+        "name": "DIO",
+        "year": 2022,
+        "value": 59.68,
+        "basis": "average_prior_current"
+      },
+      {
+        "id": "dio",
+        "category": "activity",
+        "name": "DIO",
+        "year": 2023,
+        "value": 58.57,
+        "basis": "average_prior_current"
+      },
+      {
+        "id": "dio",
+        "category": "activity",
+        "name": "DIO",
+        "year": 2024,
+        "value": 50.31,
+        "basis": "average_prior_current"
+      },
+      {
+        "id": "inventory_turnover",
+        "category": "activity",
+        "name": "재고회전율",
+        "year": 2021,
+        "value": 6.33,
+        "basis": "ending_value_proxy"
+      },
+      {
+        "id": "inventory_turnover",
+        "category": "activity",
+        "name": "재고회전율",
+        "year": 2022,
+        "value": 6.12,
+        "basis": "average_prior_current"
+      },
+      {
+        "id": "inventory_turnover",
+        "category": "activity",
+        "name": "재고회전율",
+        "year": 2023,
+        "value": 6.23,
+        "basis": "average_prior_current"
+      },
+      {
+        "id": "inventory_turnover",
+        "category": "activity",
+        "name": "재고회전율",
+        "year": 2024,
+        "value": 7.25,
+        "basis": "average_prior_current"
+      },
+      {
+        "id": "total_asset_turnover",
+        "category": "activity",
+        "name": "총자산회전율",
+        "year": 2021,
+        "value": 0.86,
+        "basis": "ending_value_proxy"
+      },
+      {
+        "id": "total_asset_turnover",
+        "category": "activity",
+        "name": "총자산회전율",
+        "year": 2022,
+        "value": 0.98,
+        "basis": "average_prior_current"
+      },
+      {
+        "id": "total_asset_turnover",
+        "category": "activity",
+        "name": "총자산회전율",
+        "year": 2023,
+        "value": 0.97,
+        "basis": "average_prior_current"
+      },
+      {
+        "id": "total_asset_turnover",
+        "category": "activity",
+        "name": "총자산회전율",
+        "year": 2024,
+        "value": 0.95,
+        "basis": "average_prior_current"
+      },
+      {
+        "id": "accruals_ratio",
+        "category": "earnings_quality",
+        "name": "발생액 비율",
+        "year": 2021,
+        "value": 1.53,
+        "basis": "ending_value_proxy"
+      },
+      {
+        "id": "accruals_ratio",
+        "category": "earnings_quality",
+        "name": "발생액 비율",
+        "year": 2022,
+        "value": -2.56,
+        "basis": "average_prior_current"
+      },
+      {
+        "id": "accruals_ratio",
+        "category": "earnings_quality",
+        "name": "발생액 비율",
+        "year": 2023,
+        "value": -1.35,
+        "basis": "average_prior_current"
+      },
+      {
+        "id": "accruals_ratio",
+        "category": "earnings_quality",
+        "name": "발생액 비율",
+        "year": 2024,
+        "value": -2.71,
+        "basis": "average_prior_current"
+      },
+      {
+        "id": "ocf_to_net_income",
+        "category": "earnings_quality",
+        "name": "영업CF/순이익",
+        "year": 2021,
+        "value": 0.61,
+        "basis": "current_year"
+      },
+      {
+        "id": "ocf_to_net_income",
+        "category": "earnings_quality",
+        "name": "영업CF/순이익",
+        "year": 2022,
+        "value": 1.6,
+        "basis": "current_year"
+      },
+      {
+        "id": "ocf_to_net_income",
+        "category": "earnings_quality",
+        "name": "영업CF/순이익",
+        "year": 2023,
+        "value": 1.14,
+        "basis": "current_year"
+      },
+      {
+        "id": "ocf_to_net_income",
+        "category": "earnings_quality",
+        "name": "영업CF/순이익",
+        "year": 2024,
+        "value": 1.36,
+        "basis": "current_year"
+      },
+      {
+        "id": "gross_profit_margin",
+        "category": "profitability",
+        "name": "매출총이익률",
+        "year": 2021,
+        "value": 15.53,
+        "basis": "current_year"
+      },
+      {
+        "id": "gross_profit_margin",
+        "category": "profitability",
+        "name": "매출총이익률",
+        "year": 2022,
+        "value": 16.13,
+        "basis": "current_year"
+      },
+      {
+        "id": "gross_profit_margin",
+        "category": "profitability",
+        "name": "매출총이익률",
+        "year": 2023,
+        "value": 18.98,
+        "basis": "current_year"
+      },
+      {
+        "id": "gross_profit_margin",
+        "category": "profitability",
+        "name": "매출총이익률",
+        "year": 2024,
+        "value": 23.49,
+        "basis": "current_year"
+      },
+      {
+        "id": "operating_margin",
+        "category": "profitability",
+        "name": "영업이익률",
+        "year": 2021,
+        "value": 3.14,
+        "basis": "current_year"
+      },
+      {
+        "id": "operating_margin",
+        "category": "profitability",
+        "name": "영업이익률",
+        "year": 2022,
+        "value": 5.57,
+        "basis": "current_year"
+      },
+      {
+        "id": "operating_margin",
+        "category": "profitability",
+        "name": "영업이익률",
+        "year": 2023,
+        "value": 7.32,
+        "basis": "current_year"
+      },
+      {
+        "id": "operating_margin",
+        "category": "profitability",
+        "name": "영업이익률",
+        "year": 2024,
+        "value": 9.45,
+        "basis": "current_year"
+      },
+      {
+        "id": "roa",
+        "category": "profitability",
+        "name": "ROA",
+        "year": 2021,
+        "value": 3.88,
+        "basis": "ending_value_proxy"
+      },
+      {
+        "id": "roa",
+        "category": "profitability",
+        "name": "ROA",
+        "year": 2022,
+        "value": 4.27,
+        "basis": "average_prior_current"
+      },
+      {
+        "id": "roa",
+        "category": "profitability",
+        "name": "ROA",
+        "year": 2023,
+        "value": 9.38,
+        "basis": "average_prior_current"
+      },
+      {
+        "id": "roa",
+        "category": "profitability",
+        "name": "ROA",
+        "year": 2024,
+        "value": 7.47,
+        "basis": "average_prior_current"
+      },
+      {
+        "id": "roe",
+        "category": "profitability",
+        "name": "ROE",
+        "year": 2021,
+        "value": 5.91,
+        "basis": "ending_value_proxy"
+      },
+      {
+        "id": "roe",
+        "category": "profitability",
+        "name": "ROE",
+        "year": 2022,
+        "value": 6.5,
+        "basis": "average_prior_current"
+      },
+      {
+        "id": "roe",
+        "category": "profitability",
+        "name": "ROE",
+        "year": 2023,
+        "value": 13.94,
+        "basis": "average_prior_current"
+      },
+      {
+        "id": "roe",
+        "category": "profitability",
+        "name": "ROE",
+        "year": 2024,
+        "value": 10.38,
+        "basis": "average_prior_current"
+      },
+      {
+        "id": "current_ratio",
+        "category": "stability",
+        "name": "유동비율",
+        "year": 2021,
+        "value": 1.21,
+        "basis": "current_year"
+      },
+      {
+        "id": "current_ratio",
+        "category": "stability",
+        "name": "유동비율",
+        "year": 2022,
+        "value": 1.35,
+        "basis": "current_year"
+      },
+      {
+        "id": "current_ratio",
+        "category": "stability",
+        "name": "유동비율",
+        "year": 2023,
+        "value": 1.64,
+        "basis": "current_year"
+      },
+      {
+        "id": "current_ratio",
+        "category": "stability",
+        "name": "유동비율",
+        "year": 2024,
+        "value": 2.24,
+        "basis": "current_year"
+      },
+      {
+        "id": "debt_to_equity",
+        "category": "stability",
+        "name": "부채비율",
+        "year": 2021,
+        "value": 52.19,
+        "basis": "current_year"
+      },
+      {
+        "id": "debt_to_equity",
+        "category": "stability",
+        "name": "부채비율",
+        "year": 2022,
+        "value": 52.53,
+        "basis": "current_year"
+      },
+      {
+        "id": "debt_to_equity",
+        "category": "stability",
+        "name": "부채비율",
+        "year": 2023,
+        "value": 45.2,
+        "basis": "current_year"
+      },
+      {
+        "id": "debt_to_equity",
+        "category": "stability",
+        "name": "부채비율",
+        "year": 2024,
+        "value": 33.41,
+        "basis": "current_year"
+      },
+      {
+        "id": "interest_coverage",
+        "category": "stability",
+        "name": "이자보상배율",
+        "year": 2021,
+        "value": 7.05,
+        "basis": "current_year"
+      },
+      {
+        "id": "interest_coverage",
+        "category": "stability",
+        "name": "이자보상배율",
+        "year": 2022,
+        "value": 6.64,
+        "basis": "current_year"
+      },
+      {
+        "id": "interest_coverage",
+        "category": "stability",
+        "name": "이자보상배율",
+        "year": 2023,
+        "value": 11.23,
+        "basis": "current_year"
+      },
+      {
+        "id": "interest_coverage",
+        "category": "stability",
+        "name": "이자보상배율",
+        "year": 2024,
+        "value": 11.43,
+        "basis": "current_year"
+      }
+    ],
+    "unmapped_material_accounts": [
+      {
+        "year": "2024",
+        "fs_div": "CFS",
+        "sj_div": "CF",
+        "label": "당기순이익(손실)",
+        "account_id": "ifrs-full_ProfitLoss",
+        "amount": 8315526894.0
+      },
+      {
+        "year": "2024",
+        "fs_div": "OFS",
+        "sj_div": "CF",
+        "label": "당기순이익(손실)",
+        "account_id": "ifrs-full_ProfitLoss",
+        "amount": 7852171722.0
+      },
+      {
+        "year": "2024",
+        "fs_div": "OFS",
+        "sj_div": "CF",
+        "label": "유동성장기부채의 상환",
+        "account_id": "-표준계정코드 미사용-",
+        "amount": 2567260000.0
+      },
+      {
+        "year": "2024",
+        "fs_div": "CFS",
+        "sj_div": "CF",
+        "label": "유동성장기부채의 상환",
+        "account_id": "-표준계정코드 미사용-",
+        "amount": 2567260000.0
+      },
+      {
+        "year": "2024",
+        "fs_div": "OFS",
+        "sj_div": "CF",
+        "label": "파생상품의 취득",
+        "account_id": "-표준계정코드 미사용-",
+        "amount": 119889500.0
+      },
+      {
+        "year": "2024",
+        "fs_div": "CFS",
+        "sj_div": "CF",
+        "label": "파생상품의 취득",
+        "account_id": "-표준계정코드 미사용-",
+        "amount": 119889500.0
+      },
+      {
+        "year": "2024",
+        "fs_div": "CFS",
+        "sj_div": "CF",
+        "label": "재고자산평가이익",
+        "account_id": "-표준계정코드 미사용-",
+        "amount": -64434051.0
+      },
+      {
+        "year": "2024",
+        "fs_div": "OFS",
+        "sj_div": "CF",
+        "label": "재고자산평가이익",
+        "account_id": "-표준계정코드 미사용-",
+        "amount": -64434051.0
+      },
+      {
+        "year": "2024",
+        "fs_div": "OFS",
+        "sj_div": "CF",
+        "label": "리스보증금의 감소",
+        "account_id": "-표준계정코드 미사용-",
+        "amount": 33840000.0
+      },
+      {
+        "year": "2024",
+        "fs_div": "CFS",
+        "sj_div": "CF",
+        "label": "리스보증금의 감소",
+        "account_id": "-표준계정코드 미사용-",
+        "amount": 33840000.0
+      },
+      {
+        "year": "2024",
+        "fs_div": "CFS",
+        "sj_div": "CF",
+        "label": "리스보증금의 증가",
+        "account_id": "-표준계정코드 미사용-",
+        "amount": 24735000.0
+      },
+      {
+        "year": "2024",
+        "fs_div": "OFS",
+        "sj_div": "CF",
+        "label": "리스보증금의 증가",
+        "account_id": "-표준계정코드 미사용-",
+        "amount": 24735000.0
+      }
+    ],
+    "account_series_count": 1057
+  },
+  "phase2": {
+    "account_cards": [
+      {
+        "account": "CFS:운전자본변동",
+        "issue_type": "cash_flow",
+        "vote_count": 3,
+        "materiality": 0.2,
+        "anomaly": 0.0,
+        "confidence": "High",
+        "risk": "High",
+        "rebuttal_verdict": "mixed",
+        "counter_evidence": [
+          "영업활동현금흐름이 11,330,064,730으로 여전히 높은 수준이며 당기순이익을 상회한다.",
+          "운전자본 유출이 있었음에도 영업현금흐름이 흑자를 유지해 단기적 자금경색으로 단정하기는 어렵다.",
+          "매출채권 잔액은 전년 대비 소폭 감소해 운전자본 악화가 전적으로 채권 회수 부진 때문이라고 보이지는 않는다."
+        ],
+        "normal_explanation": [
+          "매입채무 감소, 재고 확보, 선급금 증가 등 성장·조달정책 변화로 일시적인 운전자본 유출이 발생할 수 있다.",
+          "원재료 가격 변동이나 결제조건 변경으로 공급업체에 대한 조기상환이 늘면 운전자본변동이 악화될 수 있다.",
+          "전년도 운전자본 유입이 일시적으로 컸다면 2024년 반전은 기저효과일 수 있다."
+        ],
+        "confirm_question": [
+          "2024년 운전자본변동 -3,030,836,983의 세부 구성(채권·재고·채무·기타)은 각각 얼마인가?",
+          "매입채무 감소가 자발적 결제전략인지, 공급조건 악화인지, 거래량 감소 때문인지 설명 가능한가?",
+          "2025년 초 현재 운전자본 흐름은 정상화되고 있는가?"
+        ],
+        "next_procedure": [
+          "영업현금흐름 간접법 조정표를 구성항목별로 재작성하고 전년 대비 브리지 분석한다.",
+          "채권·재고·채무 회전일수와 월별 추이를 점검해 연말 컷오프 영향 여부를 본다.",
+          "주요 거래처·공급처 결제조건 변경 계약을 확인한다."
+        ],
+        "reference_badges": []
+      },
+      {
+        "account": "CFS:법인세비용",
+        "issue_type": "earnings_tax",
+        "vote_count": 3,
+        "materiality": 0.03,
+        "anomaly": 0.0,
+        "confidence": "High",
+        "risk": "High",
+        "rebuttal_verdict": "mixed",
+        "counter_evidence": [
+          "2023년 법인세비용이 음수였으므로, 2024년 양수 전환 자체는 전년도 일시적 세무효과의 되돌림일 가능성이 있다.",
+          "2024년 세전이익 8,797,040,556 대비 법인세비용 481,513,662는 명목세율 대비 과도하게 높아 보이지 않으며, 오히려 유효세율이 낮은 편일 수 있다.",
+          "당기법인세부채 인식은 이익 발생 기업에서 정상적으로 나타날 수 있는 결과다."
+        ],
+        "normal_explanation": [
+          "전년도 이연법인세자산 인식 또는 일시적 차이 재평가로 세금수익이 컸다면, 2024년에는 세무가 정상화되며 비용으로 돌아설 수 있다.",
+          "세액공제, 비과세수익, 손금불산입/산입 타이밍 차이로 비용과 실제 납부액, 자산·부채 잔액이 서로 다르게 보일 수 있다.",
+          "중간예납·원천납부·전기 확정신고 차이로 법인세납부액이 당기 비용보다 크게 나타나는 것은 가능하다."
+        ],
+        "confirm_question": [
+          "2023년 법인세수익의 발생 원인과 2024년 법인세비용 전환의 핵심 요인은 무엇인가?",
+          "2024년 법인세비용을 당기법인세와 이연법인세로 구분하면 각각 얼마인가?",
+          "법인세납부액 919,634,993과 비용 481,513,662, 당기법인세부채 1,181,504,767의 조정표를 제시할 수 있는가?"
+        ],
+        "next_procedure": [
+          "세무조정계산서, 법인세비용 명세서, 이연법인세 자산·부채 롤포워드를 입수해 재계산한다.",
+          "유효세율 분석을 통해 일회성 세무효과, 공제, 추징/환급 요인을 식별한다.",
+          "전기 세무추정과 당기 확정신고 차이를 검토하고 필요시 세무전문가 검토를 연계한다."
+        ],
+        "reference_badges": []
+      },
+      {
+        "account": "CFS:당기순이익",
+        "issue_type": "earnings_tax",
+        "vote_count": 2,
+        "materiality": 0.54,
+        "anomaly": 0.0,
+        "confidence": "High",
+        "risk": "High",
+        "rebuttal_verdict": "mixed",
+        "counter_evidence": [
+          "영업이익이 10,025,103,418로 전년 대비 30.46% 증가해 본업 수익성 자체는 개선된 것으로 보인다.",
+          "영업활동현금흐름이 11,330,064,730으로 당기순이익을 상회해 최종이익 감소가 곧바로 현금창출 악화로 연결되지는 않았다.",
+          "법인세비용차감전순이익이 흑자를 유지하고 있어 손익구조 전반이 훼손된 상황으로 단정하기는 어렵다."
+        ],
+        "normal_explanation": [
+          "전년 기타수익 2,621,916,375가 일회성 처분이익·평가이익 등이었다면, 해당 기저효과 소멸만으로도 영업이익 증가와 순이익 감소가 동시에 나타날 수 있다.",
+          "2024년 기타비용 증가와 세금비용 정상화가 겹치면 영업단 개선에도 최종이익은 감소할 수 있다.",
+          "금융비용, 지분법손익, 외환관련손익 등 영업외 항목의 변동이 큰 업종·거래구조에서는 이런 괴리가 정상 범위 내에서 발생할 수 있다."
+        ],
+        "confirm_question": [
+          "2023년과 2024년 기타수익·기타비용의 주요 구성 항목별 금액과 반복성 여부는 무엇인가?",
+          "법인세비용차감전순이익이 감소한 직접 원인(금융손익, 기타손익, 지분법손익, 외환손익 등)은 무엇인가?",
+          "전년 순이익에 포함된 일회성 이익 또는 2024년 순이익에 반영된 일회성 비용이 있는가?"
+        ],
+        "next_procedure": [
+          "전년·당기 영업외손익 및 법인세비용을 세부 계정별로 브리지 분석한다.",
+          "기타수익·기타비용 상위 전표와 계약서, 처분명세, 평가근거를 표본 점검한다.",
+          "유효세율 분석을 수행해 세전이익 대비 세금부담 변동 원인을 이연법인세와 당기법인세로 구분 검토한다."
+        ],
+        "reference_badges": []
+      },
+      {
+        "account": "CFS:재무활동현금흐름",
+        "issue_type": "liability_liquidity",
+        "vote_count": 2,
+        "materiality": 0.47,
+        "anomaly": 0.0,
+        "confidence": "High",
+        "risk": "Medium",
+        "rebuttal_verdict": "mixed",
+        "counter_evidence": [
+          "재무활동현금흐름 유출 확대는 차입 축소와 상환 진행의 결과로서 재무건전성 개선과 양립 가능하다.",
+          "영업활동현금흐름이 충분히 창출되어 차입 상환 재원 일부를 자체 조달했을 가능성이 있다."
+        ],
+        "normal_explanation": [
+          "고금리 환경에서 단기차입을 줄이는 보수적 재무전략을 택했을 수 있다.",
+          "연중 운영자금 차입 후 매출회수기에 상환하는 계절적 롤링 구조에서는 총 차입과 총 상환이 모두 크게 나타날 수 있다.",
+          "배당, 리스부채 상환, 장기부채 유동성대체 등도 재무활동현금유출을 확대할 수 있다."
+        ],
+        "confirm_question": [
+          "재무활동현금흐름 유출 확대의 구성(차입상환, 배당, 리스, 이자지급)은 각각 얼마인가?",
+          "차입 롤오버 빈도와 평균 만기, 사용 목적은 무엇인가?",
+          "2025년 만기도래 차입금에 대한 차환계획은 확보되어 있는가?"
+        ],
+        "next_procedure": [
+          "재무활동현금흐름 세부명세를 은행거래내역과 대사한다.",
+          "차입금 만기스케줄 및 금융약정 준수 여부를 확인한다.",
+          "자금수지표와 월별 현금잔액 추이를 검토해 계절적 롤링인지 구조적 압박인지 판단한다."
+        ],
+        "reference_badges": []
+      },
+      {
+        "account": "CFS:당기순이익조정가감",
+        "issue_type": "cash_flow",
+        "vote_count": 2,
+        "materiality": 0.34,
+        "anomaly": 0.0,
+        "confidence": "High",
+        "risk": "Medium",
+        "rebuttal_verdict": "mixed",
+        "counter_evidence": [
+          "조정가감 증가는 비현금성 비용 증가를 반영한 것일 수 있어, 오히려 영업현금흐름이 순이익보다 나빠지지 않도록 설명될 수 있다.",
+          "대손상각비, 지분법손실, 평가손익, 법인세비용 등은 간접법상 통상 조정되는 항목들이다.",
+          "영업활동현금흐름이 흑자를 유지하고 있어 조정 자체가 즉시 비정상으로 연결되지는 않는다."
+        ],
+        "normal_explanation": [
+          "감가상각, 대손충당, 평가손익, 지분법손익 등 비현금 항목이 특정 연도에 집중되면 당기순이익조정가감이 크게 증가할 수 있다.",
+          "투자자산·파생상품·외화자산 평가손익이 손익계산서에 반영된 후 현금흐름표에서 조정되며 큰 변동을 만들 수 있다.",
+          "전년도 조정가감이 이례적으로 낮았던 경우 2024년 증가는 정상화일 수 있다."
+        ],
+        "confirm_question": [
+          "당기순이익조정가감 5,201,344,289의 세부 내역과 각 항목의 현금/비현금 성격은 무엇인가?",
+          "전년 대비 신규 또는 급증한 조정항목은 무엇이며 그 회계정책 근거는 무엇인가?",
+          "해당 조정항목 중 일회성 항목은 얼마인가?"
+        ],
+        "next_procedure": [
+          "영업현금흐름 조정항목별 원장과 계산근거를 입수해 손익계산서·주석과 대사한다.",
+          "상위 조정항목에 대해 반복성 여부를 판단하기 위한 전기·차기 비교를 수행한다.",
+          "현금흐름표 작성 로직 및 분류정책의 일관성을 검토한다."
+        ],
+        "reference_badges": []
+      },
+      {
+        "account": "CFS:대손상각비",
+        "issue_type": "revenue_receivables",
+        "vote_count": 2,
+        "materiality": 0.05,
+        "anomaly": 0.0,
+        "confidence": "High",
+        "risk": "High",
+        "rebuttal_verdict": "suspicion_dominant",
+        "counter_evidence": [
+          "매출채권및기타유동채권 잔액이 전년 대비 3.29% 감소해 단순한 채권 팽창에 따른 대손비용 증가만은 아닐 수 있다.",
+          "전년도 대손상각비가 환입(음수)이었으므로 2024년 양수 전환에는 일부 기저효과가 있다."
+        ],
+        "normal_explanation": [
+          "특정 거래처 부실, 특수관계자 채권 재평가, 기대신용손실모형 가정 변경으로 단기간에 대손비용이 커질 수 있다.",
+          "전년도 충당금 환입이 과도했거나 회수상황이 일시적으로 좋았다면 2024년 정상 수준 복귀 과정일 수 있다.",
+          "채권 매각·처분 과정에서 손실 인식이 함께 반영되었을 수 있다."
+        ],
+        "confirm_question": [
+          "2024년 대손상각비 712,155,622 중 개별평가와 집합평가 금액은 각각 얼마인가?",
+          "상위 손상 대상 거래처와 발생 사유, 회수 진행상황은 무엇인가?",
+          "특수관계자 채권 충당금 233,546천원과 일반 매출채권 대손비용은 어떻게 구분되는가?"
+        ],
+        "next_procedure": [
+          "채권연령분석표, ECL 산정모형, 개별 손상 검토서류를 입수해 재검토한다.",
+          "기말 이후 입금내역을 확인해 충당금 적정성을 사후검증한다.",
+          "대손상각비, 충당금 잔액, 채권처분손실 간 연결관계를 대사한다."
+        ],
+        "reference_badges": []
+      },
+      {
+        "account": "CFS:매출채권및기타유동채권",
+        "issue_type": "revenue_receivables",
+        "vote_count": 1,
+        "materiality": 0.78,
+        "anomaly": 0.0,
+        "confidence": "Medium",
+        "risk": "Medium",
+        "rebuttal_verdict": "mixed",
+        "counter_evidence": [
+          "매출 증가율 0.98%와 비교해 채권이 3.29% 감소해 표면적인 회전은 오히려 개선된 모습이다.",
+          "채권 잔액 자체는 급증하지 않아 매출 인식 부풀리기 신호는 강하지 않다."
+        ],
+        "normal_explanation": [
+          "채권 잔액은 안정적이지만 특정 소수 채권의 건전성 악화로 대손비용이 증가할 수 있다.",
+          "채권 회수 강화로 총잔액은 줄었으나, 장기연체 또는 특수관계자 채권에 대한 개별 손상이 발생했을 수 있다.",
+          "매출채권처분손실은 팩토링·채권양도 등 정상적 자금운용 과정에서 발생할 수 있다."
+        ],
+        "confirm_question": [
+          "채권 잔액 감소에도 대손상각비와 채권처분손실이 증가한 직접 원인은 무엇인가?",
+          "연령별 채권구성, 장기연체 비중, 상위 10개 채권잔액은 전년과 어떻게 달라졌는가?",
+          "특수관계자 채권과 일반 상거래채권의 회수조건 차이는 무엇인가?"
+        ],
+        "next_procedure": [
+          "채권연령분석, 후속 입금검사, 주요 거래처 확인조회 절차를 수행한다.",
+          "채권처분 거래가 있다면 매각조건, recourse 여부, 손실 산정근거를 확인한다.",
+          "대손충당금 정책 변경 여부와 ECL 가정 변화를 검토한다."
+        ],
+        "reference_badges": []
+      },
+      {
+        "account": "CFS:매입채무및기타유동채무",
+        "issue_type": "liability_liquidity",
+        "vote_count": 1,
+        "materiality": 0.45,
+        "anomaly": 0.0,
+        "confidence": "Medium",
+        "risk": "Medium",
+        "rebuttal_verdict": "mixed",
+        "counter_evidence": [
+          "매입채무및기타유동채무 감소는 부채부담 경감으로 볼 수 있으며, 반드시 자금압박을 의미하지는 않는다.",
+          "영업활동현금흐름이 높은 수준이어서 공급업체 결제를 앞당겨도 감내 가능했을 수 있다."
+        ],
+        "normal_explanation": [
+          "원재료 매입 감소, 원가구조 변화, 구매조건 개선, 조기결제 정책 도입 등으로 매입채무가 줄 수 있다.",
+          "전년말 일시적으로 큰 매입채무가 누적되었다가 2024년에 정상화되었을 가능성이 있다.",
+          "기타유동채무 중 미지급비용, 부가세, 선수금 등의 계절성이 반영됐을 수 있다."
+        ],
+        "confirm_question": [
+          "매입채무및기타유동채무 감소의 세부 구성은 무엇이며, 매입채무와 기타채무 중 어느 항목이 주로 감소했는가?",
+          "주요 공급업체 결제조건이나 구매량에 변화가 있었는가?",
+          "연말 직전 대금지급 집중으로 컷오프 왜곡이 발생하지 않았는가?"
+        ],
+        "next_procedure": [
+          "매입채무 연령분석과 주요 공급처별 잔액 증감을 검토한다.",
+          "기말 전후 지급전표를 테스트해 컷오프와 비정상 조기지급 여부를 확인한다.",
+          "매입채무 감소가 운전자본 유출과 어떻게 연결되는지 현금흐름표와 대사한다."
+        ],
+        "reference_badges": []
+      },
+      {
+        "account": "CFS:단기차입금",
+        "issue_type": "liability_liquidity",
+        "vote_count": 1,
+        "materiality": 0.2,
+        "anomaly": 0.0,
+        "confidence": "Medium",
+        "risk": "High",
+        "rebuttal_verdict": "mixed",
+        "counter_evidence": [
+          "단기차입금과 장기차입금이 모두 감소해 순차입 축소 자체는 재무건전성 개선으로도 해석 가능하다.",
+          "영업활동현금흐름이 양호하여 차입금 감축을 자체 현금창출로 수행했을 가능성이 있다.",
+          "유동비율과 이자보상배율이 업종 대비 양호하다는 회사 전체 신호와도 완전히 배치되지는 않는다."
+        ],
+        "normal_explanation": [
+          "금리 부담 완화 목적의 차입 축소 또는 보수적 재무정책으로 단기차입을 상환했을 수 있다.",
+          "연중 차입 롤오버가 컸더라도 계절적 자금수요 대응 후 연말 잔액을 낮춘 구조일 수 있다.",
+          "일부 단기차입을 매입채무 감소와 연계한 운전자본 재조정 차원에서 줄였을 가능성이 있다."
+        ],
+        "confirm_question": [
+          "유동단기차입금 증가 25,295,952,785와 상환 29,140,680,884의 거래별 내역과 주요 차입처는 무엇인가?",
+          "차입금 감소가 자발적 디레버리징인지, 차환조건 악화에 따른 축소인지 설명 가능한가?",
+          "보고기간 후 차입한도, 약정 갱신, 재차입 여부는 어떠한가?"
+        ],
+        "next_procedure": [
+          "차입금 롤포워드와 은행별 약정서, 만기표를 확인한다.",
+          "기말 후 차입금 상환 및 재차입 내역을 검토해 유동성 리스크를 평가한다.",
+          "담보제공 자산 및 재무제한조항 준수 여부를 테스트한다."
+        ],
+        "reference_badges": []
+      },
+      {
+        "account": "CFS:기타비용",
+        "issue_type": "earnings_tax",
+        "vote_count": 1,
+        "materiality": 0.1,
+        "anomaly": 0.0,
+        "confidence": "Medium",
+        "risk": "High",
+        "rebuttal_verdict": "mixed",
+        "counter_evidence": [
+          "기타비용 절대금액 1,565,901,142는 영업이익 10,025,103,418 대비 관리 가능한 수준으로도 볼 수 있다.",
+          "영업이익이 증가한 점을 보면 기타비용 급증이 본업 전반의 악화를 의미한다고 단정하기 어렵다."
+        ],
+        "normal_explanation": [
+          "유형자산 처분손실, 외환차손, 금융자산 평가손실, 기부금, 잡손실 등 비경상 항목이 특정 연도에 집중될 수 있다.",
+          "전년도 기타비용이 비정상적으로 낮았거나 일시적 환입이 있었다면 2024년 증가율이 과대하게 보일 수 있다.",
+          "연결 범위 내 특정 종속·관계기업에서 일회성 손실이 발생해 기타비용이 커졌을 가능성이 있다."
+        ],
+        "confirm_question": [
+          "2024년 기타비용의 상위 구성 항목 10개와 전년 대비 증감 사유는 무엇인가?",
+          "기타비용 중 일회성 항목과 반복성 영업외비용을 구분하면 각각 얼마인가?",
+          "기타수익 감소와 기타비용 증가가 동일 거래 또는 동일 자산군과 관련되는가?"
+        ],
+        "next_procedure": [
+          "기타비용 원장 전체를 받아 계정재분류 여부와 일회성 항목 존재를 점검한다.",
+          "상위 손실 항목에 대해 증빙(처분계약, 평가보고서, 외화정산내역 등)을 확인한다.",
+          "전년 기타수익/기타비용과 상계 또는 분류 변경 가능성을 검토한다."
+        ],
+        "reference_badges": []
+      },
+      {
+        "account": "CFS:기타수익",
+        "issue_type": "earnings_tax",
+        "vote_count": 1,
+        "materiality": 0.03,
+        "anomaly": 0.0,
+        "confidence": "Medium",
+        "risk": "Medium",
+        "rebuttal_verdict": "mixed",
+        "counter_evidence": [
+          "기타수익 감소는 전년의 높은 기저가 사라진 결과일 수 있어, 2024년 자체가 비정상이라고 단정하기 어렵다.",
+          "영업이익이 증가한 점을 보면 기타수익 감소가 본업 경쟁력 저하를 뜻하지는 않는다."
+        ],
+        "normal_explanation": [
+          "전년도 자산처분이익, 보조금수익, 외환이익, 평가이익 등 일회성 수익이 컸고 2024년에는 반복되지 않았을 수 있다.",
+          "기타수익 일부가 다른 계정으로 재분류되었을 가능성도 있다.",
+          "환율·시장가격 변동에 민감한 평가이익 감소로 기타수익이 축소될 수 있다."
+        ],
+        "confirm_question": [
+          "2023년 기타수익 2,621,916,375의 주요 항목은 무엇이며 2024년에 왜 재발하지 않았는가?",
+          "2024년 기타수익 감소가 분류변경 때문인지 실질 감소인지 확인 가능한가?",
+          "기타수익 감소와 기타비용 증가가 동일 사건의 양면 효과인가?"
+        ],
+        "next_procedure": [
+          "전년·당기 기타수익 상세명세를 비교해 일회성 항목을 식별한다.",
+          "주요 기타수익 발생 근거 문서와 전표를 확인한다.",
+          "손익분류 일관성 검토를 위해 관련 계정 재분류 여부를 점검한다."
+        ],
+        "reference_badges": []
+      },
+      {
+        "account": "CFS:유형자산취득",
+        "issue_type": "asset_valuation",
+        "vote_count": 3,
+        "materiality": 0.19,
+        "anomaly": 0.0,
+        "confidence": "High",
+        "risk": "Medium",
+        "rebuttal_verdict": "normal_dominant",
+        "counter_evidence": [
+          "감가상각비가 2,461,987,311로 상당하여, 취득 증가에도 순장부가 증가는 제한적일 수 있다.",
+          "유형자산 장부잔액은 취득액에서 감가상각, 처분, 손상, 재분류를 차감한 결과이므로 현금지출 증가와 순증가 폭이 일치하지 않는 것이 일반적이다.",
+          "투자활동현금흐름 유출 확대가 실제 취득 집행과 방향상 일치한다."
+        ],
+        "normal_explanation": [
+          "노후설비 교체나 생산성 개선 목적의 설비투자가 증가했지만, 기존 자산의 감가상각과 일부 처분이 병행되면 장부잔액 순증은 작을 수 있다.",
+          "건설중인자산, 무형자산, 수선비/자본적지출 구분에 따라 현금지출과 BS 증가액 간 시차가 생길 수 있다.",
+          "정부보조금 차감표시, 리스자산 분류, 자산 재분류 등이 있으면 BS상 증가 폭이 제한될 수 있다."
+        ],
+        "confirm_question": [
+          "2024년 유형자산 취득의 주요 프로젝트와 자산군별 집행액은 무엇인가?",
+          "취득액 대비 장부가 순증이 낮은 이유를 감가상각·처분·손상·재분류로 분해해 설명할 수 있는가?",
+          "취득한 자산 중 아직 가동 전이거나 건설중인자산으로 남아 있는 금액은 얼마인가?"
+        ],
+        "next_procedure": [
+          "유형자산 롤포워드(기초+취득-처분-감가상각±재분류=기말)를 작성해 대사한다.",
+          "상위 CAPEX 건에 대해 계약서, 세금계산서, 검수/가동 증빙을 확인한다.",
+          "처분 및 제각 자산이 있다면 관련 손익과 현금유입을 함께 검토한다."
+        ],
+        "reference_badges": []
+      },
+      {
+        "account": "CFS:유동부채",
+        "issue_type": "liability_liquidity",
+        "vote_count": 1,
+        "materiality": 1.0,
+        "anomaly": 0.0,
+        "confidence": "Medium",
+        "risk": "Medium",
+        "rebuttal_verdict": "normal_dominant",
+        "counter_evidence": [
+          "유동부채 27.24% 감소는 단기지급의무 축소로 해석 가능하며, 유동성 악화의 직접 증거는 아니다.",
+          "단기차입금과 매입채무가 함께 감소한 것은 차입·상거래채무 의존도 하락일 수 있다.",
+          "업종 대비 유동비율과 이자보상배율이 양호하다는 점은 전반적 지급능력에 우호적이다."
+        ],
+        "normal_explanation": [
+          "영업현금 유입을 활용한 차입금 및 매입채무 감축으로 재무구조를 개선했을 수 있다.",
+          "원재료 구매 규모 및 결제조건 변화로 유동부채가 자연스럽게 감소했을 수 있다.",
+          "전년도 말에 일시적으로 높았던 유동부채가 2024년에 정상화됐을 가능성이 있다."
+        ],
+        "confirm_question": [
+          "유동부채 감소가 자발적 상환인지, 거래규모 축소인지, 분류변경 때문인지 설명 가능한가?",
+          "2025년 상반기 유동부채 추이는 2024년말 수준을 유지하고 있는가?",
+          "유동부채 감소와 담보·약정 변경 사이 연관성은 있는가?"
+        ],
+        "next_procedure": [
+          "유동부채 세부 롤포워드를 작성해 감소 원인을 항목별로 분석한다.",
+          "기말 후 지급 및 차입 재개 여부를 점검한다.",
+          "유동성비율과 실제 가용차입한도를 함께 검토한다."
+        ],
+        "reference_badges": []
+      }
+    ],
+    "company_cards": [
+      {
+        "account": "(회사 전체)",
+        "issue_type": "contingency_related_party",
+        "vote_count": 1,
+        "materiality": 0.0,
+        "anomaly": 0.0,
+        "confidence": "Low",
+        "risk": "High",
+        "rebuttal_verdict": "suspicion_dominant",
+        "counter_evidence": [
+          "주석 공시가 존재한다는 점 자체는 회사가 관련 약정·담보·파생·특수관계 거래를 숨기지 않았다는 긍정적 신호다.",
+          "지급보증, 담보제공, 위험회피 파생상품은 사업상·금융상 필요에 의해 정상적으로 체결될 수 있다.",
+          "특수관계자 거래 규모가 공시되어 있어 기본적인 투명성은 확보된 편이다."
+        ],
+        "normal_explanation": [
+          "외화지급보증과 환헤지 파생상품은 수입거래나 외화차입이 있는 제조·유통기업에서 통상적인 위험관리 수단일 수 있다.",
+          "유형자산 담보제공은 은행차입 확보를 위한 일반적 금융관행이다.",
+          "특수관계자 거래도 가격·회수조건이 제3자와 유사하면 정상 거래일 수 있다."
+        ],
+        "confirm_question": [
+          "외화지급보증의 한도·실행액·만기·담보·구상권 조건은 무엇인가?",
+          "담보 제공된 토지·건물 54,345백만원에 대응하는 피담보채무와 약정상 제한사항은 무엇인가?",
+          "특수관계자 채권 대손충당금 233,546천원 설정 사유와 회수계획은 무엇인가?",
+          "천안농산 등 특수관계자와의 매출·채권·결제조건이 일반 거래처와 비교해 동일한가?",
+          "USD 4.1m 파생상품의 위험회피회계 지정 여부와 평가손익 반영 위치는 어디인가?"
+        ],
+        "next_procedure": [
+          "관련자 거래 명세서, 채권회수현황, 이사회 승인 및 이전가격 근거를 확인한다.",
+          "지급보증·담보·파생상품 계약서 원본을 검토하고 우발채무 및 공정가치 측정을 재점검한다.",
+          "특수관계자 채권에 대해 후속 회수검사와 필요시 확인조회 절차를 수행한다."
+        ],
+        "reference_badges": []
+      },
+      {
+        "account": "(회사 전체)",
+        "issue_type": "asset_valuation",
+        "vote_count": 1,
+        "materiality": 0.0,
+        "anomaly": 0.0,
+        "confidence": "Low",
+        "risk": "Medium",
+        "rebuttal_verdict": "mixed",
+        "counter_evidence": [
+          "핵심감사사항(KAM)으로 재고 실재성 및 평가가 언급된 것은 중요성을 뜻하지만, 곧바로 오류를 의미하지는 않는다.",
+          "과거 전액 손상 자산에 대한 지속 공시는 오히려 보수적 공시의 결과일 수 있다."
+        ],
+        "normal_explanation": [
+          "재고 비중이 높거나 평가판단이 중요한 제조업에서는 재고가 KAM으로 반복 선정되는 경우가 흔하다.",
+          "과거 손상 자산 관련 문구가 비교목적 또는 잔존 법적형식 때문에 주석에 남아 있을 수 있다.",
+          "재고평가손실 및 충당금이 통상적인 범위라면 주석 강조는 감사절차의 초점일 뿐 이상징후는 아닐 수 있다."
+        ],
+        "confirm_question": [
+          "재고자산 KAM 선정의 구체 사유와 회사가 적용한 평가통제는 무엇인가?",
+          "재고평가충당금 및 폐기·저가법 반영액의 전년 대비 변동은 어떠한가?",
+          "치크월드 자산은 현재 장부에 잔존하는가, 완전 제거되었는가, 주석 문구가 최신인가?"
+        ],
+        "next_procedure": [
+          "재고실사 결과, 평가충당금 산정자료, 장기체화재고 리스트를 검토한다.",
+          "손상 자산 관련 자산원장과 처분/제거 내역을 확인한다.",
+          "KAM 관련 감사절차 결과와 경영진 통제문서를 대사한다."
+        ],
+        "reference_badges": []
+      },
+      {
+        "account": "(회사 전체)",
+        "issue_type": "earnings_tax",
+        "vote_count": 0,
+        "materiality": 0.0,
+        "anomaly": 0.0,
+        "confidence": "Low",
+        "risk": "Medium",
+        "rebuttal_verdict": "mixed",
+        "counter_evidence": [
+          "수익성 지표가 업종 대비 높더라도 사업모델, 제품믹스, 원재료 조달, 고객구조 차이로 설명될 수 있다.",
+          "총자산회전율이 낮은 구조는 보유자산이 많은 제조설비형 사업에서 자연스러울 수 있다."
+        ],
+        "normal_explanation": [
+          "고부가가치 제품 비중, 원가경쟁력, 자가설비 중심 구조라면 높은 마진과 낮은 자산회전율이 동시에 나타날 수 있다.",
+          "일시적 원재료 가격 하락이나 판가 유지가 수익성을 끌어올렸을 수 있다.",
+          "부동산·유휴자산 보유가 많으면 자산효율이 낮아 보여도 영업마진은 높을 수 있다."
+        ],
+        "confirm_question": [
+          "피어 대비 높은 영업이익률의 지속가능 요인은 무엇인가?",
+          "낮은 총자산회전율은 유휴자산, 토지보유, 설비가동률 중 어떤 요인에 기인하는가?",
+          "2024년 수익성 개선에 일회성 원가요인 또는 판가요인이 있었는가?"
+        ],
+        "next_procedure": [
+          "제품/사업부별 마진 분석과 가동률, 원재료 단가 추이를 검토한다.",
+          "유휴자산 및 비영업자산 비중을 파악해 총자산회전율 해석을 보완한다.",
+          "피어 비교는 참고로만 두고 내부 시계열 및 세그먼트 분석을 병행한다."
+        ],
+        "reference_badges": [
+          "industry"
+        ]
+      },
+      {
+        "account": "(회사 전체)",
+        "issue_type": "cash_flow",
+        "vote_count": 0,
+        "materiality": 0.0,
+        "anomaly": 0.0,
+        "confidence": "Low",
+        "risk": "Medium",
+        "rebuttal_verdict": "mixed",
+        "counter_evidence": [
+          "영업CF/순이익 1.36으로 1배를 상회해 내부적으로는 이익의 현금전환이 양호한 편이다.",
+          "영업활동현금흐름이 순이익을 상회하는 점은 공격적 수익인식 우려를 일부 완화한다."
+        ],
+        "normal_explanation": [
+          "업종 중앙값 2.3과 차이가 있어도 사업구조, 재고/채권 정책, 계절성 차이로 충분히 달라질 수 있다.",
+          "2024년 운전자본 유출이 일시적이었다면 현금전환비율이 피어보다 낮아 보여도 지속 문제는 아닐 수 있다.",
+          "비현금 조정과 운전자본 흐름의 조합에 따라 특정 연도 현금전환 지표는 흔들릴 수 있다."
+        ],
+        "confirm_question": [
+          "피어 대비 영업CF/순이익이 낮은 이유를 운전자본과 비현금조정 측면에서 어떻게 설명하는가?",
+          "2025년 현재 현금전환은 개선되고 있는가?",
+          "주요 운전자본 정책(재고, 채권, 채무)이 피어와 어떻게 다른가?"
+        ],
+        "next_procedure": [
+          "최근 3개년 CFO bridge와 월별 운전자본 추이를 분석한다.",
+          "피어 대비 차이를 내부 KPI와 운영정책 차원에서 검증한다.",
+          "영업현금흐름의 반복성과 일회성 조정항목 비중을 구분한다."
+        ],
+        "reference_badges": [
+          "industry"
+        ]
+      },
+      {
+        "account": "(회사 전체)",
+        "issue_type": "liability_liquidity",
+        "vote_count": 1,
+        "materiality": 0.0,
+        "anomaly": 0.0,
+        "confidence": "Low",
+        "risk": "Medium",
+        "rebuttal_verdict": "normal_dominant",
+        "counter_evidence": [
+          "유동비율 2.24, 이자보상배율 11.43, 부채비율 33.41은 전반적 지급능력이 양호함을 시사한다.",
+          "유동성장기부채 상환이 존재하더라도 영업현금창출력과 재무비율상 감내 가능할 수 있다."
+        ],
+        "normal_explanation": [
+          "만기 도래 부채를 계획적으로 상환하는 과정에서 관련 주석이 강조될 수 있다.",
+          "동종업계 대비 우수한 안정성은 보수적 차입정책이나 담보구조 덕분일 수 있다.",
+          "별도·연결 동일 수치 표시는 실제 동일 채무 구조에서 자연스럽게 나타날 수 있다."
+        ],
+        "confirm_question": [
+          "유동성장기부채 2,567,260,000 상환 재원은 무엇이었고, 차환 여부는 있는가?",
+          "향후 12개월 만기 도래 차입금과 미사용 여신한도는 얼마인가?",
+          "담보제공 자산과 상환부담 사이 연계 제약은 무엇인가?"
+        ],
+        "next_procedure": [
+          "단기 유동성 예상표(12개월 rolling cash forecast)를 검토한다.",
+          "차입계약, 여신한도, covenant 준수 여부를 확인한다.",
+          "보고기간 후 상환 및 차환 내역을 점검한다."
+        ],
+        "reference_badges": [
+          "industry"
+        ]
+      },
+      {
+        "account": "(회사 전체)",
+        "issue_type": "cost_inventory",
+        "vote_count": 0,
+        "materiality": 0.0,
+        "anomaly": 0.0,
+        "confidence": "Low",
+        "risk": "Low",
+        "rebuttal_verdict": "normal_dominant",
+        "counter_evidence": [
+          "재고회전율과 DIO가 피어 중앙값과 유사해 업종 대비 뚜렷한 이상 신호는 약하다.",
+          "2024년 재고효율 개선은 수익성과 같은 방향으로 움직여 운영 개선의 결과일 수 있다."
+        ],
+        "normal_explanation": [
+          "원재료 관리 개선, 수요예측 정확도 향상, 생산계획 최적화로 재고효율이 좋아질 수 있다.",
+          "2023년 높았던 재고일수가 정상화되면서 2024년 회전율이 개선됐을 수 있다.",
+          "업종 전반의 원재료 가격 안정 및 공급망 회복이 재고운영 개선에 기여했을 수 있다."
+        ],
+        "confirm_question": [
+          "재고회전율 개선의 주요 원인이 판매 증가, 재고감축, 원가정책 변경 중 무엇인가?",
+          "재고평가충당금, 폐기손실, 장기체화재고 비중은 전년 대비 어떻게 변했는가?",
+          "개선이 일시적 연말 관리인지, 연중 지속된 추세인지 확인 가능한가?"
+        ],
+        "next_procedure": [
+          "월별 재고수불과 제품군별 회전율을 검토한다.",
+          "기말 재고실사 및 평가충당금 산정의 적정성을 확인한다.",
+          "재고효율 개선이 매출총이익률 개선과 어떻게 연결되는지 분석한다."
+        ],
+        "reference_badges": [
+          "industry"
+        ]
+      }
+    ],
+    "grounded_by_perspective": {
+      "numeric": [
+        {
+          "scope": "account",
+          "issue_type": "earnings_tax",
+          "account_id": "CFS:당기순이익",
+          "year": "2024",
+          "cited_value": "8315526894.0",
+          "description": "2024년 당기순이익은 8,315,526,894으로 전년 10,149,663,332 대비 -18.07% 감소했다. 반면 같은 해 영업이익은 10,025,103,418로 +30.46% 증가했고, latest_signal_snapshot에서도 영업이익 vs 당기순이익 증가율 괴리가 48.53%p로 제시된다. 본업 수익성 개선과 최종 이익 감소가 엇갈려 비영업·세무 구간 변동성이 컸을 가능성을 점검할 필요가 있다.",
+          "grounded": true,
+          "value_verified": true,
+          "reason": "인용 금액이 계정 실값과 일치"
+        },
+        {
+          "scope": "account",
+          "issue_type": "earnings_tax",
+          "account_id": "CFS:기타비용",
+          "year": "2024",
+          "cited_value": "1565901142.0",
+          "description": "2024년 기타비용은 1,565,901,142로 전년 561,172,966 대비 +179.04% 급증했다. 동시에 기타수익은 383,904,992로 전년 2,621,916,375 대비 -85.36% 급감했다. 영업이익은 증가했지만 법인세비용차감전순이익은 8,797,040,556으로 전년 대비 -7.84% 감소해, 영업외 손익 항목의 변동이 최종 실적에 큰 영향을 준 것으로 보인다.",
+          "grounded": true,
+          "value_verified": true,
+          "reason": "인용 금액이 계정 실값과 일치"
+        },
+        {
+          "scope": "account",
+          "issue_type": "earnings_tax",
+          "account_id": "CFS:법인세비용",
+          "year": "2024",
+          "cited_value": "481513662.0",
+          "description": "법인세비용은 2023년 -604,137,720에서 2024년 481,513,662로 부호가 반전됐다. account_metrics_panel의 yoy_pct는 +179.70%로 표시되며, 당기법인세부채 1,181,504,767이 새로 나타난 점도 함께 보여 세전이익 감소(-7.84%)와 별개로 세무 인식 구간 변동이 컸다. 전년 대비 순이익 감소 폭을 키운 요인인지 검토가 필요하다.",
+          "grounded": true,
+          "value_verified": true,
+          "reason": "인용 금액이 계정 실값과 일치"
+        },
+        {
+          "scope": "account",
+          "issue_type": "cash_flow",
+          "account_id": "CFS:운전자본변동",
+          "year": "2024",
+          "cited_value": "-3030836983.0",
+          "description": "운전자본변동은 2023년 1,696,615,727에서 2024년 -3,030,836,983으로 크게 악화됐다. yoy_pct는 -278.64%이며, 영업활동현금흐름은 여전히 11,330,064,730으로 순이익을 상회하지만 전년 대비 -2.44% 감소했다. 이익 규모와 달리 운전자본 소요가 재차 확대된 점은 현금창출의 지속성을 점검할 필요가 있다.",
+          "grounded": true,
+          "value_verified": true,
+          "reason": "인용 금액이 계정 실값과 일치"
+        },
+        {
+          "scope": "account",
+          "issue_type": "cash_flow",
+          "account_id": "CFS:당기순이익조정가감",
+          "year": "2024",
+          "cited_value": "5201344289.0",
+          "description": "당기순이익조정가감은 2023년 767,617,676에서 2024년 5,201,344,289로 +577.60% 급증했다. 같은 해 대손상각비 712,155,622, 법인세비용조정 481,513,662, FVPL금융자산평가이익조정 208,261,360, 지분법손실 433,011,663 등 조정성 항목이 다수 새롭게 반영됐다. 현금흐름이 순이익을 상회하더라도 비현금 조정 의존도가 커진 구조인지 확인이 필요하다.",
+          "grounded": true,
+          "value_verified": true,
+          "reason": "인용 금액이 계정 실값과 일치"
+        },
+        {
+          "scope": "account",
+          "issue_type": "revenue_receivables",
+          "account_id": "CFS:대손상각비",
+          "year": "2024",
+          "cited_value": "712155622.0",
+          "description": "대손상각비는 2022년 -160,257,706, 2023년 -379,103,836에서 2024년 712,155,622로 크게 반전됐다. yoy_pct는 +287.85%이고 변동계수도 3.28로 높다. 2024년 매출채권및기타유동채권 잔액이 11,998,712,425로 여전히 큰 수준이라는 점을 감안하면 채권 관련 비용 인식의 변동성이 확대된 것으로 보인다.",
+          "grounded": true,
+          "value_verified": true,
+          "reason": "인용 금액이 계정 실값과 일치"
+        },
+        {
+          "scope": "account",
+          "issue_type": "asset_valuation",
+          "account_id": "CFS:유형자산취득",
+          "year": "2024",
+          "cited_value": "2849071648.0",
+          "description": "유형자산취득은 2023년 1,027,157,497에서 2024년 2,849,071,648로 +177.37% 증가했다. 반면 BS상 유형자산은 65,617,605,789로 전년 대비 +1.08% 증가에 그쳤다. 취득 현금지출 확대에 비해 장부잔액 증가는 제한적이어서 감가상각, 처분 또는 자산 재분류가 함께 크게 발생했는지 확인이 필요하다.",
+          "grounded": true,
+          "value_verified": true,
+          "reason": "인용 금액이 계정 실값과 일치"
+        },
+        {
+          "scope": "account",
+          "issue_type": "liability_liquidity",
+          "account_id": "CFS:단기차입금",
+          "year": "2024",
+          "cited_value": "3105125786.0",
+          "description": "단기차입금은 2024년 3,105,125,786으로 전년 6,889,945,366 대비 -54.93% 감소했고, 장기차입금도 1,300,000,000으로 -24.71% 감소했다. 같은 해 재무활동현금흐름은 -7,186,142,192로 전년 대비 -165.32% 확대됐으며, 유동차입금의 상환은 29,140,680,884, 유동단기차입금의 증가는 25,295,952,785로 집계된다. 차입 롤오버 규모가 큰 가운데 순상환 기조가 강화된 점은 유동성 운용 측면에서 점검 포인트다.",
+          "grounded": true,
+          "value_verified": true,
+          "reason": "인용 금액이 계정 실값과 일치"
+        },
+        {
+          "scope": "account",
+          "issue_type": "liability_liquidity",
+          "account_id": "CFS:매입채무및기타유동채무",
+          "year": "2024",
+          "cited_value": "6984117855.0",
+          "description": "매입채무및기타유동채무는 2024년 6,984,117,855로 전년 9,366,860,689 대비 -25.44% 감소했고, 유동부채 총계도 15,352,456,641로 -27.24% 감소했다. 현금창출력과 별개로 단기성 의무를 상당폭 축소한 해로 보이며, 같은 해 매입채무증감은 -2,939,915,192로 나타난다. 운전자본 변동 악화와 결합해 공급자금 조달 축소 여부를 함께 볼 필요가 있다.",
+          "grounded": true,
+          "value_verified": true,
+          "reason": "인용 금액이 계정 실값과 일치"
+        }
+      ],
+      "note": [
+        {
+          "scope": "company",
+          "issue_type": "contingency_related_party",
+          "account_id": null,
+          "year": "2024",
+          "cited_value": null,
+          "description": "주석 발췌에 외화지급보증 약정 한도와 실행액이 함께 공시되었습니다. 우발성 금융약정 규모가 존재하므로 약정조건, 만기구조, 실제 차입·매입거래와의 연결관계, 환위험 노출 범위를 추가 확인할 필요가 있습니다. 발췌만으로 문제를 단정할 수는 없으나, 한도 대비 실행액 공시가 있어 검토 우선순위가 높습니다.",
+          "grounded": true,
+          "value_verified": false,
+          "reason": "회사레벨 의심건(수치 검증불가)"
+        },
+        {
+          "scope": "company",
+          "issue_type": "contingency_related_party",
+          "account_id": null,
+          "year": "2024",
+          "cited_value": null,
+          "description": "담보로 제공된 토지와 건물의 장부금액이 54,345백만원으로 공시되어 있습니다. 유형자산 상당 부분이 은행차입금 담보로 제공된 구조일 수 있어, 담보권 설정 범위와 피담보채무 규모, 추가 담보제공 제한 여부를 함께 점검할 필요가 있습니다.",
+          "grounded": true,
+          "value_verified": false,
+          "reason": "회사레벨 의심건(수치 검증불가)"
+        },
+        {
+          "scope": "company",
+          "issue_type": "contingency_related_party",
+          "account_id": null,
+          "year": "2024",
+          "cited_value": null,
+          "description": "특수관계자 채권에 대해 당기말 대손충당금 233,546천원을 설정했고 당기 중 동일 금액의 대손상각비를 인식한 점은 특수관계자 채권의 회수가능성 및 거래조건의 정상성 검토 필요성을 시사합니다. 특수관계 거래 자체가 문제라는 의미는 아니나, 채권 회수와 손실인식이 동시에 언급되어 주의가 필요합니다.",
+          "grounded": true,
+          "value_verified": false,
+          "reason": "회사레벨 의심건(수치 검증불가)"
+        },
+        {
+          "scope": "company",
+          "issue_type": "contingency_related_party",
+          "account_id": null,
+          "year": "2024",
+          "cited_value": null,
+          "description": "특수관계자인 천안농산과의 당기 매출 등이 3,501,242로 공시되어 있습니다. 매출 규모 자체가 유의적일 수 있으므로 거래조건, 회수기간, 기말채권 잔액 및 일반 거래처 대비 조건 차이를 확인할 필요가 있습니다.",
+          "grounded": true,
+          "value_verified": false,
+          "reason": "회사레벨 의심건(수치 검증불가)"
+        },
+        {
+          "scope": "company",
+          "issue_type": "asset_valuation",
+          "account_id": null,
+          "year": "2024",
+          "cited_value": null,
+          "description": "감사보고서 핵심감사사항으로 재고자산의 실재성 및 평가가 명시되었습니다. 이는 감사인이 재고 수량·평가의 판단영역을 중요하게 본 항목이므로, 주석상 재고평가 관련 손익과 함께 재고 구성·평가충당의 변동을 추가 검토할 필요가 있습니다.",
+          "grounded": true,
+          "value_verified": false,
+          "reason": "회사레벨 의심건(수치 검증불가)"
+        },
+        {
+          "scope": "company",
+          "issue_type": "contingency_related_party",
+          "account_id": null,
+          "year": "2024",
+          "cited_value": null,
+          "description": "환율변동위험 회피 목적의 파생상품계약과 계약금액 USD 4,100,000이 공시되어 있습니다. 또한 주석 fact에 파생상품의 취득 86,170,000 및 결제 24,195,000이 나타나므로, 위험회피 지정 여부, 평가손익 반영 위치, 실제 노출액과의 정합성을 확인할 필요가 있습니다.",
+          "grounded": true,
+          "value_verified": false,
+          "reason": "회사레벨 의심건(수치 검증불가)"
+        },
+        {
+          "scope": "company",
+          "issue_type": "asset_valuation",
+          "account_id": null,
+          "year": "2024",
+          "cited_value": null,
+          "description": "주석 발췌에 특정 자산인 치크월드가 전기 이전에 전액 손상차손 인식되었다고 기재되어 있습니다. 과거 전액 손상 자산이 현재도 주석에 언급되는 만큼, 잔존 장부금액 존재 여부, 처분·제거 여부, 공시의 최신성 확인이 필요합니다.",
+          "grounded": true,
+          "value_verified": false,
+          "reason": "회사레벨 의심건(수치 검증불가)"
+        },
+        {
+          "scope": "company",
+          "issue_type": "liability_liquidity",
+          "account_id": null,
+          "year": "2024",
+          "cited_value": null,
+          "description": "주석 fact에 유동성장기부채의 상환이 2,567,260,000으로 표시되어 있으며 별도/연결에 동일 수치가 나타납니다. 차입금 상환 부담이 실제 유동성에 미치는 영향, 차환 여부, 담보제공 자산과의 연계 검토가 필요합니다.",
+          "grounded": true,
+          "value_verified": false,
+          "reason": "회사레벨 의심건(수치 검증불가)"
+        }
+      ],
+      "flow": [
+        {
+          "scope": "account",
+          "issue_type": "cash_flow",
+          "account_id": "CFS:운전자본변동",
+          "year": "2024",
+          "cited_value": "-3,030,836,983",
+          "description": "2024년 운전자본변동이 -3,030,836,983으로 전년 1,696,615,727에서 급반전(yoy -278.64%)했는데, 영업활동현금흐름은 11,330,064,730으로 전년 11,613,190,263 대비 -2.44%에 그쳤습니다. 같은 해 당기순이익은 8,315,526,894이고 당기순이익조정가감은 5,201,344,289으로 크게 확대되었습니다. 현금창출이 유지된 배경이 운전자본 개선이 아니라 비현금 조정 확대에 더 의존한 구조로 보여, 영업현금흐름의 질과 지속가능성을 점검할 필요가 있습니다.",
+          "grounded": true,
+          "value_verified": true,
+          "reason": "인용 금액이 계정 실값과 일치"
+        },
+        {
+          "scope": "account",
+          "issue_type": "revenue_receivables",
+          "account_id": "CFS:매출채권및기타유동채권",
+          "year": "2024",
+          "cited_value": "11,998,712,425",
+          "description": "2024년 매출은 106,038,654,753으로 전년 대비 0.98% 증가에 그쳤고, 매출채권및기타유동채권은 11,998,712,425로 2023년 12,407,370,047 대비 -3.29% 감소했습니다. 표면적으로는 채권이 안정적이지만, 같은 해 현금흐름표의 대손상각비가 712,155,622로 2023년 -379,103,836에서 부호가 반전됐고(yoy 287.85%), 매출채권처분손실도 310,369,294가 새로 인식되었습니다. 매출-채권 관계는 안정적이나 채권 관련 손익/조정은 크게 흔들려, 채권 회수조건 변화나 채권 건",
+          "grounded": true,
+          "value_verified": true,
+          "reason": "인용 금액이 계정 실값과 일치"
+        },
+        {
+          "scope": "account",
+          "issue_type": "earnings_tax",
+          "account_id": "CFS:당기순이익",
+          "year": "2024",
+          "cited_value": "8,315,526,894",
+          "description": "2024년 영업이익은 10,025,103,418로 전년 대비 30.46% 증가했지만, 당기순이익은 8,315,526,894로 전년 10,149,663,332 대비 -18.07% 감소했습니다. 같은 기간 법인세비용차감전순이익도 8,797,040,556으로 -7.84% 감소했고, 기타수익은 383,904,992로 전년 2,621,916,375 대비 -85.36%, 기타비용은 1,565,901,142로 전년 561,172,966 대비 179.04% 증가했습니다. 영업단과 최종손익의 흐름이 반대로 움직여, 영업외 손익과 세전이익 전환 구조",
+          "grounded": true,
+          "value_verified": true,
+          "reason": "인용 금액이 계정 실값과 일치"
+        },
+        {
+          "scope": "account",
+          "issue_type": "earnings_tax",
+          "account_id": "CFS:법인세비용",
+          "year": "2024",
+          "cited_value": "481,513,662",
+          "description": "법인세비용은 2023년 -604,137,720에서 2024년 481,513,662로 부호가 반전됐고(yoy 179.70%), 같은 해 법인세납부는 919,634,993으로 비용의 약 1.9배 수준입니다. 또한 당기법인세부채 1,181,504,767이 새로 나타나고, 전년의 당기법인세자산 166,474,889는 사라졌습니다. 세전이익 8,797,040,556 대비 세금 관련 계정들의 방향 전환이 커서, 비용 인식과 실제 납부 및 당기세금 자산·부채 이동의 연결성을 점검할 필요가 있습니다.",
+          "grounded": true,
+          "value_verified": true,
+          "reason": "인용 금액이 계정 실값과 일치"
+        },
+        {
+          "scope": "account",
+          "issue_type": "liability_liquidity",
+          "account_id": "CFS:재무활동현금흐름",
+          "year": "2024",
+          "cited_value": "-7,186,142,192",
+          "description": "2024년 재무활동현금흐름은 -7,186,142,192로 전년 -2,708,492,166 대비 유출이 크게 확대됐습니다(yoy -165.32%). 같은 해 단기차입금은 3,105,125,786으로 전년 6,889,945,366 대비 -54.93%, 장기차입금은 1,300,000,000으로 전년 1,726,760,000 대비 -24.71% 감소했습니다. 현금흐름표상 유동단기차입금의 증가 25,295,952,785와 유동차입금의 상환 29,140,680,884가 동시에 커 순유출이 발생한 구조여서, 차환 압력이나 단기차입 롤오버 의존도",
+          "grounded": true,
+          "value_verified": true,
+          "reason": "인용 금액이 계정 실값과 일치"
+        },
+        {
+          "scope": "account",
+          "issue_type": "asset_valuation",
+          "account_id": "CFS:유형자산취득",
+          "year": "2024",
+          "cited_value": "2,849,071,648",
+          "description": "2024년 유형자산취득은 2,849,071,648로 2023년 1,027,157,497 대비 177.37% 증가했고, 투자활동현금흐름도 -2,548,740,883으로 전년 -1,055,671,576 대비 유출이 확대됐습니다. 반면 재무상태표의 유형자산은 65,617,605,789로 전년 64,918,346,216 대비 1.08% 증가에 그쳤고, 감가상각비는 2,461,987,311입니다. 대규모 취득 집행 대비 장부가 순증 폭이 제한적이어서, 취득 자산의 실제 자본화 범위·처분·감가상각 영향의 연결 확인이 필요합니다.",
+          "grounded": true,
+          "value_verified": true,
+          "reason": "인용 금액이 계정 실값과 일치"
+        }
+      ],
+      "change": [
+        {
+          "scope": "account",
+          "issue_type": "cash_flow",
+          "account_id": "CFS:운전자본변동",
+          "year": "2024",
+          "cited_value": "-3,030,836,983",
+          "description": "운전자본변동이 2023년 유입에서 2024년 유출로 반전됐습니다. account_metrics_panel상 yoy_pct 2024년 -278.64%, volatility_cv 2.0247로 변동성이 매우 큽니다. 같은 해 영업활동현금흐름은 11,330,064,730으로 유지됐지만 당기순이익은 8,315,526,894로 감소해, 현금창출은 유지되는 가운데 운전자본 항목의 방향이 크게 바뀐 점은 점검 필요합니다.",
+          "grounded": true,
+          "value_verified": true,
+          "reason": "인용 금액이 계정 실값과 일치"
+        },
+        {
+          "scope": "account",
+          "issue_type": "asset_valuation",
+          "account_id": "CFS:유형자산취득",
+          "year": "2024",
+          "cited_value": "2,849,071,648",
+          "description": "유형자산취득이 2023년 1,027,157,497에서 2024년 2,849,071,648로 크게 늘었습니다. account_metrics_panel상 yoy_pct 177.37%, delta_over_assets 0.01635, volatility_cv 1.0838입니다. 반면 BS의 유형자산은 64,918,346,216에서 65,617,605,789로 1.08% 증가에 그쳐, 투자지출 확대 대비 장부잔액 증가는 제한적이어서 취득·처분·감가상각 구성 변동을 함께 점검할 필요가 있습니다.",
+          "grounded": true,
+          "value_verified": true,
+          "reason": "인용 금액이 계정 실값과 일치"
+        },
+        {
+          "scope": "account",
+          "issue_type": "liability_liquidity",
+          "account_id": "CFS:재무활동현금흐름",
+          "year": "2024",
+          "cited_value": "-7,186,142,192",
+          "description": "재무활동현금흐름 순유출이 2023년 -2,708,492,166에서 2024년 -7,186,142,192로 확대됐습니다. account_metrics_panel상 yoy_pct -165.32%, delta_over_assets 0.04019입니다. 같은 기간 단기차입금은 6,889,945,366에서 3,105,125,786으로 54.93% 감소했고 장기차입금도 1,726,760,000에서 1,300,000,000으로 24.71% 감소해, 차입 축소와 자금유출이 동시에 크게 진행된 변화로 보입니다.",
+          "grounded": true,
+          "value_verified": true,
+          "reason": "인용 금액이 계정 실값과 일치"
+        },
+        {
+          "scope": "account",
+          "issue_type": "liability_liquidity",
+          "account_id": "CFS:유동부채",
+          "year": "2024",
+          "cited_value": "15,352,456,641",
+          "description": "유동부채가 2023년 21,099,123,809에서 2024년 15,352,456,641로 27.24% 감소했습니다. account_metrics_panel상 delta_over_assets 0.05158로 자산 대비 변화폭도 큽니다. 세부적으로 단기차입금 6,889,945,366→3,105,125,786, 매입채무및기타유동채무 9,366,860,689→6,984,117,855로 함께 줄어 단기성 자금조달과 상거래채무가 동반 축소된 변화입니다.",
+          "grounded": true,
+          "value_verified": true,
+          "reason": "인용 금액이 계정 실값과 일치"
+        },
+        {
+          "scope": "account",
+          "issue_type": "earnings_tax",
+          "account_id": "CFS:기타수익",
+          "year": "2024",
+          "cited_value": "383,904,992",
+          "description": "기타수익이 2023년 2,621,916,375에서 2024년 383,904,992로 85.36% 급감했습니다. 동시에 기타비용은 561,172,966에서 1,565,901,142로 179.04% 급증했습니다. 이로 인해 영업이익은 30.46% 증가했지만 법인세비용차감전순이익은 7.84% 감소하고 당기순이익은 18.07% 감소해, 영업외 손익의 전년 대비 급반전이 순이익 감소의 핵심 변동으로 보입니다.",
+          "grounded": true,
+          "value_verified": true,
+          "reason": "인용 금액이 계정 실값과 일치"
+        },
+        {
+          "scope": "account",
+          "issue_type": "earnings_tax",
+          "account_id": "CFS:법인세비용",
+          "year": "2024",
+          "cited_value": "481,513,662",
+          "description": "법인세비용이 2023년 -604,137,720에서 2024년 481,513,662로 부호가 반전됐습니다. account_metrics_panel상 yoy_pct 179.70%, volatility_cv 1.3345입니다. 세전이익은 9,545,525,612에서 8,797,040,556으로 7.84% 감소했는데 순이익은 18.07% 감소해, 세금 항목의 반전이 순이익 변동을 확대했습니다.",
+          "grounded": true,
+          "value_verified": true,
+          "reason": "인용 금액이 계정 실값과 일치"
+        },
+        {
+          "scope": "account",
+          "issue_type": "cash_flow",
+          "account_id": "CFS:당기순이익조정가감",
+          "year": "2024",
+          "cited_value": "5,201,344,289",
+          "description": "영업현금흐름 조정 항목인 당기순이익조정가감이 2023년 767,617,676에서 2024년 5,201,344,289로 577.60% 급증했습니다. account_metrics_panel상 delta_over_assets 0.03980, volatility_cv 0.6060입니다. 순이익은 감소했지만 영업활동현금흐름이 11,330,064,730으로 유지된 배경에 큰 조정항목 증가가 있어, 비현금성 손익·평가손익·충당 관련 조정의 구성 확인이 필요합니다.",
+          "grounded": true,
+          "value_verified": true,
+          "reason": "인용 금액이 계정 실값과 일치"
+        },
+        {
+          "scope": "account",
+          "issue_type": "revenue_receivables",
+          "account_id": "CFS:대손상각비",
+          "year": "2024",
+          "cited_value": "712,155,622",
+          "description": "대손상각비가 2023년 -379,103,836에서 2024년 712,155,622로 크게 반전됐습니다. account_metrics_panel상 yoy_pct 287.85%, volatility_cv 3.2825로 매우 높습니다. 같은 해 매출채권및기타유동채권 잔액은 12,407,370,047에서 11,998,712,425로 3.29% 감소했지만, 대손 관련 비용은 큰 폭으로 늘어 채권 건전성 또는 개별 평가 변화 가능성을 점검할 필요가 있습니다.",
+          "grounded": true,
+          "value_verified": true,
+          "reason": "인용 금액이 계정 실값과 일치"
+        }
+      ],
+      "industry": [
+        {
+          "scope": "company",
+          "issue_type": "earnings_tax",
+          "account_id": null,
+          "year": "2024",
+          "cited_value": null,
+          "description": "업종 비교는 사업구조 차이로 단순 비교에 한계가 있는 참고 신호에 불과하나, 2024년 대주산업의 영업이익률 9.45%와 매출총이익률 23.49%는 각각 피어 중앙값 3.76%, 15.59%를 크게 상회하고 백분위도 100.0, 85.7로 높다. 반면 총자산회전율은 0.95로 피어 중앙값 1.22 및 백분위 14.3에 머문다. 같은 연도에 수익성은 매우 높고 자산효율은 낮은 조합이어서, 업종 평균 대비 이익 창출 구조 차이와 그 지속가능성에 대한 추가 확인 필요성이 있다.",
+          "grounded": true,
+          "value_verified": false,
+          "reason": "동종 참고 신호(peer 미대조)"
+        },
+        {
+          "scope": "company",
+          "issue_type": "cash_flow",
+          "account_id": null,
+          "year": "2024",
+          "cited_value": null,
+          "description": "업종 비교는 참고 신호일 뿐이지만, 2024년 영업CF/순이익은 1.36으로 1배를 상회해 내부적으로는 양호해 보이지만 피어 중앙값 2.3, 백분위 42.9로 업종 중간보다 낮다. 같은 해 ROE 10.38, ROA 7.47, 영업이익률 9.45%가 피어 상위권인 점을 감안하면, 업종 대비 이익의 현금 전환 강도는 상대적으로 덜 강해 보이며 이익의 질 측면에서 추가 점검 신호로 볼 수 있다.",
+          "grounded": true,
+          "value_verified": false,
+          "reason": "동종 참고 신호(peer 미대조)"
+        },
+        {
+          "scope": "company",
+          "issue_type": "liability_liquidity",
+          "account_id": null,
+          "year": "2024",
+          "cited_value": null,
+          "description": "2024년 유동비율 2.24는 피어 중앙값 1.71을 상회하고 백분위 85.7, 이자보상배율 11.43은 피어 중앙값 1.67 대비 크게 높아 백분위 100.0이다. 동시에 부채비율은 33.41로 피어 중앙값 43.54보다 낮다. 전반적으로 안정성은 우수하나, 이렇게 큰 차이가 일시적 운전자본 변동인지 구조적 개선인지 확인할 필요가 있다. 이는 이상 신호라기보다 업종 대비 두드러진 차이의 검토 포인트다.",
+          "grounded": true,
+          "value_verified": false,
+          "reason": "동종 참고 신호(peer 미대조)"
+        },
+        {
+          "scope": "company",
+          "issue_type": "cost_inventory",
+          "account_id": null,
+          "year": "2024",
+          "cited_value": null,
+          "description": "업종 기준으로 2024년 재고회전율 7.25는 피어 중앙값 7.19와 유사하고 백분위 71.4, DIO 50.31일은 피어 중앙값 50.75일과 유사해 재고 자체는 업종 대비 뚜렷한 이상으로 보이지 않는다. 다만 시계열상 DIO가 2023년 58.57일에서 2024년 50.31일로 낮아지고 재고회전율이 6.23에서 7.25로 개선돼, 수익성 상승과 함께 나타난 재고효율 개선이 업종 공통 현상인지 회사 고유 요인인지 후속 확인이 가능하다.",
+          "grounded": true,
+          "value_verified": false,
+          "reason": "동종 참고 신호(peer 미대조)"
+        }
+      ]
+    },
+    "grounded_total": 35,
+    "dropped": [],
+    "rebuttal_entries": 19
+  }
+}

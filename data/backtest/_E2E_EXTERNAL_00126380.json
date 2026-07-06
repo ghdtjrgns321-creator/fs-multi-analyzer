@@ -1,0 +1,26 @@
+{
+  "status": "completed",
+  "queries": [
+    "삼성전자 2024년 영업이익 급증 원인",
+    "삼성전자 2024년 영업이익 당기순이익 증가율 차이 원인",
+    "삼성전자 2024년 법인세비용차감전순이익 증가 배경"
+  ],
+  "item_count": 3,
+  "items": [
+    {
+      "desc": "삼성전자의 2024년 연간 영업이익은 32조 7,260억 원으로 전년 대비 398.3% 증가한 반면, 당기순이익은 34조 4,514억 원으로 전년 대비 122.5% 증가하여 영업이익 증가율이 당기순이익 증가율보다 훨씬 높았습니다.",
+      "source_url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGMt11JPKU-ApmM6LvQzZ855X2U733tNjNpv8ALhBHbHI9pphpxCj-p5AXCjjylEvqiZ1x7PdivHMtLVwekZVGPkpxsIGFrVflj0QJvW3Fhh6RECAyhH9BfF_N17lH1Qa3eZ04xQw5NkxlgW3jj6Cc=",
+      "scope": "company"
+    },
+    {
+      "desc": "영업이익 증가율과 당기순이익 증가율의 차이 요인 중 하나는 법인세 비용의 변화입니다. 2023년에는 법인세 비용이 마이너스(-4조 4,808억 원)로 당기순이익에 긍정적인 영향을 미쳤으나, 2024년에는 3조 784억 원의 법인세 비용이 발생하여 당기순이익 증가율을 상대적으로 낮추는 요인으로 작용했습니다.",
+      "source_url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG1o05xuvi6StZvBdboecPgkyQ40ZZRx5AIqJUiAPkBqL0ovqcIVR9cL5RHJjciRFVtGn-jNTQKQaWdIDvCPf64U9wk8d-WMIiqGUMsvnw2a4V0sGm_Ls2XYAsRH6TJ51G2jniq",
+      "scope": "company"
+    },
+    {
+      "desc": "반도체 사업을 담당하는 DS 부문에서는 서버용 고부가가치 메모리 제품 판매 확대로 매출이 증가했음에도 불구하고, 연구개발비 및 첨단 공정 생산능력 확대를 위한 초기 램프업(Ramp-up) 비용 증가로 영업이익이 소폭 감소했습니다.",
+      "source_url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGMoHp9oyqz2XYpvHIaLsLXrb9sRJ0keqdPWbvTlSvAt3k5Oo7tKq7Wo1fP1eq7_IV1G8CDmRP01LIEAlRMbBSTDgQvR7MNf0F8KqLFQ4GAzlqUbGOhop2U6pVT1yvMhyup6LhicQjQf0wyjXgZlGWIBQ==",
+      "scope": "company"
+    }
+  ]
+}
