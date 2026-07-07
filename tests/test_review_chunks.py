@@ -68,33 +68,6 @@ def test_load_content_chunks_roundtrip_and_graceful(tmp_path: Path) -> None:
     assert rc.load_content_chunks("00200", "2015", path=tmp_path / "none.yaml") == []
 
 
-def test_note_material_includes_report_review_chunks(tmp_path: Path) -> None:
-    from src.report.materials import note_material
-
-    path = tmp_path / "company_quirks.yaml"
-    path.write_text("company_quirks: {}\n", encoding="utf-8")
-    selection = rc.ReviewChunkSelection(
-        corp_code="00300",
-        year="2023",
-        chunks=[
-            rc.ReviewChunk(
-                disclosure_type="제재_규제", part="XI", evidence="과징금", why_review="검토"
-            )
-        ],
-    )
-    rc.persist_review_chunks("00300", "2023", selection, path=path)
-
-    # content_chunks 있는 회사(신시대): material에 실린다.
-    mat = note_material("00300", 2023, quirks_path=path)
-    assert mat["report_review_chunks"][0]["disclosure_type"] == "제재_규제"
-    assert "report_review_role" in mat
-    # 선별 없는 회사: 빈 리스트 + S7 미선별 경고(fallback 제거 — silent 0 금지 §9).
-    mat_empty = note_material("00999", 2015, quirks_path=path)
-    assert mat_empty["report_review_chunks"] == []
-    assert "S7" in mat_empty["report_review_role"]
-    assert "미선별" in mat_empty["report_review_role"]
-
-
 def test_persist_review_chunks_writes_content_chunks(tmp_path: Path) -> None:
     path = tmp_path / "company_quirks.yaml"
     path.write_text("# header comment\ncompany_quirks: {}\n", encoding="utf-8")

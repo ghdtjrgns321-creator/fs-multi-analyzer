@@ -5,8 +5,8 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
+from src.db.normalized import read_report_extracts
 from src.notes.indexer import find_account_note_sections, load_account_note_mappings
-from src.report.review_chunks import QUIRKS_PATH, load_content_chunks
 from src.signals.metrics_panel import panel_columnar
 
 
@@ -95,13 +95,13 @@ def note_material(
     corp_code: str = "00126380",
     year: int = 2024,
     fs_div: str = "CFS",
-    quirks_path: Path = QUIRKS_PATH,
     note_facts: list[dict] | None = None,
+    data_dir: Path | None = None,
 ) -> dict[str, object]:
     """Inputs for note perspective only.
 
-    주석 섹션 외에, 온보딩이 사업보고서 원문에서 선별한 검토관심 청크(content_chunks,
-    S7 Step4)를 함께 싣는다. 선별이 없는 회사는 빈 리스트로 graceful(정상 경로 무영향).
+    주석 섹션 외에, Layer 1 서술 리더가 사업보고서 본문에서 추출한 항목(report_extracts)을
+    함께 싣는다. 리더 미실행 회사는 빈 리스트로 graceful(정상 경로 무영향).
 
     note_facts: XBRL 주석 fact 전량(detail+기타주석, 흡수·메타 제외). 특수관계자·지급보증·
     우발 등 본문 10계정 HTML 파이프가 못 보던 것을 전부 싣는다(자의적 컷 없음, 비용 수용).
@@ -134,19 +134,19 @@ def note_material(
                     "excerpt": excerpt,
                 }
             )
-    # S7 온보딩 LLM이 선별한 검토관심 청크(content_chunks)만 싣는다(키워드 fallback 제거).
-    # fallback을 남기면 'S7 미실행인데 키워드가 대충 채워 통과'라는 hollow-PASS 착각이 생긴다(§9).
-    review_chunks = load_content_chunks(corp_code, year, quirks_path)
-    if review_chunks:
-        report_review_role = (
-            "report_review_chunks는 사업보고서 원문에서 온보딩이 선별한 검토 관심 공시 종류 후보다. "
-            "부정 확정이 아니라 정상 설명 가능성을 전제로 검토한다."
+    # Layer 1 서술 리더가 사업보고서 본문에서 추출한 항목(report_extracts)을 싣는다.
+    # 미실행 시 silent 0 금지(§9): 본문 위험 누락 가능성을 명시 경고로 표면화.
+    extracts = read_report_extracts(corp_code, year, data_dir=data_dir)
+    if extracts:
+        report_extracts_role = (
+            "report_extracts는 Layer 1 서술 리더가 사업보고서 본문(사업·경영진단·감사·지배구조·특수관계·"
+            "우발·제재)에서 추출한 감사 검토 관심 항목이다. 각 item은 part·label·statement(원문 수치 인용)·"
+            "evidence·why_relevant를 갖는다. 부정 확정이 아니라 정상 설명 가능성을 전제로 검토한다."
         )
     else:
-        # S7 미선별/실패 시 silent 0 금지(§9): 본문 위험 누락 가능성을 명시 경고로 표면화.
-        report_review_role = (
-            "[경고] S7 검토관심 청크 미선별 — 사업보고서 본문의 소송·특수관계·우발·약정 등 "
-            "서술형 감사관심사항이 이 분석에 포함되지 않았다. 온보딩에서 S7 청크선별을 실행해야 한다."
+        report_extracts_role = (
+            "[경고] Layer 1 서술 추출물 없음 — 사업보고서 본문의 소송·특수관계·우발·약정 등 서술형 "
+            "감사관심사항이 이 분석에 포함되지 않았다. 온보딩에서 Layer 1 리더를 실행해야 한다."
         )
     facts = note_facts or []
     note_facts_role = (
@@ -158,8 +158,8 @@ def note_material(
     )
     return {
         "note_sections": sections,
-        "report_review_chunks": review_chunks,
-        "report_review_role": report_review_role,
+        "report_extracts": extracts,
+        "report_extracts_role": report_extracts_role,
         "note_facts": facts,
         "note_facts_role": note_facts_role,
         "scope": "note perspective only",

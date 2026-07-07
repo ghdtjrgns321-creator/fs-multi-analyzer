@@ -81,7 +81,7 @@ def build_account_index(
     note_facts는 `note:{label}`·`note:{category}` 네임스페이스로 색인(본문 키와 비충돌). 금액형은
     value 유효숫자, 서술형은 빈 풀(존재만) → note-only 우발 항목이 환각 탈락하지 않게 한다.
 
-    note_disclosures는 서술형 공시(note_sections·report_review_chunks 담보·특수관계·소송 등)로,
+    note_disclosures는 서술형 공시(note_sections·report_extracts 담보·특수관계·소송 등)로,
     각 항목 {tokens, text}의 금액을 note:{token}별 + 전역 note:__disclosure__ 풀에 색인한다(사각#3).
     XBRL fact에 없는 서술형 공시가 grounding에서 허위탈락하던 것을 막는다."""
 

@@ -1,6 +1,6 @@
 """주석 grounding 사각#3 — 서술형 공시 색인(허위탈락 차단).
 
-담보·특수관계 같은 서술형 공시는 note_sections·report_review_chunks(HTML 텍스트)에 살고 XBRL fact엔
+담보·특수관계 같은 서술형 공시는 note_sections·report_extracts(Layer 1 추출)에 살고 XBRL fact엔
 없다. 이걸 note: 네임스페이스에 색인해, LLM이 라벨을 다르게 앵커링해도 인용 금액이 실제 공시에
 있으면 grounded 시킨다(환각가드는 유지 — 공시에 없는 금액은 탈락).
 """

@@ -28,20 +28,19 @@ def _accounts_reviewed(report: dict[str, object]) -> int:
 
 
 def _note_disclosures(note_material: dict) -> list[dict]:
-    """note material의 서술형 공시(note_sections·report_review_chunks)를 grounding 색인용으로 정규화.
+    """note material의 서술형 공시(note_sections·report_extracts)를 grounding 색인용으로 정규화.
 
-    각 공시를 {tokens, text}로 — tokens는 앵커 후보(계정·키워드·공시종류), text는 금액 추출 대상.
-    담보·특수관계 등 XBRL fact에 없는 서술형 공시를 grounding에 닿게 한다(사각#3)."""
+    각 공시를 {tokens, text}로 — tokens는 앵커 후보(계정·라벨·파트), text는 금액 추출 대상.
+    담보·특수관계 등 XBRL fact에 없는 Layer 1 서술 추출을 grounding에 닿게 한다(사각#3)."""
 
     out: list[dict] = []
     for sec in note_material.get("note_sections", []) or []:
         tokens = [sec.get("account", ""), *(sec.get("matched_keywords", []) or [])]
         text = f"{sec.get('title', '')} {sec.get('excerpt', '')}"
         out.append({"tokens": [t for t in tokens if t], "text": text})
-    for chunk in note_material.get("report_review_chunks", []) or []:
-        dtype = str(chunk.get("disclosure_type", ""))
-        tokens = [dtype, *dtype.replace("_", " ").split()]
-        text = " ".join(str(chunk.get(k, "")) for k in ("evidence", "summary", "text", "part"))
+    for item in note_material.get("report_extracts", []) or []:
+        tokens = [str(item.get("label", "")), str(item.get("part", ""))]
+        text = " ".join(str(item.get(k, "")) for k in ("statement", "evidence", "why_relevant"))
         out.append({"tokens": [t for t in tokens if t], "text": text})
     return out
 

@@ -31,6 +31,72 @@ def test_note_material_no_facts_warns() -> None:
     assert "없음" in str(mat["note_facts_role"])
 
 
+def test_note_material_includes_report_extracts(tmp_path) -> None:
+    # Layer 1 추출물(report_extracts)이 note material에 실린다(S7 청크 교체).
+    from src.db.normalized import write_report_extracts
+    from src.schemas.extract import ExtractedItem
+
+    items = [
+        ExtractedItem(
+            part="XI",
+            label="제재",
+            statement="과징금 1,012억 17백만원",
+            evidence="XI.3",
+            why_relevant="고위험",
+        ),
+        ExtractedItem(
+            part="VIII",
+            label="특수관계",
+            statement="이재용 등기임원",
+            evidence="VIII.1",
+            why_relevant="지배구조",
+        ),
+        ExtractedItem(
+            part="X",
+            label="지급보증",
+            statement="SETK 917,000천US$",
+            evidence="X.1",
+            why_relevant="계열 보증",
+        ),
+    ]
+    write_report_extracts(items, "00300", 2023, data_dir=tmp_path)
+
+    mat = note_material("00300", 2023, note_facts=[], data_dir=tmp_path)
+    assert len(mat["report_extracts"]) == 3
+    labels = {r["label"] for r in mat["report_extracts"]}
+    assert {"제재", "특수관계", "지급보증"} == labels
+    assert "Layer 1" in str(mat["report_extracts_role"])
+
+
+def test_note_material_no_extracts_warns(tmp_path) -> None:
+    # 리더 미실행(빈 DB) → 빈 리스트 + 경고(silent 0 금지 §9).
+    mat = note_material("00999", 2015, note_facts=[], data_dir=tmp_path)
+    assert mat["report_extracts"] == []
+    assert "[경고]" in str(mat["report_extracts_role"])
+
+
+def test_note_disclosures_indexes_report_extracts(tmp_path) -> None:
+    # card_pipeline 그라운딩 색인이 report_extracts를 tokens·text로 반영.
+    from src.report.card_pipeline import _note_disclosures
+
+    note_mat = {
+        "note_sections": [],
+        "report_extracts": [
+            {
+                "part": "XI",
+                "label": "제재",
+                "statement": "과징금 1,012억 17백만원",
+                "evidence": "XI.3",
+                "why_relevant": "고위험",
+            },
+        ],
+    }
+    out = _note_disclosures(note_mat)
+    assert len(out) == 1
+    assert "제재" in out[0]["tokens"] and "XI" in out[0]["tokens"]
+    assert "1,012억" in out[0]["text"]
+
+
 def test_trend_material_includes_sce_cells() -> None:
     # SCE 2D 셀(자본변동)은 trend(추세) 관점 material에 실린다.
     sce = [{"change": "배당", "component": "이익잉여금", "amount": -98000.0}]
