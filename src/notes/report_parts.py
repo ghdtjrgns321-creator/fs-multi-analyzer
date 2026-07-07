@@ -23,6 +23,9 @@ _PART_TITLE = re.compile(
 )
 _NUMERAL = re.compile(rf"^({_ROMAN})\.")
 
+# 최상위 subsection 헤더 = 줄 시작 "N. " + 한글/영문 제목(숫자만인 표 셀 제외).
+_SUBSECTION_HEADER = re.compile(r"^(\d+)\.\s+([가-힣A-Za-z].*)$")
+
 # 논리섹션 → PART 제목 다중패턴(시대 매핑). PART 레벨만(내용어=Step5 필터 소관).
 LOGICAL_PARTS: dict[str, list[str]] = {
     "사업내용": ["사업의 내용"],
@@ -42,6 +45,43 @@ class ReportPart:
     numeral: str
     title: str
     text: str
+
+
+@dataclass(frozen=True)
+class SubSection:
+    """PART 하위 subsection 한 개(예: II.2 주요 제품)."""
+
+    numeral: str
+    index: int
+    title: str
+    text: str
+
+
+def split_subsections(part: ReportPart) -> list[SubSection]:
+    """PART 본문을 최상위 'N. 제목' 경계로 subsection 분할.
+
+    헤더 없으면 전체를 index=0 단일 subsection으로(graceful). 표 셀의 순수 숫자는 헤더 아님.
+    """
+
+    lines = part.text.splitlines()
+    marks: list[tuple[int, int, str]] = []  # (line_idx, sub_index, title)
+    last = 0  # 단조증가: top-level 번호만 채택. 중첩 리스트(1.2.3.가 재시작)는 last 이하라 제외.
+    for i, line in enumerate(lines):
+        m = _SUBSECTION_HEADER.match(line.strip())
+        if m:
+            num = int(m.group(1))
+            if num > last:  # 다음 top-level(증가)만 경계로. 중첩·재시작 번호는 무시.
+                marks.append((i, num, m.group(2).strip()))
+                last = num
+    if not marks:
+        return [SubSection(part.numeral, 0, part.title, part.text)]
+
+    subs: list[SubSection] = []
+    for k, (line_idx, sub_index, title) in enumerate(marks):
+        end = marks[k + 1][0] if k + 1 < len(marks) else len(lines)
+        body = "\n".join(lines[line_idx + 1 : end]).strip()
+        subs.append(SubSection(part.numeral, sub_index, title, body))
+    return subs
 
 
 def extract_parts(xml: str) -> list[ReportPart]:
