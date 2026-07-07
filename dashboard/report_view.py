@@ -180,8 +180,8 @@ def _run_onboarding(corp_code: str, year: int, key: str) -> None:
         result = run_full_onboarding(corp_code, str(year))
     st.session_state["rv_onboarding"] = result
     st.session_state["rv_onboarding_key"] = key
-    chunks = (result.get("review_chunks") or {}).get("selection")
-    write_onboarding_marker(corp_code, year, chunks=len(getattr(chunks, "chunks", []) or []))
+    extracts = (result.get("layer1") or {}).get("extracts", []) or []
+    write_onboarding_marker(corp_code, year, chunks=len(extracts))
 
 
 def _render_onboarding_llm(corp_code: str, year: int, key: str) -> None:
@@ -192,14 +192,14 @@ def _render_onboarding_llm(corp_code: str, year: int, key: str) -> None:
     st.markdown("##### 온보딩 — 데이터 다듬기")
     if onboarding_done(corp_code, year):
         st.caption(
-            "✅ 온보딩 완료 — 검토 관심 공시 선별·계정 이름 제안을 이미 수행했습니다. "
+            "✅ 온보딩 완료 — 본문 서술 추출·계정 이름 제안을 이미 수행했습니다. "
             "다시 할 필요는 없습니다(내용이 바뀌었으면 아래에서 재실행)."
         )
         if st.button("온보딩 다시 실행"):
             _run_onboarding(corp_code, year, key)
     else:
         st.caption(
-            "분석 전 LLM이 표준분류가 안된 계정에 이름을 제안하고, 검토가 필요한 공시를 선별합니다."
+            "분석 전 LLM이 표준분류가 안된 계정에 이름을 제안하고, 본문을 파트별로 읽어 서술형 감사관심을 추출합니다."
         )
         if st.button("온보딩 실행"):
             _run_onboarding(corp_code, year, key)
@@ -209,13 +209,17 @@ def _render_onboarding_llm(corp_code: str, year: int, key: str) -> None:
 
 
 def _render_onboarding_summary(result: dict) -> str:
-    """온보딩 산출 요약(공시 N·별칭 N)을 렌더하고 요약 문자열 반환(테스트 가능)."""
+    """온보딩 산출 요약(추출 N·경고 N·별칭 N)을 렌더하고 요약 문자열 반환(테스트 가능)."""
 
-    sel = (result.get("review_chunks") or {}).get("selection")
-    n_chunks = len(getattr(sel, "chunks", []) or [])
+    layer1 = result.get("layer1") or {}
+    n_extracts = len(layer1.get("extracts", []) or [])
+    n_warns = len(layer1.get("warnings", []) or [])
     alias = (result.get("alias") or {}).get("result")
     n_alias = len(getattr(alias, "suggestions", []) or [])
-    text = f"검토 관심 공시 {n_chunks}건 선별 · 계정 이름 제안 {n_alias}건 (Phase2 재료로 캐시됨)"
+    text = (
+        f"서술 추출 {n_extracts}건 · 완결성 경고 {n_warns}건 · 계정 이름 제안 {n_alias}건 "
+        "(Phase2 재료로 report_extracts 적재)"
+    )
     st.caption(text)
     return text
 

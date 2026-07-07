@@ -2,7 +2,7 @@
 
 흐름: corp/year 입력 → [전처리 검사](run_gate) → gate_report 단계별 표시 → 이탈 등록 폼
       (company_quirks.yaml 안전 append) → [재검사] → 통과 시 [Phase1/2 진입] 활성.
-온보딩 LLM = S7 청크선별 + 별칭 제안. 감사 소견은 Phase2(의심건 카드)가 전담한다(G6 홀리스틱 제거).
+온보딩 LLM = Layer 1 서술추출 + 별칭 제안. 감사 소견은 Phase2(의심건 카드)가 전담한다.
 API 미설정 시 안내만(크래시 금지). corp_code/year/계정명은 모두 입력·데이터(하드코딩 금지).
 
 run_gate·load_company_quirks 로직은 재구현하지 않고 호출/로드만 한다.
@@ -65,31 +65,17 @@ def append_quirk(
 
 
 # ──────────────────────────────────────────────────────────────────────────
-# S7 Step4 — 사업보고서 원문 통독 → 검토관심 청크 선별(B안) → quirk 캐시
+# Layer 1 — 사업보고서 본문 서술 리더(파트별 추출) → report_extracts 적재 + 완결성 경고
 # ──────────────────────────────────────────────────────────────────────────
-def run_review_chunk_selection(corp_code: str, year: str) -> dict:
-    """원문 수집(Step1)→PART 추출(Step2)→온보딩 LLM 청크선별(Step4)→quirk 캐시.
+def run_layer1_stage(corp_code: str, year: str) -> dict:
+    """Layer 1 오케스트레이터 호출(원문 로드→서술 리더→report_extracts 저장→완결성 경고).
 
-    선별·판단은 src/report/review_chunks가 한다(여기선 호출만). 실패는 graceful 반환.
+    추출·판단은 src/report/layer1이 한다(여기선 호출만). 실패는 graceful 반환.
     """
 
-    from src.collect.opendart import DartCollector
-    from src.notes.report_parts import extract_parts
-    from src.report.review_chunks import persist_review_chunks, select_review_chunks
+    from src.report.layer1 import run_layer1
 
-    try:
-        collector = DartCollector()
-        report = collector.annual_report(corp_code, int(year))
-        if report is None:
-            return {"status": "absent", "message": "사업보고서 원문 미제공", "selection": None}
-        parts = extract_parts(collector.document(report.rcept_no))
-    except Exception as exc:  # noqa: BLE001
-        return {"status": "error", "message": f"{type(exc).__name__}: {exc}", "selection": None}
-
-    result = select_review_chunks(parts, corp_code, year)
-    if result["status"] == "ok" and result["selection"] is not None:
-        persist_review_chunks(corp_code, year, result["selection"])
-    return result
+    return run_layer1(corp_code, year)
 
 
 # ──────────────────────────────────────────────────────────────────────────
@@ -308,11 +294,11 @@ def render_quirk_form(corp_code: str, year: str) -> None:
 # 페이지 본체
 # ──────────────────────────────────────────────────────────────────────────
 def run_full_onboarding(corp_code: str, year: str) -> dict:
-    """온보딩 일괄 실행 — 전처리검사(게이트)→S7 청크선별→alias 제안을 순차 실행.
+    """온보딩 일괄 실행 — 전처리검사(게이트)→Layer 1 서술추출→alias 제안을 순차 실행.
 
     한 단계 실패가 전체를 막지 않게 각 단계를 graceful 흡수한다(LLM 실패 시 경고 후 사람이 강행).
     alias는 제안만 — 등록/제외는 사람 몫(자동등록 금지 설계 유지).
-    G6 홀리스틱 통독은 제거했다 — 감사 소견은 Phase2(의심건 카드)가 전담한다(역할 중복 차단).
+    감사 소견은 Phase2(의심건 카드)가 전담한다(역할 중복 차단).
     """
 
     result: dict = {"corp": corp_code, "year": year}
@@ -324,27 +310,27 @@ def run_full_onboarding(corp_code: str, year: str) -> dict:
             result[key] = {"status": "error", "message": f"{type(exc).__name__}: {exc}"}
 
     _stage("gate", lambda: run_gate(corp_code, year))
-    _stage("review_chunks", lambda: run_review_chunk_selection(corp_code, year))
+    _stage("layer1", lambda: run_layer1_stage(corp_code, year))
     _stage("alias", lambda: suggest_aliases(corp_code, int(year)))
     return result
 
 
-def can_enter_analysis(gate_report: dict, s7_status: str) -> dict:
+def can_enter_analysis(gate_report: dict, layer1_status: str) -> dict:
     """분석 진입 가능 여부 판정(순수). 게이트 미통과면 차단, 통과면 진입 허용.
 
-    S7(청크선별) 실패 시에도 게이트 통과면 진입은 허용하되 needs_override로 경고를 강제한다
+    Layer 1 서술 추출 미완/빈 결과여도 게이트 통과면 진입은 허용하되 needs_override로 경고를 강제한다
     (API 장애로 영구 차단 방지 + silent 누락 금지 §9 — 사람이 확인 후 강행).
     """
 
     if not gate_report.get("gate_passed"):
         return {"can_enter": False, "needs_override": False, "reason": "결정론 게이트 미통과"}
-    if s7_status == "ok":
+    if layer1_status == "ok":
         return {"can_enter": True, "needs_override": False, "reason": ""}
-    # absent(원문없음) vs error(LLM실패)를 status로 구분 노출(§9).
+    # empty(추출0)·absent(원문없음)·error(LLM실패)를 status로 구분 노출(§9).
     return {
         "can_enter": True,
         "needs_override": True,
-        "reason": f"S7={s7_status or '미실행'} 미완 — 본문 검토관심 공시 누락 가능(사람 확인 후 강행)",
+        "reason": f"Layer1={layer1_status or '미실행'} 미완 — 본문 서술형 감사관심 누락 가능(사람 확인 후 강행)",
     }
 
 
@@ -353,7 +339,7 @@ def render() -> None:
 
     st.title("신규회사 온보딩 전처리")
     st.caption(
-        "Phase1/2 분석 진입 전, 한 번에 [전처리검사+S7 청크선별+별칭 제안]을 실행해 "
+        "Phase1/2 분석 진입 전, 한 번에 [전처리검사+Layer 1 서술추출+별칭 제안]을 실행해 "
         "이탈을 잡고 quirk로 교정한다. 별칭 제안은 사람이 확인 후 등록한다(수 분 소요)."
     )
 
@@ -361,11 +347,11 @@ def render() -> None:
     corp_code = col1.text_input("corp_code (8자리)", key="onb_corp").strip()
     year = col2.text_input("year (YYYY)", key="onb_year").strip()
 
-    if st.button("온보딩 일괄 실행 (전처리+S7+별칭)", disabled=not (corp_code and year)):
+    if st.button("온보딩 일괄 실행 (전처리+Layer1+별칭)", disabled=not (corp_code and year)):
         with st.spinner(f"{corp_code}/{year} 온보딩 일괄 실행 중..."):
             result = run_full_onboarding(corp_code, year)
         st.session_state["gate_report"] = result.get("gate")
-        st.session_state["review_chunks"] = result.get("review_chunks")
+        st.session_state["layer1"] = result.get("layer1")
         alias_res = result.get("alias") or {}
         if alias_res.get("status") == "ok" and alias_res.get("result") is not None:
             st.session_state["alias_suggestions"] = alias_res["result"].suggestions
@@ -385,27 +371,29 @@ def render() -> None:
     # S9: 데이터 출처(원본/정정본) 배지
     render_restatement_badge(run_corp, run_year)
 
-    # S7 검토관심 청크(일괄 실행에서 채워짐)
+    # Layer 1 서술추출(일괄 실행에서 채워짐) — 추출 요약 + 완결성 경고
     st.markdown("---")
-    st.markdown("##### S7 검토관심 청크 (사업보고서 본문 통독)")
-    chunks_result = st.session_state.get("review_chunks")
-    if chunks_result:
-        if chunks_result.get("status") == "ok" and chunks_result.get("selection") is not None:
-            sel = chunks_result["selection"]
-            usage = chunks_result.get("usage", {})
+    st.markdown("##### Layer 1 서술추출 (사업보고서 본문 파트별 통독)")
+    layer1_result = st.session_state.get("layer1")
+    if layer1_result:
+        if layer1_result.get("status") in ("ok", "empty"):
+            extracts = layer1_result.get("extracts", []) or []
+            warns = layer1_result.get("warnings", []) or []
+            usage = layer1_result.get("usage", {})
             st.caption(
-                f"토큰 in {usage.get('input_tokens')}·out {usage.get('output_tokens')} / "
-                f"{chunks_result.get('latency_s')}s — company_quirks에 캐시됨"
+                f"서술 추출 {len(extracts)}건 · 완결성 경고 {len(warns)}건 · "
+                f"토큰 in {usage.get('input_tokens')}·out {usage.get('output_tokens')} "
+                f"— report_extracts에 적재됨"
             )
-            st.dataframe(
-                [
-                    {"공시종류": c.disclosure_type, "PART": c.part, "근거": c.evidence}
-                    for c in sel.chunks
-                ],
-                use_container_width=True,
-            )
+            if extracts:
+                st.dataframe(
+                    [{"PART": e.part, "항목": e.label, "근거": e.evidence} for e in extracts],
+                    use_container_width=True,
+                )
+            for w in warns:
+                st.warning(f"⚠ [{w['anchor']}] {w['reason']}")
         else:
-            st.info(chunks_result.get("message", "S7 미실행"))
+            st.info(layer1_result.get("message", "Layer 1 미실행"))
 
     # 별칭 제안 — 사람이 확인 후 등록(자동등록 금지 유지)
     st.markdown("---")
@@ -423,9 +411,17 @@ def render() -> None:
             st.session_state["gate_report"] = run_gate(run_corp, run_year)
         st.rerun()
 
-    # 진입 판정: 게이트 통과 + S7 완료. S7 실패는 경고 후 사람이 강행(§9).
-    s7_status = (st.session_state.get("review_chunks") or {}).get("status", "")
-    verdict = can_enter_analysis(report, s7_status)
+    # 진입 판정: 게이트 통과 + Layer 1 완료. 추출 0/실패는 경고 후 사람이 강행(§9).
+    layer1_result = st.session_state.get("layer1") or {}
+    extracts_n = len(layer1_result.get("extracts", []) or [])
+    layer1_status = (
+        "ok"
+        if (layer1_result.get("status") == "ok" and extracts_n)
+        else (layer1_result.get("status") or "")
+    )
+    if layer1_result.get("status") == "ok" and not extracts_n:
+        layer1_status = "empty"
+    verdict = can_enter_analysis(report, layer1_status)
     if not verdict["can_enter"]:
         st.button("Phase1/2 분석 진입", disabled=True)
         st.caption(f"진입 불가 — {verdict['reason']}. 이탈 해소 후 [게이트 재검사]로 통과시키세요.")
@@ -433,7 +429,7 @@ def render() -> None:
         st.warning(f"⚠ {verdict['reason']}")
         st.button("경고 확인 후 Phase1/2 강행 진입", type="primary")
     else:
-        st.success("게이트 통과 + S7 완료 — Phase1/2 분석 진입 가능.")
+        st.success("게이트 통과 + Layer 1 완료 — Phase1/2 분석 진입 가능.")
         st.button("Phase1/2 분석 진입", type="primary")
 
 
