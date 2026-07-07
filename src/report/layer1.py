@@ -14,9 +14,6 @@ from src.report.completeness import completeness_warnings
 from src.report.reader import run_reader
 from src.report.reader_assign import reader_focus
 
-# 기본 물질성 임계(원) — 완결성 앵커 3(물질 금액)용. 호출자가 회사 규모에 맞춰 조정 권장(리터럴 구동 아님).
-DEFAULT_MATERIALITY = 1e8
-
 
 def load_report_parts(corp_code: str, year: str | int) -> tuple[list[ReportPart], str]:
     """DART 원문에서 PART 리스트 로드(review_chunks 경로 동일). 실패는 빈 리스트+사유."""
@@ -37,7 +34,6 @@ def load_report_parts(corp_code: str, year: str | int) -> tuple[list[ReportPart]
 def run_layer1(
     corp_code: str,
     year: str | int,
-    materiality: float = DEFAULT_MATERIALITY,
     parts: list[ReportPart] | None = None,
     data_dir: Path | None = None,
     model_name: str | None = None,
@@ -80,7 +76,7 @@ def run_layer1(
         )
 
     write_report_extracts(items, corp_code, year, data_dir=data_dir)
-    warnings = completeness_warnings(parts, items, materiality)
+    warnings = completeness_warnings(parts, items)
 
     return {
         "status": "ok",
