@@ -52,6 +52,30 @@ class EvidenceRef(BaseModel):
     value: str | None = Field(default=None, description="결정론 레이어가 계산한 실제 수치")
 
 
+class Claim(BaseModel):
+    """관점이 제기한 의심 주장 1건 — 카드의 '무엇이 의심스러운가' 본문.
+
+    반박(counter_evidence 등)만 카드에 실리고 원 주장이 탈락하던 갭을 닫는다:
+    질문 없이 답변만 보이면 카드를 읽을 수 없다. cited_value는 grounding 대조를 거친 인용 수치.
+    """
+
+    perspective: str = Field(description="주장을 제기한 관점(numeric/note/flow/trend/...)")
+    description: str = Field(description="이상 근거 설명(관점 제출 원문)")
+    cited_value: str | None = Field(default=None, description="주장이 인용한 수치")
+
+
+class ExternalRef(BaseModel):
+    """카드별 외부 검증 결과 1건 — 출처 있는 외부 근거(뉴스·공시·리포트).
+
+    외부 검증 에이전트(PLAN §5 후속 검증 단계)가 카드 확정 후 타깃 검색으로 채운다.
+    출처 URL 없는 주장은 만들지 않는다(환각 차단 — external 발견자 시절 원칙 계승).
+    """
+
+    summary: str = Field(description="외부 근거 요약(출처가 뒷받침하는 주장)")
+    url: str = Field(description="출처 URL")
+    source: str = Field(default="", description="출처 제목/매체명")
+
+
 class AccountFinding(BaseModel):
     """① 수치 / ② 주석 / ③ 흐름 분석가의 수준·흐름 Finding."""
 
@@ -93,6 +117,13 @@ class AccountFinding(BaseModel):
     # 산문에만 묻히지 않게 한다. 추세 외 카드는 None → 무회귀.
     prior_value: str | None = Field(default=None, description="추세 카드: 전기 값")
     prior_year: str | None = Field(default=None, description="추세 카드: 전기 연도")
+    # 카드를 만든 관점별 의심 주장(원문). 기본 빈값 — 기존 생성 경로 무회귀.
+    claims: list[Claim] = Field(default_factory=list, description="관점별 의심 주장(카드 본문)")
+    # 외부 검증(카드 확정 후 타깃 검색) 결과. checked=True&빈 리스트 = "검색했으나 미발견".
+    external_evidence: list[ExternalRef] = Field(
+        default_factory=list, description="출처 있는 외부 근거(검증 에이전트)"
+    )
+    external_checked: bool = Field(default=False, description="외부 검증 수행 여부")
 
 
 class ChangeRef(BaseModel):

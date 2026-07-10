@@ -76,6 +76,7 @@ SHADCN_CSS = """
         margin-bottom: 2px;
     }
     .drv-strong { font-weight: 700; color: #0F172A; font-size: 0.95em; }
+    .drv-card-title { font-weight: 700; color: #0F172A; font-size: 1.15em; }
     .drv-caption { color: #64748B; font-size: 0.84em; margin-top: 2px; }
     .drv-kv { color: #94A3B8; font-size: 0.8em; }
     .drv-rank { color: #94A3B8; font-size: 0.85em; font-weight: 600; min-width: 1.2em; }

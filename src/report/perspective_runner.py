@@ -24,12 +24,13 @@ from src.schemas.suspicion import PerspectiveName, PerspectiveOutput
 
 PROMPTS_PATH = Path("config/playbooks/perspective_prompts.yaml")
 OPENAI_MODEL_NAME = settings.openai_model
+# 발견자 관점(카드 생성 전 병렬 스캔). external은 발견자가 아니라 카드 확정 후
+# 타깃 검증자(src/report/external_verify.py)로 재배치됨 — PLAN §5 후속 검증 단계.
 ALL_PERSPECTIVES: tuple[PerspectiveName, ...] = (
     "numeric",
     "note",
     "flow",
     "trend",
-    "external",
     "industry",
 )
 

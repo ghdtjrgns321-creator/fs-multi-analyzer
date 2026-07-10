@@ -1,0 +1,103 @@
+# 변동 분해 항등식 (PLAN §6.5) — K-IFRS 표준 소계 브리지만. 계정 트리 전수 정의 아님.
+# 각 bridge: variants(구성 슬롯 목록). 슬롯 = accounts(동의 canonical 후보 — 표준코드 계열에
+# 따라 같은 실질이 다른 canonical로 갈라진 것 흡수, 예: 판매비와관리비[dart]/판매 및
+# 일반관리비[ifrs]) + sign + label(표시명). 회사별로 |잔차| 최소 variant를 데이터로 선택.
+#
+# 실측 근거(2026-07, 4,782 corp-year 전수): GP 잔차≤1% 99.98% · OP 표준형 92.1% ·
+# OP 기타포함형 9.9%(변형 선택 필요근거). 세전 변형선택 2,880/4,547(63.3%) ·
+# 순이익 1,729/2,017(85.7%) — 미달 회사는 '분해 불충분' 잔차 경고로 정직 표시.
+decomposition_bridges:
+  매출총이익:
+    variants:
+      - name: 표준
+        components:
+          - label: 매출
+            sign: 1
+            accounts: [매출]
+          - label: 매출원가
+            sign: -1
+            accounts: [매출원가]
+  영업이익:
+    variants:
+      - name: 표준
+        components:
+          - label: 매출총이익
+            sign: 1
+            accounts: [매출총이익]
+          - label: 판매비와관리비
+            sign: -1
+            accounts: [판매비와관리비, 판매 및 일반관리비]
+      - name: 기타포함
+        components:
+          - label: 매출총이익
+            sign: 1
+            accounts: [매출총이익]
+          - label: 판매비와관리비
+            sign: -1
+            accounts: [판매비와관리비, 판매 및 일반관리비]
+          - label: 기타수익
+            sign: 1
+            accounts: [기타수익]
+          - label: 기타비용
+            sign: -1
+            accounts: [기타비용]
+  법인세비용차감전순이익:
+    variants:
+      - name: 금융만
+        components:
+          - label: 영업이익
+            sign: 1
+            accounts: [영업이익]
+          - label: 금융수익
+            sign: 1
+            accounts: [금융수익]
+          - label: 금융비용
+            sign: -1
+            accounts: [이자비용]
+      - name: 금융·기타
+        components:
+          - label: 영업이익
+            sign: 1
+            accounts: [영업이익]
+          - label: 금융수익
+            sign: 1
+            accounts: [금융수익]
+          - label: 금융비용
+            sign: -1
+            accounts: [이자비용]
+          - label: 기타수익
+            sign: 1
+            accounts: [기타수익]
+          - label: 기타비용
+            sign: -1
+            accounts: [기타비용]
+      - name: 금융·기타·지분법
+        components:
+          - label: 영업이익
+            sign: 1
+            accounts: [영업이익]
+          - label: 금융수익
+            sign: 1
+            accounts: [금융수익]
+          - label: 금융비용
+            sign: -1
+            accounts: [이자비용]
+          - label: 기타수익
+            sign: 1
+            accounts: [기타수익]
+          - label: 기타비용
+            sign: -1
+            accounts: [기타비용]
+          - label: 지분법이익
+            sign: 1
+            accounts: [지분법이익]
+  당기순이익:
+    variants:
+      - name: 표준
+        components:
+          - label: 법인세비용차감전순이익
+            sign: 1
+            accounts: [법인세비용차감전순이익]
+          - label: 법인세비용
+            sign: -1
+            accounts: [법인세비용]

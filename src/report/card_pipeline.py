@@ -64,11 +64,13 @@ def _rebuttal_context(grounded: list) -> dict[str, list[dict]]:
     return context
 
 
-async def _default_external_runner(report: dict[str, object]) -> PerspectiveOutput:
-    # external은 내부 5관점과 달리 실제 구글검색(Gemini)으로 출처 있는 SuspicionItem을 만든다.
-    from src.report.external import run_external_suspicions
+async def _default_external_verifier(
+    cards: list[Any], report: dict[str, object], decompositions: dict[str, dict]
+) -> dict:
+    # external은 발견자가 아니라 카드 확정 후 타깃 검증자 — 상위 카드만 구글검색(PLAN §5).
+    from src.report.external_verify import verify_cards
 
-    return await run_external_suspicions(report)
+    return await verify_cards(cards, report, decompositions)
 
 
 async def build_suspicion_cards(
@@ -78,9 +80,18 @@ async def build_suspicion_cards(
     rebuttal_runner: Callable[..., Awaitable[Any]] = run_rebuttal,
     materials: dict[str, dict] | None = None,
     peer_keys: set[str] | None = None,
-    external_runner: Callable[..., Awaitable[PerspectiveOutput]] = _default_external_runner,
+    external_verifier: Callable[..., Awaitable[dict]] = _default_external_verifier,
+    on_progress: Callable[[dict], None] | None = None,
 ) -> dict[str, Any]:
-    """6관점 병렬 → 근거검증 → 카드 클러스터·집계 → 반박 → 정렬·렌더."""
+    """발견 5관점 병렬 → 근거검증 → 카드 클러스터·집계 → 반박 + 외부 검증 → 정렬·렌더.
+
+    on_progress: 진행 표시용 콜백. 관점 완료마다 {phase:'perspective',done,total},
+    단계 경계마다 {phase:'grounding'|'cards'|'rebuttal'|'done'}로 호출(선택).
+    """
+
+    def _emit(phase: str, done: int | None = None, total: int | None = None) -> None:
+        if on_progress:
+            on_progress({"phase": phase, "done": done, "total": total})
 
     accounts = _accounts_reviewed(report)
     ledger = report.get("coverage_ledger", {}) or {}
@@ -95,16 +106,22 @@ async def build_suspicion_cards(
         return {**empty, "rendered": render_card_markdown(empty), "grounded": [], "dropped": []}
 
     materials = materials or collect_perspective_materials(report)
+    total_p = len(ALL_PERSPECTIVES)
+    done_p = 0
 
     async def _run_one(name: str) -> PerspectiveOutput:
-        # external만 실검색 경로(Gemini+구글검색), 나머지는 구조화 관점 에이전트(OpenAI).
-        if name == "external":
-            return await external_runner(report)
-        return await agent_runner(name, materials.get(name, {}))
+        nonlocal done_p
+        # 발견자는 전부 구조화 관점 에이전트(OpenAI). 실검색(external)은 카드 확정 후 검증 단계.
+        try:
+            return await agent_runner(name, materials.get(name, {}))
+        finally:
+            done_p += 1
+            _emit("perspective", done_p, total_p)
 
     outputs: list[PerspectiveOutput] = await asyncio.gather(
         *[_run_one(name) for name in ALL_PERSPECTIVES]
     )
+    _emit("grounding")
     suspicions: list[SuspicionItem] = []
     completed = 0
     failed = 0
@@ -123,12 +140,32 @@ async def build_suspicion_cards(
         note_disclosures=_note_disclosures(materials.get("note", {})),
     )
     grounded = verify_suspicions(suspicions, index, peer_keys)
+    _emit("cards")
     cards = build_cards(grounded, report)
 
     # 반박: 정렬 전에 적용해야 normal_dominant 카드가 하단으로 강등된다(S4 정렬).
     all_cards = cards["account_cards"] + cards["company_cards"] + cards["relationship_cards"]
-    rebuttal = await rebuttal_runner(all_cards, _rebuttal_context(grounded))
+    _emit("rebuttal")
+    # 변동 분해(PLAN §6.5)를 카드별로 계산해 반박 입력에 공급 — 숫자 없는 추측 반박 방지.
+    from src.report.decomposition import decompose_change, load_bridges
+
+    bridges = load_bridges()
+    series_rows = report.get("account_level_series") or []
+    target_year = int(report.get("target_year") or 0)
+    decompositions = {}
+    for card in all_cards:
+        if not card.cluster_key:
+            continue
+        decomposed = decompose_change(series_rows, card.account, target_year, bridges)  # type: ignore[arg-type]
+        if decomposed:
+            decompositions[card.cluster_key] = decomposed
+    # 반박 + 외부 검증(상위 카드 타깃 검색)을 병렬 실행 — 둘 다 카드 확정 후 검증자(PLAN §5).
+    rebuttal, external_stats = await asyncio.gather(
+        rebuttal_runner(all_cards, _rebuttal_context(grounded), decompositions=decompositions),
+        external_verifier(all_cards, report, decompositions),
+    )
     apply_rebuttal(all_cards, rebuttal)
+    _emit("done")
 
     card_report = build_card_report(
         cards,
@@ -143,6 +180,7 @@ async def build_suspicion_cards(
         "grounded": grounded,
         "dropped": [g for g in grounded if not g.grounded],
         "rebuttal_entries": len(rebuttal.entries),
+        "external_verification": external_stats,  # 상위 카드 타깃 검색 결과(관찰용)
     }
 
 

@@ -6,6 +6,52 @@
 
 ## 현재 위치
 
+- **✅ 변동 분해 엔진(1단계) — 카드의 "왜"를 코드가 계산** (2026-07-10, PLAN §6.5 신설).
+  사용자 지적: "영업이익 급감" 카드가 원인(판관비? 원가?)을 안 줌 — 멀티에이전트 깊이 부재.
+  실측 조사(4,782 corp-year): GP 항등식 99.98%·OP 표준형 92.1% 재료 충분, 주석 판관비 내역은
+  3.7%뿐(가설 기각 — 세부는 IS 개별계정·동행계정 폴백). 구현: `config/decomposition.yaml`
+  (GP·OP 브리지, 변형 2종) + `src/report/decomposition.py`(회사별 |잔차| 최소 변형 선택,
+  미설명 잔차 정직 표시) + 카드 "왜 움직였나" 표 + 반박 입력 decomposition 공급.
+  pytest 500 무회귀. **⏭ 2단계(승인됨·미구현)**: external을 발견자→카드별 타깃 검증자로
+  재배치(분해 결과=검색 쿼리 재료, PLAN §5 '카드 후속 검증 단계' 설계 반영 완료).
+  - **후속 보강(사용자 피드백 3회)**: ①동의 canonical 슬롯(판매 및 일반관리비[ifrs]↔판매비와
+    관리비[dart] 갈림 흡수, OP 통과 3,836/4,159) ②재귀 펼침(GP→매출·원가, 순환 가드,
+    부호·기여율 최상위 정렬) ③부모 값 명시(얼마→얼마·변화율 타이틀+전체 행) ④세전(변형3,
+    63.3%)·순이익(85.7%) 브리지 확장 — 영업외(기타비용) 단계까지 사다리 완성. pytest 507.
+- **✅ 카드 3섹션 통일 + 타입별 차트(a단계)** (2026-07-10). 카드 = ①무엇이 의심스러운가
+  ②결과 분해(분해표+근거수치+external_evidence 자리) ③시각자료. 차트를 폼에 맞게:
+  분해 카드=**워터폴**(전기→leaf 기여→당기, waterfall_leaves 평탄화로 소계 이중계상 방지),
+  관계 카드=**지수화 라인**(첫해=100)+2다리 괴리 음영, 일반 계정=추이 바+YoY% 라벨.
+  humanize_amounts(서술 12자리 원숫자→억/조, 사용자 추가). use_container_width 전량
+  width="stretch". pytest 511.
+- **✅ 두괄식 검토포인트 + 외부 검증 에이전트(b단계) 완성** (2026-07-10). ①카드 첫 줄
+  "🔎 검토 포인트"(결정론: 매출 vs 부모 변화율 ≥2배 괴리 명제 + 주도·방어 요인 —
+  card_data.review_point) ②근거 수치 표에서 분해 표 중복 계정 제외(decomposition_accounts)
+  ③**external 재배치 완료**: ALL_PERSPECTIVES 5관점(발견)으로 축소, 카드 확정 후
+  `src/report/external_verify.py`가 위험도 상위 5카드만 타깃 검색(카드당 ≤2쿼리, 분해 주도
+  요인 포함) → external_evidence/checked 기록, 반박과 병렬 실행. 렌더 3분기(근거/미발견/
+  미수행). 분해 차트는 발산 가로막대(contribution_figure, 워터폴 오독 교체 — 사용자 개선).
+  pytest 527. external.py 구경로(run_external_suspicions)는 integrated_report 경로가 아직
+  사용해 보존.
+- **✅ 의심건 카드 대형 리디자인 — 주장·수치·차트** (2026-07-10). 사용자 지적: 카드가 줄글뿐이라
+  사실확인 불가 + "반박만 보여 뭐라는지 모름". 근본원인 2: (a) 관점 주장(description·cited_value)이
+  반박 에이전트에만 가고 카드에서 탈락 — `Claim` 스키마 신설, card_builder 3지점서 claims 채움(질문
+  없이 답변만 보이던 구조 해소). (b) numeric_evidence(grounding 대조 수치)가 카드에 실려 있는데
+  렌더러가 미표시 — 근거 수치 표로 렌더. 신규 `dashboard/card_data.py`(순수 가공)+`card_view.py`
+  (전폭 카드: 주장→근거표|5개년 추이차트(당기 강조)→반박 expander). 관계 카드는 다리 상위 4개
+  멀티라인(dataviz validator PASS ΔE 24.2). 구 HTML 카드 렌더러(render_card_html 등) 삭제 컷오버.
+  라벨 명확화(표수 N/4→"지적 4관점 중 N", 반박: 접두). pytest 489 무회귀.
+  - **후속: 카드 결과 영속화** — 세션 메모리에만 있어 새로고침 시 LLM 재실행(₩1~2천) 필요하던 갭.
+    `src/report/cards_store.py`(suspicion_cards.json, 회사/연도 격리, 카드+시계열 스냅샷) + report_view
+    자동 저장·재방문 자동 로드("저장된 검증 결과" 캡션, 버튼 '검증 다시 실행'). pytest 492 무회귀.
+- **✅ 별칭 자동 등록 컷오버 — 감사인 확인 딸깍 제거** (2026-07-10). 사용자 결정: 메인 앱의
+  계정 이름 제안 확인·등록 UI는 무의미(판단재료 없는 딸깍=자동과 동일+마찰) → 감사인에게 아예
+  숨김. `dashboard/onboarding.py`에 `auto_register_aliases`(신뢰도 ≥0.7·非기타만 window 전 연도
+  quirk 등록, reason=auto 표기, 멱등) + `_auto_register_stage`(등록 ≥1이면 raw 보유 window 재정규화
+  — 별칭은 다음 정규화부터 반영되는 잠복문제 해소, report_extracts는 별도 테이블이라 보존).
+  보류(저신뢰·기타)는 기존 '기타 중요 계정' 경로 — 자산 5%↑면 UNMAPPED_MATERIAL_ACCOUNT 카드로
+  표면화. 수동 교정은 전처리 페이지(onboarding.py) 유지. report_view 확인 UI 삭제.
+  pytest 477 무회귀. docs: LIMITATIONS §2·UI.md 갱신.
 - **✅ issue_type B 재편 — 재무제표 영역 축으로 전면 교체** (2026-07-01). 사용자 대화로 설계 교정:
   처음 제안한 축(수준/변화/관계)은 perspective와 중복이라 기각 → issue_type은 "누가 찾았나"(perspective)와
   별개인 "무엇에 대한 우려인가"(공유 라벨, 관점별 배분 아님). **재무제표 영역 축**(revenue_receivables·

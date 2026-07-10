@@ -11,10 +11,9 @@ import asyncio
 
 import streamlit as st
 
+from dashboard.card_view import render_cards_section
 from dashboard.company_search import render_company_search
 from dashboard.report_html import (
-    render_card_html,
-    render_cards_section_html,
     render_header_html,
     render_queue_html,
     render_ratio_html,
@@ -24,8 +23,6 @@ from dashboard.style import busy, inject_css
 
 __all__ = [
     "render",
-    "render_card_html",
-    "render_cards_section_html",
     "render_header_html",
     "render_queue_html",
     "render_ratio_html",
@@ -102,16 +99,31 @@ def _render_zero_findings(scope: dict) -> None:
 
 
 def _render_card_sections(card_result: dict) -> None:
+    """의심건 카드 3섹션 — 대형 카드(주장·수치 표·추이 차트). 시계열은 분석 때 저장된 컨텍스트."""
+
     if not card_result.get("has_findings"):
         _render_zero_findings(card_result.get("review_scope") or {})
         return
-    st.html(render_cards_section_html("계정별 의심 후보", card_result.get("account_cards") or []))
-    st.html(
-        render_cards_section_html(
-            "계정 관계 이상 (흐름)", card_result.get("relationship_cards") or []
+    # 외부 검증이 키 부재로 통째 생략된 경우 — 카드별 '미수행'과 구분해 명시(§9).
+    if (card_result.get("external_verification") or {}).get("status") == "deferred":
+        st.caption(
+            "ℹ 외부 검증 생략 — GOOGLE_API_KEY 미설정"
+            "(설정 후 재실행 시 상위 카드에 외부 근거가 붙습니다)."
         )
+    series_rows = st.session_state.get("rv_series") or []
+    target_year = int(st.session_state.get("rv_target_year") or 0)
+    render_cards_section(
+        "계정별 의심 후보", card_result.get("account_cards") or [], series_rows, target_year
     )
-    st.html(render_cards_section_html("회사 전체 이슈", card_result.get("company_cards") or []))
+    render_cards_section(
+        "계정 관계 이상 (흐름)",
+        card_result.get("relationship_cards") or [],
+        series_rows,
+        target_year,
+    )
+    render_cards_section(
+        "회사 전체 이슈", card_result.get("company_cards") or [], series_rows, target_year
+    )
 
 
 def _run_prepare(corp_code: str, corp_name: str, target_year: int, window: list[int]) -> None:
@@ -152,15 +164,50 @@ def _run_analysis(corp_code: str, corp_name: str, year: int, window: list[int], 
     Phase1 리포트는 화면에 표시하지 않고 Phase2 입력으로만 쓴다(사람용 산출물 = 카드).
     """
 
+    import time
+
     from src.report.card_pipeline import build_suspicion_cards
     from src.report.company_report import build_company_report
+
+    _phase_label = {
+        "grounding": "근거 검증",
+        "cards": "카드 생성",
+        "rebuttal": "반박 검토",
+        "done": "완료",
+    }
+    progress = st.empty()
+    started = time.perf_counter()
+
+    def _on_progress(p: dict) -> None:
+        el = int(time.perf_counter() - started)
+        if p["phase"] == "perspective":
+            progress.info(f"관점 분석 중 — {p['done']}/{p['total']} 완료 · 경과 {el}s")
+        else:
+            progress.info(f"{_phase_label.get(p['phase'], p['phase'])} 중 · 경과 {el}s")
 
     try:
         with busy(f"Phase1 결정론 신호 계산 중 ({corp_name or corp_code} {year})..."):
             report = build_company_report(corp_code, window)
-        with busy("Phase2 6관점 병렬 분석·근거검증·반박 중 (수 분 소요)..."):
-            st.session_state["rv_cards"] = asyncio.run(build_suspicion_cards(report))
+        # 카드 차트·근거 표가 참조할 계정 시계열 컨텍스트(분석 시점 스냅샷) 저장.
+        st.session_state["rv_series"] = report.get("account_level_series") or []
+        st.session_state["rv_target_year"] = report.get("target_year")
+        with busy("멀티 에이전트 교차검증 중 (수 분 소요)..."):
+            st.session_state["rv_cards"] = asyncio.run(
+                build_suspicion_cards(report, on_progress=_on_progress)
+            )
+        progress.empty()
         st.session_state["rv_analysis_key"] = key
+        st.session_state.pop("rv_cards_saved_at", None)  # 방금 실행 — '저장본 표시' 캡션 잔상 제거
+        # 영속화 — 세션이 끊겨도 LLM 재실행 없이 다시 본다(비용 방지, 온보딩 마커와 동일 원칙).
+        from src.report.cards_store import save_cards
+
+        save_cards(
+            corp_code,
+            year,
+            st.session_state["rv_cards"],
+            st.session_state["rv_series"],
+            st.session_state["rv_target_year"],
+        )
     except Exception as exc:  # noqa: BLE001 — LLM·데이터 오류는 안내로 흡수(크래시 금지)
         st.error(f"분석 실패(안내만): {type(exc).__name__}: {exc}")
 
@@ -201,41 +248,18 @@ def _render_onboarding_llm(corp_code: str, year: int, key: str) -> None:
 
     from src.report.prep import onboarding_done
 
-    st.markdown("##### 온보딩 — 데이터 다듬기")
+    st.markdown("##### 온보딩 - 데이터 전처리")
     if onboarding_done(corp_code, year):
-        st.caption(
-            "✅ 온보딩 완료 — 본문 서술 추출·계정 이름 제안을 이미 수행했습니다. "
-            "다시 할 필요는 없습니다(내용이 바뀌었으면 아래에서 재실행)."
-        )
+        st.caption("✅ 온보딩 완료")
         if st.button("온보딩 다시 실행"):
             _run_onboarding(corp_code, year, key)
     else:
         st.caption(
-            "분석 전 LLM이 표준분류가 안된 계정에 이름을 제안하고, 본문을 파트별로 읽어 서술형 감사관심을 추출합니다."
+            "분석 전 LLM이 표준분류가 안된 계정 이름을 자동 보정하고(확실한 것만), "
+            "본문을 파트별로 읽어 서술형 감사관심을 추출합니다."
         )
         if st.button("온보딩 실행"):
             _run_onboarding(corp_code, year, key)
-    # 이번 세션에서 방금 실행했으면 무엇을 산출했는지 요약(감사 소견 아님 — Phase2 전담).
-    if st.session_state.get("rv_onboarding_key") == key:
-        _render_onboarding_summary(st.session_state.get("rv_onboarding") or {})
-
-
-def _render_onboarding_summary(result: dict) -> str:
-    """온보딩 산출 요약(추출 N·경고 N·별칭 N)을 렌더하고 요약 문자열 반환(테스트 가능)."""
-
-    layer1 = result.get("layer1") or {}
-    n_extracts = len(layer1.get("extracts", []) or [])
-    n_warns = len(layer1.get("warnings", []) or [])
-    elapsed = layer1.get("elapsed_s")
-    alias = (result.get("alias") or {}).get("result")
-    n_alias = len(getattr(alias, "suggestions", []) or [])
-    took = f" · {elapsed:.0f}s 소요" if elapsed else ""
-    text = (
-        f"서술 추출 {n_extracts}건 · 완결성 경고 {n_warns}건 · 계정 이름 제안 {n_alias}건{took} "
-        "(Phase2 재료로 report_extracts 적재)"
-    )
-    st.caption(text)
-    return text
 
 
 def _render_analysis(
@@ -245,19 +269,52 @@ def _render_analysis(
 
     from config.settings import settings
 
-    st.markdown("##### ② 의심건 카드 (6관점 교차검증 · 최종 결과)")
-    st.caption(
-        "결정론 신호(Phase1)를 계산한 뒤 6관점 LLM이 교차검증·반박해 의심건 카드를 만듭니다. "
-        "부정을 확정하지 않으며, 각 카드는 반대근거·정상설명·확인질문·다음절차를 포함합니다."
-    )
-    if st.button("의심건 카드 생성"):
+    st.markdown("##### 멀티 에이전트 교차검증")
+    st.caption("수치 · 주석 · 흐름 · 추세 · 외부 · 동종업계")
+    saved = _load_saved_cards_if_needed(corp_code, year, key)
+    run_label = "검증 다시 실행" if saved else "검증 실행"
+    if st.button(run_label):
         if not settings.openai_api_key:
             st.info("OPENAI_API_KEY 미설정 — 의심건 카드(LLM) 생략. .env 설정 후 재실행.")
         else:
             _run_analysis(corp_code, corp_name, year, window, key)
     # 회사·연도가 바뀐 옛 카드는 표시하지 않는다(잔상 방지).
     if st.session_state.get("rv_cards") and st.session_state.get("rv_analysis_key") == key:
+        if saved:
+            st.caption(
+                f"저장된 검증 결과 표시 중 (생성: {saved}) — 재실행 없이 다시 볼 수 있습니다."
+            )
         _render_card_sections(st.session_state["rv_cards"])
+
+
+def _load_saved_cards_if_needed(corp_code: str, year: int, key: str) -> str | None:
+    """세션에 이 회사·연도 카드가 없으면 디스크 스냅샷 로드(LLM 재실행 방지).
+
+    반환: 로드/보유한 스냅샷의 생성시각(표시용, 이번 세션 직접 실행이면 None).
+    """
+
+    if st.session_state.get("rv_analysis_key") == key and st.session_state.get("rv_cards"):
+        return st.session_state.get("rv_cards_saved_at")  # 이미 세션에 있음(직접 실행 or 기로드)
+
+    from src.report.cards_store import load_cards
+
+    payload = load_cards(corp_code, year)
+    if not payload:
+        return None
+    st.session_state["rv_cards"] = {
+        "has_findings": payload.get("has_findings"),
+        "review_scope": payload.get("review_scope") or {},
+        "external_verification": payload.get("external_verification") or {},
+        "account_cards": payload.get("account_cards") or [],
+        "relationship_cards": payload.get("relationship_cards") or [],
+        "company_cards": payload.get("company_cards") or [],
+    }
+    st.session_state["rv_series"] = payload.get("series_rows") or []
+    st.session_state["rv_target_year"] = payload.get("target_year")
+    st.session_state["rv_analysis_key"] = key
+    saved_at = str(payload.get("created_at") or "")[:16].replace("T", " ")
+    st.session_state["rv_cards_saved_at"] = saved_at
+    return saved_at
 
 
 def _render_uncollected(corp_code: str, corp_name: str) -> None:
@@ -332,7 +389,7 @@ def render() -> None:
             _run_prepare(corp_code, corp_name, selected_year, window)
         return
 
-    st.success(f"{selected_year} 준비완료 — 게이트 PASS")
+    # 준비완료 배너는 생략(중복 — 아래 온보딩 섹션 노출 자체가 준비됨 신호, 연도는 드롭다운에 있음).
     # 순서: ① 온보딩 → ② 의심건 카드. 온보딩 완료 전에는 카드 단계를 열지 않는다(안내도 생략).
     _render_onboarding_llm(corp_code, selected_year, key)
     # 온보딩 완료(영속 마커) 또는 이번 세션 실행이면 카드 단계를 연다.

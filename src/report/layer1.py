@@ -11,21 +11,13 @@ import time
 from collections.abc import Callable
 from pathlib import Path
 
+from src.agents.cost import estimate_krw  # 재수출(비용 추정 단일 출처)
 from src.notes.report_parts import ReportPart
 from src.report.completeness import completeness_warnings
 from src.report.reader import run_reader
 from src.report.reader_assign import reader_focus
 
-# LLM 비용 추정 단가(가정 — gpt-5.4 기준, 실단가 확정 시 조정). 입력/출력 $/token · 환율.
-_PRICE_IN = 2.5 / 1e6
-_PRICE_OUT = 10 / 1e6
-_KRW_PER_USD = 1380
-
-
-def estimate_krw(input_tokens: int, output_tokens: int) -> float:
-    """토큰 사용량 → 원화 추정(가정단가). 관찰·표시용이며 청구액이 아니다."""
-
-    return (input_tokens * _PRICE_IN + output_tokens * _PRICE_OUT) * _KRW_PER_USD
+__all__ = ["estimate_krw", "load_report_parts", "run_layer1"]
 
 
 def load_report_parts(corp_code: str, year: str | int) -> tuple[list[ReportPart], str]:

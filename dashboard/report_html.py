@@ -11,19 +11,6 @@ from typing import Any
 
 # 큐는 상위만 카드로(전체는 결정론 markdown 리포트 몫) — 표시 개수는 프레젠테이션 상수.
 QUEUE_TOP_LIMIT = 10
-# 반박 판정 라벨(card_report.py와 동일 어휘). None이면 '반박 미수행' 명시(빈칸 숨김 금지 §9).
-VERDICT_LABELS = {
-    "normal_dominant": "정상설명 우세",
-    "mixed": "반반",
-    "suspicion_dominant": "의심 우세",
-}
-# 카드 본문 4요소 — 모든 Finding은 반대근거·정상설명·확인질문·다음절차를 포함(포지셔닝 원칙).
-BODY_SECTIONS = [
-    ("counter_evidence", "숫자상 반대 가능성"),
-    ("normal_explanation", "정상일 수 있는 설명"),
-    ("confirm_question", "확인 질문"),
-    ("next_procedure", "다음 절차"),
-]
 
 
 def _get(obj: Any, key: str, default: Any = None) -> Any:
@@ -148,55 +135,3 @@ def render_ratio_html(ratio_summary: dict) -> str:
             f'<div class="drv-grid">{cells}</div></div>'
         )
     return title + "".join(cards)
-
-
-def render_card_html(card: Any) -> str:
-    """의심 후보 카드 1개 — 헤더(계정·전기값·유형) + 배지 + 본문 4요소 리스트."""
-
-    prior_value, prior_year = _get(card, "prior_value"), _get(card, "prior_year")
-    prior = (
-        f' <span class="drv-kv">(전기 {_esc(prior_year or "?")}: {_esc(prior_value or "?")})</span>'
-        if (prior_value or prior_year)
-        else ""
-    )
-    issue_raw = _get(card, "issue_type")
-    issue = str(getattr(issue_raw, "value", issue_raw) or "")
-    subtype = str(_get(card, "subtype") or "")
-    if subtype:  # '기타' 유형은 값만으론 무의미 — subtype 병기(#14).
-        issue = f"{issue}({subtype})"
-    vote = f"표수 {int(_get(card, 'vote_count') or 0)}/{int(_get(card, 'internal_total') or 0)}"
-    verdict = VERDICT_LABELS.get(str(_get(card, "rebuttal_verdict") or ""), "반박 미수행")
-    chips = "".join(
-        f'<span class="drv-chip">{_esc(b)}</span>' for b in (_get(card, "reference_badges") or [])
-    )
-    related = _get(card, "related_accounts") or []
-    related_html = (
-        f'<div class="drv-kv">관련 계정: {_esc(" ↔ ".join(str(a) for a in related))}</div>'
-        if related
-        else ""
-    )
-    body = []
-    for key, label in BODY_SECTIONS:
-        entries = _get(card, key) or []
-        if entries:
-            lis = "".join(f"<li>{_esc(e)}</li>" for e in entries)
-            body.append(f'<div class="drv-sub">{label}</div><ul class="drv-list">{lis}</ul>')
-    body_html = "".join(body) or '<div class="drv-empty">세부 근거 목록 없음</div>'
-    return (
-        '<div class="drv-card">'
-        f'<div class="drv-row"><span class="drv-strong">{_esc(_get(card, "account"))}</span>{prior}'
-        f'<span class="drv-chip">{_esc(issue)}</span></div>'
-        f'<div class="drv-row"><span class="drv-chip">{vote}</span>'
-        f"{_risk_pill(_get(card, 'risk_level'))}"
-        f'<span class="drv-chip">{_esc(verdict)}</span>{chips}</div>'
-        f"{related_html}{body_html}</div>"
-    )
-
-
-def render_cards_section_html(title: str, cards: list) -> str:
-    """섹션 제목 + 카드들. 빈 섹션도 '0건'을 명시한다(빈화면 금지 §9)."""
-
-    header = f'<div class="drv-section-title">{_esc(title)}</div>'
-    if not cards:
-        return header + '<div class="drv-empty">이 섹션에서 제기된 의심 후보 0건.</div>'
-    return header + "".join(render_card_html(card) for card in cards)

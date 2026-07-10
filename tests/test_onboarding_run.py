@@ -71,3 +71,48 @@ def test_can_enter_analysis_layer1_empty_needs_override(ob):
 
     verdict = ob.can_enter_analysis({"gate_passed": True}, layer1_status="empty")
     assert verdict["needs_override"] is True
+
+
+# ── alias 자동 등록 스테이지 배선 — 등록>0이면 재정규화, 0이면 생략 ──────────
+def _alias_result_one_suggestion():
+    from src.report.alias_suggest import AliasSuggestion, AliasSuggestionResult
+
+    return AliasSuggestionResult(
+        suggestions=[AliasSuggestion(alias="확실계정", suggested_canonical="X", confidence=0.9)]
+    )
+
+
+def _wire_autoreg(ob, monkeypatch, registered: int) -> list:
+    """suggest_aliases·자동등록·재정규화를 stub — 재정규화 호출 기록 리스트 반환."""
+
+    _stub_ok(ob, monkeypatch)
+    monkeypatch.setattr(
+        ob,
+        "suggest_aliases",
+        lambda c, y: {"status": "ok", "result": _alias_result_one_suggestion()},
+    )
+    monkeypatch.setattr(
+        ob, "auto_register_aliases", lambda *a, **k: {"registered": registered, "held": 0}
+    )
+    monkeypatch.setattr("src.report.prep.raw_present", lambda *a, **k: True)
+    renorm_calls: list = []
+    monkeypatch.setattr(
+        "src.normalize.spike.normalize_company_years",
+        lambda *a, **k: renorm_calls.append(a),
+    )
+    return renorm_calls
+
+
+def test_autoreg_renormalizes_when_registered(ob, monkeypatch):
+    renorm_calls = _wire_autoreg(ob, monkeypatch, registered=2)
+    out = ob.run_full_onboarding("00110893", "2024")
+    assert out["alias_autoreg"]["registered"] == 2
+    assert len(renorm_calls) == 1  # 등록 ≥1 → window 재정규화 1회
+    assert out["alias_autoreg"]["renormalized"] == [2020, 2021, 2022, 2023, 2024]
+
+
+def test_autoreg_skips_renorm_when_nothing_registered(ob, monkeypatch):
+    renorm_calls = _wire_autoreg(ob, monkeypatch, registered=0)
+    out = ob.run_full_onboarding("00110893", "2024")
+    assert out["alias_autoreg"]["registered"] == 0
+    assert renorm_calls == []  # 등록 0 → 재정규화 생략(불필요 비용 금지)

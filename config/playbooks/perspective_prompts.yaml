@@ -33,6 +33,15 @@ shared:
     (예: asset_valuation + subtype "설비투자 급증", contingency_related_party + subtype "계속기업 불확실성").
     영역이 정말 안 맞는 극소수만 "기타". 부정을 라벨에 확정하지 않는다.
     의심건이 없으면 빈 리스트로 두되 status는 completed 로 둔다(빈칸 숨김 아님).
+    **description 가독 규칙(사람이 읽는 문장):**
+    - 금액은 억/조 단위로 축약해 쓴다(예: "1,706억원", "1.3조원"). 12자리 원 단위 숫자를 그대로 나열하지 않는다.
+    - 내부 데이터 필드명(account_metrics_panel·ratio_time_series·trend·z점수 등)을 문장에 그대로 쓰지 않는다.
+      그 값이 말하려는 바를 일상어로 풀어 쓴다(예: "영업이익률이 5년째 하락").
+    - 연도 나열은 최대 3개 요점만(전부 나열 금지). 한 의심건 설명은 2~3문장 이내로 간결하게.
+    - cited_value(계정 grounding용 수치)는 field에만 넣고 description 문장에는 반복하지 않는다.
+    - **두괄식**: description 첫 문장에 이상의 핵심(무엇이 어느 정도로 비정상인가 — 괴리·배수·방향)을
+      결론으로 먼저 쓴다. 배경 설명·수치 나열로 시작하지 않는다
+      (예: "매출은 -6.7%인데 영업이익은 -62.8% 급감 — 낙폭 괴리가 비정상" 먼저, 근거는 그 뒤).
 
 perspectives:
   numeric:
@@ -83,4 +92,9 @@ rebuttal:
     - next_procedure: 다음 감사 절차 제안.
     - verdict: 정상 설명이 우세하면 normal_dominant, 의심이 우세하면 suspicion_dominant,
       판단이 갈리면 mixed. 과도하게 normal_dominant로 몰지 않는다(은폐 금지).
+    **두괄식**: 네 목록(counter_evidence·normal_explanation·confirm_question·next_procedure) 모두
+    가장 결정적인 항목을 첫 번째에 둔다 — counter_evidence 첫 항목은 카드를 뒤집을 수 있는 가장
+    강한 반대 근거, confirm_question 첫 항목은 답에 따라 판단이 갈리는 가장 핵심 질문.
+    각 항목도 결론 먼저, 부연은 뒤(배경 설명으로 시작 금지).
+    입력 카드에 decomposition(변동 분해)이 있으면 그 기여 수치를 인용해 반박한다(막연한 추측 금지).
     cluster_key는 입력 카드의 것을 그대로 쓴다(새 cluster_key 날조 금지). 한국어로 쓴다.

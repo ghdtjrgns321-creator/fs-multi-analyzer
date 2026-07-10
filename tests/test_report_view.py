@@ -9,14 +9,11 @@ from __future__ import annotations
 import pytest
 
 from dashboard.report_view import (
-    render_card_html,
-    render_cards_section_html,
     render_header_html,
     render_queue_html,
     render_ratio_html,
     window_for_year,
 )
-from src.schemas.findings import AccountFinding, IssueType
 
 
 # ── 연도 윈도우 순수함수 (연도 드롭다운 → 분석 윈도우) ─────────────────────
@@ -76,36 +73,6 @@ def test_year_dropdown_and_annual_fs_caption_render():
 
 
 # ── 케이스A 픽스처 ────────────────────────────────────────────────────────
-FINDING_FULL = AccountFinding(
-    account="매출채권",
-    issue_type=IssueType.REVENUE_RECEIVABLES,
-    subtype="회전율 급락",
-    materiality_score=1_234_567.0,
-    anomaly_score=2.5,
-    confidence="High",
-    counter_evidence=["현금흐름은 전기 대비 오히려 개선"],
-    normal_explanation=["대형 수주 후 결제조건 연장 가능성"],
-    confirm_question=["채권 연령분석표를 확인했는가?"],
-    next_procedure=["주요 거래처 조회서 발송"],
-    risk_level="High",
-    vote_count=3,
-    internal_total=4,
-    reference_badges=["외부검색", "동종비교"],
-    rebuttal_verdict="normal_dominant",
-    prior_value="1,000,000",
-    prior_year="2023",
-    related_accounts=["매출", "대손충당금"],
-)
-FINDING_MIN = AccountFinding(
-    account="재고자산",
-    issue_type=IssueType.COST_INVENTORY,
-    materiality_score=10.0,
-    anomaly_score=0.5,
-    confidence="Low",
-    risk_level="Low",
-    vote_count=1,
-    internal_total=4,
-)
 QUEUE_ITEMS = [
     {
         "subject": "매출채권",
@@ -184,46 +151,23 @@ def test_ratio_case_b_empty() -> None:
     assert "없음" in out
 
 
-# ── render_card_html ─────────────────────────────────────────────────────
-def test_card_full_object_anchors() -> None:
-    out = render_card_html(FINDING_FULL)
-    assert isinstance(out, str)
-    assert "매출채권" in out
-    assert IssueType.REVENUE_RECEIVABLES.value in out
-    assert "회전율 급락" in out  # subtype 병기
-    assert "표수 3/4" in out
-    assert "High" in out
-    assert "정상설명 우세" in out  # rebuttal_verdict 라벨
-    assert "전기 2023" in out and "1,000,000" in out  # 전기값 병기
-    assert "외부검색" in out
-    assert "숫자상 반대 가능성" in out and "다음 절차" in out
+# ── 대형 카드 컷오버 회귀 — 구 HTML 카드 렌더러 제거(card_view로 대체) ───────
+def test_old_card_html_renderers_removed() -> None:
+    """render_card_html·render_cards_section_html은 card_view 컷오버로 삭제 — 잔존 시 죽은 코드."""
+
+    import dashboard.report_html as rh
+    import dashboard.report_view as rv
+
+    for mod in (rh, rv):
+        assert not hasattr(mod, "render_card_html")
+        assert not hasattr(mod, "render_cards_section_html")
 
 
-def test_card_full_dict_input() -> None:
-    # dict 입력도 동일 앵커 — _get이 객체/dict 양쪽을 지원해야 한다.
-    out = render_card_html(FINDING_FULL.model_dump())
-    assert isinstance(out, str)
-    assert "매출채권" in out and "표수 3/4" in out and "정상설명 우세" in out
+# ── 자동 등록 컷오버 회귀 — 확인 딸깍 UI는 메인 앱에서 제거됨 ────────────────
+def test_alias_confirm_ui_removed_from_report_view() -> None:
+    """계정 이름 제안 확인 UI는 자동 등록 컷오버로 제거 — 심볼 잔존 시 죽은 코드."""
 
+    import dashboard.report_view as rv
 
-def test_card_min_empty_rebuttal() -> None:
-    out = render_card_html(FINDING_MIN)
-    assert isinstance(out, str)
-    assert "재고자산" in out
-    assert "반박 미수행" in out  # verdict None을 빈칸으로 숨기지 않음
-    assert "세부 근거 목록 없음" in out  # 본문 4요소 전부 빈 리스트
-
-
-# ── render_cards_section_html ────────────────────────────────────────────
-def test_cards_section_case_a_anchors() -> None:
-    out = render_cards_section_html("계정별 의심 후보", [FINDING_FULL, FINDING_MIN])
-    assert isinstance(out, str)
-    assert "계정별 의심 후보" in out
-    assert "매출채권" in out and "재고자산" in out
-
-
-def test_cards_section_case_b_empty() -> None:
-    out = render_cards_section_html("회사 전체 이슈", [])
-    assert isinstance(out, str)
-    assert "회사 전체 이슈" in out
-    assert "0건" in out  # 빈 섹션도 0건 명시(빈화면 금지)
+    assert not hasattr(rv, "_render_alias_confirm")
+    assert not hasattr(rv, "alias_row_text")

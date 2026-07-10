@@ -2,7 +2,8 @@
 
 흐름: corp/year 입력 → [전처리 검사](run_gate) → gate_report 단계별 표시 → 이탈 등록 폼
       (company_quirks.yaml 안전 append) → [재검사] → 통과 시 [Phase1/2 진입] 활성.
-온보딩 LLM = Layer 1 서술추출 + 별칭 제안. 감사 소견은 Phase2(의심건 카드)가 전담한다.
+온보딩 LLM = Layer 1 서술추출 + 별칭 제안(고신뢰 자동 등록, 저신뢰 보류). 감사 소견은
+Phase2(의심건 카드)가 전담한다. 이 전처리 페이지의 수동 등록 폼은 보류분·교정용으로 유지.
 API 미설정 시 안내만(크래시 금지). corp_code/year/계정명은 모두 입력·데이터(하드코딩 금지).
 
 run_gate·load_company_quirks 로직은 재구현하지 않고 호출/로드만 한다.
@@ -21,6 +22,10 @@ from src.report.alias_suggest import suggest_aliases
 
 ROOT = Path(__file__).resolve().parents[1]
 QUIRKS_PATH = ROOT / "config" / "company_quirks.yaml"
+
+# 별칭 자동 등록 임계(이상=자동 등록, 미만=보류→'기타 중요 계정' 경로). 분석 윈도우 폭(년).
+AUTO_REGISTER_MIN_CONFIDENCE = 0.7
+ANALYSIS_WINDOW_SPAN = 5
 
 
 # ──────────────────────────────────────────────────────────────────────────
@@ -62,6 +67,84 @@ def append_quirk(
     body = yaml.safe_dump(payload, allow_unicode=True, sort_keys=False, default_flow_style=False)
     path.write_text(header + body, encoding="utf-8")
     return load_company_quirks(path)
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# 별칭 자동 등록 — 고신뢰 제안만 window 전 연도 quirk로 등록, 등록 시 재정규화
+# ──────────────────────────────────────────────────────────────────────────
+def auto_register_aliases(
+    corp_code: str,
+    years: list,
+    suggestions: list,
+    threshold: float = AUTO_REGISTER_MIN_CONFIDENCE,
+    path: Path = QUIRKS_PATH,
+) -> dict:
+    """임계 이상·非'기타' 제안을 window 전 연도 alias_additions로 자동 등록(멱등).
+
+    보류(임계 미만·기타)는 기존 '기타 중요 계정' 경로로 흐른다 — 소실 없고, 크면
+    UNMAPPED_MATERIAL_ACCOUNT 카드로 감사인에게 표면화된다. reason에 auto 표기를 남겨
+    수동 등록과 감사추적을 구분한다. quirk는 라벨 매칭이라 그 라벨이 없는 연도엔 무영향(no-op)
+    — window 전 연도 등록으로 YoY 비교축(전년도 미매핑→거짓 신규발생)을 맞춘다.
+    """
+
+    from src.report.alias_suggest import NO_MATCH
+
+    eligible = [
+        s
+        for s in suggestions
+        if s.suggested_canonical and s.suggested_canonical != NO_MATCH and s.confidence >= threshold
+    ]
+    held = len(suggestions) - len(eligible)
+    registered = 0
+    for year in years:
+        existing = load_company_quirks(path).get(str(corp_code), {}).get(str(year), {})
+        seen = {
+            (e.get("canonical"), e.get("alias")) for e in existing.get("alias_additions", []) or []
+        }
+        for s in eligible:
+            if (s.suggested_canonical, s.alias) in seen:
+                continue  # 멱등 — 재실행 시 중복 append 방지
+            append_quirk(
+                corp_code,
+                str(year),
+                "alias_additions",
+                {
+                    "canonical": s.suggested_canonical,
+                    "alias": s.alias,
+                    "reason": f"auto(confidence {s.confidence:.2f})",
+                },
+                path=path,
+            )
+            registered += 1
+    return {"registered": registered, "held": held}
+
+
+def _auto_register_stage(corp_code: str, year: str, alias_stage: dict) -> dict:
+    """alias 제안 스테이지 결과를 받아 자동 등록하고, 등록이 있으면 window 재정규화.
+
+    별칭은 다음 정규화부터 반영되므로 등록 ≥1이면 raw 보유 window 연도를 즉시 재정규화한다
+    (report_extracts는 별도 테이블 REPLACE라 보존). 등록 0이면 재정규화 생략(불필요 비용 금지).
+    """
+
+    result = (alias_stage or {}).get("result")
+    suggestions = getattr(result, "suggestions", []) or []
+    if not suggestions:
+        return {"registered": 0, "held": 0, "renormalized": []}
+
+    from src.report.prep import raw_present
+
+    target = int(year)
+    years = [
+        y for y in range(target - ANALYSIS_WINDOW_SPAN + 1, target + 1) if raw_present(corp_code, y)
+    ]
+    reg = auto_register_aliases(corp_code, years, suggestions)
+    renormalized: list[int] = []
+    if reg["registered"]:
+        from src.normalize.spike import normalize_company_years
+
+        normalize_company_years(corp_code, tuple(years))
+        renormalized = years
+    return {**reg, "renormalized": renormalized}
 
 
 # ──────────────────────────────────────────────────────────────────────────
@@ -153,7 +236,7 @@ def render_gate_report(report: dict) -> None:
                     }
                     for r in triage
                 ],
-                use_container_width=True,
+                width="stretch",
             )
         else:
             st.caption("충돌 후보 없음")
@@ -163,7 +246,7 @@ def render_gate_report(report: dict) -> None:
         hard = g3.get("hard_violations") or []
         if hard:
             st.warning(f"경성 위반 {len(hard)}건")
-            st.dataframe(hard, use_container_width=True)
+            st.dataframe(hard, width="stretch")
         else:
             st.caption("경성 위반 없음")
 
@@ -298,7 +381,7 @@ def run_full_onboarding(corp_code: str, year: str, on_progress=None) -> dict:
     """온보딩 일괄 실행 — 전처리검사(게이트)→Layer 1 서술추출→alias 제안을 순차 실행.
 
     한 단계 실패가 전체를 막지 않게 각 단계를 graceful 흡수한다(LLM 실패 시 경고 후 사람이 강행).
-    alias는 제안만 — 등록/제외는 사람 몫(자동등록 금지 설계 유지).
+    alias는 고신뢰(≥임계)만 자동 등록·재정규화, 저신뢰·기타는 보류('기타 중요 계정' 경로).
     감사 소견은 Phase2(의심건 카드)가 전담한다(역할 중복 차단).
     on_progress: Layer 1 파트별 진행률 콜백(진행 표시용, 선택).
     """
@@ -314,6 +397,8 @@ def run_full_onboarding(corp_code: str, year: str, on_progress=None) -> dict:
     _stage("gate", lambda: run_gate(corp_code, year))
     _stage("layer1", lambda: run_layer1_stage(corp_code, year, on_progress=on_progress))
     _stage("alias", lambda: suggest_aliases(corp_code, int(year)))
+    # 고신뢰 제안 자동 등록(+재정규화). 보류는 '기타 중요 계정' 경로 — 감사인 확인 딸깍 없음.
+    _stage("alias_autoreg", lambda: _auto_register_stage(corp_code, year, result.get("alias")))
     return result
 
 
@@ -390,7 +475,7 @@ def render() -> None:
             if extracts:
                 st.dataframe(
                     [{"PART": e.part, "항목": e.label, "근거": e.evidence} for e in extracts],
-                    use_container_width=True,
+                    width="stretch",
                 )
             for w in warns:
                 st.warning(f"⚠ [{w['anchor']}] {w['reason']}")

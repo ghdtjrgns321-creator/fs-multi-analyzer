@@ -10,7 +10,14 @@ from __future__ import annotations
 from collections import Counter
 
 from src.report.grounding import GroundedSuspicion
-from src.schemas.findings import AccountFinding, Confidence, EvidenceRef, IssueType, RiskLevel
+from src.schemas.findings import (
+    AccountFinding,
+    Claim,
+    Confidence,
+    EvidenceRef,
+    IssueType,
+    RiskLevel,
+)
 from src.schemas.suspicion import INTERNAL_PERSPECTIVES, SuspicionItem, cluster_key
 
 COMPANY_LEVEL_ACCOUNT = "(회사 전체)"
@@ -140,6 +147,15 @@ def _aggregate_evidence(items: list[SuspicionItem]) -> list[EvidenceRef]:
     return refs
 
 
+def _claims(items: list[SuspicionItem]) -> list[Claim]:
+    """클러스터 의심건들의 주장 원문 → 카드 claims(관점·설명·인용수치). 1:1 — 누락 금지."""
+
+    return [
+        Claim(perspective=i.perspective, description=i.description, cited_value=i.cited_value)
+        for i in items
+    ]
+
+
 def build_cards(grounded: list[GroundedSuspicion], report: dict) -> dict[str, list[AccountFinding]]:
     """grounded 의심건 → 계정 카드 + 회사레벨 카드(별도 섹션)."""
 
@@ -181,6 +197,7 @@ def build_cards(grounded: list[GroundedSuspicion], report: dict) -> dict[str, li
                     reference_badges=_reference_badges(items),
                     cluster_key=cluster["cluster_key"],
                     related_accounts=legs,
+                    claims=_claims(items),
                 )
             )
             rel_raw_materiality.append(raw)
@@ -208,6 +225,7 @@ def build_cards(grounded: list[GroundedSuspicion], report: dict) -> dict[str, li
             cluster_key=cluster["cluster_key"],
             prior_value=prior_value,
             prior_year=prior_year,
+            claims=_claims(items),
         )
         if is_account:
             account_cards.append(card)

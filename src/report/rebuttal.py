@@ -52,24 +52,30 @@ def build_rebuttal_agent(
 def build_rebuttal_input(
     cards: list[AccountFinding],
     context: dict[str, list[dict]],
+    decompositions: dict[str, dict] | None = None,
 ) -> list[dict]:
-    """카드 + 그 카드의 의심근거(관점 description·cited_value)를 반박 입력으로."""
+    """카드 + 의심근거(관점 description·cited_value) + 변동 분해(PLAN §6.5)를 반박 입력으로.
 
+    분해가 있으면 반박이 숫자 없이 추측하는 대신 기여도("판관비 -54%")로 반박·설명하게 한다.
+    """
+
+    decompositions = decompositions or {}
     payload = []
     for card in cards:
         key = card.cluster_key or ""
-        payload.append(
-            {
-                "cluster_key": key,
-                "account": card.account,
-                "issue_type": card.issue_type.value,
-                "vote_count": card.vote_count,
-                "materiality_score": card.materiality_score,
-                "confidence": card.confidence,
-                "risk_level": card.risk_level,
-                "suspicions": context.get(key, []),
-            }
-        )
+        entry = {
+            "cluster_key": key,
+            "account": card.account,
+            "issue_type": card.issue_type.value,
+            "vote_count": card.vote_count,
+            "materiality_score": card.materiality_score,
+            "confidence": card.confidence,
+            "risk_level": card.risk_level,
+            "suspicions": context.get(key, []),
+        }
+        if key in decompositions:  # 브리지 없는 카드는 키 자체를 생략(빈 필드 노이즈 금지)
+            entry["decomposition"] = decompositions[key]
+        payload.append(entry)
     return payload
 
 
@@ -79,6 +85,7 @@ async def run_rebuttal(
     agent_factory: Callable[..., Any] | None = None,
     prompts: dict[str, Any] | None = None,
     retry_delays: tuple[float, ...] = DEFAULT_RETRY_DELAYS,
+    decompositions: dict[str, dict] | None = None,
 ) -> RebuttalOutput:
     """카드 전체 일괄 1회 반박. 키없음/에러는 빈 entries(카드는 그대로 생존)."""
 
@@ -88,7 +95,7 @@ async def run_rebuttal(
         return RebuttalOutput()
     prompts = prompts or load_perspective_prompts(PROMPTS_PATH)
     factory = agent_factory or (lambda name=OPENAI_MODEL_NAME: build_rebuttal_agent(name, prompts))
-    prompt = json.dumps(build_rebuttal_input(cards, context), ensure_ascii=False)
+    prompt = json.dumps(build_rebuttal_input(cards, context, decompositions), ensure_ascii=False)
     try:
         return await asyncio.wait_for(
             run_with_retry(
