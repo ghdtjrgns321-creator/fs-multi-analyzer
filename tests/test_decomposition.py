@@ -6,9 +6,33 @@ from pathlib import Path
 
 import pytest
 
-from src.report.decomposition import decompose_change, load_bridges
+from src.report.decomposition import bridge_child_map, decompose_change, load_bridges
 
 BRIDGES = load_bridges()  # config/decomposition.yaml 실물 사용(존재≠사용 방지)
+
+
+# ── 카드 병합(④) — 부모-자식 관계 사전 ────────────────────────────────────
+def test_bridge_child_map_covers_labels_and_synonyms():
+    bridges = {
+        "영업이익": {
+            "variants": [
+                {
+                    "name": "표준",
+                    "components": [
+                        {"label": "매출총이익", "sign": 1, "accounts": ["매출총이익"]},
+                        {
+                            "label": "판매비와관리비",
+                            "sign": -1,
+                            "accounts": ["판매비와관리비", "판매 및 일반관리비"],
+                        },
+                    ],
+                }
+            ]
+        }
+    }
+    child_map = bridge_child_map(bridges)
+    assert child_map["매출총이익"] == "영업이익"
+    assert child_map["판매 및 일반관리비"] == "영업이익"  # 동의 슬롯도 부모로
 
 
 def _rows(spec: dict[str, dict[int, float]], fs_div: str = "CFS") -> list[dict]:

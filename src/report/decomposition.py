@@ -23,6 +23,21 @@ def load_bridges(path: Path = DECOMPOSITION_PATH) -> dict[str, dict]:
     return payload.get("decomposition_bridges", {}) or {}
 
 
+def bridge_child_map(bridges: dict[str, dict]) -> dict[str, str]:
+    """구성 계정명 → 부모 계정명 (전 variant·동의 슬롯 합집합). 카드 병합(④)의 관계 사전."""
+
+    out: dict[str, str] = {}
+    for parent, spec in (bridges or {}).items():
+        for variant in spec.get("variants", []) or []:
+            for slot in variant.get("components", []) or []:
+                label = str(slot.get("label", ""))
+                if label:
+                    out[label] = parent
+                for name in slot.get("accounts", []) or []:
+                    out[str(name)] = parent
+    return out
+
+
 def _amounts_by_year(rows: list[dict], series_key: str) -> dict[int, float]:
     out: dict[int, float] = {}
     for r in rows or []:
@@ -178,4 +193,4 @@ def _align_child_rows(rows: list[dict], sign: int, top_delta: float) -> list[dic
     return out
 
 
-__all__ = ["DECOMPOSITION_PATH", "decompose_change", "load_bridges"]
+__all__ = ["DECOMPOSITION_PATH", "bridge_child_map", "decompose_change", "load_bridges"]

@@ -150,6 +150,49 @@ def _claims(items: list[SuspicionItem]) -> list[Claim]:
     ]
 
 
+def merge_bridge_cards(
+    cards: list[AccountFinding], bridges: dict[str, dict]
+) -> list[AccountFinding]:
+    """브리지 부모-자식 계정 카드를 한 카드로(같은 사건 두 장 방지, PLAN §5 조사 단계 1항).
+
+    자식(예: 매출총이익)은 부모(영업이익) 카드에 흡수: claims·evidence 합침, 표수는 병합
+    후 관점 합집합으로 재계산, merged_children에 기록. 조상까지 올라가며 존재하는 가장
+    가까운 부모를 찾는다(GP→OP→세전 다단). 부모 카드가 없으면 자식은 그대로 생존(드롭 0).
+    """
+
+    from src.report.decomposition import bridge_child_map
+
+    child_map = bridge_child_map(bridges)
+    by_account = {card.account: card for card in cards}
+
+    def _find_parent(account: str) -> AccountFinding | None:
+        fs_div, _, name = str(account).partition(":")
+        seen: set[str] = set()
+        while name in child_map and name not in seen:  # 조상 사슬 추적(순환 가드)
+            seen.add(name)
+            name = child_map[name]
+            parent = by_account.get(f"{fs_div}:{name}")
+            if parent is not None:
+                return parent
+        return None
+
+    survivors: list[AccountFinding] = []
+    for card in cards:
+        parent = _find_parent(card.account)
+        if parent is None or parent is card:
+            survivors.append(card)
+            continue
+        fs_div, _, child_name = str(card.account).partition(":")
+        parent.merged_children.append(child_name)
+        parent.claims.extend(card.claims)
+        parent.numeric_evidence.extend(card.numeric_evidence)
+        parent.materiality_score = max(parent.materiality_score, card.materiality_score)
+        parent.anomaly_score = max(parent.anomaly_score, card.anomaly_score)
+        votes = {c.perspective for c in parent.claims if c.perspective in INTERNAL_PERSPECTIVES}
+        parent.vote_count = len(votes)
+    return survivors
+
+
 def build_cards(grounded: list[GroundedSuspicion], report: dict) -> dict[str, list[AccountFinding]]:
     """grounded 의심건 → 계정 카드 + 회사레벨 카드(별도 섹션)."""
 
@@ -225,6 +268,12 @@ def build_cards(grounded: list[GroundedSuspicion], report: dict) -> dict[str, li
         else:
             company_cards.append(card)
 
+    # 브리지 병합(④): 부모-자식 계정(GP↔OP)은 같은 사건 — 한 카드로(정규화·점수 산정 전).
+    from src.report.decomposition import load_bridges
+
+    account_cards = merge_bridge_cards(account_cards, load_bridges())
+    raw_materiality = [c.materiality_score for c in account_cards]
+
     # materiality 0..1 정규화(각 카드 집합 내 최대 절대금액 대비) — sort·표시용.
     _normalize_materiality(account_cards, raw_materiality)
     _normalize_materiality(relationship_cards, rel_raw_materiality)
@@ -273,4 +322,4 @@ def _normalize_materiality(cards: list[AccountFinding], raw: list[float]) -> Non
             card.materiality_score = round(card.materiality_score / max_raw, 4)
 
 
-__all__ = ["COMPANY_LEVEL_ACCOUNT", "build_cards", "cluster_suspicions"]
+__all__ = ["COMPANY_LEVEL_ACCOUNT", "build_cards", "cluster_suspicions", "merge_bridge_cards"]

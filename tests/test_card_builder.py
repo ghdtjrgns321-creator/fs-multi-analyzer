@@ -6,10 +6,59 @@ AccountFinding 카드를 만든다. 외부·동종은 표수 미가산(참고배
 
 from __future__ import annotations
 
-from src.report.card_builder import build_cards, cluster_suspicions
+from src.report.card_builder import build_cards, cluster_suspicions, merge_bridge_cards
 from src.report.grounding import GroundedSuspicion
-from src.schemas.findings import IssueType
+from src.schemas.findings import AccountFinding, Claim, IssueType
 from src.schemas.suspicion import SuspicionItem, build_account_locator
+
+_BRIDGES = {
+    "영업이익": {
+        "variants": [
+            {
+                "name": "표준",
+                "components": [{"label": "매출총이익", "sign": 1, "accounts": ["매출총이익"]}],
+            }
+        ]
+    }
+}
+
+
+def _mk(account: str, perspectives: list[str]) -> AccountFinding:
+    return AccountFinding(
+        account=account,
+        issue_type=IssueType.EARNINGS_TAX,
+        materiality_score=0.5,
+        anomaly_score=0.0,
+        confidence="Medium",
+        vote_count=len(perspectives),
+        internal_total=4,
+        cluster_key=account,
+        claims=[Claim(perspective=p, description=f"{account} 이상") for p in perspectives],
+    )
+
+
+# ── 브리지 카드 병합(④) — 부모-자식 한 카드 ────────────────────────────────
+def test_child_card_merges_into_parent():
+    parent = _mk("CFS:영업이익", ["numeric"])
+    child = _mk("CFS:매출총이익", ["trend"])
+    merged = merge_bridge_cards([parent, child], _BRIDGES)
+    assert len(merged) == 1
+    only = merged[0]
+    assert only.account == "CFS:영업이익"
+    assert only.merged_children == ["매출총이익"]
+    assert only.vote_count == 2  # numeric + trend 합집합 재계산
+    assert len(only.claims) == 2  # 자식 주장 보존(누락 금지)
+
+
+def test_child_without_parent_survives():
+    child = _mk("CFS:매출총이익", ["trend"])
+    assert merge_bridge_cards([child], _BRIDGES) == [child]
+
+
+def test_different_fs_div_not_merged():
+    parent = _mk("CFS:영업이익", ["numeric"])
+    child = _mk("OFS:매출총이익", ["trend"])
+    assert len(merge_bridge_cards([parent, child], _BRIDGES)) == 2
 
 
 def _g(
