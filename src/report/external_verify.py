@@ -16,35 +16,27 @@ from config.settings import settings
 from src.agents.context_brief import create_context_brief_for_queries
 from src.schemas.findings import AccountFinding, ExternalRef
 
-# 타깃 검색 기본 카드 수 + High 전수 포함 시 절대 상한(비용 가드). 나머지는 '미수행' 표기.
+# 타깃 검색 기본 카드 수 + 절대 상한(비용 가드). 나머지는 '미수행' 표기.
 EXTERNAL_TOP_N = 5
 EXTERNAL_HARD_CAP = 10
-_RISK_ORDER = {"High": 2, "Medium": 1, "Low": 0}
 _MAX_REFS_PER_CARD = 3
 
 
 def select_top_cards(
     cards: list[AccountFinding], top_n: int = EXTERNAL_TOP_N
 ) -> list[AccountFinding]:
-    """검색 대상 — **High 위험 카드는 전부**(상한 EXTERNAL_HARD_CAP) + 유의성순으로 top_n까지 채움.
+    """검색 대상 — 조사가 '미해결'로 남긴 카드 우선, 이후 연속 점수 내림(라벨 폐지).
 
-    High인데 유의성 정규화 점수가 낮아 밀려나는 사각 방지(High=사람이 반드시 볼 카드 —
-    외부 근거도 붙어야 한다). Medium 이하는 top_n 여유분만.
-    """
+    미해결(investigation.resolved=False) 카드가 외부 근거의 효용이 가장 큼 —
+    내부 데이터로 못 좁힌 원인을 외부에서 찾는 단계이기 때문."""
 
-    ranked = sorted(
-        cards,
-        key=lambda c: (_RISK_ORDER.get(str(c.risk_level), 0), c.materiality_score or 0.0),
-        reverse=True,
-    )
-    highs = [c for c in ranked if str(c.risk_level) == "High"][:EXTERNAL_HARD_CAP]
-    selected = list(highs)
-    for card in ranked:  # High가 top_n 미만이면 유의성순으로 채움
-        if len(selected) >= max(top_n, len(highs)):
-            break
-        if card not in selected:
-            selected.append(card)
-    return selected[:EXTERNAL_HARD_CAP]
+    def _key(c: AccountFinding) -> tuple:
+        investigation = getattr(c, "investigation", None)
+        unresolved = investigation is not None and not investigation.resolved
+        return (unresolved, c.priority_score or 0.0)
+
+    ranked = sorted(cards, key=_key, reverse=True)
+    return ranked[: min(max(top_n, 0), EXTERNAL_HARD_CAP)]
 
 
 def card_queries(

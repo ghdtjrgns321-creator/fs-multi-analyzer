@@ -87,7 +87,7 @@ def _card_row(idx: int, card: AccountFinding, with_materiality: bool) -> str:
     cells = [str(idx), account_cell, issue, vote, card.confidence]
     if with_materiality:
         cells.append(f"{card.materiality_score:.2f}")
-    cells.extend([card.risk_level, _verdict_label(card), badges])
+    cells.extend([f"{card.priority_score:.2f}", _verdict_label(card), badges])
     return "| " + " | ".join(cells) + " |"
 
 
@@ -134,20 +134,20 @@ def render_card_markdown(report: dict[str, object]) -> str:
     lines.append(f"검토: 계정 {accounts}개 · 관점 {perspectives}개")
     if account_cards:
         lines.extend(["", "## 계정별 의심건"])
-        lines.append("| 순위 | 계정 | 유형 | 표수 | 확신도 | 금액 | 위험 | 반박 | 참고 |")
+        lines.append("| 순위 | 계정 | 유형 | 표수 | 확신도 | 금액 | 점수 | 반박 | 참고 |")
         lines.append("|---:|---|---|---|---|---:|---|---|---|")
         for idx, card in enumerate(account_cards, start=1):
             lines.append(_card_row(idx, card, with_materiality=True))
     if relationship_cards:
         # 흐름 관점 고유 단위 — 계정 쌍·교차재무제표(연결↔별도) 관계 이상.
         lines.extend(["", "## 계정 관계 이상 (흐름)"])
-        lines.append("| 순위 | 관계 | 유형 | 표수 | 확신도 | 금액 | 위험 | 반박 | 참고 |")
+        lines.append("| 순위 | 관계 | 유형 | 표수 | 확신도 | 금액 | 점수 | 반박 | 참고 |")
         lines.append("|---:|---|---|---|---|---:|---|---|---|")
         for idx, card in enumerate(relationship_cards, start=1):
             lines.append(_card_row(idx, card, with_materiality=True))
     if company_cards:
         lines.extend(["", "## 회사 전체 이슈"])
-        lines.append("| 순위 | 대상 | 유형 | 표수 | 확신도 | 위험 | 반박 | 참고 |")
+        lines.append("| 순위 | 대상 | 유형 | 표수 | 확신도 | 점수 | 반박 | 참고 |")
         lines.append("|---:|---|---|---|---|---|---|---|")
         for idx, card in enumerate(company_cards, start=1):
             lines.append(_card_row(idx, card, with_materiality=False))

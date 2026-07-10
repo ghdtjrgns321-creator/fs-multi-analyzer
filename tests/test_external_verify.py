@@ -10,42 +10,30 @@ from src.report.external_verify import card_queries, select_top_cards, verify_ca
 from src.schemas.findings import AccountFinding, IssueType
 
 
-def _card(account: str, risk: str, mat: float, key: str | None = None) -> AccountFinding:
+def _card(
+    account: str, priority_score: float = 0.0, mat: float = 0.0, key: str | None = None
+) -> AccountFinding:
     return AccountFinding(
         account=account,
         issue_type=IssueType.EARNINGS_TAX,
         materiality_score=mat,
         anomaly_score=1.0,
         confidence="High",
-        risk_level=risk,  # type: ignore[arg-type]
+        priority_score=priority_score,
         cluster_key=key or f"acct:IS:{account}",
     )
 
 
-# ── select_top_cards — 위험도 → 유의성 정렬, 상한 ─────────────────────────
-def test_select_top_cards_orders_and_caps():
-    cards = [
-        _card("A", "Low", 0.9),
-        _card("B", "High", 0.1),
-        _card("C", "High", 0.8),
-        _card("D", "Medium", 0.5),
-    ]
-    top = select_top_cards(cards, top_n=2)
-    assert [c.account for c in top] == ["C", "B"]  # High 우선, 동급이면 유의성
-
-
-def test_select_top_cards_includes_all_highs_beyond_top_n():
-    """High는 top_n을 넘어도 전부 선택(상한 10) — High인데 '미수행'으로 밀리는 사각 방지."""
-
-    cards = [_card(f"H{i}", "High", i / 10) for i in range(7)] + [_card("M", "Medium", 0.9)]
-    top = select_top_cards(cards, top_n=5)
-    assert len(top) == 7  # High 7장 전부(5 상한이면 FAIL)
-    assert all(c.risk_level == "High" for c in top)
+# ── select_top_cards — 우선순위 연속 점수 내림 정렬, 상한 ──────────────────
+def test_select_top_cards_by_priority():
+    lows = [_card(f"CFS:acc{i}", priority_score=0.1 * i) for i in range(6)]
+    top = select_top_cards(lows, top_n=3)
+    assert [c.account for c in top] == ["CFS:acc5", "CFS:acc4", "CFS:acc3"]
 
 
 # ── card_queries — 회사·연도·계정 + 분해 주도 요인 포함, ≤2개 ──────────────
 def test_card_queries_include_driver_from_decomposition():
-    card = _card("CFS:영업이익", "High", 1.0)
+    card = _card("CFS:영업이익", mat=1.0)
     card.subtype = "영업이익 급감"
     decomp = {
         "rows": [
@@ -62,7 +50,7 @@ def test_card_queries_include_driver_from_decomposition():
 
 
 def test_card_queries_company_card_without_decomposition():
-    card = _card("(회사 전체)", "High", 1.0, key="company:기타")
+    card = _card("(회사 전체)", mat=1.0, key="company:기타")
     queries = card_queries("테스트기업", 2025, card, None)
     assert len(queries) == 1 and "테스트기업" in queries[0]
 
@@ -79,7 +67,7 @@ class _Brief:
 
 
 def test_verify_cards_fills_evidence_and_checked():
-    cards = [_card("CFS:영업이익", "High", 1.0), _card("CFS:매출채권", "Low", 0.1)]
+    cards = [_card("CFS:영업이익", mat=1.0), _card("CFS:매출채권", mat=0.1)]
 
     async def fake_search(queries):
         return _Brief([_Item("판관비 절감 발표", "https://news.example/1")])
@@ -100,7 +88,7 @@ def test_verify_cards_fills_evidence_and_checked():
 
 
 def test_verify_cards_marks_checked_even_when_nothing_found():
-    cards = [_card("CFS:영업이익", "High", 1.0)]
+    cards = [_card("CFS:영업이익", mat=1.0)]
 
     async def empty_search(queries):
         return _Brief([])
@@ -118,7 +106,7 @@ def test_verify_cards_deferred_without_google_key(monkeypatch):
     from config import settings as settings_module
 
     monkeypatch.setattr(settings_module.settings, "google_api_key", "", raising=False)
-    cards = [_card("CFS:영업이익", "High", 1.0)]
+    cards = [_card("CFS:영업이익", mat=1.0)]
     stats = asyncio.run(verify_cards(cards, {"company_name": "x", "target_year": 2025}))
     assert stats["status"] == "deferred"
     assert cards[0].external_checked is False  # 아무것도 안 건드림
@@ -235,7 +223,7 @@ def test_evidence_rows_excludes_decomposition_accounts():
     from dashboard.card_data import evidence_rows
     from src.schemas.findings import EvidenceRef
 
-    card = _card("CFS:영업이익", "High", 1.0)
+    card = _card("CFS:영업이익", mat=1.0)
     card.numeric_evidence = [
         EvidenceRef(source="financial_statement", locator="CFS:영업이익", year="2025", value="1"),
         EvidenceRef(source="financial_statement", locator="매출총이익", year="2025", value="2"),

@@ -70,7 +70,6 @@ def build_rebuttal_input(
             "vote_count": card.vote_count,
             "materiality_score": card.materiality_score,
             "confidence": card.confidence,
-            "risk_level": card.risk_level,
             "suspicions": context.get(key, []),
         }
         if key in decompositions:  # 브리지 없는 카드는 키 자체를 생략(빈 필드 노이즈 금지)

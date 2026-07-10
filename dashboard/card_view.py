@@ -180,13 +180,12 @@ def contribution_figure(out: dict) -> go.Figure:
 def _header(card: Any) -> None:
     fs_label, name = split_series_key(str(_get(card, "account") or ""))
     title = f"{name}" + (f" <span class='drv-chip'>{fs_label}</span>" if fs_label else "")
-    risk = str(_get(card, "risk_level") or "Low")
-    pill = {"High": "high", "Medium": "medium", "Low": "low"}.get(risk, "low")
-    # 우측 배지는 위험도(High/Medium/Low) 하나만 — 나머지 배지는 노이즈라 제거.
+    score = float(_get(card, "priority_score") or 0.0)
+    # 우측 배지는 연속 점수 하나만 — 등급 라벨은 폐지(근거 없는 라벨이 가장 눈에 띄던 문제③).
     st.html(
         '<div class="drv-row" style="justify-content:space-between;">'
         f'<span class="drv-card-title">{title}</span>'
-        f'<span class="drv-pill drv-pill-{pill}">{risk}</span>'
+        f'<span class="drv-pill">우선순위 {score:.2f}</span>'
         "</div>"
     )
 
@@ -399,18 +398,15 @@ def _rebuttal_block(card: Any) -> None:
         st.caption("반박 세부 목록 없음.")
 
 
-RISK_BADGES = {"High": ("🔴", "red"), "Medium": ("🟠", "orange"), "Low": ("⚪", "gray")}
-
-
 def render_cards_section(
     title: str, cards: list, series_rows: list[dict], target_year: int
 ) -> None:
-    """섹션 제목 + 카드 단추 목록(위험도 정렬·접힘) — 눌러야 본문이 열린다(개요→상세).
+    """섹션 제목 + 카드 단추 목록(우선순위 정렬·접힘) — 눌러야 본문이 열린다(개요→상세).
 
-    단추 라벨 = 위험 이모지 + 계정 + 두괄식 헤드라인 + 위험도. 빈 섹션도 0건 명시(§9).
+    단추 라벨 = 계정 + 두괄식 헤드라인 + 우선순위 점수. 빈 섹션도 0건 명시(§9).
     """
 
-    from dashboard.card_data import card_headline, sort_cards_by_risk
+    from dashboard.card_data import card_headline, sort_cards
     from src.report.decomposition import decompose_change, load_bridges
 
     st.markdown(f"#### {title}")
@@ -418,14 +414,13 @@ def render_cards_section(
         st.caption("이 섹션에서 제기된 의심 후보 0건.")
         return
     bridges = load_bridges()
-    for card in sort_cards_by_risk(cards):
+    for card in sort_cards(cards):
         account_key = str(_get(card, "account") or "")
         decomposition = decompose_change(series_rows, account_key, target_year, bridges)
         fs_label, name = split_series_key(account_key)
-        risk = str(_get(card, "risk_level") or "Low")
-        emoji, color = RISK_BADGES.get(risk, ("⚪", "gray"))
+        score = float(_get(card, "priority_score") or 0.0)
         headline = card_headline(card, decomposition, series_rows)
         fs_tag = f" ({fs_label})" if fs_label else ""
-        label = f"{emoji} **{name}{fs_tag}** — {headline} · :{color}[{risk}]"
+        label = f"**{name}{fs_tag}** — {headline} · 우선순위 {score:.2f}"
         with st.expander(label, expanded=False):
             _card_body(card, series_rows, target_year, decomposition)

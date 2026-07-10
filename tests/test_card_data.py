@@ -299,7 +299,7 @@ def test_contribution_cell_style_blank_for_none_and_zero():
     assert contribution_cell_style(0) == ""
 
 
-# ── card_headline / sort_cards_by_risk (단추 라벨·정렬) ────────────────────
+# ── card_headline / sort_cards (단추 라벨·정렬) ────────────────────────────
 def test_card_headline_prefers_divergence_clause():
     from dashboard.card_data import card_headline
 
@@ -331,16 +331,12 @@ def test_card_headline_falls_back_to_claim_then_subtype():
     assert card_headline(with_subtype, None, []) == "손상 확대"
 
 
-def test_sort_cards_by_risk_order():
-    from dashboard.card_data import sort_cards_by_risk
+def test_sort_cards_priority_desc():
+    from dashboard.card_data import sort_cards
 
-    cards = [
-        _card(risk_level="Low", materiality_score=0.9, account="L"),
-        _card(risk_level="High", materiality_score=0.1, account="H1"),
-        _card(risk_level="Medium", materiality_score=0.5, account="M"),
-        _card(risk_level="High", materiality_score=0.8, account="H2"),
-    ]
-    assert [c.account for c in sort_cards_by_risk(cards)] == ["H2", "H1", "M", "L"]
+    a = {"priority_score": 0.2, "materiality_score": 0.9}
+    b = {"priority_score": 0.8, "materiality_score": 0.1}
+    assert sort_cards([a, b])[0] is b
 
 
 def test_render_cards_section_expander_apptest():

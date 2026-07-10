@@ -249,16 +249,13 @@ def review_point(out: dict | None, series_rows: list[dict]) -> str:
     return ". ".join(parts) + "." if parts else ""
 
 
-RISK_ORDER = {"High": 2, "Medium": 1, "Low": 0}
-
-
-def sort_cards_by_risk(cards: list) -> list:
-    """카드 정렬 — High→Medium→Low, 동급이면 유의성 내림차순(단추 목록 순서)."""
+def sort_cards(cards: list) -> list:
+    """카드 정렬 — 연속 우선순위 내림, 동점이면 유의성 내림(라벨 폐지, PLAN §5)."""
 
     return sorted(
         cards,
         key=lambda c: (
-            RISK_ORDER.get(str(_get(c, "risk_level")), 0),
+            float(_get(c, "priority_score") or 0.0),
             float(_get(c, "materiality_score") or 0.0),
         ),
         reverse=True,
