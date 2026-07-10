@@ -39,19 +39,22 @@ async def run_with_retry(
     prompt: str,
     model_name: str,
     retry_delays: tuple[float, ...] = DEFAULT_RETRY_DELAYS,
+    *,
+    raw: bool = False,
+    **run_kwargs: Any,
 ) -> Any:
     attempts = len(retry_delays) + 1
     last_error: Exception | None = None
     for index in range(attempts):
         try:
-            result = await agent.run(prompt)
+            result = await agent.run(prompt, **run_kwargs)
             try:
                 from src.agents.cost import log_usage
 
                 log_usage(model_name, getattr(result, "usage", None))
             except Exception:  # noqa: BLE001 — 비용 로깅이 본 호출을 깨지 않게
                 pass
-            return result.output
+            return result if raw else result.output
         except Exception as exc:
             if not is_temporary_model_error(exc):
                 raise

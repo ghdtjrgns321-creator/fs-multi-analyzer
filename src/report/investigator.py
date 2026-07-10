@@ -16,6 +16,7 @@ from pydantic_ai.providers.openai import OpenAIProvider
 from pydantic_ai.usage import UsageLimits
 
 from config.settings import settings
+from src.agents.model_retry import run_with_retry
 from src.report.decomposition import load_bridges
 from src.report.investigation_config import load_investigation_config
 from src.report.investigation_tools import InvestigationDeps
@@ -120,8 +121,11 @@ async def run_investigation(
         agent = agent_factory(with_tools=use_tools)
     try:
         result = await asyncio.wait_for(
-            agent.run(
+            run_with_retry(
+                agent,
                 _investigation_prompt(card, decomposition),
+                OPENAI_MODEL_NAME,
+                raw=True,
                 deps=deps,
                 usage_limits=UsageLimits(request_limit=max_requests),
             ),
