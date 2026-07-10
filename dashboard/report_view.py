@@ -173,11 +173,23 @@ def _run_onboarding(corp_code: str, year: int, key: str) -> None:
     if not settings.openai_api_key:
         st.info("OPENAI_API_KEY 미설정 — 온보딩 생략. .env 설정 후 재실행.")
         return
+    import time
+
     from dashboard.onboarding import run_full_onboarding
     from src.report.prep import write_onboarding_marker
 
+    progress = st.empty()
+    started = time.perf_counter()
+
+    def _on_progress(p: dict) -> None:
+        elapsed = int(time.perf_counter() - started)
+        progress.info(
+            f"본문 파트 읽는 중 — {p['done']}/{p['total']} (방금 PART {p['numeral']}) · 경과 {elapsed}s"
+        )
+
     with busy(f"{year} 본문·정규화 통독 중 (수 분 소요)..."):
-        result = run_full_onboarding(corp_code, str(year))
+        result = run_full_onboarding(corp_code, str(year), on_progress=_on_progress)
+    progress.empty()
     st.session_state["rv_onboarding"] = result
     st.session_state["rv_onboarding_key"] = key
     extracts = (result.get("layer1") or {}).get("extracts", []) or []
@@ -214,10 +226,12 @@ def _render_onboarding_summary(result: dict) -> str:
     layer1 = result.get("layer1") or {}
     n_extracts = len(layer1.get("extracts", []) or [])
     n_warns = len(layer1.get("warnings", []) or [])
+    elapsed = layer1.get("elapsed_s")
     alias = (result.get("alias") or {}).get("result")
     n_alias = len(getattr(alias, "suggestions", []) or [])
+    took = f" · {elapsed:.0f}s 소요" if elapsed else ""
     text = (
-        f"서술 추출 {n_extracts}건 · 완결성 경고 {n_warns}건 · 계정 이름 제안 {n_alias}건 "
+        f"서술 추출 {n_extracts}건 · 완결성 경고 {n_warns}건 · 계정 이름 제안 {n_alias}건{took} "
         "(Phase2 재료로 report_extracts 적재)"
     )
     st.caption(text)

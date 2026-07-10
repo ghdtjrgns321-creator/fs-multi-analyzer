@@ -7,12 +7,25 @@
 
 from __future__ import annotations
 
+import time
+from collections.abc import Callable
 from pathlib import Path
 
 from src.notes.report_parts import ReportPart
 from src.report.completeness import completeness_warnings
 from src.report.reader import run_reader
 from src.report.reader_assign import reader_focus
+
+# LLM 비용 추정 단가(가정 — gpt-5.4 기준, 실단가 확정 시 조정). 입력/출력 $/token · 환율.
+_PRICE_IN = 2.5 / 1e6
+_PRICE_OUT = 10 / 1e6
+_KRW_PER_USD = 1380
+
+
+def estimate_krw(input_tokens: int, output_tokens: int) -> float:
+    """토큰 사용량 → 원화 추정(가정단가). 관찰·표시용이며 청구액이 아니다."""
+
+    return (input_tokens * _PRICE_IN + output_tokens * _PRICE_OUT) * _KRW_PER_USD
 
 
 def load_report_parts(corp_code: str, year: str | int) -> tuple[list[ReportPart], str]:
@@ -37,12 +50,16 @@ def run_layer1(
     parts: list[ReportPart] | None = None,
     data_dir: Path | None = None,
     model_name: str | None = None,
+    on_progress: Callable[[dict], None] | None = None,
 ) -> dict:
     """서술 파트 전부 리더 실행 → report_extracts 저장 → 완결성 경고.
 
-    반환: {status, extracts:list[ExtractedItem], warnings, usage, per_part, message}.
+    반환: {status, extracts, warnings, usage, per_part, elapsed_s, message}.
     parts 미지정 시 DART에서 로드. 재무(III)·제외(XII)는 reader_focus None이라 자연 스킵.
+    on_progress: 서술 파트 1개 끝날 때마다 {done,total,numeral,status} dict로 호출(진행률 표시용).
     """
+
+    import logging
 
     from src.db.normalized import write_report_extracts
 
@@ -57,13 +74,15 @@ def run_layer1(
                 "message": message,
             }
 
+    narrative = [p for p in parts if reader_focus(p.numeral) is not None]
+    total = len(narrative)
     items = []
     per_part: list[dict] = []
     in_tok = out_tok = 0
-    for part in parts:
+    done = 0
+    started = time.perf_counter()
+    for part in narrative:
         focus = reader_focus(part.numeral)
-        if focus is None:  # III(재무 결정론)·XII(제외) — 서술 리더 미배정
-            continue
         result = run_reader(part, focus, model_name=model_name)
         status = result["status"]
         if status == "ok" and result["output"] is not None:
@@ -74,9 +93,26 @@ def run_layer1(
         per_part.append(
             {"part": part.numeral, "status": status, "message": result.get("message", "")}
         )
+        done += 1
+        if on_progress:
+            on_progress({"done": done, "total": total, "numeral": part.numeral, "status": status})
 
+    elapsed_s = round(time.perf_counter() - started, 1)
     write_report_extracts(items, corp_code, year, data_dir=data_dir)
     warnings = completeness_warnings(parts, items)
+
+    # 비용은 화면에 안 띄우고 서버 콘솔 로그로만 남긴다(사용자 요청).
+    krw = estimate_krw(in_tok, out_tok)
+    logging.getLogger(__name__).info(
+        "Layer1 %s/%s: 추출 %d건 · 토큰 in %d/out %d · ~₩%.0f · %.1fs",
+        corp_code,
+        year,
+        len(items),
+        in_tok,
+        out_tok,
+        krw,
+        elapsed_s,
+    )
 
     return {
         "status": "ok",
@@ -84,5 +120,6 @@ def run_layer1(
         "warnings": warnings,
         "usage": {"input_tokens": in_tok, "output_tokens": out_tok},
         "per_part": per_part,
+        "elapsed_s": elapsed_s,
         "message": "",
     }

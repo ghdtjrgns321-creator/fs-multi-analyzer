@@ -3,6 +3,7 @@
 from src.db.normalized import read_report_extracts
 from src.notes.report_parts import ReportPart
 from src.report import layer1
+from src.report.layer1 import estimate_krw
 from src.schemas.extract import ExtractedItem, ReaderOutput
 
 
@@ -43,9 +44,35 @@ def test_run_layer1_skips_financial_part_and_persists(monkeypatch, tmp_path):
     # usage 합산(2회 × 100/20)
     assert result["usage"]["input_tokens"] == 200
     assert result["usage"]["output_tokens"] == 40
+    assert "elapsed_s" in result  # 경과시간 반환
     # report_extracts 저장 왕복
     rows = read_report_extracts("00126380", 2024, data_dir=tmp_path)
     assert {r["part"] for r in rows} == {"II", "XI"}
+
+
+def test_run_layer1_on_progress_called_per_narrative_part(monkeypatch, tmp_path):
+    def fake_run_reader(part, focus, model_name=None):
+        return {"status": "ok", "output": ReaderOutput(items=[]), "usage": {}}
+
+    monkeypatch.setattr(layer1, "run_reader", fake_run_reader)
+
+    events = []
+    layer1.run_layer1(
+        "00126380",
+        2024,
+        parts=_parts(),
+        data_dir=tmp_path,
+        on_progress=lambda p: events.append(p),
+    )
+    # 서술 파트 2개(II·XI)만큼 호출, III은 제외
+    assert [e["numeral"] for e in events] == ["II", "XI"]
+    assert [e["done"] for e in events] == [1, 2]
+    assert all(e["total"] == 2 for e in events)
+
+
+def test_estimate_krw_matches_assumed_pricing():
+    # 입력 1e6 tok · 출력 0 → 1e6 × 2.5/1e6 × 1380 = ₩3450
+    assert estimate_krw(1_000_000, 0) == 3450.0
 
 
 def test_run_layer1_graceful_when_reader_skipped(monkeypatch, tmp_path):

@@ -67,15 +67,16 @@ def append_quirk(
 # ──────────────────────────────────────────────────────────────────────────
 # Layer 1 — 사업보고서 본문 서술 리더(파트별 추출) → report_extracts 적재 + 완결성 경고
 # ──────────────────────────────────────────────────────────────────────────
-def run_layer1_stage(corp_code: str, year: str) -> dict:
+def run_layer1_stage(corp_code: str, year: str, on_progress=None) -> dict:
     """Layer 1 오케스트레이터 호출(원문 로드→서술 리더→report_extracts 저장→완결성 경고).
 
     추출·판단은 src/report/layer1이 한다(여기선 호출만). 실패는 graceful 반환.
+    on_progress: 파트별 진행률 콜백(진행 표시용, 선택).
     """
 
     from src.report.layer1 import run_layer1
 
-    return run_layer1(corp_code, year)
+    return run_layer1(corp_code, year, on_progress=on_progress)
 
 
 # ──────────────────────────────────────────────────────────────────────────
@@ -293,12 +294,13 @@ def render_quirk_form(corp_code: str, year: str) -> None:
 # ──────────────────────────────────────────────────────────────────────────
 # 페이지 본체
 # ──────────────────────────────────────────────────────────────────────────
-def run_full_onboarding(corp_code: str, year: str) -> dict:
+def run_full_onboarding(corp_code: str, year: str, on_progress=None) -> dict:
     """온보딩 일괄 실행 — 전처리검사(게이트)→Layer 1 서술추출→alias 제안을 순차 실행.
 
     한 단계 실패가 전체를 막지 않게 각 단계를 graceful 흡수한다(LLM 실패 시 경고 후 사람이 강행).
     alias는 제안만 — 등록/제외는 사람 몫(자동등록 금지 설계 유지).
     감사 소견은 Phase2(의심건 카드)가 전담한다(역할 중복 차단).
+    on_progress: Layer 1 파트별 진행률 콜백(진행 표시용, 선택).
     """
 
     result: dict = {"corp": corp_code, "year": year}
@@ -310,7 +312,7 @@ def run_full_onboarding(corp_code: str, year: str) -> dict:
             result[key] = {"status": "error", "message": f"{type(exc).__name__}: {exc}"}
 
     _stage("gate", lambda: run_gate(corp_code, year))
-    _stage("layer1", lambda: run_layer1_stage(corp_code, year))
+    _stage("layer1", lambda: run_layer1_stage(corp_code, year, on_progress=on_progress))
     _stage("alias", lambda: suggest_aliases(corp_code, int(year)))
     return result
 
