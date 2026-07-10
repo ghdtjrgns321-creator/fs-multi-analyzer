@@ -249,6 +249,24 @@ def review_point(out: dict | None, series_rows: list[dict]) -> str:
     return ". ".join(parts) + "." if parts else ""
 
 
+def conclusion_view(card: Any) -> dict | None:
+    """조사 결론 → 표시 재료(금액 축약 적용). 없으면 None('조사 미수행' 캡션은 view가)."""
+
+    inv = _get(card, "investigation")
+    if not inv:
+        return None
+    texts = lambda key: [humanize_amounts(str(t)) for t in (_get(inv, key) or [])]  # noqa: E731
+    return {
+        "headline": humanize_amounts(str(_get(inv, "headline") or "")),
+        "cause_path": texts("cause_path"),
+        "anomaly_points": texts("anomaly_points"),
+        "open_questions": texts("open_questions"),
+        "resolved": bool(_get(inv, "resolved")),
+        "method": str(_get(inv, "method") or ""),
+        "tool_requests": int(_get(inv, "tool_requests") or 0),
+    }
+
+
 def sort_cards(cards: list) -> list:
     """카드 정렬 — 연속 우선순위 내림, 동점이면 유의성 내림(라벨 폐지, PLAN §5)."""
 

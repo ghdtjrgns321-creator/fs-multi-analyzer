@@ -373,6 +373,32 @@ def test_yoy_labels_first_blank_rest_filled():
     assert labels == ["", "+20%", "-50%"]  # 첫해 빈칸 + n-1개 채움
 
 
+# ── conclusion_view (조사 결론 → 표시 재료) ────────────────────────────────
+def test_conclusion_view_humanizes_and_maps():
+    from dashboard.card_data import conclusion_view
+
+    card = {
+        "investigation": {
+            "headline": "매출 1,289,630,423,605 감소가 주도",
+            "cause_path": ["영업이익 -62.8%", "매출총이익 기여 -84%"],
+            "anomaly_points": [],
+            "open_questions": ["부문별 단가 정보 없음"],
+            "resolved": False,
+            "method": "tool_loop",
+            "tool_requests": 5,
+        }
+    }
+    view = conclusion_view(card)
+    assert "1.3조" in view["headline"]  # 12자리 원숫자 축약
+    assert view["resolved"] is False and view["method"] == "tool_loop"
+
+
+def test_conclusion_view_none_when_missing():
+    from dashboard.card_data import conclusion_view
+
+    assert conclusion_view({}) is None
+
+
 # ── card_builder claims 전파 (클러스터 items N건 → claims N건) ─────────────
 def test_build_cards_fills_claims_one_per_item():
     from src.report.card_builder import build_cards

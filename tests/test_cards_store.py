@@ -6,6 +6,7 @@ from pathlib import Path
 
 from src.report.cards_store import load_cards, save_cards
 from src.schemas.findings import AccountFinding, Claim, EvidenceRef, IssueType
+from src.schemas.investigation import InvestigationConclusion
 
 CARD = AccountFinding(
     account="CFS:무형자산",
@@ -54,6 +55,43 @@ def test_save_load_roundtrip_preserves_cards(tmp_path: Path) -> None:
     assert loaded["series_rows"] == SERIES
     assert loaded["target_year"] == 2024
     assert loaded["created_at"]  # 생성시각 스탬프 존재
+
+
+def test_store_roundtrip_preserves_investigation(tmp_path: Path) -> None:
+    """조사 결론·연속 우선순위·병합 자식 — 저장 전 == 로드 후(신규 필드 3종 왕복)."""
+
+    card = CARD.model_copy(
+        update={
+            "priority_score": 0.87,
+            "merged_children": ["CFS:영업권", "CFS:특허권"],
+            "investigation": InvestigationConclusion(
+                headline="무형자산 손상이 주도",
+                cause_path=["손상차손 인식", "회수가능액 재평가"],
+                anomaly_points=["동종 대비 손상률 이례적"],
+                open_questions=["감액 근거 문서 미확인"],
+                resolved=True,
+                method="tool_loop",
+                tool_requests=3,
+            ),
+        }
+    )
+    result = {
+        "has_findings": True,
+        "review_scope": {},
+        "external_verification": {},
+        "account_cards": [card],
+        "relationship_cards": [],
+        "company_cards": [],
+    }
+    save_cards("00000002", 2024, result, SERIES, 2024, root=tmp_path)
+    loaded = load_cards("00000002", 2024, root=tmp_path)
+
+    [loaded_card] = loaded["account_cards"]
+    assert loaded_card["priority_score"] == 0.87
+    assert loaded_card["merged_children"] == ["CFS:영업권", "CFS:특허권"]
+    assert loaded_card["investigation"]["headline"] == "무형자산 손상이 주도"
+    assert loaded_card["investigation"]["resolved"] is True
+    assert loaded_card["investigation"]["tool_requests"] == 3
 
 
 def test_load_missing_file_returns_none(tmp_path: Path) -> None:

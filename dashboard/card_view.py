@@ -358,9 +358,38 @@ def _chart_block(
         st.caption("단일 계정 시계열 없음(회사 전체 이슈).")
 
 
-def _card_body(card: Any, series_rows: list[dict], target_year: int, decomposition) -> None:
-    """카드 본문 — 검토 포인트 → ①주장 → ②결과 분해 → ③시각자료 → 반박 접기."""
+def _conclusion_block(card: Any) -> None:
+    """조사 결론 — 카드의 '그래서 뭐가 문제인가'를 맨 위에(문제② 결론 주체)."""
 
+    from dashboard.card_data import conclusion_view
+
+    view = conclusion_view(card)
+    if view is None:
+        st.caption("조사 미수행 — LLM 미실행 또는 실패(결론 없음을 숨기지 않음).")
+        return
+    st.markdown(f"🧭 **결론** — {view['headline']}")
+    if view["cause_path"]:
+        st.markdown("원인 경로")
+        st.markdown("\n".join(f"{i}. {s}" for i, s in enumerate(view["cause_path"], 1)))
+    if view["anomaly_points"]:
+        st.markdown("이상 지점")
+        st.markdown("\n".join(f"- {s}" for s in view["anomaly_points"]))
+    if view["open_questions"]:
+        st.markdown("남은 확인사항")
+        st.markdown("\n".join(f"- {s}" for s in view["open_questions"]))
+    method = (
+        "분해로 설명 완료(요약 1회)"
+        if view["method"] == "gate_summary"
+        else (f"도구 조사 {view['tool_requests']}회")
+    )
+    status = "원인 규명 완결" if view["resolved"] else "미해결 — 외부검증 우선 대상"
+    st.caption(f"{method} · {status}")
+
+
+def _card_body(card: Any, series_rows: list[dict], target_year: int, decomposition) -> None:
+    """카드 본문 — 조사 결론 → 검토 포인트 → ①주장 → ②결과 분해 → ③시각자료 → 반박 접기."""
+
+    _conclusion_block(card)
     # 두괄식 — "떨어졌다"가 아니라 "왜 비정상인가"(괴리·주도요인)를 첫 줄에 찍는다.
     point = review_point(decomposition, series_rows)
     if point:
@@ -406,7 +435,7 @@ def render_cards_section(
     단추 라벨 = 계정 + 두괄식 헤드라인 + 우선순위 점수. 빈 섹션도 0건 명시(§9).
     """
 
-    from dashboard.card_data import card_headline, sort_cards
+    from dashboard.card_data import card_headline, conclusion_view, sort_cards
     from src.report.decomposition import decompose_change, load_bridges
 
     st.markdown(f"#### {title}")
@@ -419,7 +448,8 @@ def render_cards_section(
         decomposition = decompose_change(series_rows, account_key, target_year, bridges)
         fs_label, name = split_series_key(account_key)
         score = float(_get(card, "priority_score") or 0.0)
-        headline = card_headline(card, decomposition, series_rows)
+        view = conclusion_view(card)
+        headline = view["headline"] if view else card_headline(card, decomposition, series_rows)
         fs_tag = f" ({fs_label})" if fs_label else ""
         label = f"**{name}{fs_tag}** — {headline} · 우선순위 {score:.2f}"
         with st.expander(label, expanded=False):
