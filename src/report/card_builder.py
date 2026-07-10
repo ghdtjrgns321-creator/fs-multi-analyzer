@@ -184,12 +184,18 @@ def merge_bridge_cards(
             continue
         fs_div, _, child_name = str(card.account).partition(":")
         parent.merged_children.append(child_name)
+        # card 자신이 이미 흡수한 손자(더 아래 단계)도 함께 승계 — 안 하면 다단 체인에서
+        # 중간 단계가 먼저 흡수될 때 그 아래 세대 이름이 최종 survivor에서 누락된다.
+        parent.merged_children.extend(card.merged_children)
         parent.claims.extend(card.claims)
         parent.numeric_evidence.extend(card.numeric_evidence)
         parent.materiality_score = max(parent.materiality_score, card.materiality_score)
         parent.anomaly_score = max(parent.anomaly_score, card.anomaly_score)
         votes = {c.perspective for c in parent.claims if c.perspective in INTERNAL_PERSPECTIVES}
         parent.vote_count = len(votes)
+        # 흡수된 카드는 조회 테이블에서 제거 — 남겨두면 이후 카드가 이 죽은 노드에 흡수되어
+        # 조상(예: 세전이익)까지 사슬이 이어지지 못하고 claims가 무음 소실된다(다단 브리지).
+        by_account.pop(card.account, None)
     return survivors
 
 

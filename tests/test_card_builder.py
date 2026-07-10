@@ -61,6 +61,51 @@ def test_different_fs_div_not_merged():
     assert len(merge_bridge_cards([parent, child], _BRIDGES)) == 2
 
 
+# ── 3단 브리지 체인(GP→OP→세전) — 순서 무관 전량 병합(Critical 결함 회귀) ──────
+_CHAIN_BRIDGES = {
+    "영업이익": {
+        "variants": [
+            {
+                "name": "표준",
+                "components": [{"label": "매출총이익", "sign": 1, "accounts": ["매출총이익"]}],
+            }
+        ]
+    },
+    "세전이익": {
+        "variants": [
+            {
+                "name": "표준",
+                "components": [{"label": "영업이익", "sign": 1, "accounts": ["영업이익"]}],
+            }
+        ]
+    },
+}
+
+
+def _assert_chain_fully_merged(merged: list[AccountFinding]) -> None:
+    assert len(merged) == 1
+    survivor = merged[0]
+    assert survivor.account == "CFS:세전이익"
+    assert set(survivor.merged_children) == {"영업이익", "매출총이익"}
+    assert len(survivor.claims) == 3  # 3장 전부 claims 보존(무음 소실 금지)
+
+
+def test_three_level_chain_merges_all_claims_any_order():
+    op = _mk("CFS:영업이익", ["numeric"])
+    gp = _mk("CFS:매출총이익", ["trend"])
+    pretax = _mk("CFS:세전이익", ["flow"])
+    merged = merge_bridge_cards([op, gp, pretax], _CHAIN_BRIDGES)
+    _assert_chain_fully_merged(merged)
+
+
+def test_three_level_chain_merges_all_claims_reverse_order():
+    op = _mk("CFS:영업이익", ["numeric"])
+    gp = _mk("CFS:매출총이익", ["trend"])
+    pretax = _mk("CFS:세전이익", ["flow"])
+    merged = merge_bridge_cards([gp, op, pretax], _CHAIN_BRIDGES)
+    _assert_chain_fully_merged(merged)
+
+
 def _g(
     perspective: str,
     account_id: str | None,
