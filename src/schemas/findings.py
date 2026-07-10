@@ -11,6 +11,8 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
+from src.schemas.investigation import InvestigationConclusion
+
 
 class IssueType(StrEnum):
     """통제된 이슈 유형 — **재무제표 영역 축**(중립·목적정렬). 집계·필터 가능하도록 enum 고정.
@@ -130,6 +132,10 @@ class AccountFinding(BaseModel):
         default_factory=list, description="출처 있는 외부 근거(검증 에이전트)"
     )
     external_checked: bool = Field(default=False, description="외부 검증 수행 여부")
+    # 조사원 결론(PLAN §5 조사 단계) — None이면 '조사 미수행'으로 표시(둔갑 금지).
+    investigation: InvestigationConclusion | None = Field(
+        default=None, description="카드별 조사 결론(원인 경로·이상 지점·남은 확인사항)"
+    )
 
 
 class ChangeRef(BaseModel):
