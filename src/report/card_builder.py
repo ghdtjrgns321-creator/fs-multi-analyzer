@@ -16,12 +16,10 @@ from src.schemas.findings import (
     Confidence,
     EvidenceRef,
     IssueType,
-    RiskLevel,
 )
 from src.schemas.suspicion import INTERNAL_PERSPECTIVES, SuspicionItem, cluster_key
 
 COMPANY_LEVEL_ACCOUNT = "(회사 전체)"
-_RISK_ORDER = {"Low": 0, "Medium": 1, "High": 2}
 
 
 def cluster_suspicions(grounded: list[GroundedSuspicion]) -> list[dict]:
@@ -66,10 +64,6 @@ def _internal_votes(items: list[SuspicionItem]) -> int:
 
 def _reference_badges(items: list[SuspicionItem]) -> list[str]:
     return sorted({i.perspective for i in items if i.perspective in {"external", "industry"}})
-
-
-def _max_risk(items: list[SuspicionItem]) -> RiskLevel:
-    return max((i.risk_level for i in items), key=lambda r: _RISK_ORDER[r])
 
 
 def _dominant_issue(items: list[SuspicionItem]) -> IssueType:
@@ -191,7 +185,6 @@ def build_cards(grounded: list[GroundedSuspicion], report: dict) -> dict[str, li
                     anomaly_score=anomaly,
                     confidence=_confidence(value_verified, votes, None),
                     numeric_evidence=_aggregate_evidence(items),
-                    risk_level=_max_risk(items),
                     vote_count=votes,
                     internal_total=len(INTERNAL_PERSPECTIVES),
                     reference_badges=_reference_badges(items),
@@ -218,7 +211,6 @@ def build_cards(grounded: list[GroundedSuspicion], report: dict) -> dict[str, li
                 value_verified, votes, mappings.get(key) if is_account else None
             ),
             numeric_evidence=_aggregate_evidence(items),
-            risk_level=_max_risk(items),
             vote_count=votes,
             internal_total=len(INTERNAL_PERSPECTIVES),
             reference_badges=_reference_badges(items),
@@ -236,6 +228,14 @@ def build_cards(grounded: list[GroundedSuspicion], report: dict) -> dict[str, li
     # materiality 0..1 정규화(각 카드 집합 내 최대 절대금액 대비) — sort·표시용.
     _normalize_materiality(account_cards, raw_materiality)
     _normalize_materiality(relationship_cards, rel_raw_materiality)
+
+    # 연속 우선순위(0..1) — 정규화된 유의성·표수·이상·확신도의 가중합(라벨 폐지, 원칙 1).
+    from src.report.investigation_config import load_investigation_config
+    from src.report.priority import apply_priority
+
+    weights = (load_investigation_config().get("priority") or {}).get("weights") or {}
+    for group in (account_cards, company_cards, relationship_cards):
+        apply_priority(group, weights)
 
     return {
         "account_cards": account_cards,

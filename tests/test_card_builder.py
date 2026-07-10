@@ -156,10 +156,12 @@ def test_confidence_high_and_low() -> None:
     assert card_low.confidence == "Low"
 
 
-def test_risk_level_is_max() -> None:
+def test_priority_score_computed() -> None:
+    # risk_level은 폐지됨(라벨 → 연속 점수). 코드가 priority_score를 산정하는지만 확인.
     grounded = [_g("numeric", "매출채권", risk="Low"), _g("flow", "매출채권", risk="High")]
     card = build_cards(grounded, _report())["account_cards"][0]
-    assert card.risk_level == "High"
+    assert card.risk_level is None
+    assert card.priority_score > 0
 
 
 def test_cluster_key_set_on_card() -> None:

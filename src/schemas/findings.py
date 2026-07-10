@@ -98,7 +98,13 @@ class AccountFinding(BaseModel):
     )
     confirm_question: list[str] = Field(default_factory=list, description="사용자 확인 질문")
     next_procedure: list[str] = Field(default_factory=list, description="다음 감사 절차")
-    risk_level: RiskLevel
+    risk_level: RiskLevel | None = Field(
+        default=None, description="폐지됨 — priority_score(연속 점수)로 대체. 표시·정렬 미사용"
+    )
+    # 연속 우선순위(0..1, 코드 산정) — High/Medium/Low 라벨 대체(PLAN §5 조사 단계 4항).
+    priority_score: float = Field(default=0.0, description="정렬·외부검증 선정 기준 연속 점수")
+    # 브리지 병합(④)으로 이 카드에 흡수된 자식 계정명(예: 매출총이익).
+    merged_children: list[str] = Field(default_factory=list, description="병합된 자식 계정")
     # Phase2 카드 메타 (PHASE2_DESIGN §3). 코드가 클러스터 후 채운다(관점 LLM 출력 아님).
     # 전부 optional 기본값 — 기존 단일관점 Finding 생성 경로는 무영향.
     vote_count: int = Field(default=0, description="내부 4관점 중 이 카드를 지적한 수(N/4)")
