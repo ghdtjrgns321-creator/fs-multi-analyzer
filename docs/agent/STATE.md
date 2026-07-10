@@ -6,6 +6,17 @@
 
 ## 현재 위치
 
+- **✅ 조사원 파이프라인 1단계 구현 완료** (2026-07-11, PLAN §5 '조사 단계' 설계 반영).
+  구현 4항목: ①브리지 병합(부모-자식 카드 한 장, `merge_bridge_cards`) ②카드별 조사원
+  — 결정론 게이트 `needs_tool_loop`가 미해결 카드만 도구 루프(캡 5~8회)로 넘김, 도구 4종은
+  `src/report/investigation_tools.py`, 루프 본체는 `src/report/investigator.py`, 설정은
+  `config/investigation.yaml` ③조사 결론을 카드 최상단에 렌더 + 반박 에이전트 입력으로 공급
+  (`card_pipeline` 배선) ④High/Medium/Low 위험도 라벨 폐지 — `src/report/priority.py`가
+  유의성·표수·이상신호·확신도로 연속 점수(`priority_score`) 산정, 컷 없이 정렬만.
+  pytest 559 passed·1 xfailed(착수 전 536 대비 +23, 회귀 0). **⏭ 실 LLM 프로브
+  미실행**: `data/backtest/_probe_investigator.py`는 스크립트만 커밋, 조사원 실호출 품질·
+  비용은 미검증(사용자 실행 대기, 비용 발생). 남은 백로그: 반박을 "도구 쥔 반대 조사원"으로
+  승격 / 카드 횡단 스토리 종합 / `needs_tool_loop` 하위 잔차 leaf 엣지 / 빈 headline 라벨 폴백.
 - **✅ 변동 분해 엔진(1단계) — 카드의 "왜"를 코드가 계산** (2026-07-10, PLAN §6.5 신설).
   사용자 지적: "영업이익 급감" 카드가 원인(판관비? 원가?)을 안 줌 — 멀티에이전트 깊이 부재.
   실측 조사(4,782 corp-year): GP 항등식 99.98%·OP 표준형 92.1% 재료 충분, 주석 판관비 내역은
