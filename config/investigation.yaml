@@ -1,0 +1,13 @@
+# 조사원(investigator) 설정 — PLAN.md §5 조사 단계. 임계·가중치는 코드에 박지 않는다(원칙 3).
+investigation:
+  gate: # 결정론 게이트 — 아래 둘 다 충족하면 "분해가 원인 설명 완료" → 도구 루프 생략
+    residual_pct_max: 20.0 # |미설명 잔차%| 상한
+    top_leaf_pct_min: 60.0 # 최대 leaf |기여율| 하한
+  loop:
+    max_requests: 8 # 도구 루프 LLM 왕복 상한(비용 가드)
+priority:
+  weights: # 연속 점수 성분 가중치(합으로 정규화) — High/Medium/Low 라벨 대체
+    materiality: 0.35
+    votes: 0.30
+    anomaly: 0.15
+    confidence: 0.20
