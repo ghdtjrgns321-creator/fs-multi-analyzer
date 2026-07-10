@@ -44,6 +44,16 @@ def test_rebuttal_input_includes_suspicion_context() -> None:
     assert payload[0]["suspicions"][0]["perspective"] == "numeric"
 
 
+def test_rebuttal_input_includes_investigation() -> None:
+    from src.schemas.investigation import InvestigationConclusion
+
+    card = _card("매출채권", "acct:BS:매출채권")
+    card.investigation = InvestigationConclusion(headline="매출 이탈 주도", resolved=True)
+    payload = rb.build_rebuttal_input([card], {})
+    assert payload[0]["investigation"]["headline"] == "매출 이탈 주도"
+    assert "risk_level" not in payload[0]
+
+
 def test_apply_rebuttal_fills_matched_card() -> None:
     card = _card("매출채권", "acct:BS:매출채권")
     output = RebuttalOutput(

@@ -250,6 +250,54 @@ def test_rebuttal_normal_dominant_sinks_after_pipeline() -> None:
     assert "반박 미수행" not in result["rendered"]  # 둘 다 반박됨
 
 
+def test_pipeline_attaches_investigation_and_feeds_rebuttal() -> None:
+    """조사원 결과가 카드에 붙고, 반박 입력 시점에 이미 붙어 있어야 한다(순서 검증)."""
+
+    from src.schemas.investigation import InvestigationConclusion
+    from src.schemas.suspicion import RebuttalOutput
+
+    canned = {
+        "numeric": PerspectiveOutput(
+            suspicions=[
+                SuspicionItem(
+                    perspective="numeric",
+                    scope="account",
+                    issue_type=IssueType.REVENUE_RECEIVABLES,
+                    account_id="매출채권",
+                    sj_div="BS",
+                    year="2024",
+                    cited_value="100,000,000",
+                    description="매출채권 급증.",
+                )
+            ]
+        )
+    }
+
+    async def fake_investigation(card, report, decomposition, **kw):
+        return InvestigationConclusion(headline=f"{card.account} 원인 규명", resolved=False)
+
+    seen_at_rebuttal: list = []
+
+    async def fake_rebuttal(cards, context, **kw):
+        seen_at_rebuttal.extend(c.investigation for c in cards)
+        return RebuttalOutput()
+
+    result = asyncio.run(
+        build_suspicion_cards(
+            _report(),
+            agent_runner=_canned_runner(canned),
+            investigation_runner=fake_investigation,
+            rebuttal_runner=fake_rebuttal,
+            external_verifier=_canned_external(canned),
+            materials=_materials(),
+        )
+    )
+    cards = result["account_cards"] + result["company_cards"] + result["relationship_cards"]
+    assert cards and all(c.investigation is not None for c in cards)
+    assert all(inv is not None for inv in seen_at_rebuttal)  # 반박이 결론을 이미 봄
+    assert result["investigated"] == len(cards)
+
+
 def test_pipeline_unrebutted_card_shows_marker() -> None:
     canned = {
         "numeric": PerspectiveOutput(

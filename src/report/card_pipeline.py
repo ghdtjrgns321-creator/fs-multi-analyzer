@@ -13,6 +13,7 @@ from typing import Any
 from src.report.card_builder import build_cards, cluster_suspicions
 from src.report.card_report import build_card_report, render_card_markdown
 from src.report.grounding import build_account_index, verify_suspicions
+from src.report.investigator import run_investigation
 from src.report.perspective_runner import (
     ALL_PERSPECTIVES,
     collect_perspective_materials,
@@ -78,15 +79,16 @@ async def build_suspicion_cards(
     run_llm: bool = True,
     agent_runner: Callable[..., Awaitable[PerspectiveOutput]] = run_structured_perspective,
     rebuttal_runner: Callable[..., Awaitable[Any]] = run_rebuttal,
+    investigation_runner: Callable[..., Awaitable[Any]] = run_investigation,
     materials: dict[str, dict] | None = None,
     peer_keys: set[str] | None = None,
     external_verifier: Callable[..., Awaitable[dict]] = _default_external_verifier,
     on_progress: Callable[[dict], None] | None = None,
 ) -> dict[str, Any]:
-    """발견 5관점 병렬 → 근거검증 → 카드 클러스터·집계 → 반박 + 외부 검증 → 정렬·렌더.
+    """발견 5관점 병렬 → 근거검증 → 카드 클러스터·집계 → 조사 → 반박 + 외부 검증 → 정렬·렌더.
 
     on_progress: 진행 표시용 콜백. 관점 완료마다 {phase:'perspective',done,total},
-    단계 경계마다 {phase:'grounding'|'cards'|'rebuttal'|'done'}로 호출(선택).
+    단계 경계마다 {phase:'grounding'|'cards'|'investigation'|'rebuttal'|'done'}로 호출(선택).
     """
 
     def _emit(phase: str, done: int | None = None, total: int | None = None) -> None:
@@ -159,6 +161,18 @@ async def build_suspicion_cards(
         decomposed = decompose_change(series_rows, card.account, target_year, bridges)  # type: ignore[arg-type]
         if decomposed:
             decompositions[card.cluster_key] = decomposed
+
+    # 조사 단계(PLAN §5): 카드마다 결론 생성 — 반박·외부검증이 이 결론을 입력으로 받는다.
+    _emit("investigation")
+    conclusions = await asyncio.gather(
+        *[
+            investigation_runner(card, report, decompositions.get(card.cluster_key or ""))
+            for card in all_cards
+        ]
+    )
+    for card, conclusion in zip(all_cards, conclusions, strict=True):
+        card.investigation = conclusion
+
     # 반박 + 외부 검증(상위 카드 타깃 검색)을 병렬 실행 — 둘 다 카드 확정 후 검증자(PLAN §5).
     rebuttal, external_stats = await asyncio.gather(
         rebuttal_runner(all_cards, _rebuttal_context(grounded), decompositions=decompositions),
@@ -180,6 +194,7 @@ async def build_suspicion_cards(
         "grounded": grounded,
         "dropped": [g for g in grounded if not g.grounded],
         "rebuttal_entries": len(rebuttal.entries),
+        "investigated": sum(1 for c in conclusions if c is not None),
         "external_verification": external_stats,  # 상위 카드 타깃 검색 결과(관찰용)
     }
 

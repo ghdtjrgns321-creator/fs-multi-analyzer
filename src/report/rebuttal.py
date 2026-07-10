@@ -74,6 +74,8 @@ def build_rebuttal_input(
         }
         if key in decompositions:  # 브리지 없는 카드는 키 자체를 생략(빈 필드 노이즈 금지)
             entry["decomposition"] = decompositions[key]
+        if card.investigation is not None:  # 조사 결론 — 반박의 공격 대상(없으면 키 생략)
+            entry["investigation"] = card.investigation.model_dump()
         payload.append(entry)
     return payload
 
