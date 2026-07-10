@@ -142,6 +142,16 @@ def test_pipeline_wires_external_verifier():
             c.external_checked = True
         return {"status": "completed", "verified": len(cards), "found": 0}
 
+    async def fake_investigation(card, report, decomposition, **kw):
+        # 기본 investigation_runner는 실 OpenAI 호출 — 단위테스트는 fake로 차단.
+        return None
+
+    async def fake_rebuttal(cards, context, **kw):
+        # 기본 rebuttal_runner도 실 OpenAI 호출(run_rebuttal) — fake로 차단.
+        from src.schemas.suspicion import RebuttalOutput
+
+        return RebuttalOutput()
+
     report = {
         "corp_code": "x",
         "target_year": "2024",
@@ -164,6 +174,8 @@ def test_pipeline_wires_external_verifier():
         build_suspicion_cards(
             report,
             agent_runner=runner,
+            investigation_runner=fake_investigation,
+            rebuttal_runner=fake_rebuttal,
             external_verifier=fake_verifier,
             materials={name: {} for name in ALL_PERSPECTIVES},
         )

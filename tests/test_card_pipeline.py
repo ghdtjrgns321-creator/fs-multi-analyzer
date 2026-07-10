@@ -10,7 +10,7 @@ import asyncio
 from src.report.card_pipeline import build_suspicion_cards
 from src.report.perspective_runner import ALL_PERSPECTIVES
 from src.schemas.findings import IssueType
-from src.schemas.suspicion import PerspectiveOutput, SuspicionItem
+from src.schemas.suspicion import PerspectiveOutput, RebuttalOutput, SuspicionItem
 
 
 def _report():
@@ -30,6 +30,11 @@ def _report():
         ],
         "unmapped_material_accounts": [],
     }
+
+
+async def _no_investigation(card, report, decomposition, **kw):
+    # 기본 investigation_runner는 실 OpenAI 호출(run_investigation) — 단위테스트는 fake로 차단.
+    return None
 
 
 def _canned_runner(canned):
@@ -80,10 +85,17 @@ def test_pipeline_builds_account_and_company_cards() -> None:
             ]
         ),
     }
+
+    async def _no_rebuttal(cards, context, **kw):
+        # 기본 rebuttal_runner도 실 OpenAI 호출(run_rebuttal) — fake로 차단.
+        return RebuttalOutput()
+
     result = asyncio.run(
         build_suspicion_cards(
             _report(),
             agent_runner=_canned_runner(canned),
+            investigation_runner=_no_investigation,
+            rebuttal_runner=_no_rebuttal,
             external_verifier=_canned_external(canned),
             materials=_materials(),
         )
@@ -115,6 +127,7 @@ def test_pipeline_drops_ungrounded() -> None:
         build_suspicion_cards(
             _report(),
             agent_runner=_canned_runner(canned),
+            investigation_runner=_no_investigation,
             external_verifier=_canned_external(canned),
             materials=_materials(),
         )
@@ -129,6 +142,7 @@ def test_pipeline_counts_completed_perspectives() -> None:
         build_suspicion_cards(
             _report(),
             agent_runner=_canned_runner(canned),
+            investigation_runner=_no_investigation,
             external_verifier=_canned_external(canned),
             materials=_materials(),
         )
@@ -143,6 +157,7 @@ def test_pipeline_on_progress_reports_perspectives_and_phases() -> None:
         build_suspicion_cards(
             _report(),
             agent_runner=_canned_runner({}),
+            investigation_runner=_no_investigation,
             external_verifier=_canned_external(),
             materials=_materials(),
             on_progress=lambda p: events.append(p),
@@ -172,6 +187,7 @@ def test_pipeline_surfaces_failed_perspectives() -> None:
         build_suspicion_cards(
             _report(),
             agent_runner=_canned_runner(canned),
+            investigation_runner=_no_investigation,
             external_verifier=_canned_external(canned),
             materials=_materials(),
         )
@@ -224,7 +240,7 @@ def _two_card_runner():
 
 
 def test_rebuttal_normal_dominant_sinks_after_pipeline() -> None:
-    from src.schemas.suspicion import RebuttalEntry, RebuttalOutput
+    from src.schemas.suspicion import RebuttalEntry
 
     async def fake_rebuttal(cards, context, decompositions=None):
         # 큰 금액(재고자산)을 정상우세로 강등 → 정렬에서 하단으로 가야 함
@@ -239,6 +255,7 @@ def test_rebuttal_normal_dominant_sinks_after_pipeline() -> None:
         build_suspicion_cards(
             _two_account_report(),
             agent_runner=_two_card_runner(),
+            investigation_runner=_no_investigation,
             rebuttal_runner=fake_rebuttal,
             external_verifier=_canned_external(),
             materials=_materials(),
@@ -254,7 +271,6 @@ def test_pipeline_attaches_investigation_and_feeds_rebuttal() -> None:
     """조사원 결과가 카드에 붙고, 반박 입력 시점에 이미 붙어 있어야 한다(순서 검증)."""
 
     from src.schemas.investigation import InvestigationConclusion
-    from src.schemas.suspicion import RebuttalOutput
 
     canned = {
         "numeric": PerspectiveOutput(
@@ -317,7 +333,6 @@ def test_pipeline_unrebutted_card_shows_marker() -> None:
     }
 
     async def empty_rebuttal(cards, context, decompositions=None):
-        from src.schemas.suspicion import RebuttalOutput
 
         return RebuttalOutput(entries=[])
 
@@ -325,6 +340,7 @@ def test_pipeline_unrebutted_card_shows_marker() -> None:
         build_suspicion_cards(
             _report(),
             agent_runner=_canned_runner(canned),
+            investigation_runner=_no_investigation,
             rebuttal_runner=empty_rebuttal,
             external_verifier=_canned_external(canned),
             materials=_materials(),

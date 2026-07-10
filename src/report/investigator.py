@@ -135,7 +135,10 @@ async def run_investigation(
         return None
     conclusion: InvestigationConclusion = result.output
     conclusion.method = "tool_loop" if use_tools else "gate_summary"
-    conclusion.tool_requests = getattr(result.usage(), "requests", 0)
+    usage = result.usage
+    if callable(usage):
+        usage = usage()
+    conclusion.tool_requests = getattr(usage, "requests", 0)
     return conclusion
 
 
