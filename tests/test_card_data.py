@@ -573,3 +573,32 @@ def test_evidence_rows_pipe_locator_dedup_and_readable_label():
     rows = evidence_rows(card, exclude_accounts={"당기순이익"})  # 분해표에 이미 있는 계정
     assert len(rows) == 1
     assert rows[0]["계정"] == "매출"  # 'ifrs-full_Revenue|' 접두 제거(가독)
+
+
+def test_fmt_krw_parses_comma_strings():
+    assert fmt_krw("1,798,862,505,633") == "1.8조"  # 쉼표 문자열도 축약(단위 혼재 버그)
+    assert fmt_krw("6,400") == "6,400"  # 1억 미만은 그대로
+
+
+def test_evidence_rows_dedup_same_amount_different_format():
+    """같은 계정·연도·같은 금액이 '1,798,...'와 '1798...' 표기만 다르면 1행."""
+
+    card = _card(
+        numeric_evidence=[
+            EvidenceRef(
+                source="financial_statement",
+                locator="무형자산",
+                year="2025",
+                value="1,798,862,505,633",
+            ),
+            EvidenceRef(
+                source="financial_statement",
+                locator="ifrs-full_IntangibleAssets|무형자산",
+                year="2025",
+                value="1798862505633",
+            ),
+        ]
+    )
+    rows = evidence_rows(card)
+    assert len(rows) == 1
+    assert rows[0]["금액"] == "1.8조"

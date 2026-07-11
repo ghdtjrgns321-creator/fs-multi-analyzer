@@ -46,7 +46,8 @@ def fmt_krw(value: Any) -> str:
     """원화 금액을 조/억 축약(부호 보존). 숫자 아님 → '-'. 표에는 원단위 전체를 병기한다."""
 
     try:
-        amount = float(value)
+        # '1,798,862,505,633' 같은 쉼표 문자열도 축약(단위 혼재 방지 — 표에 원단위 생노출 금지).
+        amount = float(str(value).replace(",", "")) if isinstance(value, str) else float(value)
     except (TypeError, ValueError):
         return "-"
     sign = "-" if amount < 0 else ""
@@ -105,10 +106,6 @@ def evidence_rows(card: Any, exclude_accounts: set[str] | None = None) -> list[d
     seen: set[tuple] = set()
     out: list[dict] = []
     for ref in _get(card, "numeric_evidence") or []:
-        row_key = (_get(ref, "locator"), _get(ref, "year"), _get(ref, "value"))
-        if row_key in seen:
-            continue
-        seen.add(row_key)
         locator = str(_get(ref, "locator") or "")
         if locator.startswith("ratio:"):
             continue  # 원시 지표 키(ratio:… = 3 류)는 못 읽는 노이즈 — 주장 서술이 대신함
@@ -116,13 +113,23 @@ def evidence_rows(card: Any, exclude_accounts: set[str] | None = None) -> list[d
         # 'ifrs-full_ProfitLoss|당기순이익' 같은 코드|라벨 locator는 라벨로 대조·표시
         # (코드 접두 때문에 분해 표 중복 제거가 빗나가던 버그).
         display = bare_name.split("|")[-1].strip() or bare_name
+        raw_value = _get(ref, "value")
+        # 중복 키 = (표시라벨, 연도, 정규화 금액) — 같은 값이 '1,798…'/'1798…' 표기만
+        # 달라 두 행 나오던 버그 차단. 파싱 불가 값은 원문 문자열로 비교.
+        try:
+            normalized: object = float(str(raw_value).replace(",", ""))
+        except (TypeError, ValueError):
+            normalized = str(raw_value)
+        row_key = (display, str(_get(ref, "year") or ""), normalized)
+        if row_key in seen:
+            continue
+        seen.add(row_key)
         if (
             display in exclude_accounts
             or bare_name in exclude_accounts
             or locator in exclude_accounts
         ):
             continue  # 분해 표가 이미 보여준 계정 — 재나열 금지
-        raw_value = _get(ref, "value")
         out.append(
             {
                 "계정": display,
