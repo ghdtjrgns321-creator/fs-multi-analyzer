@@ -205,14 +205,8 @@ def _decomposition_table(out: dict) -> None:
     """ "왜 움직였나" 분해 표(재귀 들여쓰기·잔차 정직 표시)."""
 
     _, parent_name = split_series_key(str(out["parent"]))
-    change = f" ({out['change_pct']:+.1f}%)" if out.get("change_pct") is not None else ""
-    st.markdown(
-        f"왜 움직였나 — {parent_name} "
-        f"{fmt_krw(out['parent_prior'])}({out['prior_year']}) → "
-        f"{fmt_krw(out['parent_current'])}({out['year']}) · "
-        f"변동 {fmt_krw(out['delta'])}{change} · {out['variant']}형 분해"
-    )
-    # 주도·방어 핵심 문장은 카드 최상단 '검토 포인트'(review_point)가 담당 — 중복 표기 금지.
+    # 얼마→얼마·변동은 표 첫 행("전체")에 이미 있다 — 서문 반복 금지(사용자 지적).
+    st.markdown(f"**왜 움직였나 — {parent_name}**")
 
     pct_values: list[float | None] = []  # 기여율 셀 색(방향×강도) 계산용 — 표 행과 1:1
 
@@ -327,7 +321,10 @@ def _external_block(card: Any) -> None:
     elif checked:
         st.caption("외부 근거 미발견 — 타깃 검색을 수행했으나 출처 있는 관련 보도·공시 없음.")
     else:
-        st.caption("외부 검증 미수행 — 위험도 상위 카드에만 타깃 검색을 겁니다.")
+        st.caption(
+            "외부 검증 미수행 — 조사 미해결·우선순위 상위 카드에만 타깃 검색을 겁니다"
+            "(대상 수는 config/investigation.yaml external.top_n)."
+        )
 
 
 def _chart_block(
@@ -377,13 +374,7 @@ def _conclusion_block(card: Any) -> None:
     if view["open_questions"]:
         st.markdown("남은 확인사항")
         st.markdown("\n".join(f"- {s}" for s in view["open_questions"]))
-    method = (
-        "분해로 설명 완료(요약 1회)"
-        if view["method"] == "gate_summary"
-        else (f"도구 조사 {view['tool_requests']}회")
-    )
-    status = "원인 규명 완결" if view["resolved"] else "미해결 — 외부검증 우선 대상"
-    st.caption(f"{method} · {status}")
+    # 경로·완결 캡션은 시스템 내부 정보라 감사인에게 무의미 — 표시하지 않는다(사용자 결정).
 
 
 def _card_body(card: Any, series_rows: list[dict], target_year: int, decomposition) -> None:

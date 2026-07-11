@@ -188,8 +188,8 @@ def test_render_suspicion_card_apptest_smoke():
     assert "② 결과 분해" in body
     assert "③ 시각자료" in body
     assert "왜 움직였나" in body  # 분해 표 섹션 렌더 확인
-    # 타이틀에 부모 값 병기(얼마→얼마·변화율)
-    assert "1.0조(2023)" in body and "4,000억(2024)" in body and "-60.0%" in body
+    # 서문(얼마→얼마·변동·N형 분해)은 표 첫 행과 중복이라 제거됨(사용자 지적 2026-07-11)
+    assert "1.0조(2023)" not in body and "형 분해" not in body
     # 재귀 펼침 행('└ 매출')·부모 전체 행이 분해 표 dataframe에 존재
     decomp_tables = [df.value for df in at.dataframe if "구성" in list(df.value.columns)]
     assert decomp_tables
@@ -482,7 +482,9 @@ def test_group_cards_real_config_covers_all_issue_types():
 def test_short_headline_takes_first_sentence_and_truncates():
     from dashboard.card_data import short_headline
 
-    three = "당기순이익의 적자 전환은 세전이익 악화에서 설명된다. 핵심은 영업이익 감소다. 잔차는 0이다."
+    three = (
+        "당기순이익의 적자 전환은 세전이익 악화에서 설명된다. 핵심은 영업이익 감소다. 잔차는 0이다."
+    )
     assert short_headline(three) == "당기순이익의 적자 전환은 세전이익 악화에서 설명된다"
     long_one = "가" * 80
     out = short_headline(long_one)
@@ -511,7 +513,13 @@ def test_perspective_badge_names_dedup_and_internal_only():
 def test_card_label_prefers_conclusion_label():
     from dashboard.card_data import card_label
 
-    card = {"investigation": {"headline": "긴 헤드라인. 문장 둘.", "label": "매출 이탈이 영업이익 급감 주도", "resolved": True}}
+    card = {
+        "investigation": {
+            "headline": "긴 헤드라인. 문장 둘.",
+            "label": "매출 이탈이 영업이익 급감 주도",
+            "resolved": True,
+        }
+    }
     assert card_label(card, None, []) == "매출 이탈이 영업이익 급감 주도"
 
 
@@ -541,3 +549,27 @@ def test_card_label_no_conclusion_falls_back_to_headline_chain():
 
     card = {"claims": [{"perspective": "numeric", "description": "짧은 주장."}], "subtype": ""}
     assert card_label(card, None, []) == "짧은 주장"
+
+
+def test_evidence_rows_pipe_locator_dedup_and_readable_label():
+    """'코드|라벨' locator: 분해표 계정과 중복 제외가 라벨 기준으로 작동 + 표시도 라벨만."""
+
+    card = _card(
+        numeric_evidence=[
+            EvidenceRef(
+                source="financial_statement",
+                locator="ifrs-full_ProfitLoss|당기순이익",
+                year="2025",
+                value="-85800000000",
+            ),
+            EvidenceRef(
+                source="financial_statement",
+                locator="ifrs-full_Revenue|매출",
+                year="2025",
+                value="6400000000000",
+            ),
+        ]
+    )
+    rows = evidence_rows(card, exclude_accounts={"당기순이익"})  # 분해표에 이미 있는 계정
+    assert len(rows) == 1
+    assert rows[0]["계정"] == "매출"  # 'ifrs-full_Revenue|' 접두 제거(가독)

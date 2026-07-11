@@ -246,8 +246,8 @@ def test_evidence_rows_excludes_decomposition_accounts():
     # ratio: 원시 지표 키는 사람이 못 읽는 노이즈 — 항상 제외. 분해 표 계정 2건도 제외 → 0건.
     rows = evidence_rows(card, exclude_accounts={"영업이익", "매출총이익"})
     assert rows == []
-    # exclude 미지정이어도 ratio:는 빠지고 계정 참조만 남는다.
-    assert [r["계정"] for r in evidence_rows(card)] == ["CFS:영업이익", "매출총이익"]
+    # exclude 미지정이어도 ratio:는 빠지고 계정 참조만 남는다(표시는 fs_div 접두 벗긴 라벨).
+    assert [r["계정"] for r in evidence_rows(card)] == ["영업이익", "매출총이익"]
 
 
 def test_decomposition_accounts_collects_parent_and_children():
@@ -272,3 +272,17 @@ def test_decomposition_accounts_collects_parent_and_children():
 
 if __name__ == "__main__":
     pytest.main([__file__, "-q"])
+
+
+def test_external_top_n_reads_config_and_fallback():
+    """존재≠사용 차단 — top_n이 config를 실제로 읽고, 값 바꾸면 선정 수가 바뀐다."""
+
+    from src.report.external_verify import external_top_n, select_top_cards
+
+    assert external_top_n({"external": {"top_n": 7}}) == 7
+    assert external_top_n({}) == 5  # 폴백
+    assert external_top_n() == 10  # 실제 config/investigation.yaml 값
+
+    cards = [_card(account=f"CFS:acc{i}", priority_score=0.01 * i) for i in range(12)]
+    assert len(select_top_cards(cards, top_n=7)) == 7
+    assert len(select_top_cards(cards, top_n=12)) == 10  # 하드캡

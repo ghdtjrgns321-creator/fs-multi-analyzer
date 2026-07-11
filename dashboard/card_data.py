@@ -113,12 +113,19 @@ def evidence_rows(card: Any, exclude_accounts: set[str] | None = None) -> list[d
         if locator.startswith("ratio:"):
             continue  # 원시 지표 키(ratio:… = 3 류)는 못 읽는 노이즈 — 주장 서술이 대신함
         _, bare_name = split_series_key(locator)
-        if bare_name in exclude_accounts or locator in exclude_accounts:
+        # 'ifrs-full_ProfitLoss|당기순이익' 같은 코드|라벨 locator는 라벨로 대조·표시
+        # (코드 접두 때문에 분해 표 중복 제거가 빗나가던 버그).
+        display = bare_name.split("|")[-1].strip() or bare_name
+        if (
+            display in exclude_accounts
+            or bare_name in exclude_accounts
+            or locator in exclude_accounts
+        ):
             continue  # 분해 표가 이미 보여준 계정 — 재나열 금지
         raw_value = _get(ref, "value")
         out.append(
             {
-                "계정": locator,
+                "계정": display,
                 "연도": str(_get(ref, "year") or ""),
                 "금액": fmt_krw(raw_value) if fmt_krw(raw_value) != "-" else str(raw_value or "-"),
             }

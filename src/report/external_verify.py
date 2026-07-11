@@ -16,10 +16,19 @@ from config.settings import settings
 from src.agents.context_brief import create_context_brief_for_queries
 from src.schemas.findings import AccountFinding, ExternalRef
 
-# 타깃 검색 기본 카드 수 + 절대 상한(비용 가드). 나머지는 '미수행' 표기.
+# 타깃 검색 기본 카드 수(설정 폴백) + 절대 상한(비용 가드). 나머지는 '미수행' 표기.
 EXTERNAL_TOP_N = 5
 EXTERNAL_HARD_CAP = 10
 _MAX_REFS_PER_CARD = 3
+
+
+def external_top_n(config: dict | None = None) -> int:
+    """검색 대상 카드 수 — config/investigation.yaml external.top_n(없으면 폴백 5)."""
+
+    from src.report.investigation_config import load_investigation_config
+
+    cfg = config if config is not None else load_investigation_config()
+    return int((cfg.get("external") or {}).get("top_n", EXTERNAL_TOP_N))
 
 
 def select_top_cards(
@@ -69,7 +78,7 @@ async def verify_cards(
     cards: list[AccountFinding],
     report: dict[str, object],
     decompositions: dict[str, dict] | None = None,
-    top_n: int = EXTERNAL_TOP_N,
+    top_n: int | None = None,  # None이면 config external.top_n(운영 조정 나사)
     context_factory: Callable[..., Any] = create_context_brief_for_queries,
 ) -> dict:
     """상위 카드 외부 검증 — external_evidence 채움 + checked 마킹. 키 없음은 deferred.
@@ -84,7 +93,7 @@ async def verify_cards(
     company = str(report.get("company_name", report.get("corp_code", "")))
     year = report.get("target_year", "")
     decompositions = decompositions or {}
-    targets = select_top_cards(cards, top_n)
+    targets = select_top_cards(cards, top_n if top_n is not None else external_top_n())
 
     async def _verify_one(card: AccountFinding) -> bool:
         queries = card_queries(company, year, card, decompositions.get(card.cluster_key or ""))
