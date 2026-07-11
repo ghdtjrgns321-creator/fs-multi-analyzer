@@ -426,3 +426,51 @@ def test_build_cards_fills_claims_one_per_item():
     assert len(card.claims) == 2  # items 2건 → claims 2건(누락 금지)
     assert {c.perspective for c in card.claims} == {"numeric", "trend"}
     assert all(c.description.endswith("의심 사유") for c in card.claims)
+
+
+# --- 넓은 주제 그룹핑(group_cards) — 사용자 결정 2026-07-11: 점수 정렬 대신 주제 묶음 1차 ---
+
+_GROUP_CFG = {
+    "order": ["손익·수익성", "재무상태", "현금흐름", "우발·특수관계", "기타"],
+    "by_issue_type": {
+        "earnings_tax": "손익·수익성",
+        "asset_valuation": "재무상태",
+        "cash_flow": "현금흐름",
+    },
+}
+
+
+def test_group_cards_order_and_vote_sort():
+    from dashboard.card_data import group_cards
+
+    cards = [
+        {"issue_type": "cash_flow", "vote_count": 1, "priority_score": 0.5},
+        {"issue_type": "earnings_tax", "vote_count": 1, "priority_score": 0.9},
+        {"issue_type": "earnings_tax", "vote_count": 2, "priority_score": 0.1},
+        {"issue_type": "asset_valuation", "vote_count": 1, "priority_score": 0.4},
+    ]
+    groups = group_cards(cards, _GROUP_CFG)
+    assert [label for label, _ in groups] == ["손익·수익성", "재무상태", "현금흐름"]  # 빈 그룹 생략
+    incomes = groups[0][1]
+    assert incomes[0]["vote_count"] == 2  # 그룹 안은 표수 우선(점수보다)
+    assert incomes[1]["priority_score"] == 0.9
+
+
+def test_group_cards_unknown_issue_falls_back_to_last_group():
+    from dashboard.card_data import group_cards
+
+    groups = group_cards([{"issue_type": "낯선유형", "vote_count": 0}], _GROUP_CFG)
+    assert groups == [("기타", [{"issue_type": "낯선유형", "vote_count": 0}])]
+
+
+def test_group_cards_real_config_covers_all_issue_types():
+    from dashboard.card_data import group_cards, load_card_groups
+    from src.schemas.findings import IssueType
+
+    cfg = load_card_groups()
+    mapping = cfg["by_issue_type"]
+    missing = [t.value for t in IssueType if t.value not in mapping]
+    assert missing == []  # enum 10종 전부 매핑(누락 시 이 목록에 나옴)
+    cards = [{"issue_type": t.value, "vote_count": 0} for t in IssueType]
+    grouped_total = sum(len(g) for _, g in group_cards(cards, cfg))
+    assert grouped_total == len(cards)  # 드롭 0

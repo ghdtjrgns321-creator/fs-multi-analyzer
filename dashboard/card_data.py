@@ -7,7 +7,10 @@
 from __future__ import annotations
 
 import re
+from pathlib import Path
 from typing import Any
+
+import yaml
 
 # 관점 내부명 → 사람용 라벨(주장 칩 표기).
 PERSPECTIVE_LABELS = {
@@ -265,6 +268,45 @@ def conclusion_view(card: Any) -> dict | None:
         "method": str(_get(inv, "method") or ""),
         "tool_requests": int(_get(inv, "tool_requests") or 0),
     }
+
+
+CARD_GROUPS_PATH = Path("config/card_groups.yaml")
+
+
+def load_card_groups(path: Path = CARD_GROUPS_PATH) -> dict:
+    """카드 표시 그룹 설정(order·by_issue_type). 파일 부재는 빈 dict(그룹핑 생략 graceful)."""
+
+    if not path.exists():
+        return {}
+    payload = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    return payload.get("card_groups", {}) or {}
+
+
+def group_cards(cards: list, groups: dict | None = None) -> list[tuple[str, list]]:
+    """카드를 넓은 주제 그룹으로 묶는다(1차 구조 — 점수 전체 줄세우기 대체).
+
+    그룹 순서는 config order, 그룹 안은 표수 내림 → 점수 내림(점수는 같은 주제 안의
+    순서로만 쓰인다). 매핑에 없는 issue_type은 마지막 그룹('기타')으로 — 드롭 0."""
+
+    cfg = groups if groups is not None else load_card_groups()
+    mapping = cfg.get("by_issue_type") or {}
+    order = list(cfg.get("order") or [])
+    fallback = order[-1] if order else "기타"
+    buckets: dict[str, list] = {}
+    for card in cards:
+        issue = _get(card, "issue_type")
+        issue = str(getattr(issue, "value", issue) or "")
+        buckets.setdefault(mapping.get(issue, fallback), []).append(card)
+    for group in buckets.values():
+        group.sort(
+            key=lambda c: (
+                int(_get(c, "vote_count") or 0),
+                float(_get(c, "priority_score") or 0.0),
+            ),
+            reverse=True,
+        )
+    ordered = [g for g in order if g in buckets] + [g for g in buckets if g not in order]
+    return [(g, buckets[g]) for g in ordered]
 
 
 def sort_cards(cards: list) -> list:

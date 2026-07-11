@@ -427,30 +427,54 @@ def _rebuttal_block(card: Any) -> None:
         st.caption("반박 세부 목록 없음.")
 
 
-def render_cards_section(
-    title: str, cards: list, series_rows: list[dict], target_year: int
-) -> None:
-    """섹션 제목 + 카드 단추 목록(우선순위 정렬·접힘) — 눌러야 본문이 열린다(개요→상세).
+def _card_expander(card: Any, series_rows: list[dict], target_year: int, bridges: dict) -> None:
+    """카드 1장 단추(접힘) — 라벨 = 계정 + 결론 헤드라인 + 표수 배지(2표 이상만)."""
 
-    단추 라벨 = 계정 + 두괄식 헤드라인 + 우선순위 점수. 빈 섹션도 0건 명시(§9).
+    from dashboard.card_data import card_headline, conclusion_view
+    from src.report.decomposition import decompose_change
+
+    account_key = str(_get(card, "account") or "")
+    decomposition = decompose_change(series_rows, account_key, target_year, bridges)
+    fs_label, name = split_series_key(account_key)
+    view = conclusion_view(card)
+    headline = view["headline"] if view else card_headline(card, decomposition, series_rows)
+    fs_tag = f" ({fs_label})" if fs_label else ""
+    votes = int(_get(card, "vote_count") or 0)
+    total = int(_get(card, "internal_total") or 4)
+    # 교차확인 배지 — 여러 관점이 독립 지적한 카드만 표시(1표는 노이즈라 생략).
+    badge = f" · :blue[{votes}/{total}표]" if votes >= 2 else ""
+    label = f"**{name}{fs_tag}** — {headline}{badge}"
+    with st.expander(label, expanded=False):
+        _card_body(card, series_rows, target_year, decomposition)
+
+
+def render_cards_section(
+    title: str,
+    cards: list,
+    series_rows: list[dict],
+    target_year: int,
+    grouped: bool = False,
+) -> None:
+    """섹션 제목 + 카드 단추 목록(접힘) — 눌러야 본문이 열린다(개요→상세).
+
+    grouped=True(계정 섹션): 넓은 주제 그룹(config/card_groups.yaml)이 1차 구조,
+    그룹 안은 표수→점수 순(card_data.group_cards). False: 점수 정렬 단일 목록(기존).
+    빈 섹션도 0건 명시(§9).
     """
 
-    from dashboard.card_data import card_headline, conclusion_view, sort_cards
-    from src.report.decomposition import decompose_change, load_bridges
+    from dashboard.card_data import group_cards, sort_cards
+    from src.report.decomposition import load_bridges
 
     st.markdown(f"#### {title}")
     if not cards:
         st.caption("이 섹션에서 제기된 의심 후보 0건.")
         return
     bridges = load_bridges()
+    if grouped:
+        for group_label, group in group_cards(cards):
+            st.markdown(f"##### {group_label}")
+            for card in group:
+                _card_expander(card, series_rows, target_year, bridges)
+        return
     for card in sort_cards(cards):
-        account_key = str(_get(card, "account") or "")
-        decomposition = decompose_change(series_rows, account_key, target_year, bridges)
-        fs_label, name = split_series_key(account_key)
-        score = float(_get(card, "priority_score") or 0.0)
-        view = conclusion_view(card)
-        headline = view["headline"] if view else card_headline(card, decomposition, series_rows)
-        fs_tag = f" ({fs_label})" if fs_label else ""
-        label = f"**{name}{fs_tag}** — {headline} · 우선순위 {score:.2f}"
-        with st.expander(label, expanded=False):
-            _card_body(card, series_rows, target_year, decomposition)
+        _card_expander(card, series_rows, target_year, bridges)

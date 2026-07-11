@@ -1,0 +1,20 @@
+# 카드 목록 표시 그룹 — issue_type(재무제표 영역 축)을 넓은 주제로 접는 매핑.
+# 정렬 점수 대신 주제 묶음이 1차 구조(사용자 결정 2026-07-11). 그룹 순서도 여기서.
+card_groups:
+  order:
+    - 손익·수익성
+    - 재무상태
+    - 현금흐름
+    - 우발·특수관계
+    - 기타
+  by_issue_type:
+    revenue_receivables: 손익·수익성
+    cost_inventory: 손익·수익성
+    earnings_tax: 손익·수익성
+    asset_valuation: 재무상태
+    liability_liquidity: 재무상태
+    equity_capital: 재무상태
+    cash_flow: 현금흐름
+    contingency_related_party: 우발·특수관계
+    unmapped_material_account: 기타
+    기타: 기타

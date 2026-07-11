@@ -113,7 +113,11 @@ def _render_card_sections(card_result: dict) -> None:
     series_rows = st.session_state.get("rv_series") or []
     target_year = int(st.session_state.get("rv_target_year") or 0)
     render_cards_section(
-        "계정별 의심 후보", card_result.get("account_cards") or [], series_rows, target_year
+        "계정별 의심 후보",
+        card_result.get("account_cards") or [],
+        series_rows,
+        target_year,
+        grouped=True,  # 넓은 주제 그룹이 1차 구조(점수 전체 줄세우기 대체)
     )
     render_cards_section(
         "계정 관계 이상 (흐름)",
