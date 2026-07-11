@@ -99,24 +99,19 @@ def series_points(rows: list[dict], series_key: str) -> list[dict]:
 _EVIDENCE_SOURCE_LABELS = {"report_extracts": "공시 본문", "note_facts": "주석", "note": "주석"}
 
 
-_METRIC_KEY_HEAD = re.compile(r"^[A-Za-z_][\w-]*([.:]|$)")
-
-
 def _is_metric_key(locator: str) -> bool:
-    """지표 원시 키 판정(ratio:·benchmark.·ratio_time_series.… 일반형) — 계정 참조 아님.
+    """지표 원시 키 판정(구 카드 폴백 — 신규 카드는 grounding resolved_kind가 담당).
 
-    지표는 주장 서술이 이미 담고 있어 근거 표·목록에 원시 키를 노출하지 않는다.
-    계정 표식이 하나라도 있으면 유지: 한글 라벨 / '코드|라벨' 파이프 / fs_div 접두 /
-    서술 네임스페이스(report_extracts: 등). 접두 열거 대신 형태 판정(두더지잡기 방지)."""
+    규칙은 grounding과 동일: 계정 표식(한글 라벨 / '코드|라벨' 파이프 / fs_div 접두 /
+    서술 네임스페이스)이 하나도 없는 **ASCII-only 참조는 전부 지표**로 본다 — 구분자
+    형식(점·콜론·언더스코어)을 예상하지 않는다(실측: LLM이 임의 형식을 발명함)."""
 
     prefix, _, _rest = locator.partition(":")
     if prefix in _EVIDENCE_SOURCE_LABELS or prefix in FS_DIV_LABELS:
         return False
     if "|" in locator:
         return False
-    if any("가" <= ch <= "힣" for ch in locator):
-        return False
-    return bool(_METRIC_KEY_HEAD.match(locator))
+    return bool(locator) and not any("가" <= ch <= "힣" for ch in locator)
 
 
 def _parse_amount(value: Any) -> float | None:
@@ -129,13 +124,14 @@ def _parse_amount(value: Any) -> float | None:
 
 
 def _evidence_display(locator: str) -> str:
-    """locator → 사람용 라벨: 네임스페이스(report_extracts: 등)·fs_div·코드 접두 제거."""
+    """locator → 사람용 라벨: 'ASCII접두:'·fs_div·'코드|' 접두 제거(접두 열거 안 함)."""
 
     prefix, _, rest = locator.partition(":")
-    if prefix in _EVIDENCE_SOURCE_LABELS:
-        return rest.split("|")[-1].strip() or rest.strip()
-    _, bare_name = split_series_key(locator)
-    return bare_name.split("|")[-1].strip() or bare_name
+    if rest and not any("가" <= ch <= "힣" for ch in prefix):
+        base = rest
+    else:
+        _, base = split_series_key(locator)
+    return base.split("|")[-1].strip() or base or locator
 
 
 def evidence_rows(card: Any, exclude_accounts: set[str] | None = None) -> list[dict]:

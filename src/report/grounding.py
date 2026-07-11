@@ -293,14 +293,20 @@ def verify_company_suspicion(
 # 렌더러가 locator 문자열 모양으로 역추정하던 두더지잡기의 근본 해결.
 _NARRATIVE_NAMESPACES = frozenset({"note", "note_facts", "report_extracts", "sce"})
 _FS_PREFIXES = frozenset({"CFS", "OFS", "BS", "IS", "CF", "CIS", "SCE"})
-_METRIC_HEAD = re.compile(r"^[A-Za-z_][\w-]*[.:]")
+
+
+def _has_korean(text: str) -> bool:
+    return any("가" <= ch <= "힣" for ch in text)
 
 
 def _evidence_label(locator: str) -> str:
-    """locator → 사람용 라벨(네임스페이스·fs_div·'코드|' 접두 제거)."""
+    """locator → 사람용 라벨: 'ASCII접두:한글라벨'·'코드|라벨' 형태의 접두를 벗긴다.
+
+    접두를 열거하지 않는다 — LLM이 canonical: 같은 임의 접두를 발명해도(실측) 나머지에
+    한글 라벨이 있으면 그것이 사람용 라벨이다."""
 
     prefix, _, rest = locator.partition(":")
-    base = rest if (prefix in _NARRATIVE_NAMESPACES or prefix in _FS_PREFIXES) else locator
+    base = rest if (rest and not _has_korean(prefix)) else locator
     return base.split("|")[-1].strip() or locator
 
 
@@ -312,29 +318,43 @@ def _numeric_value(value: object) -> bool:
     return True
 
 
+def classify_ref(ref: object, sj_div: str | None, index: dict[str, set[str]]) -> None:
+    """근거 참조 1건에 resolved_kind·display_label 세팅(in-place).
+
+    규칙(형식 예상 금지 — 실측에서 LLM이 canonical:·언더스코어 변형을 발명함):
+    ①서술 네임스페이스 → note/narrative ②locator 또는 '접두 뒤 나머지'가 색인에 실존 →
+    account ③한글이 한 글자도 없는 미해석 참조 = 전부 metric(어떤 구분자든) ④나머지는
+    값이 금액이면 account, 아니면 narrative(드롭 없음)."""
+
+    locator = str(getattr(ref, "locator", "") or "")
+    prefix, _, rest = locator.partition(":")
+    label = _evidence_label(locator)
+    if prefix in _NARRATIVE_NAMESPACES:
+        kind = "note" if _numeric_value(getattr(ref, "value", None)) else "narrative"
+    elif any(
+        candidate in index or (sj_div and f"{sj_div}:{candidate}" in index)
+        for candidate in (locator, rest, label)
+        if candidate
+    ):
+        kind = "account"
+    elif prefix in _FS_PREFIXES:
+        kind = "account"
+    elif not _has_korean(locator):
+        kind = "metric"  # ASCII-only 미해석 참조(지표·내부 키) — 표시 금지
+    else:
+        kind = "account" if _numeric_value(getattr(ref, "value", None)) else "narrative"
+    ref.resolved_kind = kind  # type: ignore[attr-defined]
+    ref.display_label = label  # type: ignore[attr-defined]
+
+
 def classify_evidence(item: SuspicionItem, index: dict[str, set[str]]) -> None:
-    """의심건의 근거 참조마다 resolved_kind·display_label을 코드가 세팅(in-place).
+    """의심건의 근거 참조 전부에 종류·라벨 세팅.
 
     account=계정 실측(수치 표) / note=주석 수치 / narrative=서술 공시(읽는 목록) /
     metric=지표 원시 키(표시 안 함 — 내용은 주장 서술이 이미 담음)."""
 
     for ref in item.evidence:
-        locator = str(ref.locator or "")
-        prefix, _, _rest = locator.partition(":")
-        if prefix in _NARRATIVE_NAMESPACES:
-            ref.resolved_kind = "note" if _numeric_value(ref.value) else "narrative"
-        elif (
-            locator in index
-            or (item.sj_div and f"{item.sj_div}:{locator}" in index)
-            or prefix in _FS_PREFIXES
-        ):
-            ref.resolved_kind = "account"
-        elif _METRIC_HEAD.match(locator) and not any("가" <= ch <= "힣" for ch in locator):
-            ref.resolved_kind = "metric"
-        else:
-            # 색인 밖 미상 참조: 값이 금액이면 계정 취급, 아니면 서술로(드롭 없음).
-            ref.resolved_kind = "account" if _numeric_value(ref.value) else "narrative"
-        ref.display_label = _evidence_label(locator)
+        classify_ref(ref, item.sj_div, index)
 
 
 def verify_suspicions(

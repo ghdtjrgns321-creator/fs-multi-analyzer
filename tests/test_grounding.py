@@ -331,3 +331,34 @@ def test_verify_suspicions_classifies_all_refs():
     )
     verify_suspicions([item], index)
     assert all(e.resolved_kind is not None for e in item.evidence)  # 미분류 잔존 0
+
+
+def test_classify_handles_invented_locator_formats():
+    """실측 재발분: canonical: 접두·언더스코어 지표 변형 — 형식 예상 없이 분류돼야 한다."""
+
+    from src.report.grounding import build_account_index, classify_ref
+    from src.schemas.findings import EvidenceRef
+
+    index = build_account_index(
+        [{"series_key": "CFS:당기순이익", "label": "당기순이익", "amount": -85.0, "sj_div": "IS", "year": 2025}]
+    )
+    canonical = EvidenceRef(
+        source="financial_statement", locator="canonical:당기순이익", year="2025", value="-858억원"
+    )
+    underscore_metric = EvidenceRef(
+        source="financial_statement",
+        locator="ratio_time_series_CFS_operating_margin",
+        year="2025",
+        value="3",
+    )
+    baseline = EvidenceRef(
+        source="financial_statement",
+        locator="benchmark_baseline_roa",
+        year="2025",
+        value="-1.2 vs 업계 중간 6.2",
+    )
+    for ref in (canonical, underscore_metric, baseline):
+        classify_ref(ref, "IS", index)
+    assert (canonical.resolved_kind, canonical.display_label) == ("account", "당기순이익")
+    assert underscore_metric.resolved_kind == "metric"  # 수치값이어도 ASCII-only는 지표
+    assert baseline.resolved_kind == "metric"  # 서술값 ASCII-only도 지표(목록 노출 금지)
