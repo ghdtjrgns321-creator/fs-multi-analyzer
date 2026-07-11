@@ -95,11 +95,34 @@ def series_points(rows: list[dict], series_key: str) -> list[dict]:
     return sorted(points, key=lambda p: p["year"])
 
 
-def evidence_rows(card: Any, exclude_accounts: set[str] | None = None) -> list[dict]:
-    """카드 numeric_evidence → 표 행(계정·연도·금액). 동일 (locator,year,value) 중복 제거.
+# 근거 locator의 내부 네임스페이스 → 사람용 출처 라벨(화면에 내부 식별자 노출 금지).
+_EVIDENCE_SOURCE_LABELS = {"report_extracts": "공시 본문", "note_facts": "주석", "note": "주석"}
 
-    exclude_accounts: 분해 표에 이미 나온 계정명 — 같은 숫자를 두 번 대지 않는다(중복 노이즈).
-    locator의 fs_div 접두를 벗긴 이름으로 비교한다("CFS:영업이익" ↔ "영업이익").
+
+def _parse_amount(value: Any) -> float | None:
+    """금액 파싱('1,798,862,505,633' 허용). 서술형 텍스트는 None — 표/목록 분리 기준."""
+
+    try:
+        return float(str(value).replace(",", ""))
+    except (TypeError, ValueError):
+        return None
+
+
+def _evidence_display(locator: str) -> str:
+    """locator → 사람용 라벨: 네임스페이스(report_extracts: 등)·fs_div·코드 접두 제거."""
+
+    prefix, _, rest = locator.partition(":")
+    if prefix in _EVIDENCE_SOURCE_LABELS:
+        return rest.split("|")[-1].strip() or rest.strip()
+    _, bare_name = split_series_key(locator)
+    return bare_name.split("|")[-1].strip() or bare_name
+
+
+def evidence_rows(card: Any, exclude_accounts: set[str] | None = None) -> list[dict]:
+    """카드 numeric_evidence 중 **금액형**만 → 표 행(계정·연도·금액).
+
+    서술형(비금액 값)은 narrative_evidence()가 목록으로 담당 — 금액 칸에 문장이
+    잘려 들어가는 것 금지(사용자 지적). exclude_accounts: 분해 표 계정 재나열 금지.
     """
 
     exclude_accounts = exclude_accounts or set()
@@ -109,18 +132,14 @@ def evidence_rows(card: Any, exclude_accounts: set[str] | None = None) -> list[d
         locator = str(_get(ref, "locator") or "")
         if locator.startswith("ratio:"):
             continue  # 원시 지표 키(ratio:… = 3 류)는 못 읽는 노이즈 — 주장 서술이 대신함
-        _, bare_name = split_series_key(locator)
-        # 'ifrs-full_ProfitLoss|당기순이익' 같은 코드|라벨 locator는 라벨로 대조·표시
-        # (코드 접두 때문에 분해 표 중복 제거가 빗나가던 버그).
-        display = bare_name.split("|")[-1].strip() or bare_name
         raw_value = _get(ref, "value")
-        # 중복 키 = (표시라벨, 연도, 정규화 금액) — 같은 값이 '1,798…'/'1798…' 표기만
-        # 달라 두 행 나오던 버그 차단. 파싱 불가 값은 원문 문자열로 비교.
-        try:
-            normalized: object = float(str(raw_value).replace(",", ""))
-        except (TypeError, ValueError):
-            normalized = str(raw_value)
-        row_key = (display, str(_get(ref, "year") or ""), normalized)
+        amount = _parse_amount(raw_value)
+        if amount is None:
+            continue  # 서술형 근거 — narrative_evidence가 목록으로 렌더
+        display = _evidence_display(locator)
+        _, bare_name = split_series_key(locator)
+        # 중복 키 = (표시라벨, 연도, 정규화 금액) — 표기만 다른 같은 값 2행 차단.
+        row_key = (display, str(_get(ref, "year") or ""), amount)
         if row_key in seen:
             continue
         seen.add(row_key)
@@ -134,9 +153,35 @@ def evidence_rows(card: Any, exclude_accounts: set[str] | None = None) -> list[d
             {
                 "계정": display,
                 "연도": str(_get(ref, "year") or ""),
-                "금액": fmt_krw(raw_value) if fmt_krw(raw_value) != "-" else str(raw_value or "-"),
+                "금액": fmt_krw(raw_value),
             }
         )
+    return out
+
+
+def narrative_evidence(card: Any) -> list[dict]:
+    """서술형 근거(비금액 값) → [{출처, 제목, 내용}] — 읽는 목록용(표 금지).
+
+    내부 네임스페이스는 사람용 출처 라벨(공시 본문/주석)로 바꾼다. 중복(제목·내용) 제거."""
+
+    seen: set[tuple] = set()
+    out: list[dict] = []
+    for ref in _get(card, "numeric_evidence") or []:
+        raw_value = _get(ref, "value")
+        if raw_value is None or _parse_amount(raw_value) is not None:
+            continue
+        locator = str(_get(ref, "locator") or "")
+        if locator.startswith("ratio:"):
+            continue
+        prefix, _, _rest = locator.partition(":")
+        source = _EVIDENCE_SOURCE_LABELS.get(prefix, "근거")
+        title = _evidence_display(locator)
+        content = humanize_amounts(str(raw_value).strip())
+        key = (title, content)
+        if key in seen or not content:
+            continue
+        seen.add(key)
+        out.append({"출처": source, "제목": title, "내용": content})
     return out
 
 

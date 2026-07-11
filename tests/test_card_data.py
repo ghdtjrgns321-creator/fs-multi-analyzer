@@ -602,3 +602,60 @@ def test_evidence_rows_dedup_same_amount_different_format():
     rows = evidence_rows(card)
     assert len(rows) == 1
     assert rows[0]["금액"] == "1.8조"
+
+
+# --- 서술형 근거 분리 — 내부 네임스페이스·금액칸 문장 노출 제거(사용자 지적) ---
+
+
+def _narrative_card() -> AccountFinding:
+    return _card(
+        account="(회사 전체)",
+        numeric_evidence=[
+            EvidenceRef(
+                source="note",
+                locator="report_extracts:소송 및 우발부채",
+                year="2025",
+                value="당기말 현재 연결기업은 피고로 총 17건의 소송사건에 제소되어 있으며",
+            ),
+            EvidenceRef(
+                source="note",
+                locator="note_facts:Consolidated·ReportedAmount",
+                year="2025",
+                value="연결기업은 The Creme Shop, Inc.의 잔여지분 중재 결과에 따라",
+            ),
+            EvidenceRef(
+                source="financial_statement",
+                locator="충당부채",
+                year="2025",
+                value="3,300,000,000",
+            ),
+        ],
+    )
+
+
+def test_evidence_rows_keeps_only_numeric_values():
+    rows = evidence_rows(_narrative_card())
+    assert [r["계정"] for r in rows] == ["충당부채"]  # 서술형은 표에서 제외
+    assert rows[0]["금액"] == "33억"  # 쉼표 문자열 파싱·축약
+
+
+def test_narrative_evidence_strips_namespace_and_labels_source():
+    from dashboard.card_data import narrative_evidence
+
+    items = narrative_evidence(_narrative_card())
+    assert len(items) == 2
+    first = items[0]
+    assert first["출처"] == "공시 본문" and first["제목"] == "소송 및 우발부채"
+    assert "17건의 소송사건" in first["내용"]
+    assert all("report_extracts" not in i["제목"] and "note_facts" not in i["제목"] for i in items)
+
+
+def test_narrative_evidence_empty_for_numeric_only():
+    from dashboard.card_data import narrative_evidence
+
+    card = _card(
+        numeric_evidence=[
+            EvidenceRef(source="financial_statement", locator="매출", year="2025", value="100")
+        ]
+    )
+    assert narrative_evidence(card) == []

@@ -287,7 +287,7 @@ def _decomposition_table(out: dict) -> None:
 def _analysis_block(card: Any, decomposition: dict | None) -> None:
     """② 결과 분해 — 변동 분해 표 + (분해와 안 겹치는) 근거 수치 + 외부 검증 결과."""
 
-    from dashboard.card_data import decomposition_accounts
+    from dashboard.card_data import decomposition_accounts, narrative_evidence
 
     st.markdown("**② 결과 분해**")
     shown = False
@@ -299,6 +299,13 @@ def _analysis_block(card: Any, decomposition: dict | None) -> None:
     if rows:
         st.markdown("추가 근거 수치 (실측 대조 — 분해 표 밖 항목)")
         st.dataframe(rows, width="stretch", hide_index=True)
+        shown = True
+    # 서술형 근거(소송·특수관계·중재 등)는 표가 아니라 읽는 목록 — 금액 칸 문장 잘림 금지.
+    narrative = narrative_evidence(card)
+    if narrative:
+        st.markdown("주석·공시 근거")
+        for item in narrative:
+            st.markdown(f"- **{item['제목']}** — {item['내용']} · :gray[{item['출처']}]")
         shown = True
     _external_block(card)
     if not shown:
