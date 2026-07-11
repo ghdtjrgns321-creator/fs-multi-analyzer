@@ -428,9 +428,14 @@ def _rebuttal_block(card: Any) -> None:
 
 
 def _card_expander(card: Any, series_rows: list[dict], target_year: int, bridges: dict) -> None:
-    """카드 1장 단추(접힘) — 라벨 = 계정 + 결론 헤드라인 + 표수 배지(2표 이상만)."""
+    """카드 1장 단추(접힘) — 라벨 = 계정 + 핵심 한 줄 + 지적 관점 배지(빽빽함 방지)."""
 
-    from dashboard.card_data import card_headline, conclusion_view
+    from dashboard.card_data import (
+        card_headline,
+        conclusion_view,
+        perspective_badge,
+        short_headline,
+    )
     from src.report.decomposition import decompose_change
 
     account_key = str(_get(card, "account") or "")
@@ -439,11 +444,10 @@ def _card_expander(card: Any, series_rows: list[dict], target_year: int, bridges
     view = conclusion_view(card)
     headline = view["headline"] if view else card_headline(card, decomposition, series_rows)
     fs_tag = f" ({fs_label})" if fs_label else ""
-    votes = int(_get(card, "vote_count") or 0)
-    total = int(_get(card, "internal_total") or 4)
-    # 교차확인 배지 — 여러 관점이 독립 지적한 카드만 표시(1표는 노이즈라 생략).
-    badge = f" · :blue[{votes}/{total}표]" if votes >= 2 else ""
-    label = f"**{name}{fs_tag}** — {headline}{badge}"
+    # 배지는 "누가 지적했나"(수치·추세 의심) — 표수 숫자보다 읽힌다(사용자 피드백).
+    badge = perspective_badge(card)
+    badge_tag = f" · :blue[{badge}]" if badge else ""
+    label = f"**{name}{fs_tag}** — {short_headline(headline)}{badge_tag}"
     with st.expander(label, expanded=False):
         _card_body(card, series_rows, target_year, decomposition)
 

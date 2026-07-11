@@ -270,6 +270,28 @@ def conclusion_view(card: Any) -> dict | None:
     }
 
 
+def short_headline(text: str, limit: int = 60) -> str:
+    """카드 단추 라벨용 축약 — 첫 문장만, limit자 초과는 말줄임(빽빽한 목록 방지)."""
+
+    first = str(text or "").split(". ")[0].split("다. ")[0].strip().rstrip(".")
+    if len(first) > limit:
+        return first[:limit] + "…"
+    return first
+
+
+def perspective_badge(card: Any) -> str:
+    """어느 관점이 지적했나 배지 — '수치·추세 의심'. 내부 발견 관점만, 중복 1회."""
+
+    names: list[str] = []
+    internal = {"numeric", "note", "flow", "trend"}
+    for claim in _get(card, "claims") or []:
+        perspective = str(_get(claim, "perspective") or "")
+        label = PERSPECTIVE_LABELS.get(perspective, "")
+        if perspective in internal and label and label not in names:
+            names.append(label)
+    return "·".join(names) + " 의심" if names else ""
+
+
 CARD_GROUPS_PATH = Path("config/card_groups.yaml")
 
 

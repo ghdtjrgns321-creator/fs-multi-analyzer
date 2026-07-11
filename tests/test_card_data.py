@@ -474,3 +474,32 @@ def test_group_cards_real_config_covers_all_issue_types():
     cards = [{"issue_type": t.value, "vote_count": 0} for t in IssueType]
     grouped_total = sum(len(g) for _, g in group_cards(cards, cfg))
     assert grouped_total == len(cards)  # 드롭 0
+
+
+# --- 카드 단추 라벨 슬림화 — 첫 문장 축약 + 관점 이름 배지(사용자 피드백 2026-07-11) ---
+
+
+def test_short_headline_takes_first_sentence_and_truncates():
+    from dashboard.card_data import short_headline
+
+    three = "당기순이익의 적자 전환은 세전이익 악화에서 설명된다. 핵심은 영업이익 감소다. 잔차는 0이다."
+    assert short_headline(three) == "당기순이익의 적자 전환은 세전이익 악화에서 설명된다"
+    long_one = "가" * 80
+    out = short_headline(long_one)
+    assert out.endswith("…") and len(out) == 61  # 60자 + 말줄임
+    assert short_headline("") == ""
+
+
+def test_perspective_badge_names_dedup_and_internal_only():
+    from dashboard.card_data import perspective_badge
+
+    card = {
+        "claims": [
+            {"perspective": "numeric", "description": "a"},
+            {"perspective": "trend", "description": "b"},
+            {"perspective": "numeric", "description": "c"},  # 중복 → 1회
+            {"perspective": "external", "description": "d"},  # 비내부 → 제외
+        ]
+    }
+    assert perspective_badge(card) == "수치·추세 의심"
+    assert perspective_badge({"claims": []}) == ""
