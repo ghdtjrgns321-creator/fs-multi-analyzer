@@ -99,6 +99,26 @@ def series_points(rows: list[dict], series_key: str) -> list[dict]:
 _EVIDENCE_SOURCE_LABELS = {"report_extracts": "공시 본문", "note_facts": "주석", "note": "주석"}
 
 
+_METRIC_KEY_HEAD = re.compile(r"^[A-Za-z_][\w-]*([.:]|$)")
+
+
+def _is_metric_key(locator: str) -> bool:
+    """지표 원시 키 판정(ratio:·benchmark.·ratio_time_series.… 일반형) — 계정 참조 아님.
+
+    지표는 주장 서술이 이미 담고 있어 근거 표·목록에 원시 키를 노출하지 않는다.
+    계정 표식이 하나라도 있으면 유지: 한글 라벨 / '코드|라벨' 파이프 / fs_div 접두 /
+    서술 네임스페이스(report_extracts: 등). 접두 열거 대신 형태 판정(두더지잡기 방지)."""
+
+    prefix, _, _rest = locator.partition(":")
+    if prefix in _EVIDENCE_SOURCE_LABELS or prefix in FS_DIV_LABELS:
+        return False
+    if "|" in locator:
+        return False
+    if any("가" <= ch <= "힣" for ch in locator):
+        return False
+    return bool(_METRIC_KEY_HEAD.match(locator))
+
+
 def _parse_amount(value: Any) -> float | None:
     """금액 파싱('1,798,862,505,633' 허용). 서술형 텍스트는 None — 표/목록 분리 기준."""
 
@@ -130,8 +150,8 @@ def evidence_rows(card: Any, exclude_accounts: set[str] | None = None) -> list[d
     out: list[dict] = []
     for ref in _get(card, "numeric_evidence") or []:
         locator = str(_get(ref, "locator") or "")
-        if locator.startswith("ratio:"):
-            continue  # 원시 지표 키(ratio:… = 3 류)는 못 읽는 노이즈 — 주장 서술이 대신함
+        if _is_metric_key(locator):
+            continue  # 원시 지표 키(ratio:·benchmark. 등)는 노이즈 — 주장 서술이 대신함
         raw_value = _get(ref, "value")
         amount = _parse_amount(raw_value)
         if amount is None:
@@ -171,8 +191,8 @@ def narrative_evidence(card: Any) -> list[dict]:
         if raw_value is None or _parse_amount(raw_value) is not None:
             continue
         locator = str(_get(ref, "locator") or "")
-        if locator.startswith("ratio:"):
-            continue
+        if _is_metric_key(locator):
+            continue  # 지표 kv 서술("target_value …")이 목록으로 새는 것 차단
         prefix, _, _rest = locator.partition(":")
         source = _EVIDENCE_SOURCE_LABELS.get(prefix, "근거")
         title = _evidence_display(locator)

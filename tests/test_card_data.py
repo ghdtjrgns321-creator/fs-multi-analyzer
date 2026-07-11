@@ -659,3 +659,46 @@ def test_narrative_evidence_empty_for_numeric_only():
         ]
     )
     assert narrative_evidence(card) == []
+
+
+def test_metric_keys_excluded_from_table_and_narrative():
+    """지표 원시 키(benchmark.·ratio_time_series.·ratio:)는 계정이 아니다 — 표·목록 둘 다 제외."""
+
+    from dashboard.card_data import narrative_evidence
+
+    card = _card(
+        numeric_evidence=[
+            EvidenceRef(
+                source="financial_statement",
+                locator="benchmark.roa",
+                year="2025",
+                value="target_value -1.2, peer_median 6.2, target_percentile 22.2",
+            ),
+            EvidenceRef(
+                source="financial_statement",
+                locator="ratio_time_series.CFS.operating_margin",
+                year="2025",
+                value="3",
+            ),
+            EvidenceRef(
+                source="financial_statement", locator="ratio:roe", year="2025", value="5"
+            ),
+            EvidenceRef(
+                source="financial_statement", locator="무형자산", year="2025", value="100000000"
+            ),
+        ]
+    )
+    rows = evidence_rows(card)
+    assert [r["계정"] for r in rows] == ["무형자산"]  # 지표 키 전부 제외, 진짜 계정만
+    assert narrative_evidence(card) == []  # 지표 kv 서술이 목록으로 새지도 않음
+
+
+def test_metric_key_detector_keeps_real_account_forms():
+    from dashboard.card_data import _is_metric_key
+
+    assert _is_metric_key("benchmark.roa") is True
+    assert _is_metric_key("ratio_time_series.CFS.operating_margin") is True
+    assert _is_metric_key("무형자산") is False
+    assert _is_metric_key("ifrs-full_ProfitLoss|당기순이익") is False  # 코드|라벨 계정
+    assert _is_metric_key("report_extracts:소송 및 우발부채") is False  # 서술 네임스페이스
+    assert _is_metric_key("CFS:영업이익") is False  # fs_div 접두 계정
