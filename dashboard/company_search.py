@@ -44,7 +44,8 @@ def filter_companies(
     q = (query or "").strip()
     if not q:
         return [], 0
-    matched = table[table["corp_name"].str.contains(q, regex=False, na=False)].copy()
+    # case=False — 'lg'로 'LG생활건강'을 찾게(사용자는 대소문자를 신경 안 씀).
+    matched = table[table["corp_name"].str.contains(q, regex=False, case=False, na=False)].copy()
     total = len(matched)
     if total == 0:
         return [], 0

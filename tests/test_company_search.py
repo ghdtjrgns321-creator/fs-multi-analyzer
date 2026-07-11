@@ -93,3 +93,21 @@ def test_real_data_finds_samsung_electronics():
     results, total = filter_companies(table, "삼성전자", limit=30)
     codes = [code for _, code in format_options(results)]
     assert "00126380" in codes, f"삼성전자 미포함 (총 {total}건, 상위: {codes[:5]})"
+
+
+def test_case_insensitive_match():
+    """소문자 'lg'가 'LG생활건강'에 매치돼야 한다(실사용 버그: 소문자 검색 0건)."""
+
+    table = pd.DataFrame(
+        {
+            "corp_code": ["00356370", "00000001", "00000002"],
+            "corp_name": ["LG생활건강", "lg헬로비전", "삼성전자"],
+            "stock_code": ["051900", "037560", "005930"],
+        }
+    )
+    lower_results, lower_total = filter_companies(table, "lg")
+    upper_results, upper_total = filter_companies(table, "LG")
+    assert lower_total == upper_total == 2  # 대소문자 무관 동일 매치
+    assert {r["corp_name"] for r in lower_results} == {"LG생활건강", "lg헬로비전"}
+    korean_results, _ = filter_companies(table, "삼성")  # 한글 경로 회귀 없음
+    assert korean_results[0]["corp_name"] == "삼성전자"
