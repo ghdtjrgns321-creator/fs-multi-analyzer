@@ -702,3 +702,26 @@ def test_metric_key_detector_keeps_real_account_forms():
     assert _is_metric_key("ifrs-full_ProfitLoss|당기순이익") is False  # 코드|라벨 계정
     assert _is_metric_key("report_extracts:소송 및 우발부채") is False  # 서술 네임스페이스
     assert _is_metric_key("CFS:영업이익") is False  # fs_div 접두 계정
+
+
+def test_resolved_kind_overrides_pattern_guessing():
+    """grounding이 세팅한 종류가 패턴 역추정보다 우선 — 근본 구조의 소비 검증."""
+
+    metric_looking_but_account = EvidenceRef(
+        source="financial_statement",
+        locator="benchmark.roa",  # 패턴상 지표로 보이지만
+        year="2025",
+        value="100000000",
+        resolved_kind="account",  # 코드가 계정으로 판정했다면
+        display_label="총자산이익률 관련 계정",
+    )
+    korean_but_metric = EvidenceRef(
+        source="financial_statement",
+        locator="이상한지표",  # 패턴상 계정으로 보이지만
+        year="2025",
+        value="200000000",
+        resolved_kind="metric",  # 코드가 지표로 판정했다면
+    )
+    card = _card(numeric_evidence=[metric_looking_but_account, korean_but_metric])
+    rows = evidence_rows(card)
+    assert [r["계정"] for r in rows] == ["총자산이익률 관련 계정"]  # kind가 승리, 라벨은 display_label

@@ -150,13 +150,16 @@ def evidence_rows(card: Any, exclude_accounts: set[str] | None = None) -> list[d
     out: list[dict] = []
     for ref in _get(card, "numeric_evidence") or []:
         locator = str(_get(ref, "locator") or "")
-        if _is_metric_key(locator):
-            continue  # 원시 지표 키(ratio:·benchmark. 등)는 노이즈 — 주장 서술이 대신함
+        kind = _get(ref, "resolved_kind")
+        if kind in ("metric", "narrative"):
+            continue  # grounding이 판정한 종류(구조화) — 지표는 미표시, 서술은 목록 담당
+        if kind is None and _is_metric_key(locator):
+            continue  # 구 카드 폴백(kind 없던 시절 저장분) — 형태 역추정
         raw_value = _get(ref, "value")
         amount = _parse_amount(raw_value)
         if amount is None:
             continue  # 서술형 근거 — narrative_evidence가 목록으로 렌더
-        display = _evidence_display(locator)
+        display = str(_get(ref, "display_label") or "") or _evidence_display(locator)
         _, bare_name = split_series_key(locator)
         # 중복 키 = (표시라벨, 연도, 정규화 금액) — 표기만 다른 같은 값 2행 차단.
         row_key = (display, str(_get(ref, "year") or ""), amount)
@@ -191,11 +194,12 @@ def narrative_evidence(card: Any) -> list[dict]:
         if raw_value is None or _parse_amount(raw_value) is not None:
             continue
         locator = str(_get(ref, "locator") or "")
-        if _is_metric_key(locator):
-            continue  # 지표 kv 서술("target_value …")이 목록으로 새는 것 차단
+        kind = _get(ref, "resolved_kind")
+        if kind == "metric" or (kind is None and _is_metric_key(locator)):
+            continue  # 지표 kv 서술("target_value …")이 목록으로 새는 것 차단(구 카드는 폴백)
         prefix, _, _rest = locator.partition(":")
         source = _EVIDENCE_SOURCE_LABELS.get(prefix, "근거")
-        title = _evidence_display(locator)
+        title = str(_get(ref, "display_label") or "") or _evidence_display(locator)
         content = humanize_amounts(str(raw_value).strip())
         key = (title, content)
         if key in seen or not content:

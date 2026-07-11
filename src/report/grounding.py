@@ -289,15 +289,64 @@ def verify_company_suspicion(
     )
 
 
+# EvidenceRef 종류 분류 — 여기(코드가 색인을 아는 유일한 지점)서 확정해 카드에 싣는다.
+# 렌더러가 locator 문자열 모양으로 역추정하던 두더지잡기의 근본 해결.
+_NARRATIVE_NAMESPACES = frozenset({"note", "note_facts", "report_extracts", "sce"})
+_FS_PREFIXES = frozenset({"CFS", "OFS", "BS", "IS", "CF", "CIS", "SCE"})
+_METRIC_HEAD = re.compile(r"^[A-Za-z_][\w-]*[.:]")
+
+
+def _evidence_label(locator: str) -> str:
+    """locator → 사람용 라벨(네임스페이스·fs_div·'코드|' 접두 제거)."""
+
+    prefix, _, rest = locator.partition(":")
+    base = rest if (prefix in _NARRATIVE_NAMESPACES or prefix in _FS_PREFIXES) else locator
+    return base.split("|")[-1].strip() or locator
+
+
+def _numeric_value(value: object) -> bool:
+    try:
+        float(str(value).replace(",", ""))
+    except (TypeError, ValueError):
+        return False
+    return True
+
+
+def classify_evidence(item: SuspicionItem, index: dict[str, set[str]]) -> None:
+    """의심건의 근거 참조마다 resolved_kind·display_label을 코드가 세팅(in-place).
+
+    account=계정 실측(수치 표) / note=주석 수치 / narrative=서술 공시(읽는 목록) /
+    metric=지표 원시 키(표시 안 함 — 내용은 주장 서술이 이미 담음)."""
+
+    for ref in item.evidence:
+        locator = str(ref.locator or "")
+        prefix, _, _rest = locator.partition(":")
+        if prefix in _NARRATIVE_NAMESPACES:
+            ref.resolved_kind = "note" if _numeric_value(ref.value) else "narrative"
+        elif (
+            locator in index
+            or (item.sj_div and f"{item.sj_div}:{locator}" in index)
+            or prefix in _FS_PREFIXES
+        ):
+            ref.resolved_kind = "account"
+        elif _METRIC_HEAD.match(locator) and not any("가" <= ch <= "힣" for ch in locator):
+            ref.resolved_kind = "metric"
+        else:
+            # 색인 밖 미상 참조: 값이 금액이면 계정 취급, 아니면 서술로(드롭 없음).
+            ref.resolved_kind = "account" if _numeric_value(ref.value) else "narrative"
+        ref.display_label = _evidence_label(locator)
+
+
 def verify_suspicions(
     items: list[SuspicionItem],
     index: dict[str, set[str]],
     peer_keys: set[str] | None = None,
 ) -> list[GroundedSuspicion]:
-    """전 의심건 검증. 탈락 건도 reason과 함께 전부 반환(§9 silent drop 금지)."""
+    """전 의심건 검증 + 근거 종류 분류. 탈락 건도 reason과 함께 전부 반환(§9 silent drop 금지)."""
 
     results = []
     for item in items:
+        classify_evidence(item, index)
         if item.scope == "account":
             results.append(verify_account_suspicion(item, index))
         elif item.scope == "relationship":

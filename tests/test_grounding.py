@@ -271,3 +271,63 @@ def test_verify_returns_all_with_reasons_no_silent_drop() -> None:
     assert len(results) == len(items)
     assert all(r.reason for r in results)
     assert sum(1 for r in results if not r.grounded) == 2
+
+
+# --- EvidenceRef 종류 분류(classify_evidence) — 렌더 역추정 폐지의 근본 지점 ---
+
+
+def test_classify_evidence_sets_kind_and_label():
+    from src.report.grounding import build_account_index, classify_evidence
+    from src.schemas.findings import EvidenceRef
+    from src.schemas.suspicion import SuspicionItem
+
+    index = build_account_index(
+        [{"series_key": "CFS:영업이익", "label": "영업이익", "amount": 100.0, "sj_div": "IS", "year": 2025}]
+    )
+    item = SuspicionItem(
+        perspective="numeric",
+        scope="account",
+        issue_type="earnings_tax",
+        account_id="CFS:영업이익",
+        sj_div="IS",
+        year="2025",
+        cited_value="100",
+        description="영업이익 급감",
+        risk_level="High",
+        evidence=[
+            EvidenceRef(source="financial_statement", locator="CFS:영업이익", year="2025", value="100"),
+            EvidenceRef(source="note", locator="report_extracts:소송 및 우발부채", year="2025", value="피고 소송 17건"),
+            EvidenceRef(source="note", locator="note_facts:지급보증", year="2025", value="1,000,000,000"),
+            EvidenceRef(source="financial_statement", locator="benchmark.roa", year="2025", value="target_value -1.2"),
+        ],
+    )
+    classify_evidence(item, index)
+    kinds = [(e.resolved_kind, e.display_label) for e in item.evidence]
+    assert kinds[0] == ("account", "영업이익")
+    assert kinds[1] == ("narrative", "소송 및 우발부채")
+    assert kinds[2] == ("note", "지급보증")
+    assert kinds[3][0] == "metric"
+
+
+def test_verify_suspicions_classifies_all_refs():
+    from src.report.grounding import build_account_index, verify_suspicions
+    from src.schemas.findings import EvidenceRef
+    from src.schemas.suspicion import SuspicionItem
+
+    index = build_account_index(
+        [{"series_key": "CFS:매출", "label": "매출", "amount": 5.0, "sj_div": "IS", "year": 2025}]
+    )
+    item = SuspicionItem(
+        perspective="numeric",
+        scope="account",
+        issue_type="earnings_tax",
+        account_id="CFS:매출",
+        sj_div="IS",
+        year="2025",
+        cited_value="5",
+        description="매출 이상",
+        risk_level="Low",
+        evidence=[EvidenceRef(source="financial_statement", locator="매출", year="2025", value="5")],
+    )
+    verify_suspicions([item], index)
+    assert all(e.resolved_kind is not None for e in item.evidence)  # 미분류 잔존 0

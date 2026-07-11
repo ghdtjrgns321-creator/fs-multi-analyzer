@@ -52,6 +52,14 @@ class EvidenceRef(BaseModel):
     locator: str = Field(description="계정 ID / 주석 섹션 ID 등 추적 키")
     year: str
     value: str | None = Field(default=None, description="결정론 레이어가 계산한 실제 수치")
+    # 아래 둘은 LLM이 아니라 grounding(코드)이 매칭 시점에 세팅한다 — 렌더러가 locator
+    # 문자열 모양으로 종류를 역추정하던 두더지잡기의 근본 해결. None = 미분류(구 카드 폴백).
+    resolved_kind: Literal["account", "note", "narrative", "metric"] | None = Field(
+        default=None, description="근거 종류(코드 판정): 계정/주석수치/서술/지표"
+    )
+    display_label: str | None = Field(
+        default=None, description="사람용 표시 라벨(코드 산출, 내부 접두 제거)"
+    )
 
 
 class Claim(BaseModel):

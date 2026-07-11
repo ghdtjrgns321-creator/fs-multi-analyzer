@@ -35,6 +35,7 @@ def build_investigator_agent(
     model_name: str = OPENAI_MODEL_NAME,
     prompts: dict | None = None,
     with_tools: bool = True,
+    banned_vocab: set[str] | None = None,
 ) -> Agent[InvestigationDeps, InvestigationConclusion]:
     prompts = prompts or load_perspective_prompts(PROMPTS_PATH)
     block = prompts.get("investigator", {})
@@ -79,18 +80,24 @@ def build_investigator_agent(
 
             return _top_changes(ctx.deps)
 
+    from src.report.vocab_guard import attach_vocab_guard
+
+    attach_vocab_guard(agent, banned_vocab or set())  # 어휘 게이트(내부 식별자 반려)
     return agent
 
 
-def _investigation_prompt(card: AccountFinding, decomposition: dict | None) -> str:
-    payload = {
+# 도구 이름도 금지 어휘 — 결론에 "get_decomposition 결과가 없어" 같은 문장 차단.
+_TOOL_NAME_VOCAB = {"get_series", "get_decomposition", "find_notes", "top_changes"}
+
+
+def _investigation_payload(card: AccountFinding, decomposition: dict | None) -> dict:
+    return {
         "account": card.account,
         "issue_type": card.issue_type.value,
         "claims": [c.model_dump() for c in card.claims],
         "merged_children": card.merged_children,
         "decomposition": decomposition,
     }
-    return json.dumps(payload, ensure_ascii=False)
 
 
 async def run_investigation(
@@ -115,15 +122,22 @@ async def run_investigation(
         bridges=load_bridges(),
         note_facts=list(report.get("note_facts") or []),
     )
+    payload = _investigation_payload(card, decomposition)
+    # 어휘 게이트: 입력 키 + 도구 이름이 결론 본문에 새면 반려(감사인 언어 강제).
+    from src.report.vocab_guard import banned_identifiers
+
+    banned_vocab = banned_identifiers(payload) | _TOOL_NAME_VOCAB
     if agent_factory is None:
-        agent = build_investigator_agent(prompts=prompts, with_tools=use_tools)
+        agent = build_investigator_agent(
+            prompts=prompts, with_tools=use_tools, banned_vocab=banned_vocab
+        )
     else:
         agent = agent_factory(with_tools=use_tools)
     try:
         result = await asyncio.wait_for(
             run_with_retry(
                 agent,
-                _investigation_prompt(card, decomposition),
+                json.dumps(payload, ensure_ascii=False),
                 OPENAI_MODEL_NAME,
                 raw=True,
                 deps=deps,

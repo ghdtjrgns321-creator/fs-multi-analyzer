@@ -58,21 +58,28 @@ def build_structured_perspective_agent(
     perspective: str,
     model_name: str = OPENAI_MODEL_NAME,
     prompts: dict[str, Any] | None = None,
+    banned_vocab: set[str] | None = None,
 ) -> Agent[None, PerspectiveOutput]:
-    """관점 agent — 출력 타입 PerspectiveOutput 강제(PydanticAI)."""
+    """관점 agent — 출력 타입 PerspectiveOutput 강제(PydanticAI).
+
+    banned_vocab: 이 호출의 재료에서 추출한 내부 식별자 — 본문에 새면 코드가 반려(어휘 게이트)."""
 
     prompts = prompts or load_perspective_prompts()
     model = OpenAIModel(model_name, provider=OpenAIProvider(api_key=settings.openai_api_key))
     model_settings = OpenAIModelSettings(timeout=settings.openai_timeout_seconds)
     if settings.openai_reasoning_effort:
         model_settings["openai_reasoning_effort"] = settings.openai_reasoning_effort
-    return Agent(
+    agent: Agent[None, PerspectiveOutput] = Agent(
         model,
         output_type=PerspectiveOutput,
         system_prompt=build_system_prompt(prompts, perspective),
         model_settings=model_settings,
         retries=2,
     )
+    from src.report.vocab_guard import attach_vocab_guard
+
+    attach_vocab_guard(agent, banned_vocab or set())
+    return agent
 
 
 async def run_structured_perspective(
@@ -87,9 +94,13 @@ async def run_structured_perspective(
     if agent_factory is None and not settings.openai_api_key:
         return PerspectiveOutput(status="deferred")
     prompts = prompts or load_perspective_prompts()
+    # 어휘 게이트: 이 호출의 재료 키를 금지 목록으로(입력이 모집단 — 새 필드 자동 커버).
+    from src.report.vocab_guard import banned_identifiers
+
+    banned_vocab = banned_identifiers(material_board)
     factory = agent_factory or (
         lambda name=OPENAI_MODEL_NAME: build_structured_perspective_agent(
-            perspective, name, prompts
+            perspective, name, prompts, banned_vocab=banned_vocab
         )
     )
     prompt = json.dumps(

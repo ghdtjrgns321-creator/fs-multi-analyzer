@@ -34,19 +34,24 @@ def build_rebuttal_system_prompt(prompts: dict[str, Any]) -> str:
 def build_rebuttal_agent(
     model_name: str = OPENAI_MODEL_NAME,
     prompts: dict[str, Any] | None = None,
+    banned_vocab: set[str] | None = None,
 ) -> Agent[None, RebuttalOutput]:
     prompts = prompts or load_perspective_prompts(PROMPTS_PATH)
     model = OpenAIModel(model_name, provider=OpenAIProvider(api_key=settings.openai_api_key))
     model_settings = OpenAIModelSettings(timeout=settings.openai_timeout_seconds)
     if settings.openai_reasoning_effort:
         model_settings["openai_reasoning_effort"] = settings.openai_reasoning_effort
-    return Agent(
+    agent: Agent[None, RebuttalOutput] = Agent(
         model,
         output_type=RebuttalOutput,
         system_prompt=build_rebuttal_system_prompt(prompts),
         model_settings=model_settings,
         retries=2,
     )
+    from src.report.vocab_guard import attach_vocab_guard
+
+    attach_vocab_guard(agent, banned_vocab or set())  # 어휘 게이트(내부 식별자 반려)
+    return agent
 
 
 def build_rebuttal_input(
@@ -95,8 +100,15 @@ async def run_rebuttal(
     if agent_factory is None and not settings.openai_api_key:
         return RebuttalOutput()
     prompts = prompts or load_perspective_prompts(PROMPTS_PATH)
-    factory = agent_factory or (lambda name=OPENAI_MODEL_NAME: build_rebuttal_agent(name, prompts))
-    prompt = json.dumps(build_rebuttal_input(cards, context, decompositions), ensure_ascii=False)
+    payload = build_rebuttal_input(cards, context, decompositions)
+    # 어휘 게이트: 입력 payload의 내부 키(cluster_key·분해 필드 등)가 본문에 새면 반려.
+    from src.report.vocab_guard import banned_identifiers
+
+    banned_vocab = banned_identifiers(payload)
+    factory = agent_factory or (
+        lambda name=OPENAI_MODEL_NAME: build_rebuttal_agent(name, prompts, banned_vocab)
+    )
+    prompt = json.dumps(payload, ensure_ascii=False)
     try:
         return await asyncio.wait_for(
             run_with_retry(
