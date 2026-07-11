@@ -194,7 +194,8 @@ class DisclosureChangeFinding(BaseModel):  # ④ 공시 변동 에이전트
       · 외부 검증 에이전트 — 카드 주장+분해를 타깃 검색 쿼리로
         ("○○사 판관비 급증/구조조정/소송" 등). 찾으면 출처를 카드 근거로,
         못 찾으면 "외부 근거 미발견" 명시(빈손 은폐 금지).
-        구현: src/report/external_verify.py — 위험도·유의성 상위 5카드만 검색(비용 상한),
+        구현: src/report/external_verify.py — 대상 = 조사 미해결(resolved!=True) 카드
+        전부(목적 기준, 숫자 상한 폐지 2026-07-11 / hard_cap 30은 폭주 안전핀),
         카드당 ≤2쿼리(분해 주도 요인 포함), external_evidence/external_checked에 기록.
 ```
 

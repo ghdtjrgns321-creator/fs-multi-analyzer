@@ -12,4 +12,4 @@ priority:
     anomaly: 0.15
     confidence: 0.20
 external:
-  top_n: 10 # 외부 타깃 검색 카드 수(하드캡 10) — 조사 미해결·우선순위 상위부터
+  hard_cap: 30 # 폭주 방지 안전핀 — 선정 기준 아님(선정 = 조사 미해결 카드 전부)

@@ -16,36 +16,37 @@ from config.settings import settings
 from src.agents.context_brief import create_context_brief_for_queries
 from src.schemas.findings import AccountFinding, ExternalRef
 
-# 타깃 검색 기본 카드 수(설정 폴백) + 절대 상한(비용 가드). 나머지는 '미수행' 표기.
-EXTERNAL_TOP_N = 5
-EXTERNAL_HARD_CAP = 10
+# 폭주 방지 안전핀(설정 폴백) — 선정 기준이 아니다. 선정은 목적 기준(조사 미해결 전부).
+EXTERNAL_HARD_CAP = 30
 _MAX_REFS_PER_CARD = 3
 
 
-def external_top_n(config: dict | None = None) -> int:
-    """검색 대상 카드 수 — config/investigation.yaml external.top_n(없으면 폴백 5)."""
+def external_hard_cap(config: dict | None = None) -> int:
+    """안전핀 상한 — config/investigation.yaml external.hard_cap(없으면 폴백 30)."""
 
     from src.report.investigation_config import load_investigation_config
 
     cfg = config if config is not None else load_investigation_config()
-    return int((cfg.get("external") or {}).get("top_n", EXTERNAL_TOP_N))
+    return int((cfg.get("external") or {}).get("hard_cap", EXTERNAL_HARD_CAP))
 
 
-def select_top_cards(
-    cards: list[AccountFinding], top_n: int = EXTERNAL_TOP_N
+def select_external_targets(
+    cards: list[AccountFinding], hard_cap: int | None = None
 ) -> list[AccountFinding]:
-    """검색 대상 — 조사가 '미해결'로 남긴 카드 우선, 이후 연속 점수 내림(라벨 폐지).
+    """검색 대상 = 조사 미해결 카드 전부(목적 기준 — 숫자 상한 폐지, 사용자 결정).
 
-    미해결(investigation.resolved=False) 카드가 외부 근거의 효용이 가장 큼 —
-    내부 데이터로 못 좁힌 원인을 외부에서 찾는 단계이기 때문."""
+    제외는 내부 조사가 원인을 완결(resolved=True)한 카드뿐 — 외부 정보가 필요 없는
+    유일한 경우. 조사 실패·미수행(None)은 미확인이라 포함. hard_cap은 폭주 방지
+    안전핀으로만 작동하며, 걸릴 때는 연속 점수 낮은 카드부터 탈락한다."""
 
-    def _key(c: AccountFinding) -> tuple:
-        investigation = getattr(c, "investigation", None)
-        unresolved = investigation is not None and not investigation.resolved
-        return (unresolved, c.priority_score or 0.0)
-
-    ranked = sorted(cards, key=_key, reverse=True)
-    return ranked[: min(max(top_n, 0), EXTERNAL_HARD_CAP)]
+    cap = hard_cap if hard_cap is not None else external_hard_cap()
+    targets = [
+        c
+        for c in cards
+        if not (getattr(c, "investigation", None) is not None and c.investigation.resolved)
+    ]
+    targets.sort(key=lambda c: c.priority_score or 0.0, reverse=True)
+    return targets[: max(cap, 0)]
 
 
 def card_queries(
@@ -78,7 +79,7 @@ async def verify_cards(
     cards: list[AccountFinding],
     report: dict[str, object],
     decompositions: dict[str, dict] | None = None,
-    top_n: int | None = None,  # None이면 config external.top_n(운영 조정 나사)
+    hard_cap: int | None = None,  # None이면 config external.hard_cap(안전핀, 선정 기준 아님)
     context_factory: Callable[..., Any] = create_context_brief_for_queries,
 ) -> dict:
     """상위 카드 외부 검증 — external_evidence 채움 + checked 마킹. 키 없음은 deferred.
@@ -93,7 +94,7 @@ async def verify_cards(
     company = str(report.get("company_name", report.get("corp_code", "")))
     year = report.get("target_year", "")
     decompositions = decompositions or {}
-    targets = select_top_cards(cards, top_n if top_n is not None else external_top_n())
+    targets = select_external_targets(cards, hard_cap)
 
     async def _verify_one(card: AccountFinding) -> bool:
         queries = card_queries(company, year, card, decompositions.get(card.cluster_key or ""))
@@ -121,4 +122,4 @@ async def verify_cards(
     }
 
 
-__all__ = ["EXTERNAL_TOP_N", "card_queries", "select_top_cards", "verify_cards"]
+__all__ = ["EXTERNAL_HARD_CAP", "card_queries", "select_external_targets", "verify_cards"]

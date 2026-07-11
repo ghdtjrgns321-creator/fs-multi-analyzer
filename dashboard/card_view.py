@@ -322,8 +322,7 @@ def _external_block(card: Any) -> None:
         st.caption("외부 근거 미발견 — 타깃 검색을 수행했으나 출처 있는 관련 보도·공시 없음.")
     else:
         st.caption(
-            "외부 검증 미수행 — 조사 미해결·우선순위 상위 카드에만 타깃 검색을 겁니다"
-            "(대상 수는 config/investigation.yaml external.top_n)."
+            "외부 검색 미수행 — 내부 조사에서 원인이 설명돼 외부 근거가 필요 없던 카드입니다."
         )
 
 

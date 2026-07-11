@@ -6,8 +6,9 @@ import asyncio
 
 import pytest
 
-from src.report.external_verify import card_queries, select_top_cards, verify_cards
+from src.report.external_verify import card_queries, select_external_targets, verify_cards
 from src.schemas.findings import AccountFinding, IssueType
+from src.schemas.investigation import InvestigationConclusion
 
 
 def _card(
@@ -24,11 +25,21 @@ def _card(
     )
 
 
-# ── select_top_cards — 우선순위 연속 점수 내림 정렬, 상한 ──────────────────
-def test_select_top_cards_by_priority():
-    lows = [_card(f"CFS:acc{i}", priority_score=0.1 * i) for i in range(6)]
-    top = select_top_cards(lows, top_n=3)
-    assert [c.account for c in top] == ["CFS:acc5", "CFS:acc4", "CFS:acc3"]
+# ── select_external_targets — 목적 기준: 조사 미해결 전부, resolved만 제외 ──
+def test_select_targets_excludes_only_resolved():
+    resolved = _card("CFS:영업이익")
+    resolved.investigation = InvestigationConclusion(headline="원인 완결", resolved=True)
+    unresolved = _card("CFS:매출채권")
+    unresolved.investigation = InvestigationConclusion(headline="미해결", resolved=False)
+    no_investigation = _card("CFS:재고자산")  # 조사 실패·미수행 — 미확인이라 포함
+    targets = select_external_targets([resolved, unresolved, no_investigation])
+    assert {c.account for c in targets} == {"CFS:매출채권", "CFS:재고자산"}
+
+
+def test_select_targets_hard_cap_drops_lowest_priority():
+    cards = [_card(f"CFS:acc{i}", priority_score=0.1 * i) for i in range(6)]
+    capped = select_external_targets(cards, hard_cap=3)
+    assert [c.account for c in capped] == ["CFS:acc5", "CFS:acc4", "CFS:acc3"]
 
 
 # ── card_queries — 회사·연도·계정 + 분해 주도 요인 포함, ≤2개 ──────────────
@@ -68,6 +79,8 @@ class _Brief:
 
 def test_verify_cards_fills_evidence_and_checked():
     cards = [_card("CFS:영업이익", mat=1.0), _card("CFS:매출채권", mat=0.1)]
+    # 두 번째 카드는 조사 완결 — 목적 기준에 따라 검색 대상에서 제외된다.
+    cards[1].investigation = InvestigationConclusion(headline="원인 완결", resolved=True)
 
     async def fake_search(queries):
         return _Brief([_Item("판관비 절감 발표", "https://news.example/1")])
@@ -76,7 +89,6 @@ def test_verify_cards_fills_evidence_and_checked():
         verify_cards(
             cards,
             {"company_name": "테스트기업", "target_year": 2025},
-            top_n=1,
             context_factory=fake_search,
         )
     )
@@ -84,7 +96,7 @@ def test_verify_cards_fills_evidence_and_checked():
     top = cards[0]
     assert top.external_checked is True
     assert top.external_evidence[0].url == "https://news.example/1"
-    assert cards[1].external_checked is False  # top_n 밖 — 미수행 유지
+    assert cards[1].external_checked is False  # 조사 완결 카드 — 검색 불필요, 미수행 유지
 
 
 def test_verify_cards_marks_checked_even_when_nothing_found():
@@ -274,15 +286,15 @@ if __name__ == "__main__":
     pytest.main([__file__, "-q"])
 
 
-def test_external_top_n_reads_config_and_fallback():
-    """존재≠사용 차단 — top_n이 config를 실제로 읽고, 값 바꾸면 선정 수가 바뀐다."""
+def test_external_hard_cap_reads_config_and_fallback():
+    """존재≠사용 차단 — hard_cap이 config를 실제로 읽고, 값 바꾸면 선정 수가 바뀐다."""
 
-    from src.report.external_verify import external_top_n, select_top_cards
+    from src.report.external_verify import external_hard_cap
 
-    assert external_top_n({"external": {"top_n": 7}}) == 7
-    assert external_top_n({}) == 5  # 폴백
-    assert external_top_n() == 10  # 실제 config/investigation.yaml 값
+    assert external_hard_cap({"external": {"hard_cap": 7}}) == 7
+    assert external_hard_cap({}) == 30  # 폴백
+    assert external_hard_cap() == 30  # 실제 config/investigation.yaml 값
 
-    cards = [_card(account=f"CFS:acc{i}", priority_score=0.01 * i) for i in range(12)]
-    assert len(select_top_cards(cards, top_n=7)) == 7
-    assert len(select_top_cards(cards, top_n=12)) == 10  # 하드캡
+    cards = [_card(account=f"CFS:acc{i}", priority_score=0.01 * i) for i in range(40)]
+    assert len(select_external_targets(cards, hard_cap=7)) == 7
+    assert len(select_external_targets(cards)) == 30  # 안전핀(실컨피그)
