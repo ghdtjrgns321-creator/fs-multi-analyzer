@@ -12,6 +12,8 @@ from pydantic import BaseModel, Field
 
 class InvestigationConclusion(BaseModel):
     headline: str = Field(description="핵심 결론 1~2문장 — 원인이 어디까지 좁혀졌는가")
+    # 카드 목록 단추에 그대로 보이는 줄 — 자르지 않아도 되게 짧고 완결되게(LLM 작성).
+    label: str = Field(default="", description="목록용 핵심 한 줄(40자 이내 완결 구문)")
     cause_path: list[str] = Field(
         default_factory=list, description="원인 경로(상위→하위 순 단계 서술, 수치 인용)"
     )

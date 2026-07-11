@@ -292,6 +292,33 @@ def perspective_badge(card: Any) -> str:
     return "·".join(names) + " 의심" if names else ""
 
 
+def card_label(card: Any, decomposition: dict | None, series_rows: list[dict]) -> str:
+    """카드 단추 라벨 — 완결된 핵심 한 줄(중간 절단 금지).
+
+    우선순위: ①조사원이 쓴 목록용 label(40자 완결 구문) ②결정론 검토포인트
+    (괴리 명제·주도요인 — 항상 완결 문장) ③주장 첫 문장 축약(최후 폴백)."""
+
+    inv = _get(card, "investigation")
+    conclusion_label = str(_get(inv, "label") or "").strip() if inv else ""
+    if conclusion_label:
+        return humanize_amounts(conclusion_label)
+    if decomposition:
+        point = review_point(decomposition, series_rows)
+        if point:
+            return point.split(" — ")[0].split(". ")[0].rstrip(".")
+    lines = claim_lines(card)
+    if lines:
+        return short_headline(lines[0]["description"])
+    inv_headline = str(_get(inv, "headline") or "") if inv else ""
+    if inv_headline:
+        return short_headline(humanize_amounts(inv_headline))
+    subtype = str(_get(card, "subtype") or "")
+    if subtype:
+        return subtype
+    issue = _get(card, "issue_type")
+    return str(getattr(issue, "value", issue) or "")
+
+
 CARD_GROUPS_PATH = Path("config/card_groups.yaml")
 
 

@@ -503,3 +503,41 @@ def test_perspective_badge_names_dedup_and_internal_only():
     }
     assert perspective_badge(card) == "수치·추세 의심"
     assert perspective_badge({"claims": []}) == ""
+
+
+# --- 카드 라벨 우선순위 — 조사원 label > 결정론 헤드라인 > 축약 폴백(말줄임은 최후) ---
+
+
+def test_card_label_prefers_conclusion_label():
+    from dashboard.card_data import card_label
+
+    card = {"investigation": {"headline": "긴 헤드라인. 문장 둘.", "label": "매출 이탈이 영업이익 급감 주도", "resolved": True}}
+    assert card_label(card, None, []) == "매출 이탈이 영업이익 급감 주도"
+
+
+def test_card_label_old_conclusion_without_label_uses_deterministic():
+    from dashboard.card_data import card_label
+
+    # 구결론(label 칸 없음) + 분해 있음 → 결정론 주도요인 문장(완결 구문, 말줄임 없음)
+    card = {"investigation": {"headline": "아주 " + "긴" * 60 + " 헤드라인.", "resolved": False}}
+    out = {
+        "parent": "CFS:영업이익",
+        "prior_year": 2024,
+        "year": 2025,
+        "parent_prior": 100.0,
+        "parent_current": 40.0,
+        "change_pct": -60.0,
+        "delta": -60.0,
+        "residual": 0.0,
+        "residual_pct": 0.0,
+        "rows": [{"account": "매출총이익", "delta": -60.0, "contribution_pct": -100.0}],
+    }
+    label = card_label(card, out, [])
+    assert "매출총이익" in label and "…" not in label
+
+
+def test_card_label_no_conclusion_falls_back_to_headline_chain():
+    from dashboard.card_data import card_label
+
+    card = {"claims": [{"perspective": "numeric", "description": "짧은 주장."}], "subtype": ""}
+    assert card_label(card, None, []) == "짧은 주장"
