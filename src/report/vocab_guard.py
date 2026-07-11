@@ -38,10 +38,14 @@ EXCLUDED_FIELDS = frozenset(
     }
 )
 
-# 금지 대상 식별자 형태: '_' 또는 '.'를 포함한 ASCII 식별자(target_value, benchmark.roa …).
-_BANNABLE = re.compile(r"^[A-Za-z_][A-Za-z0-9]*(?:[._][A-Za-z0-9_.]+)+$")
-# 본문에서 찾을 토큰(같은 형태).
-_TOKEN = re.compile(r"[A-Za-z_][A-Za-z0-9]*(?:[._][A-Za-z0-9_]+)+")
+# 금지 대상 식별자 형태: '_'/'.'를 포함한 ASCII 식별자(target_value, benchmark.roa …)
+# 또는 6자 이상 단일 영단어 키(decomposition, residual …) — 한글 본문에 새면 내부 어휘.
+# 5자 이하(roe·dso·trend 등)는 정당한 감사 용어와 겹쳐 금지하지 않는다(오탐 방지).
+_BANNABLE = re.compile(
+    r"^(?:[A-Za-z_][A-Za-z0-9]*(?:[._][A-Za-z0-9_.]+)+|[A-Za-z][A-Za-z0-9]{5,})$"
+)
+# 본문에서 찾을 토큰: '_'/'.' 식별자 + 단일 영단어(6자+).
+_TOKEN = re.compile(r"[A-Za-z_][A-Za-z0-9]*(?:[._][A-Za-z0-9_]+)+|\b[A-Za-z][A-Za-z0-9]{5,}\b")
 
 
 def banned_identifiers(payload: Any) -> set[str]:

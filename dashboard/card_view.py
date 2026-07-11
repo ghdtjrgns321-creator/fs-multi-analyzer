@@ -412,6 +412,8 @@ def render_suspicion_card(card: Any, series_rows: list[dict], target_year: int) 
 def _rebuttal_block(card: Any) -> None:
     """④ 반박·확인 절차 — 카드 자체가 expander라 중첩 불가, 일반 섹션으로 렌더."""
 
+    from dashboard.card_data import humanize_amounts
+
     st.markdown("**④ 반박·확인 절차**")
     empty = True
     for key, label in REBUTTAL_SECTIONS:
@@ -419,7 +421,8 @@ def _rebuttal_block(card: Any) -> None:
         if entries:
             empty = False
             st.markdown(f"{label}")
-            st.markdown("\n".join(f"- {e}" for e in entries))
+            # 12자리 원숫자는 억/조로 축약(다른 섹션과 동일 규칙 — 원문 나열 금지).
+            st.markdown("\n".join(f"- {humanize_amounts(str(e))}" for e in entries))
     if empty:
         st.caption("반박 세부 목록 없음.")
 

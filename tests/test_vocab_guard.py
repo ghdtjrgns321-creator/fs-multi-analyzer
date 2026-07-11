@@ -14,8 +14,15 @@ def test_banned_identifiers_collects_nested_internal_keys():
     }
     banned = banned_identifiers(material)
     assert {"target_value", "peer_median", "ratio_time_series", "delta_score"} <= banned
-    # '_'/'.' 없는 일반 단어·정당한 감사 약어는 금지하지 않는다(오탐 방지)
-    assert "roe" not in banned and "trend" not in banned and "amount" not in banned
+    # 5자 이하 일반 단어·정당한 감사 약어는 금지하지 않는다(오탐 방지)
+    assert "roe" not in banned and "trend" not in banned
+
+
+def test_banned_identifiers_includes_long_single_word_keys():
+    # 'decomposition상 residual이 0.0%' 재발 차단 — '_' 없는 단일단어 키(6자+)도 금지
+    banned = banned_identifiers({"decomposition": {"residual": 0.0, "rows": []}})
+    assert {"decomposition", "residual"} <= banned
+    assert "rows" not in banned  # 5자 이하 제외
 
 
 def test_find_violations_scans_prose_but_exempts_structural_fields():

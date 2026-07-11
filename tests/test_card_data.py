@@ -725,3 +725,30 @@ def test_resolved_kind_overrides_pattern_guessing():
     card = _card(numeric_evidence=[metric_looking_but_account, korean_but_metric])
     rows = evidence_rows(card)
     assert [r["계정"] for r in rows] == ["총자산이익률 관련 계정"]  # kind가 승리, 라벨은 display_label
+
+
+def test_rebuttal_block_humanizes_amounts_apptest():
+    """④ 반박 섹션도 12자리 원숫자를 억/조로 축약(원문 나열 금지)."""
+
+    from streamlit.testing.v1 import AppTest
+
+    def _app():
+        from dashboard.card_view import _rebuttal_block
+        from src.schemas.findings import AccountFinding, IssueType
+
+        card = AccountFinding(
+            account="CFS:당기순이익",
+            issue_type=IssueType.EARNINGS_TAX,
+            materiality_score=1.0,
+            anomaly_score=1.0,
+            confidence="High",
+            counter_evidence=["법인세비용은 90,286,298,837원 감소해 순이익 감소를 완화했습니다."],
+        )
+        _rebuttal_block(card)
+
+    at = AppTest.from_function(_app)
+    at.run()
+    assert not at.exception
+    body = " ".join(m.value for m in at.markdown)
+    assert "90,286,298,837" not in body  # 원숫자 나열 사라짐
+    assert "903억원" in body  # 축약 표기
