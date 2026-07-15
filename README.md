@@ -303,7 +303,9 @@
                                    └─ 예 ─────▶ grounded + value_verified
                                    └─ 인용 수치 자체가 없음 ─▶ grounded(추세·비율 주장)
       relationship  다리 전원 실존하나 ── 아니오 ──▶ 탈락(가짜 계정 간 관계 날조 차단)
-      company       external = 출처 URL 있나 / industry = peer 대조(참고라 탈락 없음)
+      company       industry = peer 대조(참고라 탈락 없음) / 그 외 관점 = 통과
+                    └ external 분기(출처 URL 검사)는 코드에 있으나 라이브에선 도달 불가 —
+                      external은 발견자가 아니라서 여기로 안 온다(아래 외부검증이 그 자리)
 
   ◆ 규율   탈락 건도 reason 달아 전부 반환 — silent drop 금지
                          │
