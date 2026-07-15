@@ -286,3 +286,19 @@ def test_cluster_suspicions_groups() -> None:
     clusters = cluster_suspicions(grounded)
     account_clusters = [c for c in clusters if c["scope"] == "account"]
     assert len(account_clusters) == 2
+
+
+def test_confidence_gives_point_for_exact_taxonomy_match() -> None:
+    """매핑 정확 가점(+1)은 파이프라인이 실제로 방출하는 값에 발화해야 한다.
+
+    회귀: 비교 리터럴이 "exact"인데 mapper는 EXACT="exact_taxonomy_match"만 방출해
+    가점이 영원히 죽어 있었다(생산자 0). 상수를 참조하지 않은 문자열 비교의 대가.
+    """
+
+    from src.normalize.mapper import EXACT
+    from src.report.card_builder import _confidence
+
+    # 근거검증만 통과(+1) → 가점 없으면 Medium, 매핑 가점이 붙으면 High.
+    assert _confidence(value_verified=True, votes=0, mapping_status=EXACT) == "High"
+    # 감점 경로는 그대로 — 미매핑 + 표수 0이면 -1.
+    assert _confidence(value_verified=True, votes=0, mapping_status="unmapped_extension_account") == "Low"

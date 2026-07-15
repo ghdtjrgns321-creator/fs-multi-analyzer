@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from collections import Counter
 
+from src.normalize.mapper import EXACT, UNMAPPED
 from src.report.grounding import GroundedSuspicion
 from src.schemas.findings import (
     AccountFinding,
@@ -87,9 +88,11 @@ def _confidence(value_verified: bool, votes: int, mapping_status: str | None) ->
         score += 1
     if votes >= 2:
         score += 1
-    if mapping_status == "exact":
+    # 상수 참조 필수 — 리터럴 "exact"로 비교하던 동안 mapper는 "exact_taxonomy_match"만
+    # 방출해 이 가점이 한 번도 발화하지 않았다(생산자 0인 값과 비교).
+    if mapping_status == EXACT:
         score += 1
-    elif mapping_status in {"unmapped_extension_account", "OTHER", None} and votes == 0:
+    elif mapping_status in {UNMAPPED, None} and votes == 0:
         score -= 1
     if score >= 2:
         return "High"
