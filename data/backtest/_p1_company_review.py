@@ -33,8 +33,32 @@ from src.normalize.mapper import OTHER_CANONICAL, AccountMapper
 
 BASE = Path("data/companies")
 M = 1_000_000  # 표시 단위 백만
+EOK = 100_000_000  # 억(원) — 병기 환산 기준. 1억 = 100백만이므로 백만표시→억은 ÷100.
+EOK_MIN = 100_000_000  # 1억 미만은 병기 생략(소액 노이즈 억제, amounts.ANNOTATE_THRESHOLD와 동일)
 KNOWN_FS_ABSENCE = {"no_report", "dart_no_data"}
 KNOWN_XBRL_ABSENCE = {"no_report", "dart_no_xbrl"}
+
+
+def eok(x: object) -> str:
+    """백만원 표시 옆에 억 환산을 병기한다 — 읽는 쪽에 나눗셈을 시키지 않는다.
+
+    Why: 이 덤프는 G6 LLM 통독(onboarding_gate.run_g6)과 감사 통독의 **입력 경계**다.
+    경계에서 환산을 읽는 쪽에 떠넘기면 스케일 오독이 난다. 실제로 백만→억 환산에 ÷1,000을
+    오적용해(정답 ÷100) `golden/hit/_effect_ranking.md` 금액 9건이 전수 1/10로 기재됐다
+    (2026-07-15 적발·교정). 섹션 헤더에 "(백만원)"이라 적혀 있었는데도 9/9가 틀렸다 —
+    라벨은 방어가 아니다.
+
+    해법은 프로덕션이 이미 쓰는 것과 같다: 환산은 코드가 하고 원값 옆에 병기한다
+    (src/report/amounts.py annotate_amounts — "원값(1조 2,534.7억)"). 표시 기준은 백만으로
+    통일한 채(단위 혼재 금지, show() 주석 참조) 병기만 얹는다.
+
+    주의: 게이트가 파싱하는 라인(§B '차이 N' 줄 끝, [기계요약])에는 붙이지 않는다 —
+    onboarding_gate._parse_g1의 정규식 `차이\\s+(-?[\\d,]+)\\s*$`가 깨진다.
+    """
+    n = pd.to_numeric(x, errors="coerce")
+    if pd.isna(n) or abs(float(n)) < EOK_MIN:
+        return ""
+    return f"({float(n) / EOK:,.1f}억)"
 
 
 def _missing_db_status(corp_code: str, year_value: str) -> str:
@@ -149,7 +173,9 @@ def show(df, cols, n=200):
     # 항상 백만(÷M) 단위로 표시한다. 과거엔 abs<1백만 행을 원 단위로 표기해, 89만원 같은 미세값이
     # "900,000"처럼 큰 백만 숫자로 둔갑하는 표시 착시가 있었다(LLM이 거짓 스케일결함으로 오판).
     # sj_div·금액 무관 일괄 ÷M로 통일해 착시를 제거한다(데이터 무변경, 표시층만).
-    pd.set_option("display.float_format", lambda x: f"{x / M:,.2f}")
+    # 여기에 억 병기를 얹는다(eok) — 기준 단위는 백만 그대로 두되(단위 혼재 금지) 읽는 쪽이
+    # ÷100을 직접 하지 않게 한다. float_format은 amt 컬럼(유일한 float)에만 적용된다.
+    pd.set_option("display.float_format", lambda x: f"{x / M:,.2f}{eok(x)}")
     return df[cols].to_string(index=False)
 
 
@@ -162,7 +188,7 @@ def trunc_note(total: int, shown: int) -> None:
 # A. 본문 전과목(분류됨) — 표별, 금액순. LLM이 모든 과목을 읽음(단위: 백만)
 # CFS 우선, 없으면 OFS(별도전용 회사가 빈 dump 되는 것 방지)
 fs_main = "CFS" if (nf["fs_div"] == "CFS").any() else "OFS"
-print(f"\n## A. 본문 분류 과목 전체 (백만원, {fs_main}) — 표(sj_div)별")
+print(f"\n## A. 본문 분류 과목 전체 (백만원 + 억 병기, {fs_main}) — 표(sj_div)별")
 if fs_main == "OFS":
     print("  (CFS 없음 — 별도재무제표 전용 회사. OFS로 dump)")
 body = nf[nf["fs_div"] == fs_main]
@@ -326,7 +352,7 @@ for fs in ["CFS", "OFS"]:
         print(f"  [{fs}] 전기 미출현 0건 — raw 전기 금액 전수가 prior에 생존(절대값 기준)")
 
 # E. 시계열 — 당기/전기/전전기 (주요계정) LLM이 급변 판단 + 전기 보존율
-print(f"\n## E. 시계열 (당기·전기·전전기, 백만, {fs_main}) — 급변·역전 판단")
+print(f"\n## E. 시계열 (당기·전기·전전기, 백만 + 억 병기, {fs_main}) — 급변·역전 판단")
 pri_null = nf["prior_amount"].isna().mean() * 100
 pri2_null = nf["prior2_amount"].isna().mean() * 100
 print(
@@ -342,13 +368,14 @@ ts = nf[
 
 
 def _fm(x: object) -> str:
+    # 백만 표시 + 억 병기(eok). 시계열은 급변 판단에 가장 많이 인용되는 구간이라 병기 필수.
     n = pd.to_numeric(x, errors="coerce")
-    return "—" if pd.isna(n) else f"{float(n) / M:,.0f}"
+    return "—" if pd.isna(n) else f"{float(n) / M:,.0f}{eok(n)}"
 
 
 for _, r in ts.iterrows():
     p0, p1, p2 = r["amount"], r.get("prior_amount"), r.get("prior2_amount")
-    print(f"  {str(r['canonical']):12s} 당기 {_fm(p0):>14} 전기 {_fm(p1):>14} 전전기 {_fm(p2):>14}")
+    print(f"  {str(r['canonical']):12s} 당기 {_fm(p0):>24} 전기 {_fm(p1):>24} 전전기 {_fm(p2):>24}")
 
 # F-1. SCE 원공시 자기모순 — raw bare 합계행과 구성요소 컬럼 합 비교.
 raw_conflict_count = sce_raw_conflict_count(sce)
