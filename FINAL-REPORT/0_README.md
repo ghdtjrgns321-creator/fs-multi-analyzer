@@ -81,7 +81,7 @@
 | 관계 사슬 · 재무비율 · 변동분해 브리지 | **9 · 15 · 4**                                             | [4장](4_SIGNAL-ENGINE.md)          |
 | 실 LLM E2E (전과정)                    | 삼성 **231초·₩1,981·10호출**, 대주 **158초·₩1,365·10호출** | [9장](9_GOLDEN-TESTS-DECISIONS.md) |
 | 백테스트 발굴 recall                   | **5/6** (결정론 신호만)                                    | [9장](9_GOLDEN-TESTS-DECISIONS.md) |
-| 골든 검사1(수치)                       | 삼성물산 **N=57 전량 match**, 아스트 N=61 불일치 0         | [9장](9_GOLDEN-TESTS-DECISIONS.md) |
+| 골든 검사1(수치)                       | LG생활건강 **N=57 전량 match**, 아스트 N=61 불일치 0       | [9장](9_GOLDEN-TESTS-DECISIONS.md) |
 | 골든 검사2(적중)                       | 아스트 재고자산 **rank1·recall@5=2/3**                     | [9장](9_GOLDEN-TESTS-DECISIONS.md) |
 | 코드 정독 분모 N                       | **1,626** 파일 (핵심 306 + backtest 1,320)                 | [12장](12_COVERAGE.md)             |
 
