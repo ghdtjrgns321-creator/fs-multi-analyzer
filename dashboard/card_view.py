@@ -25,6 +25,9 @@ from dashboard.card_data import (
     waterfall_leaves,
     yoy_labels,
 )
+from dashboard.card_data import (
+    disclosed_label as _disclosed_label,
+)
 
 # 반박 4요소(원 주장 아래 접기로). report_html의 BODY_SECTIONS 어휘 계승.
 REBUTTAL_SECTIONS = [
@@ -177,8 +180,12 @@ def contribution_figure(out: dict) -> go.Figure:
     return fig
 
 
-def _header(card: Any) -> None:
-    fs_label, name = split_series_key(str(_get(card, "account") or ""))
+def _header(card: Any, series_rows: list[dict] | None = None) -> None:
+    account_key = str(_get(card, "account") or "")
+    fs_label, name = split_series_key(account_key)
+    # 설계3: 제목은 공시 원문 계정명이 권위 — 정준명(내부 키)은 라벨이 없을 때만.
+    disclosed = _disclosed_label(series_rows or [], account_key)
+    name = disclosed or name
     title = f"{name}" + (f" <span class='drv-chip'>{fs_label}</span>" if fs_label else "")
     score = float(_get(card, "priority_score") or 0.0)
     # 우측 배지는 연속 점수 하나만 — 등급 라벨은 폐지(근거 없는 라벨이 가장 눈에 띄던 문제③).
@@ -324,7 +331,14 @@ def _external_block(card: Any) -> None:
             url = str(_get(item, "url") or "")
             source = str(_get(item, "source") or "출처")
             link = f" — [{source}]({url})" if url else ""
-            st.markdown(f"- {summary}{link}")
+            # 설계4a: 외부 인용 금액의 내부 공시값 대조 결과 — 불일치는 명시 마킹.
+            check = str(_get(item, "figure_check") or "")
+            badge = {
+                "mismatch": " ⚠️ 외부 주장 수치가 공시와 상이 — 원문 대조 필요",
+                "uncheckable": "",
+                "match": " (수치 공시 일치)",
+            }.get(check, "")
+            st.markdown(f"- {summary}{link}{badge}")
     elif checked:
         st.caption("외부 근거 미발견 — 타깃 검색을 수행했으나 출처 있는 관련 보도·공시 없음.")
     else:
@@ -371,6 +385,8 @@ def _conclusion_block(card: Any) -> None:
         st.caption("조사 미수행 — LLM 미실행 또는 실패(결론 없음을 숨기지 않음).")
         return
     st.markdown(f"🧭 **결론** — {view['headline']}")
+    # 결론부는 전폭 유지 — 2칸으로 쪼개봤으나 좌우가 비슷하게 길어 128px(4.6%)밖에 안 줄고,
+    # 6단계 인과 서술이 열을 넘나들어 읽기만 나빠졌다(실측 후 되돌림).
     if view["cause_path"]:
         st.markdown("원인 경로")
         st.markdown("\n".join(f"{i}. {s}" for i, s in enumerate(view["cause_path"], 1)))
@@ -384,17 +400,24 @@ def _conclusion_block(card: Any) -> None:
 
 
 def _card_body(card: Any, series_rows: list[dict], target_year: int, decomposition) -> None:
-    """카드 본문 — 조사 결론 → 검토 포인트 → ①주장 → ②결과 분해 → ③시각자료 → 반박 접기."""
+    """카드 본문 — 결론·검토포인트는 전폭, 그 아래 좌(①주장·②분해) / 우(③시각·④반박) 2칸.
+
+    2칸인 이유: 6블록을 1열로 쌓으면 카드가 세로로 길어져 ④ 다음절차가 한 화면에 안 들어온다.
+    좌=읽는 근거, 우=보는 근거+절차로 갈라 높이를 sum이 아니라 max로 만든다.
+    """
 
     _conclusion_block(card)
     # 두괄식 — "떨어졌다"가 아니라 "왜 비정상인가"(괴리·주도요인)를 첫 줄에 찍는다.
     point = review_point(decomposition, series_rows)
     if point:
         st.markdown(f"🔎 **검토 포인트** — {point}")
-    _claims_block(card)
-    _analysis_block(card, decomposition)
-    _chart_block(card, series_rows, target_year, decomposition)
-    _rebuttal_block(card)  # 카드가 expander 단추라 중첩 expander 불가 — 일반 섹션
+    left, right = st.columns(2, gap="medium")
+    with left:
+        _claims_block(card)
+        _analysis_block(card, decomposition)
+    with right:
+        _chart_block(card, series_rows, target_year, decomposition)
+        _rebuttal_block(card)  # 카드가 expander 단추라 중첩 expander 불가 — 일반 섹션
 
 
 def render_suspicion_card(card: Any, series_rows: list[dict], target_year: int) -> None:
@@ -403,7 +426,7 @@ def render_suspicion_card(card: Any, series_rows: list[dict], target_year: int) 
     from src.report.decomposition import decompose_change
 
     with st.container(border=True):
-        _header(card)
+        _header(card, series_rows)
         account_key = str(_get(card, "account") or "")
         decomposition = decompose_change(series_rows, account_key, target_year)
         _card_body(card, series_rows, target_year, decomposition)
