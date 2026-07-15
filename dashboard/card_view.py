@@ -152,8 +152,13 @@ def contribution_figure(out: dict) -> go.Figure:
             orientation="h",
             marker=dict(color=colors, line=dict(width=0), cornerradius=4),
             text=texts,
-            textposition="outside",
-            textfont=dict(size=11, color="#475569"),
+            # outside 고정은 최장 막대의 라벨이 놓일 자리가 없어 y축 계정명과 겹쳤다(폭이 좁아질수록
+            # 악화). dataviz 규칙: 맞을 때만 안에, 안 맞으면 바깥 — plotly auto가 그 판정을 한다.
+            # 안쪽 라벨은 색 채움 위라 흰색(명도 기준), 바깥 라벨은 잉크.
+            textposition="auto",
+            insidetextfont=dict(size=11, color="#FFFFFF"),
+            outsidetextfont=dict(size=11, color="#475569"),
+            constraintext="none",
             cliponaxis=False,
             hovertemplate="%{y}: %{x:,.0f}원<extra></extra>",
         )
