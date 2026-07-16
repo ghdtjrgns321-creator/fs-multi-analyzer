@@ -6,7 +6,7 @@
 
 1. **Collect**   — OpenDART 원본 사업보고서 수집
 2. **Normalize** — 회사별 XBRL을 DART 공식 사전으로 정규화 + 온보딩 게이트 검문
-3. **Signal**    — 계산전용 코드가 계정 전수 스캔 (기준축 5+관계비율 9+재무비율 15)
+3. **Signal**    — 계산전용 코드가 계정 전수 스캔 (기준축 5+관계사슬 9+재무비율 15)
 4. **Discover**  — 5개 관점 Agents들이 각각 분석 수행 (+ 카드 확정 후 외부검증 1종)
 5. **Report**    — 의심스러운 건을 카드 형식으로 제공
 
@@ -23,7 +23,7 @@
 └────────────────────┬───────────────────────────────────────────────────────┘
                      ▼  관점별 발췌
 ┌───────────────────────────────── LLM 분석 ─────────────────────────────────┐
-│  5관점 병렬분석    ─▶ grounding     ─▶ 카드생성           ─▶ 외부검증      │
+│  5관점 병렬분석    ─▶ grounding     ─▶ 카드·조사·반박     ─▶ 외부검증      │
 │  numeric·note·flow    원본숫자 대조    의심·이유·확인사항    출처 대조     │
 │  trend·industry       없는숫자 탈락    반대근거·다음절차     수치 대사     │
 └────────────────────┬───────────────────────────────────────────────────────┘
@@ -136,7 +136,7 @@
                         └ rcept_no를 안 써 게이트 무경유(연도+11011로 DART가 주는 대로)
       주석 XBRL         save_xbrl_zip → Arelle 전개
                         └ fact 1건 = concept·label_ko·label_en·period·unit·value·dimensions
-                        └ 회사가 발명한 udf_ 태그·연결/별도 축이 여기 붙는다(함정은 §4.2)
+                        └ 회사가 발명한 udf_ 태그·연결/별도 축이 여기 붙는다(함정은 §3.2)
                         └ 전수 수집 경로는 final=True·iloc[-1] = 최신 정정본(as-filed 반대)
       사업보고서 XML    document(rcept_no) — 게이트가 실제로 서는 유일한 축
                         └ 우발·특수관계·연결범위 등 서술형(숫자가 아니라 XBRL이 못 긁음)
@@ -153,7 +153,7 @@
         ├─ id 일치 + label 충돌 없음 ────────▶ exact_taxonomy_match
         ├─ id와 label이 서로 다른 canonical 지목 ──▶ id 채택 + id_label_conflict 흔적
         │     └ label은 label_canonical로 기록만 — 자동으로 안 뒤집고 G2 인벤토리로 사람에게
-        │       label이 이기는 건 label_priority 등록 + 같은 표(statement)일 때뿐(§8 대표 사고)
+        │       label이 이기는 건 label_priority 등록 + 같은 표(statement)일 때뿐(§7 대표 사고)
         └─ 둘 다 미해결 ────────────────────▶ unmapped_extension_account
               └ 분석 제외가 아니라 "기타 중요 계정"으로 게시(조용한 드롭 금지)
 
@@ -163,7 +163,7 @@
                            change_label · change_canonical · component_raw · component_std
                            role 컬럼이 둘: change_role(begin/total/subtotal/restated_begin/
                            leaf/stock_balance) · component_role(marker/leaf/subtotal/total/
-                           composite/unmatched) — 축이 둘이니 역할도 둘
+                           composite/unmatched/derived_total) — 축이 둘이니 역할도 둘
       series_key           "{fs_div}:{canonical}"  예: CFS:재고자산  (리포트 계층에서 생성)
                            └ fs_div 접두가 연결·별도의 이질병합을 차단
                          │
@@ -241,7 +241,7 @@
       note     ◀ note_sections · note_facts 전량 · report_extracts(Layer1 서술 추출)
       flow     ◀ panel · snapshot(관계신호) · 활동성/이익의질 비율 · unmapped_material
                  · event_timeline
-      trend    ◀ panel 전량 · ratio_time_series · sce_cells 2D · snapshot
+      trend    ◀ panel 전량 · ratio_time_series · sce_cells 2D · snapshot · event_timeline
                  └ "trend 축만"은 입력 필터가 아니라 프롬프트 지시다
       industry ◀ peer 지표 · rules · ratio_time_series · review_queue[:5]  (industry.py)
                  └ ★ 예외 — 등수 힌트를 받는 유일한 관점(참고 관점이라 판단 미관여)
@@ -367,11 +367,11 @@
 
 ---
 
-## 4. 기술설명
+## 3. 기술설명
 
 §2 파이프라인의 구간을 순서대로 하나씩 푼다. 수치·동작은 전부 코드·설정·수집 데이터 실측이고, 근거 파일을 함께 적었다.
 
-### 4.1 L0 수집 — 어느 제출본을 진실로 삼나
+### 3.1 L0 수집 — 어느 제출본을 진실로 삼나
 
 분식은 나중에 정정된다. 그래서 **정정본을 입력으로 쓰면 분식을 잡은 게 아니라 정정 결과를 베낀 것**이 된다(전후꼬임). `select_annual_report`가 그 경계를 지킨다(`src/collect/opendart.py:27-51`).
 
@@ -389,14 +389,14 @@ filings(final=False)          ← final=True는 정정이력을 뭉개 원본을
 | 축             | 호출                                                | 무엇                                             |
 | -------------- | --------------------------------------------------- | ------------------------------------------------ |
 | finstate JSON  | `finstate_all(reprt_code="11011", fs_div=CFS\|OFS)` | 본표 5종의 계정·금액 뼈대                        |
-| 주석 XBRL      | `save_xbrl_zip` → Arelle 전개                       | 본표를 넘어선 주석 fact (§4.2)                   |
+| 주석 XBRL      | `save_xbrl_zip` → Arelle 전개                       | 본표를 넘어선 주석 fact (§3.2)                   |
 | 사업보고서 XML | `document(rcept_no)`                                | 우발·특수관계·연결범위 등 **숫자가 아닌** 서술형 |
 
 > **경계 주의** — as-filed 게이트가 세 축 전부에 걸리지는 않는다. `finstate_all`은 `rcept_no`를 안 쓰므로 게이트를 타지 않고(연도+`11011`로 DART가 주는 대로), 주석 XBRL **전수 수집** 경로는 `final=True` + `.iloc[-1]`로 오히려 최신 정정본을 고른다(`notes_xbrl.py:119,135`). 게이트가 실제로 서는 축은 사업보고서 XML이다.
 
-원문 미제공 보고서는 `except ValueError: return ""`로 흡수한다(`opendart.py:90-93`). 없는 것과 실패한 것을 구분해 `collection_summary.json`의 absence manifest에 사유를 남긴다 — 조용히 0건이 되지 않게 하려는 것이다.
+원문 미제공 보고서는 `except ValueError: return ""`로 흡수한다(`opendart.py:90-93`). 없는 것과 실패한 것을 구분하는 absence manifest(`collection_summary.json`)는 재무제표·주석 XBRL 축의 사유를 남긴다 — 사업보고서 원문 축은 흡수만 되고 사유가 저장되지 않는다(기록 사각).
 
-### 4.2 XBRL — 표가 아니라 fact 목록
+### 3.2 XBRL — 표가 아니라 fact 목록
 
 공시 재무제표는 XBRL(eXtensible Business Reporting Language, 기계가 읽는 재무보고 표준)로 제출된다. 사람이 보는 행·열 표가 아니라 **숫자 하나하나가 독립된 fact**로 흩어져 있고, 각 fact에 "무엇·언제·어느 단위·어느 갈래"가 붙는다. `financial_statement_xbrl.zip`을 Arelle로 전개하면 fact 하나가 7칸으로 떨어진다(`src/collect/notes_xbrl.py`).
 
@@ -408,11 +408,11 @@ filings(final=False)          ← final=True는 정정이력을 뭉개 원본을
 
 - **회사가 태그를 발명한다** — 990개 중 **197개(20%)** 가 `udf_`(user-defined) 접두다. 예: `udf_CF_2021319154114447_AdjustmentsForReconcileProfitLoss`(재고자산평가충당금). 개념명에 타임스탬프가 박혀 회사·연도마다 다르다. 이름으로는 매핑이 불가능하고 한글 라벨을 봐야 한다.
 - **같은 계정이 축으로 쪼개진다** — 990개 중 **859개**에 `ConsolidatedAndSeparateFinancialStatementsAxis`(연결/별도)가 붙는다. 축을 무시하고 합치면 이중계상, 한 축만 보면 나머지를 통째로 놓친다.
-- **단위가 돈만 있지 않다** — KRW 847 · SHARES 12 · PURE(비율) 5 · 빈칸(서술형) 126. 게이트의 `_NON_CURRENCY_UNITS = {KRW, SHARES}`가 여기서 나왔다(§8 SHARES 통화 오판).
+- **단위가 돈만 있지 않다** — KRW 847 · SHARES 12 · PURE(비율) 5 · 빈칸(서술형) 126. 게이트의 `_NON_CURRENCY_UNITS = {KRW, SHARES}`가 여기서 나왔다(§7 SHARES 통화 오판).
 
 주석을 XBRL로 받는 이유는 대안이 막혔기 때문이다. DART singlnote 웹뷰어는 8종만 지원하고 소형사엔 빈 응답을 준다(`notes_xbrl.py` 첫 줄). XBRL을 전개하면 본문 5표를 넘어 주석까지 나온다.
 
-### 4.3 L1 정규화 — 여러 표준을 하나의 축으로 접는다
+### 3.3 L1 정규화 — 여러 표준을 하나의 축으로 접는다
 
 `config/canonical_accounts.yaml`. 자체 발명이 아니라 **IFRS 국제표준 + 금감원 DART 확장 택소노미의 표준 ID를 근거로** 삼는다.
 
@@ -440,7 +440,7 @@ filings(final=False)          ← final=True는 정정이력을 뭉개 원본을
 | 표준 코드를 안 쓴다       | 876,199행 중 **132,609행(15.1%)** 이 비표준. 그중 131,514행이 DART가 직접 찍은 `-표준계정코드 미사용-`                 |
 | 표준 안에 동의어가 있다   | canonical **689개**가 표준 ID를 2개 이상 보유. 2,766 ID → 2,015 canonical이니 **751개가 같은 뜻 다른 이름**(최대 11개) |
 | 같은 ID인데 라벨이 제각각 | `ifrs-full_IncreaseDecreaseThroughChangesInOwnershipInterests...` 하나에 회사들이 붙인 한글 라벨 **274종**             |
-| ID와 라벨이 어긋난다      | `dart_BondsIssued`(발행사채) 슬롯에 "주식발행초과금" 라벨 → 1.4조 둔갑 (§8 id_label_conflict)                          |
+| ID와 라벨이 어긋난다      | `dart_BondsIssued`(발행사채) 슬롯에 "주식발행초과금" 라벨 → 1.4조 둔갑 (§7 id_label_conflict)                          |
 
 택소노미의 목적은 _신고 편의_(회사가 고르는 어휘 목록)고, 분석에 필요한 건 _비교 가능한 단일 축_이다. 정규화는 분류를 다시 하는 게 아니라 **여러 표준을 하나의 축으로 접는다**.
 
@@ -459,19 +459,19 @@ return MappingResult(
 
 바로 위 주석이 이유를 말한다 — _"매핑은 id-first 유지(T3 결정 보존, 무회귀), mapping_status에 흔적만 남겨 2단계 측정·리뷰 대상으로 노출한다."_ 즉 자동으로 뒤집지 않고, 흔적을 게이트 G2 인벤토리로 올려 사람이 보게 한다.
 
-label이 이기는 건 좁은 예외뿐이다. `account_id`가 `label_priority`에 등록돼 있고 **동시에 label canonical이 같은 표(statement)** 일 때만 label을 채택한다(`mapper.py:89-93`). 같은 표 제약이 있는 이유는 현금흐름표 id의 행이 라벨 때문에 자본변동표 canonical로 새는 교차표 오배정을 막기 위해서다. §8의 id_label_conflict 사고를 "label_priority 등록"으로 고쳤다는 게 바로 이 목록에 추가했다는 뜻이다.
+label이 이기는 건 좁은 예외뿐이다. `account_id`가 `label_priority`에 등록돼 있고 **동시에 label canonical이 같은 표(statement)** 일 때만 label을 채택한다(`mapper.py:89-93`). 같은 표 제약이 있는 이유는 현금흐름표 id의 행이 라벨 때문에 자본변동표 canonical로 새는 교차표 오배정을 막기 위해서다. §7의 id_label_conflict 사고를 "label_priority 등록"으로 고쳤다는 게 바로 이 목록에 추가했다는 뜻이다.
 
 셋 중 어디에도 안 걸리면 `unmapped_extension_account`가 되고, canonical 이름은 `"기타 중요 계정"`이 된다(`mapper.py:17,107`). **분석에서 빼는 게 아니라 게시한다** — 금액이 0보다 크면 전량 노출된다(개수 상한 없음, `src/report/company_report.py:394-419`).
 
 #### 구조 축
 
-dedup·충돌 중재도 **삭제가 아니다**. 같은 canonical에 여러 행이 몰리면 대표 1행을 고르고 나머지는 드롭이 아니라 "기타 중요 계정"으로 강등 보존한다(`pipeline.py:371-372`) — 금액 큰 행이 headline을 탈취하며 작은 행을 지우던 사고(§8 bigger-amount-wins)의 대응이다.
+dedup·충돌 중재도 **삭제가 아니다**. 같은 canonical에 여러 행이 몰리면 대표 1행을 고르고 나머지는 드롭이 아니라 "기타 중요 계정"으로 강등 보존한다(`pipeline.py:371-372`) — 금액 큰 행이 headline을 탈취하며 작은 행을 지우던 사고(§7 bigger-amount-wins)의 대응이다.
 
-자본변동표는 (변동 × 구성요소) 2D 셀로 전개한다. 셀 하나가 컬럼 **18개**(`SCE_COMPONENT_COLUMNS`, `src/normalize/sce.py:22-41`)를 갖고, 역할 컬럼이 **둘**이다 — `change_role`(begin/total/subtotal/restated_begin/leaf + `stock_balance`)과 `component_role`(marker/leaf/subtotal/total/composite/unmatched). 축이 둘이니 역할도 둘이다.
+자본변동표는 (변동 × 구성요소) 2D 셀로 전개한다. 셀 하나가 컬럼 **18개**(`SCE_COMPONENT_COLUMNS`, `src/normalize/sce.py:22-41`)를 갖고, 역할 컬럼이 **둘**이다 — `change_role`(begin/total/subtotal/restated_begin/leaf + `stock_balance`)과 `component_role`(marker/leaf/subtotal/total/composite/unmatched + 합성 합계행 `derived_total`). 축이 둘이니 역할도 둘이다.
 
 시계열 키는 `"{fs_div}:{canonical}"`이다(예: `CFS:재고자산`). 접두가 붙는 이유는 주석에 그대로 있다 — _"동명계정(차입금 등)이 연결·별도에서 한 시계열로 합산되는 이질병합을 차단"_(`company_report.py:257-258`).
 
-### 4.4 온보딩 게이트 — 회사가 아니라 우리 번역을 검문한다
+### 3.4 온보딩 게이트 — 회사가 아니라 우리 번역을 검문한다
 
 방향이 중요하다. FAIL은 "이 회사가 수상하다"가 아니라 **"우리가 이 회사를 제대로 못 읽었다"**이다. 그래서 FAIL이면 회사를 버리는 게 아니라 별칭 3단 분업으로 가서 사전을 고친다.
 
@@ -496,9 +496,9 @@ G2(id-라벨 충돌 인벤토리)·G6(LLM 통독 dump)은 **보고용**이라 �
 
 그래서 검산이 최소 1건은 나와야 통과를 인정한다. 반대로 과잉 차단도 막는다 — G3는 소계는 있는데 구성요소가 없으면 FAIL이 아니라 SKIP이다(은행·보험은 매출총이익 개념 자체가 없다).
 
-### 4.5 L2 신호엔진 — 숫자를 만드는 유일한 곳
+### 3.5 L2 신호엔진 — 숫자를 만드는 유일한 곳
 
-여기서 나온 값을 뒤에서 LLM이 해석만 한다. `src/signals/` 12개 파일에 `openai`·`pydantic_ai`·`genai` 계열 import가 **0건**이다 — "LLM 호출 0"은 표어가 아니라 import 목록으로 확인되는 사실이다.
+여기서 나온 값을 뒤에서 LLM이 해석만 한다. `src/signals/` 11개 파일에 `openai`·`pydantic_ai`·`genai` 계열 import가 **0건**이다 — "LLM 호출 0"은 표어가 아니라 import 목록으로 확인되는 사실이다.
 
 #### 계정 패널 — 전 계정, 순위 없음
 
@@ -519,7 +519,7 @@ G2(id-라벨 충돌 인벤토리)·G6(LLM 통독 dump)은 **보고용**이라 �
 
 #### 5축 — 계정 하나를 다섯 각도로
 
-`src/signals/profiler.py`가 계정마다 원점수를 낸다. **분모가 전부 자산총계**라 규모로 정규화된다(삼성 1조와 소형사 1조를 다르게 본다).
+`src/signals/profiler.py`가 계정마다 원점수를 낸다. **delta·trend는 분모가 자산총계**라 규모로 정규화되고(삼성 1조와 소형사 1조를 다르게 본다), volatility는 자기 시계열 변동계수(std/|평균|), mix는 표 내 비중 변화(pp)로 잰다.
 
 | 축                  | 계산                                  | 잡는 것         |
 | ------------------- | ------------------------------------- | --------------- |
@@ -529,7 +529,7 @@ G2(id-라벨 충돌 인벤토리)·G6(LLM 통독 dump)은 **보고용**이라 �
 | mix (구성비)        | 표 내 비중의 전기 대비 변화(pp)       | 구성이 바뀜     |
 | peer (업종 분위)    | 동종업계 대비                         | 남들과 다름     |
 
-앞 넷은 자기 시계열만 보는 **self 4축**이고, peer만 남과 비교라 `src/peers/benchmark.py`가 맡는다(`profiler.py:211`). 각 축의 감사기준서 근거는 §6.4.
+앞 넷은 자기 시계열만 보는 **self 4축**이고, peer만 남과 비교라 `src/peers/benchmark.py`가 맡는다(`profiler.py:211`). 각 축의 감사기준서 근거는 §5.4.
 
 여기선 **점수만 내고 자르지 않는다** — `profiler.py`에 "임계 리터럴 없음"이 명시돼 있다. 참고로 `z_score`는 "전 계정 분포에서의 위치"가 아니라 **자기 과거 시계열 대비 z**이고, 이력이 4개 미만이면 `None`이다. 분포상 위치는 별도 키 `percentiles`가 맡는다.
 
@@ -575,7 +575,7 @@ delta_parent = Σ(구성 항목 delta) + residual        (src/report/decompositi
 residual_pct = residual / |delta_parent| × 100
 ```
 
-**미설명 잔차를 지우지 않고 남기는 게 핵심이다.** 잔차가 크면 "분해가 원인을 설명 못 했다"는 뜻이고, 그 사실이 뒤에서 조사원 도구 루프를 여는 트리거가 된다(§4.10). 브리지는 4개지만 회사마다 계정 구성이 달라 variants가 총 7개이고, 잔차 절대값이 가장 작은 것을 고른다.
+**미설명 잔차를 지우지 않고 남기는 게 핵심이다.** 잔차가 크면 "분해가 원인을 설명 못 했다"는 뜻이고, 그 사실이 뒤에서 조사원 도구 루프를 여는 트리거가 된다(§3.10). 브리지는 4개지만 회사마다 계정 구성이 달라 variants가 총 7개이고, 잔차 절대값이 가장 작은 것을 고른다.
 
 #### 커버리지 원장 — 조용한 드롭을 구조로 막는다
 
@@ -589,7 +589,7 @@ population_n == analyzed_n + len(excluded) + len(unaccounted)     → reconciled
 
 > **정확히 말하면** — `reconciled`는 예외를 던지는 assert가 아니라 원장이 반환하는 **bool 필드**다. 그리고 `unaccounted == []`를 단언하는 테스트는 9행짜리 합성 픽스처 대상이다(`tests/test_coverage_ledger.py:68`). 실데이터에서 미설명이 생기면 화면 경고로는 드러나지만 CI가 막지는 않는다.
 
-### 4.6 materials — 등수 힌트를 주지 않는다
+### 3.6 materials — 등수 힌트를 주지 않는다
 
 코드가 이미 추린 후보 목록(`review_queue`)을 관점에 넘기면, LLM은 그 순서를 그대로 베낀다. 그러면 관점 5개를 돌린 의미가 없다. 그래서 `materials.py`는 **전 계정 계산값을 통째로 주고 "무엇이 유의한가"는 관점이 직접 고르게 한다**(`src/report/materials.py:78-80`).
 
@@ -598,17 +598,17 @@ population_n == analyzed_n + len(excluded) + len(unaccounted)     → reconciled
 | numeric  | panel 전량 · ratio_summary · ratio_time_series · snapshot · report_event_timeline              |
 | note     | note_sections · note_facts 전량 · report_extracts                                              |
 | flow     | panel · snapshot · 비율{활동성·이익의 질} · unmapped_material_accounts · report_event_timeline |
-| trend    | panel 전량 · ratio_time_series · sce_cells 2D · snapshot                                       |
-| industry | peer 지표 · rules · ratio_time_series                                                          |
+| trend    | panel 전량 · ratio_time_series · sce_cells 2D · snapshot · report_event_timeline · target_year |
+| industry | peer 지표 · rules · ratio_time_series · review_queue[:5]                                       |
 
 투입 경계에서 코드가 두 가지를 한다.
 
 - **`annotate_amounts`** — 원값 옆에 억/조를 병기한다(임계 1억, `src/report/amounts.py:46-47`). `1,253,469,878,367(1조 2,534.7억)`처럼 원값을 앞에 남기는 게 요점이다. LLM이 나눗셈을 안 하면 나눗셈을 틀릴 수도 없고, 원값이 남아 있어 grounding 유효숫자 대조를 통과한다.
-- **`vocab_guard`** — 재료 dict의 키를 **자동 수집**해 금지어로 삼는다(손으로 열거하지 않으니 새 필드가 자동 커버된다). 그 내부 식별자가 결론 본문에 새면 `ModelRetry`로 반려한다(`src/report/vocab_guard.py:51-68`). 오탐을 막으려 4자 미만·감사 약어(ROE·DSO)는 금지하지 않고 구조 필드 20종은 면제한다.
+- **`vocab_guard`** — 재료 dict의 키를 **자동 수집**해 금지어로 삼는다(손으로 열거하지 않으니 새 필드가 자동 커버된다). 그 내부 식별자가 결론 본문에 새면 `ModelRetry`로 반려한다(`src/report/vocab_guard.py:51-68`). 오탐을 막으려 4자 미만 키는 수집하지 않고 단일 영단어는 6자 이상만 금지하며(ROE·DSO 같은 짧은 감사 약어는 자연 면제), 구조 필드 21종(locator 등)은 면제한다.
 
 > **예외 하나** — "등수 힌트 없음"은 5관점 중 4관점에만 참이다. `industry`만 `review_queue[:5]`를 받는다(`src/report/industry.py:32`). 참고 관점이라 판단에 관여하지 않지만, 원칙의 구멍인 건 맞다.
 
-### 4.7 L3 발견 — 5관점 병렬, 관점당 1회
+### 3.7 L3 발견 — 5관점 병렬, 관점당 1회
 
 ```python
 # src/report/perspective_runner.py:27-35
@@ -635,7 +635,7 @@ ALL_PERSPECTIVES = ("numeric", "note", "flow", "trend", "industry")
 - **`perspective` 재주입** — `item.model_copy(update={"perspective": perspective})`. LLM의 자기 라벨링을 믿지 않는다(`perspective_runner.py:124-126`).
 - **`status` 3분기** — `completed`(0건도 정상) / `deferred`(의도적 건너뜀) / `failed`(호출 실패). 스키마 주석이 이유를 못박는다 — _"failed는 빈 결과로 둔갑시키지 않고 표면화한다."_ quota로 관점이 전멸했는데 "0건 = 위험 없음"이 되는 게 이 도구에서 가장 위험한 실패다.
 
-### 4.8 grounding — 인용 수치가 실재하나
+### 3.8 grounding — 인용 수치가 실재하나
 
 LLM은 같은 금액을 원·백만·억으로 뒤섞어 인용한다. 그래서 float 비교가 아니라 **유효숫자(앞뒤 0 제거) 동일성**으로 대조한다(`src/report/grounding.py:31-35`).
 
@@ -653,11 +653,11 @@ LLM은 같은 금액을 원·백만·억으로 뒤섞어 인용한다. 그래서
 | 인용 유효숫자가 그 계정 풀에 없음 | **탈락** — "인용 수치가 실값과 불일치(환각)" |
 | 금액 주장 자체가 없음(추세·비율)  | `grounded` 유지, `value_verified=False`      |
 
-관계 의심건은 **다리 전원이 실존해야** 통과한다 — 가짜 계정 사이의 관계를 날조하는 걸 막는다. 그리고 탈락 건도 사유를 달아 전부 반환한다. 파일 첫 줄에 `§9 silent drop 금지`가 박혀 있다.
+관계 의심건은 **다리 전원이 실존해야** 통과한다 — 가짜 계정 사이의 관계를 날조하는 걸 막는다. 그리고 탈락 건도 사유를 달아 전부 반환한다. 파일 첫 줄에 `§9 silent drop 금지`(여기서 §9는 이 문서가 아니라 PLAN.md의 절)가 박혀 있다.
 
 > **한계** — `sj_div` 한정키는 우선 조회일 뿐 강제가 아니다. 한정키 풀이 없으면 비한정 키로 폴백하는데, 그 풀은 전 `sj_div` 금액의 합집합이다. LLM이 `sj_div`를 비우거나 틀리면 동명이계(BS와 IS에 같은 계정명) 오매칭이 통과할 수 있다.
 
-### 4.9 L4 카드 — 점수는 코드가 매긴다
+### 3.9 L4 카드 — 점수는 코드가 매긴다
 
 같은 사건이 여러 관점에서 오면 한 장으로 묶는다.
 
@@ -683,7 +683,7 @@ priority:
 
 `votes`의 분모가 **4**인 게 중요하다. `industry`·`external`은 참고 관점이라 표수에 안 들어가고 배지로만 표시된다(`INTERNAL_PERSPECTIVES`, `src/schemas/suspicion.py:18`). 그리고 `priority_score`는 **정렬·외부검증 대상 선정에만 쓰고 임계로 자르지 않는다** — 코드 전역에 이 값과 비교하는 필터가 0건이다.
 
-### 4.10 조사·반박·외부검증 — 모든 카드가 결론을 받는다
+### 3.10 조사·반박·외부검증 — 모든 카드가 결론을 받는다
 
 분해가 원인을 이미 설명했으면 종합 1호출로 끝내고, 설명이 부족하면 도구를 쥐여준다. **배제가 아니라 경로 차이**다(`src/report/investigator.py:183-200`).
 
@@ -713,25 +713,25 @@ return top_share < 60.0                                              # 최대 le
 
 ---
 
-## 5. 핵심 설계 5원칙
+## 4. 핵심 설계 5원칙
 
 이후 모든 설계가 종속되는 헌법이다.
 
-| #   | 원칙                                  | 무엇을 강제하나                   | 코드 증거                                     |
-| --- | ------------------------------------- | --------------------------------- | --------------------------------------------- |
-| 1   | **계산은 코드, 발견은 LLM**           | 숫자 계산을 LLM에 안 맡김         | 수집·정규화·신호엔진 LLM 호출 0               |
-| 2   | **에이전트는 역할, 계정은 데이터**    | 데이터 차원을 에이전트화 금지     | `PerspectiveName` 6개 닫힌 집합               |
-| 3   | **계정 지식은 플레이북(데이터)**      | 항등식·관계사슬·프롬프트를 YAML로 | `config/playbooks/` 15개 YAML                 |
-| 4   | **LLM은 풀되 사실에 앵커링**          | tool DSL + grounding + 반박       | `grounding.py`·`vocab_guard.py`·`rebuttal.py` |
-| 5   | **수준(level)과 변화(change)를 함께** | 전기 대비 변화를 1급 축으로       | `series_normalize`·occurrence_state           |
+| #   | 원칙                                  | 무엇을 강제하나                   | 코드 증거                                          |
+| --- | ------------------------------------- | --------------------------------- | -------------------------------------------------- |
+| 1   | **계산은 코드, 발견은 LLM**           | 숫자 계산을 LLM에 안 맡김         | 수집·정규화·신호엔진 LLM 호출 0                    |
+| 2   | **에이전트는 역할, 계정은 데이터**    | 데이터 차원을 에이전트화 금지     | `PerspectiveName` 6개 닫힌 집합(발견 5 + external) |
+| 3   | **계정 지식은 플레이북(데이터)**      | 항등식·관계사슬·프롬프트를 YAML로 | `config/playbooks/` 15개 YAML                      |
+| 4   | **LLM은 풀되 사실에 앵커링**          | tool DSL + grounding + 반박       | `grounding.py`·`vocab_guard.py`·`rebuttal.py`      |
+| 5   | **수준(level)과 변화(change)를 함께** | 전기 대비 변화를 1급 축으로       | `series_normalize`·occurrence_state                |
 
 원칙 2에는 **에이전트 추가 게이트**가 붙어 있다. 새 에이전트는 검증 관점이 기존 직교 차원과 구별되고 회사·산업과 무관하게 고정일 때만 추가한다. 분석 대상(계정·엔티티·기간)은 어떤 경우에도 에이전트로 만들지 않는다. 이 게이트가 "계정으로 가면 끝없다"의 재발을 막는다.
 
 ---
 
-## 6. 차별점
+## 5. 차별점
 
-### 6.1 환각 방지 4중 장치
+### 5.1 환각 방지 4중 장치
 
 원칙 4의 구현이다. LLM의 자유 추론은 과잉지적(1종오류)을 유발하므로 네 겹으로 막는다.
 
@@ -766,15 +766,15 @@ ANNOTATE_THRESHOLD = 1e8          # 1억 이상만 병기
 #                      ^^^^^^^^^^^^^^^^^ 원값을 앞에 남겨 grounding 유효숫자 대조를 통과시킨다
 ```
 
-③은 grounding이 숫자에 하는 일을 언어에 한다. `target_value`·`peer_median` 같은 내부 키가 서술에 새면 `ModelRetry`로 반려하되, 오탐을 막으려 5자 이하 일반 단어·감사 약어(roe·dso)는 금지하지 않고 구조 필드(locator)는 면제한다.
+③은 grounding이 숫자에 하는 일을 언어에 한다. `target_value`·`peer_median` 같은 내부 키가 서술에 새면 `ModelRetry`로 반려하되, 오탐을 막으려 4자 미만 키·5자 이하 단일 영단어(roe·dso 같은 감사 약어가 여기 해당)는 금지하지 않고 구조 필드 21종(locator 등)은 면제한다.
 
-### 6.2 멀티에이전트의 "반쪽"을 자각하고 극복
+### 5.2 멀티에이전트의 "반쪽"을 자각하고 극복
 
 초기엔 내부 3관점이 같은 연결재무제표 패널만 봐서 numeric 관점으로 수렴했다 — "멀티에이전트가 쓸모없다"의 정체였다. 진단은 관점이 아니라 **데이터 축**이었다. 도구가 "연결 본문 계정의 전년 대비 변화" 한 축만 봐서, 해석 다양성만 있고 데이터 차원 다양성이 없었다.
 
 해결은 관점을 쪼개는 게 아니라(그건 원칙 2 위반) 데이터층을 전면 개방하는 쪽이었다. 별도재무제표(OFS) 개방 · 주석 전량 투입 · 자본변동표 2D 편입으로 각 관점이 자기 차원의 데이터를 본다.
 
-### 6.3 조용한 드롭을 구조로 차단 — 커버리지 원장
+### 5.3 조용한 드롭을 구조로 차단 — 커버리지 원장
 
 분석 명단을 "기본 슬라이스(올해·연결·본문)에서 골라 담기"하면 슬라이스 밖은 조용히 사라진다. 원장은 이를 불변식으로 바꾼다.
 
@@ -784,7 +784,7 @@ population_n == analyzed_n + len(excluded) + len(unaccounted)   → reconciled
 
 모집단은 본문 셀 전량이다. 미설명이 1건이라도 있으면 "⚠ 미분석 N건"으로 화면에 표면화한다. 원장은 실제로 작동했다 — 1차 실행에서 대주산업 미설명 24건(NaN placeholder 거짓 드롭)을 자동 포착해 필터를 고치게 했다.
 
-### 6.4 감사기준서에 앵커링된 방법론
+### 5.4 감사기준서에 앵커링된 방법론
 
 관점·지표·5축이 ISA/KSA·K-IFRS 조항에 1:1 매핑된다. 신호 축이 특정 계정을 잡으려 발명한 과적합이 아니라 기준서에서 도출됐음을 증명해 뒀다.
 
@@ -796,7 +796,7 @@ population_n == analyzed_n + len(excluded) + len(unaccounted)   → reconciled
 | mix (구성비)        | ISA 520                       |
 | peer (업종 분위)    | ISA 520 (industry comparison) |
 
-### 6.5 카드는 삭제하지 않는다
+### 5.5 카드는 삭제하지 않는다
 
 반박 에이전트는 반대근거·정상설명·확인질문·다음절차를 채우되 **위험도 숫자는 건드리지 않고 카드를 제거하지 않는다**. 정상우세로 판정돼도 하단 강등만 한다. 반박이 없으면 verdict=None("반박 미수행")으로 남긴다 — 빈손을 은폐하지 않는다.
 
@@ -814,11 +814,11 @@ priority:
 
 ---
 
-## 7. 검증
+## 6. 검증
 
 정답을 내 이전 실행에서 가져오면 버그까지 잠긴다. 그래서 **DART(수치)와 현실의 제재·재작성(적중)** 두 곳에서 가져왔다.
 
-### 7.1 골든 2검사
+### 6.1 골든 2검사
 
 **검사1 수치 골든** — 최종 카드(모든 변환 후)에 찍힌 수치를 DART 원천값과 전자동 대조한다. grounding이 못 보는 변환 버그(억/조 환산 ÷10·부호)를 겨냥한다.
 
@@ -831,7 +831,7 @@ priority:
 
 **검사2 의심 적중 골든** — as-filed 원본을 입력으로 파이프라인을 돌려 실제 제재·재작성 계정이 카드 큐에 뜨는지 순위로 채점한다. 텍스트 비교 없이 **존재+순위만** 보므로 LLM 문구가 매번 달라져도 점수가 안정적이다.
 
-### 7.2 검증 로그 (M/N)
+### 6.2 검증 로그 (M/N)
 
 | 항목                         | 방법                   | 결과                                                                |
 | ---------------------------- | ---------------------- | ------------------------------------------------------------------- |
@@ -846,7 +846,7 @@ priority:
 
 정답지는 익명 사례집이 아니라 **실명 확정 사건 8사**다 — 분식 6(두산에너빌리티·아스트·셀트리온·디아이동일·모델솔루션·세토피아) + 통제 2(삼성 정상·KAI 무죄확정).
 
-### 7.3 검증이 실제로 고친 것
+### 6.3 검증이 실제로 고친 것
 
 검증은 통과 도장이 아니라 결함 발견 장치였다.
 
@@ -858,18 +858,18 @@ priority:
 | 빈 검산 통과(hollow-PASS) | 통과로 둔갑 → FAIL 처리                           |
 | 규모 기준                 | 1조 절대값 → 자산총계 비율 (백테스트가 버그 발견) |
 
-### 7.4 실 LLM E2E 실측
+### 6.4 실 LLM E2E 실측
 
 | 회사                     |      총시간 |       총비용 | LLM 호출 | 입력/출력 토큰   | 카드             |
 | ------------------------ | ----------: | -----------: | :------: | ---------------- | ---------------- |
 | 대주산업 (00112457/2024) | **158.4초** | **₩1,364.9** |    10    | 313,178 / 20,608 | 계정 13 + 회사 6 |
 | 삼성전자 (00126380/2024) | **231.1초** | **₩1,981.0** |    10    | 487,443 / 21,693 | 계정 12 + 회사 3 |
 
-병목은 Phase2 카드(삼성 115.8초)와 사업보고서 본문 처리(삼성 ₩1,089·304,852토큰)다. 단가는 입력 $2.5/출력 $10 per 1M·₩1,380/$ 가정이다(실단가 미확정). LLM 에이전트 10개(온보딩 3 + 관점 6 + 반박 1)가 호출 수와 일치한다.
+병목은 Phase2 카드(삼성 115.8초)와 사업보고서 본문 처리(삼성 ₩1,089·304,852토큰)다. 단가는 입력 $2.5/출력 $10 per 1M·₩1,380/$ 가정이다(실단가 미확정). LLM 에이전트 10개(온보딩 3 + 관점 6 + 반박 1)가 호출 수와 일치한다 — **측정 당시 구성**이다(당시 external이 발견 관점에 포함된 6관점, 현행은 5관점 + 카드 확정 후 외부검증).
 
 ---
 
-## 8. 트러블슈팅
+## 7. 트러블슈팅
 
 실제로 겪은 사고와 근본 원인이다. "코드 한 줄"이 아니라 제거·변경이 조용히 부순 것을 담았다.
 
@@ -915,7 +915,7 @@ priority:
 
 ---
 
-## 9. 한계
+## 8. 한계
 
 부정을 판정하거나 운영 탐지 성능을 보장하지 않는다. 아래를 문서에 그대로 명시한다.
 
@@ -937,17 +937,17 @@ priority:
 
 ---
 
-## 10. 기술 스택
+## 9. 기술 스택
 
-| 레이어      | 기술                                                                                                          | 이유                                                            |
-| ----------- | ------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| 언어·패키지 | Python 3.11+ · uv (dependency-groups)                                                                         | core/agent/dashboard/dev 4그룹 분리                             |
-| 에이전트    | PydanticAI + 순수 Python async                                                                                | 구조화 출력이 환각을 막는다. 고정 순서 1회라 프레임워크 불필요  |
-| LLM         | OpenAI **gpt-5.4** (6관점·반박·온보딩) · Google **gemini-2.5-flash** / **gemini-3.1-pro-preview** (외부 검색) | 금융 환각 벤치에서 GPT-5.4만 통과                               |
-| DB          | DuckDB (회사/연도 격리)                                                                                       | `data/companies/{corp}/{year}/analysis.duckdb` — 전역 공유 금지 |
-| 데이터      | OpenDART · Arelle (XBRL) · OpenDartReader                                                                     | 실제 공시 데이터                                                |
-| 검증        | Pandera (L1 구조) · pytest (tests + golden)                                                                   | 금액은 round 후 비교                                            |
-| UI          | Streamlit + plotly                                                                                            | 색각 이상 대비 검증 통과(ΔE 24.2)                               |
+| 레이어      | 기술                                                                                                                              | 이유                                                            |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| 언어·패키지 | Python 3.11+ · uv (dependency-groups)                                                                                             | core/agent/dashboard/dev 4그룹 분리                             |
+| 에이전트    | PydanticAI + 순수 Python async                                                                                                    | 구조화 출력이 환각을 막는다. 고정 순서 1회라 프레임워크 불필요  |
+| LLM         | OpenAI **gpt-5.4** (5관점·조사·반박·온보딩) · Google **gemini-2.5-flash** (외부 검색; **gemini-3.1-pro-preview**는 백테스트 전용) | 금융 환각 벤치에서 GPT-5.4만 통과                               |
+| DB          | DuckDB (회사/연도 격리)                                                                                                           | `data/companies/{corp}/{year}/analysis.duckdb` — 전역 공유 금지 |
+| 데이터      | OpenDART · Arelle (XBRL) · OpenDartReader                                                                                         | 실제 공시 데이터                                                |
+| 검증        | Pandera (L1 구조) · pytest (tests + golden)                                                                                       | 금액은 round 후 비교                                            |
+| UI          | Streamlit + plotly                                                                                                                | 색각 이상 대비 검증 통과(ΔE 24.2)                               |
 
 <details>
 <summary><b>주요 의사결정 (ADR) — 펼치기</b></summary>
@@ -992,7 +992,7 @@ FINAL-REPORT/       프로젝트 전체 보고서 13장
 
 ---
 
-## 11. 빠른 시작
+## 10. 빠른 시작
 
 ```bash
 # 설치
