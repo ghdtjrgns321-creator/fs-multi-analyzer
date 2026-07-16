@@ -3,9 +3,9 @@
 ## 12.1 센서스
 
 - **분모 N = 1,626** 정독 대상 파일 (code 326 · config 105 · doc 221 · text 974)
-- 실행 커맨드:
+- 실행 커맨드 (census.py는 저장소가 아니라 final-report 스킬에 있는 스크립트):
   ```
-  python census.py inventory . --exclude companies --exclude _backup_corrected
+  python ~/.claude/skills/final-report/scripts/census.py inventory . --exclude companies --exclude _backup_corrected
   ```
 - **제외 디렉토리로 걸러진 파일 = 77,645**: `.venv` 29,705 · `companies` 43,197 · `.git` 3,490 · `_backup_corrected` 746 · `__pycache__` 299 · `.ruff_cache` 42 · `.superpowers` 34 · `.claude` 121 · `.codex` 5 · `.pytest_cache` 6
 - 목록만(정독 면제) = 97

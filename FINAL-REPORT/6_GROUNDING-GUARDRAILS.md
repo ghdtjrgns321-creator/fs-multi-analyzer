@@ -1,6 +1,6 @@
 # 6. 환각 방지 4중 장치
 
-> **위치**: 6관점 발견과 카드 조립 사이, 그리고 LLM 출력 전 구간을 관통한다. 원칙 4("LLM은 풀되 사실에 앵커링")의 구체적 구현. LLM의 자유 추론은 1종오류(과잉지적)를 유발하므로 **네 겹**으로 막는다.
+> **위치**: 5관점 발견과 카드 조립 사이, 그리고 LLM 출력 전 구간을 관통한다. 원칙 4("LLM은 풀되 사실에 앵커링")의 구체적 구현. LLM의 자유 추론은 1종오류(과잉지적)를 유발하므로 **네 겹**으로 막는다.
 
 ## 6.1 4중 장치 개요
 
@@ -41,7 +41,7 @@ LLM에게 자유 SQL을 주지 않는다(D1). LLM은 "어떤 함수를 호출할
 판정 규칙:
 - 계정 미존재·금액 불일치 → grounded=False
 - 관계는 **모든 다리가 실존**해야 grounded(가짜 관계 날조 차단)
-- external은 URL 존재, industry는 참고이므로 탈락 안 함(D15)
+- external 분기(출처 URL 검사)는 코드에 있으나 라이브에선 도달 불가(external은 발견자가 아니라 grounding에 안 들어온다), industry는 참고이므로 탈락 안 함(D15)
 - **탈락도 reason과 함께 전부 반환**(silent drop 0)
 
 `classify_ref`가 근거 종류(resolved_kind)를 코드로 판정한다 — 렌더러가 locator 모양을 역추정하던 두더지잡기의 근본 해결이다. 규칙은 형식 예상 금지: 서술 네임스페이스→note/narrative, 색인 실존→account, 한글 없는 미해석→metric(표시 금지), 나머지는 값 금액이면 account 아니면 narrative(드롭 없음).
@@ -60,13 +60,13 @@ LLM이 "1조 2,534.7억"을 "1,253.47억"으로 ÷10 축소하는 오독을 막�
 1,253,469,878,367  →  "1,253,469,878,367(1조 2,534.7억)"
 ```
 
-원값을 앞에 남겨 grounding 유효숫자 대조를 통과시키고, 프롬프트는 "그대로 옮겨 쓰기"로 교체한다(LG생건 감사 결함② 근본 차단). perspective_runner·investigator·rebuttal이 json.dumps 직전 호출한다.
+원값을 앞에 남겨 grounding 유효숫자 대조를 통과시키고, 프롬프트는 "그대로 옮겨 쓰기"로 교체한다(LG생건 감사 결함② 근본 차단). perspective_runner·investigator 두 곳이 json.dumps 직전 호출한다(rebuttal 경로는 미호출).
 
-`figure_sheet.py`는 반박 서술 수치를 한 단계 더 감사한다. as-filed series에서 KEY_TOTALS의 정확 수치를 코드가 계산해 LLM에 주고, 서술에 등장한 숫자가 그 도표의 멤버인지 감사한다(파생값 환각 차단). 연속 YoY만 집합에 넣어, 다년 임의 쌍 델타가 집합을 넓혀 환각(아스트 583.1억)을 흡수하는 것을 막는다. "LLM에 준 작은 도표"의 정확 멤버십이라 전역 DB 대조보다 신뢰할 수 있다.
+`figure_sheet.py`는 반박 서술 수치를 한 단계 더 감사하기 위한 장치다 — 구현·테스트만 완료됐고 파이프라인 배선은 보류 상태다(현재 반박 경로에서 호출되지 않는다). 설계는 as-filed series에서 KEY_TOTALS의 정확 수치를 코드가 계산해 LLM에 주고, 서술에 등장한 숫자가 그 도표의 멤버인지 감사하는 것이다(파생값 환각 차단). 연속 YoY만 집합에 넣어, 다년 임의 쌍 델타가 집합을 넓혀 환각(아스트 583.1억)을 흡수하는 것을 막는다. "LLM에 준 작은 도표"의 정확 멤버십이라 전역 DB 대조보다 신뢰할 수 있다.
 
 ## 6.6 에이전트 레벨 가드레일
 
-관점 에이전트 자체에도 출력 검증이 걸려 있다(`guardrails.py`). `BANNED_EXTERNAL_FACTS`(반도체 불황·뉴스·시장점유율·금리 인상으로·AI 수요)나 `BANNED_CERTAINTY`(명확히 증명·확정·부정 적발·분식)가 출력에 하나라도 있으면 `ModelRetry`로 반려한다 — 포지셔닝 원칙(부정 확정 금지)의 강제 지점이다. numeric_evidence와 flow_evidence가 둘 다 비어도 반려한다. retry 정책은 provider별로 나뉘며(`gemini_retry`·`model_retry`, delays (2,4,8,16)), 특히 `insufficient_quota`는 "일시적 아님"으로 판정해 헛재시도 후 빈 결과로 둔갑하는 hollow-PASS를 차단한다(`model_retry.py:26-27`).
+에이전트 출력 검증(`guardrails.py`)도 있다 — 단 부착 지점은 구경로 단일 에이전트(numeric_analyst·note_analyst)뿐이고, Phase2 관점 에이전트에는 어휘 게이트(vocab_guard)만 걸려 있다. `BANNED_EXTERNAL_FACTS`(반도체 불황·뉴스·시장점유율·금리 인상으로·AI 수요)나 `BANNED_CERTAINTY`(명확히 증명·확정·부정 적발·분식)가 출력에 하나라도 있으면 `ModelRetry`로 반려한다 — 포지셔닝 원칙(부정 확정 금지)의 강제 지점이다. numeric_evidence와 flow_evidence가 둘 다 비어도 반려한다. retry 정책은 provider별로 나뉘며(`gemini_retry`·`model_retry`, delays (2,4,8,16)), 특히 `insufficient_quota`는 "일시적 아님"으로 판정해 헛재시도 후 빈 결과로 둔갑하는 hollow-PASS를 차단한다(`model_retry.py:26-27`).
 
 ## 6.7 실증 예시 — 대주 담보·특수관계 서술이 "환각"으로 죽던 것을 부활
 

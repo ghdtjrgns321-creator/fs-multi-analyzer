@@ -1,6 +1,6 @@
 # 3. L0 수집 · L1 정규화 · 온보딩 게이트 (계산 레이어)
 
-> **위치**: `[L0 수집] → [L1 정규화] → [온보딩 게이트]` → L2 신호엔진. 이 세 레이어에는 **LLM 호출이 전혀 없다** — 전부 결정론 코드(수집·매핑·검산). LLM은 게이트의 별칭 제안(코드가 좁힌 후보 안에서만)과 G6 통독에서만 관여한다.
+> **위치**: `[L0 수집] → [L1 정규화] → [온보딩 게이트]` → L2 신호엔진. 이 세 레이어에는 **LLM 호출이 전혀 없다** — 전부 결정론 코드(수집·매핑·검산). LLM은 게이트의 별칭 제안(코드가 좁힌 후보 안에서만)에서만 관여한다 — G6 통독은 LLM 입력 dump 생성까지 구현돼 있고 실제 호출은 R4 예정이다.
 
 ## 3.1 내부 흐름
 
@@ -12,7 +12,7 @@ finstate JSON     ──→   validate(Pandera)          ──→   G1 완결�
                        _rescue_cross_statement            G6 dump(LLM 통독 입력)
                        _dedupe (소실 대신 강등 보존)          │
                        _enforce_capital_decomposition       │ FAIL → 별칭 3단 분업
-                       SCE 2D 별도(sce_balance)             │      코드 후보→LLM 선택→사람 등록
+                       SCE 2D 별도(sce_balance)             │      코드 후보→LLM 선택→고신뢰 자동 등록(보류분만 사람 확인)
                             │                              │      quirk 재게이트
                             ▼                              ▼
                   회사/연도 격리 DuckDB              gate_passed → L2 진입
@@ -24,9 +24,9 @@ finstate JSON     ──→   validate(Pandera)          ──→   G1 완결�
 | ------------------ | -------------------------------------------------------------------------- | ---------------------------------- |
 | L0 수집 모듈       | 12                                                                         | `src/collect/`                     |
 | L1 정규화 모듈     | 12                                                                         | `src/normalize/`                   |
-| canonical 표준계정 | 약 2,015 (4표: BS/CIS/CF/SCE)                                              | `config/canonical_accounts.yaml`   |
+| canonical 표준계정 | 약 2,015 (5표: BS/IS/CIS/CF/SCE)                                           | `config/canonical_accounts.yaml`   |
 | 매핑 상태 코드     | 6 (EXACT·ALIAS·UNMAPPED·ID_LABEL_CONFLICT·OTHER_CANONICAL·CROSS_STATEMENT) | `src/normalize/mapper.py:11-18`    |
-| 온보딩 게이트      | G1~G6 + 통화                                                               | `src/normalize/onboarding_gate.py` |
+| 온보딩 게이트      | G1·G2·G3·G5·G6 + 통화                                                      | `src/normalize/onboarding_gate.py` |
 | 회계 항등식        | 3 (BS-BALANCE·ROLLFORWARD·CF-RECON)                                        | `config/playbooks/identities.yaml` |
 
 ## 3.3 L0 수집 — raw만 저장, 부재≠오류
@@ -88,10 +88,10 @@ gate_passed = G1 완결성 FAIL 0
 ```
 후보 검색 = 코드   candidate_canonicals: 같은 표에서 라벨 2-gram 유사도순 ≤12개
 분류 선택 = LLM    candidate 목록 안에서만 1개 선택 (밖이면 '기타 중요 계정' 강등 = _anchor, 환각 차단)
-적용     = 사람    UI 확인 클릭만 등록 (자동적용 금지)
+적용     = 코드    confidence≥0.7이면 자동 등록+재정규화, 임계 미만·NO_MATCH만 사람 확인 보류
 ```
 
-`alias_suggest.py`의 `_anchor`(`:165-174`)는 LLM 제안이 candidate 밖이면 `NO_MATCH`로 강등하고 confidence=0을 준다. 실험에서 confidence가 회계 오답을 못 거른다는 것이 실측됐다(제조원가→매출원가 오답에 0.88 부여, ONBOARDING_LLM_PLAN) — 그래서 자동 등록 금지·사람 확인 필수 설계가 정당하다. 사람이 확정하면 `config/company_quirks.yaml`에 등록되고, `_apply_company_quirks`가 corp_code/year를 **데이터 키**로 그 회사·연도에만 적용한다(하드코딩 분기 아님, 매칭 없는 회사는 무변경).
+`alias_suggest.py`의 `_anchor`(`:165-174`)는 LLM 제안이 candidate 밖이면 `NO_MATCH`로 강등하고 confidence=0을 준다. 초기 실험에서는 confidence가 회계 오답을 못 걸렀다(제조원가→매출원가 오답에 0.88 부여, ONBOARDING_LLM_PLAN) — 이후 회계힌트 라운드에서 고확신 오답이 해소된 뒤 임계(0.7) 기반 자동 등록으로 전환했고, 임계 미만·NO_MATCH 보류분에만 사람 확인이 남는다. 사람이 확정하면 `config/company_quirks.yaml`에 등록되고, `_apply_company_quirks`가 corp_code/year를 **데이터 키**로 그 회사·연도에만 적용한다(하드코딩 분기 아님, 매칭 없는 회사는 무변경).
 
 ## 3.6 실증 예시 — 진양(별도재무제표만 있는 회사)의 정규화
 

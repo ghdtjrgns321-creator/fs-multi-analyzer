@@ -1,25 +1,25 @@
-# 5. L3/L4 — 6관점 발견 → 카드 → 조사·반박·외부검증
+# 5. L3/L4 — 5관점 발견 → 카드 → 조사·반박·외부검증
 
-> **위치**: L2 신호엔진 → `[L3 6관점 + L4 카드 파이프라인]` → L5 Human. Phase2의 핵심. 산출물은 자유 단문이 아니라 **의심건 카드 목록**이다(PHASE2_DESIGN, grill 17결정).
+> **위치**: L2 신호엔진 → `[L3 5관점 + L4 카드 파이프라인]` → L5 Human. Phase2의 핵심. 산출물은 자유 단문이 아니라 **의심건 카드 목록**이다(PHASE2_DESIGN, grill 17결정).
 
 ## 5.1 내부 흐름
 
 ```
 materials.py (관점별 발췌, 등수 힌트 없음)
    │
-   ▼  asyncio.gather 병렬
-┌──────────┬──────────┬──────────┬──────────┬──────────┬──────────┐
-│ numeric  │  note    │  flow    │  trend   │ industry │ external │
-│ 당해급변  │ 서술리스크│ 관계교차  │ 다년추세  │ 업종분위  │ 뉴스검색  │
-│ GPT-5.4  │ GPT-5.4  │ GPT-5.4  │ GPT-5.4  │ GPT-5.4  │ Gemini   │
-└──────────┴──────────┴──────────┴──────────┴──────────┴──────────┘
+   ▼  asyncio.gather 병렬 (발견 5관점 — external은 발견자 아님)
+┌──────────┬──────────┬──────────┬──────────┬──────────┐
+│ numeric  │  note    │  flow    │  trend   │ industry │
+│ 당해급변  │ 서술리스크│ 관계교차  │ 다년추세  │ 업종분위  │
+│ GPT-5.4  │ GPT-5.4  │ GPT-5.4  │ GPT-5.4  │ GPT-5.4  │
+└──────────┴──────────┴──────────┴──────────┴──────────┘
    │  PerspectiveOutput{status, suspicions}  (completed/deferred/failed)
    ▼
 grounding.verify_suspicions  →  유효숫자 대조로 환각 탈락 (silent drop 0)
    ▼
 card_builder  →  계정/관계/회사 클러스터 + 표수 N/4 + 우선순위 점수 + 브리지 병합
    ▼
-decompose_change 부착  →  investigator (도구 루프)  →  rebuttal ∥ external_verify
+decompose_change 부착  →  investigator (도구 루프)  →  rebuttal ∥ external_verify (Gemini 뉴스검색 — 카드 확정 후 타깃 검증)
    ▼
 card_report  →  정렬(표수→금액, 정상우세 하단) + markdown 렌더
 ```
@@ -46,7 +46,7 @@ card_report  →  정렬(표수→금액, 정상우세 하단) + markdown 렌더
 - **external**(외부맥락): grounding URL 있는 항목만. 원인 뉴스 검색 — 설명이지 면죄부 아님. 내부 위험 안 키움(참고).
 - **industry**(동종): peer baseline(benchmark)만. 사업구조 차이 한계 명시(ISA/KSA 520 참고 신호).
 
-**발견자/검증자 분리**(2026-07 재편)가 중요하다. 발견자(내부 4관점)는 카드가 생기기 전 병렬로 넓게 스캔하고, 검증자(반박·외부검증)는 카드가 만들어진 **뒤** 카드별로 붙어 깊게 판다. external은 발견자에서 검증자로 옮겨졌다 — 카드 없이 막연히 회사명을 검색하는 것보다 분해로 좁혀진 가설("판관비 기여 −54%")을 들고 검색하는 쪽이 질·비용 모두 우위이기 때문이다.
+**발견자/검증자 분리**(2026-07 재편)가 중요하다. 발견자(industry 포함 5관점)는 카드가 생기기 전 병렬로 넓게 스캔하고, 검증자(반박·외부검증)는 카드가 만들어진 **뒤** 카드별로 붙어 깊게 판다. external은 발견자에서 검증자로 옮겨졌다 — 카드 없이 막연히 회사명을 검색하는 것보다 분해로 좁혀진 가설("판관비 기여 −54%")을 들고 검색하는 쪽이 질·비용 모두 우위이기 때문이다.
 
 ## 5.4 프롬프트는 데이터 — perspective_prompts.yaml
 

@@ -6,25 +6,24 @@
 flowchart TD
     A[회사명 검색<br/>OpenDart ~12만사] --> B[L0 수집<br/>finstate JSON + 주석 XBRL + 사업보고서 XML]
     B --> C[L1 정규화<br/>XBRL→canonical 2,015종<br/>회사·연도 격리 DuckDB]
-    C --> G{온보딩 게이트<br/>G1~G6}
+    C --> G{온보딩 게이트<br/>G1~G5·통화 +G6 dump}
     G -->|FAIL| Q[별칭 3단 분업<br/>코드 후보→LLM 선택→사람 등록<br/>quirk 재게이트]
     Q --> G
-    G -->|PASS| S[L2 신호엔진 결정론<br/>전수 스캔·5축·관계사슬·변동분해·커버리지 원장]
+    G -->|PASS| S[L2 신호엔진 결정론<br/>전수 스캔·self 4축·관계사슬·변동분해·커버리지 원장]
     S --> M[materials.py<br/>관점별 발췌, 등수 힌트 없음]
     M --> P1[numeric]
     M --> P2[note]
     M --> P3[flow]
     M --> P4[trend]
     M --> P5[industry]
-    M --> P6[external Gemini]
-    P1 & P2 & P3 & P4 & P5 & P6 --> GR[grounding<br/>유효숫자 대조로 환각 탈락]
+    P1 & P2 & P3 & P4 & P5 --> GR[grounding<br/>유효숫자 대조로 환각 탈락]
     GR --> CB[카드 클러스터<br/>계정·관계·회사 + 표수 N/4 + 우선순위 점수]
     CB --> DEC[변동분해 부착]
     DEC --> INV[조사원 도구 루프]
     INV --> RB[반박]
-    INV --> EV[외부검증]
+    INV --> EV[외부검증<br/>external·Gemini — 카드 확정 후]
     RB & EV --> CARD[의심건 카드 목록]
-    CARD --> H[L5 Human<br/>승인·기각·추가질문]
+    CARD --> H[L5 Human<br/>검토 큐 카드 검토]
 ```
 
 ## 2.2 단계 요약
@@ -35,7 +34,7 @@ flowchart TD
 | L1 정규화          | raw CSV         | id-first 매핑·충돌 중재·dedup·SCE 2D·자본분해                     | 회사/연도 격리 DuckDB               | [3장](3_COLLECT-NORMALIZE.md)    |
 | 온보딩 게이트      | 정규화 DB       | G1 완결성·BS 항등식·G3 산술·G5 무결성·통화 검문 + 별칭 제안       | gate_passed 여부                    | [3장](3_COLLECT-NORMALIZE.md)    |
 | L2 신호엔진        | 정규화 frame    | 전수 스캔·다축 프로파일러·관계사슬·비율·변동분해·커버리지 원장    | 계정 패널·시계열·큐·원장            | [4장](4_SIGNAL-ENGINE.md)        |
-| L3 6관점           | 관점별 material | 병렬 발견(4 내부 + 외부·동종), 각 관점 LLM 1회                    | SuspicionItem 목록                  | [5장](5_PERSPECTIVES-CARDS.md)   |
+| L3 5관점           | 관점별 material | 병렬 발견(내부 4 + 동종 1), 각 관점 LLM 1회                       | SuspicionItem 목록                  | [5장](5_PERSPECTIVES-CARDS.md)   |
 | grounding          | 의심건          | 인용 수치를 실데이터 유효숫자와 대조, 환각 탈락                   | grounded 의심건                     | [6장](6_GROUNDING-GUARDRAILS.md) |
 | 카드 조립          | grounded 의심건 | 계정/관계/회사 클러스터·표수·우선순위 점수·브리지 병합            | AccountFinding 카드                 | [5장](5_PERSPECTIVES-CARDS.md)   |
 | 조사·반박·외부검증 | 카드            | 조사원 도구 루프 → 반박·외부검증 병렬                             | 결론·반대근거·외부근거              | [5장](5_PERSPECTIVES-CARDS.md)   |
@@ -53,7 +52,7 @@ flowchart TD
 
 **온보딩 게이트** — G1 완결성 OK, BS 항등식 잔차 100만원 이내, 통화 KRW → `gate_passed=True`. 아스트는 L2로 진입한다.
 
-**L2 신호엔진** — `universal.scan_universal_signals`가 `CFS:재고자산`의 YoY를 스캔한다. `profiler`의 trend 축(단조성 1.0 × 누적변화/자산)이 5년 단조 증가로 높은 분위를 받고, `metrics_panel`이 재고회전율·DIO를 계산해 전 계정 패널에 부착한다(2020년 실측: 재고회전율 0.38·DIO 952.35일). 관계사슬 `[재고, 매출원가, 재고평가손실]`도 활성화 — 2020년 매출은 544.9억원으로 전년 대비 −62.32%, 매출원가는 615.4억원으로 −44.4% 급감했는데 재고자산만 +10.43% 늘었다.
+**L2 신호엔진** — `universal.scan_universal_signals`가 `CFS:재고자산`의 YoY를 스캔한다. `profiler`의 trend 축(단조성 1.0 × 누적변화/자산)이 5년 단조 증가로 높은 분위를 받고, `ratios`가 `financial_ratios.yaml`의 정의로 재고회전율·DIO를 계산한다(2020년 실측: 재고회전율 0.38·DIO 952.35일). 관계사슬 `[재고, 매출원가, 재고평가손실]`도 활성화 — 2020년 매출은 544.9억원으로 전년 대비 −62.32%, 매출원가는 615.4억원으로 −44.4% 급감했는데 재고자산만 +10.43% 늘었다.
 
 **materials.py 발췌** — numeric 관점에는 재고자산 패널 행(YoY·자산대비·추세·구성비·z점수)이, flow 관점에는 재고↔매출원가↔매출 관계가 실린다. **코드는 순위를 매기지 않고** 전 계정 계산값을 전량 전달한다.
 
