@@ -48,6 +48,18 @@ def test_currency_ok_foreign_blocks() -> None:
     assert _currency_ok({"KRW", "USD"}) is False  # 일부라도 외화면 차단
 
 
+def test_currency_ok_shares_unit_passes() -> None:
+    """SHARES(주당이익·주식수 단위)는 통화가 아니라 단위 표기 → 외화 오판 차단 금지.
+
+    원본 XBRL 유래 as-filed 데이터의 주당이익 행이 currency=SHARES로 실림(정상 수집은 KRW).
+    SHARES는 환율 오차 위험이 없으므로 KRW와 함께 있어도 통과해야 한다(USD 등 실외화는 여전히 차단).
+    """
+
+    assert _currency_ok({"SHARES"}) is True
+    assert _currency_ok({"KRW", "SHARES"}) is True
+    assert _currency_ok({"KRW", "SHARES", "USD"}) is False  # 실외화는 SHARES와 무관하게 차단
+
+
 def test_g1_verdict_sce_standardization_fail_blocks() -> None:
     """SCE 표준화 사망(전 행 unmatched, SCE표준화=FAIL)은 완결성 OK라도 통과 아님(BS 바닥과 대칭).
 

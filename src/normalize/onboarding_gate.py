@@ -212,14 +212,20 @@ def run_g6(g1_result: dict) -> dict:
     return {"dump_path": None, "dump_lines": g1_result.get("dump_stdout", "").count("\n")}
 
 
+# 통화가 아닌 단위 표기 — 환율 오차 위험이 없어 외화 차단 대상이 아니다.
+# SHARES=주당이익·주식수(원본 XBRL 유래 as-filed 데이터에 등장, 정상 수집은 KRW로 표기).
+_NON_CURRENCY_UNITS = {"KRW", "SHARES"}
+
+
 def _currency_ok(currencies) -> bool:
-    """통화 단일성 판정(순수). KRW(또는 빈값)만이면 True, 외화(USD 등) 포함이면 False.
+    """통화 단일성 판정(순수). KRW·단위표기(빈값·SHARES)만이면 True, 외화(USD 등) 포함이면 False.
 
     외화재무는 원화 환산 없이 분석하면 환율(~1300배) 오차가 항등식엔 안 잡혀 silent로 통과한다.
     DART는 환율을 안 주므로 환산이 불가·부정확 → 외화재무는 '원화 분석 부적합'으로 차단한다(§9).
+    단 SHARES 등 비통화 단위는 환율 오차가 없으므로 차단 대상이 아니다(단위≠통화).
     """
 
-    foreign = {str(c).strip().upper() for c in currencies if str(c).strip()} - {"KRW"}
+    foreign = {str(c).strip().upper() for c in currencies if str(c).strip()} - _NON_CURRENCY_UNITS
     return not foreign
 
 
