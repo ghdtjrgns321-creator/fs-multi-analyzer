@@ -24,6 +24,33 @@ class AnnualReport:
     report_name: str
 
 
+def select_annual_report(filings: pd.DataFrame, corp_code: str, year: int) -> AnnualReport | None:
+    """정정 이력 포함 filing 목록에서 대상 사업연도의 **원본 사업보고서**를 고른다(순수함수).
+
+    ①report_nm에 "사업보고서" & "(year.12)" 둘 다 — 대상 사업연도만(타년도 정정 오염 차단).
+    ②정정 미포함(원본) 우선, 없으면 매칭 전체에서 ③최초 제출(rcept_dt 최소, as-filed). 미매칭 None.
+    """
+
+    if filings is None or filings.empty or "report_nm" not in filings:
+        return None
+    name = filings["report_nm"].astype(str)
+    matched = filings[
+        name.str.contains("사업보고서", regex=False)
+        & name.str.contains(f"({year}.12)", regex=False)
+    ].copy()
+    if matched.empty:
+        return None
+    original = matched[~matched["report_nm"].astype(str).str.contains("정정", regex=False)]
+    pick = original if not original.empty else matched
+    row = pick.sort_values("rcept_dt").iloc[0]  # 최초 제출 = as-filed 원본
+    return AnnualReport(
+        corp_code=corp_code,
+        business_year=year,
+        rcept_no=str(row["rcept_no"]),
+        report_name=str(row["report_nm"]),
+    )
+
+
 class DartCollector:
     """Small OpenDART adapter. API key is read only through config.settings."""
 
@@ -90,39 +117,25 @@ class DartCollector:
     def filings(self, corp_code: str, start: str, end: str) -> pd.DataFrame:
         """Return the raw DART filing list (정정 이력 포함, final=False).
 
-        annual_report는 kind='A'·final=True로 최종본만 보지만, 정정 이력은 final=False라야
-        [기재정정]/[첨부정정] 재제출 기록이 남는다. 파싱은 호출측(correction.py)이 한다.
+        final=False라야 [기재정정]/[첨부정정] 재제출 기록이 남는다(final=True는 정정 이력을
+        뭉개 대상 원본까지 누락). annual_report·correction.py 등 호출측이 파싱한다.
         """
 
         result = self._dart.list(corp=corp_code, start=start, end=end, final=False)
         return result if result is not None else pd.DataFrame()
 
-    def annual_report(self, corp_code: str, year: int) -> AnnualReport | None:
-        """Find the final annual report submitted after the business year."""
+    def annual_report(
+        self, corp_code: str, year: int, search_window: int = 4
+    ) -> AnnualReport | None:
+        """대상 사업연도의 **원본(as-filed) 사업보고서**를 찾는다.
 
-        submitted_year = year + 1
-        reports = self._dart.list(
-            corp=corp_code,
-            start=f"{submitted_year}0101",
-            end=f"{submitted_year}1231",
-            kind="A",
-            final=True,
-        )
-        if reports is None or reports.empty:
-            return None
+        구현은 filings(final=False)로 year+1..year+window 구간을 훑는다. final=True는 정정
+        이력 회사의 대상 보고서를 누락(원본은 '최종'이 아니라 드롭)하므로 쓰지 않는다. 선택은
+        순수함수 select_annual_report에 위임(기간필터 "(year.12)" + 정정미포함 원본).
+        """
 
-        mask = reports["report_nm"].astype(str).str.contains("사업보고서", regex=False)
-        candidates = reports[mask].copy()
-        if candidates.empty:
-            return None
-
-        row = candidates.sort_values("rcept_dt").iloc[-1]
-        return AnnualReport(
-            corp_code=corp_code,
-            business_year=year,
-            rcept_no=str(row["rcept_no"]),
-            report_name=str(row["report_nm"]),
-        )
+        filings = self.filings(corp_code, f"{year + 1}-01-01", f"{year + search_window}-12-31")
+        return select_annual_report(filings, corp_code, year)
 
     def save_xbrl_zip(self, report: AnnualReport, path: Path) -> bool:
         """Download raw financial statement XBRL zip for the annual report.

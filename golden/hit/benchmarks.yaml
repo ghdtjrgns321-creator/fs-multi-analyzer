@@ -1,0 +1,30 @@
+# 검사2 벤치마크 등록부 (설계: golden/DESIGN.md §3.5)
+#
+# 각 사례: 원본 접수분(as-filed) 입력으로 파이프라인을 돌려 정답 계정이 카드 큐에 뜨는지 채점.
+# verified: 등록조건(우리 DB t년 값 == 원본 접수분 t년 값) 통과 여부. 미검증(false)은 채점에서
+#           보류 — 원본 대조가 끝나야 true로 승격한다(전후꼬임 방지). 실제 대조·채점은 미실행.
+#
+# label_source:
+#   restated_later : series_normalize가 t년 값의 후속 재표시를 감지(자동, 사람 라벨링 0)
+#   sanction       : 금감원 제재·감리 확정(수동 등록, 지적 영역)
+#   injected       : 합성 주입 이상(전후꼬임 원천 무관)
+
+benchmarks:
+  - corp_code: "00117212"
+    years: [2017, 2018, 2019, 2020]
+    label_source: restated_later
+    kind: 연결재무제표 재작성
+    corrected_rcept: "20240418000399" # 2024-04-18 재작성 정정(원본과 별개 서빙 실측)
+    verified: false # 원본 대조·채점 미실행
+    note: 스캔으로 확보한 재작성 후보. 원본 rcept resolve_original로 식별 후 등록조건 대조 필요.
+
+  - corp_code: "00258801"
+    years: [2020, 2021, 2022]
+    label_source: restated_later
+    kind: 재무제표 재작성
+    corrected_rcept: "20240320000386" # 2024-03-20 재작성 정정
+    verified: false
+    note: 스캔으로 확보한 재작성 후보. 등록조건 게이트 통과분만 채점 대상.
+
+# 정상 대조군(거짓양성 억제 확인) — 재작성·제재 이력 없는 회사. 상위 K 카드 수가 기준선 이하여야 정상.
+control_group: []
