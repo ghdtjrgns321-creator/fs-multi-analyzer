@@ -84,6 +84,12 @@ class ExternalRef(BaseModel):
     summary: str = Field(description="외부 근거 요약(출처가 뒷받침하는 주장)")
     url: str = Field(description="출처 URL")
     source: str = Field(default="", description="출처 제목/매체명")
+    # 설계4a: 외부 요약이 인용한 금액(원문 그대로) + 내부 공시값 대조 결과(코드 판정).
+    # 외부 수치는 신뢰하지 않는다 — mismatch는 UI에서 "외부 주장(공시와 상이)"로 구분 표시.
+    claimed_figures: list[str] = Field(default_factory=list, description="외부 인용 금액(원문)")
+    figure_check: Literal["match", "mismatch", "uncheckable"] | None = Field(
+        default=None, description="내부 공시값 대조: 일치/불일치/대조불가(코드 판정)"
+    )
 
 
 class AccountFinding(BaseModel):

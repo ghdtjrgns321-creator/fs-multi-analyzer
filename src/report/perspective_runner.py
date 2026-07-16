@@ -103,8 +103,11 @@ async def run_structured_perspective(
             perspective, name, prompts, banned_vocab=banned_vocab
         )
     )
+    # 설계2: 금액 환산은 코드가 — 원값에 억/조 표기를 병기해 LLM이 나누기할 일을 제거.
+    from src.report.amounts import annotate_amounts
+
     prompt = json.dumps(
-        {"perspective": perspective, "material_board": material_board},
+        {"perspective": perspective, "material_board": annotate_amounts(material_board)},
         ensure_ascii=False,
     )
     try:

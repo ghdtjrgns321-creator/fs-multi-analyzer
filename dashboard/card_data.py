@@ -32,6 +32,20 @@ def _get(obj: Any, key: str, default: Any = None) -> Any:
     return default
 
 
+def disclosed_label(series_rows: list[dict], series_key: str) -> str:
+    """공시 원문 계정명(설계3) — 최신 연도 행의 label. 없으면 빈 문자열(정준명 폴백은 호출부)."""
+
+    rows = [
+        r
+        for r in series_rows or []
+        if str(r.get("series_key")) == series_key and str(r.get("label") or "").strip()
+    ]
+    if not rows:
+        return ""
+    latest = max(rows, key=lambda r: int(r.get("year") or 0))
+    return str(latest.get("label") or "").strip()
+
+
 def split_series_key(key: str) -> tuple[str, str]:
     """'CFS:무형자산' → ('연결', '무형자산'). 접두 없으면 라벨 없이 원문 유지."""
 

@@ -9,6 +9,7 @@ external을 '막연한 발견자'에서 '카드별 검증자'로 재배치: 분�
 from __future__ import annotations
 
 import asyncio
+import re
 from collections.abc import Callable
 from typing import Any
 
@@ -18,6 +19,8 @@ from src.schemas.findings import AccountFinding, ExternalRef
 
 # 폭주 방지 안전핀(설정 폴백) — 선정 기준이 아니다. 선정은 목적 기준(조사 미해결 전부).
 EXTERNAL_HARD_CAP = 30
+# 우선순위 상위 K장은 resolved여도 포함(설정 폴백) — 결함④-b 역설 차단.
+EXTERNAL_TOP_K_ALWAYS = 3
 _MAX_REFS_PER_CARD = 3
 
 
@@ -30,22 +33,35 @@ def external_hard_cap(config: dict | None = None) -> int:
     return int((cfg.get("external") or {}).get("hard_cap", EXTERNAL_HARD_CAP))
 
 
-def select_external_targets(
-    cards: list[AccountFinding], hard_cap: int | None = None
-) -> list[AccountFinding]:
-    """검색 대상 = 조사 미해결 카드 전부(목적 기준 — 숫자 상한 폐지, 사용자 결정).
+def external_top_k_always(config: dict | None = None) -> int:
+    """resolved 무관 포함할 상위 카드 수 — external.top_k_always(없으면 폴백 3)."""
 
-    제외는 내부 조사가 원인을 완결(resolved=True)한 카드뿐 — 외부 정보가 필요 없는
-    유일한 경우. 조사 실패·미수행(None)은 미확인이라 포함. hard_cap은 폭주 방지
-    안전핀으로만 작동하며, 걸릴 때는 연속 점수 낮은 카드부터 탈락한다."""
+    from src.report.investigation_config import load_investigation_config
+
+    cfg = config if config is not None else load_investigation_config()
+    return int((cfg.get("external") or {}).get("top_k_always", EXTERNAL_TOP_K_ALWAYS))
+
+
+def select_external_targets(
+    cards: list[AccountFinding],
+    hard_cap: int | None = None,
+    top_k_always: int | None = None,
+) -> list[AccountFinding]:
+    """검색 대상 = 우선순위 상위 K장(무조건) + 조사 미해결 카드 전부.
+
+    resolved=True 제외 규칙은 상위 K장 밖에만 적용한다 — "조사가 깔끔하게 끝난
+    카드일수록(=보통 제일 중요한 카드일수록) 외부검사에서 빠지는" 역설 차단(결함④-b).
+    조사 실패·미수행(None)은 미확인이라 포함. hard_cap은 폭주 방지 안전핀."""
 
     cap = hard_cap if hard_cap is not None else external_hard_cap()
+    top_k = top_k_always if top_k_always is not None else external_top_k_always()
+    ranked = sorted(cards, key=lambda c: c.priority_score or 0.0, reverse=True)
     targets = [
         c
-        for c in cards
-        if not (getattr(c, "investigation", None) is not None and c.investigation.resolved)
+        for rank, c in enumerate(ranked)
+        if rank < top_k
+        or not (getattr(c, "investigation", None) is not None and c.investigation.resolved)
     ]
-    targets.sort(key=lambda c: c.priority_score or 0.0, reverse=True)
     return targets[: max(cap, 0)]
 
 
@@ -75,26 +91,129 @@ def card_queries(
     return unique[:2]
 
 
+# ── 설계4a: 외부 인용 금액 ↔ 내부 공시값 대사 ─────────────────────────────
+# 외부 figures는 "1,478억"·"4조 2,810억" 같은 통제된 금액 표기(structured output).
+# 산문 파싱이 아니라 금액 표기의 결정론 해석 — 원 단위로 환산해 유효숫자로 대조한다.
+_COMPOSITE_JO = re.compile(r"([\d,]+)\s*조\s*([\d,]+(?:\.\d+)?)\s*억")
+_JO_ONLY = re.compile(r"([\d,]+(?:\.\d+)?)\s*조")
+_EOK_ONLY = re.compile(r"([\d,]+(?:\.\d+)?)\s*억")
+_MILLION = re.compile(r"([\d,]+(?:\.\d+)?)\s*백만")
+_PLAIN = re.compile(r"[\d,]{6,}")
+
+
+def _num(text: str) -> float:
+    return float(text.replace(",", ""))
+
+
+def figure_to_won(figure: str) -> float | None:
+    """외부 인용 금액 문자열 → 원 단위. 해석 불가면 None(대조불가)."""
+
+    text = str(figure or "").strip()
+    if match := _COMPOSITE_JO.search(text):
+        return _num(match.group(1)) * 1e12 + _num(match.group(2)) * 1e8
+    if match := _JO_ONLY.search(text):
+        return _num(match.group(1)) * 1e12
+    if match := _EOK_ONLY.search(text):
+        return _num(match.group(1)) * 1e8
+    if match := _MILLION.search(text):
+        return _num(match.group(1)) * 1e6
+    if match := _PLAIN.search(text):
+        return _num(match.group(0))
+    return None
+
+
+def internal_amount_sigs(report: dict[str, object]) -> set[str]:
+    """내부 공시값(계정 시계열 + 주석 fact) 유효숫자 풀 — 외부 수치 대조의 정답."""
+
+    from src.report.grounding import _note_value_sig, _sig_amount
+
+    sigs: set[str] = set()
+    for row in report.get("account_level_series") or []:  # type: ignore[union-attr]
+        try:
+            sigs.add(_sig_amount(float(row.get("amount"))))  # type: ignore[arg-type]
+        except (TypeError, ValueError):
+            continue
+    for fact in report.get("note_facts") or []:  # type: ignore[union-attr]
+        sig = _note_value_sig(fact.get("value"))
+        if sig:
+            sigs.add(sig)
+    return sigs
+
+
+def check_figures(figures: list[str], internal_sigs: set[str]) -> str:
+    """외부 인용 금액 전부가 내부 공시값과 일치하면 match, 하나라도 다르면 mismatch.
+
+    해석 가능한 수치가 없으면 uncheckable. mismatch는 삭제가 아니라 마킹 —
+    UI가 "외부 주장(공시와 상이)"로 구분 표시한다(silent 저장 금지, 결함④-a)."""
+
+    from src.report.grounding import _sig_amount
+
+    sigs = []
+    for figure in figures or []:
+        won = figure_to_won(str(figure))
+        if won is not None:
+            sigs.append(_sig_amount(won))
+    if not sigs:
+        return "uncheckable"
+    return "match" if all(sig in internal_sigs for sig in sigs) else "mismatch"
+
+
+async def resolve_final_url(url: str, timeout: float = 5.0) -> str:
+    """리다이렉트 URL(vertexaisearch 등)을 원 기사 주소로 해소(설계4c). 실패는 원본 유지."""
+
+    try:
+        import httpx
+
+        async with httpx.AsyncClient(follow_redirects=True, timeout=timeout) as client:
+            async with client.stream("GET", url) as response:
+                final = str(response.url)
+        return final or url
+    except Exception:
+        return url  # 해소 실패 — 현행 URL 유지(출처 도메인은 source 제목에 보존)
+
+
 async def verify_cards(
     cards: list[AccountFinding],
     report: dict[str, object],
     decompositions: dict[str, dict] | None = None,
     hard_cap: int | None = None,  # None이면 config external.hard_cap(안전핀, 선정 기준 아님)
     context_factory: Callable[..., Any] = create_context_brief_for_queries,
+    url_resolver: Callable[[str], Any] | None = None,
 ) -> dict:
     """상위 카드 외부 검증 — external_evidence 채움 + checked 마킹. 키 없음은 deferred.
 
     실패한 카드는 checked=False 유지(미수행으로 표시 — 실패를 '미발견'으로 둔갑 금지).
+    외부 요약의 인용 금액은 내부 공시값과 대조해 figure_check로 마킹한다(결함④-a).
     """
 
     uses_real_search = context_factory is create_context_brief_for_queries
     if uses_real_search and not settings.google_api_key:
         return {"status": "deferred", "verified": 0, "found": 0}
+    # 리다이렉트 해소는 실검색 경로에서만 기본 활성(단위테스트 stub에 네트워크 금지).
+    resolver = (
+        url_resolver
+        if url_resolver is not None
+        else (resolve_final_url if uses_real_search else None)
+    )
 
     company = str(report.get("company_name", report.get("corp_code", "")))
     year = report.get("target_year", "")
     decompositions = decompositions or {}
     targets = select_external_targets(cards, hard_cap)
+    internal_sigs = internal_amount_sigs(report)
+
+    async def _external_ref(item: Any) -> ExternalRef:
+        url = str(item.source_url)
+        if resolver is not None:
+            url = str(await resolver(url))
+        figures = [str(f) for f in (getattr(item, "figures", []) or [])]
+        return ExternalRef(
+            summary=str(item.claim),
+            url=url,
+            source=str(getattr(item, "source_title", "") or ""),
+            claimed_figures=figures,
+            figure_check=check_figures(figures, internal_sigs),
+        )
 
     async def _verify_one(card: AccountFinding) -> bool:
         queries = card_queries(company, year, card, decompositions.get(card.cluster_key or ""))
@@ -103,11 +222,7 @@ async def verify_cards(
         except Exception:
             return False  # 실패 — checked 미설정(미수행 표기 유지)
         card.external_evidence = [
-            ExternalRef(
-                summary=str(item.claim),
-                url=str(item.source_url),
-                source=str(getattr(item, "source_title", "") or ""),
-            )
+            await _external_ref(item)
             for item in (brief.items or [])[:_MAX_REFS_PER_CARD]
             if item.source_url and str(item.source_url).startswith("http")
         ]
@@ -122,4 +237,15 @@ async def verify_cards(
     }
 
 
-__all__ = ["EXTERNAL_HARD_CAP", "card_queries", "select_external_targets", "verify_cards"]
+__all__ = [
+    "EXTERNAL_HARD_CAP",
+    "EXTERNAL_TOP_K_ALWAYS",
+    "card_queries",
+    "check_figures",
+    "external_top_k_always",
+    "figure_to_won",
+    "internal_amount_sigs",
+    "resolve_final_url",
+    "select_external_targets",
+    "verify_cards",
+]

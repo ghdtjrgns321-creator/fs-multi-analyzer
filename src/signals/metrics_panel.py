@@ -101,10 +101,25 @@ def account_metrics_panel(
     totals = statement_totals(rows)
     sj_by_key: dict[str, str] = {}
     fs_by_key: dict[str, str] = {}
+    label_by_key: dict[str, tuple[int, str]] = {}
+    presentation_years: dict[str, set[int]] = {}
+    restated_years: dict[str, set[int]] = {}
     for row in rows:
         key = str(row.get("series_key"))
         sj_by_key.setdefault(key, str(row.get("sj_div")))
         fs_by_key.setdefault(key, str(row.get("fs_div", "")))
+        try:
+            year = int(row.get("year"))  # type: ignore[arg-type]
+        except (TypeError, ValueError):
+            year = 0
+        # 공시 원문 라벨(설계3): 최신 연도 보고서의 label이 사람·LLM용 계정 이름의 권위.
+        label = str(row.get("label") or "").strip()
+        if label and year >= label_by_key.get(key, (-1, ""))[0]:
+            label_by_key[key] = (year, label)
+        if row.get("presentation_change"):
+            presentation_years.setdefault(key, set()).add(year)
+        if row.get("restated_later"):
+            restated_years.setdefault(key, set()).add(year)
 
     def _asset_for(fs: str) -> float:
         if isinstance(asset, dict):
@@ -123,12 +138,28 @@ def account_metrics_panel(
         prior_total = totals.get((fs, sj, target_year - 1), 0.0)
         cur_share = abs(current) / cur_total if current is not None and cur_total else 0.0
         prior_share = abs(prior) / prior_total if prior is not None and prior_total else 0.0
+        pres = sorted(presentation_years.get(key, ()))
+        restated = sorted(restated_years.get(key, ()))
         entries.append(
             {
                 "account": key,
+                # 공시 원문 계정명 — 서사에서 계정을 부르는 이름의 권위(정준명은 내부 키).
+                "disclosed_label": label_by_key.get(key, (0, ""))[1],
                 "sj_div": sj,
                 "fs_div": fs,
                 "occurrence_state": occurrence_state(ts, target_year),
+                # 설계1: 부호는 최신 보고서 표기로 정규화됨 — 부호 반전은 경제적 사건이 아님.
+                "presentation_change": (
+                    f"{'·'.join(map(str, pres))} 부호를 최신 보고서 표기로 정규화(표기변경)"
+                    if pres
+                    else None
+                ),
+                # 설계1: 이후 보고서가 전기값을 다르게 재표시 — 그 자체가 검토 포인트.
+                "restated_prior_mismatch": (
+                    f"이후 보고서가 전기값을 다르게 재표시: {'·'.join(map(str, restated))}"
+                    if restated
+                    else None
+                ),
                 "amounts": {y: ts[y] for y in years},
                 "yoy_pct": {y: _yoy(ts.get(y), ts.get(y - 1)) for y in years},
                 "delta_over_assets": delta_score(current, prior, _asset_for(fs)),
@@ -147,9 +178,12 @@ def account_metrics_panel(
 
 _PANEL_COLUMNS = (
     "account",
+    "disclosed_label",
     "sj_div",
     "fs_div",
     "occurrence_state",
+    "presentation_change",
+    "restated_prior_mismatch",
     "delta_over_assets",
     "trend",
     "volatility_cv",

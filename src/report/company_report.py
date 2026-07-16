@@ -27,6 +27,7 @@ from src.report.integrated import (
     payload_for_summary,
     summarize_ratio_categories,
 )
+from src.report.series_normalize import normalize_presentation
 from src.schemas.findings import AccountFinding
 from src.signals.metrics_panel import account_metrics_panel, sce_occurrence_states
 from src.signals.mvp1 import build_mvp1_signal_report
@@ -51,6 +52,9 @@ def build_company_report(
     # 2025 리터럴 고정 시 2025 미제출사는 전 신호가 빈값→LLM에 0건이 넘어가던 회귀를 차단.
     target_years = years or _available_norm_years(corp_code) or DEFAULT_YEARS
     frame = load_normalized_financials(corp_code, target_years)
+    # 설계1: 표기변경 정규화 — 이후 보고서의 재표시 전기값을 권위로 부호 아티팩트 제거.
+    # frame 차원에서 고쳐 신호·패널·시계열·분해가 전부 정규화된 값을 본다.
+    frame, presentation_changes = normalize_presentation(frame)
     present_years = _present_years(frame)
     target_year = max(present_years) if present_years else max(target_years)
     company_profile = _company_profile(corp_code, company_provider)
@@ -107,6 +111,7 @@ def build_company_report(
         "coverage_ledger": coverage_ledger,
         "note_facts": note_facts,
         "sce_cells": sce_cells,
+        "presentation_changes": presentation_changes,
         "llm_payload": payload,
     }
 
@@ -277,9 +282,19 @@ def _account_level_series(
         (scoped["series_key"].isin(keys)) & (scoped["year"].astype(int).isin(window_years))
     ].copy()
     result = result.sort_values(["sj_div", "series_key", "year"])
-    return result[
-        ["year", "fs_div", "sj_div", "series_key", "canonical", "label", "amount", "mapping_status"]
-    ].to_dict("records")
+    columns = [
+        "year",
+        "fs_div",
+        "sj_div",
+        "series_key",
+        "canonical",
+        "label",
+        "amount",
+        "mapping_status",
+    ]
+    # 설계1 플래그(표기변경 정규화·재표시 후보)를 하류(패널·조사)로 전파.
+    columns += [c for c in ("presentation_change", "restated_later") if c in result.columns]
+    return result[columns].to_dict("records")
 
 
 def _slim_dimensions(dimensions: object) -> str:

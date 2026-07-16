@@ -13,3 +13,6 @@ priority:
     confidence: 0.20
 external:
   hard_cap: 30 # 폭주 방지 안전핀 — 선정 기준 아님(선정 = 조사 미해결 카드 전부)
+  # 우선순위 상위 K장은 조사 완결(resolved)이어도 외부검사 포함 — "제일 중요한 카드가
+  # 조사가 깔끔해서 외부검사에서 빠지는" 역설 차단(LG생건 결함④-b).
+  top_k_always: 3

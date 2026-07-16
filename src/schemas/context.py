@@ -11,6 +11,9 @@ class ContextItem(BaseModel):
     claim: str = Field(min_length=1)
     source_title: str = ""
     source_url: str = ""
+    # claim에 인용된 금액 문자열(원문 그대로, 예: "1,478억") — 코드가 내부 공시값과
+    # 대조하기 위한 구조화 출력(설계4a: 요약문 정규식 파싱 대신 structured output).
+    figures: list[str] = Field(default_factory=list)
 
 
 class ContextBrief(BaseModel):

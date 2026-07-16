@@ -14,10 +14,13 @@ from src.signals.metrics_panel import panel_columnar
 def _sample_panel() -> list[dict]:
     return [
         {
-            "account": "매출채권",
+            "account": "CFS:매출채권",
+            "disclosed_label": "매출채권",
             "sj_div": "BS",
             "fs_div": "CFS",
             "occurrence_state": "present",
+            "presentation_change": None,
+            "restated_prior_mismatch": None,
             "amounts": {2023: 100.0, 2024: 180.0},
             "yoy_pct": {2023: None, 2024: 80.0},
             "delta_over_assets": 0.05,
@@ -29,10 +32,13 @@ def _sample_panel() -> list[dict]:
             "percentiles": {"delta_over_assets": 0.9, "trend": 0.7},
         },
         {
-            "account": "재고자산",
+            "account": "CFS:재고자산",
+            "disclosed_label": "재고자산",
             "sj_div": "BS",
             "fs_div": "CFS",
             "occurrence_state": "present",
+            "presentation_change": None,
+            "restated_prior_mismatch": None,
             "amounts": {2023: 50.0, 2024: 55.0},
             "yoy_pct": {2023: None, 2024: 10.0},
             "delta_over_assets": 0.01,

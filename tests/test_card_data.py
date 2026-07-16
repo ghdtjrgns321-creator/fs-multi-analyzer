@@ -752,3 +752,16 @@ def test_rebuttal_block_humanizes_amounts_apptest():
     body = " ".join(m.value for m in at.markdown)
     assert "90,286,298,837" not in body  # 원숫자 나열 사라짐
     assert "903억원" in body  # 축약 표기
+
+
+def test_disclosed_label_prefers_latest_year_and_falls_back_empty():
+    from dashboard.card_data import disclosed_label
+
+    rows = [
+        {"series_key": "CFS:이자비용", "year": 2024, "label": "금융비용"},
+        {"series_key": "CFS:이자비용", "year": 2025, "label": "금융원가"},
+        {"series_key": "CFS:매출", "year": 2025, "label": "매출액"},
+    ]
+    # 설계3: 카드 제목은 정준명(이자비용)이 아니라 최신 공시 원문(금융원가).
+    assert disclosed_label(rows, "CFS:이자비용") == "금융원가"
+    assert disclosed_label(rows, "CFS:없는계정") == ""

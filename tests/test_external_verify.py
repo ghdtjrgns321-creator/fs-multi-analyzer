@@ -25,15 +25,27 @@ def _card(
     )
 
 
-# ── select_external_targets — 목적 기준: 조사 미해결 전부, resolved만 제외 ──
+# ── select_external_targets — 상위 K장 무조건 + 조사 미해결 전부 ────────────
 def test_select_targets_excludes_only_resolved():
     resolved = _card("CFS:영업이익")
     resolved.investigation = InvestigationConclusion(headline="원인 완결", resolved=True)
     unresolved = _card("CFS:매출채권")
     unresolved.investigation = InvestigationConclusion(headline="미해결", resolved=False)
     no_investigation = _card("CFS:재고자산")  # 조사 실패·미수행 — 미확인이라 포함
-    targets = select_external_targets([resolved, unresolved, no_investigation])
+    targets = select_external_targets([resolved, unresolved, no_investigation], top_k_always=0)
     assert {c.account for c in targets} == {"CFS:매출채권", "CFS:재고자산"}
+
+
+def test_select_targets_top_k_includes_resolved_top_card():
+    # 결함④-b: 최상위 카드가 resolved=True라는 이유로 외부검사에서 빠지던 역설 차단.
+    top = _card("CFS:순이익", priority_score=0.9)
+    top.investigation = InvestigationConclusion(headline="원인 완결", resolved=True)
+    low_resolved = _card("CFS:영업이익", priority_score=0.1)
+    low_resolved.investigation = InvestigationConclusion(headline="원인 완결", resolved=True)
+    unresolved = _card("CFS:매출채권", priority_score=0.5)
+    targets = select_external_targets([low_resolved, top, unresolved], top_k_always=1)
+    # 상위 1장(순이익)은 resolved여도 포함, 하위 resolved(영업이익)만 제외.
+    assert [c.account for c in targets] == ["CFS:순이익", "CFS:매출채권"]
 
 
 def test_select_targets_hard_cap_drops_lowest_priority():
@@ -78,9 +90,9 @@ class _Brief:
 
 
 def test_verify_cards_fills_evidence_and_checked():
-    cards = [_card("CFS:영업이익", mat=1.0), _card("CFS:매출채권", mat=0.1)]
-    # 두 번째 카드는 조사 완결 — 목적 기준에 따라 검색 대상에서 제외된다.
-    cards[1].investigation = InvestigationConclusion(headline="원인 완결", resolved=True)
+    cards = [_card(f"CFS:acc{i}", priority_score=1.0 - 0.1 * i, mat=1.0) for i in range(5)]
+    # 상위 3장 밖의 카드가 조사 완결 — 검색 대상에서 제외된다(상위 K장은 resolved여도 포함).
+    cards[4].investigation = InvestigationConclusion(headline="원인 완결", resolved=True)
 
     async def fake_search(queries):
         return _Brief([_Item("판관비 절감 발표", "https://news.example/1")])
@@ -92,11 +104,11 @@ def test_verify_cards_fills_evidence_and_checked():
             context_factory=fake_search,
         )
     )
-    assert stats == {"status": "completed", "verified": 1, "found": 1}
+    assert stats == {"status": "completed", "verified": 4, "found": 4}
     top = cards[0]
     assert top.external_checked is True
     assert top.external_evidence[0].url == "https://news.example/1"
-    assert cards[1].external_checked is False  # 조사 완결 카드 — 검색 불필요, 미수행 유지
+    assert cards[4].external_checked is False  # 하위 조사 완결 카드 — 검색 불필요, 미수행 유지
 
 
 def test_verify_cards_marks_checked_even_when_nothing_found():
@@ -284,6 +296,77 @@ def test_decomposition_accounts_collects_parent_and_children():
 
 if __name__ == "__main__":
     pytest.main([__file__, "-q"])
+
+
+# ── 설계4a: 외부 인용 금액 ↔ 내부 공시값 대사 ──────────────────────────────
+def test_figure_to_won_parses_controlled_formats():
+    from src.report.external_verify import figure_to_won
+
+    assert figure_to_won("1,478억") == 1_478e8
+    assert figure_to_won("4조 2,810억") == 4_2810e8
+    assert figure_to_won("1.5조") == 1.5e12
+    assert figure_to_won("532,893백만") == 532_893e6
+    assert figure_to_won("190,475,674,544") == 190_475_674_544
+    assert figure_to_won("증가했다") is None  # 금액 아님 — 대조불가
+
+
+def test_verify_cards_marks_figure_check_match_and_mismatch():
+    from src.schemas.investigation import InvestigationConclusion as _IC  # noqa: F401
+
+    cards = [_card("CFS:영업활동현금흐름", priority_score=0.9, mat=1.0)]
+    report = {
+        "company_name": "테스트기업",
+        "target_year": 2025,
+        # 내부 정답: 영업활동현금흐름 4,464억 / 영업권 손상 1,423억
+        "account_level_series": [
+            {"series_key": "CFS:영업활동현금흐름", "year": 2025, "amount": 446_400_000_000.0},
+            {"series_key": "CFS:영업권", "year": 2025, "amount": 142_300_000_000.0},
+        ],
+    }
+
+    async def fake_search(queries):
+        ok = _Item("영업활동현금흐름 4,464억 기록", "https://news.example/ok")
+        ok.figures = ["4,464억"]
+        wrong = _Item("영업권 손상 1,478억 인식", "https://news.example/wrong")
+        wrong.figures = ["1,478억"]  # 실제 공시 1,423억 — 결함④-a 실사례
+        prose = _Item("업황 부진 지속", "https://news.example/prose")
+        return _Brief([ok, wrong, prose])
+
+    asyncio.run(verify_cards(cards, report, context_factory=fake_search))
+    refs = {r.url.rsplit("/", 1)[-1]: r for r in cards[0].external_evidence}
+    assert refs["ok"].figure_check == "match"
+    assert refs["wrong"].figure_check == "mismatch"  # 저장은 하되 '공시와 상이' 마킹
+    assert refs["wrong"].claimed_figures == ["1,478억"]
+    assert refs["prose"].figure_check == "uncheckable"
+
+
+# ── 설계4c: 리다이렉트 URL 해소 — 성공 시 원 기사 주소, 실패 시 원본 유지 ────
+def test_verify_cards_resolves_redirect_urls_with_resolver():
+    cards = [_card("CFS:영업이익", priority_score=0.9, mat=1.0)]
+
+    async def fake_search(queries):
+        return _Brief([_Item("기사", "https://vertexaisearch.cloud.google.com/redirect/abc")])
+
+    async def fake_resolver(url):
+        return "https://news.example/original-article"
+
+    asyncio.run(
+        verify_cards(
+            cards,
+            {"company_name": "x", "target_year": 2025},
+            context_factory=fake_search,
+            url_resolver=fake_resolver,
+        )
+    )
+    assert cards[0].external_evidence[0].url == "https://news.example/original-article"
+
+
+def test_resolve_final_url_keeps_original_on_failure():
+    from src.report.external_verify import resolve_final_url
+
+    # 연결 불가 주소 — 예외를 삼키고 원본 URL을 유지한다(출처 도메인은 source에 보존).
+    url = "http://127.0.0.1:9/unreachable"
+    assert asyncio.run(resolve_final_url(url, timeout=0.2)) == url
 
 
 def test_external_hard_cap_reads_config_and_fallback():

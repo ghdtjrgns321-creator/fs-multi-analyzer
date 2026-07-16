@@ -104,8 +104,10 @@ def _make_client(client_factory: Callable[..., Any] | None, query: str) -> Any:
 def _prompt(query: str) -> str:
     return (
         "Use Google Search grounding only. Return JSON ContextBrief with up to 3 items. "
-        "Each item must contain claim, source_title, source_url. "
-        "Do not use model memory. If no grounded sources exist, return {\"items\": []}. "
+        "Each item must contain claim, source_title, source_url, and figures: every "
+        "monetary amount quoted in the claim, copied verbatim as strings "
+        '(e.g. ["1,478억", "4조 2,810억"]); use [] if the claim has no amounts. '
+        'Do not use model memory. If no grounded sources exist, return {"items": []}. '
         f"Search query: {query}"
     )
 
@@ -152,6 +154,11 @@ def _filter_grounded_items(brief: ContextBrief, sources: dict[str, str]) -> Cont
         if url not in sources:
             continue
         items.append(
-            ContextItem(claim=item.claim, source_title=sources[url], source_url=item.source_url)
+            ContextItem(
+                claim=item.claim,
+                source_title=sources[url],
+                source_url=item.source_url,
+                figures=list(getattr(item, "figures", []) or []),
+            )
         )
     return ContextBrief(items=items)
