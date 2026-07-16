@@ -245,6 +245,9 @@ def _run_onboarding(corp_code: str, year: int, key: str) -> None:
     st.session_state["rv_onboarding_key"] = key
     extracts = (result.get("layer1") or {}).get("extracts", []) or []
     write_onboarding_marker(corp_code, year, chunks=len(extracts))
+    # 완료 마커를 쓴 뒤 페이지를 다시 그려 "✅ 온보딩 완료" 배지가 뜨게 한다
+    # (prepare_company 후 st.rerun 패턴과 동일 — 미호출 시 실행 전 버튼 상태가 잔존).
+    st.rerun()
 
 
 def _render_onboarding_llm(corp_code: str, year: int, key: str) -> None:
@@ -285,9 +288,7 @@ def _render_analysis(
     # 회사·연도가 바뀐 옛 카드는 표시하지 않는다(잔상 방지).
     if st.session_state.get("rv_cards") and st.session_state.get("rv_analysis_key") == key:
         if saved:
-            st.caption(
-                f"저장된 검증 결과 표시 중 (생성: {saved}) — 재실행 없이 다시 볼 수 있습니다."
-            )
+            st.caption(f"저장된 검증 결과 표시 중 (생성: {saved})")
         _render_card_sections(st.session_state["rv_cards"])
 
 

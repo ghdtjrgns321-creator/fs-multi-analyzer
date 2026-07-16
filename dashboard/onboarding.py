@@ -427,7 +427,7 @@ def render() -> None:
     st.title("신규회사 온보딩 전처리")
     st.caption(
         "Phase1/2 분석 진입 전, 한 번에 [전처리검사+Layer 1 서술추출+별칭 제안]을 실행해 "
-        "이탈을 잡고 quirk로 교정한다. 별칭 제안은 사람이 확인 후 등록한다(수 분 소요)."
+        "이탈을 잡고 quirk로 교정한다(수 분 소요)."
     )
 
     col1, col2 = st.columns(2)
@@ -482,7 +482,7 @@ def render() -> None:
         else:
             st.info(layer1_result.get("message", "Layer 1 미실행"))
 
-    # 별칭 제안 — 사람이 확인 후 등록(자동등록 금지 유지)
+    # 별칭 제안 — 고신뢰(≥AUTO_REGISTER_MIN_CONFIDENCE)는 자동 등록, 나머지만 사람이 확인
     st.markdown("---")
     render_alias_suggestions(run_corp, run_year)
 
