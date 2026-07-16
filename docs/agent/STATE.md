@@ -6,6 +6,80 @@
 
 ## 현재 위치
 
+- **✅ 게이트 SHARES 통화 오판 수정 — 아스트2020·셀트리온2019 스트림릿 준비완료 복구** (2026-07-14).
+  사용자가 두 회사 온보딩이 "망가졌다"(2018로 들어감·0개 파싱)고 보고 → **재조사 결과 진짜 원인은
+  `_currency_ok`가 SHARES(주당이익 단위)를 외화로 오판**해 G_currency FAIL → prep.json 미생성 →
+  스트림릿 "준비완료 없음". 회계항등식·산술·신호 게이트는 전부 PASS.
+  - **데이터 상태 규명**: 두 회사 raw는 **CSV=as-filed 원본(아스트 재고 168.5B·셀트리온 무형 1.040T,
+    분식 보이는 과대값) / JSON=정정본(미사용)**로 갈려 있음. 정규화는 CSV를 읽으므로 duckdb·골든카드가
+    이미 as-filed. rcept: 아스트 원본 20210322000920 / 정정 20240208001322(재고 과대계상 자진정정),
+    셀트리온 원본 20200330003829 / 정정 20220512000850(재무제표 재작성). **정정 전 데이터는 이미 DB에
+    있어 별도 수집 불필요** — 골든 메모리의 "정정=OFS만" 서술은 부정확하나 DB값==as-filed 결론은 유효.
+  - **수정(TDD)**: `_NON_CURRENCY_UNITS={KRW,SHARES}` — SHARES는 통화 아닌 단위라 외화 차단 대상 제외
+    (USD 등 실외화는 차단 유지). `_currency_ok` + 테스트 `test_currency_ok_shares_unit_passes`.
+  - **검증(2/2)**: 재-prepare 후 gate_passed=True·duckdb as-filed 값 유지·CSV rcept 원본 불변(재수집
+    없음)·prep.json 생성·prepared_years=[2020]/[2019]. 전체 **624 passed·1 xfailed**(회귀 0).
+  - **미재현/잔여**: "2018로 들어감"=현재 코드 미재현(문서·정규화 모두 2020 원본 정확). "0개 파싱"=
+    본문 11파트 정상로드, layer1 **LLM 추출 0건**(파싱 실패 아님)—셀트리온 라이브 온보딩 재확인 필요(비용).
+    주석 HTML 빈 껍데기(singlnote 서비스가 이 회사/연도 빈 셸 반환, note XBRL 숫자는 정상)—별개 갭.
+  - **⏭ 사용자 스크린샷 경로**: 스트림릿에서 아스트 2020/셀트리온 2019 선택→준비완료→온보딩(선택)→
+    검증실행(또는 저장카드 자동로드)→as-filed(분식 보이는) 카드 스크린샷. **주의: 이 두 연도는 재수집 금지**
+    (정상 수집이 CSV를 정정본으로 덮어씀). 메모리 `[[golden-test-strategy]]` 관련.
+- **✅ 골든테스트 설계 + 검사1(수치 골든) 하니스 구현** (2026-07-12, 설계 단일출처:
+  [golden/DESIGN.md](../../golden/DESIGN.md), 메모리 `[[golden-test-strategy]]`). 사용자 문제제기:
+  "PHASE2를 '숫자 맞고 LLM 그럴듯함'으로는 검증 못 한다 — 내 이전 실행 봉인=순환(버그 잠금),
+  사람이 filing마다 정답지=불가능." → 골든을 **외부정답 2검사**로 확정. **검사1(전자동)**: 최종 카드
+  표시 수치를 DART 원천값과 대조 — grounding `build_account_index`·`_sig`(스케일 무관 유효숫자)를
+  **최종 카드**(모든 변환 후)에 재적용, grounding이 못 보는 변환 버그(억/조 ÷10·부호) 겨냥.
+  **검사2(as-filed 벤치마크·후속)**: 원본 접수분 입력으로 재작성·제재 계정 적중 채점(존재+순위,
+  텍스트 비교 금지). 전후꼬임(사용자 지적)은 **DART 원본 서빙 실측으로 해소** — 정정 후에도 원본
+  rcept로 본문·XBRL 서빙(00117212 실측: document 4.37MB·XBRL 252KB·정정본 해시 상이).
+  - **검사1 하니스 구현**: `golden/numeric/check_numeric.py`(1a 원값 실재·1b 환산 무결 convert_ok·
+    분해 항등·대사불능 버킷), `test_numeric_golden.py` 10(단위 9+실데이터 1). 실데이터 00356370/2025
+    저장카드 27장 → **N=57 전량 match**(value_mismatch·convert_fail·unreconcilable 0, 6.4조까지 환산
+    정확, `_report_00356370_2025.md`). 구축 중 하니스 한계 2건 실측 수정(claim 형제계정 인용=전역대조·
+    주석 네임스페이스=전역 주석값대조). pytest **628 passed·1 xfailed**(baseline 618+10, 회귀 0).
+  - **✅ 검사2(의심 적중 골든) 코드 구축 — 실행 없이** (2026-07-12): 사용자 지시 "생성하되 실제 실행은
+    아직 하지마." 채점 엔진·정답지 로직·원본 식별은 순수함수라 실행 없이 완결. `golden/asfiled/
+    resolve_original.py`(원본 rcept 식별), `golden/hit/build_labels.py`(재표시 계정 추출 + 유의성
+    필터 파라미터 + 등록조건 게이트 DB값==asfiled), `golden/hit/check_hit.py`(recall@K·hit_rank·존재+순위
+    채점, 텍스트 비교 없음), `golden/hit/run_benchmark.py`(오케스트레이터, execute=False 기본 dry-run —
+    실LLM/실DART 미호출), `benchmarks.yaml`(후보 2사 verified=false). 신규 test 17, 전체 **645 passed·
+    1 xfailed**(회귀 0). **실데이터 발견·수정**: 정답지 빌더가 대형사 재표시 576건 중 대부분 22.9조→22.9조
+    (0.0005%) 반올림 노이즈 → 유의성 필터(상대변화 임계) 추가, 121건으로 정제(매출 17.0조→11.1조 Δ35%
+    등 진짜 중대재작성만 잔존). 원본 XBRL 본표 추출(기재정정 포함 사례)은 설계 §4 확장 미구현 — 게이트
+    통과분은 기존 build_company_report로 충분(기재정정 안 된 본표는 JSON API가 이미 as-filed).
+  - **✅ 검사2 첫 실행 — 아스트(00409681) 재고분식 as-filed 채점** (2026-07-12): 정답지 재정의(restated_later
+    311 잡음 기각 → known_cases.json 증선위/법원 확정 분식 8사가 진짜 답지, `_benchmark_candidates.md`).
+    효과 측정으로 아스트 선정(재고자산 4배 단조증가, 정답계정 완전 커버 — 두산에너빌리티는 건설 특수계정
+    매핑 사각·디아이동일은 매칭 아티팩트로 탈락, `_effect_ranking.md`). **as-filed 검증**: 아스트 2018·2019
+    "유상사급 재작성" 발견 → 원본 vs 재작성 XBRL 직접대조로 **CFS 재고자산 원본==우리DB 실증**(재작성은 OFS만).
+    target 2020·[2015..2020] 로드(미래 재표시 누수 차단). **결과: recall@5=2/3, 재고자산 rank1**(재고회전율
+    0.84→0.3·5년 누적 서술로 분식 정확 포착)·매출원가 rank5·자기자본 미카드. 검사1 교차 N=64 전량 as-filed 일치.
+    `golden/hit/_score_00409681_2020.md`. **하니스 버그 3건 실데이터로 발견·수정**(check_hit fs접두 미매칭→이름매칭·
+    검사1 주석근거 동명계정 오매칭→전역대조·병기포맷 파싱실패 N=8 hollow→N=64). 신규 테스트 2, 전체 647 passed 회귀0.
+  - **⏭ 다음(사용자 결정·비용)**: 나머지 분식 5사(셀트리온·모델솔루션 등) 배치 채점 + 통제군(삼성·KAI) 거짓양성
+    측정 → recall/FP baseline 고정. build_labels에 known_cases(labels.csv) sanction 로더 배선(현재 restated_later만).
+    두산에너빌리티 건설 진행률 계정 정규화 커버 갭은 별도 과제.
+- **✅ 변환 경계 권위 승격 — LG생건 감사 4결함 구조 해결** (2026-07-11, 설계:
+  [docs/superpowers/specs/2026-07-11-transform-boundary-authority-design.md](../superpowers/specs/2026-07-11-transform-boundary-authority-design.md)).
+  원칙: 사후 정규식 검사 발명이 아니라 **이미 보유한 데이터를 각 변환 경계의 권위로 승격**.
+  ①시계열 표기변경 정규화(`src/report/series_normalize.py`): t년 당기값 vs t+1·t+2 보고서의
+  재표시 전기값(prior_amount·prior2_amount — 저장만 되고 안 쓰이던 데이터) 대조, 부호만 다르면
+  최신 표기로 정규화(presentation_change)·절대값 다르면 재표시 신호(restated_later).
+  LG생건 실측: 투자활동 현금유출 CFS·OFS 부호 아티팩트 정규화 + 진짜 재표시 6건 신규 포착.
+  ②금액 환산은 코드(`src/report/amounts.py` format_krw·annotate_amounts): LLM 입력 경계
+  (관점 material·조사 payload·조사 도구 4종)에서 원값에 "1조 2,534.7억" 병기, 프롬프트는
+  "그대로 옮겨 쓰기"로 교체 — LLM 나누기 오류(1/10 축소) 원천 제거. ③라벨 권위=공시 원문:
+  패널·조사 payload·카드 제목에 disclosed_label(공시 계정명), 정준명은 내부 키로 강등.
+  전수 감사 `src/normalize/label_audit.py` → [CANONICAL_LABEL_AUDIT.md](CANONICAL_LABEL_AUDIT.md)
+  (1,659사·35,126조합, 오라벨 후보 1,153건 — '이자비용'←금융비용/금융원가가 1,594사 시스템성
+  최대 건). ④외부 경계 대사: figures 구조화 출력→내부 공시값 대조(figure_check
+  match/mismatch/uncheckable, UI ⚠ 마킹) + 상위 K장(top_k_always=3)은 resolved여도 외부검사
+  + 리다이렉트 URL 해소(resolve_final_url). pytest 618 passed·1 xfailed(신규 26+, 회귀 0).
+  **⏭ 남은 결정(사용자)**: 오라벨 후보 1,153건 중 정준명 개명 범위(특히 '이자비용'→'금융원가'와
+  이자보상배율 분자 문제 — 진짜 이자비용 매핑 dart_InterestExpenseFinanceExpense로 교체 여부).
+  기존 저장 카드(LG생건 27장 등)는 재생성해야 새 경로가 반영된다.
 - **✅ 조사원 파이프라인 1단계 구현 완료** (2026-07-11, PLAN §5 '조사 단계' 설계 반영).
   구현 4항목: ①브리지 병합(부모-자식 카드 한 장, `merge_bridge_cards`) ②카드별 조사원
   — 결정론 게이트 `needs_tool_loop`가 미해결 카드만 도구 루프(캡 5~8회)로 넘김, 도구 4종은
@@ -1830,6 +1904,24 @@ ComponentsOfEquityAxis·SegmentConsolidationItemsAxis)를 버려 흡수 concept�
   항등식차이0·raw=norm일치·SCE검산0. ruff·mojibake0.
 - **미구현 1급**: C1 값정확성(전과목 raw=norm)·F1 신호 dangling(lump로 18개 개명, 신호엔진 옛이름 참조 위험).
 - **다음**: 위 프로토콜로 분식사+표본을 깊게 LLM 감사. 전수 본문 재정규화는 버그 다 잡은 뒤 마지막.
+
+## FINAL-REPORT 정합성 감사·교정 (2026-07-16)
+
+Opus 생성 FINAL-REPORT 13장을 전수 감사(주장 456건 대조, census 13/13·경로 37/37) 후 교정.
+- **결과**: 불일치 43건(치명 14·경미 29) 전량 교정 + 파생 잔존 7곳 마감. census_diff PASS 43/43,
+  현재형 stale 0·mojibake 0. 근거: `_workspace/final-report-audit/` (audit-A~D·SUMMARY.md).
+- **치명 근원 7개**: 발견자 6관점 stale·별칭 자동등록 반대서술·external URL 분기 도달불가 누락·
+  annotate 3곳 과장·figure_sheet 미배선인데 "감사한다"·guardrails 부착 위치·한계#9 반대서술.
+  전부 생성 시점(07-14)에 코드 진실이 이미 확정돼 있었음 — 낡은 docs/docstring/캡션이 코드를 이김.
+- **스킬 결함 판정·패치 완료**: final-report 스킬 verify가 커버리지(N/N) 전용, 동작 주장 정합은
+  스팟체크 3개뿐이던 것이 원인. `~/.claude/skills/final-report/SKILL.md`에 4건 반영 —
+  진실 우선순위(코드>config·테스트>docs·docstring·UI 문구, §2) · 배선 역참조(정독 노트 필수 필드
+  + 검증, §2·§5) · 주장 감사 패스(집필 비관여 에이전트가 현재형 동작 서술·다이어그램 엣지 전수
+  대조, 스팟체크 대체 금지, §5) · 최신성 앵커(git log 최근 fix 커밋을 팩트시트에, §3).
+  '흔한 실패'에 실측 2종(자기서술 전사·존재≠배선≠도달) 추가. 68줄 유지.
+- **미결**: `dashboard/onboarding.py:430` UI 캡션이 "사람이 확인 후 등록"으로 낡음 —
+  자동 등록 코드(:27 AUTO_REGISTER_MIN_CONFIDENCE=0.7)와 모순. 이번 보고서 치명 오류의 원인
+  파일이기도 함(제품 수정 후보).
 
 ## 진입 포인트
 
