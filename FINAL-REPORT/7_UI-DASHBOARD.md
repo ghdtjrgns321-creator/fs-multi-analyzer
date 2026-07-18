@@ -59,7 +59,7 @@ company_state 판정
 
 ## 7.5 LLM 전처리 — 자동 실행, 사람 확인은 보류분만
 
-메인 화면의 [LLM 전처리] 버튼은 `run_full_onboarding`으로 게이트 재검문 → Layer 1 본문 통독(서술형 감사관심 → `report_extracts`) → 별칭 제안·자동 등록을 한 번에 실행하고, 완료 마커(`onboarding.json`)를 남겨 재실행을 요구하지 않는다 — 이 마커가 검증(카드) 단계 진입 조건이다. `auto_register_aliases`는 신뢰도 ≥0.7·비-기타 제안만 window 전 연도에 자동 등록하고(멱등), 등록이 생기면 5개년을 재정규화한다. Layer 1이 추출 0건·실패면 진입을 막지 않되 경고를 강제해 사람이 확인 후 강행한다(`can_enter_analysis`의 needs_override).
+메인 화면의 [LLM 전처리] 버튼은 `run_full_onboarding`으로 게이트 재검문 → Layer 1 본문 통독(서술형 감사관심 → `report_extracts`) → 별칭 제안·자동 등록을 한 번에 실행하고, 완료 마커(`onboarding.json`)를 남겨 재실행을 요구하지 않는다 — 이 마커가 검증(카드) 단계 진입 조건이며, **완주(ok/empty)에만 기록된다**(실패 실행이 "✅ 완료"로 굳는 위장 차단, 11장 본문 통독 0건 오진). 같은 원칙이 카드 저장에도 걸려 있다 — 관점 실패가 있는 빈 결과는 `save_cards`가 저장을 거부해 이전 정상 카드를 보존한다. `auto_register_aliases`는 신뢰도 ≥0.7·비-기타 제안만 window 전 연도에 자동 등록하고(멱등), 등록이 생기면 5개년을 재정규화한다. Layer 1이 추출 0건·실패면 진입을 막지 않되 경고를 강제해 사람이 확인 후 강행한다(`can_enter_analysis`의 needs_override).
 
 보류(저신뢰·기타)는 "기타 중요 계정" 경로로 흘러 라이브에선 금액>0이면 임계 없이 전부 게시되고(자산 5%↑ 임계는 backtest 도구 전용), 관점이 제기하면 `UNMAPPED_MATERIAL_ACCOUNT` 카드로 표면화된다. 사람이 버튼을 눌러 개별 등록하는 `_register_suggestion`과 수동 이탈 등록 폼은 메인 흐름에서 빠져, 별도 실행하는 정비 페이지(`dashboard/onboarding.py` 단독 구동)에만 남아 있다 — 보류분·교정용이다. `append_quirk`는 헤더 주석을 보존하며 안전 append(UTF-8 allow_unicode)해 mojibake 0을 지킨다.
 
