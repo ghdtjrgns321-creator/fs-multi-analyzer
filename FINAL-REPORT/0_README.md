@@ -20,7 +20,7 @@
 
 ```
   회사명 검색            OpenDART 수집(L0)          정규화(L1)              온보딩 게이트
-  ─────────      →      finstate JSON            XBRL→canonical    →   G1~G8·통화 결정론 검문
+  ─────────      →      finstate JSON            XBRL→canonical    →   G1~G9·통화 결정론 검문
   (~12만 회사)          + 주석 XBRL + 원문XML       2,015 표준계정          ("분석 준비"가 자동 실행)
                                                   회사/연도 격리 DuckDB
                                                                               │ 통과

@@ -1,0 +1,5992 @@
+[
+ {
+  "label": "당기순이익",
+  "rows": 320,
+  "companies": 27
+ },
+ {
+  "label": "당기순이익(손실)",
+  "rows": 282,
+  "companies": 23
+ },
+ {
+  "label": "수정후 기초자본",
+  "rows": 248,
+  "companies": 10
+ },
+ {
+  "label": "수정 후 재작성된 금액",
+  "rows": 204,
+  "companies": 7
+ },
+ {
+  "label": "연결범위의 변동",
+  "rows": 146,
+  "companies": 17
+ },
+ {
+  "label": "비지배지분과의 거래",
+  "rows": 143,
+  "companies": 12
+ },
+ {
+  "label": "소계",
+  "rows": 131,
+  "companies": 4
+ },
+ {
+  "label": "신주인수권부사채의 행사",
+  "rows": 126,
+  "companies": 4
+ },
+ {
+  "label": "현금흐름위험회피",
+  "rows": 125,
+  "companies": 5
+ },
+ {
+  "label": "주식선택권의 부여",
+  "rows": 118,
+  "companies": 4
+ },
+ {
+  "label": "수정 후 금액",
+  "rows": 106,
+  "companies": 7
+ },
+ {
+  "label": "주식매수선택권",
+  "rows": 98,
+  "companies": 10
+ },
+ {
+  "label": "전환사채 전환",
+  "rows": 87,
+  "companies": 8
+ },
+ {
+  "label": "자산재평가이익의 이익잉여금 대체",
+  "rows": 84,
+  "companies": 1
+ },
+ {
+  "label": "연결범위변동",
+  "rows": 80,
+  "companies": 9
+ },
+ {
+  "label": "기타포괄손익-공정가치 측정 지분상품 평가손익",
+  "rows": 79,
+  "companies": 3
+ },
+ {
+  "label": "주식매입선택권",
+  "rows": 79,
+  "companies": 3
+ },
+ {
+  "label": "배당금지급",
+  "rows": 76,
+  "companies": 10
+ },
+ {
+  "label": "확정급여제도의 재측정손익(세후기타포괄손익)",
+  "rows": 76,
+  "companies": 5
+ },
+ {
+  "label": "소유주와의 거래 총액",
+  "rows": 75,
+  "companies": 4
+ },
+ {
+  "label": "토지재평가",
+  "rows": 75,
+  "companies": 4
+ },
+ {
+  "label": "인적분할로 인한 변동",
+  "rows": 73,
+  "companies": 3
+ },
+ {
+  "label": "재평가이익",
+  "rows": 72,
+  "companies": 6
+ },
+ {
+  "label": "관계기업의 재측정요소에 대한 지분",
+  "rows": 72,
+  "companies": 2
+ },
+ {
+  "label": "회계정책의 변경효과",
+  "rows": 69,
+  "companies": 6
+ },
+ {
+  "label": "연결당기순이익(손실)",
+  "rows": 68,
+  "companies": 3
+ },
+ {
+  "label": "순확정급여제도의 재측정요소",
+  "rows": 66,
+  "companies": 5
+ },
+ {
+  "label": "자본잉여금의 이익잉여금 전입",
+  "rows": 65,
+  "companies": 6
+ },
+ {
+  "label": "기타자본잉여금의 이입",
+  "rows": 64,
+  "companies": 1
+ },
+ {
+  "label": "전기오류수정",
+  "rows": 63,
+  "companies": 7
+ },
+ {
+  "label": "지분법평가",
+  "rows": 62,
+  "companies": 3
+ },
+ {
+  "label": "기타조정",
+  "rows": 62,
+  "companies": 2
+ },
+ {
+  "label": "종속기업의 배당",
+  "rows": 59,
+  "companies": 7
+ },
+ {
+  "label": "소유주와의 거래 소계",
+  "rows": 58,
+  "companies": 2
+ },
+ {
+  "label": "신종자본증권전환",
+  "rows": 58,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 처분",
+  "rows": 57,
+  "companies": 3
+ },
+ {
+  "label": "지분법이익잉여금의 변동",
+  "rows": 57,
+  "companies": 4
+ },
+ {
+  "label": "연결범위 변동",
+  "rows": 56,
+  "companies": 8
+ },
+ {
+  "label": "만기보유금융자산평가손익",
+  "rows": 56,
+  "companies": 3
+ },
+ {
+  "label": "임의적립금 이입",
+  "rows": 56,
+  "companies": 1
+ },
+ {
+  "label": "기초자본(회계정책변경에 따른 조정 후 금액)",
+  "rows": 56,
+  "companies": 1
+ },
+ {
+  "label": "회계정책변경효과",
+  "rows": 55,
+  "companies": 5
+ },
+ {
+  "label": "결손보전",
+  "rows": 55,
+  "companies": 5
+ },
+ {
+  "label": "확정급여부채의 재측정요소",
+  "rows": 54,
+  "companies": 6
+ },
+ {
+  "label": "임의적립금 전입",
+  "rows": 53,
+  "companies": 1
+ },
+ {
+  "label": "종업원급여재측정요소",
+  "rows": 52,
+  "companies": 1
+ },
+ {
+  "label": "주식선택권의 취소",
+  "rows": 52,
+  "companies": 2
+ },
+ {
+  "label": "기타자본변동",
+  "rows": 51,
+  "companies": 5
+ },
+ {
+  "label": "부의지분법자본변동",
+  "rows": 51,
+  "companies": 9
+ },
+ {
+  "label": "종속기업소유지분변동차액",
+  "rows": 51,
+  "companies": 2
+ },
+ {
+  "label": "자본에 직접 반영된 소유주와의 거래 등 소계",
+  "rows": 51,
+  "companies": 1
+ },
+ {
+  "label": "해외사업장환산손익",
+  "rows": 50,
+  "companies": 2
+ },
+ {
+  "label": "교환사채 자기주식 교환",
+  "rows": 50,
+  "companies": 1
+ },
+ {
+  "label": "주식교환",
+  "rows": 50,
+  "companies": 1
+ },
+ {
+  "label": "관계기업의 기타포괄손익 지분",
+  "rows": 49,
+  "companies": 1
+ },
+ {
+  "label": "자본에 직접 반영된 소유주와의 거래 등",
+  "rows": 48,
+  "companies": 1
+ },
+ {
+  "label": "토지재평가차익",
+  "rows": 48,
+  "companies": 2
+ },
+ {
+  "label": "종속기업지분변동",
+  "rows": 48,
+  "companies": 1
+ },
+ {
+  "label": "회계정책의 변경",
+  "rows": 47,
+  "companies": 3
+ },
+ {
+  "label": "순확정급여부채의 재측정손익",
+  "rows": 47,
+  "companies": 2
+ },
+ {
+  "label": "해외사업장외화환산차이",
+  "rows": 47,
+  "companies": 4
+ },
+ {
+  "label": "전환사채 전환권행사",
+  "rows": 47,
+  "companies": 2
+ },
+ {
+  "label": "전환권 청구",
+  "rows": 47,
+  "companies": 2
+ },
+ {
+  "label": "확정급여채무의 재측정요소",
+  "rows": 46,
+  "companies": 6
+ },
+ {
+  "label": "주식발행비용의 지급",
+  "rows": 45,
+  "companies": 2
+ },
+ {
+  "label": "종속기업 지분변동",
+  "rows": 45,
+  "companies": 4
+ },
+ {
+  "label": "주식선택권의 소멸",
+  "rows": 44,
+  "companies": 4
+ },
+ {
+  "label": "재평가적립금",
+  "rows": 44,
+  "companies": 2
+ },
+ {
+  "label": "사업양도",
+  "rows": 44,
+  "companies": 2
+ },
+ {
+  "label": "재평가차액",
+  "rows": 43,
+  "companies": 1
+ },
+ {
+  "label": "전환우선주의 전환권 행사",
+  "rows": 42,
+  "companies": 2
+ },
+ {
+  "label": "비지배지분의 변동",
+  "rows": 42,
+  "companies": 6
+ },
+ {
+  "label": "전환사채 발행",
+  "rows": 42,
+  "companies": 4
+ },
+ {
+  "label": "해외산업환산손익",
+  "rows": 42,
+  "companies": 3
+ },
+ {
+  "label": "종속기업의 연차배당",
+  "rows": 42,
+  "companies": 1
+ },
+ {
+  "label": "지배기업의 연차배당",
+  "rows": 42,
+  "companies": 1
+ },
+ {
+  "label": "신종자본증권상환손실",
+  "rows": 42,
+  "companies": 1
+ },
+ {
+  "label": "전환사채의 전환 청구",
+  "rows": 42,
+  "companies": 1
+ },
+ {
+  "label": "감자차익 이입액",
+  "rows": 42,
+  "companies": 1
+ },
+ {
+  "label": "전환권대가 이입액",
+  "rows": 42,
+  "companies": 1
+ },
+ {
+  "label": "주식발행초과금 이입액",
+  "rows": 42,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정금융자산 평가손익의 대체",
+  "rows": 42,
+  "companies": 1
+ },
+ {
+  "label": "신주인수권대가 이입액",
+  "rows": 42,
+  "companies": 1
+ },
+ {
+  "label": "기초 보고금액",
+  "rows": 42,
+  "companies": 1
+ },
+ {
+  "label": "확정급여제도 재측정요소",
+  "rows": 41,
+  "companies": 5
+ },
+ {
+  "label": "종속기업의 주식선택권",
+  "rows": 41,
+  "companies": 2
+ },
+ {
+  "label": "수정 후 재작성 된 금액",
+  "rows": 41,
+  "companies": 1
+ },
+ {
+  "label": "현물배당",
+  "rows": 41,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정지분상품 평가손익",
+  "rows": 40,
+  "companies": 1
+ },
+ {
+  "label": "해외사업환산차대",
+  "rows": 40,
+  "companies": 1
+ },
+ {
+  "label": "배당금",
+  "rows": 39,
+  "companies": 2
+ },
+ {
+  "label": "토지처분 잉여금 대체",
+  "rows": 39,
+  "companies": 1
+ },
+ {
+  "label": "전환권의 행사",
+  "rows": 38,
+  "companies": 3
+ },
+ {
+  "label": "주식선택권 행사",
+  "rows": 38,
+  "companies": 2
+ },
+ {
+  "label": "기타포괄손익-공정가치 측정 지분상품 평가손익의 대체",
+  "rows": 37,
+  "companies": 1
+ },
+ {
+  "label": "신종자본증권에 대한 배당",
+  "rows": 37,
+  "companies": 1
+ },
+ {
+  "label": "전환사채전환",
+  "rows": 37,
+  "companies": 6
+ },
+ {
+  "label": "인적분할",
+  "rows": 37,
+  "companies": 2
+ },
+ {
+  "label": "종속기업 취득",
+  "rows": 36,
+  "companies": 4
+ },
+ {
+  "label": "기초자본(조정후)",
+  "rows": 36,
+  "companies": 2
+ },
+ {
+  "label": "기타포괄손익-공정가치금융자산평가이익(손실)",
+  "rows": 36,
+  "companies": 1
+ },
+ {
+  "label": "공정가치측정금융자산평가이익(손실)",
+  "rows": 36,
+  "companies": 1
+ },
+ {
+  "label": "재작성된 금액",
+  "rows": 36,
+  "companies": 3
+ },
+ {
+  "label": "기타포괄손익-공정가치측정금융자산 기대신용손실",
+  "rows": 35,
+  "companies": 1
+ },
+ {
+  "label": "교환사채의 교환",
+  "rows": 35,
+  "companies": 3
+ },
+ {
+  "label": "관계기업투자평가손익",
+  "rows": 35,
+  "companies": 1
+ },
+ {
+  "label": "자본잉여금 결손보전",
+  "rows": 34,
+  "companies": 2
+ },
+ {
+  "label": "기초자본_회계정책변경 및 오류수정 효과 반영 후",
+  "rows": 34,
+  "companies": 1
+ },
+ {
+  "label": "자본준비금의 이익잉여금 전입",
+  "rows": 34,
+  "companies": 3
+ },
+ {
+  "label": "자본에 직접 반영된 소유주와의 거래 소계",
+  "rows": 34,
+  "companies": 1
+ },
+ {
+  "label": "비지배지분의 증감",
+  "rows": 33,
+  "companies": 2
+ },
+ {
+  "label": "종속기업의 자기주식취득",
+  "rows": 33,
+  "companies": 2
+ },
+ {
+  "label": "법정적립금 전입",
+  "rows": 33,
+  "companies": 1
+ },
+ {
+  "label": "신주인수권부사채 매도청구권 재매입손실",
+  "rows": 33,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 배당",
+  "rows": 32,
+  "companies": 2
+ },
+ {
+  "label": "기타포괄손익-공정가치 측정 금융자산 처분",
+  "rows": 32,
+  "companies": 2
+ },
+ {
+  "label": "소계:",
+  "rows": 32,
+  "companies": 1
+ },
+ {
+  "label": "기타자본조정",
+  "rows": 32,
+  "companies": 3
+ },
+ {
+  "label": "적립금의 적립",
+  "rows": 32,
+  "companies": 2
+ },
+ {
+  "label": "교환사채 발행",
+  "rows": 32,
+  "companies": 3
+ },
+ {
+  "label": "회계정책에 따른 증가(감소)",
+  "rows": 32,
+  "companies": 1
+ },
+ {
+  "label": "자본준비금 이입액",
+  "rows": 32,
+  "companies": 1
+ },
+ {
+  "label": "현금흐름위험회피평가손익",
+  "rows": 32,
+  "companies": 2
+ },
+ {
+  "label": "총기타포괄손익",
+  "rows": 31,
+  "companies": 2
+ },
+ {
+  "label": "기타포괄손익-공정가치측정 금융자산 처분",
+  "rows": 31,
+  "companies": 2
+ },
+ {
+  "label": "신종자본증권의 이자",
+  "rows": 31,
+  "companies": 3
+ },
+ {
+  "label": "재평가차익",
+  "rows": 31,
+  "companies": 3
+ },
+ {
+  "label": "유형자산재평가",
+  "rows": 31,
+  "companies": 3
+ },
+ {
+  "label": "주식매수청구권행사",
+  "rows": 31,
+  "companies": 1
+ },
+ {
+  "label": "퇴직급여채무 재측정요소",
+  "rows": 30,
+  "companies": 1
+ },
+ {
+  "label": "총포괄이익의 대체",
+  "rows": 30,
+  "companies": 1
+ },
+ {
+  "label": "자기주식 매입",
+  "rows": 30,
+  "companies": 1
+ },
+ {
+  "label": "동일지배하의 사업결합",
+  "rows": 29,
+  "companies": 4
+ },
+ {
+  "label": "채무면제이익 대체",
+  "rows": 29,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정금융자산 처분",
+  "rows": 28,
+  "companies": 5
+ },
+ {
+  "label": "(부의)지분법자본변동",
+  "rows": 28,
+  "companies": 4
+ },
+ {
+  "label": "매도가능유가증권평가손익",
+  "rows": 28,
+  "companies": 1
+ },
+ {
+  "label": "만기보유유가증권평가손익",
+  "rows": 28,
+  "companies": 1
+ },
+ {
+  "label": "당기손익-공정가치지정 금융부채평가손익",
+  "rows": 28,
+  "companies": 1
+ },
+ {
+  "label": "당기손익-공정가치지정 금융부채처분손익",
+  "rows": 28,
+  "companies": 1
+ },
+ {
+  "label": "자산재평가잉여금",
+  "rows": 28,
+  "companies": 1
+ },
+ {
+  "label": "자기주식처분손실의 처리",
+  "rows": 28,
+  "companies": 1
+ },
+ {
+  "label": "지분상품투자자산평가손익",
+  "rows": 28,
+  "companies": 1
+ },
+ {
+  "label": "회계정책 변동효과 반영후",
+  "rows": 28,
+  "companies": 1
+ },
+ {
+  "label": "전기(전전기)말",
+  "rows": 28,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 자기주식거래",
+  "rows": 28,
+  "companies": 2
+ },
+ {
+  "label": "종속회사의 유상증자",
+  "rows": 28,
+  "companies": 3
+ },
+ {
+  "label": "수정후자본",
+  "rows": 27,
+  "companies": 3
+ },
+ {
+  "label": "전환사채의 전환 등",
+  "rows": 27,
+  "companies": 1
+ },
+ {
+  "label": "합병",
+  "rows": 27,
+  "companies": 4
+ },
+ {
+  "label": "종속기업의 자기주식 취득",
+  "rows": 27,
+  "companies": 4
+ },
+ {
+  "label": "종속기업의 편입",
+  "rows": 27,
+  "companies": 1
+ },
+ {
+  "label": "해외사업장 외화환산차이",
+  "rows": 27,
+  "companies": 1
+ },
+ {
+  "label": "주식의 포괄적 교환",
+  "rows": 27,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정 지분상품 평가손익",
+  "rows": 26,
+  "companies": 4
+ },
+ {
+  "label": "-인적분할",
+  "rows": 26,
+  "companies": 1
+ },
+ {
+  "label": "회계정책변경후 기초자본",
+  "rows": 26,
+  "companies": 2
+ },
+ {
+  "label": "기타포괄손익-공정가치측정금융자산 대손충당금",
+  "rows": 26,
+  "companies": 1
+ },
+ {
+  "label": "관계기업의 확정급여제도의 재측정손익",
+  "rows": 26,
+  "companies": 1
+ },
+ {
+  "label": "관계기업 및 공동기업의 기타포괄손익(재측정요소 제외)에 대한 지분",
+  "rows": 26,
+  "companies": 1
+ },
+ {
+  "label": "관계기업투자의 자본변동에 대한 지분",
+  "rows": 25,
+  "companies": 2
+ },
+ {
+  "label": "기타포괄손익 - 공정가치 측정 금융자산 처분으로인한 대체",
+  "rows": 25,
+  "companies": 1
+ },
+ {
+  "label": "수정 후 기초자본",
+  "rows": 25,
+  "companies": 3
+ },
+ {
+  "label": "보험수리적이익(손실)",
+  "rows": 25,
+  "companies": 3
+ },
+ {
+  "label": "주식매수선택권행사",
+  "rows": 25,
+  "companies": 2
+ },
+ {
+  "label": "유형자산 매각 후 재평가손익 대체",
+  "rows": 25,
+  "companies": 1
+ },
+ {
+  "label": "관계기업투자 관련 기타포괄손익에 대한 지분변동",
+  "rows": 24,
+  "companies": 1
+ },
+ {
+  "label": "신주인수권부사채의 발행",
+  "rows": 24,
+  "companies": 2
+ },
+ {
+  "label": "지분거래에 의한 비지배지분의 변동",
+  "rows": 24,
+  "companies": 1
+ },
+ {
+  "label": "수정후 재작성된 금액",
+  "rows": 24,
+  "companies": 3
+ },
+ {
+  "label": "종속기업의 설립",
+  "rows": 24,
+  "companies": 3
+ },
+ {
+  "label": "기초자본(조정금액)",
+  "rows": 24,
+  "companies": 1
+ },
+ {
+  "label": "-토지재평가잉여금",
+  "rows": 24,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정 지분상품의 대체",
+  "rows": 24,
+  "companies": 1
+ },
+ {
+  "label": "수정후 자본",
+  "rows": 24,
+  "companies": 2
+ },
+ {
+  "label": "공정가치측정금융자산의 처분",
+  "rows": 24,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치채무증권대손상각비",
+  "rows": 24,
+  "companies": 1
+ },
+ {
+  "label": "적립금의전입",
+  "rows": 24,
+  "companies": 1
+ },
+ {
+  "label": "적립금의이입",
+  "rows": 24,
+  "companies": 1
+ },
+ {
+  "label": "인수합병/기타자본변동",
+  "rows": 24,
+  "companies": 1
+ },
+ {
+  "label": "동일지배하 사업결합",
+  "rows": 24,
+  "companies": 2
+ },
+ {
+  "label": "해외사업환산",
+  "rows": 24,
+  "companies": 1
+ },
+ {
+  "label": "배당금 지급",
+  "rows": 24,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 추가취득",
+  "rows": 24,
+  "companies": 1
+ },
+ {
+  "label": "종속기업지분의 추가취득",
+  "rows": 24,
+  "companies": 2
+ },
+ {
+  "label": "지배기업의 유상증자",
+  "rows": 24,
+  "companies": 1
+ },
+ {
+  "label": "자본의 감소",
+  "rows": 24,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 측정 금융자산 평가손실",
+  "rows": 24,
+  "companies": 1
+ },
+ {
+  "label": "종속기업지분율 변동 등에 따른 변동",
+  "rows": 24,
+  "companies": 1
+ },
+ {
+  "label": "신주인수권부사채의 신주인수권행사",
+  "rows": 24,
+  "companies": 1
+ },
+ {
+  "label": "순확정급여의 재측정요소",
+  "rows": 23,
+  "companies": 3
+ },
+ {
+  "label": "신주인수권의 행사",
+  "rows": 23,
+  "companies": 4
+ },
+ {
+  "label": "기타포괄손익금융자산 처분",
+  "rows": 23,
+  "companies": 1
+ },
+ {
+  "label": "주식매수선택권의 소멸",
+  "rows": 23,
+  "companies": 3
+ },
+ {
+  "label": "전환사채의 조기상환",
+  "rows": 23,
+  "companies": 2
+ },
+ {
+  "label": "전환사채권 행사",
+  "rows": 22,
+  "companies": 1
+ },
+ {
+  "label": "관계기업 기타포괄손익 중 지분해당액",
+  "rows": 22,
+  "companies": 3
+ },
+ {
+  "label": "특별계정기타포괄손익_IFRS4",
+  "rows": 22,
+  "companies": 2
+ },
+ {
+  "label": "기초자본 (조정후)",
+  "rows": 22,
+  "companies": 1
+ },
+ {
+  "label": "토지재평가잉여금",
+  "rows": 22,
+  "companies": 2
+ },
+ {
+  "label": "전환사채 재매입",
+  "rows": 22,
+  "companies": 1
+ },
+ {
+  "label": "종속기업주식의 추가 취득",
+  "rows": 22,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-해외사업장외화환산차이",
+  "rows": 22,
+  "companies": 1
+ },
+ {
+  "label": "신주인수권의 발행",
+  "rows": 22,
+  "companies": 1
+ },
+ {
+  "label": "상환전환우선주의 상환",
+  "rows": 22,
+  "companies": 3
+ },
+ {
+  "label": "비지배지분의 처분",
+  "rows": 22,
+  "companies": 1
+ },
+ {
+  "label": "주식매입선택권 행사 및 소멸",
+  "rows": 22,
+  "companies": 1
+ },
+ {
+  "label": "수정후기초자본",
+  "rows": 21,
+  "companies": 1
+ },
+ {
+  "label": "비지배지분 변동",
+  "rows": 21,
+  "companies": 1
+ },
+ {
+  "label": "공정가치금융자산평가손익",
+  "rows": 21,
+  "companies": 2
+ },
+ {
+  "label": "기타포괄손익-공정가치측정 지분상품 처분",
+  "rows": 21,
+  "companies": 1
+ },
+ {
+  "label": "관계기업의 자본변동",
+  "rows": 21,
+  "companies": 1
+ },
+ {
+  "label": "비지배지분과 자본거래등",
+  "rows": 21,
+  "companies": 1
+ },
+ {
+  "label": "전환우선주 상환",
+  "rows": 21,
+  "companies": 2
+ },
+ {
+  "label": "회계정책 변경 전 기초잔액",
+  "rows": 21,
+  "companies": 1
+ },
+ {
+  "label": "지분법자본잉여금변동",
+  "rows": 21,
+  "companies": 3
+ },
+ {
+  "label": "유형자산재평가손익",
+  "rows": 21,
+  "companies": 2
+ },
+ {
+  "label": "관계기업 소유지분 변동에 대한 효과",
+  "rows": 21,
+  "companies": 1
+ },
+ {
+  "label": "자본감소",
+  "rows": 21,
+  "companies": 1
+ },
+ {
+  "label": "재무제표 재작성으로 인한 변동",
+  "rows": 21,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 파생상품부채의 자본대체",
+  "rows": 20,
+  "companies": 1
+ },
+ {
+  "label": "전환사채의 전환권행사",
+  "rows": 20,
+  "companies": 3
+ },
+ {
+  "label": "확정금여부채 재측정요소",
+  "rows": 20,
+  "companies": 1
+ },
+ {
+  "label": "수정후 금액",
+  "rows": 20,
+  "companies": 2
+ },
+ {
+  "label": "종속기업의 신주인수권행사",
+  "rows": 20,
+  "companies": 1
+ },
+ {
+  "label": "세율변동에 따른 이연법인세 효과",
+  "rows": 20,
+  "companies": 1
+ },
+ {
+  "label": "전환권청구",
+  "rows": 20,
+  "companies": 2
+ },
+ {
+  "label": "등록면허세의 환급",
+  "rows": 20,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치지정지분상품 제거로 인한 평가손익누적액의 변동",
+  "rows": 20,
+  "companies": 1
+ },
+ {
+  "label": "현금흐름위험회피회계",
+  "rows": 19,
+  "companies": 2
+ },
+ {
+  "label": "매도가능금융자산평가손익(처분)",
+  "rows": 19,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치평가손익",
+  "rows": 19,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄-공정가치측정자산의 공정가치변동",
+  "rows": 19,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 측정 금융자산 처분으로 인한 평가손익 대체",
+  "rows": 18,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익누계액의 자본내 분류변경",
+  "rows": 18,
+  "companies": 1
+ },
+ {
+  "label": "퇴직급여부채의재측정요소",
+  "rows": 18,
+  "companies": 1
+ },
+ {
+  "label": "분할조정",
+  "rows": 18,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정 채무상품 평가손익",
+  "rows": 18,
+  "companies": 2
+ },
+ {
+  "label": "주식매수선택권 부여",
+  "rows": 18,
+  "companies": 2
+ },
+ {
+  "label": "자본잉여금의 대체",
+  "rows": 18,
+  "companies": 2
+ },
+ {
+  "label": "종속기업 및 관계기업의 재측정요소에 대한 지분",
+  "rows": 18,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 및 관계기업투자평가손익",
+  "rows": 18,
+  "companies": 1
+ },
+ {
+  "label": "-확정급여제도의 재측정요소",
+  "rows": 18,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 배당금 지급",
+  "rows": 18,
+  "companies": 1
+ },
+ {
+  "label": "관계기업투자의 자본변동에 대한 지분 등",
+  "rows": 18,
+  "companies": 1
+ },
+ {
+  "label": "관계기업의 기타포괄손익 지분 대체",
+  "rows": 18,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치채무증권 대손상각비",
+  "rows": 18,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 배당 등",
+  "rows": 18,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 지분 매입",
+  "rows": 18,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정지분상품 제거로인한 자본간의 대체",
+  "rows": 18,
+  "companies": 1
+ },
+ {
+  "label": "기초자본(변경 후)",
+  "rows": 18,
+  "companies": 1
+ },
+ {
+  "label": "재평가잉여금 재분류",
+  "rows": 18,
+  "companies": 1
+ },
+ {
+  "label": "자산재평가적립금",
+  "rows": 18,
+  "companies": 1
+ },
+ {
+  "label": "전환사채 콜옵션 소급 수정효과",
+  "rows": 18,
+  "companies": 1
+ },
+ {
+  "label": "신종자본증권 등의 분배금",
+  "rows": 18,
+  "companies": 1
+ },
+ {
+  "label": "결손금 처리",
+  "rows": 18,
+  "companies": 1
+ },
+ {
+  "label": "상환",
+  "rows": 18,
+  "companies": 1
+ },
+ {
+  "label": "당기손익-공정가치측정금융부채 평가손익",
+  "rows": 18,
+  "companies": 1
+ },
+ {
+  "label": "주식매수선택권 행사 및 소멸",
+  "rows": 18,
+  "companies": 1
+ },
+ {
+  "label": "관계기업투자의 기타포괄손익에 대한 지분",
+  "rows": 17,
+  "companies": 1
+ },
+ {
+  "label": "재평가잉여금 법인세효과",
+  "rows": 17,
+  "companies": 2
+ },
+ {
+  "label": "주식발행초과금의 이익잉여금 전입",
+  "rows": 17,
+  "companies": 2
+ },
+ {
+  "label": "총포괄손익 계",
+  "rows": 17,
+  "companies": 1
+ },
+ {
+  "label": "자기주식의 소각",
+  "rows": 17,
+  "companies": 2
+ },
+ {
+  "label": "주식매수선택권 행사",
+  "rows": 17,
+  "companies": 2
+ },
+ {
+  "label": "기타포괄손익-공정가치 금융자산 손익",
+  "rows": 17,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 순이익 성격 변경",
+  "rows": 16,
+  "companies": 1
+ },
+ {
+  "label": "관계기업의기타포괄손익 지분",
+  "rows": 16,
+  "companies": 1
+ },
+ {
+  "label": "매도가능증권평가손익",
+  "rows": 16,
+  "companies": 3
+ },
+ {
+  "label": "해외사업환산손익의 변동",
+  "rows": 16,
+  "companies": 1
+ },
+ {
+  "label": "해외사업장 환산외화차이",
+  "rows": 16,
+  "companies": 1
+ },
+ {
+  "label": "종속회사청산",
+  "rows": 16,
+  "companies": 1
+ },
+ {
+  "label": "확정급여부채의재측정요소",
+  "rows": 16,
+  "companies": 2
+ },
+ {
+  "label": "회계정책 변경 후, 기초자본",
+  "rows": 16,
+  "companies": 1
+ },
+ {
+  "label": "관계기업 및 공동기업 기타포괄손익에 대한 지분",
+  "rows": 16,
+  "companies": 1
+ },
+ {
+  "label": "기타자본잉여금 이입",
+  "rows": 16,
+  "companies": 1
+ },
+ {
+  "label": "관계기업의 기타포괄손익에 대한 지분",
+  "rows": 16,
+  "companies": 2
+ },
+ {
+  "label": "종속기업에 대한 소유지분변동",
+  "rows": 16,
+  "companies": 1
+ },
+ {
+  "label": "관계기업의 처분",
+  "rows": 16,
+  "companies": 1
+ },
+ {
+  "label": "재평가잉여금의재분류",
+  "rows": 16,
+  "companies": 1
+ },
+ {
+  "label": "연결실체내의 자본거래 등",
+  "rows": 16,
+  "companies": 1
+ },
+ {
+  "label": "동일지배하사업결합",
+  "rows": 16,
+  "companies": 1
+ },
+ {
+  "label": "주식매입선택권의 행사",
+  "rows": 16,
+  "companies": 2
+ },
+ {
+  "label": "자산재평가",
+  "rows": 16,
+  "companies": 2
+ },
+ {
+  "label": "위험회피회계-파생상품 평가손익",
+  "rows": 16,
+  "companies": 1
+ },
+ {
+  "label": "위험회피회계-이자율스왑 평가손익",
+  "rows": 16,
+  "companies": 1
+ },
+ {
+  "label": "위험회피회계-리스부채 평가손익",
+  "rows": 16,
+  "companies": 1
+ },
+ {
+  "label": "재평가잉여금 대체",
+  "rows": 16,
+  "companies": 1
+ },
+ {
+  "label": "신종자본증권상환손실 소각",
+  "rows": 16,
+  "companies": 1
+ },
+ {
+  "label": "주식매수청구권 행사",
+  "rows": 16,
+  "companies": 1
+ },
+ {
+  "label": "연결자본잉여금 대체",
+  "rows": 16,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정금융자산평가손익의 대체",
+  "rows": 16,
+  "companies": 1
+ },
+ {
+  "label": "당기손익-공정가치 측정 금융부채 평가손익",
+  "rows": 16,
+  "companies": 1
+ },
+ {
+  "label": "주식선택권 관련 자본변동",
+  "rows": 16,
+  "companies": 1
+ },
+ {
+  "label": "조정후금액",
+  "rows": 16,
+  "companies": 1
+ },
+ {
+  "label": "유형자산 매각 후 재평가손익대체",
+  "rows": 16,
+  "companies": 1
+ },
+ {
+  "label": "유형자산처분 재평가손익(세후기타포괄손익)",
+  "rows": 16,
+  "companies": 1
+ },
+ {
+  "label": "합병으로 인한 자본변동",
+  "rows": 16,
+  "companies": 2
+ },
+ {
+  "label": "기타포괄손익 합계",
+  "rows": 15,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 지분율 변동",
+  "rows": 15,
+  "companies": 2
+ },
+ {
+  "label": "총포괄이익 합계",
+  "rows": 15,
+  "companies": 1
+ },
+ {
+  "label": "전환청구권행사",
+  "rows": 15,
+  "companies": 1
+ },
+ {
+  "label": "관계기업자본변동",
+  "rows": 15,
+  "companies": 1
+ },
+ {
+  "label": "채무의출자전환",
+  "rows": 15,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정지분상품평가손익",
+  "rows": 15,
+  "companies": 2
+ },
+ {
+  "label": "종속기업의 합병",
+  "rows": 15,
+  "companies": 1
+ },
+ {
+  "label": "-기타포괄손익-공정가치측정 금융자산 평가손익",
+  "rows": 15,
+  "companies": 1
+ },
+ {
+  "label": "-(부의)지분법자본변동",
+  "rows": 15,
+  "companies": 1
+ },
+ {
+  "label": "-주식선택권의 취소",
+  "rows": 15,
+  "companies": 1
+ },
+ {
+  "label": "중간배당금지급",
+  "rows": 15,
+  "companies": 1
+ },
+ {
+  "label": "신종자본증권의 이자지급",
+  "rows": 15,
+  "companies": 1
+ },
+ {
+  "label": "기타자본잉여금 외",
+  "rows": 15,
+  "companies": 1
+ },
+ {
+  "label": "주식발행초과금과 주식할인발행차금의 상계",
+  "rows": 15,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정지분상품 제거로 인한 평가손익누적액의 변동",
+  "rows": 15,
+  "companies": 1
+ },
+ {
+  "label": "재평가잉여금의 감소",
+  "rows": 15,
+  "companies": 1
+ },
+ {
+  "label": "해외사업장환산외환차이(세후기타포괄손익)",
+  "rows": 15,
+  "companies": 2
+ },
+ {
+  "label": "자본에 직접 반영된 소유주와의 거래",
+  "rows": 15,
+  "companies": 1
+ },
+ {
+  "label": "자기주식거래에 따른 변동",
+  "rows": 15,
+  "companies": 1
+ },
+ {
+  "label": "연결실체 간 자본거래",
+  "rows": 15,
+  "companies": 1
+ },
+ {
+  "label": "공정가치 측정 금융자산 평가손익",
+  "rows": 15,
+  "companies": 2
+ },
+ {
+  "label": "순확정급여자산부채의 재측정요소",
+  "rows": 15,
+  "companies": 1
+ },
+ {
+  "label": "지분법 적용대상 관계기업과 공동기업의 기타포괄손익에 대한 지분(세후기타포괄손익)",
+  "rows": 15,
+  "companies": 1
+ },
+ {
+  "label": "전환우선주의전환",
+  "rows": 15,
+  "companies": 1
+ },
+ {
+  "label": "자본잉여금이익잉여금전입",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "조정 후 금액",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "신주인수권의 행사 등",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "종속기업투자의 기타자본변동",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "분기배당",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "자본잉여금의 이익잉여금 이입",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정 금융자산 평가손실",
+  "rows": 14,
+  "companies": 2
+ },
+ {
+  "label": "소유주와의 거래 등",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "교환사채 발행에 따른 교환권 대가",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "감자차익의 이익잉여금 전입",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "기타의 변동",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "유형자산의 재평가 차익",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "연결범위의변동",
+  "rows": 14,
+  "companies": 2
+ },
+ {
+  "label": "기타의 자본변동",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "기초자본(회계정책 변경 적용 후)",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "당기손익-공정가치지정금융부채처분손익",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "지분율변동",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "지분법 자본잉여금 변동",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "종속회사유상증자",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "보통주식의 발행",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "조정후자본",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "종속기업지분의 취득",
+  "rows": 14,
+  "companies": 2
+ },
+ {
+  "label": "종속기업 투자주식의 추가 취득",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "자기지분매입의무의 변동",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 측정 금융자산 평가이익의 이익잉여금 대체",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "연결실체 내 자본거래",
+  "rows": 14,
+  "companies": 2
+ },
+ {
+  "label": "회계정책의 변경 효과",
+  "rows": 14,
+  "companies": 2
+ },
+ {
+  "label": "관계기업투자 처분으로 인한 재분류조정",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "자본잉여금의 결손금 보전",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "주식매수권행사",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "주식병합 등",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "감자차손상계",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "기초자본 (조정)",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "자본에 직접 인식된 주주와의 거래 등",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "회계정책 변동 반영 후 기초자본",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "재평가 토지의 매각",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "신주인수권부사채의 재매각",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "소급전",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "주식선택권행사",
+  "rows": 14,
+  "companies": 1
+ },
+ {
+  "label": "비지배주주와의 거래",
+  "rows": 14,
+  "companies": 2
+ },
+ {
+  "label": "교환사채의 발행",
+  "rows": 13,
+  "companies": 2
+ },
+ {
+  "label": "지분율의 변동",
+  "rows": 13,
+  "companies": 1
+ },
+ {
+  "label": "유상증자(주식전환)",
+  "rows": 13,
+  "companies": 1
+ },
+ {
+  "label": "토지재평가이익",
+  "rows": 13,
+  "companies": 3
+ },
+ {
+  "label": "-현금흐름위험회피파생상품평가손익",
+  "rows": 13,
+  "companies": 1
+ },
+ {
+  "label": "자본잉여금의 이익잉여금 전입(감액배당)",
+  "rows": 13,
+  "companies": 1
+ },
+ {
+  "label": "공동기업의 순확정급여부채의 재측정요소 중 지분해당액",
+  "rows": 13,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-이잉잉여금 대체",
+  "rows": 13,
+  "companies": 1
+ },
+ {
+  "label": "자기주식거래",
+  "rows": 13,
+  "companies": 1
+ },
+ {
+  "label": "당기손익조정접근법 조정손익",
+  "rows": 13,
+  "companies": 1
+ },
+ {
+  "label": "전환권 매입손실",
+  "rows": 13,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 측정 금융자산 평가손익 적립금",
+  "rows": 13,
+  "companies": 2
+ },
+ {
+  "label": "관계기업의 확정급여제도의 재측정요소 지분",
+  "rows": 13,
+  "companies": 1
+ },
+ {
+  "label": "신주인수권 및 전환권의 행사로 인한 비지배지분의 변동",
+  "rows": 13,
+  "companies": 1
+ },
+ {
+  "label": "확정급여제도의 재측정",
+  "rows": 13,
+  "companies": 2
+ },
+ {
+  "label": "공정가치측정지분상품 평가손익의 대체",
+  "rows": 13,
+  "companies": 1
+ },
+ {
+  "label": "합병으로 인한 변동",
+  "rows": 13,
+  "companies": 2
+ },
+ {
+  "label": "기타포괄-금융자산평가손익",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "총포괄이익합계",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "전환청구권 행사",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "주식발행비용의지급",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "전환사채의 전환권 행사",
+  "rows": 12,
+  "companies": 2
+ },
+ {
+  "label": "자기주식의 변동",
+  "rows": 12,
+  "companies": 2
+ },
+ {
+  "label": "종속기업 차등배당",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "기업분할로 인한 변동",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 측정 금융자산 평가손익 대체",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정금융자산 평가손익 대체",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "자산재평가 변동",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "재평가자산 감가상각 법인세 효과",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "재평가자산 잉여금 대체",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "종속기업청산으로인한 변동",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "신주인수권대가 발생",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "개정 후",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "-종속기업의 유상증자",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "-종속기업의 신주인수권 행사",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "소계.",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "-해외사업환산손익",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "-종속기업의 지분율변동",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 측정 금융자산 처분으로 인한 대체",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "기타투자자산평가손익",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "매도가능금융자산 평가손익(처분)",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 유상증자 및 지분취득",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "전환사채 자본요소",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "지분법자본변동 및 지분법이익잉여금",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "토지재평가이익(손실)",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "전기오류수정후 자본",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "관계기업 지분법 평가",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "연결 당기순이익",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "관계기업 투자 평가",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "자산재평가 차액",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 금융자산 처분",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "1. 회계정책의 변경효과",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "종속기업지분의 추가 취득",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "기초자본(재작성)",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "해외사업장환산외환차익",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "이익잉여금 이입",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "3. 신종자본증권",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "공정가치측정 지분상품의 세후재측정이익",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 금융자산 처분 계정 재분류",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "자본잉여금의 결손 전입",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "연결실체내 자본거래",
+  "rows": 12,
+  "companies": 2
+ },
+ {
+  "label": "2018년 1월 1일(당기초)(재작성금액)",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 자기주식 취득/처분",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "총 포괄손익 계",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "지배력을 상실하지 않는 종속기업에 대한 지분 변동",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "전기오류 이익잉여금 수정",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "총포괄이익 대체",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정 금융자산평가손익의 대체",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "지배력상실에 따른 증감",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "법인세율변경효과",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "합병 및 분할로 인한 자본의 변동",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정지분상품 처분에 따른 대체",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 지분율 변동 등",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 측정 지분상품 처분손익",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "초인플레이션 경제 하 재무제표 재작성효과",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "주식매수선택권 인식",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "해외사업외화환산손익",
+  "rows": 12,
+  "companies": 1
+ },
+ {
+  "label": "기초자본(회계정책변경효과반영후)",
+  "rows": 11,
+  "companies": 1
+ },
+ {
+  "label": "회계정책변경(도입) 효과",
+  "rows": 11,
+  "companies": 1
+ },
+ {
+  "label": "파생상품손익",
+  "rows": 11,
+  "companies": 2
+ },
+ {
+  "label": "수정후",
+  "rows": 11,
+  "companies": 1
+ },
+ {
+  "label": "자본변동",
+  "rows": 11,
+  "companies": 1
+ },
+ {
+  "label": "매각예정분류",
+  "rows": 11,
+  "companies": 1
+ },
+ {
+  "label": "합병 등으로 인한 자본변동",
+  "rows": 11,
+  "companies": 1
+ },
+ {
+  "label": "현금흐름위험회피 파생금융상품 평가손익",
+  "rows": 11,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정금융자산의 처분으로 인한 이익잉여금 대체",
+  "rows": 11,
+  "companies": 1
+ },
+ {
+  "label": "회계변경누적효과",
+  "rows": 10,
+  "companies": 2
+ },
+ {
+  "label": "확정급여채무재측정요소",
+  "rows": 10,
+  "companies": 2
+ },
+ {
+  "label": "주식기준보상비용",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "관계기업투자 평가",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 청산",
+  "rows": 10,
+  "companies": 2
+ },
+ {
+  "label": "처분후이익잉여금",
+  "rows": 10,
+  "companies": 2
+ },
+ {
+  "label": "기타포괄손익-공정가치 측정 금융자산 평가",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "부의지분법 자본변동",
+  "rows": 10,
+  "companies": 2
+ },
+ {
+  "label": "기타포괄손익금융자산 평가",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 자본변동",
+  "rows": 10,
+  "companies": 2
+ },
+ {
+  "label": "-종속기업의 자기주식 취득",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 전환권행사",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "회계추정의 변경효과",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "관계기업 순확정급여부채의 측정요소 중 지분해당액",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "재평가잉여금의 증가",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "소유주와의 거래에서 발생한 지분법자본변동",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "기타 포괄손익 법인세 효과",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 청산",
+  "rows": 10,
+  "companies": 3
+ },
+ {
+  "label": "파생상품 손익",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "자기주식의 교부",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "전환가능상품의 전환으로 인한 증가(감소), 자본",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "자기주식 상여지급",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "출자전환채무의 상환",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정금융자산평가이익",
+  "rows": 10,
+  "companies": 2
+ },
+ {
+  "label": "종속기업합병",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정처분손익",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "관계기업투자주식 처분에 따른 대체",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익 공정가치 측정 금융자산 평가손실",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익 공정가치 측정 금융자산 처분이익",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "주식발행",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "전환상환우선주 전환",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "신주인수권의행사",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "교환사채 교환",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정 금융상품 관련손익 및 이익잉여금 대체",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "손익변동성 조정손익",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "회계정책변경의 효과 반영 후 기초",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 측정 금융상품 관련 손익 및 이익잉여금 대체",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "조정금액",
+  "rows": 10,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄-공정가치측정금융자산평가손실",
+  "rows": 9,
+  "companies": 2
+ },
+ {
+  "label": "기타포괄-공정가치측정금융자산평가이익",
+  "rows": 9,
+  "companies": 2
+ },
+ {
+  "label": "신주인수권부사채 행사",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 측정 금융 자산 처분후 평가손익 이익잉여금 대체",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 측정 금융자산 처분후 평가손익 이익잉여금 대체",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "종속기업지분변동으로 인한 증감",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "괸계기업 기타포괄손익 중 지분해당",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "자산재평가 변동 (주14)",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "만기보유금융상품평가손익",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "-종속기업의 주식선택권",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "-기타포괄손익누계액의 이익잉여금 대체",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익누계액의 이익잉여금 대체",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "관계기업투자자본변동",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 사업결합에 따른 증가(감소)",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 취득 등 자본거래로 인한 증가(감소)",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "관계기업의 사업결합에 따른 증가(감소)",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "합병차익",
+  "rows": 9,
+  "companies": 2
+ },
+ {
+  "label": "신종자본증권 변동",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "종속회사 영업중단 효과",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "청산종속법인 잉여금",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "환율변동차이",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 지분매입",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "관계기업이익잉여금변동",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "전환권의행사",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익금융자산평가손익",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 자기주식변동",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의주식기준보상거래의 인식",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정 금융자산평가이익(손실)",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 측정 금융자산 평가이익(손실)",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정금융자산 평가손익 재분류조정",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "해외사업장환산차이",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "2. 총포괄손익",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정지분상품의 세후재측정이익",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "공동기업 기타포괄손익에 대한 지분해당액",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "상환전환우선주의 전환",
+  "rows": 9,
+  "companies": 2
+ },
+ {
+  "label": "종속기업의 전환사채 발행",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "주식선택권 발행",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "공동기업 순확정급여부채의 재측정요소",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "공동기업 및 관계기업 기타포괄손익 중 지분해당액",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 우선주 보통주전환 등",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 자기주식처분",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "자가주식의 변동",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄-공정가치측정자산의 처분",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "지분변동효과",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "재평가잉여금의 처분",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "합병으로 인한 자본증가",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "기타연결자본조정의 변동",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익 이익잉여금 재분류",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "신종자본증권 상환손실 이익잉여금 대체",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "기타 비지배지분의 변동",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "기업회계기준서 제1117호 최초 적용에 따른 조정",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "신주인수권",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "수정후재작성된 금액",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "주식매입선택권 행사",
+  "rows": 9,
+  "companies": 1
+ },
+ {
+  "label": "확정급여의 재측정요소",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "전기 오류 수정 전 기초자본",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 연차배당",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 상환우선주 전환",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 상환우선주 상환기간만료",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄-공정가치측정금융자산평가이익(손실)",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "비지배지분의 거래",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "우선주 비지배지분 누적이익 인식",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 측정 금융자산 평가손익 처분대체",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 비지배지분에 부여한 풋옵션 소멸",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "관계기업의 자본 변동",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 측정 지분상품평가손익",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "비지배지분의 조정",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "해외사업 환산",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 전환권 대가",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "비지배지분과의 자본거래",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "공정가치금융자산처분에따른대체",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 측정 금융자산 처분 대체",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "연결범위의 변동으로 인한 증감",
+  "rows": 8,
+  "companies": 2
+ },
+ {
+  "label": "기타포괄손익금융자산의 처분",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "관계기업투자 지분법평가",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "복합금융상품 조정",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "기초자본_회계정책변경효과반영후",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "순확정급여부채의 재측정요",
+  "rows": 8,
+  "companies": 2
+ },
+ {
+  "label": "포괄손익[개요]",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "비지배지분과 자본거래 등",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "결손의 보전",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "종속회사지분율변동",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "세후기타포괄손익, 외화환산외환차이 (비지배지분 포함)",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "비지배지분 부채대체",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 자기주식",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "자본잉여금 전입액",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "순확정급여자산의 재측정요소",
+  "rows": 8,
+  "companies": 2
+ },
+ {
+  "label": "-종속기업의 신주인수권 발행",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "-종속기업의 상환전환우선주 상환",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "-기타자본잉여금의 변동",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "-종속기업의 자산수증이익",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "연결기업내 자본거래",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "주식기준보상의 지급 등",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "자본금 전입",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "종속회사 취득으로 인한 지분율 변동",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "비지배지분 감소",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "비지배지분의 부채 대체",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "변경 후 기초자본",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "확정급여부채 재측정요소",
+  "rows": 8,
+  "companies": 2
+ },
+ {
+  "label": "관계기업의 확정급여제도 재측정손익",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "확정급여제도 재측정손익",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "관계기업 기타포괄손익 지분",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "자본준비금 전환",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "공정가치측정 기타포괄손익 금융자산 처분",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "전환사채의 전환청구",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "동일지배하사업결합에 의한 증가",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "인적분할효과",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "종속회사 지분율 변동",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익금융자산처분손익",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "연결자본변동",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "종속기업에 대한 소유지분 변동",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "종속기업지분 추가취득",
+  "rows": 8,
+  "companies": 2
+ },
+ {
+  "label": "세후기타포괄손익, 당기 자산재평가로 인한 자산재평가차익(차손)",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "자본에 직접 반영되는 교환권 대가",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "자산재평가차익(차손)의 세율변동효과",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "자본거래 등 직접원가",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "자본잉여금의 결손보전",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "토지의 재평가이익",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "지배력을 상실하지 않는 종속기업의 처분",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "지배력을 상실하는 종속기업의 처분",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "종속기업지본의 처분",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 신규설립",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "관계기업투자 제거로 인한 평가손익 누적액의 변동",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "교환사채 교환권 대가",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "자본재분류 및 대체",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "상환전환우선주의 보통주전환",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "초인플레이션 경제하에서의 재무제표 재작성효과",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "해외사업장환산 외환차이(세후 기타포괄손익)",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "세후기타포괄손익, 확정급여제도의 재측정손익",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "종속기업간 합병으로 인한 변동",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 자기주식 거래",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "관계기업의 기타포괄손익에 대한 지분해당액",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익누계액의 이익잉여금대체",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "종속기업주식선택권의 소멸",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "연차(현금)배당",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "위험회피회계 - 리스부채 평가손익",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "위험회피회계 - 파생상품 평가손익",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 및 공동기업 순확정급여부채의 재측정요소",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "해외사업환산손익 재분류조정",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "확정급여제도의　재측정요소",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "등록면허세의　환급",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "해외사업환산손익의　재분류조정",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "연결자본잉여금의　대체",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "해외사업환산손익의 재분류조정",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 신종자본증권 상환",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 신주인수권부사채 발행",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 신주인수권 행사",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "회계정책변경 효과반영후자본",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 처분으로 인한 증가(감소), 자본",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 측정 금융자산 평가손익의 자본내 대체",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "연결대상의변동",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "법인세효과관련 기타변동",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익(공정가치측정금융자산 처분이익)",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "관계기업 자본변동",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "기타연결기타포괄손익",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "신종자본증권재분류",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "전환권대가 인식",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정금융자산평가손실",
+  "rows": 8,
+  "companies": 2
+ },
+ {
+  "label": "비지배지분부채조정",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 비지배지분의 변동",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "교환사채의 교환권 행사",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄-공정가치금융자산 평가이익",
+  "rows": 8,
+  "companies": 1
+ },
+ {
+  "label": "회계정책의변경",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "전화사채권 행사",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 측정 금융상품 처분",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정금융자산 평가이익",
+  "rows": 7,
+  "companies": 2
+ },
+ {
+  "label": "지분법이익잉여",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 전환권대가",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "공정가치금융자산 처분에 따른 대체",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "지분법 적용대상 관계기업과 공동기업의 기타포괄손익에 대한 지분",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "오류수정효과",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "재평가포괄손익",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "초인플레이션으로 경제 하 재작성효과",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 자기수식취득",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "종속기업투자취득",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "종속기업투자처분",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "기업회계기준서 제1016호 개정효과",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "기타자본잉여금의 변동",
+  "rows": 7,
+  "companies": 2
+ },
+ {
+  "label": "관계기업자본변동의 증감",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의추가취득",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "자기주식처분손익",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "종속기업추가취득",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "순확정급여의재측정요소",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "기타투자증권평가손익",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "신종자본증권의 교환",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "관계기업의 확정급여제도 재측정요소 지분",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "전환사채 전환 및 상환",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "신주발행비환급",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "수정후 전기초",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "수정후 당기초",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "회계정책변경누적효과",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "기타비지배지분의 변동",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "전환상환우선주전환",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "기타 포괄손익 법인세효과",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익 관련 법인세효과",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 자기주식 취득",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "주식의 병합",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "공정가치측정금융상품  평가손익",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "수정 후 재작성된  금액",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "해외사업순투자환산손익",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "지분법자본변동의 대체",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "K-IFRS 1109 최초 적용에 따른 조정(세후)",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "주식기준보상거래의 인식",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "감자차손보전",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "전환권청구로 인한 신주발행",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "전환권청구로인한신주발행",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 주식의 취득/처분",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익_공정가치즉정금융자산평가이익",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "종속기업투자주식 취득",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 기타자본변동",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "신종자본증권상환손실 이익잉여금 대체",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "신종자본증권 재분류",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "주식병합",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "전환권등의 행사",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "기업회계기준서 제1029호 효과",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "전환우선주의 보통주 전환",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "현물출자",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "신주발행 정정에 따른 변동",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "전환상환우선주의 보통주전환",
+  "rows": 7,
+  "companies": 1
+ },
+ {
+  "label": "당기손익",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "금융자산 처분으로 인한 재분류",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정금융자산평가손익의 잉여금 대체",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "연결대상기업변동",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄-공정가치측정금융자산처분이익",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "연결자본조정",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "전환사채의 발행-전환권",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "기타포관손익-공정가치 측정 금융자산 평가손익",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정 금융자산 평가손익 처분대체",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "채무의 출자전환",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "관계기업의 이익잉여금변동에 대한 지분",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 설립",
+  "rows": 6,
+  "companies": 2
+ },
+ {
+  "label": "자본잉여금의 이입",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "주식매수선택권부여",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익금융자산 처분손익대체",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "재평가잉여금의 조정",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "재평가잉여금 제거",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "유상증자 (주24)",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "재평가자산 잉여금 대체 (주14)",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "순확정급여부채의 재측정요소 (주20)",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 증자",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "포괄손익 [개요]",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "지분법주식 미실현손익 제거",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정금융자산(처분)",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 취득 등으로 인한 변동",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 이익잉여금 처분",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "기타의 거래 합계",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "-배당금지급",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "-주식발행비용",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "-기타포괄손익-공정가치측정금융자산평가손익",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "-자기주식의 이익소각",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "-자기주식의 취득",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "주식기준보상의 지급",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "주식선택권의 행사 등",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "주식선택권의 발행",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "기타자본 잉여금 이입",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "기타자본금 잉여금 이입",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "순확정급여 재측정요소",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "종속기업지분의 변동",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "변경후 기초자본",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "종속회사 유상증자",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "자기주식의 소각으로 인한 변동",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "종속기업지분의 처분",
+  "rows": 6,
+  "companies": 2
+ },
+ {
+  "label": "주식발행초과금의 이익잉여금 대체",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "자본준비금 감액",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "재평가잉여금의분류",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "전환사채의전환청구",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 등의 자기주식취득",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치금융자산 처분으로 인한 자본변동",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정금융자산의 감소",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "공정가치금융자산 평가손익",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "이연법인세 효과",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "재무제표 재작성효과",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "비지배지분보유비율변동",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "투자전환사채 콜옵션 소급 수정효과",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "주식매수선택권소멸이익",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "주식매입선택권소멸이익",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "후속적으로 당기손익으로 재분류되지 않은 지분법적용중단 효과",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "관계기업 확정급여제도의 재측정요소에 대한 지분",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치금융자산평가손익 재분류",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "동일지배거래",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정금융자산의 처분으로 인한 재분류조정",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "재측정요소의 세후기타포괄손익",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "주식발행초과금 결손보전",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "동일지배거래(종속기업 합병)",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "관계기업및공동기업 기타포괄손익에 대한 지분",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "손실충당금평가손익",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "7. 재분류조정",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "4. 종속기업의 취득",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "8. 기타조정",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "5. 종속기업의 추가취득",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 재측정요소에 대한 지분",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 기타포괄손익에 대한 지분",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "종속기업과의 합병으로 인한 변동",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "지분법이익잉여금변동, 자본에 직접인식된 주주와의 거래",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "재측정요소",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "종업원 급여 재측정요소",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "관계기업의 기타포괄손익-공정가치측정금융자산 처분",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 및 공동기업, 관계기업 기타포괄손익 중 지분해당액",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄금융자산평가이익",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "공동기업기타포괄손익-공정가치측정금융자산 평가손익",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 평가 손익의 잉여금 대체",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "확정급여재도의 재측정요소",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "확정급여채무 재측정요소",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정자산의 처분",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "잉여금의 증가(감소)",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "소급누적효과",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "회계정책변경 효과 반영후자본",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정금융자산평가손익의 자본내 대체",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "동일지배 하 사업결합",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "관계기업 기타포괄손익에 대한 지분",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "주식매수선택권의소멸",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "비지배주주지분의 증가",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "관계기업의 재측정요소",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "공정가치측정금융자산평가손익",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "자본에 직접 반영된 소유주와의 거래 합계",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "공정가치측정지분상품 처분에 따른 대체",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "전환권대가의 대체",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익 공정가치 측정？금융자산 처분으로 인한 재분류",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "주식액면병합",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "매각예정자산과 관련하여 자본으로 직접 인식된 금액",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "연결실체의 변동등",
+  "rows": 6,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정금융자산 평가손실",
+  "rows": 5,
+  "companies": 2
+ },
+ {
+  "label": "연결실체내 자본거래 및 비지배",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "합병으로 인한 자본잉여금조정",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "합병으로인한 자본잉여금조정",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "법인세율변동효과",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "관계기업투자의 기타포괄손익에대한 지분",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "관계기업투자의 이익잉여금변동에 대한 지분",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "관계기업투자의 이익잉여금에 대한 지분",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "관계기업투자 평가손익",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "지배력을 상실하지 않는 종속기업에 대한 소유지분 변동",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "사업결합 및 종속기업 처분관련 비지배지분",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "공동기업 및 관계기업 기타포괄손익 등에 대한 지분",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "합병으로인한증가",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "연결범위변동효과",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "지분율의 변동으로 인한 증감",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "회계변경의 누적효과",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "전환권대가청산손실",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "전환권대가청산이익",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "상환전환우선주의 소각",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "-종속기업의 투자주식 일부 처분",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "소계;",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "-종속기업의 연결범위 변동",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "자본준비금 전입",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "2022년 배당금지급",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "2022년 중간배당금지급",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "2021년 배당금 지급",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "자기주식의처분손익",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "회계정책변경 전 기초잔액",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "자본잉여금의 이익잉여금 대체",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "전환사채 발행 및 전환",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "교환사채 발행 및 교환",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "전환사채의 보통주 전환",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "사업결합관련 보통주 발행",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "토재평가잉여금",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "관계기업의 확정급여제도의 재측정요소",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "출자전환 등으로 인한 자본변동",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "신주발행비 환급",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "유형자산평가손익",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "연차배당금의 지급",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "9.신주인수권 및 전환권의 행사",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "후속적으로 당기손익으로 재분류된 지분법적용중단 효과",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "유형자산재평가이익 관련 법인세효과",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 및 관계기업처분",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "세후기타포괄손익, 자산재평가차익(차손)",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정금융자산평가이익(손실)",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익- 공장가치측정금융자산평가손익 재분류",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "공정가치측정 지분상품 평가손익",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "계정대체",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 금융자산 처분손익",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "K-IFRS 1115 최초 적용에 따른 조정(세후)",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "비지배지분의 증가(감소)",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "영업양수도",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 유상증자로 인한 변동",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "전환우선주부채의 분류 변경",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 측정 금융자산 평가손익(세후기타포괄손익)",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "확정급여제도의 재측정요소(세후기타포괄손익)",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "재평가잉여금의 변동",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "출자전환채무(회생채무)",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "공동기업 기타포괄손익 중 지분해당액",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "전환사채의 대체",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "종속기업투자주식의 일부처분",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "영업양수",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "2020.01.01(수정후 전전기초)",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "유형자산재평가손익(세후기타포괄손익)",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "관계기업투자주식의 처분",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "전환권의 대가",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "주식매수선택권  행사",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "주식청약증거금",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "설립자본",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "전환권대가 조정",
+  "rows": 5,
+  "companies": 1
+ },
+ {
+  "label": "금융자산의 처분으로 인한 재분류",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 지분변동",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 지분취득",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속회사 지분취득",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속회사지분취득",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "지배회사 보유 종속기업 전환사채의 전환",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 지분율의 변동",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속기업변동",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 주식선택권",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "신주인수권의 행사등",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "관계기업의 회계정책변경",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "교환사채의 처분",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익－공정가치측정 금융자산 평가",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 전환권대가",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "확정급여의재측정요소",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "지배력 상실",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "동일지배하의 거래",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "매각예정자산부채 관련 기타포괄 손익누계액 분류",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "비지배분 부채대체",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "비지배분부채의 변동",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손인금융자산 처분",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "자산재평가자산 감가상각 법인세 효과",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "재평가잉여금 변동",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "재평가자산 감가상각 법인세 효과 (주33)",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "유상증자 (주25)",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 감자",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 측정 금융자산 제거",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측저금융자산제거",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정금융자산대손충당금평가손익",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "연결회사의변동",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "해외사업장환산외화차이",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "주식발행초과금대체",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "주식발행초과금 대체",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "복합금융상품의 전환",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 지분율 변동 효과 등",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "순확정급여자산및부채의 재측정요소",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "순확정급여자신및부채의 재측정요소",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "-종속기업의 분할합병",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "-현금흐름위험회피파생상품평가이익(손실)",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "-종속기업의 전환사채 발행",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "-자기주식",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "-종속기업의 일부 처분",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "-주식기준보상거래의 인식",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "비지배지분 증감",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "관계기업 및 공동기업 순확정급여부채의 재측정요소 중 지분 해당액",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "공동기업 순확정급여부채의 재측정 요소 중 지분해당액",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "주식선택권 취소",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 취득 등 자본거래로 인한 변동",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "관계기업 및 공동기업 순확정 급여부채의 재측정요소 중 지분해당액",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속회사의 증자",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "토지재평가로 인한 자본의 변동",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속회사 토지재평가로 인한 자본의 변동",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "해외사업장 환산차이",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 지분변동 등",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "관계기업 기타포괄손익에대한 지분해당액",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "비지배지분과의거래",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 자본조정 변동분",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "출자전환등",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "1.출자전환등",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "순확정급여자산의 재측정 요소",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "매도가능금융자산의 공정가치 변동",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "연차배당금",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "연결자본잉여금",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "유상증자시 지분변동차액",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속기업에 대한 소유지분의 변동",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "기준서변동효과",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익 재분류",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "사업결합으로 인한 변동 등",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "연결범위변동 및 비지배지분 유상증자",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "위험회피회계-리스부채 평가이익(손실)",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속회사 주식매수선택권",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "재무제표 재작성",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "비지배지분 수증",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 측정 금융자산 평가이익",
+  "rows": 4,
+  "companies": 2
+ },
+ {
+  "label": "회계정책 변경효과",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "신주인수권부사채 대용납입",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "신주인수권부사채 대응납입",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "신주인수권부사채행사",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "지배지분변동",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "회계정책변경",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속회사의 배당",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 측정 금융자산 평가손익 처분 계정재분류",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "재평가잉여금 변동으로 인한 증가(감소)",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 신규설립으로 인한 변동",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "확정급여 재측정",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "신종자본증권 및 분배금",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "신종자본증권 및 이자",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 주식병합",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "비지배지분의 납입",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속기업투자의 추가취득",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "K-IFRS 1109호 최초 적용에 따른 조정",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 주식의 처분",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 기타자본변동 중 지분해당액",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "공동기업기타포괄손익-공정가치 측정 금융자산 평가손익",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "비지배지분대체",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "비지배지분추가취득",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속기업투자주식의 취득",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 전환우선주 발행",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄-공정가치측정금융자산 공정가치변동",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄-공정가치측정금융자산 처분",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "주식매수선택",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 측정 금융자산 평가손익(채무상품)",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 유상증자 및 지분율 변동 등",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "사업결합으로 인한 효과",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄-공정가치금융자산의 처분",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속기업지분율 변동효과",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 지분율변동",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 소유지분변동",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 합병으로 인한 증가",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "전환상환우선주의발행",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "확정급여부채의 재측정 요소",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "주식선택권 인식",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속기업지분매각",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익 공정가치측정금융자산평가손익",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "순환정급여부채의 재측정요소",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 유상증자 및 소유지분변동",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "당기연결순이익(손실)",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 유상증자 및 소유지분 변동",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익공정가치금융자산평가손익",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "전환사채 보통주전환",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "연결회사내 자본거래",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "액면분할",
+  "rows": 4,
+  "companies": 1
+ },
+ {
+  "label": "자기주식의 처분손실",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "분할로 인한 주식병합",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "기업회계기준서 제1109호 최초 적용에따른 조정(세후)",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "K-IFRS 제1109호 최초적용에 따른 조정(세후)",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄-금융자산 처분",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "지분법잉여금",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "합병으로 인한 자본잉여금 조정",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정금융 자산 처분",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "자기주식 변동",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정 금융자산의 처분손익",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정  지분상품 처분",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "보험수리적이익",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "자산재평가잉여금 법인세효과",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "순확정급여부채의 재측정요소 (주21)",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "재평가자산 잉여금 대체 (주33)",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정금융자산 제거",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "회계정책변경(도입)효과",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "부의지분법변동",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 자본변동",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "복합금융상품의 발행",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "대체와 기타 변동에 따른 증가(감소) 자본",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "기타의자본조정",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "회계정책변경의 효과(지분법)",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "-합병조정",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "-주식선택권 취소",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "기타자본 보전",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "기타자본보전",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정 금융자산 처분에 따른 대체",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 측정 금융자산의 처분으로 인한 대체",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "2020년배당금지급",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "2021년 중간배당금지급",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "관계기업투자주식 지분법평가",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "종속회사 토지처분으로 인한 재평가잉여금 변동",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "교환사채의 교환에 따른 자기주식 교부",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "회계정책변경 누적효과",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익누계액 결손금대체",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익누계액 결손금 대체",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 이익잉여금 변동",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "금융자산평가손익",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "해외사업환산차익",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "개정기준서 누적효과 일괄조정",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "개정기준서도입효과",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "주식발행초과금과 주식할인바행차금의 상계",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "합병으로 인한 자본의 증가",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "합병으로 인한 자본의증가",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "11.기타포괄손익-공정가치측정지분상품제거로인한평가손익누적액의변동",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "2.무상감자",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "파생상품평가",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "관계기업 확정급여제도의 재측정요소",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "결손금처리액",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "매도가능금융자산의평가손익",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "미반영지분법손실 반영",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "자기자본취득",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "종속회사 자기주식소각",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "재평가잉여금재분류",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "회계변경에 따른 재분류조정",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "재평가잉여금세율변동효과",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "주식매수선택권(스톡옵션)",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "관계기업기타포괄손익에 대한 지분",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "재평가잉여금대체",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "공정가치 측정지분상품 평가손익",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "6. 재분류조정",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "5. 종속기업의 취득",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "7. 기타조정",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "6. 종속기업의 일처분",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "6. 종속기업의 일부 처분",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "종속기업지분취득",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "중단영업구분에 따른 비지배지분손익차이조정",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "신주인수권부사채의발행",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "신주인수권부사채전환",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "중단영업 구분에 따른 비지배지분 손익차이조정",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "주식기준보상거래에 따른 증가(감소)지분",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 금융자산 처분계정재분류",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 금융자산 처분 계정재분류",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "전환사채의 전환권 대가",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "공정가치 금융자산평가손익",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "전환사채의 전환권대가",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "해외사업장환산외환손익",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 측정금융자산처분대체",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공장가치측정금융자산 처분대체",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "주식발행초과금의 이익잉여금 전환",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "회계정책의 변동",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "확정급여재측정",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "기타불입자본의 결손보전",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "관계기업기타포괄손익누계액",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "지분법자본변동(처분대체)",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "K-IFRS 1109호 최초 적용에 따른 조정(주석2)",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "해외사업장 외환차이",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익금융자산평가이익",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "공동기업의 순확정급여부채의 재측정요소",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "동일지배사업결합",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "퇴직급여부채 재측정요소",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "기타주주와의 자본거래",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 전환사채발행",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 간 사업양수도",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 투자주식의 취득",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 전환사채발행 및 행사",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "종속기업간 사업양수도",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 무상감자",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 신주인수권 발행 및 행사",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "투자금융자산평가손익",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "관계회사 순확정급여부채의 재측정요소",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄-공정가치측정자산의 변동",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "재평가잉여금 및 이익잉여금 사이의 이전",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "토지 재평가잉여금의 처분대체",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "관계기업 자본변동에 대한 지분",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "관계기업의 기타포괄손익에 대한 지분(세후기타포괄손익)",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "관계기업 기타포괄손익 변동에 대한 지분",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "사업결합 관련 변동",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "확정급여제도의재측정요소 재분류",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "공정가치측정금융자산 처분에 따른 자본 재분류",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "공정가치측정금융자산 처분(재분류)",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "잉여금 대체",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익 공정가치 측정 금융자산 처분으로 인한 재분류",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "초인플레이션 경제 하 재무제표 재작성 효과",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "전환상환우선주 계약변경",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "공정가치측정 금융자산 평가손실",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "종속회사 주식매입선택권 행사",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "종속회사 주식선택권 인식",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익인식 금융자산 평가손익",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "법인세 세율변경효과",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치 측정 금융자산 처분으로 인한 재분류",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "주식선택권의 미행사",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "주식매수선택권의 미행사",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "전환우선주의 전환",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "주식선택권소멸이익",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "주식매수선택권의 권리소멸",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "주식매수선택권 소멸",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "합병으로 인한 증감",
+  "rows": 3,
+  "companies": 1
+ },
+ {
+  "label": "종속기업 배당관련",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄-공정가치금융자산 처분손익",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "동일지배하 합병",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "합병으로인한자본잉여금조정",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "지분법 적용대상 종속기업과 관계기업의 기타포괄손익에 대한 지분(세후기타포괄손익)",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치측정 금융자산 평가이익",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "회계변경의누적효과",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "사업결합으로 인한 증가",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "전환권대가(전환사채 발행)",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "출자금의 배분",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "-종속기업의 신종자본증권 상환",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "-주식기준보상",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "-위험회피파생상품평가손익",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "주식선택권 부여",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익-공정가치금융자산 평가이익",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "2021년중간배당금지급",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "2020년 배당금지급",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄금융자산평가손익",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "종속기업신규설립",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "사업결합으로 인한 주식발행",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "종속기업투자차액",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "비지배주주의 납입",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "유형자산 재평가",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "4.주식발행비용",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "8.기타",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "6.연결범위변동",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "10.자기주식의처분",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "7.배당금의지급",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "5.전환권대가",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의 보통주 발행",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "현재가치차감(합병)",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "배댱금의지급",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "회계정책의 변경의 효과",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "당기순손실",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "비지배지분부채 대체",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "지분법자본잉여변동",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "주식매수건택권(스톡옵션)",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "4. 연결범위변동",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "현금흐름회피 파생상품평가손익",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "유상증자 및 전환사채 발행",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "전환상환우선주의 상환",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "지분법자본변동(회계정책변경효과)",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "지분법이익잉여금변동(회계정책변경효과)",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "연결범위의 조정",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "주식매수청구권의 행사",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "종속기업배당",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "비지배지분의 자본금납입",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "교환사채 발행(교환권대가)",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "기타 주주와의 자본거래",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "관계이업과공동기업지분(세후기타포괄손익-부의자본변동)",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "관계기업과공동기업지분(세후기타포괄손익-부의자본변동)",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "토지 재평가잉여금의 변동",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "공정가치 측정 금융자산 처분이익(기타포괄손익)",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "종속기업의설립",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "전환상환우선주의 발행",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "종속기업투자주식의 추가 취득",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익 공정가치측정 금융자산 평가손실",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익 공정가치측정 금융자산평가손실",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "비지배지분의 주식보상비용",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "비지배지분 주식보상비용",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "법인세세율변동효과",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "전기총포괄손익",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "지배력 상실에 따른 연결범위변동",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "기타포괄손익인식 공정가치측정금융자산 평가손익",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "지분법잉여금변동",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "순확정급여부채(자산)의 재측정요소",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "상환전환우선주의 발행",
+  "rows": 2,
+  "companies": 1
+ },
+ {
+  "label": "지분율및연결범위변동",
+  "rows": 1,
+  "companies": 1
+ },
+ {
+  "label": "총포괄손익：",
+  "rows": 1,
+  "companies": 1
+ }
+]

@@ -6,7 +6,7 @@
 flowchart TD
     A[회사명 검색<br/>OpenDart ~12만사] --> B[L0 수집<br/>finstate JSON + 주석 XBRL + 사업보고서 XML]
     B --> C[L1 정규화<br/>XBRL→canonical 2,015종<br/>회사·연도 격리 DuckDB]
-    C --> G{온보딩 게이트<br/>G1~G8·통화 +G6 dump<br/>분석 준비가 자동 실행}
+    C --> G{온보딩 게이트<br/>G1~G9·통화 +G6 dump<br/>분석 준비가 자동 실행}
     G -->|FAIL| Q[별칭 보정·quirk 등록<br/>코드 후보→LLM 선택→고신뢰 자동 등록<br/>보류분만 사람 · 재게이트]
     Q --> G
     G -->|PASS| OB[LLM 전처리<br/>별칭 자동 등록 ≥0.7 + 5개년 재정규화<br/>본문 통독→서술형 감사관심 적재]
@@ -33,7 +33,7 @@ flowchart TD
 | ------------------ | --------------- | ------------------------------------------------------------------------ | ----------------------------------- | -------------------------------- |
 | L0 수집            | 회사·연도       | OpenDART 재무제표 JSON·주석 XBRL·원문 XML을 raw로 저장(부재≠오류)        | `data/companies/{corp}/{year}/raw/` | [3장](3_COLLECT-NORMALIZE.md)    |
 | L1 정규화          | raw CSV         | id-first 매핑·충돌 중재·dedup·SCE 2D·자본분해                            | 회사/연도 격리 DuckDB               | [3장](3_COLLECT-NORMALIZE.md)    |
-| 온보딩 게이트      | 정규화 DB       | G1 완결성·BS 항등식·G3 산술·G5 무결성·G7 소계/표간대사·G8 번역품질·통화 검문 | gate_passed 여부                    | [3장](3_COLLECT-NORMALIZE.md)    |
+| 온보딩 게이트      | 정규화 DB       | G1 완결성·BS 항등식·G3 산술·G5 무결성·G7 소계/표간대사·G8 번역품질·G9 연도간대사·통화 검문 | gate_passed 여부                    | [3장](3_COLLECT-NORMALIZE.md)    |
 | LLM 전처리         | 게이트 통과 DB  | 별칭 제안·고신뢰(≥0.7) 자동 등록+5개년 재정규화 · 본문 통독 서술추출     | quirk·report_extracts·완료 마커     | [3장](3_COLLECT-NORMALIZE.md)    |
 | L2 신호엔진        | 정규화 frame    | 전수 스캔·다축 프로파일러·관계사슬·비율·변동분해·커버리지 원장           | 계정 패널·시계열·큐·원장            | [4장](4_SIGNAL-ENGINE.md)        |
 | L3 5관점           | 관점별 material | 병렬 발견(내부 4 + 동종 1), 각 관점 LLM 1회                              | SuspicionItem 목록                  | [5장](5_PERSPECTIVES-CARDS.md)   |

@@ -465,7 +465,8 @@ canonical_accounts:
     statement: IS
     account_ids:
       - ifrs-full_ProfitLoss
-    aliases: [당기순이익]
+    # 순이익·연결당기순이익: SCE 변동행 최빈 미매핑(코퍼스 320+68행) — 당기접두 절단 후 키가 '순이익'
+    aliases: [당기순이익, 순이익, 연결당기순이익]
   지배기업귀속순이익:
     statement: IS
     account_ids:
@@ -574,7 +575,7 @@ canonical_accounts:
     statement: SCE
     account_ids:
       - ifrs-full_DividendsPaid
-    aliases: [배당, 현금배당, 연차배당]
+    aliases: [배당, 현금배당, 연차배당, 배당금지급]
   자본금변동:
     statement: SCE
     account_ids:
@@ -583,21 +584,21 @@ canonical_accounts:
   자본잉여금변동:
     statement: SCE
     account_ids: []
-    aliases: [전환권 행사, 교환권 행사, 주식매입선택권 행사 및 취소, 주식매입선택권 인식, 자본잉여금의 증가, 자본잉여금의 감소]
+    aliases: [전환권 행사, 교환권 행사, 주식매입선택권 행사 및 취소, 주식매입선택권 인식, 자본잉여금의 증가, 자본잉여금의 감소, 신주인수권부사채의 행사, 주식매수선택권 인식, 주식매수선택권 행사 및 소멸, 주식매입선택권 행사 및 소멸, 전환사채 전환권행사, 전환사채의 전환권행사]
   이익잉여금변동:
     statement: SCE
     account_ids: []
-    aliases: [이익잉여금 처분, 결손금보전, 주식배당, 이익잉여금의 증가, 이익잉여금의 감소]
+    aliases: [이익잉여금 처분, 결손금보전, 주식배당, 이익잉여금의 증가, 이익잉여금의 감소, 결손보전]
   자기주식변동:
     statement: SCE
     account_ids:
       - dart_TreasuryShareTransactions
-    aliases: [자기주식 취득, 자기주식 처분, 자기주식의 취득, 자기주식의 처분, 자기주식]
+    aliases: [자기주식 취득, 자기주식 처분, 자기주식의 취득, 자기주식의 처분, 자기주식 매입, 자기주식]
   연결대상범위변동:
     statement: SCE
     account_ids:
       - dart_ChangesInConsolidatedCompanies
-    aliases: [연결실체의 변동, 연결실체내 자본거래 등, 회계정책변경에 따른 증가(감소), 전환사채 조기상환, 신주인수권 행사, 기타자본의 증가, 기타자본의 감소, 연결대상범위의 변동]
+    aliases: [연결실체의 변동, 연결실체내 자본거래 등, 회계정책변경에 따른 증가(감소), 전환사채 조기상환, 신주인수권 행사, 기타자본의 증가, 기타자본의 감소, 연결대상범위의 변동, 연결범위의 변동, 연결범위 변동, 연결범위변동]
   내부거래취득:
     statement: SCE
     account_ids:
@@ -609,7 +610,7 @@ canonical_accounts:
       - ifrs-full_IncreaseDecreaseThroughChangesInAccountingPolicies
       - ifrs_IncreaseDecreaseThroughChangesInAccountingPolicies
       - dart_IncreaseDecreaseThroughChangesInAccountingPolicies
-    aliases: []
+    aliases: [회계정책변경효과, 회계정책의 변경효과, 회계정책 변경효과]
   영업활동현금흐름:
     statement: CF
     account_ids:
@@ -801,12 +802,12 @@ canonical_accounts:
     statement: SCE
     account_ids:
       - ifrs-full_IncreaseDecreaseThroughSharebasedPaymentTransactions
-    aliases: [주식기준보상거래에 따른 증가(감소), 주식보상비용]
+    aliases: [주식기준보상거래에 따른 증가(감소), 주식보상비용, 주식선택권의 부여]
   종속기업소유지분변동:
     statement: SCE
     account_ids:
       - ifrs-full_IncreaseDecreaseThroughChangesInOwnershipInterestsInSubsidiariesThatDoNotResultInLossOfControl
-    aliases: [지배력을 상실하지 않는 종속기업에 대한 소유지분의 변동에 따른 증가(감소)]
+    aliases: [지배력을 상실하지 않는 종속기업에 대한 소유지분의 변동에 따른 증가(감소), 비지배지분과의 거래, 종속기업지분율 변동 등에 따른 변동]
   신주발행비:
     statement: SCE
     account_ids:
@@ -816,7 +817,7 @@ canonical_accounts:
     statement: SCE
     account_ids:
       - dart_ProceedsFromExerciseOfShareOptions
-    aliases: [주식선택권행사로 인한 현금유입, 주식매수선택권의 행사]
+    aliases: [주식선택권행사로 인한 현금유입, 주식매수선택권의 행사, 주식선택권행사, 주식매수선택권행사]
   자본증감합계:
     statement: SCE
     is_subtotal: true
@@ -1591,7 +1592,7 @@ canonical_accounts:
     account_ids:
       - ifrs-full_IncreaseDecreaseThroughTransactionsWithOwners
       - ifrs_IncreaseDecreaseThroughTransactionsWithOwners
-    aliases: [소유주와의 거래 합계]
+    aliases: [소유주와의 거래 합계, 소유주와의 거래 총액, 소유주와의 거래 소계]
   기타 비유동채권:
     statement: BS
     account_ids:
@@ -2000,7 +2001,7 @@ canonical_accounts:
     statement: SCE
     account_ids:
       - dart_ShareOfRetainedEarningsOfAssociatesAndJointVenturesAccountedForUsingEquityMethod
-    aliases: [지분법 이익잉여금 변동]
+    aliases: [지분법 이익잉여금 변동, 지분법이익잉여금의 변동]
   자본조정(BS):
     statement: BS
     account_ids:
@@ -2108,7 +2109,7 @@ canonical_accounts:
     statement: SCE
     account_ids:
       - dart_ChangesInReserveOfGainsAndLossesFromInvestmentsInEquityInstruments
-    aliases: []
+    aliases: [지분법평가]
   집기의 취득:
     statement: CF
     account_ids:
@@ -2372,7 +2373,7 @@ canonical_accounts:
       - ifrs-full_IncreaseDecreaseThroughCorrectionsOfErrors
       - ifrs_IncreaseDecreaseThroughCorrectionsOfErrors
       - dart_IncreaseDecreaseThroughCorrectionsOfErrors
-    aliases: [오류수정에 따른 증가(감소)]
+    aliases: [오류수정에 따른 증가(감소), 전기오류수정]
   주식발행비용:
     statement: CF
     account_ids:
@@ -2418,7 +2419,7 @@ canonical_accounts:
     statement: SCE
     account_ids:
       - dart_CompoundFinancialInstrumentConversion
-    aliases: [복합금융상품 전환]
+    aliases: [복합금융상품 전환, 전환사채 전환]
   기타포괄손익-공정가치측정금융자산의취득:
     statement: CF
     account_ids:
@@ -5298,7 +5299,7 @@ canonical_accounts:
     account_ids:
       - ifrs-full_DividendsRecognisedAsDistributionsToNoncontrollingInterests
       - ifrs_DividendsRecognisedAsDistributionsToNoncontrollingInterests
-    aliases: [비지배지분에 대한 배당금]
+    aliases: [비지배지분에 대한 배당금, 종속기업의 배당]
   금융손익:
     statement: CIS
     account_ids:

@@ -44,6 +44,7 @@ from data.backtest._is_cf_arithmetic import check_company_year
 from src.normalize.config import load_canonical_accounts, normalize_label
 from src.normalize.gate_identities import identity_report
 from src.normalize.gate_quality import quality_report
+from src.normalize.gate_yoy import yoy_tieout
 from src.normalize.mapper import AccountMapper
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -273,6 +274,8 @@ def run_gate(corp_code: str, year: str) -> dict:
     currency = run_currency_check(corp_code, year)
     g7 = identity_report(db)  # 소계 항등식 + 표 간 대사
     g8 = quality_report(db)  # 번역 품질(미매핑·충돌·표 커버리지·부호·원천)
+    # G9 연도 간 대사 — 재표시는 회사 사실이라 통과 판정에 미관여(표면화만).
+    g9 = yoy_tieout(db, _db_path(corp_code, str(int(year) - 1)))
 
     # G6 dump 파일 기록(G1이 받아온 전문 재사용 — _p1_company_review 이중 실행 안 함)
     DUMP_DIR.mkdir(parents=True, exist_ok=True)
@@ -301,6 +304,7 @@ def run_gate(corp_code: str, year: str) -> dict:
         "G6_dump": g6,
         "G7_identities": g7,
         "G8_quality": g8,
+        "G9_yoy": g9,
     }
 
 
@@ -385,6 +389,21 @@ def _print_report(report: dict) -> None:
         print(f"  ⛔ {b}")
     for w in g8["warnings"]:
         print(f"  ⚠ {w}")
+
+    g9 = report["G9_yoy"]
+    if g9["available"]:
+        print(
+            f"\n[G9 연도 간 대사] (표면화 전용 — 재표시는 회사 사실이라 차단 안 함) "
+            f"대사 {g9['compared']}건: 일치 {g9['match']} · 표기변경 {g9['presentation']} · "
+            f"재표시 후보 {len(g9['restated'])}"
+        )
+        for r in g9["restated"][:5]:
+            print(
+                f"  · {r['fs_div']:3} {r['sj_div']:3} {r['canonical'][:20]:22} "
+                f"작년DB {r['prior_db']:+,.0f} vs 올해보고 전기 {r['current_prior']:+,.0f}"
+            )
+    else:
+        print("\n[G9 연도 간 대사] 대사 불가 — 직전 연도 정규화 DB 없음")
 
     g6 = report["G6_dump"]
     print("\n[G6 dump] (LLM 통독 입력, 실제 호출은 R4)")
