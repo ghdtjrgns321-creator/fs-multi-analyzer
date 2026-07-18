@@ -49,16 +49,32 @@ def occurrence_state(ts: dict[int, float], target_year: int) -> str:
     return "disappeared" if prior_nonzero else "present"
 
 
-def sce_occurrence_states(window_rows: list[dict], target_year: int) -> dict[tuple[str, str], str]:
-    """SCE 변동종류(change_canonical)별 신규/소멸 상태(사각#2·D18).
+def sce_change_identity(row: dict) -> str:
+    """SCE 변동종류의 정체성 이름 — 미매핑 강등행은 원문 라벨이 정체성이다.
 
-    정체성=표준 변동라벨. leaf(component·차원)는 연도간 불안정해 안 쓰고, (fs_div, change_canonical)
-    층위로 구성요소 abs금액을 연도별 합산해 occurrence_state를 판정한다. 자기주식취득이 올해만 있으면
-    appeared → LLM이 '올해 신규 자본거래'로 본다."""
+    미매핑이면 canonical이 '기타 중요 계정' 상수로 덮여, 서로 다른 자본거래(자기주식 매입·
+    주식선택권 행사·신종자본증권 재분류 등)가 한 이름으로 병합된다 → LLM은 무슨 거래인지 모르고
+    occurrence 판정도 뒤섞인다. universal.py의 미매핑=label 규칙과 동일하게 라벨로 복원한다."""
+
+    from src.normalize.mapper import OTHER_CANONICAL, UNMAPPED
+
+    canonical = str(row.get("change_canonical") or "").strip()
+    if canonical and canonical != OTHER_CANONICAL and row.get("change_status") != UNMAPPED:
+        return canonical
+    return str(row.get("change_label") or canonical or "").strip()
+
+
+def sce_occurrence_states(window_rows: list[dict], target_year: int) -> dict[tuple[str, str], str]:
+    """SCE 변동종류(change 정체성)별 신규/소멸 상태(사각#2·D18).
+
+    정체성=표준 변동라벨(미매핑은 원문 라벨 — sce_change_identity). leaf(component·차원)는
+    연도간 불안정해 안 쓰고, (fs_div, change) 층위로 구성요소 abs금액을 연도별 합산해
+    occurrence_state를 판정한다. 자기주식취득이 올해만 있으면 appeared → LLM이 '올해 신규
+    자본거래'로 본다."""
 
     series: dict[tuple[str, str], dict[int, float]] = {}
     for row in window_rows or []:
-        change = str(row.get("change_canonical") or row.get("change_label") or "").strip()
+        change = sce_change_identity(row)
         if not change:
             continue
         fs = str(row.get("fs_div", ""))

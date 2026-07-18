@@ -56,10 +56,10 @@ def analysis_window(target: int, span: int = 5) -> list[int]:
 
 
 def visible_stages(is_prepared: bool) -> dict[str, bool]:
-    """화면 단계 노출 판정(순수). 미준비→준비만. 준비완료→온보딩(선택)+분석(의심건 카드).
+    """화면 단계 노출 판정(순수). 미준비→준비만. 준비완료→LLM 전처리+분석(의심건 카드).
 
     phase1 결정론 지표(검토큐·비율)는 UI에 표시하지 않는다(내부 중간산출물 — 추후 별도 탭 그래프).
-    분석 = 내부에서 phase1 계산 후 phase2 카드 생성. 순서: 온보딩 → phase1 → phase2.
+    분석 = 내부에서 phase1 계산 후 phase2 카드 생성. 순서: LLM 전처리 → phase1 → phase2.
     """
 
     return {
@@ -156,7 +156,7 @@ def _run_prepare(corp_code: str, corp_name: str, target_year: int, window: list[
     else:
         st.error(
             "온보딩 게이트 미통과 — 정규화 이탈이 있습니다. "
-            "온보딩 페이지에서 quirk 교정 후 재시도하세요."
+            "정비 페이지(dashboard/onboarding.py 단독 실행)에서 quirk 교정 후 재시도하세요."
         )
         gate = result.get("gate") or {}
         st.json({k: gate.get(k) for k in ("gate_passed", "G1_machine", "G3_arithmetic")})
@@ -202,7 +202,7 @@ def _run_analysis(corp_code: str, corp_name: str, year: int, window: list[int], 
         progress.empty()
         st.session_state["rv_analysis_key"] = key
         st.session_state.pop("rv_cards_saved_at", None)  # 방금 실행 — '저장본 표시' 캡션 잔상 제거
-        # 영속화 — 세션이 끊겨도 LLM 재실행 없이 다시 본다(비용 방지, 온보딩 마커와 동일 원칙).
+        # 영속화 — 세션이 끊겨도 LLM 재실행 없이 다시 본다(비용 방지, 전처리 마커와 동일 원칙).
         from src.report.cards_store import save_cards
 
         save_cards(
@@ -217,12 +217,12 @@ def _run_analysis(corp_code: str, corp_name: str, year: int, window: list[int], 
 
 
 def _run_onboarding(corp_code: str, year: int, key: str) -> None:
-    """온보딩 실행 + 완료 마커 영속(재실행 방지). API 키 없으면 안내만."""
+    """LLM 전처리 실행 + 완료 마커 영속(재실행 방지). API 키 없으면 안내만."""
 
     from config.settings import settings
 
     if not settings.openai_api_key:
-        st.info("OPENAI_API_KEY 미설정 — 온보딩 생략. .env 설정 후 재실행.")
+        st.info("OPENAI_API_KEY 미설정 — LLM 전처리 생략. .env 설정 후 재실행.")
         return
     import time
 
@@ -243,29 +243,35 @@ def _run_onboarding(corp_code: str, year: int, key: str) -> None:
     progress.empty()
     st.session_state["rv_onboarding"] = result
     st.session_state["rv_onboarding_key"] = key
-    extracts = (result.get("layer1") or {}).get("extracts", []) or []
+    layer1 = result.get("layer1") or {}
+    # 실패·미실행에 완료 마커를 쓰면 "✅ 전처리 완료"로 굳어 영영 재실행을 안 묻는다
+    # (셀트리온 2019가 이 경로로 서술 추출 없이 몇 주간 분석됨). 완주(ok/empty)만 완료다.
+    if layer1.get("status") not in ("ok", "empty"):
+        st.error(f"본문 통독 실패 — 완료 처리하지 않음. {layer1.get('message', '')}")
+        return
+    extracts = layer1.get("extracts", []) or []
     write_onboarding_marker(corp_code, year, chunks=len(extracts))
-    # 완료 마커를 쓴 뒤 페이지를 다시 그려 "✅ 온보딩 완료" 배지가 뜨게 한다
+    # 완료 마커를 쓴 뒤 페이지를 다시 그려 "✅ 전처리 완료" 배지가 뜨게 한다
     # (prepare_company 후 st.rerun 패턴과 동일 — 미호출 시 실행 전 버튼 상태가 잔존).
     st.rerun()
 
 
 def _render_onboarding_llm(corp_code: str, year: int, key: str) -> None:
-    """① 온보딩 — LLM 사전 검토. 이미 완료(마커)면 재실행을 요구하지 않는다."""
+    """① LLM 전처리 — 이미 완료(마커)면 재실행을 요구하지 않는다."""
 
     from src.report.prep import onboarding_done
 
-    st.markdown("##### 온보딩 - 데이터 전처리")
+    st.markdown("##### LLM 전처리")
     if onboarding_done(corp_code, year):
-        st.caption("✅ 온보딩 완료")
-        if st.button("온보딩 다시 실행"):
+        st.caption("✅ 전처리 완료")
+        if st.button("전처리 다시 실행"):
             _run_onboarding(corp_code, year, key)
     else:
         st.caption(
             "분석 전 LLM이 표준분류가 안된 계정 이름을 자동 보정하고(확실한 것만), "
             "본문을 파트별로 읽어 서술형 감사관심을 추출합니다."
         )
-        if st.button("온보딩 실행"):
+        if st.button("전처리 실행"):
             _run_onboarding(corp_code, year, key)
 
 
@@ -334,7 +340,7 @@ def _render_uncollected(corp_code: str, corp_name: str) -> None:
 
 
 def render() -> None:
-    """분석 리포트 페이지 — 검색 → 상태판정 → 준비 → 온보딩(선택) → 의심건 카드(내부 P1→P2)."""
+    """분석 리포트 페이지 — 검색 → 상태판정 → 준비 → LLM 전처리 → 의심건 카드(내부 P1→P2)."""
 
     inject_css()
     st.title("FS Multi-agents analyzer")
@@ -394,10 +400,10 @@ def render() -> None:
             _run_prepare(corp_code, corp_name, selected_year, window)
         return
 
-    # 준비완료 배너는 생략(중복 — 아래 온보딩 섹션 노출 자체가 준비됨 신호, 연도는 드롭다운에 있음).
-    # 순서: ① 온보딩 → ② 의심건 카드. 온보딩 완료 전에는 카드 단계를 열지 않는다(안내도 생략).
+    # 준비완료 배너는 생략(중복 — 아래 전처리 섹션 노출 자체가 준비됨 신호, 연도는 드롭다운에 있음).
+    # 순서: ① LLM 전처리 → ② 의심건 카드. 전처리 완료 전에는 카드 단계를 열지 않는다(안내도 생략).
     _render_onboarding_llm(corp_code, selected_year, key)
-    # 온보딩 완료(영속 마커) 또는 이번 세션 실행이면 카드 단계를 연다.
+    # 전처리 완료(영속 마커) 또는 이번 세션 실행이면 카드 단계를 연다.
     onboarded = onboarding_done(corp_code, selected_year) or (
         st.session_state.get("rv_onboarding_key") == key
     )

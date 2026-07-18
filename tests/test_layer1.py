@@ -75,7 +75,9 @@ def test_estimate_krw_matches_assumed_pricing():
     assert estimate_krw(1_000_000, 0) == 3450.0
 
 
-def test_run_layer1_graceful_when_reader_skipped(monkeypatch, tmp_path):
+def test_run_layer1_all_skipped_is_not_ok(monkeypatch, tmp_path):
+    """전 파트 미실행(무키)은 "추출 0건"이 아니다 — status로 구분해 override 경고를 태운다."""
+
     def skipped_reader(part, focus, model_name=None):
         return {"status": "skipped", "output": None, "message": "무키"}
 
@@ -83,10 +85,60 @@ def test_run_layer1_graceful_when_reader_skipped(monkeypatch, tmp_path):
 
     result = layer1.run_layer1("00126380", 2024, parts=_parts(), data_dir=tmp_path)
 
-    assert result["status"] == "ok"
+    assert result["status"] == "skipped"
     assert result["extracts"] == []
-    # 서술 파트는 per_part에 skipped로 기록(III 제외)
     statuses = {p["part"]: p["status"] for p in result["per_part"]}
     assert statuses == {"II": "skipped", "XI": "skipped"}
-    # 0추출이므로 완결성 경고 발생(section_coverage)
+    # 미실행은 저장하지 않는다 — 빈 테이블이 "실행됐고 0건"으로 위장하는 것 차단
+    assert read_report_extracts("00126380", 2024, data_dir=tmp_path) == []
+
+
+def test_run_layer1_all_errors_is_error_and_preserves_prior_extracts(monkeypatch, tmp_path):
+    """전 파트 LLM 실패는 status=error — "0건"으로 위장 금지 + 이전 정상 추출분 보존.
+
+    셀트리온 2019 오진의 재발 방지: 실패 실행이 빈 replace로 기존 데이터를 덮으면
+    다음 세션엔 재조사할 증거가 없다."""
+
+    def ok_reader(part, focus, model_name=None):
+        out = ReaderOutput(
+            items=[
+                ExtractedItem(
+                    part=part.numeral,
+                    label="소송",
+                    statement="손해배상 청구",
+                    evidence="XI.1",
+                    why_relevant="우발부채",
+                )
+            ]
+        )
+        return {"status": "ok", "output": out, "usage": {"input_tokens": 10, "output_tokens": 2}}
+
+    monkeypatch.setattr(layer1, "run_reader", ok_reader)
+    layer1.run_layer1("00126380", 2024, parts=_parts(), data_dir=tmp_path)
+    assert len(read_report_extracts("00126380", 2024, data_dir=tmp_path)) == 2
+
+    def error_reader(part, focus, model_name=None):
+        return {"status": "error", "output": None, "message": "TimeoutError: ..."}
+
+    monkeypatch.setattr(layer1, "run_reader", error_reader)
+    result = layer1.run_layer1("00126380", 2024, parts=_parts(), data_dir=tmp_path)
+
+    assert result["status"] == "error"
+    assert "실행 실패" in result["message"]
+    # 이전 정상 추출 2건이 빈 테이블로 덮이지 않았다
+    assert len(read_report_extracts("00126380", 2024, data_dir=tmp_path)) == 2
+
+
+def test_run_layer1_completed_zero_items_is_empty(monkeypatch, tmp_path):
+    """리더가 정상 완주했는데 0건이면 "empty" — 대형사에서 감사관심 0건은 그 자체가 이상 신호."""
+
+    def empty_reader(part, focus, model_name=None):
+        return {"status": "ok", "output": ReaderOutput(items=[]), "usage": {}}
+
+    monkeypatch.setattr(layer1, "run_reader", empty_reader)
+    result = layer1.run_layer1("00126380", 2024, parts=_parts(), data_dir=tmp_path)
+
+    assert result["status"] == "empty"
+    # 완주했으므로 저장은 수행(빈 테이블 = "실행됐고 진짜 0건"의 증거)
+    assert read_report_extracts("00126380", 2024, data_dir=tmp_path) == []
     assert any(w["anchor"] == "section_coverage" for w in result["warnings"])

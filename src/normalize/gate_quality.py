@@ -99,6 +99,33 @@ def sign_anomalies(con: duckdb.DuckDBPyConnection) -> list[dict]:
     return [{"fs_div": str(f), "canonical": str(c), "amount": float(a)} for f, c, a in rows]
 
 
+def sce_2d_quality(con: duckdb.DuckDBPyConnection) -> dict | None:
+    """자본변동표 품질 — 분석이 실제로 쓰는 2D 테이블(sce_equity_components) 기준.
+
+    normalized_financials의 SCE 행은 분석 경로가 아니다(커버리지 원장이 'SCE 2D가 상위 포함'으로
+    제외) — 거기서 재면 미매핑이 2~3배 부풀거나 완전한 거짓 경고가 난다(2026-07-18 실측:
+    0%짜리 회사가 88%로 보고됨). 미매핑 자본거래는 원문 라벨로 복원돼 흐르므로(sce_change_identity)
+    분석 손실이 아니라 '표준분류 밖' 표시다."""
+
+    exists = con.execute(
+        "SELECT 1 FROM information_schema.tables WHERE table_name = 'sce_equity_components'"
+    ).fetchone()
+    if not exists:
+        return None
+    rows = con.execute(
+        "SELECT change_status, COUNT(DISTINCT change_label) FROM sce_equity_components "
+        "GROUP BY change_status"
+    ).fetchall()
+    by_status = {str(s): int(n) for s, n in rows}
+    total = sum(by_status.values())
+    unmapped = by_status.get(UNMAPPED_STATUS, 0)
+    return {
+        "changes_total": total,
+        "changes_unmapped": unmapped,
+        "share": (unmapped / total) if total else None,
+    }
+
+
 def source_loaded(con: duckdb.DuckDBPyConnection) -> dict:
     """숫자 아닌 원천이 실제로 들어왔나 — 주석 XBRL·사업보고서 서술 추출 행 수."""
 
@@ -131,6 +158,7 @@ def quality_report(db: Path) -> dict:
         coverage = statement_coverage(con)
         signs = sign_anomalies(con)
         sources = source_loaded(con)
+        sce = sce_2d_quality(con)
         conflicts = int(
             _scalar(
                 con,
@@ -156,11 +184,18 @@ def quality_report(db: Path) -> dict:
     if conflicts:
         warnings.append(f"ID-한글명 충돌 {conflicts}행 — ID 채택, 충돌 기록 보존")
     for sj, stat in sorted(unmapped["by_statement"].items()):
+        if sj == "SCE":
+            continue  # 분석 경로가 아닌 표 — 2D 테이블 기준(sce_2d_quality)으로 따로 잰다
         share = stat["share"]
         if share is not None and share > STATEMENT_UNMAPPED_WARN:
             warnings.append(
                 f"{sj} 미매핑 {stat['unmapped']}/{stat['rows']}행({share:.0%}) — 이 표는 절반 이상 못 읽었다"
             )
+    if sce and sce["share"] is not None and sce["share"] > STATEMENT_UNMAPPED_WARN:
+        warnings.append(
+            f"자본변동표 거래 {sce['changes_unmapped']}/{sce['changes_total']}종이 표준분류 밖"
+            f"({sce['share']:.0%}) — 원문 라벨로 분석엔 흐르나 표준 비교는 불가"
+        )
     if coverage["missing"]:
         warnings.append(f"미적재 표 {coverage['missing']}")
     if sources["note_empty"]:
@@ -177,4 +212,5 @@ def quality_report(db: Path) -> dict:
         "coverage": coverage,
         "sign_anomalies": signs,
         "sources": sources,
+        "sce_2d": sce,
     }

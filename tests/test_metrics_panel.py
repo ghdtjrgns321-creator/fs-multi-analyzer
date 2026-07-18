@@ -194,3 +194,54 @@ def test_zero_asset_delta_is_zero():
     rows = [_row("매출", "IS", 2023, 1_000_000), _row("매출", "IS", 2024, 2_000_000)]
     panel = account_metrics_panel(rows, 0.0, 2024)
     assert panel[0]["delta_over_assets"] == 0.0
+
+
+# ── SCE 미매핑 정체성 복원(자본거래 병합 버그) ──────────────────────────────
+def test_sce_change_identity_unmapped_uses_label():
+    """미매핑 강등행은 canonical이 '기타 중요 계정' 상수 — 원문 라벨이 정체성이다."""
+
+    from src.signals.metrics_panel import sce_change_identity
+
+    unmapped = {
+        "change_canonical": "기타 중요 계정",
+        "change_label": "자기주식 매입",
+        "change_status": "unmapped_extension_account",
+    }
+    mapped = {
+        "change_canonical": "자기주식변동",
+        "change_label": "자기주식매입",
+        "change_status": "exact_taxonomy_match",
+    }
+    assert sce_change_identity(unmapped) == "자기주식 매입"
+    assert sce_change_identity(mapped) == "자기주식변동"
+
+
+def test_sce_occurrence_not_merged_across_unmapped_transactions():
+    """서로 다른 미매핑 자본거래가 한 키로 병합되면 신규/소멸 신호가 뒤섞인다.
+
+    작년 전환사채 상환 + 올해 자기주식 매입(둘 다 미매핑)일 때, 병합되면 '계속 있음'으로
+    둔갑해 자기주식 appeared 신호가 죽는다 — 거래별로 갈라져야 한다."""
+
+    from src.signals.metrics_panel import sce_occurrence_states
+
+    window = [
+        {
+            "fs_div": "CFS",
+            "year": 2023,
+            "amount": 100.0,
+            "change_canonical": "기타 중요 계정",
+            "change_label": "전환사채의 조기상환",
+            "change_status": "unmapped_extension_account",
+        },
+        {
+            "fs_div": "CFS",
+            "year": 2024,
+            "amount": 582.0,
+            "change_canonical": "기타 중요 계정",
+            "change_label": "자기주식 매입",
+            "change_status": "unmapped_extension_account",
+        },
+    ]
+    states = sce_occurrence_states(window, 2024)
+    assert states[("CFS", "자기주식 매입")] == "appeared"
+    assert states[("CFS", "전환사채의 조기상환")] == "disappeared"

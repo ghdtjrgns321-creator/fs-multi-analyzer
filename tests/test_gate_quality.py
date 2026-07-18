@@ -87,9 +87,44 @@ def test_small_unmapped_warns_but_passes(tmp_path):
 def test_statement_level_unmapped_share_warns(tmp_path):
     """금액이 작아도 한 표의 절반 이상이 미매핑이면 그 표를 못 읽은 것 — 표별로 경고."""
 
-    rows = [*HEALTHY] + [("SCE", f"자본변동{i}", 1 * B, UNMAPPED) for i in range(3)]
+    rows = [*HEALTHY] + [("CF", f"현금흐름{i}", 1 * B, UNMAPPED) for i in range(3)]
     report = quality_report(_make_db(tmp_path, rows))
-    assert any("SCE 미매핑" in w for w in report["warnings"])
+    assert any("CF 미매핑" in w for w in report["warnings"])
+
+
+def test_sce_measured_on_2d_table_not_body_rows(tmp_path):
+    """자본변동표는 분석이 쓰는 2D 테이블 기준 — 본문 SCE 행으로 재면 거짓 경고가 난다.
+
+    본문 SCE 행이 전부 미매핑이어도(안 쓰는 표), 2D 테이블이 전부 매핑이면 경고 없어야 한다."""
+
+    rows = [*HEALTHY] + [("SCE", f"자본변동{i}", 1 * B, UNMAPPED) for i in range(3)]
+    db = _make_db(tmp_path, rows)
+    with duckdb.connect(str(db)) as con:
+        con.execute(
+            "CREATE TABLE sce_equity_components (change_label VARCHAR, change_status VARCHAR)"
+        )
+        con.execute("INSERT INTO sce_equity_components VALUES ('배당', 'exact_taxonomy_match')")
+    report = quality_report(db)
+    assert not any("자본변동표" in w or "SCE" in w for w in report["warnings"])
+    assert report["sce_2d"]["share"] == 0.0
+
+
+def test_sce_2d_unmapped_majority_warns(tmp_path):
+    """2D 테이블 기준으로 자본거래 절반 이상이 표준분류 밖이면 경고(원문 라벨로는 흐름)."""
+
+    db = _make_db(tmp_path, HEALTHY)
+    with duckdb.connect(str(db)) as con:
+        con.execute(
+            "CREATE TABLE sce_equity_components (change_label VARCHAR, change_status VARCHAR)"
+        )
+        for label, status in [
+            ("자기주식 매입", UNMAPPED),
+            ("전환사채의 조기상환", UNMAPPED),
+            ("배당", "exact_taxonomy_match"),
+        ]:
+            con.execute("INSERT INTO sce_equity_components VALUES (?, ?)", [label, status])
+    report = quality_report(db)
+    assert any("표준분류 밖" in w for w in report["warnings"])
 
 
 def test_conflict_rows_warn(tmp_path):

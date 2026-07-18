@@ -29,7 +29,11 @@ from src.report.integrated import (
 )
 from src.report.series_normalize import normalize_presentation
 from src.schemas.findings import AccountFinding
-from src.signals.metrics_panel import account_metrics_panel, sce_occurrence_states
+from src.signals.metrics_panel import (
+    account_metrics_panel,
+    sce_change_identity,
+    sce_occurrence_states,
+)
 from src.signals.mvp1 import build_mvp1_signal_report
 from src.signals.ratios import build_ratio_report, load_ratio_config
 from src.signals.red_flags import extract_red_flags
@@ -350,7 +354,8 @@ def _compact_sce_cells(
         if amount is None:
             continue
         fs = str(cell.get("fs_div", ""))
-        change = str(cell.get("change_canonical") or cell.get("change_label") or "")
+        # 미매핑 강등행은 canonical이 '기타 중요 계정' 상수라 라벨로 복원해야 거래가 식별된다.
+        change = sce_change_identity(cell)
         present_keys.add((fs, change))
         compact.append(
             {

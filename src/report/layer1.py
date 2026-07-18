@@ -90,6 +90,25 @@ def run_layer1(
             on_progress({"done": done, "total": total, "numeral": part.numeral, "status": status})
 
     elapsed_s = round(time.perf_counter() - started, 1)
+
+    # 전 파트 미완주 = "추출 0건"이 아니다(§9 — 실패·미실행을 빈 결과로 둔갑 금지).
+    # 저장도 하지 않는다: 빈 replace가 이전 정상 추출분을 덮어쓰는 것을 막는다.
+    # (셀트리온 2019가 이 위장 때문에 몇 주간 "0건"으로 오진됐다 — 실제로는 저장 미도달.)
+    ok_parts = [p for p in per_part if p["status"] == "ok"]
+    if narrative and not ok_parts:
+        any_error = any(p["status"] == "error" for p in per_part)
+        reasons = "; ".join(f"[{p['part']}] {p['message']}" for p in per_part[:3])
+        head = "전부 실패 — 추출 0건이 아니라 실행 실패" if any_error else "전부 미실행(키 없음)"
+        return {
+            "status": "error" if any_error else "skipped",
+            "extracts": [],
+            "warnings": [],
+            "usage": {"input_tokens": in_tok, "output_tokens": out_tok},
+            "per_part": per_part,
+            "elapsed_s": elapsed_s,
+            "message": f"서술 파트 {total}개 {head}. {reasons}",
+        }
+
     write_report_extracts(items, corp_code, year, data_dir=data_dir)
     warnings = completeness_warnings(parts, items)
 
@@ -106,12 +125,15 @@ def run_layer1(
         elapsed_s,
     )
 
+    # 리더가 정상 완주했는데 0건이면 "empty" — 대형 상장사 사업보고서에서 감사관심 0건은
+    # 그 자체가 이상 신호라, "ok"와 구분해 needs_override 경고를 태운다(onboarding.can_enter_analysis).
+    failed = [p for p in per_part if p["status"] == "error"]
     return {
-        "status": "ok",
+        "status": "ok" if items else "empty",
         "extracts": items,
         "warnings": warnings,
         "usage": {"input_tokens": in_tok, "output_tokens": out_tok},
         "per_part": per_part,
         "elapsed_s": elapsed_s,
-        "message": "",
+        "message": f"일부 파트 실패 {len(failed)}/{total}" if failed else "",
     }
