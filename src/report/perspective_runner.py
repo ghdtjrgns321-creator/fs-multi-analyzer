@@ -117,9 +117,16 @@ async def run_structured_perspective(
             ),
             timeout=settings.openai_timeout_seconds,
         )
-    except Exception:
+    except Exception as exc:
         # LLM 호출 실패(quota·타임아웃·에러)는 deferred(의도적 건너뜀)와 구분해 failed로.
         # deferred로 묻으면 0건이 "위험 후보 없음"으로 둔갑한다(hollow-PASS).
+        # 사유는 로그로 남긴다 — 429(한도 소진)가 화면에 '0건'으로만 보여 원인 추적이
+        # 막히던 실사례(2026-07-18). 예외를 무언으로 삼키지 않는다(§9).
+        import logging
+
+        logging.getLogger(__name__).warning(
+            "관점 %s 실패: %s: %s", perspective, type(exc).__name__, str(exc)[:300]
+        )
         return PerspectiveOutput(status="failed")
     # 코드가 perspective 재주입(LLM이 자기 관점을 잘못 라벨링하는 것 차단).
     stamped = [item.model_copy(update={"perspective": perspective}) for item in output.suspicions]

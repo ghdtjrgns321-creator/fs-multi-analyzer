@@ -103,3 +103,45 @@ def test_load_corrupt_json_returns_none(tmp_path: Path) -> None:
     path.parent.mkdir(parents=True)
     path.write_text("{broken json", encoding="utf-8")
     assert load_cards("00000001", 2024, root=tmp_path) is None
+
+
+def test_save_refuses_empty_result_from_failed_perspectives(tmp_path):
+    """관점 실패로 빈손이면 저장 거부 — 이전 정상 카드를 빈 파일로 덮는 사고 방지(429 실사례)."""
+
+    from src.report.cards_store import load_cards, save_cards
+
+    good = {
+        "account_cards": [{"account": "CFS:재고자산"}],
+        "relationship_cards": [],
+        "company_cards": [],
+        "review_scope": {"perspectives_run": 5, "perspectives_failed": 0},
+        "has_findings": True,
+    }
+    assert save_cards("00000001", 2024, good, [], 2024, root=tmp_path) is not None
+
+    failed_empty = {
+        "account_cards": [],
+        "relationship_cards": [],
+        "company_cards": [],
+        "review_scope": {"perspectives_run": 0, "perspectives_failed": 5},
+        "has_findings": False,
+    }
+    assert save_cards("00000001", 2024, failed_empty, [], 2024, root=tmp_path) is None
+    # 이전 정상 저장분이 보존됐다
+    loaded = load_cards("00000001", 2024, root=tmp_path)
+    assert loaded is not None and len(loaded["account_cards"]) == 1
+
+
+def test_save_allows_genuine_zero_findings(tmp_path):
+    """전 관점 완주 후 진짜 0건은 저장한다 — '실행됐고 0건'의 증거."""
+
+    from src.report.cards_store import save_cards
+
+    clean = {
+        "account_cards": [],
+        "relationship_cards": [],
+        "company_cards": [],
+        "review_scope": {"perspectives_run": 5, "perspectives_failed": 0},
+        "has_findings": False,
+    }
+    assert save_cards("00000002", 2024, clean, [], 2024, root=tmp_path) is not None

@@ -28,8 +28,19 @@ def save_cards(
     series_rows: list[dict],
     target_year: object,
     root: Path | None = None,
-) -> Path:
-    """카드 결과 스냅샷 저장. AccountFinding은 model_dump로 직렬화(렌더러는 dict도 읽음)."""
+) -> Path | None:
+    """카드 결과 스냅샷 저장. AccountFinding은 model_dump로 직렬화(렌더러는 dict도 읽음).
+
+    관점이 하나라도 실패했는데 카드가 0장이면 저장하지 않고 None을 반환한다 — 실패 실행의
+    빈 결과가 이전 정상 카드를 덮어쓰는 사고 방지(2026-07-18 실측: OpenAI 한도 소진으로
+    5관점 전멸한 실행이 정상 카드 24장을 빈 파일로 파괴). 전 관점 완주 후 진짜 0건은 저장한다.
+    """
+
+    total_cards = sum(len(card_result.get(section) or []) for section in _CARD_SECTIONS)
+    scope = card_result.get("review_scope") or {}
+    failed = int(scope.get("perspectives_failed") or 0) if isinstance(scope, dict) else 0
+    if total_cards == 0 and failed > 0:
+        return None
 
     payload = {
         "created_at": datetime.now(UTC).isoformat(),
