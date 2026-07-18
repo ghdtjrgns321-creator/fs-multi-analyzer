@@ -41,14 +41,15 @@
 L0   수집        OpenDART: 재무제표 JSON + 주석 XBRL(TSV) + 사업보고서 원문 XML
 L1   정규화      XBRL 계정 → canonical account tree (약 2,015종) + mapping confidence
 L1.5 주석 인덱서  주석 → 섹션 분류 + 전기/당기 정렬 + note diff + 계정↔섹션 매핑
-     [온보딩 게이트]  G1~G5·통화 결정론 검문(+G6 LLM용 dump) + 별칭 3단 분업(코드→LLM→사람) — L1→L2 관문
+     [온보딩 게이트]  G1~G8·통화 결정론 검문(+G6 dump) — L1→L2 관문, UI "분석 준비"가 자동 실행
+     [LLM 전처리]  별칭 자동 보정(코드 후보→LLM 선택→신뢰도≥0.7만 자동 등록) + 본문 통독 서술추출 — 카드 단계 진입 조건
 L2   신호엔진    결정론: materiality + 관계사슬 + QoE + 변화 + 변동분해 + 커버리지 원장
 L3   역할에이전트 LLM 5관점(발견) — 수치·주석·흐름·추세·동종. tool DSL·EvidenceRef
 L4   리포트      의심건 카드(근거·반박·조사·외부검증·다음절차) 종합
 L5   Human       검토 큐로 카드 게시 — 감사인이 검토 (review queue 철학)
 ```
 
-L1.5와 L2가 토대다. 나머지 레이어는 모두 이 출력에 얹힌다. 이후 이 도구는 **전처리 엔진**(온보딩+Phase1)을 2-Layer(리더=읽기 / 분석가=판단)로 재정의했다(DISCLOSURE_DECOMPOSITION_DESIGN, 10장 참조).
+L1.5와 L2가 토대다. 나머지 레이어는 모두 이 출력에 얹힌다. 이후 이 도구는 **전처리 엔진**(LLM 전처리+Phase1)을 2-Layer(리더=읽기 / 분석가=판단)로 재정의했다(DISCLOSURE_DECOMPOSITION_DESIGN, 10장 참조).
 
 ## 1.5 기술 스택
 
@@ -56,7 +57,7 @@ L1.5와 L2가 토대다. 나머지 레이어는 모두 이 출력에 얹힌다. 
 | ----------- | -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
 | 언어/패키지 | Python 3.11+ · uv (dependency-groups)                                                                                | core/agent/dashboard/dev 4그룹                               |
 | 에이전트    | PydanticAI + 순수 Python async                                                                                       | 구조화 출력=환각 방지. 고정 순서 1회라 프레임워크 불필요(D2) |
-| LLM         | OpenAI **gpt-5.4**(발견 5관점·반박·온보딩) · Google **gemini-2.5-flash**(내부)/**gemini-3.1-pro-preview**(외부 검색) | D16: 2026 금융환각벤치 GPT-5.4만 통과                        |
+| LLM         | OpenAI **gpt-5.4**(발견 5관점·반박·전처리) · Google **gemini-2.5-flash**(내부)/**gemini-3.1-pro-preview**(외부 검색) | D16: 2026 금융환각벤치 GPT-5.4만 통과                        |
 | DB          | DuckDB (회사/연도 격리)                                                                                              | `data/companies/{corp}/{year}/analysis.duckdb`               |
 | 데이터      | OpenDART (재무제표 JSON + 주석 XBRL) · Arelle(XBRL 정규화) · OpenDartReader(수집)                                    |                                                              |
 | 검증        | Pandera (L1 구조 스키마) · pytest (tests + golden)                                                                   | 금액은 round 후 비교(amount_round_digits=0)                  |

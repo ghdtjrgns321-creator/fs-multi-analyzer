@@ -1,13 +1,13 @@
 # 3. L0 수집 · L1 정규화 · 온보딩 게이트 (계산 레이어)
 
-> **위치**: `[L0 수집] → [L1 정규화] → [온보딩 게이트]` → L2 신호엔진. 이 세 레이어에는 **LLM 호출이 전혀 없다** — 전부 결정론 코드(수집·매핑·검산). LLM은 게이트의 별칭 제안(코드가 좁힌 후보 안에서만)에서만 관여한다 — G6 통독은 LLM 입력 dump 생성까지 구현돼 있고 실제 호출은 R4 예정이다.
+> **위치**: `[L0 수집] → [L1 정규화] → [온보딩 게이트]` → LLM 전처리 → L2 신호엔진. 이 세 레이어에는 **LLM 호출이 전혀 없다** — 전부 결정론 코드(수집·매핑·검산)이며, 게이트는 UI "분석 준비"가 정규화 직후 자동 실행한다. LLM은 게이트 통과 뒤의 LLM 전처리(별칭 제안 — 코드가 좁힌 후보 안에서만 — 과 사업보고서 본문 통독)에서만 관여한다. G6 dump는 점검용 산출로 계속 생성되지만 이를 통독하는 LLM은 배선돼 있지 않다.
 
 ## 3.1 내부 흐름
 
 ```
 raw OpenDART               L1 정규화                      온보딩 게이트
 finstate JSON     ──→   validate(Pandera)          ──→   G1 완결성 + BS 항등식(tol 100만원)
-주석 XBRL zip           map_row (id-first)                G3 산술검산 + G5 신호 무결성
+주석 XBRL zip           map_row (id-first)                G3·G7 산술검산 + G5 무결성 + G8 품질
 사업보고서 XML          _arbitrate_conflicts               통화 KRW 검사(_currency_ok)
                        _rescue_cross_statement            G6 dump(LLM 통독 입력)
                        _dedupe (소실 대신 강등 보존)          │
@@ -15,7 +15,7 @@ finstate JSON     ──→   validate(Pandera)          ──→   G1 완결�
                        SCE 2D 별도(sce_balance)             │      코드 후보→LLM 선택→고신뢰 자동 등록(보류분만 사람 확인)
                             │                              │      quirk 재게이트
                             ▼                              ▼
-                  회사/연도 격리 DuckDB              gate_passed → L2 진입
+                  회사/연도 격리 DuckDB              gate_passed → LLM 전처리 → L2 진입
 ```
 
 ## 3.2 구조
@@ -26,7 +26,7 @@ finstate JSON     ──→   validate(Pandera)          ──→   G1 완결�
 | L1 정규화 모듈     | 12                                                                         | `src/normalize/`                   |
 | canonical 표준계정 | 약 2,015 (5표: BS/IS/CIS/CF/SCE)                                           | `config/canonical_accounts.yaml`   |
 | 매핑 상태 코드     | 6 (EXACT·ALIAS·UNMAPPED·ID_LABEL_CONFLICT·OTHER_CANONICAL·CROSS_STATEMENT) | `src/normalize/mapper.py:11-18`    |
-| 온보딩 게이트      | G1·G2·G3·G5·G6 + 통화                                                      | `src/normalize/onboarding_gate.py` |
+| 온보딩 게이트      | G1·G2·G3·G5·G6·G7·G8 + 통화                                                      | `src/normalize/onboarding_gate.py` |
 | 회계 항등식        | 3 (BS-BALANCE·ROLLFORWARD·CF-RECON)                                        | `config/playbooks/identities.yaml` |
 
 ## 3.3 L0 수집 — raw만 저장, 부재≠오류
@@ -68,22 +68,30 @@ member 셀 부호는 raw에 충실하게 보존한다 — grand이 진실이라 
 
 ## 3.5 온보딩 게이트 — 결정론 검문 + 별칭 3단 분업
 
-회사마다 라벨·확장계정이 무한 변주하므로, 처음 보는 회사는 정규화 직후 게이트를 거쳐야 L2에 진입한다. 게이트는 기존 감사 스크립트를 **재사용**(재구현 금지)한다.
+회사마다 라벨·확장계정이 무한 변주하므로, 처음 보는 회사는 정규화 직후 게이트를 거쳐야 L2에 진입한다. 이 검문은 UI "분석 준비"가 자동 실행하며(통과 연도만 준비완료), 별칭 3단 분업은 게이트와 별개로 LLM 전처리 단계에서 돈다. 게이트는 기존 감사 스크립트를 **재사용**(재구현 금지)한다.
 
-**통과 기준**(`onboarding_gate.py:275`):
+**통과 기준**(`onboarding_gate.py:run_gate`):
 ```
 gate_passed = G1 완결성 FAIL 0
             AND BS 항등식 잔차 ≤ BS_TOL(1,000,000원)
             AND G3 산술검산 경성위반 0
             AND G5 신호 dangling 0
             AND 통화 KRW
+            AND G7 소계·대사 차단위반 0
+            AND G8 번역품질 차단사유 0
 ```
 
-핵심은 **hollow-PASS(빈 검사가 통과로 둔갑) 차단**이다. `_g1_verdict`는 completeness=="OK"만으로 통과시키지 않는다 — `bs_residuals`가 실재해야 한다(**검산 0건이면 "검산 못함"이지 통과 아님** — BS 핵심행 결손 시 빈 검사가 통과로 둔갑하던 갭). SCE 전 행이 unmatched(표준화 사망)여도 통과 아니다.
+**G7 소계·대사**(`src/normalize/gate_identities.py`)는 검산 범위를 두 축으로 넓힌다. 표 안 소계 항등식 9종(자산·부채·자본총계의 구성 합, 순이익 귀속·계속/중단 분해, 총포괄손익·기타포괄손익 구성)과 **표 간 대사 4종**(재무상태표 현금 = 현금흐름표 기말현금, 재무상태표 자본총계·지배지분·이익잉여금 = 자본변동표 기말잔액)이다. 후자가 특히 강한 이유는 업종·부호 규약과 무관하기 때문이다 — 같은 값이 두 표에 적혀 있으면 반드시 일치해야 한다. 11장의 `id_label_conflict` 사고(발행사채 슬롯에 주식발행초과금 라벨 → 자본 1.4조 둔갑)가 부호·항등식 검사를 통과했던 것은 **그 표 안에서는 아귀가 맞았기 때문**이고, 표 간 대사는 그 유형을 겨냥한다. 회사 재량이 큰 식(영업이익 = 매출총이익 − 판관비, 표준형 92.1%)은 `blocking=False`로 기록만 한다.
+
+**G8 번역 품질**(`src/normalize/gate_quality.py`)은 게이트를 통과/실패 이진에서 품질 리포트로 바꾼다. 차단은 "분석이 성립하지 않는 상태"에만 건다 — 미매핑 금액이 자산의 20% 초과, 재무상태표·손익계산서 결손, 총계 계정 음수(부호 오적용). 나머지는 경고로 표면화한다: 표별 미매핑 비율, ID-라벨 충돌 행 수, 주석 XBRL·사업보고서 서술 추출 공백.
+
+핵심은 **hollow-PASS(빈 검사가 통과로 둔갑) 차단**이다. `_g1_verdict`는 completeness=="OK"만으로 통과시키지 않는다 — `bs_residuals`가 실재해야 한다(**검산 0건이면 "검산 못함"이지 통과 아님** — BS 핵심행 결손 시 빈 검사가 통과로 둔갑하던 갭). SCE 전 행이 unmatched(표준화 사망)여도 통과 아니다. 같은 규율이 G7에도 적용된다 — 구성요소 결측으로 전 항목이 SKIP되면 `executed=0`이 되고 `passed=False`로 떨어진다.
+
+준비완료 3개 회사연도(00356370/2025 · 00409681/2020 · 00413046/2019) 실측: G7 검산 **18~20건 실행 · 위반 0**. 같은 실행에서 G8 경고는 남았다 — 세 회사 모두 자본변동표 미매핑 비율이 **71~88%**였고(재무상태표 기준 금액 비중으로는 0%로 보이던 구간), 00413046은 사업보고서 서술 추출이 0건이었다. 차단 사유는 아니지만 "이 회사의 자본 흐름·서술형 공시는 읽지 못한 상태"가 게이트 리포트에 드러난다.
 
 `_currency_ok`(`onboarding_gate.py:220-229`)는 `{통화} - _NON_CURRENCY_UNITS`에 외화(USD 등)가 남으면 False다. 외화 재무를 원화 환산 없이 분석하면 환율(~1,300배) 오차가 항등식에 안 잡혀 silent 통과하기 때문이다. `_NON_CURRENCY_UNITS = {KRW, SHARES}` — SHARES(주당이익 단위)는 통화가 아니므로 차단하지 않는다(2026-07-14 수정, 11장 참조).
 
-**별칭 3단 분업**(원칙 1·4의 온보딩 적용)이 자동 오분류를 막는다:
+**별칭 3단 분업**(원칙 1·4의 적용)이 자동 오분류를 막는다:
 
 ```
 후보 검색 = 코드   candidate_canonicals: 같은 표에서 라벨 2-gram 유사도순 ≤12개
@@ -92,6 +100,8 @@ gate_passed = G1 완결성 FAIL 0
 ```
 
 `alias_suggest.py`의 `_anchor`(`:165-174`)는 LLM 제안이 candidate 밖이면 `NO_MATCH`로 강등하고 confidence=0을 준다. 초기 실험에서는 confidence가 회계 오답을 못 걸렀다(제조원가→매출원가 오답에 0.88 부여, ONBOARDING_LLM_PLAN) — 이후 회계힌트 라운드에서 고확신 오답이 해소된 뒤 임계(0.7) 기반 자동 등록으로 전환했고, 임계 미만·NO_MATCH 보류분에만 사람 확인이 남는다. 사람이 확정하면 `config/company_quirks.yaml`에 등록되고, `_apply_company_quirks`가 corp_code/year를 **데이터 키**로 그 회사·연도에만 적용한다(하드코딩 분기 아님, 매칭 없는 회사는 무변경).
+
+LLM 전처리는 별칭 자동 등록과 함께 사업보고서 본문을 파트별로 통독해 서술형 감사관심을 적재한다(주석 관점의 입력). 완료 마커가 카드 단계 진입 조건이며, 사람이 직접 등록하는 폼은 별도 정비 페이지에만 남아 있다(7장 §7.5).
 
 ## 3.6 실증 예시 — 진양(별도재무제표만 있는 회사)의 정규화
 

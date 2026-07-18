@@ -13,8 +13,13 @@
   G5 신호무결성 ← _f1_signal_dangling.py:collect_references/canonical_keys (Layer A, 전사 1회)
   G6 dump      ← _p1_company_review.py 전체 출력(LLM 통독 입력 — 실제 호출은 R4)
 
-통과기준(gate_passed): G1 완결성 FAIL 0 + BS 항등식 tol 이내 + G3 경성위반 0 + G5 dangling 0.
-G2 충돌·G6 dump는 보고용(최종 판정은 G6 LLM이 R4에서).
+  G7 소계·대사   ← src/normalize/gate_identities.py:identity_report (표 안 소계 항등식 +
+                  표 간 대사. 구성요소 결측은 SKIP, 검산 0건이면 '통과'가 아니라 '검산 못함')
+  G8 번역품질    ← src/normalize/gate_quality.py:quality_report (미매핑 비중·ID라벨 충돌·
+                  표 커버리지·총계 부호·원천 적재. 분석이 성립 안 하는 상태만 차단, 나머지는 경고)
+
+통과기준(gate_passed): G1 완결성 FAIL 0 + BS 항등식 tol 이내 + G3 경성위반 0 + G5 dangling 0
++ 통화 단일 + G7 차단위반 0 + G8 차단사유 0. G2 충돌·G6 dump는 보고용.
 
 실행: PYTHONPATH=. uv run python -m src.normalize.onboarding_gate <corp> <year>
 """
@@ -37,6 +42,8 @@ from data.backtest._f1_signal_dangling import (
 )
 from data.backtest._is_cf_arithmetic import check_company_year
 from src.normalize.config import load_canonical_accounts, normalize_label
+from src.normalize.gate_identities import identity_report
+from src.normalize.gate_quality import quality_report
 from src.normalize.mapper import AccountMapper
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -264,6 +271,8 @@ def run_gate(corp_code: str, year: str) -> dict:
     g3 = run_g3(corp_code, year)
     g5 = run_g5()
     currency = run_currency_check(corp_code, year)
+    g7 = identity_report(db)  # 소계 항등식 + 표 간 대사
+    g8 = quality_report(db)  # 번역 품질(미매핑·충돌·표 커버리지·부호·원천)
 
     # G6 dump 파일 기록(G1이 받아온 전문 재사용 — _p1_company_review 이중 실행 안 함)
     DUMP_DIR.mkdir(parents=True, exist_ok=True)
@@ -272,7 +281,14 @@ def run_gate(corp_code: str, year: str) -> dict:
     g6 = run_g6(g1)
     g6["dump_path"] = str(dump_path)
 
-    gate_passed = bool(g1["passed"] and g3["passed"] and g5["passed"] and currency["passed"])
+    gate_passed = bool(
+        g1["passed"]
+        and g3["passed"]
+        and g5["passed"]
+        and currency["passed"]
+        and g7["passed"]
+        and g8["passed"]
+    )
     return {
         "corp": corp_code,
         "year": year,
@@ -283,6 +299,8 @@ def run_gate(corp_code: str, year: str) -> dict:
         "G3_arithmetic": g3,
         "G5_signal": g5,
         "G6_dump": g6,
+        "G7_identities": g7,
+        "G8_quality": g8,
     }
 
 
@@ -342,6 +360,32 @@ def _print_report(report: dict) -> None:
     for n, prov in g5["layer_a_dangling"].items():
         print(f"  ✗ {n!r}  <- {prov[0] if prov else '?'}")
 
+    g7 = report["G7_identities"]
+    g7_tag = "PASS" if g7["passed"] else "FAIL"
+    print(
+        f"\n[G7 소계·대사] {g7_tag} — 검산 {g7['executed']}건 실행 · 위반 {len(g7['violations'])}건"
+    )
+    if g7.get("reason"):
+        print(f"  ⛔ {g7['reason']}")
+    for f in g7["violations"]:
+        mark = "✗" if f["blocking"] else "·"
+        print(f"  {mark} {f['fs_div']:3} {f['id']:14} 잔차={f['resid']:+,.0f}")
+
+    g8 = report["G8_quality"]
+    g8_tag = "PASS" if g8["passed"] else "FAIL"
+    unmapped = g8["unmapped"]
+    ratio = unmapped["ratio"]
+    print(f"\n[G8 번역 품질] {g8_tag}")
+    print(
+        f"  미매핑 {unmapped['count']}계정"
+        + (f" · 자산 대비 {ratio:.1%}" if ratio is not None else "")
+        + f" · ID-라벨 충돌 {g8['conflicts']}행 · 적재 표 {'/'.join(g8['coverage']['present'])}"
+    )
+    for b in g8["blockers"]:
+        print(f"  ⛔ {b}")
+    for w in g8["warnings"]:
+        print(f"  ⚠ {w}")
+
     g6 = report["G6_dump"]
     print("\n[G6 dump] (LLM 통독 입력, 실제 호출은 R4)")
     print(f"  dump 경로: {g6['dump_path']}  ({g6['dump_lines']}줄)")
@@ -352,8 +396,8 @@ def _print_report(report: dict) -> None:
     )
     print(f"게이트 판정: {verdict}")
     print(
-        "  (통과기준: G1 완결성 OK + BS 항등식 tol 이내 + G3 경성위반 0 + G5 dangling 0. "
-        "G2·G6은 보고용 — 최종 판정은 G6 LLM·R4)"
+        "  (통과기준: G1 완결성 OK + BS 항등식 tol 이내 + G3 경성위반 0 + G5 dangling 0 "
+        "+ 통화 단일 + G7 차단위반 0 + G8 차단사유 0. G2·G6은 보고용)"
     )
 
 

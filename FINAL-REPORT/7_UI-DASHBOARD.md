@@ -11,7 +11,7 @@
 company_state 판정
    ├─ A 미수집        → "수집부터" 안내
    ├─ B 수집됨·미준비  → prepare_company (재정규화·주석분류·게이트·마커)
-   └─ C 준비완료      → 온보딩(카드 단계 진입 조건) → 분석
+   └─ C 준비완료      → LLM 전처리(카드 단계 진입 조건) → 분석
                           │
                           ▼
               build_company_report (Phase1, 결정론)
@@ -57,9 +57,11 @@ company_state 판정
 
 색상 팔레트는 dataviz palette validator를 통과했다(CVD 색각 이상 대비 ΔE 24.2). 금액 축약(`fmt_krw`·`humanize_amounts`)은 렌더 시점에 적용돼 캐시 카드에 즉시 반영되며, 1억 미만·연도·%는 불변으로 둔다.
 
-## 7.5 온보딩 페이지 — 사람 확인 필수
+## 7.5 LLM 전처리 — 자동 실행, 사람 확인은 보류분만
 
-`onboarding.py`는 신규 회사를 게이트·이탈등록·재검사한다. `auto_register_aliases`는 신뢰도 ≥0.7·비-기타 제안만 window 전 연도에 자동 등록하지만(멱등), 그 밖의 제안은 `_register_suggestion`으로 **사람이 버튼을 눌러야만** 등록된다(임계 미만은 자동 등록 대상이 아님). 보류(저신뢰·기타)는 "기타 중요 계정" 경로로 흘러 라이브에선 금액>0이면 임계 없이 전부 게시되고(자산 5%↑ 임계는 backtest 도구 전용), 관점이 제기하면 `UNMAPPED_MATERIAL_ACCOUNT` 카드로 표면화된다. `append_quirk`는 헤더 주석을 보존하며 안전 append(UTF-8 allow_unicode)해 mojibake 0을 지킨다.
+메인 화면의 [LLM 전처리] 버튼은 `run_full_onboarding`으로 게이트 재검문 → Layer 1 본문 통독(서술형 감사관심 → `report_extracts`) → 별칭 제안·자동 등록을 한 번에 실행하고, 완료 마커(`onboarding.json`)를 남겨 재실행을 요구하지 않는다 — 이 마커가 검증(카드) 단계 진입 조건이다. `auto_register_aliases`는 신뢰도 ≥0.7·비-기타 제안만 window 전 연도에 자동 등록하고(멱등), 등록이 생기면 5개년을 재정규화한다. Layer 1이 추출 0건·실패면 진입을 막지 않되 경고를 강제해 사람이 확인 후 강행한다(`can_enter_analysis`의 needs_override).
+
+보류(저신뢰·기타)는 "기타 중요 계정" 경로로 흘러 라이브에선 금액>0이면 임계 없이 전부 게시되고(자산 5%↑ 임계는 backtest 도구 전용), 관점이 제기하면 `UNMAPPED_MATERIAL_ACCOUNT` 카드로 표면화된다. 사람이 버튼을 눌러 개별 등록하는 `_register_suggestion`과 수동 이탈 등록 폼은 메인 흐름에서 빠져, 별도 실행하는 정비 페이지(`dashboard/onboarding.py` 단독 구동)에만 남아 있다 — 보류분·교정용이다. `append_quirk`는 헤더 주석을 보존하며 안전 append(UTF-8 allow_unicode)해 mojibake 0을 지킨다.
 
 ## 7.6 hollow 렌더 방지 — 0건도 정직하게
 

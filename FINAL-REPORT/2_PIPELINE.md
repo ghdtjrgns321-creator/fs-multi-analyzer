@@ -6,10 +6,11 @@
 flowchart TD
     A[회사명 검색<br/>OpenDart ~12만사] --> B[L0 수집<br/>finstate JSON + 주석 XBRL + 사업보고서 XML]
     B --> C[L1 정규화<br/>XBRL→canonical 2,015종<br/>회사·연도 격리 DuckDB]
-    C --> G{온보딩 게이트<br/>G1~G5·통화 +G6 dump}
-    G -->|FAIL| Q[별칭 3단 분업<br/>코드 후보→LLM 선택→사람 등록<br/>quirk 재게이트]
+    C --> G{온보딩 게이트<br/>G1~G8·통화 +G6 dump<br/>분석 준비가 자동 실행}
+    G -->|FAIL| Q[별칭 보정·quirk 등록<br/>코드 후보→LLM 선택→고신뢰 자동 등록<br/>보류분만 사람 · 재게이트]
     Q --> G
-    G -->|PASS| S[L2 신호엔진 결정론<br/>전수 스캔·self 4축·관계사슬·변동분해·커버리지 원장]
+    G -->|PASS| OB[LLM 전처리<br/>별칭 자동 등록 ≥0.7 + 5개년 재정규화<br/>본문 통독→서술형 감사관심 적재]
+    OB --> S[L2 신호엔진 결정론<br/>전수 스캔·self 4축·관계사슬·변동분해·커버리지 원장]
     S --> M[materials.py<br/>관점별 발췌, 등수 힌트 없음]
     M --> P1[numeric]
     M --> P2[note]
@@ -28,17 +29,18 @@ flowchart TD
 
 ## 2.2 단계 요약
 
-| 단계               | 입력            | 처리                                                              | 출력                                | 상세 장                          |
-| ------------------ | --------------- | ----------------------------------------------------------------- | ----------------------------------- | -------------------------------- |
-| L0 수집            | 회사·연도       | OpenDART 재무제표 JSON·주석 XBRL·원문 XML을 raw로 저장(부재≠오류) | `data/companies/{corp}/{year}/raw/` | [3장](3_COLLECT-NORMALIZE.md)    |
-| L1 정규화          | raw CSV         | id-first 매핑·충돌 중재·dedup·SCE 2D·자본분해                     | 회사/연도 격리 DuckDB               | [3장](3_COLLECT-NORMALIZE.md)    |
-| 온보딩 게이트      | 정규화 DB       | G1 완결성·BS 항등식·G3 산술·G5 무결성·통화 검문 + 별칭 제안       | gate_passed 여부                    | [3장](3_COLLECT-NORMALIZE.md)    |
-| L2 신호엔진        | 정규화 frame    | 전수 스캔·다축 프로파일러·관계사슬·비율·변동분해·커버리지 원장    | 계정 패널·시계열·큐·원장            | [4장](4_SIGNAL-ENGINE.md)        |
-| L3 5관점           | 관점별 material | 병렬 발견(내부 4 + 동종 1), 각 관점 LLM 1회                       | SuspicionItem 목록                  | [5장](5_PERSPECTIVES-CARDS.md)   |
-| grounding          | 의심건          | 인용 수치를 실데이터 유효숫자와 대조, 환각 탈락                   | grounded 의심건                     | [6장](6_GROUNDING-GUARDRAILS.md) |
-| 카드 조립          | grounded 의심건 | 계정/관계/회사 클러스터·표수·우선순위 점수·브리지 병합            | AccountFinding 카드                 | [5장](5_PERSPECTIVES-CARDS.md)   |
-| 조사·반박·외부검증 | 카드            | 조사원 도구 루프 → 반박·외부검증 병렬                             | 결론·반대근거·외부근거              | [5장](5_PERSPECTIVES-CARDS.md)   |
-| L5 렌더            | 카드 목록       | 3섹션 카드 + 타입별 차트                                          | Streamlit 화면                      | [7장](7_UI-DASHBOARD.md)         |
+| 단계               | 입력            | 처리                                                                     | 출력                                | 상세 장                          |
+| ------------------ | --------------- | ------------------------------------------------------------------------ | ----------------------------------- | -------------------------------- |
+| L0 수집            | 회사·연도       | OpenDART 재무제표 JSON·주석 XBRL·원문 XML을 raw로 저장(부재≠오류)        | `data/companies/{corp}/{year}/raw/` | [3장](3_COLLECT-NORMALIZE.md)    |
+| L1 정규화          | raw CSV         | id-first 매핑·충돌 중재·dedup·SCE 2D·자본분해                            | 회사/연도 격리 DuckDB               | [3장](3_COLLECT-NORMALIZE.md)    |
+| 온보딩 게이트      | 정규화 DB       | G1 완결성·BS 항등식·G3 산술·G5 무결성·G7 소계/표간대사·G8 번역품질·통화 검문 | gate_passed 여부                    | [3장](3_COLLECT-NORMALIZE.md)    |
+| LLM 전처리         | 게이트 통과 DB  | 별칭 제안·고신뢰(≥0.7) 자동 등록+5개년 재정규화 · 본문 통독 서술추출     | quirk·report_extracts·완료 마커     | [3장](3_COLLECT-NORMALIZE.md)    |
+| L2 신호엔진        | 정규화 frame    | 전수 스캔·다축 프로파일러·관계사슬·비율·변동분해·커버리지 원장           | 계정 패널·시계열·큐·원장            | [4장](4_SIGNAL-ENGINE.md)        |
+| L3 5관점           | 관점별 material | 병렬 발견(내부 4 + 동종 1), 각 관점 LLM 1회                              | SuspicionItem 목록                  | [5장](5_PERSPECTIVES-CARDS.md)   |
+| grounding          | 의심건          | 인용 수치를 실데이터 유효숫자와 대조, 환각 탈락                          | grounded 의심건                     | [6장](6_GROUNDING-GUARDRAILS.md) |
+| 카드 조립          | grounded 의심건 | 계정/관계/회사 클러스터·표수·우선순위 점수·브리지 병합                   | AccountFinding 카드                 | [5장](5_PERSPECTIVES-CARDS.md)   |
+| 조사·반박·외부검증 | 카드            | 조사원 도구 루프 → 반박·외부검증 병렬                                    | 결론·반대근거·외부근거              | [5장](5_PERSPECTIVES-CARDS.md)   |
+| L5 렌더            | 카드 목록       | 3섹션 카드 + 타입별 차트                                                 | Streamlit 화면                      | [7장](7_UI-DASHBOARD.md)         |
 
 **strict 채점 경계 = sj_div ∈ {BS, IS}** (OVERVIEW). CF·CIS·SCE·소급재작성은 결정론 점수에서 제외하고 관점 material에 단서로만 실어 LLM이 맥락 판단한다(원래 출렁이는 항목이라 점수화하면 멀쩡한 회사를 오해).
 
