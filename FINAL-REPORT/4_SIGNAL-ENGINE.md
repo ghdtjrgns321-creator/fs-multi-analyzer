@@ -63,7 +63,7 @@
 | resumed      | 당기 존재, 직전기 없음, 더 과거엔 존재(재개)   |
 | disappeared  | 당기 없음, 과거 존재(소멸)                     |
 
-이는 delta_score와 별개 신호다 — 변화율 0/None이 죽이던 신규·소멸을 별도 칸으로 표시한다. SCE로도 확장돼(`sce_occurrence_states`) 자기주식취득이 올해만 나타나면 appeared로 판정한다. `disclosed_label`(공시 원문 계정명)을 계정명 권위로 실어, 정준명 오라벨이 서사를 관통하는 것을 차단한다(설계3).
+이는 delta_score와 별개 신호다 — 변화율 0/None이 죽이던 신규·소멸을 별도 칸으로 표시한다. SCE로도 확장돼(`sce_occurrence_states`) 자기주식취득이 올해만 나타나면 appeared로 판정한다. 판정 키는 표준 변동명이되, **미매핑 변동은 원문 라벨을 정체성으로 쓴다**(`sce_change_identity`) — 미매핑을 canonical 상수 그대로 두면 서로 다른 자본거래가 한 키로 합쳐져 신규·소멸이 뒤섞인다(11장). `disclosed_label`(공시 원문 계정명)을 계정명 권위로 실어, 정준명 오라벨이 서사를 관통하는 것을 차단한다(설계3).
 
 ## 4.5 전수 스캔과 관계 사슬
 
@@ -100,4 +100,4 @@ population_n == analyzed_n + len(excluded) + len(unaccounted)   → reconciled
 
 과거 파이프라인은 계정층에만 occurrence_state가 있고 SCE에는 없어, 자기주식 신규 취득(1.8조)이 raw로만 흐르고 변화 축에서 사라졌다(delta_score의 prior=None → 0 = 변화 축 사망). 이것이 삼성 E2E 3대 사각 중 하나였다(HANDOFF_ROOT_REDESIGN).
 
-`metrics_panel.sce_occurrence_states`는 `(fs_div, change_canonical)` 층위(D18 정체성 — leaf 불안정 회피)로 구성요소 abs 금액을 연도 합산해 occurrence를 판정한다. 삼성 자기주식취득은 분석 창 내에서 처음 나타나므로 **appeared**로 판정되고, 소멸(disappeared) 변동종류는 synthetic 셀로 표면화된다(silent drop 금지). 이제 trend 관점이 이 신규 자본거래를 우선 검토하도록 프롬프트(sce_role)가 유도한다. 실측에서 삼성 자기주식취득 appeared가 확인됐다(STATE). "숫자가 0/None이라 죽던 신규·소멸을 별도 신호로 살린다" — 5원칙 중 ⑤(수준+변화)의 구체적 실현이다.
+`metrics_panel.sce_occurrence_states`는 `(fs_div, 변동 정체성)` 층위(D18 정체성 — leaf 불안정 회피)로 구성요소 abs 금액을 연도 합산해 occurrence를 판정한다. 정체성은 표준 변동명이고, 미매핑이면 원문 라벨이다. 삼성 자기주식취득은 분석 창 내에서 처음 나타나므로 **appeared**로 판정되고, 소멸(disappeared) 변동종류는 synthetic 셀로 표면화된다(silent drop 금지). 이제 trend 관점이 이 신규 자본거래를 우선 검토하도록 프롬프트(sce_role)가 유도한다. 실측에서 삼성 자기주식취득 appeared가 확인됐다(STATE). "숫자가 0/None이라 죽던 신규·소멸을 별도 신호로 살린다" — 5원칙 중 ⑤(수준+변화)의 구체적 실현이다.

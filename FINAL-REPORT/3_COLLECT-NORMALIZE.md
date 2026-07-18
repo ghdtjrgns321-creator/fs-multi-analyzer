@@ -7,13 +7,14 @@
 ```
 raw OpenDART               L1 정규화                      온보딩 게이트
 finstate JSON     ──→   validate(Pandera)          ──→   G1 완결성 + BS 항등식(tol 100만원)
-주석 XBRL zip           map_row (id-first)                G3·G7 산술검산 + G5 무결성 + G8 품질
-사업보고서 XML          _arbitrate_conflicts               통화 KRW 검사(_currency_ok)
-                       _rescue_cross_statement            G6 dump(LLM 통독 입력)
-                       _dedupe (소실 대신 강등 보존)          │
-                       _enforce_capital_decomposition       │ FAIL → 별칭 3단 분업
-                       SCE 2D 별도(sce_balance)             │      코드 후보→LLM 선택→고신뢰 자동 등록(보류분만 사람 확인)
-                            │                              │      quirk 재게이트
+주석 XBRL zip           map_row (id-first)                G3·G7 산술검산(소계 9 + 표 간 대사 4)
+사업보고서 XML          map_change_row (SCE label-first)   G5 신호 무결성 + G8 번역 품질
+                       _arbitrate_conflicts               G9 연도 간 대사(표면화 전용)
+                       _rescue_cross_statement            통화 KRW 검사(_currency_ok)
+                       _dedupe (소실 대신 강등 보존)          G6 dump(LLM 통독 입력)
+                       _enforce_capital_decomposition       │
+                       SCE 2D 별도(sce_balance)             │ FAIL → 준비완료 마커 미생성
+                            │                              │        (사람이 quirk 등록 후 재준비)
                             ▼                              ▼
                   회사/연도 격리 DuckDB              gate_passed → LLM 전처리 → L2 진입
 ```
@@ -23,8 +24,8 @@ finstate JSON     ──→   validate(Pandera)          ──→   G1 완결�
 | 구성요소           | 개수                                                                       | 출처 파일                          |
 | ------------------ | -------------------------------------------------------------------------- | ---------------------------------- |
 | L0 수집 모듈       | 12                                                                         | `src/collect/`                     |
-| L1 정규화 모듈     | 12                                                                         | `src/normalize/`                   |
-| canonical 표준계정 | 약 2,015 (5표: BS/IS/CIS/CF/SCE)                                           | `config/canonical_accounts.yaml`   |
+| L1 정규화 모듈     | 15 (게이트 검문 3종 gate_identities·gate_quality·gate_yoy 포함)            | `src/normalize/`                   |
+| canonical 표준계정 | 약 2,017 (5표: BS 603·CF 770·CIS 451·SCE 155·IS 38) · 별칭 1,805          | `config/canonical_accounts.yaml`   |
 | 매핑 상태 코드     | 6 (EXACT·ALIAS·UNMAPPED·ID_LABEL_CONFLICT·OTHER_CANONICAL·CROSS_STATEMENT) | `src/normalize/mapper.py:11-18`    |
 | 온보딩 게이트      | G1·G2·G3·G5·G6·G7·G8·G9 + 통화                                             | `src/normalize/onboarding_gate.py` |
 | 회계 항등식        | 3 (BS-BALANCE·ROLLFORWARD·CF-RECON)                                        | `config/playbooks/identities.yaml` |
@@ -53,11 +54,14 @@ finstate JSON     ──→   validate(Pandera)          ──→   G1 완결�
 
 - id-label 모순 시 **같은 표(sj_div) 라벨 교정만** ALIAS로 허용하고, 아니면 `ID_LABEL_CONFLICT`로 id를 유지하며 label 후보를 기록(후처리 중재).
 - `map_change_row`(SCE 전용)는 반대로 label을 우선한다 — SCE에서는 회사가 `dart_StockDividends` 슬롯에 주식선택권 등을 신고하는 일이 흔해 한글 라벨이 변동 실질이다.
+- **미매핑 변동은 원문 라벨이 정체성이다**(`sce_change_identity`) — 미매핑 강등은 canonical 칸을 `"기타 중요 계정"` 상수로 덮으므로, 그 값을 그대로 쓰면 자기주식 매입·주식선택권 행사·신종자본증권 재분류가 **한 이름으로 병합**된다(11장 사고). 상태 컬럼이 미매핑이면 `change_label`을 정체성으로 되돌려 관점 입력·occurrence 판정 양쪽에 쓴다.
 
 `pipeline.py`의 정규화 순서는 `validate → map_row → _arbitrate_conflicts → _rescue_cross_statement → _dedupe_statement_rows → _dedupe_canonical_rows`이다. 두 가지 원칙이 데이터 무결성을 지킨다:
 
 - **dedup은 소실 대신 강등 보존** — 같은 canonical에 여러 행이 잡히면 비대표 행을 드롭하지 않고 "기타 중요 계정"으로 강등한다. 소실(2종오류)과 이중계상을 동시에 차단한다.
 - **자본분해 정확 조건** — `_enforce_capital_decomposition`은 `자본금 A ≈ 보통주자본금 B + 주식발행초과금 C`가 round 일치할 때**만** 분해한다. 자본잠식·우선주는 성립하지 않아 무영향이다.
+
+표준 계정 사전은 감이 아니라 **수집 데이터 센서스**로 넓힌다. SCE 미매핑 라벨을 전 코퍼스(SCE 테이블 보유 1,494 회사연도)에서 집계하면 1,198종이 나오고, 그중 뜻이 명확하고 여러 회사에 걸친 군집만 별칭으로 승격했다(당기접두 절단으로 키가 비던 `순이익`·연결범위 3표기·자기주식 매입·주식매수선택권 인식/행사 등). 코퍼스 회수 2,164행이고, 데모 3사 기준 표준분류 밖 자본거래는 32~35% → **0~5%**로 줄었다. 1~2개사에만 있는 꼬리 라벨은 사전으로 덮지 않고 원문 이름으로 흘린다 — 억지 매핑은 오분류이기 때문이다.
 
 **SCE 2D 보존**(`sce.py`)이 이 도구의 정규화 난이도를 상징한다. 자본변동표는 (변동행 × 자본구성요소)의 2차원 격자표다. 메인 long format이 이 열 차원을 붕괴시키므로 별도 2D long 프레임으로 보존한다. 두 검산이 무결성을 지킨다:
 

@@ -5,7 +5,7 @@
 ```mermaid
 flowchart TD
     A[회사명 검색<br/>OpenDart ~12만사] --> B[L0 수집<br/>finstate JSON + 주석 XBRL + 사업보고서 XML]
-    B --> C[L1 정규화<br/>XBRL→canonical 2,015종<br/>회사·연도 격리 DuckDB]
+    B --> C[L1 정규화<br/>XBRL→canonical 2,017종<br/>회사·연도 격리 DuckDB]
     C --> G{온보딩 게이트<br/>G1~G9·통화 +G6 dump<br/>분석 준비가 자동 실행}
     G -->|FAIL| Q[별칭 보정·quirk 등록<br/>코드 후보→LLM 선택→고신뢰 자동 등록<br/>보류분만 사람 · 재게이트]
     Q --> G
