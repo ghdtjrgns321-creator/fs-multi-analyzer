@@ -25,12 +25,25 @@ def _make_db(tmp_path, rows, sce_rows=()):
             )
         con.execute(
             "CREATE TABLE sce_equity_components (corp_code VARCHAR, year VARCHAR, fs_div VARCHAR, "
-            "change_role VARCHAR, component_std VARCHAR, amount DOUBLE)"
+            "change_role VARCHAR, component_std VARCHAR, amount DOUBLE, "
+            "change_canonical VARCHAR, component_role VARCHAR)"
         )
-        for role, component, amount in sce_rows:
+        for row in sce_rows:
+            role, component, amount = row[0], row[1], row[2]
+            change_canonical = row[3] if len(row) > 3 else None
+            component_role = row[4] if len(row) > 4 else None
             con.execute(
-                "INSERT INTO sce_equity_components VALUES (?,?,?,?,?,?)",
-                ["00000001", "2024", "CFS", role, component, amount],
+                "INSERT INTO sce_equity_components VALUES (?,?,?,?,?,?,?,?)",
+                [
+                    "00000001",
+                    "2024",
+                    "CFS",
+                    role,
+                    component,
+                    amount,
+                    change_canonical,
+                    component_role,
+                ],
             )
     return db
 
@@ -113,3 +126,30 @@ def test_operating_profit_is_informational(tmp_path):
 def test_absent_db_is_not_pass(tmp_path, missing):
     report = identity_report(tmp_path / "nope.duckdb")
     assert report["passed"] is False
+
+
+def test_comprehensive_income_attribution(tmp_path):
+    """총포괄손익 = 지배귀속 + 비지배 — 순이익 귀속 분해와 대칭인데 빠져 있던 축."""
+
+    rows = [
+        *BALANCED,
+        ("CIS", "총포괄손익", -28 * B),
+        ("CIS", "지배기업귀속총포괄손익", -26 * B),
+        ("CIS", "비지배지분총포괄손익", -5 * B),  # 합 -31 ≠ -28
+    ]
+    report = identity_report(_make_db(tmp_path, rows))
+    assert any(v["id"] == "CIS_총포괄귀속" and v["blocking"] for v in report["violations"])
+
+
+def test_profit_ties_income_statement_to_equity_statement(tmp_path):
+    """손익 당기순이익 = 자본변동표 당기순이익 변동 — 두 표를 잇는 고리."""
+
+    db = _make_db(
+        tmp_path,
+        [*BALANCED, ("IS", "당기순이익", 300 * B)],
+        sce_rows=[("leaf", "-", 250 * B, "당기순이익", "marker")],
+    )
+    report = identity_report(db)
+    violation = next(v for v in report["violations"] if v["id"] == "TIE_순이익_자본")
+    assert violation["blocking"] is True
+    assert violation["resid"] == 50 * B

@@ -60,6 +60,12 @@ SUBTOTAL_IDENTITIES: list[tuple[str, tuple[str, str], list[tuple[str, str, str]]
         True,
     ),
     (
+        "CIS_총포괄귀속",
+        ("CIS", "총포괄손익"),
+        [("CIS", "지배기업귀속총포괄손익", "+"), ("CIS", "비지배지분총포괄손익", "+")],
+        True,
+    ),
+    (
         "IS_영업이익",
         ("IS", "영업이익"),
         [("IS", "매출총이익", "+"), ("IS", "판매비와관리비", "-abs")],
@@ -76,6 +82,14 @@ SCE_TIE_OUTS: list[tuple[str, str, str]] = [
     ("TIE_자본총계", "자본총계", "-"),  # "-" = 합계 marker 행
     ("TIE_지배지분", "지배기업소유주지분", "지배기업소유주지분"),
     ("TIE_이익잉여금", "이익잉여금", "이익잉여금"),
+    ("TIE_자본금", "자본금", "자본금"),
+    ("TIE_자본잉여금", "자본잉여금", "자본잉여금"),
+    ("TIE_기타포괄누계", "기타포괄손익누계액", "기타포괄손익누계액"),
+]
+# 손익 ↔ 자본변동표: 같은 당기순이익이 두 표에 적힌다(SCE는 변동행 총계 marker).
+# 이 고리가 닫히면 "손익에서 만든 이익이 자본으로 실제로 넘어갔나"가 확인된다.
+SCE_CHANGE_TIE_OUTS: list[tuple[str, tuple[str, str], str]] = [
+    ("TIE_순이익_자본", ("IS", "당기순이익"), "당기순이익"),
 ]
 
 
@@ -96,6 +110,23 @@ def sce_closing(con: duckdb.DuckDBPyConnection, fs_div: str) -> dict[str, float]
     rows = con.execute(
         "SELECT component_std, SUM(amount) FROM sce_equity_components "
         "WHERE fs_div = ? AND change_role = 'total' AND amount IS NOT NULL GROUP BY component_std",
+        [fs_div],
+    ).fetchall()
+    return {str(c): float(a) for c, a in rows if c is not None}
+
+
+def sce_change_totals(con: duckdb.DuckDBPyConnection, fs_div: str) -> dict[str, float]:
+    """자본변동표 변동행 총계(component_role='marker') change_canonical -> 금액.
+
+    marker는 그 변동의 자본 전체 영향(구성요소 합)이라, 손익의 같은 항목과 맞댈 수 있다."""
+
+    cols = {r[0] for r in con.execute("DESCRIBE sce_equity_components").fetchall()}
+    if not {"change_canonical", "component_role"} <= cols:
+        return {}  # 컬럼 부재 = 대사 불가(SKIP) — 크래시로 게이트를 멈추지 않는다
+    rows = con.execute(
+        "SELECT change_canonical, SUM(amount) FROM sce_equity_components "
+        "WHERE fs_div = ? AND component_role = 'marker' AND amount IS NOT NULL "
+        "GROUP BY change_canonical",
         [fs_div],
     ).fetchall()
     return {str(c): float(a) for c, a in rows if c is not None}
@@ -135,6 +166,14 @@ def _run_checks(con: duckdb.DuckDBPyConnection, fs_div: str) -> list[dict]:
         add(
             _check_identity(
                 name, values.get(("BS", bs_key)), [closing.get(sce_key)], allow_sign_variant=False
+            ),
+            True,
+        )
+    changes = sce_change_totals(con, fs_div)
+    for name, left, change_key in SCE_CHANGE_TIE_OUTS:
+        add(
+            _check_identity(
+                name, values.get(left), [changes.get(change_key)], allow_sign_variant=False
             ),
             True,
         )
