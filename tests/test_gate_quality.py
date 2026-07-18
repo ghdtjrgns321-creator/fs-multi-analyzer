@@ -101,12 +101,21 @@ def test_sce_measured_on_2d_table_not_body_rows(tmp_path):
     db = _make_db(tmp_path, rows)
     with duckdb.connect(str(db)) as con:
         con.execute(
-            "CREATE TABLE sce_equity_components (change_label VARCHAR, change_status VARCHAR)"
+            "CREATE TABLE sce_equity_components "
+            "(change_label VARCHAR, change_status VARCHAR, change_role VARCHAR)"
         )
-        con.execute("INSERT INTO sce_equity_components VALUES ('배당', 'exact_taxonomy_match')")
+        con.execute(
+            "INSERT INTO sce_equity_components VALUES ('배당', 'exact_taxonomy_match', 'leaf')"
+        )
+        # 재작성 기초잔액 마커는 거래가 아니다 — 미매핑이어도 비율에 안 센다(셀트리온 실측 교훈)
+        con.execute(
+            "INSERT INTO sce_equity_components VALUES ('기초 보고금액', ?, 'restated_begin')",
+            [UNMAPPED],
+        )
     report = quality_report(db)
     assert not any("자본변동표" in w or "SCE" in w for w in report["warnings"])
     assert report["sce_2d"]["share"] == 0.0
+    assert report["sce_2d"]["changes_total"] == 1  # leaf만 모집단
 
 
 def test_sce_2d_unmapped_majority_warns(tmp_path):
@@ -115,14 +124,15 @@ def test_sce_2d_unmapped_majority_warns(tmp_path):
     db = _make_db(tmp_path, HEALTHY)
     with duckdb.connect(str(db)) as con:
         con.execute(
-            "CREATE TABLE sce_equity_components (change_label VARCHAR, change_status VARCHAR)"
+            "CREATE TABLE sce_equity_components "
+            "(change_label VARCHAR, change_status VARCHAR, change_role VARCHAR)"
         )
         for label, status in [
             ("자기주식 매입", UNMAPPED),
             ("전환사채의 조기상환", UNMAPPED),
             ("배당", "exact_taxonomy_match"),
         ]:
-            con.execute("INSERT INTO sce_equity_components VALUES (?, ?)", [label, status])
+            con.execute("INSERT INTO sce_equity_components VALUES (?, ?, 'leaf')", [label, status])
     report = quality_report(db)
     assert any("표준분류 밖" in w for w in report["warnings"])
 

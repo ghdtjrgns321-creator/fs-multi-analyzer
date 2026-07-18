@@ -112,9 +112,14 @@ def sce_2d_quality(con: duckdb.DuckDBPyConnection) -> dict | None:
     ).fetchone()
     if not exists:
         return None
+    # leaf(실거래 변동)만 센다 — 기초/기말/재작성 마커('기초 보고금액' 등)는 거래가 아니라
+    # 구조 라벨이고 role 기계가 이미 분류한다. 마커까지 세면 비율이 과대 표시된다(실측: 셀트리온
+    # 10%가 전부 restated_begin 마커였음).
+    cols = {r[0] for r in con.execute("DESCRIBE sce_equity_components").fetchall()}
+    role_filter = "WHERE change_role = 'leaf'" if "change_role" in cols else ""
     rows = con.execute(
-        "SELECT change_status, COUNT(DISTINCT change_label) FROM sce_equity_components "
-        "GROUP BY change_status"
+        f"SELECT change_status, COUNT(DISTINCT change_label) FROM sce_equity_components "
+        f"{role_filter} GROUP BY change_status"
     ).fetchall()
     by_status = {str(s): int(n) for s, n in rows}
     total = sum(by_status.values())

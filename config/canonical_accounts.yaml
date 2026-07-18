@@ -2420,6 +2420,15 @@ canonical_accounts:
     account_ids:
       - dart_CompoundFinancialInstrumentConversion
     aliases: [복합금융상품 전환, 전환사채 전환]
+  # SCE 미매핑 센서스 기반 신설(라벨 전용) — 재평가·신종자본증권 변동은 표준 ID가 없어 라벨로만 수렴
+  재평가잉여금변동:
+    statement: SCE
+    account_ids: []
+    aliases: [재평가적립금, 토지재평가, 재평가이익]
+  신종자본증권변동:
+    statement: SCE
+    account_ids: []
+    aliases: [신종자본증권 재분류, 신종자본증권전환, 신종자본증권 전환]
   기타포괄손익-공정가치측정금융자산의취득:
     statement: CF
     account_ids:
