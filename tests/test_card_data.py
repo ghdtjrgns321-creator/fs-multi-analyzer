@@ -331,12 +331,30 @@ def test_card_headline_falls_back_to_claim_then_subtype():
     assert card_headline(with_subtype, None, []) == "손상 확대"
 
 
-def test_sort_cards_priority_desc():
+def test_sort_cards_votes_then_amount():
+    """가중합 폐지 후 화면 정렬 = 표수 우선, 동점이면 금액(card_order 사전식)."""
+
     from dashboard.card_data import sort_cards
 
-    a = {"priority_score": 0.2, "materiality_score": 0.9}
-    b = {"priority_score": 0.8, "materiality_score": 0.1}
-    assert sort_cards([a, b])[0] is b
+    few_votes_big = {"vote_count": 1, "materiality_score": 0.9}
+    many_votes_small = {"vote_count": 3, "materiality_score": 0.1}
+    assert sort_cards([few_votes_big, many_votes_small])[0] is many_votes_small
+
+    tie_small = {"vote_count": 2, "materiality_score": 0.2}
+    tie_big = {"vote_count": 2, "materiality_score": 0.8}
+    assert sort_cards([tie_small, tie_big])[0] is tie_big
+
+
+def test_sort_cards_normal_dominant_sinks():
+    """반박이 정상우세로 본 카드는 표수가 높아도 하단 — 삭제가 아니라 강등(§9)."""
+
+    from dashboard.card_data import sort_cards
+
+    normal = {"vote_count": 4, "materiality_score": 1.0, "rebuttal_verdict": "normal_dominant"}
+    plain = {"vote_count": 1, "materiality_score": 0.1}
+    ordered = sort_cards([normal, plain])
+    assert ordered[0] is plain and ordered[-1] is normal
+    assert len(ordered) == 2  # 강등이지 제거가 아니다
 
 
 def test_render_cards_section_expander_apptest():
@@ -444,16 +462,16 @@ def test_group_cards_order_and_vote_sort():
     from dashboard.card_data import group_cards
 
     cards = [
-        {"issue_type": "cash_flow", "vote_count": 1, "priority_score": 0.5},
-        {"issue_type": "earnings_tax", "vote_count": 1, "priority_score": 0.9},
-        {"issue_type": "earnings_tax", "vote_count": 2, "priority_score": 0.1},
-        {"issue_type": "asset_valuation", "vote_count": 1, "priority_score": 0.4},
+        {"issue_type": "cash_flow", "vote_count": 1, "materiality_score": 0.5},
+        {"issue_type": "earnings_tax", "vote_count": 1, "materiality_score": 0.9},
+        {"issue_type": "earnings_tax", "vote_count": 2, "materiality_score": 0.1},
+        {"issue_type": "asset_valuation", "vote_count": 1, "materiality_score": 0.4},
     ]
     groups = group_cards(cards, _GROUP_CFG)
     assert [label for label, _ in groups] == ["손익·수익성", "재무상태", "현금흐름"]  # 빈 그룹 생략
     incomes = groups[0][1]
-    assert incomes[0]["vote_count"] == 2  # 그룹 안은 표수 우선(점수보다)
-    assert incomes[1]["priority_score"] == 0.9
+    assert incomes[0]["vote_count"] == 2  # 그룹 안은 표수 우선(금액보다)
+    assert incomes[1]["materiality_score"] == 0.9
 
 
 def test_group_cards_unknown_issue_falls_back_to_last_group():
@@ -680,9 +698,7 @@ def test_metric_keys_excluded_from_table_and_narrative():
                 year="2025",
                 value="3",
             ),
-            EvidenceRef(
-                source="financial_statement", locator="ratio:roe", year="2025", value="5"
-            ),
+            EvidenceRef(source="financial_statement", locator="ratio:roe", year="2025", value="5"),
             EvidenceRef(
                 source="financial_statement", locator="무형자산", year="2025", value="100000000"
             ),
@@ -724,7 +740,9 @@ def test_resolved_kind_overrides_pattern_guessing():
     )
     card = _card(numeric_evidence=[metric_looking_but_account, korean_but_metric])
     rows = evidence_rows(card)
-    assert [r["계정"] for r in rows] == ["총자산이익률 관련 계정"]  # kind가 승리, 라벨은 display_label
+    assert [r["계정"] for r in rows] == [
+        "총자산이익률 관련 계정"
+    ]  # kind가 승리, 라벨은 display_label
 
 
 def test_rebuttal_block_humanizes_amounts_apptest():

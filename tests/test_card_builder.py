@@ -250,12 +250,14 @@ def test_confidence_high_and_low() -> None:
     assert card_low.confidence == "Low"
 
 
-def test_priority_score_computed() -> None:
-    # risk_level은 폐지됨(라벨 → 연속 점수). 코드가 priority_score를 산정하는지만 확인.
+def test_sort_components_set_without_weighted_score() -> None:
+    # 등급 라벨(risk_level)도 가중합 점수(priority_score)도 폐지 — 정렬 성분만 남는다.
     grounded = [_g("numeric", "매출채권", risk="Low"), _g("flow", "매출채권", risk="High")]
     card = build_cards(grounded, _report())["account_cards"][0]
     assert card.risk_level is None
-    assert card.priority_score > 0
+    assert not hasattr(card, "priority_score")
+    assert card.vote_count == 2  # 정렬 1축
+    assert card.materiality_score > 0  # 정렬 2축
 
 
 def test_cluster_key_set_on_card() -> None:
@@ -301,4 +303,7 @@ def test_confidence_gives_point_for_exact_taxonomy_match() -> None:
     # 근거검증만 통과(+1) → 가점 없으면 Medium, 매핑 가점이 붙으면 High.
     assert _confidence(value_verified=True, votes=0, mapping_status=EXACT) == "High"
     # 감점 경로는 그대로 — 미매핑 + 표수 0이면 -1.
-    assert _confidence(value_verified=True, votes=0, mapping_status="unmapped_extension_account") == "Low"
+    assert (
+        _confidence(value_verified=True, votes=0, mapping_status="unmapped_extension_account")
+        == "Low"
+    )

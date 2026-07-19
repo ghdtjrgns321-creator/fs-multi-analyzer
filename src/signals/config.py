@@ -21,3 +21,11 @@ def load_l2_config(path: Path | None = None) -> dict[str, Any]:
     if not config:
         raise ValueError("l2_mvp1 config is missing")
     return config
+
+
+def load_relationship_chains(path: Path | None = None) -> list[dict[str, Any]]:
+    """관계사슬 정의 목록. 파생층 커버리지가 '이름으로 조회되는 계정'을 뽑는 데 쓴다."""
+
+    with (path or DEFAULT_CONFIG).open(encoding="utf-8") as file:
+        payload = yaml.safe_load(file) or {}
+    return list(payload.get("relationship_chains", []) or [])

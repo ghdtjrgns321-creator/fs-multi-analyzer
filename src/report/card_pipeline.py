@@ -98,12 +98,17 @@ async def build_suspicion_cards(
     accounts = _accounts_reviewed(report)
     ledger = report.get("coverage_ledger", {}) or {}
     unaccounted = len(ledger.get("unaccounted", []))  # type: ignore[union-attr]
+    derived = ledger.get("derived", {}) or {}  # type: ignore[union-attr]
+    blocked = len(derived.get("blocked", []) or [])
+    blocked_amount = float(derived.get("blocked_amount", 0.0) or 0.0)
     if not run_llm:
         empty = build_card_report(
             {"account_cards": [], "company_cards": [], "relationship_cards": []},
             accounts,
             perspectives_run=0,
             unaccounted=unaccounted,
+            derived_blocked=blocked,
+            derived_blocked_amount=blocked_amount,
         )
         return {**empty, "rendered": render_card_markdown(empty), "grounded": [], "dropped": []}
 
@@ -187,6 +192,8 @@ async def build_suspicion_cards(
         perspectives_run=completed,
         perspectives_failed=failed,
         unaccounted=unaccounted,
+        derived_blocked=blocked,
+        derived_blocked_amount=blocked_amount,
     )
     return {
         **card_report,

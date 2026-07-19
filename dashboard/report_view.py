@@ -80,6 +80,8 @@ def _review_scope(report: dict, card_result: dict | None = None) -> dict:
         "accounts_reviewed": len({str(r.get("series_key")) for r in rows if r.get("series_key")}),
         "perspectives_run": 0,  # 결정론 단계 — 관점 LLM 미실행
         "unaccounted_cells": len(ledger.get("unaccounted") or []),
+        "derived_blocked": len((ledger.get("derived") or {}).get("blocked") or []),
+        "derived_blocked_amount": float((ledger.get("derived") or {}).get("blocked_amount") or 0.0),
     }
 
 

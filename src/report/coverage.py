@@ -234,10 +234,144 @@ def build_fs_div_coverage(
     return {"population_fs_div": sorted(population), "per_fs_div": per, "gaps": gaps}
 
 
+# ── 파생층(관계사슬·재무비율) 원장 ──────────────────────────────────────────
+# 계정층 원장은 "모든 셀이 패널에 들어갔나"만 잰다. 미매핑 계정도 원문 라벨을 키로 패널에는
+# 들어가므로 거기선 '분석됨'으로 세어진다. 그런데 관계사슬·재무비율은 **표준 계정명**을 키로
+# 조회하므로 미매핑 계정은 진입 자체가 불가능하다 → 계정층 원장만 보면 이 누락이 안 보인다
+# (조용한 드롭). 여기서 그 몫을 따로 센다.
+
+
+def derived_layer_accounts(chains: list[dict] | None, ratios: list[dict] | None) -> set[str]:
+    """관계사슬·재무비율이 이름으로 조회하는 표준 계정 집합(파생층 진입 자격)."""
+
+    names: set[str] = set()
+    for chain in chains or []:
+        for account in chain.get("chain") or []:
+            name = str(account).strip()
+            if name:
+                names.add(name)
+    for ratio in ratios or []:
+        for account in ratio.get("accounts") or []:
+            name = str(account).strip()
+            if name:
+                names.add(name)
+    return names
+
+
+def _is_unmapped(row: dict) -> bool:
+    """미매핑 판정 — canonical이 비었거나 포괄버킷이거나 mapping_status가 미매핑."""
+
+    from src.normalize.mapper import OTHER_CANONICAL, UNMAPPED
+
+    canonical = str(row.get("canonical") or "").strip()
+    return (
+        not canonical
+        or canonical == OTHER_CANONICAL
+        or str(row.get("mapping_status") or "") == UNMAPPED
+    )
+
+
+def _derived_identity(row: dict) -> str:
+    """파생층 모집단의 계정 정체성 — 미매핑은 원문 라벨로 복원해 병합을 푼다."""
+
+    if _is_unmapped(row):
+        label = str(row.get("label") or "").strip()
+        if label:
+            return f"{row.get('fs_div')}:{row.get('sj_div')}:{label}"
+    return str(row.get("series_key") or "")
+
+
+def build_derived_ledger(
+    account_series: list[dict],
+    target_year: int,
+    covered_names: set[str],
+) -> dict[str, object]:
+    """파생층 커버리지 — 계정층 분석 계정이 사슬·비율에 진입했나.
+
+    모집단 = target_year 잔액>0 계정(계정층에서 이미 분석된 것). 항등식:
+      population_n == entered_n + len(excluded) + len(blocked)
+
+    blocked = 미매핑이라 표준 이름이 없어 진입 자체가 불가능했던 계정. 이 값이 이 원장의
+    존재 이유다 — 계정층 원장에서 '분석됨'으로 세어져 안 보이던 몫이다.
+    excluded = 표준 이름은 있으나 사슬·비율 정의에 없는 계정(정당 — 모든 계정이 사슬에
+    속하지는 않는다).
+    """
+
+    from src.normalize.mapper import OTHER_CANONICAL, UNMAPPED
+
+    # 정체성: 매핑된 계정은 series_key, **미매핑은 원문 라벨**(universal.py·metrics_panel.py와
+    # 같은 규칙). series_key로 세면 미매핑이 전부 'fs:기타 중요 계정' 한 키로 병합돼 서로 다른
+    # 계정 N종이 1건으로 과소 집계된다 — 원장이 재려던 바로 그 누락을 원장이 다시 숨기게 된다.
+    seen: dict[str, dict] = {}
+    for row in account_series or []:
+        try:
+            if int(row.get("year")) != int(target_year):  # type: ignore[arg-type]
+                continue
+        except (TypeError, ValueError):
+            continue
+        if _real_amount(row.get("amount")) is None:
+            continue
+        key = _derived_identity(row)
+        if key and key not in seen:
+            seen[key] = row
+
+    entered: list[dict[str, object]] = []
+    excluded: list[dict[str, object]] = []
+    blocked: list[dict[str, object]] = []
+    blocked_amount = 0.0
+    for key, row in seen.items():
+        canonical = str(row.get("canonical") or "").strip()
+        if _is_unmapped(row):
+            label = str(row.get("label") or "").strip()
+            if label in covered_names:
+                # 표 불일치 강등(예: 현금흐름표의 '당기순이익'). 같은 이름이 제 표(손익계산서)에서
+                # 이미 사슬·비율에 진입하므로 누락이 아니다 — 누락으로 세면 과대계상.
+                excluded.append(
+                    {
+                        "account": key,
+                        "canonical": label,
+                        "reason": "동명 표준계정이 제 표에서 진입(표 간 중복 방지 강등)",
+                    }
+                )
+                continue
+            amount = abs(float(_real_amount(row.get("amount")) or 0.0))
+            blocked_amount += amount
+            blocked.append(
+                {
+                    "account": key,
+                    "label": label,
+                    "amount": amount,
+                    "reason": "표준 계정명 없음(미매핑) — 이름 기반 조회 불가",
+                }
+            )
+        elif canonical in covered_names:
+            entered.append({"series_key": key, "canonical": canonical})
+        else:
+            excluded.append(
+                {
+                    "series_key": key,
+                    "canonical": canonical,
+                    "reason": "사슬·비율 정의에 없는 계정",
+                }
+            )
+
+    population_n = len(seen)
+    return {
+        "population_n": population_n,
+        "entered_n": len(entered),
+        "excluded": excluded,
+        "blocked": blocked,
+        "blocked_amount": round(blocked_amount, 2),
+        "reconciled": population_n == len(entered) + len(excluded) + len(blocked),
+    }
+
+
 __all__ = [
     "build_coverage_ledger",
+    "build_derived_ledger",
     "build_fs_div_coverage",
     "build_note_ledger",
     "build_sce_ledger",
+    "derived_layer_accounts",
     "surfaced_note_facts",
 ]

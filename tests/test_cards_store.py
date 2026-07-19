@@ -58,11 +58,11 @@ def test_save_load_roundtrip_preserves_cards(tmp_path: Path) -> None:
 
 
 def test_store_roundtrip_preserves_investigation(tmp_path: Path) -> None:
-    """조사 결론·연속 우선순위·병합 자식 — 저장 전 == 로드 후(신규 필드 3종 왕복)."""
+    """조사 결론·정렬 성분·병합 자식 — 저장 전 == 로드 후."""
 
     card = CARD.model_copy(
         update={
-            "priority_score": 0.87,
+            "vote_count": 3,
             "merged_children": ["CFS:영업권", "CFS:특허권"],
             "investigation": InvestigationConclusion(
                 headline="무형자산 손상이 주도",
@@ -87,7 +87,7 @@ def test_store_roundtrip_preserves_investigation(tmp_path: Path) -> None:
     loaded = load_cards("00000002", 2024, root=tmp_path)
 
     [loaded_card] = loaded["account_cards"]
-    assert loaded_card["priority_score"] == 0.87
+    assert loaded_card["vote_count"] == 3
     assert loaded_card["merged_children"] == ["CFS:영업권", "CFS:특허권"]
     assert loaded_card["investigation"]["headline"] == "무형자산 손상이 주도"
     assert loaded_card["investigation"]["resolved"] is True

@@ -18,6 +18,8 @@ from src.db.normalized import db_path
 from src.normalize.mapper import OTHER_CANONICAL
 from src.report.coverage import (
     build_coverage_ledger,
+    build_derived_ledger,
+    derived_layer_accounts,
     build_note_ledger,
     build_sce_ledger,
     surfaced_note_facts,
@@ -35,6 +37,7 @@ from src.signals.metrics_panel import (
     sce_occurrence_states,
 )
 from src.signals.mvp1 import build_mvp1_signal_report
+from src.signals.config import load_relationship_chains
 from src.signals.ratios import build_ratio_report, load_ratio_config
 from src.signals.red_flags import extract_red_flags
 from src.signals.universal import UNIVERSAL_STATEMENTS, scan_cfs_ofs_gaps, scan_universal_signals
@@ -83,6 +86,13 @@ def build_company_report(
     )
     # 근본구조 C: 본문 셀 모집단 대조. 이유 없이 빠진 셀(unaccounted)=조용한 드롭 → 표면화.
     coverage_ledger = build_coverage_ledger(frame, account_series, target_years)
+    # 파생층: 사슬·비율은 표준 계정명으로 조회하므로 미매핑 계정은 진입 불가. 계정층 원장에선
+    # '분석됨'으로 세어져 안 보이던 몫을 따로 센다(조용한 드롭 차단).
+    coverage_ledger["derived"] = build_derived_ledger(
+        account_series,
+        target_year,
+        derived_layer_accounts(load_relationship_chains(), ratio_config),
+    )
     # 주석 차원: detail+기타주석 전량을 분석 투입(흡수=본문중복·메타=비fact만 사실기반 제외).
     note_facts_raw = load_notes_classified(corp_code, [target_year]).to_dict("records")
     coverage_ledger["notes"] = build_note_ledger(note_facts_raw)

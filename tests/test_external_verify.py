@@ -11,45 +11,44 @@ from src.schemas.findings import AccountFinding, IssueType
 from src.schemas.investigation import InvestigationConclusion
 
 
-def _card(
-    account: str, priority_score: float = 0.0, mat: float = 0.0, key: str | None = None
-) -> AccountFinding:
+def _card(account: str, votes: int = 0, mat: float = 0.0, key: str | None = None) -> AccountFinding:
+    """정렬 성분만으로 카드 생성 — 가중합 점수 폐지 후 순위는 표수 → 금액 사전식."""
+
     return AccountFinding(
         account=account,
         issue_type=IssueType.EARNINGS_TAX,
         materiality_score=mat,
         anomaly_score=1.0,
         confidence="High",
-        priority_score=priority_score,
+        vote_count=votes,
         cluster_key=key or f"acct:IS:{account}",
     )
 
 
-# ── select_external_targets — 상위 K장 무조건 + 조사 미해결 전부 ────────────
+# ── select_external_targets — 선정 = 조사 미해결 전부 ──────────────────────
 def test_select_targets_excludes_only_resolved():
     resolved = _card("CFS:영업이익")
     resolved.investigation = InvestigationConclusion(headline="원인 완결", resolved=True)
     unresolved = _card("CFS:매출채권")
     unresolved.investigation = InvestigationConclusion(headline="미해결", resolved=False)
     no_investigation = _card("CFS:재고자산")  # 조사 실패·미수행 — 미확인이라 포함
-    targets = select_external_targets([resolved, unresolved, no_investigation], top_k_always=0)
+    targets = select_external_targets([resolved, unresolved, no_investigation])
     assert {c.account for c in targets} == {"CFS:매출채권", "CFS:재고자산"}
 
 
-def test_select_targets_top_k_includes_resolved_top_card():
-    # 결함④-b: 최상위 카드가 resolved=True라는 이유로 외부검사에서 빠지던 역설 차단.
-    top = _card("CFS:순이익", priority_score=0.9)
+def test_select_targets_excludes_resolved_regardless_of_rank():
+    # 우선순위 상위 K장 예외 폐지 — 순위와 무관하게 resolved면 제외한다.
+    top = _card("CFS:순이익", votes=3)
     top.investigation = InvestigationConclusion(headline="원인 완결", resolved=True)
-    low_resolved = _card("CFS:영업이익", priority_score=0.1)
+    low_resolved = _card("CFS:영업이익", votes=1)
     low_resolved.investigation = InvestigationConclusion(headline="원인 완결", resolved=True)
-    unresolved = _card("CFS:매출채권", priority_score=0.5)
-    targets = select_external_targets([low_resolved, top, unresolved], top_k_always=1)
-    # 상위 1장(순이익)은 resolved여도 포함, 하위 resolved(영업이익)만 제외.
-    assert [c.account for c in targets] == ["CFS:순이익", "CFS:매출채권"]
+    unresolved = _card("CFS:매출채권", votes=2)
+    targets = select_external_targets([low_resolved, top, unresolved])
+    assert [c.account for c in targets] == ["CFS:매출채권"]
 
 
-def test_select_targets_hard_cap_drops_lowest_priority():
-    cards = [_card(f"CFS:acc{i}", priority_score=0.1 * i) for i in range(6)]
+def test_select_targets_hard_cap_drops_lowest_ranked():
+    cards = [_card(f"CFS:acc{i}", mat=0.1 * i) for i in range(6)]
     capped = select_external_targets(cards, hard_cap=3)
     assert [c.account for c in capped] == ["CFS:acc5", "CFS:acc4", "CFS:acc3"]
 
@@ -90,7 +89,7 @@ class _Brief:
 
 
 def test_verify_cards_fills_evidence_and_checked():
-    cards = [_card(f"CFS:acc{i}", priority_score=1.0 - 0.1 * i, mat=1.0) for i in range(5)]
+    cards = [_card(f"CFS:acc{i}", mat=1.0 - 0.1 * i) for i in range(5)]
     # 상위 3장 밖의 카드가 조사 완결 — 검색 대상에서 제외된다(상위 K장은 resolved여도 포함).
     cards[4].investigation = InvestigationConclusion(headline="원인 완결", resolved=True)
 
@@ -313,7 +312,7 @@ def test_figure_to_won_parses_controlled_formats():
 def test_verify_cards_marks_figure_check_match_and_mismatch():
     from src.schemas.investigation import InvestigationConclusion as _IC  # noqa: F401
 
-    cards = [_card("CFS:영업활동현금흐름", priority_score=0.9, mat=1.0)]
+    cards = [_card("CFS:영업활동현금흐름", mat=1.0)]
     report = {
         "company_name": "테스트기업",
         "target_year": 2025,
@@ -342,7 +341,7 @@ def test_verify_cards_marks_figure_check_match_and_mismatch():
 
 # ── 설계4c: 리다이렉트 URL 해소 — 성공 시 원 기사 주소, 실패 시 원본 유지 ────
 def test_verify_cards_resolves_redirect_urls_with_resolver():
-    cards = [_card("CFS:영업이익", priority_score=0.9, mat=1.0)]
+    cards = [_card("CFS:영업이익", mat=1.0)]
 
     async def fake_search(queries):
         return _Brief([_Item("기사", "https://vertexaisearch.cloud.google.com/redirect/abc")])
@@ -378,6 +377,6 @@ def test_external_hard_cap_reads_config_and_fallback():
     assert external_hard_cap({}) == 30  # 폴백
     assert external_hard_cap() == 30  # 실제 config/investigation.yaml 값
 
-    cards = [_card(account=f"CFS:acc{i}", priority_score=0.01 * i) for i in range(40)]
+    cards = [_card(account=f"CFS:acc{i}", mat=0.01 * i) for i in range(40)]
     assert len(select_external_targets(cards, hard_cap=7)) == 7
     assert len(select_external_targets(cards)) == 30  # 안전핀(실컨피그)

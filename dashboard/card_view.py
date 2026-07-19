@@ -192,12 +192,11 @@ def _header(card: Any, series_rows: list[dict] | None = None) -> None:
     disclosed = _disclosed_label(series_rows or [], account_key)
     name = disclosed or name
     title = f"{name}" + (f" <span class='drv-chip'>{fs_label}</span>" if fs_label else "")
-    score = float(_get(card, "priority_score") or 0.0)
-    # 우측 배지는 연속 점수 하나만 — 등급 라벨은 폐지(근거 없는 라벨이 가장 눈에 띄던 문제③).
+    # 우측 점수 배지 폐지 — 가중합 우선순위(0.35·유의성 + …)는 성분별 근거를 댈 수 없어
+    # 제거했다. 순서 자체가 우선순위를 말해준다(정렬: card_order 사전식).
     st.html(
         '<div class="drv-row" style="justify-content:space-between;">'
         f'<span class="drv-card-title">{title}</span>'
-        f'<span class="drv-pill">우선순위 {score:.2f}</span>'
         "</div>"
     )
 
@@ -484,7 +483,7 @@ def render_cards_section(
     """섹션 제목 + 카드 단추 목록(접힘) — 눌러야 본문이 열린다(개요→상세).
 
     grouped=True(계정 섹션): 넓은 주제 그룹(config/card_groups.yaml)이 1차 구조,
-    그룹 안은 표수→점수 순(card_data.group_cards). False: 점수 정렬 단일 목록(기존).
+    그룹 안은 card_order 사전식(표수→금액). False: 같은 기준의 단일 목록.
     빈 섹션도 0건 명시(§9).
     """
 

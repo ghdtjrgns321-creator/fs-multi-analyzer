@@ -1,4 +1,4 @@
-"""L5 온보딩 전처리 페이지 — 신규 회사를 Phase1/2 분석에 넣기 전 게이트·이탈등록·재검사.
+"""L5 정비 페이지 — 신규 회사를 Phase1/2 분석에 넣기 전 게이트 검문·이탈등록·재검사.
 
 흐름: corp/year 입력 → [전처리 검사](run_gate) → gate_report 단계별 표시 → 이탈 등록 폼
       (company_quirks.yaml 안전 append) → [재검사] → 통과 시 [Phase1/2 진입] 활성.
@@ -424,7 +424,7 @@ def can_enter_analysis(gate_report: dict, layer1_status: str) -> dict:
 def render() -> None:
     """온보딩 전처리 페이지 렌더링. 상태는 st.session_state로 관리."""
 
-    st.title("신규회사 온보딩 전처리")
+    st.title("신규회사 정비 — 게이트 검문·이탈 등록")
     st.caption(
         "Phase1/2 분석 진입 전, 한 번에 [전처리검사+Layer 1 서술추출+별칭 제안]을 실행해 "
         "이탈을 잡고 quirk로 교정한다(수 분 소요)."
@@ -434,8 +434,8 @@ def render() -> None:
     corp_code = col1.text_input("corp_code (8자리)", key="onb_corp").strip()
     year = col2.text_input("year (YYYY)", key="onb_year").strip()
 
-    if st.button("온보딩 일괄 실행 (전처리+Layer1+별칭)", disabled=not (corp_code and year)):
-        with st.spinner(f"{corp_code}/{year} 온보딩 일괄 실행 중..."):
+    if st.button("일괄 실행 (게이트 검문+Layer1+별칭)", disabled=not (corp_code and year)):
+        with st.spinner(f"{corp_code}/{year} 일괄 실행 중..."):
             result = run_full_onboarding(corp_code, year)
         st.session_state["gate_report"] = result.get("gate")
         st.session_state["layer1"] = result.get("layer1")
@@ -447,7 +447,7 @@ def render() -> None:
 
     report = st.session_state.get("gate_report")
     if not report:
-        st.info("corp_code·year를 입력하고 [온보딩 일괄 실행]을 누르세요.")
+        st.info("corp_code·year를 입력하고 [일괄 실행]을 누르세요.")
         return
 
     run_corp = st.session_state.get("onb_corp_run", corp_code)
@@ -521,7 +521,7 @@ def render() -> None:
 
 
 def main() -> None:
-    st.set_page_config(page_title="온보딩 전처리", layout="wide")
+    st.set_page_config(page_title="신규회사 정비", layout="wide")
     render()
 
 

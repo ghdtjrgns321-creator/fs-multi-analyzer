@@ -1,8 +1,14 @@
 """Phase2 근거검증 (grounding) — PHASE2_DESIGN §4 ①.
 
 관점이 제출한 의심건의 인용 수치가 실제 데이터에 있는지 코드가 대조해 환각을 탈락시킨다.
-LLM은 같은 금액을 원·백만·억 등 다른 단위로 인용하므로(메모리: 원/백만 오독), 직접 float
-비교 대신 **유효숫자(trailing-zero 제거) 동일성**으로 스케일·단위 무관하게 대조한다.
+
+인용에 단위(조·억·백만·원)가 붙어 있으면 **원 단위로 복원해 자릿수까지** 대조한다. 예전에는
+유효숫자(trailing-zero 제거)만 봐서 '1,961억'과 '1,961백만'이 같은 값으로 통과했다 — 자릿수가
+8자리 틀려도 grounded로 나가던 구멍. 단위 병기(amounts.py)가 LLM 입력 경계에서 원→억 나눗셈을
+없앤 뒤로 스케일 무시의 근거가 사라져 제거했다.
+
+단위 없는 맨숫자('1,961')는 스케일 복원이 불가능하므로 유효숫자 대조로 남기되,
+value_verified=False로 내려 '존재는 확인·자릿수 미확인'을 카드에 정직하게 표시한다.
 탈락 건도 reason과 함께 전부 반환한다(§9 silent drop 금지).
 """
 
@@ -18,6 +24,20 @@ from src.schemas.suspicion import INTERNAL_PERSPECTIVES, SuspicionItem
 # 퍼센트·소액 비율(유효숫자<3)은 금액 주장으로 보지 않아 환각 탈락 대상에서 제외(false-drop 방지).
 _AMOUNT_TOKEN = re.compile(r"\d{1,3}(?:,\d{3})+|\d+\s*(?:억|조|백만)|\d{6,}")
 
+# 단위가 붙은 인용 — 원 단위 복원이 가능한 형태. figure_sheet._SCALE에 천원을 더한 환산표.
+# 긴 접미사(백만원·천원)를 먼저 둬야 '원'이 가로채지 않는다.
+_SCALE = {"조": 1e12, "억": 1e8, "백만원": 1e6, "백만": 1e6, "천원": 1e3, "천": 1e3, "원": 1.0}
+_UNITS = "조|억|백만원|백만|천원|천|원"
+_SCALED_TOKEN = re.compile(rf"(-?\d[\d,]*(?:\.\d+)?)\s*({_UNITS})")
+# 단위 없는 원 단위 금액 — 자릿수(6+)가 곧 스케일이라 복원이 확정된다.
+# 쉼표 묶음(22,264,200,000,000)도 포함. 뒤에 단위가 오면 위 스케일 경로가 맡으므로 제외.
+_RAW_WON_TOKEN = re.compile(rf"(?<![\d,.])(\d{{1,3}}(?:,\d{{3}})+|\d{{6,}})(?!\s*(?:{_UNITS}))")
+
+# 복원된 인용과 실값의 허용 오차. LLM이 '1조 2,534.7억'처럼 반올림해 쓰므로 상대오차를 준다.
+# 절대 하한(100만원)은 소액에서 상대오차가 과하게 좁아지는 것을 막는다(BS_TOL과 같은 철학).
+_REL_TOL = 0.01
+_ABS_TOL = 1_000_000.0
+
 
 class GroundedSuspicion(BaseModel):
     """근거검증 결과. grounded=False면 탈락(환각), value_verified는 확신도 입력."""
@@ -29,20 +49,68 @@ class GroundedSuspicion(BaseModel):
 
 
 def _sig(text: str) -> str:
-    """문자열에서 유효숫자만 추출(앞뒤 0 제거). '1,961억'·'196100000000' → '1961'."""
+    """문자열에서 유효숫자만 추출(앞뒤 0 제거). 스케일 미상 인용의 fallback 대조용."""
 
     digits = re.sub(r"\D", "", text).lstrip("0").rstrip("0")
     return digits
 
 
 def _sig_amount(amount: float) -> str:
-    """금액(float) → 유효숫자. round 후 정수화(accounting-precision)."""
+    """금액(float) → 인덱스 저장 형태 '원단위절대값'. round 후 정수화(accounting-precision)."""
 
-    return _sig(str(int(round(abs(amount)))))
+    return str(int(round(abs(float(amount)))))
+
+
+def scaled_claims(cited: str) -> list[float]:
+    """인용에서 **스케일이 확정되는** 금액만 원 단위 절대값으로 복원.
+
+    '1,961억' → 1.961e11 · '532,893백만원' → 5.32893e11 · '196100000000' → 1.961e11.
+    단위 없는 '1,961'은 복원 불가라 여기 안 들어온다(→ _amount_claim_sigs fallback).
+    """
+
+    out: list[float] = []
+    text = cited or ""
+    for num, unit in _SCALED_TOKEN.findall(text):
+        try:
+            out.append(abs(float(num.replace(",", "")) * _SCALE[unit]))
+        except (ValueError, KeyError):
+            continue
+    for raw in _RAW_WON_TOKEN.findall(text):
+        digits = raw.replace(",", "")
+        if len(digits) < 6:  # 짧은 맨숫자(1,961)는 스케일 미상 — sig fallback으로 넘긴다
+            continue
+        try:
+            out.append(abs(float(digits)))
+        except ValueError:
+            continue
+    return out
+
+
+def _values_of(pool: set[str]) -> list[float]:
+    """인덱스 풀(원단위 절대값 문자열) → float 목록."""
+
+    out: list[float] = []
+    for entry in pool:
+        try:
+            out.append(float(entry))
+        except ValueError:
+            continue
+    return out
+
+
+def _matches_scaled(claims: list[float], pool: set[str]) -> bool:
+    """복원된 인용이 풀의 실값과 허용오차 내에서 일치하나(자릿수 포함 대조)."""
+
+    actuals = _values_of(pool)
+    for claim in claims:
+        for actual in actuals:
+            if abs(claim - actual) <= max(_ABS_TOL, _REL_TOL * abs(actual)):
+                return True
+    return False
 
 
 def _amount_claim_sigs(cited: str) -> list[str]:
-    """인용 문자열의 금액 주장 토큰들의 유효숫자(3자리+만)."""
+    """인용 금액 토큰의 유효숫자(3자리+). 스케일 미상 인용의 fallback 대조용."""
 
     sigs = []
     for token in _AMOUNT_TOKEN.findall(cited or ""):
@@ -50,6 +118,13 @@ def _amount_claim_sigs(cited: str) -> list[str]:
         if len(sig) >= 3:
             sigs.append(sig)
     return sigs
+
+
+def _matches_sig(claims: list[str], pool: set[str]) -> bool:
+    """스케일 미상 인용 — 유효숫자만 대조(자릿수는 확인 못 함)."""
+
+    pool_sigs = {_sig(entry) for entry in pool}
+    return any(claim in pool_sigs for claim in claims)
 
 
 def _note_value_sig(value: object) -> str | None:
@@ -119,15 +194,16 @@ def build_account_index(
                 pool.add(sig)
     # 서술형 공시(사각#3): 담보·특수관계·소송 등은 XBRL fact가 아니라 HTML 발췌·사업보고서 청크에
     # 산다. 각 공시 텍스트의 금액을 token별 + 전역(__disclosure__) 풀에 색인해 값 기반 grounding.
+    # 공시 원문의 '532,893백만원'도 인덱스는 원 단위 절대값으로 통일한다(대조 기준 일치).
     for disc in note_disclosures or []:
         text = str(disc.get("text", ""))
-        sigs = {sig for tok in _AMOUNT_TOKEN.findall(text) if len(sig := _sig(tok)) >= 3}
+        values = {_sig_amount(v) for v in scaled_claims(text)}
         for token in disc.get("tokens", []) or []:
             token = str(token).strip()
             if token:
-                index.setdefault(f"note:{token}", set()).update(sigs)
-        if sigs:
-            index.setdefault(_NOTE_DISCLOSURE_KEY, set()).update(sigs)
+                index.setdefault(f"note:{token}", set()).update(values)
+        if values:
+            index.setdefault(_NOTE_DISCLOSURE_KEY, set()).update(values)
     # SCE 2D 셀: sce:{change}·sce:{component} 네임스페이스(본문 비충돌). change 관점이 조회.
     for cell in sce_cells or []:
         sig = _note_value_sig(cell.get("amount"))
@@ -151,15 +227,24 @@ def _verify_note_suspicion(item: SuspicionItem, index: dict[str, set[str]]) -> G
     if pool is None and item.related_accounts:
         pool = index.get(f"note:{item.related_accounts[0]}")
     disclosure = index.get(_NOTE_DISCLOSURE_KEY, set())
-    claims = _amount_claim_sigs(item.cited_value or "")
+    cited = item.cited_value or ""
+    scaled = scaled_claims(cited)
+    claims = _amount_claim_sigs(cited)
     if pool is None:
         # 라벨 미매칭이라도 인용 금액이 실제 공시 텍스트에 있으면 grounded(허위탈락 방지).
-        if claims and any(claim in disclosure for claim in claims):
+        if scaled and _matches_scaled(scaled, disclosure):
             return GroundedSuspicion(
                 item=item,
                 grounded=True,
                 value_verified=True,
                 reason="주석 공시 텍스트에 인용 금액 실재",
+            )
+        if not scaled and claims and _matches_sig(claims, disclosure):
+            return GroundedSuspicion(
+                item=item,
+                grounded=True,
+                value_verified=False,
+                reason="주석 공시에 유효숫자 일치(단위 미표기 — 자릿수 미확인)",
             )
         return GroundedSuspicion(
             item=item,
@@ -167,13 +252,27 @@ def _verify_note_suspicion(item: SuspicionItem, index: dict[str, set[str]]) -> G
             value_verified=False,
             reason="주석 라벨·금액 모두 데이터에 없음(환각)",
         )
-    if not claims:
+    if not claims and not scaled:
         return GroundedSuspicion(
             item=item, grounded=True, value_verified=False, reason="주석 존재·수치 비교불가(서술형)"
         )
-    if any(claim in pool or claim in disclosure for claim in claims):
+    if scaled:
+        if _matches_scaled(scaled, pool) or _matches_scaled(scaled, disclosure):
+            return GroundedSuspicion(
+                item=item, grounded=True, value_verified=True, reason="인용 금액이 주석 실값과 일치"
+            )
         return GroundedSuspicion(
-            item=item, grounded=True, value_verified=True, reason="인용 금액이 주석 실값과 일치"
+            item=item,
+            grounded=False,
+            value_verified=False,
+            reason="인용 수치가 주석 실값과 불일치(환각 — 자릿수 포함 대조)",
+        )
+    if _matches_sig(claims, pool) or _matches_sig(claims, disclosure):
+        return GroundedSuspicion(
+            item=item,
+            grounded=True,
+            value_verified=False,
+            reason="주석 실값과 유효숫자 일치(단위 미표기 — 자릿수 미확인)",
         )
     return GroundedSuspicion(
         item=item,
@@ -202,17 +301,33 @@ def verify_account_suspicion(item: SuspicionItem, index: dict[str, set[str]]) ->
         return GroundedSuspicion(
             item=item, grounded=False, value_verified=False, reason="계정이 데이터에 없음(환각)"
         )
-    claims = _amount_claim_sigs(item.cited_value or "")
-    if not claims:
+    cited = item.cited_value or ""
+    scaled = scaled_claims(cited)
+    claims = _amount_claim_sigs(cited)
+    if not claims and not scaled:
         return GroundedSuspicion(
             item=item,
             grounded=True,
             value_verified=False,
             reason="계정 존재·수치 비교불가(추세/비율)",
         )
-    if any(claim in pool for claim in claims):
+    if scaled:
+        if _matches_scaled(scaled, pool):
+            return GroundedSuspicion(
+                item=item, grounded=True, value_verified=True, reason="인용 금액이 계정 실값과 일치"
+            )
         return GroundedSuspicion(
-            item=item, grounded=True, value_verified=True, reason="인용 금액이 계정 실값과 일치"
+            item=item,
+            grounded=False,
+            value_verified=False,
+            reason="인용 수치가 계정 실값과 불일치(환각 — 자릿수 포함 대조)",
+        )
+    if _matches_sig(claims, pool):
+        return GroundedSuspicion(
+            item=item,
+            grounded=True,
+            value_verified=False,
+            reason="계정 실값과 유효숫자 일치(단위 미표기 — 자릿수 미확인)",
         )
     return GroundedSuspicion(
         item=item,
@@ -252,12 +367,12 @@ def verify_relationship_suspicion(
             value_verified=False,
             reason=f"관계 다리 미존재(환각): {missing}",
         )
-    claims = _amount_claim_sigs(item.cited_value or "")
-    verified = any(
-        claim in index.get(str(leg), set()) or claim in index.get(f"{item.sj_div}:{leg}", set())
-        for leg in legs
-        for claim in claims
-    )
+    cited = item.cited_value or ""
+    scaled = scaled_claims(cited)
+    pools = [index.get(str(leg), set()) | index.get(f"{item.sj_div}:{leg}", set()) for leg in legs]
+    # 관계는 비율·괴리라 단일 금액이 없을 수 있어 value_verified는 선택 판정이다.
+    # 자릿수까지 맞아야 verified — 스케일 미상 인용은 verified로 올리지 않는다.
+    verified = bool(scaled) and any(_matches_scaled(scaled, pool) for pool in pools)
     reason = "관계 다리 실존" + (" · 인용수치 일치" if verified else "")
     return GroundedSuspicion(item=item, grounded=True, value_verified=verified, reason=reason)
 

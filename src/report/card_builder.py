@@ -287,14 +287,9 @@ def build_cards(grounded: list[GroundedSuspicion], report: dict) -> dict[str, li
     _normalize_materiality(account_cards, raw_materiality)
     _normalize_materiality(relationship_cards, rel_raw_materiality)
 
-    # 연속 우선순위(0..1) — 정규화된 유의성·표수·이상·확신도의 가중합(라벨 폐지, 원칙 1).
-    from src.report.investigation_config import load_investigation_config
-    from src.report.priority import apply_priority
-
-    weights = (load_investigation_config().get("priority") or {}).get("weights") or {}
-    for group in (account_cards, company_cards, relationship_cards):
-        apply_priority(group, weights)
-
+    # 우선순위 가중합은 폐지 — 정렬은 표시 시점에 card_order(사전식)가 단독 담당한다.
+    # 가중치(0.35·0.30·0.15·0.20)는 성분별 근거를 댈 수 없어 제거했다(원칙 1: 결정론이되
+    # 설명 가능해야 한다). 여기서는 정렬 성분(유의성·표수·확신도)만 확정해 넘긴다.
     return {
         "account_cards": account_cards,
         "company_cards": company_cards,

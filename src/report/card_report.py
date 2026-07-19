@@ -1,37 +1,20 @@
 """Phase2 카드 정렬·렌더 — PHASE2_DESIGN §4(정렬·표시).
 
-계정 카드는 표수 내림 → 동점 시 금액(materiality) 내림으로 정렬하고, 반박이 '정상우세'로
-판정한 카드는 표수가 높아도 하단으로 강등한다(제거 아님, §9). 회사레벨 카드는 별도 섹션.
-의심건 0건이면 빈 화면 대신 검토 범위(계정 수·관점 수)를 명시한다(§9 hollow-PASS 차단).
+정렬 기준은 src/report/card_order.py 단일 출처(화면·리포트·외부검증 공용). 여기서는
+렌더만 한다. 의심건 0건이면 빈 화면 대신 검토 범위(계정 수·관점 수)를 명시한다
+(§9 hollow-PASS 차단).
 """
 
 from __future__ import annotations
 
+from src.report.card_order import order_cards, order_company_cards
 from src.schemas.findings import AccountFinding
-
-NORMAL_DOMINANT = "normal_dominant"
 
 
 def order_account_cards(cards: list[AccountFinding]) -> list[AccountFinding]:
-    """표수 내림 → 금액 내림. 단 '정상우세' 카드는 항상 하단으로."""
+    """계정·관계 카드 정렬 — card_order 단일 기준 위임(이름은 기존 호출부 호환)."""
 
-    return sorted(
-        cards,
-        key=lambda c: (
-            c.rebuttal_verdict == NORMAL_DOMINANT,  # False(0) 먼저, 정상우세(True) 뒤로
-            -c.vote_count,
-            -c.materiality_score,
-        ),
-    )
-
-
-def order_company_cards(cards: list[AccountFinding]) -> list[AccountFinding]:
-    """회사레벨은 금액 앵커가 없어 표수 내림 → 정상우세 하단 → 계정명 순."""
-
-    return sorted(
-        cards,
-        key=lambda c: (c.rebuttal_verdict == NORMAL_DOMINANT, -c.vote_count, c.account),
-    )
+    return order_cards(cards)
 
 
 def build_card_report(
@@ -40,6 +23,8 @@ def build_card_report(
     perspectives_run: int,
     perspectives_failed: int = 0,
     unaccounted: int = 0,
+    derived_blocked: int = 0,
+    derived_blocked_amount: float = 0.0,
 ) -> dict[str, object]:
     """정렬된 카드 섹션 + 검토 범위 + 산출 여부.
 
@@ -60,6 +45,9 @@ def build_card_report(
             "perspectives_run": perspectives_run,
             "perspectives_failed": perspectives_failed,
             "unaccounted_cells": unaccounted,
+            # 파생층: 표준 이름이 없어 관계사슬·재무비율에 진입 못 한 계정(조용한 드롭 표면화).
+            "derived_blocked": derived_blocked,
+            "derived_blocked_amount": derived_blocked_amount,
         },
         "has_findings": bool(account_cards or company_cards or relationship_cards),
     }
@@ -87,7 +75,7 @@ def _card_row(idx: int, card: AccountFinding, with_materiality: bool) -> str:
     cells = [str(idx), account_cell, issue, vote, card.confidence]
     if with_materiality:
         cells.append(f"{card.materiality_score:.2f}")
-    cells.extend([f"{card.priority_score:.2f}", _verdict_label(card), badges])
+    cells.extend([_verdict_label(card), badges])
     return "| " + " | ".join(cells) + " |"
 
 
@@ -109,6 +97,16 @@ def render_card_markdown(report: dict[str, object]) -> str:
     )
     if coverage_warn:
         lines.extend(["", coverage_warn])
+    blocked = int(scope.get("derived_blocked", 0) or 0)  # type: ignore[union-attr]
+    if blocked:
+        amount = float(scope.get("derived_blocked_amount", 0.0) or 0.0)  # type: ignore[union-attr]
+        lines.extend(
+            [
+                "",
+                f"ℹ 관계사슬·재무비율 미진입 {blocked}건(금액 {amount:,.0f}원) — 표준 계정명이 "
+                "없어 이름 기반 분석에서 조회되지 않았다. 계정별 지표·카드에는 포함된다.",
+            ]
+        )
 
     if not report.get("has_findings"):
         lines.append("")
@@ -134,21 +132,21 @@ def render_card_markdown(report: dict[str, object]) -> str:
     lines.append(f"검토: 계정 {accounts}개 · 관점 {perspectives}개")
     if account_cards:
         lines.extend(["", "## 계정별 의심건"])
-        lines.append("| 순위 | 계정 | 유형 | 표수 | 확신도 | 금액 | 점수 | 반박 | 참고 |")
-        lines.append("|---:|---|---|---|---|---:|---|---|---|")
+        lines.append("| 순위 | 계정 | 유형 | 표수 | 확신도 | 금액 | 반박 | 참고 |")
+        lines.append("|---:|---|---|---|---|---:|---|---|")
         for idx, card in enumerate(account_cards, start=1):
             lines.append(_card_row(idx, card, with_materiality=True))
     if relationship_cards:
         # 흐름 관점 고유 단위 — 계정 쌍·교차재무제표(연결↔별도) 관계 이상.
         lines.extend(["", "## 계정 관계 이상 (흐름)"])
-        lines.append("| 순위 | 관계 | 유형 | 표수 | 확신도 | 금액 | 점수 | 반박 | 참고 |")
-        lines.append("|---:|---|---|---|---|---:|---|---|---|")
+        lines.append("| 순위 | 관계 | 유형 | 표수 | 확신도 | 금액 | 반박 | 참고 |")
+        lines.append("|---:|---|---|---|---|---:|---|---|")
         for idx, card in enumerate(relationship_cards, start=1):
             lines.append(_card_row(idx, card, with_materiality=True))
     if company_cards:
         lines.extend(["", "## 회사 전체 이슈"])
-        lines.append("| 순위 | 대상 | 유형 | 표수 | 확신도 | 점수 | 반박 | 참고 |")
-        lines.append("|---:|---|---|---|---|---|---|---|")
+        lines.append("| 순위 | 대상 | 유형 | 표수 | 확신도 | 반박 | 참고 |")
+        lines.append("|---:|---|---|---|---|---|---|")
         for idx, card in enumerate(company_cards, start=1):
             lines.append(_card_row(idx, card, with_materiality=False))
     return "\n".join(lines)

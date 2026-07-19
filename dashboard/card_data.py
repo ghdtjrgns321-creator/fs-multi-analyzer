@@ -12,6 +12,8 @@ from typing import Any
 
 import yaml
 
+from src.report.card_order import card_sort_key, order_cards
+
 # 관점 내부명 → 사람용 라벨(주장 칩 표기).
 PERSPECTIVE_LABELS = {
     "numeric": "수치",
@@ -440,28 +442,18 @@ def group_cards(cards: list, groups: dict | None = None) -> list[tuple[str, list
         issue = str(getattr(issue, "value", issue) or "")
         buckets.setdefault(mapping.get(issue, fallback), []).append(card)
     for group in buckets.values():
-        group.sort(
-            key=lambda c: (
-                int(_get(c, "vote_count") or 0),
-                float(_get(c, "priority_score") or 0.0),
-            ),
-            reverse=True,
-        )
+        group.sort(key=card_sort_key)
     ordered = [g for g in order if g in buckets] + [g for g in buckets if g not in order]
     return [(g, buckets[g]) for g in ordered]
 
 
 def sort_cards(cards: list) -> list:
-    """카드 정렬 — 연속 우선순위 내림, 동점이면 유의성 내림(라벨 폐지, PLAN §5)."""
+    """카드 정렬 — card_order 단일 기준(정상우세 하단 → 표수 → 금액).
 
-    return sorted(
-        cards,
-        key=lambda c: (
-            float(_get(c, "priority_score") or 0.0),
-            float(_get(c, "materiality_score") or 0.0),
-        ),
-        reverse=True,
-    )
+    이전에는 화면만 가중합 점수로 정렬해 마크다운 리포트와 1등 카드가 달랐다.
+    """
+
+    return order_cards(cards)
 
 
 def card_headline(card: Any, out: dict | None, series_rows: list[dict]) -> str:
