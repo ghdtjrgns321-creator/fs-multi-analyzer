@@ -101,3 +101,96 @@ decomposition_bridges:
           - label: 법인세비용
             sign: -1
             accounts: [법인세비용]
+  # CF 브리지 — 이익의 질(순이익이 현금으로 얼마나 오나)을 기여로 쪼갠다.
+  # 손익 브리지와 달리 부호 규약이 회사마다 갈린다(이자지급·법인세납부를 음수로 내는 회사와
+  # 절대값으로 내는 회사). 손으로 정하지 않고 유출표기 variant를 둘 다 두어 |잔차| 최소로 고른다.
+  # 같은 소계가 회사마다 '영업창출현금흐름'(54사)·'영업에서 창출된 현금'(13사)으로 갈린다
+  # — 실측(표본 200사) 기준 동의 슬롯으로 흡수한다.
+  영업창출현금흐름:
+    variants:
+      - name: 표준
+        components:
+          - label: 당기순이익
+            sign: 1
+            accounts: [당기순이익]
+          - label: 비현금조정
+            sign: 1
+            accounts: [당기순이익조정가감]
+          - label: 운전자본변동
+            sign: 1
+            accounts: [운전자본변동]
+  영업활동현금흐름:
+    variants:
+      - name: 유출음수표기
+        components:
+          - label: 영업창출현금흐름
+            sign: 1
+            accounts: [영업창출현금흐름, 영업에서 창출된 현금, 영업으로부터 창출된 현금]
+          - label: 이자수취
+            sign: 1
+            accounts: [이자수취]
+          - label: 이자지급
+            sign: 1
+            accounts: [이자지급]
+          - label: 법인세납부
+            sign: 1
+            accounts: [법인세납부]
+      - name: 유출양수표기
+        components:
+          - label: 영업창출현금흐름
+            sign: 1
+            accounts: [영업창출현금흐름, 영업에서 창출된 현금, 영업으로부터 창출된 현금]
+          - label: 이자수취
+            sign: 1
+            accounts: [이자수취]
+          - label: 이자지급
+            sign: -1
+            accounts: [이자지급]
+          - label: 법인세납부
+            sign: -1
+            accounts: [법인세납부]
+      - name: 배당포함·유출음수표기
+        components:
+          - label: 영업창출현금흐름
+            sign: 1
+            accounts: [영업창출현금흐름, 영업에서 창출된 현금, 영업으로부터 창출된 현금]
+          - label: 이자수취
+            sign: 1
+            accounts: [이자수취]
+          - label: 배당금수취
+            sign: 1
+            accounts: [배당금수취]
+          - label: 이자지급
+            sign: 1
+            accounts: [이자지급]
+          - label: 법인세납부
+            sign: 1
+            accounts: [법인세납부]
+      - name: 배당포함·유출양수표기
+        components:
+          - label: 영업창출현금흐름
+            sign: 1
+            accounts: [영업창출현금흐름, 영업에서 창출된 현금, 영업으로부터 창출된 현금]
+          - label: 이자수취
+            sign: 1
+            accounts: [이자수취]
+          - label: 배당금수취
+            sign: 1
+            accounts: [배당금수취]
+          - label: 이자지급
+            sign: -1
+            accounts: [이자지급]
+          - label: 법인세납부
+            sign: -1
+            accounts: [법인세납부]
+      - name: 영업창출없음
+        components:
+          - label: 당기순이익
+            sign: 1
+            accounts: [당기순이익]
+          - label: 비현금조정
+            sign: 1
+            accounts: [당기순이익조정가감]
+          - label: 운전자본변동
+            sign: 1
+            accounts: [운전자본변동]
