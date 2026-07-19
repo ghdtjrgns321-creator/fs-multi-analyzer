@@ -6,6 +6,31 @@
 
 ## 현재 위치
 
+- **✅ README 4장(검증)을 아스트 단일 케이스 스토리로 재작성** (2026-07-19). 사용자 지시로 다른
+  회사 M/N 로그·실 LLM E2E 실측 표는 삭제하고 아스트 2020 한 건만 남겼다(제재 경위 → 정정 전
+  원본 입력 고정 → 카드 24장·정답 순위 → 못 잡은 것 → 수치 대조).
+  - **재측정으로 드리프트 확인**: `golden/numeric/_report_00409681_2020.md`(07-14 생성)는
+    N=61·대사불능 1건으로 낡았다. 저장 카드(07-18 실행) 재계산 결과 **53/53 match PASS**가 맞고,
+    매출원가 순위는 기록된 5위가 아니라 **4위**(관계 카드). 근거는 `_workspace/readme-factcheck.md`.
+  - **스크린샷 신규 1장** — `docs/images/ui-cards-04.png`(아스트 2020 재고자산 1위 카드 펼침).
+  - ⚠ 미조치: 위 골든 리포트 파일 2종은 재생성하지 않았다(본문 수치는 재측정값 사용).
+- **✅ 우선순위 가중치 폐지 — 정렬을 사전식 비교로 단일화** (2026-07-19). 사용자 판단:
+  가중치(materiality 0.35·votes 0.30·anomaly 0.15·confidence 0.20)는 성분별 근거를 댈 수
+  없어 자의적이다. `src/report/priority.py` 삭제, `AccountFinding.priority_score` 필드 제거,
+  `config/investigation.yaml`의 `priority.weights` 블록 제거.
+  - **신설 `src/report/card_order.py`** — 정렬 단일 출처. 사전식 3단: ①반박 정상우세는 하단
+    (강등이지 제거 아님) ②표수 내림 ③금액 내림. 회사 카드는 금액 앵커가 없어 3축이 계정명.
+    객체·dict 양쪽 지원(저장 카드가 dict로 흐르는 경로 때문).
+  - **부수 발견·해소 — 화면과 리포트가 다른 순서였다**: 마크다운 리포트는 (정상우세, 표수, 금액)
+    사전식인데 Streamlit `sort_cards`만 가중합 점수 내림이라 같은 분석 결과의 1등 카드가 보는
+    곳마다 달랐다. 이제 화면·리포트·외부검증 선정이 `card_order` 하나를 쓴다(실측 확인).
+  - **UI**: 카드 우측 "우선순위 0.87" 배지 삭제(사용자 선택) — 순서 자체가 우선순위를 말한다.
+    마크다운 카드 표의 `점수` 컬럼도 제거.
+  - 테스트: `tests/test_priority.py` 삭제, 정렬·저장·외부검증 테스트를 정렬 성분(vote_count·
+    materiality_score) 기준으로 이관. **660 passed·1 xfailed**(가중치 테스트 1건이 폐지 단언
+    테스트로 교체됨).
+  - ⚠ 미검증: 실 LLM E2E 재실행은 안 했다(비용). 정렬 변경은 표시 계층이라 카드 생성 결과
+    자체는 불변이지만, 외부검증 대상 집합은 순서 기준이 바뀌어 달라질 수 있다.
 - **✅ 문서·스크린샷 최종 동기화** (2026-07-18 마감). README 실제 화면을 아스트 2020 실측 3장으로
   교체(검토큐·재고카드·관계카드 — 스트림릿 headless + playwright 촬영, 재생성 카드 기준). 골든
   검사1 수치 갱신(LG생건 72/72·아스트 53/53), 검증 로그에 G7/G9 실측 행 추가, 트러블슈팅에 오늘
@@ -157,7 +182,7 @@
   전수 감사 `src/normalize/label_audit.py` → [CANONICAL_LABEL_AUDIT.md](CANONICAL_LABEL_AUDIT.md)
   (1,659사·35,126조합, 오라벨 후보 1,153건 — '이자비용'←금융비용/금융원가가 1,594사 시스템성
   최대 건). ④외부 경계 대사: figures 구조화 출력→내부 공시값 대조(figure_check
-  match/mismatch/uncheckable, UI ⚠ 마킹) + 상위 K장(top_k_always=3)은 resolved여도 외부검사
+  match/mismatch/uncheckable, UI ⚠ 마킹). 외부검사 대상은 조사 미해결 카드 전부
   + 리다이렉트 URL 해소(resolve_final_url). pytest 618 passed·1 xfailed(신규 26+, 회귀 0).
   **⏭ 남은 결정(사용자)**: 오라벨 후보 1,153건 중 정준명 개명 범위(특히 '이자비용'→'금융원가'와
   이자보상배율 분자 문제 — 진짜 이자비용 매핑 dart_InterestExpenseFinanceExpense로 교체 여부).
