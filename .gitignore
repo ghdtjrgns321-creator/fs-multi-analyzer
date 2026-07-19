@@ -31,3 +31,6 @@ Thumbs.db
 data/_backup_corrected/
 .claude/state/
 .codex/
+
+# 브라우저 자동화 산출물(로그·스냅샷, 재생성 가능)
+.playwright-cli/
