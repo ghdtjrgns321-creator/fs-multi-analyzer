@@ -20,6 +20,7 @@ from src.report.coverage import (
     build_coverage_ledger,
     build_derived_ledger,
     derived_layer_accounts,
+    no_std_code_identities,
     build_note_ledger,
     build_sce_ledger,
     surfaced_note_facts,
@@ -92,6 +93,7 @@ def build_company_report(
         account_series,
         target_year,
         derived_layer_accounts(load_relationship_chains(), ratio_config),
+        no_std_code_identities(frame),
     )
     # 주석 차원: detail+기타주석 전량을 분석 투입(흡수=본문중복·메타=비fact만 사실기반 제외).
     note_facts_raw = load_notes_classified(corp_code, [target_year]).to_dict("records")

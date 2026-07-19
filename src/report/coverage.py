@@ -281,20 +281,44 @@ def _derived_identity(row: dict) -> str:
     return str(row.get("series_key") or "")
 
 
+def no_std_code_identities(frame: Any) -> set[str]:
+    """표준계정코드가 없는(별칭 제안 대상) 행의 파생층 정체성 집합.
+
+    판정 기준은 alias_suggest.unmapped_accounts와 동일 — account_id가 '표준계정코드 미사용'
+    이거나 빈 값. 표준코드를 가진 미매핑은 사전 누락이 아니라 강등이므로 여기 안 들어간다.
+    """
+
+    out: set[str] = set()
+    if not hasattr(frame, "to_dict") or frame.empty:
+        return out
+    for row in frame.to_dict("records"):
+        account_id = str(row.get("account_id") or "").strip()
+        if account_id and "미사용" not in account_id:
+            continue
+        identity = _derived_identity(row)
+        if identity:
+            out.add(identity)
+    return out
+
+
 def build_derived_ledger(
     account_series: list[dict],
     target_year: int,
     covered_names: set[str],
+    no_std_code: set[str] | None = None,
 ) -> dict[str, object]:
     """파생층 커버리지 — 계정층 분석 계정이 사슬·비율에 진입했나.
 
     모집단 = target_year 잔액>0 계정(계정층에서 이미 분석된 것). 항등식:
       population_n == entered_n + len(excluded) + len(blocked)
 
-    blocked = 미매핑이라 표준 이름이 없어 진입 자체가 불가능했던 계정. 이 값이 이 원장의
-    존재 이유다 — 계정층 원장에서 '분석됨'으로 세어져 안 보이던 몫이다.
-    excluded = 표준 이름은 있으나 사슬·비율 정의에 없는 계정(정당 — 모든 계정이 사슬에
-    속하지는 않는다).
+    blocked = **표준코드가 없어** 이름을 못 붙인 계정 — 별칭 제안기(alias_suggest)가 고칠 수
+    있는 몫이라 그대로 교정 후보가 된다. no_std_code로 판별한다(alias_suggest.unmapped_accounts와
+    같은 기준: account_id가 '표준계정코드 미사용'이거나 빈 값).
+    excluded = ⓐ 표준 이름은 있으나 사슬·비율 정의에 없는 계정 ⓑ 표준코드는 있는데 강등된
+    계정(중복 방지·표 불일치). ⓑ는 누락이 아니다 — 예: 삼성 '보통주자본금'은 '자본금' 총계가
+    이미 매핑돼 이중계상을 막으려 강등된 것이고, 현금흐름표의 '당기순이익'은 손익계산서에서
+    이미 진입한다. 이들을 누락으로 세면 과대계상이 된다.
     """
 
     from src.normalize.mapper import OTHER_CANONICAL, UNMAPPED
@@ -323,9 +347,17 @@ def build_derived_ledger(
         canonical = str(row.get("canonical") or "").strip()
         if _is_unmapped(row):
             label = str(row.get("label") or "").strip()
+            # 표준코드를 가진 미매핑은 사전 누락이 아니라 강등(중복 방지·표 불일치)이다.
+            if no_std_code is not None and key not in no_std_code:
+                excluded.append(
+                    {
+                        "account": key,
+                        "canonical": label,
+                        "reason": "표준코드 보유 — 중복 방지·표 불일치로 강등(누락 아님)",
+                    }
+                )
+                continue
             if label in covered_names:
-                # 표 불일치 강등(예: 현금흐름표의 '당기순이익'). 같은 이름이 제 표(손익계산서)에서
-                # 이미 사슬·비율에 진입하므로 누락이 아니다 — 누락으로 세면 과대계상.
                 excluded.append(
                     {
                         "account": key,
@@ -373,5 +405,6 @@ __all__ = [
     "build_note_ledger",
     "build_sce_ledger",
     "derived_layer_accounts",
+    "no_std_code_identities",
     "surfaced_note_facts",
 ]

@@ -291,6 +291,23 @@ def _register_suggestion(
     )
 
 
+def _chain_ratio_accounts() -> set[str]:
+    """관계사슬·재무비율이 이름으로 조회하는 표준 계정 집합.
+
+    제안된 canonical이 이 집합에 있으면 등록 즉시 관계분석에 편입된다 — 등록 효과가 가장
+    큰 건이라 화면에 표시한다. 미매핑인 채로는 어느 계정이든 이 분석에 못 들어간다.
+    """
+
+    try:
+        from src.report.coverage import derived_layer_accounts
+        from src.signals.config import load_relationship_chains
+        from src.signals.ratios import load_ratio_config
+
+        return derived_layer_accounts(load_relationship_chains(), load_ratio_config())
+    except Exception:  # 표시용 부가정보 — 실패해도 별칭 제안 자체는 막지 않는다
+        return set()
+
+
 def render_alias_suggestions(corp_code: str, year: str) -> None:
     """미매핑 계정에 LLM canonical 제안을 표시하고, 사람이 확인 클릭 시에만 등록."""
 
@@ -298,6 +315,9 @@ def render_alias_suggestions(corp_code: str, year: str) -> None:
     st.caption(
         "무표준코드 미매핑 계정에 canonical 후보를 제안한다. 회계적으로 맞는지 확인 후 등록."
     )
+    # 파생층 원장이 짚은 '관계사슬·재무비율 미진입' 계정을 먼저 붙이도록 표시한다.
+    # 이름이 없어 분석에서 조회조차 안 되던 계정이라, 등록 효과가 가장 크다.
+    chain_ratio_accounts = _chain_ratio_accounts()
     if st.button("미매핑 계정 별칭 제안 실행", key="alias_suggest_run"):
         result = suggest_aliases(corp_code, int(year))
         if result["status"] == "skipped":
@@ -312,10 +332,14 @@ def render_alias_suggestions(corp_code: str, year: str) -> None:
 
         col_info, col_btn = st.columns([4, 1])
         with col_info:
+            enters = sug.suggested_canonical in chain_ratio_accounts
             st.write(
                 f"**{sug.alias}** ({sug.sj_div}) → `{sug.suggested_canonical}` "
                 f"· 신뢰도 {sug.confidence:.2f}"
             )
+            if enters:
+                # 미매핑인 채로는 관계사슬·재무비율이 이름으로 조회하지 못한다 — 등록하면 편입.
+                st.caption("★ 등록하면 관계사슬·재무비율에 편입되는 계정")
             if sug.reason:
                 st.caption(sug.reason)
         with col_btn:
