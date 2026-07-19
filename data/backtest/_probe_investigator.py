@@ -6,7 +6,7 @@
 cards_store.load_cards는 {"account_cards": [...], "relationship_cards": [...],
 "company_cards": [...], "series_rows": [...], "target_year": ...} 형태 dict(또는 부재시
 None)를 반환한다. 각 카드는 model_dump(mode="json")으로 저장된 dict이므로
-AccountFinding.model_validate로 복원해야 priority_score·account 등 속성 접근이 된다.
+AccountFinding.model_validate로 복원해야 vote_count·account 등 속성 접근이 된다.
 note_facts는 save_cards가 스냅샷에 남기지 않으므로 이 프로브에서는 빈 리스트로 진행한다
 (find_notes 도구가 빈 결과를 반환할 뿐 실패하지 않음 — graceful degrade).
 """
@@ -17,6 +17,7 @@ import asyncio
 import json
 import sys
 
+from src.report.card_order import card_sort_key
 from src.report.cards_store import load_cards
 from src.report.decomposition import decompose_change, load_bridges
 from src.report.investigation_config import load_investigation_config
@@ -37,7 +38,7 @@ async def main(corp: str, year: int, n_cards: int = 3) -> None:
         for section in _CARD_SECTIONS
         for raw in (stored.get(section) or [])
     ]
-    cards.sort(key=lambda c: c.priority_score, reverse=True)
+    cards.sort(key=card_sort_key)  # 화면·리포트와 같은 사전식 정렬(표수 → 금액)
     cards = cards[:n_cards]
     if not cards:
         print(f"카드 0건: {corp}/{year}")
