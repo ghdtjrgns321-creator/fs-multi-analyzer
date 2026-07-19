@@ -69,7 +69,7 @@
 
 `universal.scan_universal_signals`는 관계사슬 밖 전 계정을 단일 일관 statement 기준(`preferred_fs_div`, 혼용 금지)으로 스캔한다. `UNIVERSAL_STATEMENTS=(BS,IS,CIS,CF)` — SCE(2D 격자표)는 평면 스캔에서 제외해 합계·member 셀 오비교로 인한 거짓 신호를 막는다. `_valid_yoy_base`(abs(prior)≥floor & 동부호)로 소액기저·부호반전을 걸러내고, z-score는 [−10,10]로 클립한다. **채점/quota를 제거**해 materiality순 전량 반환한다(top-N 없음). unmapped 계정도 YoY 스캔해 "기타 중요 계정"으로 표면화한다.
 
-관계 사슬 9개(`relationship_chains.yaml`)는 pairwise를 넘어 "사슬 추적"으로 정합성을 본다:
+관계 사슬 11개(`relationship_chains.yaml`)는 pairwise를 넘어 "사슬 추적"으로 정합성을 본다:
 ```
 매출 → 매출채권 → 대손충당금 → 영업CF          (수익의 질·회수가능성)
 재고 → 매출원가 → 재고평가손실                  (재고 진부화·원가)
@@ -95,6 +95,14 @@ population_n == analyzed_n + len(excluded) + len(unaccounted)   → reconciled
 ```
 
 모집단은 frame 본문 셀(CFS/OFS, 윈도우 연도, 잔액>0) 전량이다. 미설명(unaccounted)이 1건이라도 있으면 "⚠ 미분석 N건"으로 표면화한다. 이 원장은 실제로 작동을 입증했다 — 1차 실행에서 대주 미설명 24건(NaN placeholder 거짓 드롭)을 자동 포착해 `_real_amount` 필터를 수정하게 했다. 파생층(비율)까지 확장돼(`build_fs_div_coverage`) fs_div-고정 누락을 전수 포착하는 영구 가드다.
+
+**파생층 진입 원장**(`build_derived_ledger`)이 여기에 축을 하나 더 얹는다. 계정층 원장은 "모든 셀이 패널에 실렸나"만 재는데, 미매핑 계정도 원문 라벨을 키로 패널에는 실리므로 거기서는 '분석됨'으로 세어진다. 그러나 관계사슬·재무비율은 **표준 계정명**으로 조회하므로 미매핑은 진입 자체가 불가능하다 — 계정층 원장만 보면 안 보이는 조용한 드롭이다.
+
+```
+population_n == entered_n + len(excluded) + len(blocked)   → reconciled
+```
+
+`blocked`는 **표준코드가 없어** 이름을 못 붙인 계정으로, `alias_suggest.unmapped_accounts`와 같은 모집단이다 — 즉 그대로 별칭 교정 후보가 된다. `excluded`는 ⓐ 표준 이름은 있으나 사슬·비율 정의에 없는 계정 ⓑ 표준코드는 있는데 중복 방지·표 불일치로 강등된 계정이다. ⓑ를 누락으로 세면 과대계상이 된다 — 삼성 `보통주자본금`은 `자본금` 총계가 이미 매핑돼 이중계상을 막으려 강등된 것이고, 현금흐름표의 `당기순이익`은 손익계산서에서 이미 진입한다. 실측(2024): 삼성 208 = 66 + 137 + **5**, 대주 237 = 49 + 178 + **10**. 전처리의 별칭 제안 화면은 제안된 canonical이 사슬·비율 조회 계정(47종)에 속하면 "등록하면 편입되는 계정"으로 표시해, 재기만 하지 않고 교정 루프로 잇는다.
 
 ## 4.8 실증 예시 — 삼성전자 2025 자기주식취득이 "신규 발생"으로 표면화
 

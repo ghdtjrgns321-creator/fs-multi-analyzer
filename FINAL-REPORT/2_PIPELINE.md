@@ -17,8 +17,8 @@ flowchart TD
     M --> P3[flow]
     M --> P4[trend]
     M --> P5[industry]
-    P1 & P2 & P3 & P4 & P5 --> GR[grounding<br/>유효숫자 대조로 환각 탈락]
-    GR --> CB[카드 클러스터<br/>계정·관계·회사 + 표수 N/4 + 우선순위 점수]
+    P1 & P2 & P3 & P4 & P5 --> GR[grounding<br/>원 단위 복원 대조로 환각 탈락]
+    GR --> CB[카드 클러스터<br/>계정·관계·회사 + 표수 N/4 + 사전식 정렬]
     CB --> DEC[변동분해 부착]
     DEC --> INV[조사원 도구 루프]
     INV --> RB[반박]
@@ -37,8 +37,8 @@ flowchart TD
 | LLM 전처리         | 게이트 통과 DB  | 별칭 제안·고신뢰(≥0.7) 자동 등록+5개년 재정규화 · 본문 통독 서술추출     | quirk·report_extracts·완료 마커     | [3장](3_COLLECT-NORMALIZE.md)    |
 | L2 신호엔진        | 정규화 frame    | 전수 스캔·다축 프로파일러·관계사슬·비율·변동분해·커버리지 원장           | 계정 패널·시계열·큐·원장            | [4장](4_SIGNAL-ENGINE.md)        |
 | L3 5관점           | 관점별 material | 병렬 발견(내부 4 + 동종 1), 각 관점 LLM 1회                              | SuspicionItem 목록                  | [5장](5_PERSPECTIVES-CARDS.md)   |
-| grounding          | 의심건          | 인용 수치를 실데이터 유효숫자와 대조, 환각 탈락                          | grounded 의심건                     | [6장](6_GROUNDING-GUARDRAILS.md) |
-| 카드 조립          | grounded 의심건 | 계정/관계/회사 클러스터·표수·우선순위 점수·브리지 병합                   | AccountFinding 카드                 | [5장](5_PERSPECTIVES-CARDS.md)   |
+| grounding          | 의심건          | 인용 수치를 원 단위로 복원해 실데이터와 대조, 환각 탈락                          | grounded 의심건                     | [6장](6_GROUNDING-GUARDRAILS.md) |
+| 카드 조립          | grounded 의심건 | 계정/관계/회사 클러스터·표수·사전식 정렬·브리지 병합                     | AccountFinding 카드                 | [5장](5_PERSPECTIVES-CARDS.md)   |
 | 조사·반박·외부검증 | 카드            | 조사원 도구 루프 → 반박·외부검증 병렬                                    | 결론·반대근거·외부근거              | [5장](5_PERSPECTIVES-CARDS.md)   |
 | L5 렌더            | 카드 목록       | 3섹션 카드 + 타입별 차트                                                 | Streamlit 화면                      | [7장](7_UI-DASHBOARD.md)         |
 
@@ -60,9 +60,9 @@ flowchart TD
 
 **L3 관점 발견** — numeric 관점 LLM이 "재고자산이 5년 누적 4배 증가, 재고회전율 급락"을 `SuspicionItem`으로 제출한다(account_id=재고자산, cited_value="168,532,992,835", issue_type=cost_inventory). flow 관점은 재고↔매출원가 역행을 relationship scope로 제출한다.
 
-**grounding** — 인용 값 "168,532,992,835"의 유효숫자가 `CFS:재고자산` 인덱스 풀에 실재하는지 대조 → 통과(grounded=True). 지어낸 값이면 여기서 탈락했을 것이다.
+**grounding** — 인용 값 "168,532,992,835"를 원 단위로 읽어 `CFS:재고자산` 인덱스 풀의 실값과 자릿수까지 대조 → 통과(grounded=True). 지어낸 값이면 여기서 탈락했을 것이다.
 
-**카드 조립** — grounded 의심건이 `acct:BS:CFS:재고자산` cluster_key로 묶여 계정 카드가 된다. 표수(votes)는 이 계정을 지적한 내부 관점 고유 수. 관계 카드 `rel:CFS:매출|CFS:매출원가|CFS:재고자산`도 별도 생성. 연속 우선순위 점수(materiality 0.35·votes 0.30·anomaly 0.15·confidence 0.20 가중합)로 정렬된다.
+**카드 조립** — grounded 의심건이 `acct:BS:CFS:재고자산` cluster_key로 묶여 계정 카드가 된다. 표수(votes)는 이 계정을 지적한 내부 관점 고유 수. 관계 카드 `rel:CFS:매출|CFS:매출원가|CFS:재고자산`도 별도 생성. 정렬은 가중합 점수가 아니라 **사전식 비교**다 — 반박 정상우세는 하단 → 표수 내림 → 금액 내림(`card_order.py`). 가중치(0.35·0.30·0.15·0.20)는 성분별 근거를 댈 수 없어 폐지했다.
 
 **조사·반박** — 조사원이 변동분해로 원인 경로를 좁히고, 반박 에이전트가 "재고 증가는 수주 대비 선제 생산일 수 있다"(정상 설명)·"재고실사·평가충당금 확인"(다음 절차)을 채운다. 위험도 숫자는 건드리지 않는다.
 
