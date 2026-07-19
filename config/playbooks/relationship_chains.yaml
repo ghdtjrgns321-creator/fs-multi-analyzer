@@ -130,33 +130,14 @@ relationship_chains:
         procedure: provisions_contingencies_disclosure
         gist: 충당부채·우발부채 인식과 공시를 수치와 텍스트로 교차검증한다.
         source_url: https://www.ifrs.org/issued-standards/list-of-standards/ias-37-provisions-contingent-liabilities-and-contingent-assets/
-  - id: intangible-impairment
-    name: 자산 손상·자산화
-    chain: [무형자산, 영업권, 연구개발비, 무형자산손상차손]
-    audit_basis:
-      - standard: ISA/KSA 520
-        procedure: analytical_procedures
-        gist: 무형자산 증가와 연구개발비·손상차손의 관계를 분석적 절차로 검토한다.
-        source_url: https://www.iaasb.org/standards-pronouncements
-      - standard: ISA/KSA 540
-        procedure: accounting_estimates_and_disclosures
-        gist: 손상 판단과 회수가능액 추정을 회계추정 및 공시 검토 관점으로 본다.
-        source_url: https://www.iaasb.org/standards-pronouncements
-      - standard: K-IFRS 1036 / IAS 36
-        procedure: impairment_review
-        gist: 자산 손상 인식 시점과 손상 공시를 수치 신호와 교차검증한다.
-        source_url: https://www.ifrs.org/issued-standards/list-of-standards/ias-36-impairment-of-assets/
-      - standard: K-IFRS 1038 / IAS 38
-        procedure: intangible_assets_capitalisation
-        gist: 개발비 자산화 요건과 무형자산 인식·상각 주석을 비용 감소 신호와 함께 본다.
-        source_url: https://www.ifrs.org/issued-standards/list-of-standards/ias-38-intangible-assets/
   - id: cash-existence
     name: 현금·금융자산 실재성
-    chain: [현금및현금성자산, 단기금융상품, 이자수익]
+    # 이자수익은 10사뿐 — 금융수익(171사)이 실측 커버리지가 넓다.
+    chain: [현금및현금성자산, 단기금융상품, 금융수익]
     audit_basis:
       - standard: ISA/KSA 500
         procedure: evidence_grounding
-        gist: 현금·금융자산 잔액과 그로부터 발생해야 할 이자수익을 함께 근거로 본다.
+        gist: 현금·금융자산 잔액과 그로부터 발생해야 할 금융수익을 함께 근거로 본다.
         source_url: https://www.iaasb.org/standards-pronouncements
       - standard: ISA/KSA 505
         procedure: external_confirmations
@@ -168,7 +149,7 @@ relationship_chains:
         source_url: https://www.ifrs.org/issued-standards/list-of-standards/ifrs-7-financial-instruments-disclosures/
   - id: related-party-lending
     name: 특수관계자 자금 유출
-    chain: [대여금증가, 투자활동현금흐름, 관계기업투자]
+    chain: [장기대여금증가, 투자활동현금흐름, 관계기업투자]
     audit_basis:
       - standard: ISA/KSA 550
         procedure: related_party_review
@@ -244,9 +225,8 @@ l2_mvp1:
     - 무형자산
     - 무형자산손상차손
     - 영업권
-    - 연구개발비
-    - 이자수익
-    - 대여금증가
+    - 금융수익
+    - 장기대여금증가
     - 유동부채
     - 매입채무
     - 단기차입금
@@ -320,22 +300,22 @@ l2_mvp1:
       name: 투자활동CF vs 유형자산 취득 증가율 괴리
       account_a: 투자활동현금흐름
       account_b: 유형자산취득
-    - id: intangible-vs-rnd-expense
-      name: 무형자산 vs 연구개발비 증가율 괴리
-      account_a: 무형자산
-      account_b: 연구개발비
-    - id: intangible-vs-impairment
-      name: 무형자산 vs 무형자산손상차손 증가율 괴리
-      account_a: 무형자산
-      account_b: 무형자산손상차손
-    - id: short-term-investment-vs-interest-income
-      name: 단기금융상품 vs 이자수익 증가율 괴리
+    # 계정 커버리지 실측(표본 200사, 2개 연도 모두 보유 기준)으로 짝을 정했다.
+    # 이자수익은 10사뿐이라 금융수익(171사)으로 대체 — 이자·배당·평가익을 합친 상위 계정이라
+    # "잔액은 느는데 수익이 안 따라온다"는 실재성 질문은 그대로 성립한다.
+    # 넣지 않은 축과 이유(같은 실측):
+    #   무형자산↔연구개발비  — 연구개발비 5사(경상개발비도 5사). 개발비 자산화는 본문 합계
+    #                          계정으로 측정 불가 → 주석 관점이 서술로 본다.
+    #   무형자산↔손상차손    — 짝 보유는 25사지만 실제 산출 2사. 손상차손 금액이 규모 임계
+    #                          (max 1억, 자산 1%) 아래라 괴리 신호로는 구조적으로 안 걸린다.
+    - id: short-term-investment-vs-financial-income
+      name: 단기금융상품 vs 금융수익 증가율 괴리
       account_a: 단기금융상품
-      account_b: 이자수익
-    - id: cash-vs-interest-income
-      name: 현금및현금성자산 vs 이자수익 증가율 괴리
+      account_b: 금융수익
+    - id: cash-vs-financial-income
+      name: 현금및현금성자산 vs 금융수익 증가율 괴리
       account_a: 현금및현금성자산
-      account_b: 이자수익
+      account_b: 금융수익
   direction_checks:
     - id: receivable-growth-vs-operating-cf
       name: 매출채권 증가율과 영업활동현금흐름 방향 비교
@@ -349,9 +329,11 @@ l2_mvp1:
       name: 당기순이익과 영업활동현금흐름 방향 비교
       growth_account: 당기순이익
       flow_account: 영업활동현금흐름
-    - id: lending-vs-investing-cf
-      name: 대여금 증가와 투자활동현금흐름 방향 비교
-      growth_account: 대여금증가
+    # 대여금증가(43사)보다 장기대여금증가(63사)가 커버리지가 넓고, 특수관계자 자금 유출은
+    # 통상 장기로 잡힌다.
+    - id: long-term-lending-vs-investing-cf
+      name: 장기대여금 증가와 투자활동현금흐름 방향 비교
+      growth_account: 장기대여금증가
       flow_account: 투자활동현금흐름
   deferred_ratios:
     - name: ROI
