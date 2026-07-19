@@ -12,7 +12,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 
 from golden.hit.check_hit import normalize_account_key
-from src.report.grounding import _sig
+from src.report.grounding import _matches_scaled, _sig_amount
 
 
 @dataclass(frozen=True)
@@ -112,14 +112,16 @@ def _as_float(value: object) -> float | None:
 
 
 def gate_asfiled(label: Label, asfiled_value: float | None) -> bool:
-    """등록조건: 우리 DB의 t년 값(label.reported)이 원본 접수분 값과 유효숫자 일치.
+    """등록조건: 우리 DB의 t년 값(label.reported)이 원본 접수분 값과 일치(자릿수 포함).
 
-    asfiled_value=None(원본 미조회)이면 미검증 → False(등록 보류). 값이 있으면 유효숫자 대조.
+    asfiled_value=None(원본 미조회)이면 미검증 → False(등록 보류).
+    양쪽 다 실제 금액이라 유효숫자가 아니라 원 단위 절대값으로 본다 — 유효숫자로 보면
+    1,961억과 1,961백만이 같아져 스케일이 어긋난 적재를 정답으로 등록해버린다.
     """
 
     if label.reported is None or asfiled_value is None:
         return False
-    return _sig(str(int(round(label.reported)))) == _sig(str(int(round(asfiled_value))))
+    return _matches_scaled([abs(float(label.reported))], {_sig_amount(asfiled_value)})
 
 
 def build_label_set(

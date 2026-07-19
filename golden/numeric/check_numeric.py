@@ -1,11 +1,14 @@
 """검사1 수치 골든 — 최종 카드의 표시 수치를 DART 원천값과 대조(설계: golden/DESIGN.md §2).
 
-기존 grounding 인덱스(`build_account_index`)와 유효숫자 대조(`_sig`)를 **최종 카드**에 재적용한다.
-grounding은 LLM 출력을 카드 조립 *전*에 보지만, 이 하니스는 모든 변환(억/조 환산·표기정규화)
-*후*의 카드를 봐서 grounding이 못 보는 변환 버그를 잡는다.
+기존 grounding 인덱스(`build_account_index`)와 값 대조(`_matches_scaled`)를 **최종 카드**에
+재적용한다. grounding은 LLM 출력을 카드 조립 *전*에 보지만, 이 하니스는 모든 변환(억/조 환산·
+표기정규화) *후*의 카드를 봐서 grounding이 못 보는 변환 버그를 잡는다.
+
+대조 기준은 grounding과 같이 **원 단위 절대값**이다(자릿수 포함). 예전 유효숫자(trailing-zero
+제거) 대조는 1,961억과 1,961백만을 같은 값으로 봐서 스케일 오류를 통과시켰다.
 
 판정(verdict) 4종:
-- match          : 원값 유효숫자가 그 계정 원천 풀에 실재 + 환산 표기도 정합
+- match          : 원값이 그 계정 원천 풀에 실재(자릿수 포함) + 환산 표기도 정합
 - value_mismatch : 계정은 있으나 인용 금액이 원천에 없음(환각) — 1a 실패
 - convert_fail   : 원값은 맞으나 표시 표기가 원값과 스케일 불일치(÷10 등) — 1b 실패
 - unreconcilable : 계정 자체가 인덱스에 없어 대조 불가(조용히 통과 금지, 별도 버킷)
@@ -18,7 +21,7 @@ from collections.abc import Callable
 from typing import Any
 
 from dashboard.card_data import fmt_krw
-from src.report.grounding import _sig
+from src.report.grounding import _matches_scaled, _sig_amount
 
 # 서술/지표 근거는 금액 표가 아니므로 대조 대상에서 뺀다(evidence_rows와 동일 필터).
 _NON_AMOUNT_KINDS = frozenset({"metric", "narrative"})
@@ -159,7 +162,7 @@ def _reconcile_amount(
         "year": str(year or ""),
         "raw": str(raw_str),
         "display": display,
-        "sig": _sig(str(int(round(raw)))) if raw is not None else "",
+        "sig": _sig_amount(raw) if raw is not None else "",
     }
     if raw is None:
         return {**record, "verdict": "unreconcilable"}
@@ -173,7 +176,7 @@ def _reconcile_amount(
         pool = resolve_pool(locator, sj_div, index)
         if pool is None:
             return {**record, "verdict": "unreconcilable"}
-    if _sig(str(int(round(raw)))) not in pool:
+    if not _matches_scaled([abs(float(raw))], pool):
         return {**record, "verdict": "value_mismatch"}
     if not convert_ok(raw, display):
         return {**record, "verdict": "convert_fail"}
