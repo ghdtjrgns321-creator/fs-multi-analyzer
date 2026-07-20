@@ -1,5 +1,9 @@
 # FS Multi-Agent Analyzer
 
+> **권위 문서는 이 README와 [FINAL-REPORT/](FINAL-REPORT/)뿐이다.** `data/backtest/_*.md`,
+> `dev/`는 개발 중 작업기록이라 수치(테스트 개수 등)가 최신이 아닐 수 있다 — 현황은 위 두
+> 곳으로만 판단한다. 테스트 현황: `uv run pytest tests -q`로 직접 확인.
+
 ## 개요
 
 연차별 사업보고서 **멀티에이전트 교차검증** 도구

@@ -32,5 +32,9 @@ data/_backup_corrected/
 .claude/state/
 .codex/
 
+# 개발 중 작업기록(비권위 — 진행 계획·감사 워크스페이스). 로컬엔 유지, 배포 제외.
+dev/active/
+_workspace/
+
 # 브라우저 자동화 산출물(로그·스냅샷, 재생성 가능)
 .playwright-cli/
