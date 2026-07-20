@@ -1,7 +1,9 @@
 """반박 서술 수치 도표(figure_sheet) 단위 테스트 — 근본수정 B(예방).
 
 도표=코드가 as-filed series에서 계산한 정확 수치 집합. 감사=서술 숫자가 도표 멤버인지 대조.
-발단: 아스트 2020 반박 "전체 자산 583.1억 감소"(실제 298.8억) 환각 — 도표에 583.1 없어 flag돼야 한다.
+발단: 아스트 2020 반박 "자산 583.1억 감소"를 환각으로 의심했으나, as-filed series(2019 5,787.6억
+→ 2020 5,204.4억) 기준 583.1은 grounded로 확인됨. 오히려 재작성 비교치(5,503.3억) 기준 298.8이
+as-filed 도표에 없다 — 도표는 재작성 비교치가 아닌 연도별 as-filed series로 만들기 때문.
 """
 
 from __future__ import annotations
@@ -15,7 +17,10 @@ from src.report.figure_sheet import (
 
 # 아스트 2020 실측 값(as-filed)
 _INV_2020, _INV_2019 = 168_532_992_835.0, 152_615_809_899.0  # 재고 1685.3 / 1526.2
-_ASSET_2020, _ASSET_2019 = 520_443_461_969.0, 550_327_734_361.0  # 자산총계 5204.4 / 5503.3
+_ASSET_2020, _ASSET_2019 = 520_443_461_969.0, 578_756_230_211.0  # 자산총계 as-filed 5204.4 / 5787.6
+_ASSET_RESTATED_2019 = (
+    550_327_734_361.0  # 2020 보고서 내 재작성 2019 비교치 5503.3 (as-filed series엔 없음)
+)
 
 
 def _series() -> list[dict]:
@@ -63,8 +68,10 @@ def test_sheet_includes_grounded_excludes_hallucination():
     sheet = build_figure_sheet({"재고자산", "자산총계"}, _series())
     assert sheet.contains_money(_INV_2020)  # 1685.3 원값
     assert sheet.contains_money(_INV_2020 - _INV_2019)  # 159.2 델타
-    assert sheet.contains_money(_ASSET_2019 - _ASSET_2020)  # 298.8 자산총계 델타
-    assert not sheet.contains_money(58_310_000_000.0)  # 583.1억 환각 — 도표에 없음
+    assert sheet.contains_money(_ASSET_2019 - _ASSET_2020)  # 583.1 as-filed YoY 델타 — grounded
+    assert not sheet.contains_money(
+        _ASSET_RESTATED_2019 - _ASSET_2020
+    )  # 298.8 재작성 비교치 — as-filed series에 없음
     assert sheet.contains_pct(10.43)  # 재고 증감율
 
 
@@ -72,7 +79,9 @@ def test_company_card_scope_uses_extra_amounts():
     # company 카드는 앵커계정이 없어도 자체 근거(note 금액)가 도표에 들어간다.
     sheet = build_figure_sheet(set(), _series(), extra_amounts=[75_369_000_000.0])
     assert sheet.contains_money(75_369_000_000.0)  # 753.69억 note 금액
-    assert not sheet.contains_money(58_310_000_000.0)  # 583.1 여전히 없음
+    assert not sheet.contains_money(
+        _ASSET_RESTATED_2019 - _ASSET_2020
+    )  # 298.8 재작성 비교치 — 도표에 없음
 
 
 # ---- audit_narrative_figures ----
@@ -83,18 +92,18 @@ def test_audit_flags_ungrounded_number():
     flagged = audit_narrative_figures(
         [
             "증가폭은 159.2억원으로 재고잔액 1,685.3억 대비 10.43% 증가",
-            "전체 자산은 583.1억원 감소했는데",
+            "전체 자산은 298.8억원 감소했는데",  # 재작성 비교치 — as-filed 도표에 없음
         ],
         sheet,
     )
-    assert any("583.1" in f for f in flagged)
+    assert any("298.8" in f for f in flagged)
     assert not any("159.2" in f for f in flagged)  # 도표 내 값은 통과
 
 
 def test_audit_clean_when_all_grounded():
     sheet = build_figure_sheet({"재고자산", "자산총계"}, _series())
     flagged = audit_narrative_figures(
-        ["재고 159.2억 증가, 자산총계 298.8억 감소, 10.43% 상승"], sheet
+        ["재고 159.2억 증가, 자산총계 583.1억 감소, 10.43% 상승"], sheet
     )
     assert flagged == []
 

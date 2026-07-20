@@ -1,8 +1,12 @@
 """반박 서술 수치 도표(figure sheet) — 코드가 as-filed series에서 정확 수치를 계산해 LLM에 주고,
-서술 숫자가 그 도표의 멤버인지 감사한다(근본수정 B/예방, 설계 spec 2026-07-14).
+서술 숫자가 그 도표의 멤버인지 감사하도록 설계된 인프라(근본수정 B/예방, 설계 spec 2026-07-14).
+**파이프라인 배선은 보류** — 구현·테스트만 완료됐고 반박 경로에서 호출되지 않는다.
 
-reader.py의 "계산 금지·원문 인용만" 가드를 반박 에이전트로 확장하는 인프라. LLM이 파생값
-(증감·비율)을 직접 계산하다 내는 환각(예: 아스트 "자산 583.1억 감소" ← 실제 298.8억)을 막는다.
+reader.py의 "계산 금지·원문 인용만" 가드를 반박 에이전트로 확장하려는 것. LLM이 파생값
+(증감·비율)을 직접 계산하다 낼 수 있는 환각을 예방하는 방어 하드닝이다.
+※ 촉발 사례였던 아스트 "자산 583.1억 감소"는 이후 as-filed series(2019 5,787.6억 → 2020 5,204.4억)
+   기준으로 grounded 확인됨 — 환각이 아니라, 재작성 비교치(prior 5,503.3억 → 298.8억)와
+   as-filed series가 공존하는 provenance 표시 정책 문제였다.
 """
 
 from __future__ import annotations
@@ -121,7 +125,7 @@ def build_figure_sheet(
         for y in years:
             money.add(round(abs(ys[y]) / 1e8, 1))
         latest = years[-1]
-        # 연속 YoY만 — 다년 임의쌍 델타는 집합을 넓혀 환각(583.1)을 흡수하므로 배제.
+        # 연속 YoY만 — 비연속 임의쌍 델타는 집합을 넓혀 근거 없는 파생값을 우연히 흡수하므로 배제.
         # render도 YoY만 보여주고, B에선 LLM이 render 값만 인용하므로 이 범위가 근거의 전부다.
         pairs = {(years[i], years[i - 1]) for i in range(1, len(years))}
         for a_y, b_y in pairs:
