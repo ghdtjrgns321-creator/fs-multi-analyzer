@@ -13,7 +13,7 @@
    ├─ profiler          self 4축(delta·trend·volatility·mix) → 분위 정규화 → OR 플래그
    ├─ metrics_panel     전 계정 계산값 전량 부착 + occurrence_state (선택·랭킹 없음)
    ├─ ratios            15개 재무비율 (계정 결측이면 not_computed)
-   ├─ decomposition     4개 브리지로 소계 변동을 구성 기여로 분해 (잔차 정직 표시)
+   ├─ decomposition     6개 브리지로 소계 변동을 구성 기여로 분해 (잔차 정직 표시)
    ├─ mvp1 + red_flags  관계사슬 계산 + config 임계 적용
    │
    └─ coverage.build_coverage_ledger  모집단 = 분석 + 제외 + 미설명 (음의공간 대조)
@@ -28,9 +28,9 @@
 | 신호엔진 모듈           | 11                                                        | `src/signals/`                              |
 | 다축 프로파일러 축      | 4 (delta·trend·volatility·mix)                            | `profiler.py:138`                           |
 | 분포 꼬리 임계          | tail = **0.8**                                            | `profiler.py:139`                           |
-| 관계 사슬               | 9                                                         | `config/playbooks/relationship_chains.yaml` |
+| 관계 사슬               | 11                                                        | `config/playbooks/relationship_chains.yaml` |
 | 재무비율                | 15 (4카테고리)                                            | `config/playbooks/financial_ratios.yaml`    |
-| 변동분해 브리지         | 4 (GP·OP·세전·순이익)                                     | `config/decomposition.yaml`                 |
+| 변동분해 브리지         | 6 (GP·OP·세전·순이익·영업창출CF·영업활동CF)               | `config/decomposition.yaml`                 |
 | 스캔 임계 (전부 config) | yoy 50·mix_shift 5·z 2·cfs_ofs_gap 30%·floor 1억·z cap 10 | `relationship_chains.yaml` l2_mvp1          |
 
 ## 4.3 다축 프로파일러 — 룰 열거에서 분포 꼬리로
@@ -75,7 +75,7 @@
 재고 → 매출원가 → 재고평가손실                  (재고 진부화·원가)
 차입금 → 이자비용 → 재무활동CF → 만기 주석      (유동성·계속기업)
 당기순이익 → 영업CF → 운전자본 변동             (이익의 질)
-… (총 9개)
+… (총 11개)
 ```
 
 sanity 게이트(`sanity.py`)가 스캔 전 데이터를 검문한다 — `exclude_foreign_currency_years`(두산밥캣 KRW→USD 1,300배 점프 차단)와 `exclude_asset_sanity_years`(자산총계 100배 점프 제외).
@@ -84,7 +84,7 @@ sanity 게이트(`sanity.py`)가 스캔 전 데이터를 검문한다 — `exclu
 
 카드가 "영업이익 −62.8% 급감"까지 찾아도 **왜**(매출·원가·판관비 중 무엇의 기여)가 없으면 사람이 검증할 수 없다. 분해는 계산이므로 코드가 한다(원칙 §3.1).
 
-`decomposition.yaml`은 K-IFRS 표준 소계 브리지 **4개**만 둔다(계정 트리 전수 정의 아님) — 유한·닫힌 집합이다. 2026-07 코퍼스 전수 실측(4,782 corp-year): GP 잔차≤1% **99.98%**, OP 표준형 **92.1%**, 세전 변형선택 **63.3%**, 순이익 **85.7%**. 회사별로 변형 중 **|잔차| 최소를 데이터로 선택**한다(손 정의 없음). `decompose_change`는 `sum(row.delta) + residual == delta` 항등을 보장하고, 구성 합이 부모 변동과 다르면 "미설명 잔차 X원(Y%)" 행으로 정직하게 노출한다. 구성 라벨에 자기 브리지가 있으면 재귀로 하위 분해를 첨부한다(GP→매출/원가 다단, 순환 가드).
+`decomposition.yaml`은 K-IFRS 표준 소계 브리지 **6개**(손익 4: GP·OP·세전·순이익 + 현금흐름 2: 영업창출CF·영업활동CF)만 둔다(계정 트리 전수 정의 아님) — 유한·닫힌 집합이다. 2026-07 코퍼스 전수 실측(4,782 corp-year): GP 잔차≤1% **99.98%**, OP 표준형 **92.1%**, 세전 변형선택 **63.3%**, 순이익 **85.7%**. 회사별로 변형 중 **|잔차| 최소를 데이터로 선택**한다(손 정의 없음). `decompose_change`는 `sum(row.delta) + residual == delta` 항등을 보장하고, 구성 합이 부모 변동과 다르면 "미설명 잔차 X원(Y%)" 행으로 정직하게 노출한다. 구성 라벨에 자기 브리지가 있으면 재귀로 하위 분해를 첨부한다(GP→매출/원가 다단, 순환 가드).
 
 ## 4.7 커버리지 원장 — 조용한 드롭을 구조적으로 차단
 

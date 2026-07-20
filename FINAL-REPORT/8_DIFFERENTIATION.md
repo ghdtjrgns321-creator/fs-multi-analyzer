@@ -27,7 +27,7 @@
 - LLM 전처리+Phase1을 2-Layer로 재정의했다 — Layer1(문서구조=목차 파트 축, 읽기)과 Layer2(분석 테마 축, 판단)를 분리. 자의적 taxonomy로 rich section을 억지 버킷하던 문제를 근본 해결. "재무제표를 읽을 수 있게 만드는 것"이 이 도구의 실제 자산이다.
 
 **④ 재무제표 간 흐름 + 전기 대비 변화** (PLAN §1)
-- 숫자만 보는 것이 아니라 BS-IS-CF를 9개 관계 사슬로 추적하고(공간 축), 전기 대비 변화·주석 텍스트 변화를 occurrence_state·series_normalize로 전담한다(시간 축). "숫자는 그대로인데 주석 문구가 커졌다" 같은 수치 vs 텍스트 교차가 핵심 신호다.
+- 숫자만 보는 것이 아니라 BS-IS-CF를 11개 관계 사슬로 추적하고(공간 축), 전기 대비 변화·주석 텍스트 변화를 occurrence_state·series_normalize로 전담한다(시간 축). "숫자는 그대로인데 주석 문구가 커졌다" 같은 수치 vs 텍스트 교차가 핵심 신호다.
 
 **⑤ 감사기준서에 앵커링된 방법론** (AUDIT_BASIS·METHODOLOGY)
 - 관점·지표·신호 축(self 4축)이 ISA/KSA·K-IFRS 조항에 1:1 매핑된다(delta→ISA320, trend→ISA520). 신호 축이 capex를 잡으려 발명한 fitting이 아니라 기준서 도출임을 증명해(PHASE1_AXIS_AUDIT_MAPPING) 과적합을 방어한다.

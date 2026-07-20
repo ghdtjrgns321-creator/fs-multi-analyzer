@@ -24,7 +24,7 @@ LLM은 함수만 고름      원 단위 복원 대조      내부 식별자 반�
 | ① tool DSL 앵커링 | LLM이 숫자를 지어냄         | `analysis_tools/`·`investigation_tools.py` |
 | ② grounding       | 인용 수치가 실데이터에 없음 | `grounding.py`                             |
 | ③ 어휘 게이트     | 백데이터 내부 식별자 노출   | `vocab_guard.py`                           |
-| ④ 금액 환산 병기  | LLM 자릿수 나누기 오독(÷10) | `amounts.py`·`figure_sheet.py`             |
+| ④ 금액 환산 병기  | LLM 자릿수 나누기 오독(÷10) | `amounts.py`                               |
 
 ## 6.2 ① tool DSL 앵커링
 

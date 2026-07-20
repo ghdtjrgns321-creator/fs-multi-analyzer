@@ -7,7 +7,7 @@
 ```
 raw OpenDART               L1 정규화                      온보딩 게이트
 finstate JSON     ──→   validate(Pandera)          ──→   G1 완결성 + BS 항등식(tol 100만원)
-주석 XBRL zip           map_row (id-first)                G3·G7 산술검산(소계 9 + 표 간 대사 4)
+주석 XBRL zip           map_row (id-first)                G3·G7 산술검산(소계 10 + 표 간 대사 8)
 사업보고서 XML          map_change_row (SCE label-first)   G5 신호 무결성 + G8 번역 품질
                        _arbitrate_conflicts               G9 연도 간 대사(표면화 전용)
                        _rescue_cross_statement            통화 KRW 검사(_currency_ok)
@@ -25,7 +25,7 @@ finstate JSON     ──→   validate(Pandera)          ──→   G1 완결�
 | ------------------ | -------------------------------------------------------------------------- | ---------------------------------- |
 | L0 수집 모듈       | 12                                                                         | `src/collect/`                     |
 | L1 정규화 모듈     | 15 (게이트 검문 3종 gate_identities·gate_quality·gate_yoy 포함)            | `src/normalize/`                   |
-| canonical 표준계정 | 약 2,017 (5표: BS 603·CF 770·CIS 451·SCE 155·IS 38) · 별칭 1,805          | `config/canonical_accounts.yaml`   |
+| canonical 표준계정 | 약 2,017 (5표: BS 603·CF 770·CIS 451·SCE 155·IS 38) · 별칭 1,805           | `config/canonical_accounts.yaml`   |
 | 매핑 상태 코드     | 6 (EXACT·ALIAS·UNMAPPED·ID_LABEL_CONFLICT·OTHER_CANONICAL·CROSS_STATEMENT) | `src/normalize/mapper.py:11-18`    |
 | 온보딩 게이트      | G1·G2·G3·G5·G6·G7·G8·G9 + 통화                                             | `src/normalize/onboarding_gate.py` |
 | 회계 항등식        | 3 (BS-BALANCE·ROLLFORWARD·CF-RECON)                                        | `config/playbooks/identities.yaml` |
