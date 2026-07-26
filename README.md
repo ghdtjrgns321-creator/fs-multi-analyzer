@@ -675,7 +675,7 @@ LLM 관점 5개가 각자 독립으로 본 결과를 병합해 **계정 12 · �
 
 ## 8. 빠른 시작
 
-**Docker** — 파이썬·uv 설치 없이 대시보드만 띄울 때.
+**Docker**
 
 ```bash
 # API 키 설정 (DART_API_KEY · OPENAI_API_KEY · GOOGLE_API_KEY)
@@ -685,11 +685,7 @@ cp .env.example .env
 docker compose up --build
 ```
 
-수집·분석 산출물(`data/`)과 playbook(`config/`)은 호스트에 마운트된다 — 컨테이너를 지워도
-데이터는 남고, YAML 수정은 재빌드 없이 반영된다. 이미지는 실행 전용이라 테스트·lint 도구
-(dev 그룹)는 포함하지 않는다.
-
-**로컬 uv** — 코드를 고치고 테스트까지 돌릴 때.
+**로컬 uv**
 
 ```bash
 # 설치
