@@ -1,0 +1,17 @@
+name: disclosure-review-agent
+
+services:
+  dashboard:
+    build: .
+    image: disclosure-review-agent:local
+    ports:
+      - "8501:8501"
+    env_file:
+      # API 키(DART·OPENAI·GOOGLE)는 이미지가 아니라 실행 시점에 주입한다.
+      - path: .env
+        required: false
+    volumes:
+      # 수집·분석 산출물은 호스트에 남는다 — 컨테이너를 지워도 데이터는 유지.
+      - ./data:/app/data
+      # playbook·계정 YAML은 재빌드 없이 수정 즉시 반영.
+      - ./config:/app/config
