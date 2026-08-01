@@ -123,7 +123,7 @@ def test_claim_lines_labels_and_skips_blank():
     )
     lines = claim_lines(card)
     assert len(lines) == 1
-    assert lines[0]["perspective"] == "수치"  # 내부명 → 사람용 라벨
+    assert lines[0]["perspective"] == "재무 수치"  # 내부명 → 사람용 라벨
     assert lines[0]["cited_value"] == "1.96조"
 
 
@@ -521,7 +521,7 @@ def test_perspective_badge_names_dedup_and_internal_only():
             {"perspective": "external", "description": "d"},  # 비내부 → 제외
         ]
     }
-    assert perspective_badge(card) == "수치·추세 의심"
+    assert perspective_badge(card) == "재무 수치·시계열 추세 의심"
     assert perspective_badge({"claims": []}) == ""
 
 

@@ -464,7 +464,7 @@ def _card_expander(card: Any, series_rows: list[dict], target_year: int, bridges
     decomposition = decompose_change(series_rows, account_key, target_year, bridges)
     fs_label, name = split_series_key(account_key)
     fs_tag = f" ({fs_label})" if fs_label else ""
-    # 배지는 "누가 지적했나"(수치·추세 의심) — 표수 숫자보다 읽힌다(사용자 피드백).
+    # 배지는 "누가 지적했나"(재무 수치·시계열 추세 의심) — 표수 숫자보다 읽힌다(사용자 피드백).
     badge = perspective_badge(card)
     badge_tag = f" · :blue[{badge}]" if badge else ""
     # 라벨 본문은 완결된 핵심 한 줄(조사원 label > 결정론 검토포인트) — 중간 절단 금지.

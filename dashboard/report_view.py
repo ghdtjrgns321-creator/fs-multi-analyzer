@@ -130,7 +130,7 @@ def _render_card_sections(card_result: dict) -> None:
         grouped=True,  # 넓은 주제 그룹이 1차 구조(점수 전체 줄세우기 대체)
     )
     render_cards_section(
-        "계정 관계 이상 (흐름)",
+        "계정 관계 이상",
         card_result.get("relationship_cards") or [],
         series_rows,
         target_year,
