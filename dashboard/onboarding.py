@@ -260,7 +260,7 @@ def render_gate_report(report: dict) -> None:
             st.caption("dangling 없음")
 
     g6 = report.get("G6_dump", {})
-    with st.expander("G6 dump (LLM 통독 입력)"):
+    with st.expander("G6 dump (LLM 읽기 입력)"):
         st.write({"dump 경로": g6.get("dump_path"), "줄수": g6.get("dump_lines")})
 
 
@@ -484,7 +484,7 @@ def render() -> None:
 
     # Layer 1 서술추출(일괄 실행에서 채워짐) — 추출 요약 + 완결성 경고
     st.markdown("---")
-    st.markdown("##### Layer 1 서술추출 (사업보고서 본문 파트별 통독)")
+    st.markdown("##### Layer 1 서술추출 (사업보고서 본문 파트별 읽기)")
     layer1_result = st.session_state.get("layer1")
     if layer1_result:
         if layer1_result.get("status") in ("ok", "empty"):

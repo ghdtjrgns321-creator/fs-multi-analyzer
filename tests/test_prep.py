@@ -4,7 +4,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from dashboard.report_view import analysis_window, visible_stages, window_for_year
+from dashboard.report_view import analysis_window, window_for_year
+from dashboard.steps import COLLECT, CROSS, NORMALIZE, READ, all_done, build_steps
 from src.report.prep import (
     company_state,
     onboarding_done,
@@ -91,15 +92,48 @@ def test_raw_years_sorted(tmp_path):
     assert raw_years("00000008", root=tmp_path) == [2021, 2023, 2025]
 
 
-# ── phase gating (미준비면 분석·온보딩 숨김) ─────────────────────────────
-def test_visible_stages_unprepared():
-    s = visible_stages(is_prepared=False)
-    assert s["prepare"] is True and s["analysis"] is False and s["onboarding"] is False
+# ── 실행 4단계 — 끝난 단계는 건너뛴다(버튼은 [분석 실행] 하나) ───────────
+WINDOW = [2016, 2017, 2018, 2019, 2020]
 
 
-def test_visible_stages_prepared():
-    s = visible_stages(is_prepared=True)
-    assert s["prepare"] is False and s["analysis"] is True and s["onboarding"] is True
+def _steps(**over):
+    kwargs = {
+        "window": WINDOW,
+        "missing_years": [],
+        "prepared": False,
+        "onboarded_at": None,
+        "cards_at": None,
+    }
+    return {s["key"]: s for s in build_steps(**{**kwargs, **over})}
+
+
+def test_steps_fresh_year_nothing_done():
+    s = _steps(missing_years=[2016, 2017])
+    assert [s[k]["done"] for k in (COLLECT, NORMALIZE, READ, CROSS)] == [False] * 4
+    assert "2016, 2017" in s[COLLECT]["meta"]
+
+
+def test_steps_collect_skipped_when_raw_present():
+    s = _steps()
+    assert s[COLLECT]["done"] is True and s[COLLECT]["meta"] == "건너뜀 — 이미 있음"
+
+
+def test_steps_normalize_reports_full_window_when_unprepared():
+    """마커가 없으면 window 전체를 다시 변환한다(연도별 부분 건너뛰기 없음) — 그대로 적는다."""
+
+    assert _steps()[NORMALIZE]["meta"] == "5개년 전체"
+
+
+def test_steps_llm_stages_show_when_they_ran():
+    s = _steps(prepared=True, onboarded_at="2026-07-18", cards_at="2026-07-18 13:41")
+    assert s[READ]["done"] is True and "2026-07-18" in s[READ]["meta"]
+    assert s[CROSS]["done"] is True and "13:41" in s[CROSS]["meta"]
+
+
+def test_all_done_only_when_four_stages_finished():
+    every = build_steps(WINDOW, [], True, "2026-07-18", "2026-07-18")
+    assert all_done(every) is True
+    assert all_done(build_steps(WINDOW, [], True, "2026-07-18", None)) is False
 
 
 # ── 수집·분석 윈도우 5년 ─────────────────────────────────────────────────

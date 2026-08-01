@@ -39,29 +39,17 @@ def _risk_pill(level: Any) -> str:
     return f'<span class="drv-pill drv-pill-{css}">{_esc(level or "Low")}</span>'
 
 
-def render_selection_html(
-    company_name: str, corp_code: str, raw_years: list[int], prepared_years: list[int]
-) -> str:
-    """회사 선택 헤더 — 회사명·코드 + raw/준비완료 연도를 배지로 나란히 표시."""
+def render_selection_html(company_name: str, corp_code: str) -> str:
+    """회사 선택 헤더 — 회사명·코드만.
 
-    raw_badges = (
-        "".join(f'<span class="drv-badge-year">{_esc(y)}</span>' for y in reversed(raw_years))
-        or '<span class="drv-kv">없음</span>'
-    )
-    prep_badges = (
-        "".join(f'<span class="drv-badge-year">{_esc(y)}</span>' for y in reversed(prepared_years))
-        or '<span class="drv-kv">없음</span>'
-    )
+    raw 보유·준비완료 연도 배지는 뺐다. 내부 상태(수집됨·정규화 최신)를 사용자가 대신
+    관리하게 만드는 표시였고, 같은 정보는 [분석 실행] 아래 단계 목록이 대신한다.
+    """
+
     return (
         '<div class="drv-header">'
         f'<div class="drv-row"><span class="drv-title">{_esc(company_name)}</span>'
         f'<span class="drv-chip">{_esc(corp_code)}</span></div>'
-        f'<div class="drv-row" style="margin-top:6px;">'
-        f'<span class="drv-kv">raw 보유</span>{raw_badges}'
-        "</div>"
-        f'<div class="drv-row" style="margin-top:4px;">'
-        f'<span class="drv-kv">준비완료</span>{prep_badges}'
-        "</div>"
         "</div>"
     )
 
