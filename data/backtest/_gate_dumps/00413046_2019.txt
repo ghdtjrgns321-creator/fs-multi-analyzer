@@ -174,7 +174,6 @@ sj_div fs_div      label                                                        
 
 ## H. 주석 분류 (note_facts_classified) — 특수관계자·차입·만기·약정·보증 등
   적재율 354/1000행 (35%) — 분모는 raw XBRL TSV
-  ⚠ 적재율 50% 미만 — 분류기가 다수 fact를 떨굼(의도된 흡수인지 LLM 판단)
   bucket: {'기타주석': np.int64(232), '흡수': np.int64(122)}
   category 상위: 없음(흡수/기타주석뿐)
   주석 차원축 분포: {'ConsolidatedAndSeparateFinancialStatementsAxis': 354, 'ComponentsOfEquityAxis': 122}

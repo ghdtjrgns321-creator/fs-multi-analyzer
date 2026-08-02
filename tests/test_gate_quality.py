@@ -15,6 +15,7 @@ CONFLICT = "id_label_conflict"
 def _make_db(tmp_path, rows, *, notes=1, extracts=1):
     """rows = [(sj_div, canonical, amount, mapping_status)]."""
 
+    tmp_path.mkdir(parents=True, exist_ok=True)
     db = tmp_path / "analysis.duckdb"
     with duckdb.connect(str(db)) as con:
         con.execute(
@@ -66,30 +67,25 @@ def test_negative_total_blocks(tmp_path):
     assert any("부호 이상" in b for b in report["blockers"])
 
 
-def test_large_unmapped_amount_blocks(tmp_path):
-    """자산 대비 미매핑 금액이 20%를 넘으면 절반만 읽은 회사다 — 차단."""
+def test_unmapped_is_posted_not_cut_by_threshold(tmp_path):
+    """표준 계정 미연결은 임계로 자르지 않는다 — 금액이 크든 작든 차단이 아니라 수치 게시.
 
-    rows = [*HEALTHY, ("BS", "정체불명자산", 300 * B, UNMAPPED)]
-    report = quality_report(_make_db(tmp_path, rows))
-    assert report["passed"] is False
-    assert any("미매핑 금액 비중" in b for b in report["blockers"])
+    회귀 방지: 자산 대비 20%라는 자의적 컷으로 분석 진입을 막던 규칙을 제거했다. 미연결
+    계정도 '기타 중요 계정'으로 분석에 흐르므로 손실이 아니라 상태다. 실제 이관 손실은
+    transfer_ledger(원본 대비 미설명 0)가 판정한다.
+    """
 
+    large = quality_report(
+        _make_db(tmp_path / "a", [*HEALTHY, ("BS", "정체불명", 300 * B, UNMAPPED)])
+    )
+    assert large["passed"] is True
+    assert any("표준 계정 미연결" in w for w in large["warnings"])
 
-def test_small_unmapped_warns_but_passes(tmp_path):
-    """소액 미매핑은 차단이 아니라 경고 — '기타 중요 계정'으로 게시되기 때문."""
-
-    rows = [*HEALTHY, ("BS", "정체불명자산", 80 * B, UNMAPPED)]
-    report = quality_report(_make_db(tmp_path, rows))
-    assert report["passed"] is True
-    assert any("미매핑 금액 비중" in w for w in report["warnings"])
-
-
-def test_statement_level_unmapped_share_warns(tmp_path):
-    """금액이 작아도 한 표의 절반 이상이 미매핑이면 그 표를 못 읽은 것 — 표별로 경고."""
-
-    rows = [*HEALTHY] + [("CF", f"현금흐름{i}", 1 * B, UNMAPPED) for i in range(3)]
-    report = quality_report(_make_db(tmp_path, rows))
-    assert any("CF 미매핑" in w for w in report["warnings"])
+    small = quality_report(
+        _make_db(tmp_path / "b", [*HEALTHY, ("BS", "정체불명", 80 * B, UNMAPPED)])
+    )
+    assert small["passed"] is True
+    assert any("표준 계정 미연결" in w for w in small["warnings"])
 
 
 def test_sce_measured_on_2d_table_not_body_rows(tmp_path):

@@ -1,25 +1,23 @@
-"""온보딩 QA 게이트 러너 — 한 회사연도의 정규화 품질을 결정론 단계(G1~G5)로 검문.
+"""온보딩 QA 게이트 러너 — 한 회사연도의 데이터가 분석에 쓸 수 있는 상태인지 점검.
 
 위치: raw 수집 → 정규화 → [이 게이트] → FS 분석. 게이트를 통과해야 분석에 진입한다.
-이번 단계는 결정론 floor(G1~G5)와 G6용 LLM 입력 dump 생성까지다(실제 LLM 통독·반복
-루프·UI는 R4). 모든 단계는 기존 검사 스크립트의 함수를 **재사용**한다(재구현 금지).
 
-부품(재사용 출처):
-  G1 기계검사   ← data/backtest/_p1_company_review.py (스크립트 __main__ 전용 → subprocess
-                  실행 후 [기계요약]·BS 항등식 라인 파싱. 로직 재구현 아님, 산출 재사용)
-  G2 충돌인벤토리 ← _conflict_canonical_inventory.py:compatible/coarse_category + mapper
-                  (회사 스코프로 단일 DB의 id_label_conflict 행만 수집)
-  G3 산술검산   ← _is_cf_arithmetic.py:check_company_year(db)  (import 그대로)
-  G5 신호무결성 ← _f1_signal_dangling.py:collect_references/canonical_keys (Layer A, 전사 1회)
-  G6 dump      ← _p1_company_review.py 전체 출력(LLM 통독 입력 — 실제 호출은 R4)
+두 축으로 묻는다.
 
-  G7 소계·대사   ← src/normalize/gate_identities.py:identity_report (표 안 소계 항등식 +
-                  표 간 대사. 구성요소 결측은 SKIP, 검산 0건이면 '통과'가 아니라 '검산 못함')
-  G8 번역품질    ← src/normalize/gate_quality.py:quality_report (미매핑 비중·ID라벨 충돌·
-                  표 커버리지·총계 부호·원천 적재. 분석이 성립 안 하는 상태만 차단, 나머지는 경고)
+  이관 원장  원본에 있던 게 다 왔나  ← src/normalize/transfer_ledger.py
+             모집단(재무제표 raw 행·자본변동표 raw 행·주석 fact) = 적재 + 사유 있는 제외 +
+             미설명. 미설명 1건이면 미통과, 원본이 없어 대조를 못 해도 미통과.
+             임계로 자르지 않는다("몇 % 실렸나"가 아니라 "설명 못 하는 항목이 있나").
 
-통과기준(gate_passed): G1 완결성 FAIL 0 + BS 항등식 tol 이내 + G3 경성위반 0 + G5 dangling 0
-+ 통화 단일 + G7 차단위반 0 + G8 차단사유 0. G2 충돌·G6 dump는 보고용.
+  항등식 검산 온 숫자가 서로 맞나
+             BS 항등식(G1) · 손익 정의식(G3) · 표 안 소계와 표 간 대사(G7).
+             검산이 0건이면 '통과'가 아니라 '검산 못함'이다(빈 검사의 통과 위장 차단).
+
+부수 검사: 통화 단일(외화재무는 환산 불가라 분석 부적합) · 신호엔진 참조 무결성(G5) ·
+핵심 표(BS·IS) 존재와 총계 부호(G8). G2 충돌·G6 dump·G9 연도 간 대사는 보고용.
+
+통과기준(gate_passed): 원장 미설명 0 + BS 항등식 tol 이내 + G3 경성위반 0 + G5 dangling 0
++ 통화 단일 + G7 차단위반 0 + G8 차단사유 0.
 
 실행: PYTHONPATH=. uv run python -m src.normalize.onboarding_gate <corp> <year>
 """
@@ -46,6 +44,7 @@ from src.normalize.gate_identities import identity_report
 from src.normalize.gate_quality import quality_report
 from src.normalize.gate_yoy import yoy_tieout
 from src.normalize.mapper import AccountMapper
+from src.normalize.transfer_ledger import ledger_lines, transfer_ledger
 
 ROOT = Path(__file__).resolve().parents[2]
 BASE = ROOT / "data" / "companies"
@@ -59,27 +58,26 @@ def _db_path(corp_code: str, year: str) -> Path:
 
 
 def _g1_verdict(
-    completeness: str,
     bs_residuals: list,
     bs_breaks: list,
     returncode: int,
     sce_std: str = "OK",
 ) -> bool:
-    """G1 통과 판정(순수). §9 hollow-PASS 차단.
+    """G1 항등식 검산 판정(순수). §9 hollow-PASS 차단.
 
     BS 항등식 검산이 0건이면 '검산 못함'이지 '통과'가 아니다. 자산총계 등 BS 핵심행이
     결손되면 검산행이 0이 되어, 빈 검사가 통과로 둔갑하던 갭(BS 통째 결손도 gate_passed=True).
     검산이 최소 1건은 나와야(bs_residuals 존재) 통과를 인정한다.
 
-    SCE 표준화 사망(sce_std=='FAIL', 전 행 unmatched)도 통과 아님 — sce 행은 있으나 전부
-    미분류라 SCE 분석이 무력한데 completeness OK로 통과하던 갭(BS 바닥과 대칭).
+    SCE 표준화 사망(sce_std=='FAIL', 전 행 unmatched)도 통과 아님 — 2D 셀은 있으나 전부
+    미분류라 SCE 분석이 무력하다(원장은 셀이 있으면 이관된 것으로 세므로 여기서 잡는다).
+
+    원본 대비 적재 완전성은 이 판정이 아니라 이관 원장(transfer_ledger)이 본다.
     """
 
     bs_checked = bool(bs_residuals)
     sce_ok = sce_std != "FAIL"
-    return (
-        (completeness == "OK") and bs_checked and sce_ok and (not bs_breaks) and (returncode == 0)
-    )
+    return bs_checked and sce_ok and (not bs_breaks) and (returncode == 0)
 
 
 def run_g1(corp_code: str, year: str) -> dict:
@@ -120,19 +118,14 @@ def run_g1(corp_code: str, year: str) -> dict:
                 # 표시단위 백만 → 원 환산 후 tol 비교
                 bs_residuals.append({"line": line.strip(), "resid_won": resid * 1_000_000})
 
-    completeness = summary.get("완결성", "?")
     bs_breaks = [r for r in bs_residuals if abs(r["resid_won"]) > BS_TOL]
-    passed = _g1_verdict(
-        completeness, bs_residuals, bs_breaks, proc.returncode, summary.get("SCE표준화", "OK")
-    )
+    passed = _g1_verdict(bs_residuals, bs_breaks, proc.returncode, summary.get("SCE표준화", "OK"))
 
     return {
         "passed": passed,
         "bs_checked": bool(bs_residuals),
-        "completeness": completeness,
         "sce_check": summary.get("SCE검산", "?"),
         "sce_std": summary.get("SCE표준화", "?"),
-        "loss_candidates": summary.get("소실후보", "?"),
         "bs_residuals": bs_residuals,
         "bs_breaks": bs_breaks,
         "returncode": proc.returncode,
@@ -250,12 +243,16 @@ def run_currency_check(corp_code: str, year: str) -> dict:
                     "SELECT DISTINCT currency FROM normalized_financials"
                 ).fetchall()
             ]
-    foreign = sorted({str(c).strip().upper() for c in currencies if str(c).strip()} - {"KRW"})
+    # 표시도 판정과 같은 기준으로 — SHARES 등 비통화 단위를 외화로 적으면 PASS인데 "외화재무"
+    # 라고 찍히는 모순이 난다(판정은 _currency_ok, 표시는 KRW만 제외하던 갭).
+    foreign = sorted(
+        {str(c).strip().upper() for c in currencies if str(c).strip()} - _NON_CURRENCY_UNITS
+    )
     return {"passed": _currency_ok(currencies), "currencies": currencies, "foreign": foreign}
 
 
 def run_gate(corp_code: str, year: str) -> dict:
-    """G1~G5 결정론 단계 + 통화검사 + G6 dump를 순차 실행해 gate_report dict를 집계."""
+    """이관 원장 + 항등식 검산 + 부수 검사를 순차 실행해 gate_report dict를 집계."""
     db = _db_path(corp_code, year)
     if not db.exists():
         return {
@@ -267,6 +264,7 @@ def run_gate(corp_code: str, year: str) -> dict:
 
     mapper = AccountMapper(load_canonical_accounts(ROOT / "config" / "canonical_accounts.yaml"))
 
+    ledger = transfer_ledger(corp_code, year, BASE)
     g1 = run_g1(corp_code, year)
     g2 = run_g2(corp_code, year, mapper)
     g3 = run_g3(corp_code, year)
@@ -285,7 +283,8 @@ def run_gate(corp_code: str, year: str) -> dict:
     g6["dump_path"] = str(dump_path)
 
     gate_passed = bool(
-        g1["passed"]
+        ledger["passed"]
+        and g1["passed"]
         and g3["passed"]
         and g5["passed"]
         and currency["passed"]
@@ -296,6 +295,7 @@ def run_gate(corp_code: str, year: str) -> dict:
         "corp": corp_code,
         "year": year,
         "gate_passed": gate_passed,
+        "transfer_ledger": ledger,
         "G1_machine": g1,
         "G_currency": currency,
         "G2_conflicts": g2,
@@ -318,13 +318,19 @@ def _print_report(report: dict) -> None:
         print("\n게이트 판정: FAIL (DB 없음 — 정규화부터)")
         return
 
+    ledger = report["transfer_ledger"]
+    print(f"\n[이관 원장] {'PASS' if ledger['passed'] else 'FAIL'}")
+    for line in ledger_lines(ledger):
+        print(f"  {line}")
+    if ledger["uncheckable"]:
+        print(f"  ⛔ 대조 불가 {ledger['uncheckable']} — 원본이 없어 이관을 확인하지 못했다")
+    for row in ledger["financials"]["unexplained"][:10]:
+        print(f"  ⛔ 미설명: [{row['fs_div']}/{row['sj_div']}] {row['label']} {row['amount']}")
+
     g1 = report["G1_machine"]
     g1_tag = "PASS" if g1["passed"] else "FAIL"
-    print(f"\n[G1 기계검사] {g1_tag}")
-    print(
-        f"  완결성={g1['completeness']} SCE검산={g1['sce_check']} "
-        f"SCE표준화={g1['sce_std']} 소실후보={g1['loss_candidates']}"
-    )
+    print(f"\n[G1 항등식 검산] {g1_tag}")
+    print(f"  SCE검산={g1['sce_check']} SCE표준화={g1['sce_std']}")
     for r in g1["bs_residuals"]:
         flag = "⛔이탈" if abs(r["resid_won"]) > BS_TOL else "ok"
         print(f"    BS항등식[{flag}]: {r['line']}")
@@ -415,8 +421,8 @@ def _print_report(report: dict) -> None:
     )
     print(f"게이트 판정: {verdict}")
     print(
-        "  (통과기준: G1 완결성 OK + BS 항등식 tol 이내 + G3 경성위반 0 + G5 dangling 0 "
-        "+ 통화 단일 + G7 차단위반 0 + G8 차단사유 0. G2·G6은 보고용)"
+        "  (통과기준: 이관 원장 미설명 0·대조불가 0 + BS 항등식 tol 이내 + G3 경성위반 0 "
+        "+ G5 dangling 0 + 통화 단일 + G7 차단위반 0 + G8 차단사유 0. G2·G6·G9는 보고용)"
     )
 
 

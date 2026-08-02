@@ -10,8 +10,8 @@ def _resid() -> list[dict]:
 
 
 def test_g1_verdict_normal_passes() -> None:
-    # 완결성 OK + BS 검산행 존재 + 이탈 없음 + returncode 0 → 통과
-    assert _g1_verdict("OK", _resid(), [], 0) is True
+    # BS 검산행 존재 + 이탈 없음 + returncode 0 → 통과
+    assert _g1_verdict(_resid(), [], 0) is True
 
 
 def test_g1_verdict_empty_bs_residuals_fails() -> None:
@@ -20,20 +20,16 @@ def test_g1_verdict_empty_bs_residuals_fails() -> None:
     회귀 방지: 자산총계 등 BS 핵심행이 결손되면 검산행 0 → 빈 검사가 통과로 둔갑하던 갭.
     """
 
-    assert _g1_verdict("OK", [], [], 0) is False
-
-
-def test_g1_verdict_completeness_fail_blocks() -> None:
-    assert _g1_verdict("FAIL", _resid(), [], 0) is False
+    assert _g1_verdict([], [], 0) is False
 
 
 def test_g1_verdict_bs_break_blocks() -> None:
     # BS 항등식 잔차가 tol 초과(bs_breaks 존재) → FAIL
-    assert _g1_verdict("OK", _resid(), [{"line": "x", "resid_won": 9_999_999}], 0) is False
+    assert _g1_verdict(_resid(), [{"line": "x", "resid_won": 9_999_999}], 0) is False
 
 
 def test_g1_verdict_nonzero_returncode_blocks() -> None:
-    assert _g1_verdict("OK", _resid(), [], 1) is False
+    assert _g1_verdict(_resid(), [], 1) is False
 
 
 def test_currency_ok_krw_passes() -> None:
@@ -61,12 +57,13 @@ def test_currency_ok_shares_unit_passes() -> None:
 
 
 def test_g1_verdict_sce_standardization_fail_blocks() -> None:
-    """SCE 표준화 사망(전 행 unmatched, SCE표준화=FAIL)은 완결성 OK라도 통과 아님(BS 바닥과 대칭).
+    """SCE 표준화 사망(전 행 unmatched, SCE표준화=FAIL)은 검산이 정상이어도 통과 아님.
 
-    회귀 방지: sce_equity_components에 행은 있으나 전부 unmatched라 SCE 분석이 무력한데
-    completeness=OK·BS검산 정상이면 게이트를 통과하던 갭(SCE-dead hollow-PASS).
+    회귀 방지: sce_equity_components에 셀은 있으나 전부 unmatched라 SCE 분석이 무력한데
+    BS검산이 정상이면 게이트를 통과하던 갭(SCE-dead hollow-PASS). 이관 원장은 셀이 있으면
+    '이관됨'으로 세므로 표준화 사망은 이 판정이 잡아야 한다.
     """
 
-    assert _g1_verdict("OK", _resid(), [], 0, sce_std="FAIL") is False
+    assert _g1_verdict(_resid(), [], 0, sce_std="FAIL") is False
     # SCE 정상이면 통과(기본값 OK와 동일)
-    assert _g1_verdict("OK", _resid(), [], 0, sce_std="OK") is True
+    assert _g1_verdict(_resid(), [], 0, sce_std="OK") is True

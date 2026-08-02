@@ -111,6 +111,19 @@ def test_trend_material_includes_sce_cells() -> None:
     assert mat["sce_cells"] == sce
 
 
+def test_flow_material_includes_sce_cells() -> None:
+    """SCE 2D 셀은 flow(계정 간 관계) 관점에도 실린다.
+
+    유상증자·자기주식취득은 재무활동CF의 구성이라, 이것 없이는 '차입금 조달과 사용처'
+    사슬이 조달 경로의 절반(자본 조달)을 못 본다.
+    """
+
+    sce = [{"change": "유상증자", "component": "자본금", "amount": 5_000_000.0}]
+    mat = flow_material({**_REPORT, "sce_cells": sce})
+    assert mat["sce_cells"] == sce
+    assert "재무활동현금흐름과 대사" in mat["sce_role"]
+
+
 # corp_code=""로 둬 _routed_events·_correction_history가 graceful 빈 리스트를 타게 한다.
 _REPORT = {
     "corp_code": "",
@@ -169,6 +182,23 @@ def test_flow_material_no_queue_keeps_calc() -> None:
     _assert_calc_preserved(m)
     _assert_no_redundant_series(m)
     _assert_panel_columnar(m)
+
+
+def test_flow_material_keeps_all_ratio_categories() -> None:
+    """비율은 묶음을 가리지 않고 전량 — 관계사슬이 안정성·수익성 비율을 근거로 삼는다.
+
+    활동성·이익의 질만 주면 이자보상배율 없이 '유동성·계속기업' 사슬을,
+    영업이익률 없이 '영업손익에서 순이익으로' 사슬을 보게 된다(렌즈≠재료).
+    """
+
+    report = {
+        **_REPORT,
+        "ratio_summary": {"활동성": {}, "이익의 질": {}, "안정성": {"이자보상배율": 1.2}},
+        "ratio_time_series": [{"category": "stability"}, {"category": "profitability"}],
+    }
+    m = flow_material(report)
+    assert "안정성" in m["ratio_summary"]
+    assert {row["category"] for row in m["ratio_time_series"]} == {"stability", "profitability"}
 
 
 def test_trend_material_no_queue_keeps_calc() -> None:

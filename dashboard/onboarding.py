@@ -1,4 +1,4 @@
-"""L5 정비 페이지 — 신규 회사를 Phase1/2 분석에 넣기 전 게이트 검문·이탈등록·재검사.
+"""L5 정비 페이지 — 신규 회사를 Phase1/2 분석에 넣기 전 게이트 점검·이탈등록·재검사.
 
 흐름: corp/year 입력 → [전처리 검사](run_gate) → gate_report 단계별 표시 → 이탈 등록 폼
       (company_quirks.yaml 안전 append) → [재검사] → 통과 시 [Phase1/2 진입] 활성.
@@ -18,6 +18,7 @@ import yaml
 
 from src.normalize.config import load_company_quirks
 from src.normalize.onboarding_gate import run_gate
+from src.normalize.transfer_ledger import ledger_lines
 from src.report.alias_suggest import suggest_aliases
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -202,16 +203,21 @@ def render_gate_report(report: dict) -> None:
     overall = report.get("gate_passed", False)
     st.subheader(f"게이트 판정: {_tag(overall)}")
 
+    ledger = report.get("transfer_ledger", {})
+    with st.expander(f"이관 원장 — {_tag(ledger.get('passed', False))}", expanded=True):
+        st.caption("원본에 있던 항목 = 적재 + 사유 있는 제외 + 미설명. 미설명이 0이어야 통과한다.")
+        for line in ledger_lines(ledger) if ledger else []:
+            st.write(f"- {line}")
+        if ledger.get("uncheckable"):
+            st.error(f"대조 불가 {ledger['uncheckable']} — 원본이 없어 이관을 확인하지 못했다")
+        rows = (ledger.get("financials") or {}).get("unexplained") or []
+        if rows:
+            st.warning(f"미설명 {len(rows)}행 — 원본에 있으나 적재 결과 어디에도 없다")
+            st.dataframe(rows[:50], width="stretch")
+
     g1 = report.get("G1_machine", {})
-    with st.expander(f"G1 기계검사 — {_tag(g1.get('passed', False))}", expanded=True):
-        st.write(
-            {
-                "완결성": g1.get("completeness"),
-                "SCE검산": g1.get("sce_check"),
-                "SCE표준화": g1.get("sce_std"),
-                "소실후보": g1.get("loss_candidates"),
-            }
-        )
+    with st.expander(f"G1 항등식 검산 — {_tag(g1.get('passed', False))}", expanded=True):
+        st.write({"SCE검산": g1.get("sce_check"), "SCE표준화": g1.get("sce_std")})
         breaks = g1.get("bs_breaks") or []
         if breaks:
             st.warning(f"BS 항등식 이탈 {len(breaks)}건")
@@ -402,8 +408,10 @@ def render_quirk_form(corp_code: str, year: str) -> None:
 # 페이지 본체
 # ──────────────────────────────────────────────────────────────────────────
 def run_full_onboarding(corp_code: str, year: str, on_progress=None) -> dict:
-    """온보딩 일괄 실행 — 전처리검사(게이트)→Layer 1 서술추출→alias 제안을 순차 실행.
+    """온보딩 일괄 실행 — Layer 1 서술추출→전처리검사(게이트)→alias 제안을 순차 실행.
 
+    Layer 1은 게이트 결과를 입력으로 받지 않는 독립 수집 단계라 준비 국면에 둔다(게이트 앞).
+    alias만 게이트가 지적한 미매핑 계정을 메우는 보정이므로 게이트 뒤에 온다.
     한 단계 실패가 전체를 막지 않게 각 단계를 graceful 흡수한다(LLM 실패 시 경고 후 사람이 강행).
     alias는 고신뢰(≥임계)만 자동 등록·재정규화, 저신뢰·기타는 보류('기타 중요 계정' 경로).
     감사 소견은 Phase2(의심건 카드)가 전담한다(역할 중복 차단).
@@ -418,8 +426,8 @@ def run_full_onboarding(corp_code: str, year: str, on_progress=None) -> dict:
         except Exception as exc:  # noqa: BLE001 — 단계 오류를 안내로 흡수하고 다음 단계 계속
             result[key] = {"status": "error", "message": f"{type(exc).__name__}: {exc}"}
 
-    _stage("gate", lambda: run_gate(corp_code, year))
     _stage("layer1", lambda: run_layer1_stage(corp_code, year, on_progress=on_progress))
+    _stage("gate", lambda: run_gate(corp_code, year))
     _stage("alias", lambda: suggest_aliases(corp_code, int(year)))
     # 고신뢰 제안 자동 등록(+재정규화). 보류는 '기타 중요 계정' 경로 — 감사인 확인 딸깍 없음.
     _stage("alias_autoreg", lambda: _auto_register_stage(corp_code, year, result.get("alias")))
@@ -448,9 +456,9 @@ def can_enter_analysis(gate_report: dict, layer1_status: str) -> dict:
 def render() -> None:
     """온보딩 전처리 페이지 렌더링. 상태는 st.session_state로 관리."""
 
-    st.title("신규회사 정비 — 게이트 검문·이탈 등록")
+    st.title("신규회사 정비 — 게이트 점검·이탈 등록")
     st.caption(
-        "Phase1/2 분석 진입 전, 한 번에 [전처리검사+Layer 1 서술추출+별칭 제안]을 실행해 "
+        "Phase1/2 분석 진입 전, 한 번에 [Layer 1 서술추출+전처리검사+별칭 제안]을 실행해 "
         "이탈을 잡고 quirk로 교정한다(수 분 소요)."
     )
 
@@ -458,7 +466,7 @@ def render() -> None:
     corp_code = col1.text_input("corp_code (8자리)", key="onb_corp").strip()
     year = col2.text_input("year (YYYY)", key="onb_year").strip()
 
-    if st.button("일괄 실행 (게이트 검문+Layer1+별칭)", disabled=not (corp_code and year)):
+    if st.button("일괄 실행 (Layer1+게이트 점검+별칭)", disabled=not (corp_code and year)):
         with st.spinner(f"{corp_code}/{year} 일괄 실행 중..."):
             result = run_full_onboarding(corp_code, year)
         st.session_state["gate_report"] = result.get("gate")

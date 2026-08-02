@@ -141,7 +141,7 @@ def _render_card_sections(card_result: dict) -> None:
 
 
 def _do_prepare(corp_code: str, corp_name: str, target_year: int, window: list[int]) -> bool:
-    """수집·표준 계정 변환·품질 검문. 통과 여부를 돌려주고, 실패는 안내로 흡수한다(크래시 금지)."""
+    """수집·표준 계정 변환·품질 점검. 통과 여부를 돌려주고, 실패는 안내로 흡수한다(크래시 금지)."""
 
     from src.report.prep import prepare_company
 
@@ -164,7 +164,7 @@ def _do_prepare(corp_code: str, corp_name: str, target_year: int, window: list[i
         st.session_state.pop("rv_report", None)
         return True
     st.error(
-        "품질 검문(온보딩 게이트) 미통과 — 정규화 이탈이 있습니다. "
+        "품질 점검(온보딩 게이트) 미통과 — 정규화 이탈이 있습니다. "
         "정비 페이지(dashboard/onboarding.py 단독 실행)에서 quirk 교정 후 재시도하세요."
     )
     gate = result.get("gate") or {}

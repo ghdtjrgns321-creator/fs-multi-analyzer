@@ -31,6 +31,15 @@ def _routed_events(report: dict[str, object], perspective: str) -> list[dict]:
     return events[:30] + [{"_truncated": len(events) - 30, "note": "추가 event 생략"}]
 
 
+# 자본변동표(SCE) 2D 셀 공통 안내 — 관점별 지시문만 뒤에 덧붙인다(같은 데이터, 다른 렌즈).
+_SCE_ROLE = (
+    "sce_cells는 자본변동표 2D(변동×구성요소). 배당·유상증자·자기주식취득·기타자본변동 등 "
+    "본문 패널에 없는 자본거래를 담는다. change=변동사건, component=자본 구성요소. "
+    "occurrence_state는 이 변동종류의 신규/소멸: appeared=올해 신규 발생(예: 자기주식 첫 취득), "
+    "disappeared=과거 있다 당기 소멸, present=매년 반복. "
+)
+
+
 def numeric_material(report: dict[str, object]) -> dict[str, object]:
     """Inputs for numeric perspective only."""
 
@@ -103,22 +112,22 @@ def flow_material(report: dict[str, object]) -> dict[str, object]:
 
     # 큐(등수 힌트)는 주지 않는다. 흐름 관점에 필요한 관계신호(growth_divergences·
     # direction_checks·cfs_ofs_gaps)는 latest_signal_snapshot에 전수로 들어 있다.
-    ratio_summary = report["ratio_summary"]
-    ratio_summary = ratio_summary if isinstance(ratio_summary, dict) else {}
+    # 비율은 묶음을 가리지 않고 전량 준다 — 관계사슬이 이자보상배율(안정성)·영업이익률(수익성)을
+    # 근거로 삼는데 활동성·이익의 질만 주면 렌즈와 재료가 어긋나 조용한 사각이 된다.
     return {
         # account_level_series는 싣지 않는다 — panel이 같은 계정·금액을 압축 보유(중복 제거).
         "latest_signal_snapshot": report.get("latest_signal_snapshot", {}),
         "account_metrics_panel": panel_columnar(report.get("account_metrics_panel", [])),
         "unmapped_material_accounts": report.get("unmapped_material_accounts", []),
-        "ratio_summary": {
-            key: value for key, value in ratio_summary.items() if key in {"활동성", "이익의 질"}
-        },
-        "ratio_time_series": [
-            row
-            for row in report.get("ratio_time_series", [])  # type: ignore[union-attr]
-            if row.get("category") in {"activity", "earnings_quality"}
-        ],
+        "ratio_summary": report["ratio_summary"],
+        "ratio_time_series": report.get("ratio_time_series", []),
         "report_event_timeline": _routed_events(report, "flow"),
+        # 자본변동표(SCE) 2D 셀 — 유상증자·자기주식취득은 재무활동CF의 구성이라 조달 경로 판단에 필요.
+        "sce_cells": report.get("sce_cells", []),
+        "sce_role": (
+            _SCE_ROLE + "재무활동현금흐름과 대사한다 — 자본거래도 조달·유출 경로이므로 "
+            "차입금만으로 자금 조달을 판단하지 않는다."
+        ),
         "scope": "flow perspective only",
         "judgment_role": (
             "코드가 추린 후보 목록은 제공하지 않는다. 무엇이 이상한지는 account_metrics_panel"
@@ -144,12 +153,7 @@ def trend_material(report: dict[str, object]) -> dict[str, object]:
         "report_event_timeline": _routed_events(report, "trend"),
         # 자본변동표(SCE) 2D 셀 — 자본 변동(배당·유상증자·자기주식·순이익)은 추세 관점 소관.
         "sce_cells": report.get("sce_cells", []),
-        "sce_role": (
-            "sce_cells는 자본변동표 2D(변동×구성요소). 배당·유상증자·자기주식취득·기타자본변동 등 "
-            "본문 패널에 없는 자본거래를 담는다. change=변동사건, component=자본 구성요소. "
-            "occurrence_state는 이 변동종류의 신규/소멸: appeared=올해 신규 발생(예: 자기주식 첫 취득), "
-            "disappeared=과거 있다 당기 소멸, present=매년 반복. 신규(appeared) 자본거래를 우선 검토한다."
-        ),
+        "sce_role": _SCE_ROLE + "신규(appeared) 자본거래를 우선 검토한다.",
         "scope": "trend perspective only",
         "judgment_role": (
             "코드가 추린 후보 목록은 제공하지 않는다. 당해 급변(yoy 튐)은 numeric 소관이다. "

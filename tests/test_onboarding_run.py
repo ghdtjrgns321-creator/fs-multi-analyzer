@@ -1,6 +1,6 @@
 """온보딩 일괄 실행 오케스트레이터·분석 진입 판정 테스트.
 
-온보딩 = 게이트 + Layer 1 서술추출 + 별칭 제안(3단계). 감사 소견은 Phase2 전담.
+온보딩 = Layer 1 서술추출 + 게이트 + 별칭 제안(3단계). 감사 소견은 Phase2 전담.
 """
 
 from __future__ import annotations
@@ -34,7 +34,7 @@ def test_run_full_onboarding_runs_three_stages(ob, monkeypatch):
 
 
 def test_run_full_onboarding_graceful_when_stage_raises(ob, monkeypatch):
-    """Layer1이 예외를 던져도 gate 결과는 보존되고 나머지 단계도 진행(한 단계 실패=전체 중단 금지)."""
+    """Layer1이 예외를 던져도 뒤 단계(gate·alias)는 그대로 진행(한 단계 실패=전체 중단 금지)."""
 
     _stub_ok(ob, monkeypatch)
 
@@ -43,9 +43,32 @@ def test_run_full_onboarding_graceful_when_stage_raises(ob, monkeypatch):
 
     monkeypatch.setattr(ob, "run_layer1_stage", boom)
     out = ob.run_full_onboarding("00110893", "2024")
-    assert out["gate"]["gate_passed"] is True  # 앞 단계 보존
     assert out["layer1"]["status"] == "error"  # 실패는 error로 흡수
+    assert out["gate"]["gate_passed"] is True  # 뒤 단계 계속
     assert out["alias"]["status"] == "ok"  # 뒤 단계 계속
+
+
+def test_run_full_onboarding_layer1_runs_before_gate(ob, monkeypatch):
+    """실행 순서 계약 — Layer1(준비)은 게이트 앞, alias(보정)는 게이트 뒤.
+
+    Layer1은 게이트 결과를 입력으로 받지 않는 독립 수집이고, alias만 게이트가
+    지적한 미매핑 계정을 메우는 보정이다. 순서가 뒤집히면 문서의 국면 구분과 어긋난다.
+    """
+
+    calls: list[str] = []
+    monkeypatch.setattr(ob, "run_gate", lambda c, y: calls.append("gate") or {"gate_passed": True})
+    monkeypatch.setattr(
+        ob,
+        "run_layer1_stage",
+        lambda c, y, on_progress=None: calls.append("layer1") or {"status": "ok", "extracts": []},
+    )
+    monkeypatch.setattr(
+        ob,
+        "suggest_aliases",
+        lambda c, y: calls.append("alias") or {"status": "ok", "result": None},
+    )
+    ob.run_full_onboarding("00110893", "2024")
+    assert calls == ["layer1", "gate", "alias"]
 
 
 def test_can_enter_analysis_reason_marks_layer1_status(ob):
