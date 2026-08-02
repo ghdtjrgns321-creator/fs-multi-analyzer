@@ -131,9 +131,11 @@ Phase1 감사 dump — 00409681/2020
         주식발행                유상증자                  NaN exact_taxonomy_match
   … (외 3건 생략 — 전수는 DB/raw에서 확인)
 
-[SCE] 11과목
+[SCE] 13과목
  canonical             label                  amt       mapping_status
       기초자본              기초자본 218,066.88(2,180.7억) exact_taxonomy_match
+  신종자본증권변동        신종자본증권 재분류    -3,258.41(-32.6억)    id_label_conflict
+  재평가잉여금변동            재평가적립금      2,956.45(29.6억)    label_alias_match
       기타거래  종속기업에 대한 보유지분 변동       -536.27(-5.4억) exact_taxonomy_match
     자기주식변동           자기주식 취득       -511.59(-5.1억) exact_taxonomy_match
 종속기업소유지분변동           지분법자본변동               -58.69    id_label_conflict
@@ -155,8 +157,8 @@ Phase1 감사 dump — 00409681/2020
 sj_div fs_div          label                                                                account_id                  amt
    SCE    CFS           기초자본                                            dart_EquityAtBeginningOfPeriod 189,417.85(1,894.2억)
    SCE    CFS           자본총계                                                          ifrs-full_Equity 185,561.26(1,855.6억)
-   SCE    OFS           기초자본                                            dart_EquityAtBeginningOfPeriod 171,443.46(1,714.4억)
    SCE    OFS           자본총계                                                          ifrs-full_Equity 171,443.46(1,714.4억)
+   SCE    OFS           기초자본                                            dart_EquityAtBeginningOfPeriod 171,443.46(1,714.4억)
    SCE    CFS           기초자본                                            dart_EquityAtBeginningOfPeriod 171,108.49(1,711.1억)
    SCE    CFS           자본총계                                                          ifrs-full_Equity 170,309.40(1,703.1억)
    SCE    OFS           자본총계                                                          ifrs-full_Equity 167,822.35(1,678.2억)
@@ -168,12 +170,12 @@ sj_div fs_div          label                                                    
    SCE    CFS           자본총계                                                          ifrs-full_Equity    26,193.26(261.9억)
    SCE    OFS      당기순이익(손실)                                                      ifrs-full_ProfitLoss  -21,045.35(-210.5억)
    SCE    OFS           자본총계                                                          ifrs-full_Equity  -15,474.02(-154.7억)
+   SCE    CFS           자본총계                                                          ifrs-full_Equity    12,839.83(128.4억)
    SCE    CFS           기초자본                                            dart_EquityAtBeginningOfPeriod    12,839.83(128.4억)
    SCE    OFS           자본총계                                                          ifrs-full_Equity    12,839.83(128.4억)
    SCE    OFS           기초자본                                            dart_EquityAtBeginningOfPeriod    12,839.83(128.4억)
-   SCE    CFS           자본총계                                                          ifrs-full_Equity    12,839.83(128.4억)
    SCE    CFS 순확정급여부채의 재측정요소 entity00409681_udf_CE_201989103254110_StatementOfChangesInEquityLineItems      6,728.25(67.3억)
-  … (외 63건 생략 — 전수는 DB/raw에서 확인)
+  … (외 60건 생략 — 전수는 DB/raw에서 확인)
 
 ## D. raw 원문 전수 대조 (DART CSV vs 정규화, 매퍼 미경유) — 미출현=소실/스케일 후보
   (참고: CIS 행수 격차는 IS 재분류 포함 가능 — 미출현 0이면 손실 아님. SCE는 2D테이블로 셈)
@@ -199,7 +201,7 @@ sj_div fs_div          label                                                    
 
 ## F. SCE 검산 (기초+Σleaf변동=기말, change_role 기준)
   기초 218,067 + Σleaf -32,506 = 185,561 vs 기말 185,561 차이 0 → OK  (leaf 16행, 소계·조정후개시 0행 제외)
-  leaf변동: {'당기순이익': '-37,657', '확정급여재측정손익': '6,728', '기타거래': '-536', '자기주식변동': '-512', '기타 중요 계정': '-435', '지분법기타포괄손익재분류가능': '-59', 'FVOCI적립금변동': '-35', '복합금융상품 전환': '0', '연결대상범위변동': '0', '재분류조정': '0', '자본잉여금변동': '0', '주식선택권행사': '0', '주식발행': '0'}
+  leaf변동: {'당기순이익': '-37,657', '확정급여재측정손익': '6,728', '신종자본증권변동': '-3,258', '재평가잉여금변동': '2,956', '기타거래': '-536', '자기주식변동': '-512', '기타 중요 계정': '-133', '지분법기타포괄손익재분류가능': '-59', 'FVOCI적립금변동': '-35', '연결대상범위변동': '0', '복합금융상품 전환': '0', '재분류조정': '0', '자본잉여금변동': '0', '주식선택권행사': '0', '주식발행': '0'}
   가로항등(총계=지배+비지배): 위반 없음
 
 ## G. 이상 신호

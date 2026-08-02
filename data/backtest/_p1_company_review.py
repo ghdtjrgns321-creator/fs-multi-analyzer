@@ -465,8 +465,8 @@ else:
     if note_raw_cnt is not None:
         rate = len(notes) / note_raw_cnt * 100 if note_raw_cnt else 0
         print(f"  적재율 {len(notes)}/{note_raw_cnt}행 ({rate:.0f}%) — 분모는 raw XBRL TSV")
-        if note_raw_cnt and rate < 50:
-            print("  ⚠ 적재율 50% 미만 — 분류기가 다수 fact를 떨굼(의도된 흡수인지 LLM 판단)")
+        # 적재율 임계 경고는 제거했다 — 본표 중복·메타 제외가 정상이라 낮은 적재율 자체는
+        # 이상이 아니다. 탈락이 사유로 설명되는지는 이관 원장(transfer_ledger)이 판정한다.
     else:
         print(f"  총 {len(notes)}행 (⚠ raw TSV 없음 — 적재율 분모 확인 불가)")
     if "bucket" in notes:

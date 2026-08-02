@@ -19,6 +19,8 @@ from dashboard.report_html import (
     render_ratio_html,
     render_selection_html,
 )
+from dashboard.steps import ANALYZE, INSPECT, OUTPUT, PREPARE, all_done, build_steps
+from dashboard.steps import render_steps_html as _steps_html
 from dashboard.style import busy, inject_css
 
 __all__ = [
@@ -27,7 +29,6 @@ __all__ = [
     "render_queue_html",
     "render_ratio_html",
     "analysis_window",
-    "visible_stages",
     "window_for_year",
 ]
 
@@ -55,18 +56,25 @@ def analysis_window(target: int, span: int = 5) -> list[int]:
     return list(range(target - span + 1, target + 1))
 
 
-def visible_stages(is_prepared: bool) -> dict[str, bool]:
-    """화면 단계 노출 판정(순수). 미준비→준비만. 준비완료→LLM 전처리+분석(의심건 카드).
+def _step_context(corp_code: str, year: int, window: list[int], key: str) -> list[dict]:
+    """4국면 상태 — 마커·raw 유무·저장 카드를 읽어 진행 표시용 목록을 만든다.
 
-    phase1 결정론 지표(검토큐·비율)는 UI에 표시하지 않는다(내부 중간산출물 — 추후 별도 탭 그래프).
-    분석 = 내부에서 phase1 계산 후 phase2 카드 생성. 순서: LLM 전처리 → phase1 → phase2.
+    phase1 결정론 지표(검토큐·비율)는 UI에 표시하지 않는다(내부 중간산출물).
+    교차검증 = 내부에서 phase1 계산 후 phase2 카드 생성.
     """
 
-    return {
-        "prepare": not is_prepared,
-        "onboarding": is_prepared,
-        "analysis": is_prepared,
-    }
+    from src.report.prep import raw_present, read_onboarding_marker, read_prep_marker
+
+    marker = read_onboarding_marker(corp_code, year) or {}
+    onboarded_at = str(marker.get("completed_at") or "")[:10] if marker else None
+    prep = read_prep_marker(corp_code, year) or {}
+    return build_steps(
+        window=window,
+        missing_years=[y for y in window if not raw_present(corp_code, y)],
+        prepared=bool(prep.get("gate_passed")),
+        onboarded_at=onboarded_at,
+        cards_at=_load_saved_cards_if_needed(corp_code, year, key),
+    )
 
 
 def _review_scope(report: dict, card_result: dict | None = None) -> dict:
@@ -122,7 +130,7 @@ def _render_card_sections(card_result: dict) -> None:
         grouped=True,  # 넓은 주제 그룹이 1차 구조(점수 전체 줄세우기 대체)
     )
     render_cards_section(
-        "계정 관계 이상 (흐름)",
+        "계정 관계 이상",
         card_result.get("relationship_cards") or [],
         series_rows,
         target_year,
@@ -132,8 +140,8 @@ def _render_card_sections(card_result: dict) -> None:
     )
 
 
-def _run_prepare(corp_code: str, corp_name: str, target_year: int, window: list[int]) -> None:
-    """분석 준비 파이프라인 실행 + 진행표시. 성공 시 rerun(상태 갱신), 실패 시 게이트 표시."""
+def _do_prepare(corp_code: str, corp_name: str, target_year: int, window: list[int]) -> bool:
+    """수집·표준 계정 변환·품질 점검. 통과 여부를 돌려주고, 실패는 안내로 흡수한다(크래시 금지)."""
 
     from src.report.prep import prepare_company
 
@@ -146,22 +154,22 @@ def _run_prepare(corp_code: str, corp_name: str, target_year: int, window: list[
         log_ph.markdown("\n".join(f"- {m}" for m in logs))
 
     try:
-        with busy(f"{corp_name or corp_code} {target_year} 분석 준비 중 (수 분 소요)..."):
+        with busy(f"{corp_name or corp_code} {target_year} — 수집·표준 계정 변환 중..."):
             result = prepare_company(corp_code, target_year, window, progress=_progress)
     except Exception as exc:  # noqa: BLE001 — 준비 오류는 안내로 흡수(크래시 금지)
-        st.error(f"분석 준비 실패(안내만): {type(exc).__name__}: {exc}")
-        return
+        st.error(f"표준 계정 변환 실패(안내만): {type(exc).__name__}: {exc}")
+        return False
     log_ph.empty()
     if result["gate_passed"]:
         st.session_state.pop("rv_report", None)
-        st.rerun()
-    else:
-        st.error(
-            "온보딩 게이트 미통과 — 정규화 이탈이 있습니다. "
-            "정비 페이지(dashboard/onboarding.py 단독 실행)에서 quirk 교정 후 재시도하세요."
-        )
-        gate = result.get("gate") or {}
-        st.json({k: gate.get(k) for k in ("gate_passed", "G1_machine", "G3_arithmetic")})
+        return True
+    st.error(
+        "품질 점검(온보딩 게이트) 미통과 — 정규화 이탈이 있습니다. "
+        "정비 페이지(dashboard/onboarding.py 단독 실행)에서 quirk 교정 후 재시도하세요."
+    )
+    gate = result.get("gate") or {}
+    st.json({k: gate.get(k) for k in ("gate_passed", "G1_machine", "G3_arithmetic")})
+    return False
 
 
 def _run_analysis(corp_code: str, corp_name: str, year: int, window: list[int], key: str) -> None:
@@ -172,8 +180,14 @@ def _run_analysis(corp_code: str, corp_name: str, year: int, window: list[int], 
 
     import time
 
+    from config.settings import settings
     from src.report.card_pipeline import build_suspicion_cards
     from src.report.company_report import build_company_report
+
+    # 본문 읽기가 이미 끝난 회사연도는 _do_read를 건너뛰므로 여기서 키를 다시 확인한다.
+    if not settings.openai_api_key:
+        st.info("OPENAI_API_KEY 미설정 — 교차검증(LLM) 생략. .env 설정 후 재실행.")
+        return
 
     _phase_label = {
         "grounding": "근거 검증",
@@ -218,86 +232,79 @@ def _run_analysis(corp_code: str, corp_name: str, year: int, window: list[int], 
         st.error(f"분석 실패(안내만): {type(exc).__name__}: {exc}")
 
 
-def _run_onboarding(corp_code: str, year: int, key: str) -> None:
-    """LLM 전처리 실행 + 완료 마커 영속(재실행 방지). API 키 없으면 안내만."""
+def _do_read(corp_code: str, year: int, key: str, steps: list[dict]) -> bool:
+    """사업보고서 본문 읽기(LLM) + 완료 마커 영속(재실행 방지). API 키 없으면 안내만."""
 
     from config.settings import settings
 
     if not settings.openai_api_key:
-        st.info("OPENAI_API_KEY 미설정 — LLM 전처리 생략. .env 설정 후 재실행.")
-        return
+        st.info("OPENAI_API_KEY 미설정 — 본문 읽기(LLM) 생략. .env 설정 후 재실행.")
+        return False
     import time
 
     from dashboard.onboarding import run_full_onboarding
     from src.report.prep import write_onboarding_marker
 
-    progress = st.empty()
+    board = st.empty()
     started = time.perf_counter()
 
     def _on_progress(p: dict) -> None:
         elapsed = int(time.perf_counter() - started)
-        progress.info(
-            f"본문 파트 읽는 중 — {p['done']}/{p['total']} (방금 PART {p['numeral']}) · 경과 {elapsed}s"
+        board.html(
+            _steps_html(
+                steps, running=INSPECT, running_meta=f"{p['done']}/{p['total']} 파트 · 경과 {elapsed}s"
+            )
         )
 
-    with busy(f"{year} 본문·정규화 통독 중 (수 분 소요)..."):
+    board.html(_steps_html(steps, running=INSPECT, running_meta="시작"))
+    with busy(f"{year} 사업보고서 본문 읽는 중 (수 분 소요)..."):
         result = run_full_onboarding(corp_code, str(year), on_progress=_on_progress)
-    progress.empty()
+    board.empty()
     st.session_state["rv_onboarding"] = result
     st.session_state["rv_onboarding_key"] = key
     layer1 = result.get("layer1") or {}
-    # 실패·미실행에 완료 마커를 쓰면 "✅ 전처리 완료"로 굳어 영영 재실행을 안 묻는다
+    # 실패·미실행에 완료 마커를 쓰면 이 단계가 ✓로 굳어 영영 재실행을 안 한다
     # (셀트리온 2019가 이 경로로 서술 추출 없이 몇 주간 분석됨). 완주(ok/empty)만 완료다.
     if layer1.get("status") not in ("ok", "empty"):
-        st.error(f"본문 통독 실패 — 완료 처리하지 않음. {layer1.get('message', '')}")
-        return
+        st.error(f"본문 읽기 실패 — 완료 처리하지 않음. {layer1.get('message', '')}")
+        return False
     extracts = layer1.get("extracts", []) or []
     write_onboarding_marker(corp_code, year, chunks=len(extracts))
-    # 완료 마커를 쓴 뒤 페이지를 다시 그려 "✅ 전처리 완료" 배지가 뜨게 한다
-    # (prepare_company 후 st.rerun 패턴과 동일 — 미호출 시 실행 전 버튼 상태가 잔존).
+    return True
+
+
+def _run_all(corp_code: str, corp_name: str, year: int, window: list[int], key: str) -> None:
+    """[분석 실행] — 안 끝난 국면만 순서대로 실행하고, 하나라도 실패하면 거기서 멈춘다."""
+
+    steps = _step_context(corp_code, year, window, key)
+    done = {s["key"]: s["done"] for s in steps}
+    board = st.empty()
+
+    if not done[PREPARE]:
+        board.html(_steps_html(steps, running=PREPARE, running_meta="진행 중"))
+        if not _do_prepare(corp_code, corp_name, year, window):
+            return
+    if not done[INSPECT]:
+        board.empty()
+        if not _do_read(corp_code, year, key, steps):
+            return
+    board.html(_steps_html(steps, running=ANALYZE, running_meta="진행 중"))
+    _run_analysis(corp_code, corp_name, year, window, key)
+    board.empty()
     st.rerun()
 
 
-def _render_onboarding_llm(corp_code: str, year: int, key: str) -> None:
-    """① LLM 전처리 — 이미 완료(마커)면 재실행을 요구하지 않는다."""
+def _render_cards(corp_code: str, year: int, key: str) -> None:
+    """의심건 카드 섹션(최종 결과) — 실행 버튼은 위 [분석 실행] 하나로 합쳤다."""
 
-    from src.report.prep import onboarding_done
-
-    st.markdown("##### LLM 전처리")
-    if onboarding_done(corp_code, year):
-        st.caption("✅ 전처리 완료")
-        if st.button("전처리 다시 실행"):
-            _run_onboarding(corp_code, year, key)
-    else:
-        st.caption(
-            "분석 전 LLM이 표준분류가 안된 계정 이름을 자동 보정하고(확실한 것만), "
-            "본문을 파트별로 읽어 서술형 감사관심을 추출합니다."
-        )
-        if st.button("전처리 실행"):
-            _run_onboarding(corp_code, year, key)
-
-
-def _render_analysis(
-    corp_code: str, corp_name: str, year: int, window: list[int], key: str
-) -> None:
-    """의심건 카드 섹션(최종 결과). 버튼 → 내부 Phase1→Phase2. Phase1 지표는 미표시."""
-
-    from config.settings import settings
-
-    st.markdown("##### 멀티 에이전트 교차검증")
-    st.caption("수치 · 주석 · 흐름 · 추세 · 외부 · 동종업계")
     saved = _load_saved_cards_if_needed(corp_code, year, key)
-    run_label = "검증 다시 실행" if saved else "검증 실행"
-    if st.button(run_label):
-        if not settings.openai_api_key:
-            st.info("OPENAI_API_KEY 미설정 — 의심건 카드(LLM) 생략. .env 설정 후 재실행.")
-        else:
-            _run_analysis(corp_code, corp_name, year, window, key)
     # 회사·연도가 바뀐 옛 카드는 표시하지 않는다(잔상 방지).
-    if st.session_state.get("rv_cards") and st.session_state.get("rv_analysis_key") == key:
-        if saved:
-            st.caption(f"저장된 검증 결과 표시 중 (생성: {saved})")
-        _render_card_sections(st.session_state["rv_cards"])
+    if not (st.session_state.get("rv_cards") and st.session_state.get("rv_analysis_key") == key):
+        return
+    st.markdown("---")
+    if saved:
+        st.caption(f"저장된 검증 결과 표시 중 (생성: {saved})")
+    _render_card_sections(st.session_state["rv_cards"])
 
 
 def _load_saved_cards_if_needed(corp_code: str, year: int, key: str) -> str | None:
@@ -331,18 +338,35 @@ def _load_saved_cards_if_needed(corp_code: str, year: int, key: str) -> str | No
 
 
 def _render_uncollected(corp_code: str, corp_name: str) -> None:
-    """상태 A(미수집) — 타깃 연도 입력 후 수집+준비를 한 번에."""
+    """상태 A(미수집) — 연도 드롭다운을 만들 raw가 없으므로 연도를 직접 입력받는다."""
 
-    st.caption(
-        "수집할 타깃 사업연도를 고르면 직전 4년까지 총 5년을 DART 수집·재정규화·게이트합니다."
-    )
-    year = int(st.number_input("타깃 사업연도", min_value=2015, max_value=2030, value=2024, step=1))
-    if st.button("수집 후 분석 준비 (DART)"):
-        _run_prepare(corp_code, corp_name, year, analysis_window(year))
+    st.caption("분석할 사업연도를 고르면 직전 4년까지 총 5년을 DART에서 수집한 뒤 분석합니다.")
+    year = int(st.number_input("분석 사업연도", min_value=2015, max_value=2030, value=2024, step=1))
+    _render_run_block(corp_code, corp_name, year, analysis_window(year))
+
+
+def _render_run_block(corp_code: str, corp_name: str, year: int, window: list[int]) -> None:
+    """[분석 실행] 버튼 + 4단계 진행 표시. 안 끝난 단계가 있으면 무엇이 도는지 먼저 밝힌다."""
+
+    key = f"{corp_code}:{year}"
+    steps = _step_context(corp_code, year, window, key)
+    finished = all_done(steps)
+    if not finished:
+        st.html(
+            '<div class="drv-note">원본 수집, 사업보고서 본문 읽기, 멀티 에이전트 교차검증이 '
+            "함께 실행됩니다. (LLM 호출 및 수 분 소요)</div>"
+        )
+    if st.button("다시 실행" if finished else "분석 실행", type="primary"):
+        _run_all(corp_code, corp_name, year, window, key)
+    st.html(_steps_html(steps))
 
 
 def render() -> None:
-    """분석 리포트 페이지 — 검색 → 상태판정 → 준비 → LLM 전처리 → 의심건 카드(내부 P1→P2)."""
+    """분석 리포트 페이지 — 검색 → 연도 선택 → [분석 실행] 하나 → 의심건 카드.
+
+    수집·표준 계정 변환·본문 읽기·교차검증은 사용자가 누르는 단계가 아니라 진행 표시다.
+    끝난 단계는 마커를 보고 건너뛴다(_step_context).
+    """
 
     inject_css()
     st.title("FS Multi-agents analyzer")
@@ -352,15 +376,12 @@ def render() -> None:
         return
     corp_name = st.session_state.get("cs_selected_name", "")
 
-    from src.report.prep import company_state, onboarding_done
+    from src.report.prep import company_state
 
     state = company_state(corp_code)
-    st.html(
-        render_selection_html(corp_name, corp_code, state["raw_years"], state["prepared_years"])
-    )
+    st.html(render_selection_html(corp_name, corp_code))
 
-    if state["state"] == "A":  # 미수집 — 수집부터
-        st.warning("미수집 회사 — DART 수집이 필요합니다(수집 후 재정규화·게이트 자동).")
+    if state["state"] == "A":  # 미수집 — 연도 입력부터
         _render_uncollected(corp_code, corp_name)
         return
 
@@ -379,36 +400,6 @@ def render() -> None:
         )
     )
 
-    is_prepared = selected_year in state["prepared_years"]
-    key = f"{corp_code}:{selected_year}"
-    stages = visible_stages(is_prepared)
-
     window = analysis_window(selected_year)
-    if stages["prepare"]:  # 미준비 — 준비부터(분석 차단)
-        st.warning(f"{selected_year}년 아직 미준비 상태입니다.")
-        have = ", ".join(str(y) for y in reversed(raw_yrs)) or "없음"
-        need = [y for y in window if y not in raw_yrs]
-        need_txt = ", ".join(str(y) for y in need) if need else "없음(전부 보유)"
-        st.markdown(
-            f"**[분석 준비]** 를 누르면 이 회사의 **{window[0]}~{window[-1]} 5개 사업연도**를 "
-            "분석 가능한 상태로 만듭니다:\n"
-            f"- **DART 수집**: 아직 없는 연도({need_txt}) — 현재 보유: {have}\n"
-            "- **재정규화**: 최신 코드로 계정 표준화(연결/별도)\n"
-            "- **주석 분류** + **온보딩 게이트**(정규화 품질 검문 G1~G5)\n\n"
-            "5개년을 확보해야 전년대비(YoY)·다년 추세 신호가 성립합니다. "
-            "없는 연도 수집 시 수 분 걸릴 수 있습니다."
-        )
-        if st.button("분석 준비"):
-            _run_prepare(corp_code, corp_name, selected_year, window)
-        return
-
-    # 준비완료 배너는 생략(중복 — 아래 전처리 섹션 노출 자체가 준비됨 신호, 연도는 드롭다운에 있음).
-    # 순서: ① LLM 전처리 → ② 의심건 카드. 전처리 완료 전에는 카드 단계를 열지 않는다(안내도 생략).
-    _render_onboarding_llm(corp_code, selected_year, key)
-    # 전처리 완료(영속 마커) 또는 이번 세션 실행이면 카드 단계를 연다.
-    onboarded = onboarding_done(corp_code, selected_year) or (
-        st.session_state.get("rv_onboarding_key") == key
-    )
-    if onboarded:
-        st.markdown("---")
-        _render_analysis(corp_code, corp_name, selected_year, window, key)
+    _render_run_block(corp_code, corp_name, selected_year, window)
+    _render_cards(corp_code, selected_year, f"{corp_code}:{selected_year}")

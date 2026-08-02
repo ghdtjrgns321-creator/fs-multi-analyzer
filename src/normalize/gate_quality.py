@@ -1,4 +1,4 @@
-"""정합성 검문 — 번역 품질·스케일·원천 적재(결정론, LLM 0회).
+"""정합성 점검 — 번역 품질·스케일·원천 적재(결정론, LLM 0회).
 
 산술검산이 "옮긴 숫자끼리 아귀가 맞나"를 본다면 여기는 **"얼마나 못 읽었나"를 정량화**한다.
 게이트가 통과/실패 이진이 아니라 번역 품질 리포트를 내도록 하는 축이다.
@@ -22,9 +22,6 @@ CORE_STATEMENTS = ("BS", "IS")  # 없으면 분석 불가
 ALL_STATEMENTS = ("BS", "IS", "CIS", "CF", "SCE")
 UNMAPPED_STATUS = "unmapped_extension_account"
 CONFLICT_STATUS = "id_label_conflict"
-UNMAPPED_BLOCK_RATIO = 0.20  # 자산총계 대비 미매핑이 이 비율을 넘으면 차단
-UNMAPPED_WARN_RATIO = 0.05
-STATEMENT_UNMAPPED_WARN = 0.50  # 한 표의 절반 이상이 미매핑이면 그 표는 못 읽은 것
 
 
 def _scalar(con: duckdb.DuckDBPyConnection, sql: str, params: list | None = None) -> float:
@@ -179,27 +176,23 @@ def quality_report(db: Path) -> dict:
         blockers.append(f"핵심 표 결손 {coverage['core_missing']}")
     if signs:
         blockers.append(f"총계 부호 이상 {len(signs)}건")
-    ratio = unmapped["ratio"]
-    if ratio is not None and ratio > UNMAPPED_BLOCK_RATIO:
-        blockers.append(f"미매핑 금액 비중 {ratio:.1%}")
 
+    # 미매핑은 임계로 자르지 않는다 — 표준 계정에 못 붙은 것도 '기타 중요 계정'으로 분석에
+    # 흐르므로 손실이 아니라 상태다. 자의적 컷 대신 수치를 그대로 게시한다(이관 손실은
+    # transfer_ledger가 판정한다).
     warnings: list[str] = []
-    if ratio is not None and UNMAPPED_WARN_RATIO < ratio <= UNMAPPED_BLOCK_RATIO:
-        warnings.append(f"미매핑 금액 비중 {ratio:.1%} — 기타 중요 계정으로 게시됨")
+    ratio = unmapped["ratio"]
+    if unmapped["count"]:
+        share = f" · 자산총계 대비 {ratio:.1%}" if ratio is not None else ""
+        warnings.append(
+            f"표준 계정 미연결 {unmapped['count']}계정{share} — 기타 중요 계정으로 게시됨"
+        )
     if conflicts:
         warnings.append(f"ID-한글명 충돌 {conflicts}행 — ID 채택, 충돌 기록 보존")
-    for sj, stat in sorted(unmapped["by_statement"].items()):
-        if sj == "SCE":
-            continue  # 분석 경로가 아닌 표 — 2D 테이블 기준(sce_2d_quality)으로 따로 잰다
-        share = stat["share"]
-        if share is not None and share > STATEMENT_UNMAPPED_WARN:
-            warnings.append(
-                f"{sj} 미매핑 {stat['unmapped']}/{stat['rows']}행({share:.0%}) — 이 표는 절반 이상 못 읽었다"
-            )
-    if sce and sce["share"] is not None and sce["share"] > STATEMENT_UNMAPPED_WARN:
+    if sce and sce["changes_unmapped"]:
         warnings.append(
             f"자본변동표 거래 {sce['changes_unmapped']}/{sce['changes_total']}종이 표준분류 밖"
-            f"({sce['share']:.0%}) — 원문 라벨로 분석엔 흐르나 표준 비교는 불가"
+            " — 원문 라벨로 분석엔 흐르나 표준 비교는 불가"
         )
     if coverage["missing"]:
         warnings.append(f"미적재 표 {coverage['missing']}")

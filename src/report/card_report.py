@@ -138,7 +138,7 @@ def render_card_markdown(report: dict[str, object]) -> str:
             lines.append(_card_row(idx, card, with_materiality=True))
     if relationship_cards:
         # 흐름 관점 고유 단위 — 계정 쌍·교차재무제표(연결↔별도) 관계 이상.
-        lines.extend(["", "## 계정 관계 이상 (흐름)"])
+        lines.extend(["", "## 계정 관계 이상"])
         lines.append("| 순위 | 관계 | 유형 | 표수 | 확신도 | 금액 | 반박 | 참고 |")
         lines.append("|---:|---|---|---|---|---:|---|---|")
         for idx, card in enumerate(relationship_cards, start=1):

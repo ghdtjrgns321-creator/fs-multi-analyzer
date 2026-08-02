@@ -122,6 +122,24 @@ SHADCN_CSS = """
     .drv-metric-name { color: #64748B; font-size: 0.76em; }
     .drv-metric-value { color: #0F172A; font-size: 1.05em; font-weight: 700; }
 
+    /* ── 실행 단계 목록 (분석 실행 버튼 아래) ─────────────── */
+    .drv-step {
+        display: flex; align-items: baseline; gap: 10px;
+        padding: 7px 0; font-size: 0.92em; color: #334155;
+    }
+    .drv-step + .drv-step { border-top: 1px dashed #E2E8F0; }
+    .drv-step-mark { width: 1.1em; flex-shrink: 0; font-weight: 700; }
+    .drv-step-done .drv-step-mark { color: #047857; }
+    .drv-step-run .drv-step-mark { color: #334155; }
+    .drv-step-wait { color: #94A3B8; }
+    .drv-step-wait .drv-step-mark { color: #CBD5E1; }
+    .drv-step-label { flex: 1; }
+    .drv-step-meta { color: #94A3B8; font-size: 0.86em; white-space: nowrap; }
+    .drv-note {
+        background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 8px;
+        padding: 10px 14px; color: #334155; font-size: 0.88em; margin: 4px 0 10px;
+    }
+
     /* ── 빈 상태 안내 ────────────────────────────────────── */
     .drv-empty {
         background: #F8FAFC;

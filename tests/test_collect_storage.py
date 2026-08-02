@@ -78,7 +78,6 @@ def test_collect_summary_absence_marks_dart_no_data_and_zip_failure(
         (2020,),
         data_dir=tmp_path,
         include_xbrl=True,
-        include_notes=False,
     )
 
     year_summary = result["years"]["2020"]
@@ -113,7 +112,7 @@ def test_collect_company_years_wires_corrections(tmp_path: Path, monkeypatch) ->
     monkeypatch.setattr("src.collect.spike.settings", SimpleNamespace(dart_api_key="x"))
 
     result = collect_company_years(
-        "00123456", (2020,), data_dir=tmp_path, include_xbrl=False, include_notes=False
+        "00123456", (2020,), data_dir=tmp_path, include_xbrl=False
     )
 
     assert result["corrections"]["restated_years"] == [2018]
@@ -132,7 +131,6 @@ def test_collect_summary_absence_marks_no_report(tmp_path: Path, monkeypatch) ->
         (2020,),
         data_dir=tmp_path,
         include_xbrl=True,
-        include_notes=False,
     )
 
     assert result["years"]["2020"]["absence"] == {"fs": "no_report", "xbrl_zip": "no_report"}

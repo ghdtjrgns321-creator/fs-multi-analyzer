@@ -16,12 +16,12 @@ from src.report.card_order import card_sort_key, order_cards
 
 # 관점 내부명 → 사람용 라벨(주장 칩 표기).
 PERSPECTIVE_LABELS = {
-    "numeric": "수치",
+    "numeric": "재무 수치",
     "note": "주석",
-    "flow": "흐름",
-    "trend": "추세",
-    "external": "외부",
-    "industry": "동종",
+    "flow": "계정 간 관계",
+    "trend": "시계열 추세",
+    "external": "외부 근거",
+    "industry": "업종 비교",
 }
 FS_DIV_LABELS = {"CFS": "연결", "OFS": "별도"}
 
@@ -375,7 +375,7 @@ def short_headline(text: str, limit: int = 60) -> str:
 
 
 def perspective_badge(card: Any) -> str:
-    """어느 관점이 지적했나 배지 — '수치·추세 의심'. 내부 발견 관점만, 중복 1회."""
+    """어느 관점이 지적했나 배지 — '재무 수치·시계열 추세 의심'. 내부 발견 관점만, 중복 1회."""
 
     names: list[str] = []
     internal = {"numeric", "note", "flow", "trend"}

@@ -1,62 +1,12 @@
-account_notes:
-  매출채권:
-    note_code: D82242
-    note_name: 매출채권 및 기타채권
-    keywords: [신용위험, 연체, 대손, 손상, 회수]
-    analysis_priority: high
-  재고자산:
-    note_code: D82638
-    note_name: 재고자산
-    keywords: [평가손실, 순실현가능가치, 저가법, 손상, 비용]
-    analysis_priority: high
-  단기차입금:
-    note_code: D82240
-    note_name: 차입금
-    keywords: [차입금, 만기, 유동성위험, 이자율, 담보, 약정, 상환]
-    analysis_priority: high
-  장기차입금:
-    note_code: D82240
-    note_name: 차입금
-    keywords: [장기차입금, 만기, 유동성위험, 이자율, 담보, 약정, 상환]
-    analysis_priority: high
-  사채:
-    note_code: D82245
-    note_name: 사채
-    keywords: [사채, 만기, 이자율, 상환, 유동성위험, 약정]
-    analysis_priority: high
-  충당부채:
-    note_code: D82757
-    note_name: 충당부채
-    keywords: [충당부채, 우발부채, 소송, 보증, 복구, 충당, 지급가능성]
-    analysis_priority: high
-  장기충당부채:
-    note_code: D82757
-    note_name: 충당부채
-    keywords: [장기충당부채, 우발부채, 소송, 보증, 복구, 충당, 지급가능성]
-    analysis_priority: high
-  유형자산:
-    note_code: D82210
-    note_name: 유형자산
-    keywords: [유형자산, 취득, 처분, 감가상각, 손상, 담보]
-    analysis_priority: low
-  자본금:
-    note_code: D86120
-    note_name: 자본금, 적립금, 기타지분
-    keywords: [자본금, 보통주, 우선주, 적립금, 기타지분]
-    analysis_priority: low
-  기본주당이익:
-    note_code: D83800
-    note_name: 주당이익
-    keywords: [주당이익, 기본주당이익, 희석주당이익]
-    analysis_priority: low
-
-# === 신 XBRL 주석 분류 (Option 2: 본문 canonical 재사용 + detail 토큰분류) ===
+# === XBRL 주석 분류 (본문 canonical 재사용 + detail 토큰분류) ===
 # note_facts.tsv의 concept(namespace 없는 local name)을 3분류한다:
 #  1) 흡수  = 본문 canonical_accounts account_id의 stem과 일치 → 본문 중복(canonical 연결)
 #  2) 메타  = meta_tokens 포함 → 표지·감사·연락처 노이즈(분석 제외)
 #  3) detail = note_categories 토큰(우선순위 순, 먼저 매칭 승) → IFRS 주석 카테고리, 미매칭은 기타주석
 # 토큰은 concept 소문자에 대한 부분일치. 카테고리·토큰을 코드에 하드코딩하지 않는다(여기 외부화).
-# 표본 400 회사연도 측정: 흡수 42%·메타 14%·detail 44%, detail 중 81.7%가 아래 카테고리로 분류.
+# 표본 116 회사연도(fact 230,803) 재측정: 흡수 58.2%·detail 21.4%·메타 14.7%·기타주석 5.7%.
+# detail+기타주석 중 79.1%가 아래 카테고리에 적중. 토큰은 부분일치라 단어 경계를 안 본다 —
+# 신규 토큰 추가 시 다른 카테고리 토큰과의 중복·부분문자열 충돌을 반드시 확인할 것.
 meta_tokens: [auditor, audit, identif, indentif, opinion, reportdate, author,
   contact, entity, document, exchange, homepage, address, currency, industry,
   unitinfo, amendment, title, centralindexkey, fiscalmonth, restatement,
@@ -70,8 +20,10 @@ note_categories:   # 우선순위 순서(먼저 매칭 승): 특수관계자>채
   이연법인세: [deferredtax]
   법인세: [incometax, taxexpense, currenttax, taxrelating]
   파생_위험회피: [derivative, hedge, swap, forwardcontract, optioncontract]
-  사채: [bond, debenture, convertible, warrant]
-  차입금조건: [borrowing, loanspayable, maturity, interestrate, collateral, pledge, secured, liabilitiesarisingfromfinancing]
+  # warrant는 warranty(하자보수·제품보증충당부채)까지 잡던 토큰이라 신주인수권부사채로 좁힌다.
+  사채: [bond, debenture, convertible, bondswithwarrant, withwarrant]
+  # interestrate는 위험관리공시의 interestraterisk를 선점하므로 위험 토큰을 제외한다.
+  차입금조건: [borrowing, loanspayable, maturity, collateral, pledge, secured, liabilitiesarisingfromfinancing]
   종속관계기업투자: [subsidiar, associate, jointventure, jointarrangement, equitymethod]
   정부보조금: [governmentgrant]
   외화환산: [foreignexchange, foreigncurrency, exchangerate, translationof]
@@ -90,7 +42,7 @@ note_categories:   # 우선순위 순서(먼저 매칭 승): 특수관계자>채
   현금금융기관: [cashandcashequivalent, deposit, shortterminvestment]
   자본적립금: [retainedearning, treasuryshare, capitalsurplus, reserve, capitalstock, sharecapital, sharepremium, dividendspaid, dividendsproposed]
   주당이익: [earningspershare, pershare, weightedaverageshare, weightedaveragenumber]
-  충당부채: [provision, litigation, warrant]
+  충당부채: [provision, litigation, warranty]
 
 # Phase2 리스크 리뷰 우선 카테고리(분식 단서 밀집)
 note_high_priority: [차입금조건, 사채, 특수관계자거래, 충당부채, 약정_우발, 재고자산,

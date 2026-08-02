@@ -36,6 +36,7 @@ dev = [
     "pytest",
     "ruff",
     "mypy",
+    "playwright>=1.62.0",
 ]
 
 [tool.ruff]

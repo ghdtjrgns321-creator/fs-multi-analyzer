@@ -78,7 +78,7 @@
 … (총 11개)
 ```
 
-sanity 게이트(`sanity.py`)가 스캔 전 데이터를 검문한다 — `exclude_foreign_currency_years`(두산밥캣 KRW→USD 1,300배 점프 차단)와 `exclude_asset_sanity_years`(자산총계 100배 점프 제외).
+sanity 게이트(`sanity.py`)가 스캔 전 데이터를 점검한다 — `exclude_foreign_currency_years`(두산밥캣 KRW→USD 1,300배 점프 차단)와 `exclude_asset_sanity_years`(자산총계 100배 점프 제외).
 
 ## 4.6 변동분해 — 카드의 "왜"를 코드가 계산
 
