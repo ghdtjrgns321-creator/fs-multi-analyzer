@@ -29,7 +29,7 @@
        │  ├ (raw 없으면) 수집        collect_company_years    [DART 호출]
        │  ├ 재정규화                normalize_company_years  [raw→DB, 최신코드]
        │  ├ 주석 숫자 분류          load_notes_classified
-       │  └ 온보딩 게이트 G1~G5     run_gate  (품질 검문)
+       │  └ 온보딩 게이트 G1~G5     run_gate  (품질 점검)
        │        PASS ─┐         FAIL ─→ quirk 교정 → 재게이트
        ▼             │
  [4] Phase1 결정론 리포트   ← 게이트 PASS 후 활성 (무료, ~5초)

@@ -24,7 +24,7 @@ L0 수집(OpenDART) → L1 정규화(XBRL→canonical) → L1.5 주석 인덱서
 ```
 raw 수집 → L1 정규화
   → [온보딩 게이트]
-       G1~G5 결정론 검문(완결성·BS 항등식·산술검산·신호무결성)  ← 기존 감사 스크립트 재사용
+       G1~G5 결정론 점검(완결성·BS 항등식·산술검산·신호무결성)  ← 기존 감사 스크립트 재사용
        G6 LLM 전문 통독(gpt-5.4 9렌즈 홀리스틱 dump)
        무표준코드 계정 별칭 제안: 후보검색=코드 → 분류선택=LLM → 적용=사람 확인(자동적용 금지)
   → 사람이 확정하면 config/company_quirks.yaml(alias_additions/account_overrides) 등록

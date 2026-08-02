@@ -6,6 +6,26 @@
 
 ## 현재 위치
 
+- **✅ 온보딩 게이트 재설계 — 조건 목록 → 이관 원장** (2026-08-02, `develop`). 게이트가 "확인한
+  조건 몇 개가 안 어긋났다"만 말하고 실제로는 아무것도 못 잡던 구조를 교체했다.
+  - **발단**: README 게이트 표가 안 읽힌다는 지적 → 실측하니 dump 14건 중 차단은 합성 픽스처
+    1건뿐이고 실제 회사 11건 전량 통과. 계정 단위 소실 검사는 **계산은 하는데 판정에 안 쓰고**
+    있었고, 임계(미매핑 20%·주석 적재율 50%)는 근거 없는 자의적 컷이었다.
+  - **신설** `src/normalize/transfer_ledger.py`(+`ledger_financials.py`·`ledger_notes.py`) —
+    원본 항목 전량(재무제표 raw 행·SCE 행·주석 fact)을 모집단으로 고정하고 *적재 + 사유 있는
+    제외 + 미설명*으로 분해. **미설명 0 + 대조 불가 0**이어야 통과. 임계 없음.
+    이 리포가 이미 두 번 채택한 구조(`src/report/coverage.py` 셀 원장,
+    `_signal_coverage_ledger.py` 신호 원장)를 정규화 관문에 적용한 것.
+  - **삭제(레거시)**: `_g1_verdict`의 completeness 판정, `gate_quality`의 `UNMAPPED_BLOCK_RATIO`·
+    `UNMAPPED_WARN_RATIO`·`STATEMENT_UNMAPPED_WARN` 3상수와 그에 걸린 차단·경고, dump의 적재율
+    50% 경고. 미매핑은 차단이 아니라 수치 게시로 바뀌었다.
+  - **부수 수정**: 통화 검사 표시 버그(PASS인데 "외화재무 ['SHARES']"로 찍히던 것 — 판정은
+    `_currency_ok`, 표시는 KRW만 제외하던 갭).
+  - **실측**: 준비완료 12개 회사연도 전량 PASS(재무제표 4,382행 = 적재 4,314 + 표 재분류 68 +
+    미설명 0, 주석 12곳 미설명 0). 전체 테스트 **684 passed**, 신규 `tests/test_transfer_ledger.py` 5건.
+  - **문서 교체**: README §3-4, FINAL-REPORT 2·3·12장, PLAN.md 온보딩 게이트 절.
+  - **⏭ 다음**: 사업보고서 본문 추출은 게이트 **이후** 단계라 원장 축에서 뺐다(게이트 시점엔 항상
+    0건). 추출 단계 뒤에 붙는 원장(원문 섹션 = 추출 + 사유제외 + 미설명)은 미착수.
 - **✅ 아스트 2020 마스킹 실행 재실행 + 실행 산출물 단일화** (2026-08-01, `develop`). README·
   FINAL-REPORT가 정체 공개 실행(24장·53/53)과 마스킹 실행(21장)의 수치를 섞어 쓰던 혼선을 종결.
   - **재실행**: `blind_materials` 마스킹 + 외부검색 차단, 148초, 5관점 완주(실패 0), 검토 계정 296.
@@ -168,7 +188,7 @@
     sj_div, canonical) 키로 대사. 일치/표기변경(부호만)/재표시 후보 3분류, **차단 안 함**(재표시=
     회사 사실, 셀트리온·아스트 실사례). '기타 중요 계정' 버킷은 이질 합계라 제외. 실측: 아스트
     재표시 36건(무형자산 1,761억→1,438억 — 2019 재작성 사실 자동 포착)·셀트리온 1건·00356370 0건.
-  - 문서: README §3.3(거짓 71~88% 문단 교체·G9 행·검문 블록)·FINAL-REPORT 0/1/2/3 G1~G9 동기화.
+  - 문서: README §3.3(거짓 71~88% 문단 교체·G9 행·점검 블록)·FINAL-REPORT 0/1/2/3 G1~G9 동기화.
     테스트: gate_yoy 5 신규, 전체 **660 passed·1 xfailed**(별칭 전역 적용 회귀 0).
   - **⏭ 잔여**: 저장 카드 재생성(아스트·00356370 — SCE 이름 복원 반영), 셀트리온 UI 전처리 1회
     (완료 마커), 백테스트 스크립트 재실행(아스트 재정규화가 신호에 미치는 영향 미실측 — pytest는 무회귀).
@@ -203,7 +223,7 @@
   하는 게 있나, 사람 선택 UI도 없앴는데")에 코드 대조로 답 확정 후 문서 전수 교정.
   - **확정한 실동작**: ① 결정론 게이트(G1~G5·통화)는 UI [분석 준비](`prep.prepare_company`)가
     수집·정규화 직후 자동 실행 — 통과 연도만 준비완료. ② UI 온보딩 버튼(`run_full_onboarding`) =
-    LLM 전처리 3종: 게이트 재검문 + Layer1 본문 통독(→`report_extracts`, 주석 관점 입력) + 별칭
+    LLM 전처리 3종: 게이트 재점검 + Layer1 본문 통독(→`report_extracts`, 주석 관점 입력) + 별칭
     제안·신뢰도≥0.7 자동 등록+5개년 재정규화(보류=기타 중요 계정). 완료 마커 `onboarding.json`이
     카드 단계 진입 조건. ③ 사람 수동 등록 폼은 별도 정비 페이지(`dashboard/onboarding.py` 단독
     구동)에만 잔존. ④ G6 dump는 생성되나 통독 LLM 미배선.
@@ -213,7 +233,7 @@
     9(에이전트 구성 표기). 낡은 표현("코드→LLM→사람"·"사람 확인 필수"·"R4 예정") grep 잔존 0 확인.
   - **명명 확정(사용자 지시)**: LLM 단계명 "온보딩"→"**LLM 전처리**"로 개명 — 문서 전체 +
     화면 표시 문자열(report_view.py 헤딩·버튼·배지, onboarding.py 정비 페이지 제목 "신규회사 정비").
-    "온보딩 게이트"(결정론 검문)는 코드명(`onboarding_gate.py`)과 일치해 유지. 함수·마커 파일명
+    "온보딩 게이트"(결정론 점검)는 코드명(`onboarding_gate.py`)과 일치해 유지. 함수·마커 파일명
     (`run_full_onboarding`·`onboarding.json`)은 내부 식별자라 미변경(파급 회피).
   - **잔여**: `onboarding_gate.py` 자체의 낡은 주석("최종 판정은 G6 LLM·R4")은 코드 주석이라 미수정.
 - **✅ 게이트 SHARES 통화 오판 수정 — 아스트2020·셀트리온2019 스트림릿 준비완료 복구** (2026-07-14).
@@ -803,7 +823,7 @@
        within-category 진짜오매핑(mechanical 분리 불가 측정확정)을 회사별 데이터로 교정. corp_code=데이터키(하드코딩 아님).
     3. **동의어 canonical dedup** — config 중복(FVPL↔당기손익공정가치 등) 15쌍 통합(canonical 2028→2013). 충돌 719→704 소멸.
   - **온보딩 QA 게이트** `src/normalize/onboarding_gate.py:run_gate(corp,year)` — 신규회사 정규화 후 분석 전 G1~G6(기계검사·충돌·
-    산술검산·F1·LLM홀리스틱 dump) 부품화 검문. `_quirk_promote_scan.py`(3회+ 반복 quirk 전사 승격). **UI**: `dashboard/onboarding.py`
+    산술검산·F1·LLM홀리스틱 dump) 부품화 점검. `_quirk_promote_scan.py`(3회+ 반복 quirk 전사 승격). **UI**: `dashboard/onboarding.py`
     (입력→게이트→이탈 표시→quirk 등록→재검사→Phase1/2 진입). **G6 LLM 통독=gpt-5.4 추론모델**
     (OpenAIModel+reasoning_effort, Phase2 perspectives.py 정합 — Gemini Flash 아님). 실호출 성공 확인.
   - **회귀 전부 통과**(직접 재현): 백테스트 recall 5/6·IS/CF 11=11 악화0·F1 dangling 0·pytest 203 passed·corpus 재정규화 error0·세분화 보존·CF 무회귀.
