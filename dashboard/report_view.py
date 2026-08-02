@@ -19,7 +19,7 @@ from dashboard.report_html import (
     render_ratio_html,
     render_selection_html,
 )
-from dashboard.steps import COLLECT, CROSS, NORMALIZE, READ, all_done, build_steps
+from dashboard.steps import ANALYZE, INSPECT, OUTPUT, PREPARE, all_done, build_steps
 from dashboard.steps import render_steps_html as _steps_html
 from dashboard.style import busy, inject_css
 
@@ -57,7 +57,7 @@ def analysis_window(target: int, span: int = 5) -> list[int]:
 
 
 def _step_context(corp_code: str, year: int, window: list[int], key: str) -> list[dict]:
-    """4단계 상태 — 마커·raw 유무·저장 카드를 읽어 진행 표시용 목록을 만든다.
+    """4국면 상태 — 마커·raw 유무·저장 카드를 읽어 진행 표시용 목록을 만든다.
 
     phase1 결정론 지표(검토큐·비율)는 UI에 표시하지 않는다(내부 중간산출물).
     교차검증 = 내부에서 phase1 계산 후 phase2 카드 생성.
@@ -252,11 +252,11 @@ def _do_read(corp_code: str, year: int, key: str, steps: list[dict]) -> bool:
         elapsed = int(time.perf_counter() - started)
         board.html(
             _steps_html(
-                steps, running=READ, running_meta=f"{p['done']}/{p['total']} 파트 · 경과 {elapsed}s"
+                steps, running=INSPECT, running_meta=f"{p['done']}/{p['total']} 파트 · 경과 {elapsed}s"
             )
         )
 
-    board.html(_steps_html(steps, running=READ, running_meta="시작"))
+    board.html(_steps_html(steps, running=INSPECT, running_meta="시작"))
     with busy(f"{year} 사업보고서 본문 읽는 중 (수 분 소요)..."):
         result = run_full_onboarding(corp_code, str(year), on_progress=_on_progress)
     board.empty()
@@ -274,21 +274,21 @@ def _do_read(corp_code: str, year: int, key: str, steps: list[dict]) -> bool:
 
 
 def _run_all(corp_code: str, corp_name: str, year: int, window: list[int], key: str) -> None:
-    """[분석 실행] — 안 끝난 단계만 순서대로 실행하고, 하나라도 실패하면 거기서 멈춘다."""
+    """[분석 실행] — 안 끝난 국면만 순서대로 실행하고, 하나라도 실패하면 거기서 멈춘다."""
 
     steps = _step_context(corp_code, year, window, key)
     done = {s["key"]: s["done"] for s in steps}
     board = st.empty()
 
-    if not (done[COLLECT] and done[NORMALIZE]):
-        board.html(_steps_html(steps, running=NORMALIZE, running_meta="진행 중"))
+    if not done[PREPARE]:
+        board.html(_steps_html(steps, running=PREPARE, running_meta="진행 중"))
         if not _do_prepare(corp_code, corp_name, year, window):
             return
-    if not done[READ]:
+    if not done[INSPECT]:
         board.empty()
         if not _do_read(corp_code, year, key, steps):
             return
-    board.html(_steps_html(steps, running=CROSS, running_meta="진행 중"))
+    board.html(_steps_html(steps, running=ANALYZE, running_meta="진행 중"))
     _run_analysis(corp_code, corp_name, year, window, key)
     board.empty()
     st.rerun()

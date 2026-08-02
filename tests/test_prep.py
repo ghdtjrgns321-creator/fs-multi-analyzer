@@ -5,7 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from dashboard.report_view import analysis_window, window_for_year
-from dashboard.steps import COLLECT, CROSS, NORMALIZE, READ, all_done, build_steps
+from dashboard.steps import ANALYZE, INSPECT, OUTPUT, PREPARE, all_done, build_steps
 from src.report.prep import (
     company_state,
     onboarding_done,
@@ -109,25 +109,35 @@ def _steps(**over):
 
 def test_steps_fresh_year_nothing_done():
     s = _steps(missing_years=[2016, 2017])
-    assert [s[k]["done"] for k in (COLLECT, NORMALIZE, READ, CROSS)] == [False] * 4
-    assert "2016, 2017" in s[COLLECT]["meta"]
+    assert [s[k]["done"] for k in (PREPARE, INSPECT, ANALYZE, OUTPUT)] == [False] * 4
+    assert "2016, 2017" in s[PREPARE]["meta"]
 
 
-def test_steps_collect_skipped_when_raw_present():
-    s = _steps()
-    assert s[COLLECT]["done"] is True and s[COLLECT]["meta"] == "건너뜀 — 이미 있음"
+def test_steps_prepare_done_only_when_raw_and_marker_both_ready():
+    """준비는 수집과 표준 계정 변환을 함께 안는다 — 둘 다 끝나야 건너뛴다."""
+
+    assert _steps(prepared=True)[PREPARE]["done"] is True
+    assert _steps(prepared=True)[PREPARE]["meta"] == "건너뜀 — 이미 있음"
+    assert _steps(missing_years=[2016])[PREPARE]["done"] is False
 
 
-def test_steps_normalize_reports_full_window_when_unprepared():
+def test_steps_prepare_reports_full_window_when_unprepared():
     """마커가 없으면 window 전체를 다시 변환한다(연도별 부분 건너뛰기 없음) — 그대로 적는다."""
 
-    assert _steps()[NORMALIZE]["meta"] == "5개년 전체"
+    assert _steps()[PREPARE]["meta"] == "5개년 전체"
 
 
 def test_steps_llm_stages_show_when_they_ran():
     s = _steps(prepared=True, onboarded_at="2026-07-18", cards_at="2026-07-18 13:41")
-    assert s[READ]["done"] is True and "2026-07-18" in s[READ]["meta"]
-    assert s[CROSS]["done"] is True and "13:41" in s[CROSS]["meta"]
+    assert s[INSPECT]["done"] is True and "2026-07-18" in s[INSPECT]["meta"]
+    assert s[ANALYZE]["done"] is True and "13:41" in s[ANALYZE]["meta"]
+
+
+def test_steps_output_shares_marker_with_analyze():
+    """분석과 산출은 한 호출이 함께 끝낸다 — 같은 마커를 본다."""
+
+    s = _steps(prepared=True, onboarded_at="2026-07-18", cards_at="2026-07-18 13:41")
+    assert s[OUTPUT]["done"] == s[ANALYZE]["done"]
 
 
 def test_all_done_only_when_four_stages_finished():
