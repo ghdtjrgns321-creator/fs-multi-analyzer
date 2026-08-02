@@ -74,6 +74,6 @@ LLM이 "1조 2,534.7억"을 "1,253.47억"으로 ÷10 축소하는 오독을 막�
 
 ## 6.7 실증 예시 — 대주 담보·특수관계 서술이 "환각"으로 죽던 것을 부활
 
-담보·특수관계 등 서술형 공시는 note_sections·report_review_chunks(HTML)에 사는데, 과거 grounding 인덱스는 XBRL fact만 커버했다. 그래서 진짜 공시가 "환각"으로 죽는 **허위 탈락**이 발생했다(사각#3).
+담보·특수관계 등 서술형 공시는 report_extracts(사업보고서 본문 추출)에 사는데, 과거 grounding 인덱스는 XBRL fact만 커버했다. 그래서 진짜 공시가 "환각"으로 죽는 **허위 탈락**이 발생했다(사각#3).
 
 수리는 `build_account_index(note_disclosures=...)`로 서술형 공시를 색인에 넣고, `_verify_note_suspicion`이 라벨 미매칭이라도 인용 금액이 disclosure 풀에 있으면 grounded를 주도록 한 것이다. card_pipeline이 materials[note]의 서술형 공시를 정규화 전달한다. 대주 실측: 담보 54,345·특수관계 233,546이 둘 다 탈락→grounded로 부활했고, 동시에 허위 금액 99,999는 탈락을 유지했다(환각 가드 보존). "진짜 공시를 살리되 지어낸 금액은 여전히 죽인다" — precision과 recall을 동시에 지킨 근본 해결이다.

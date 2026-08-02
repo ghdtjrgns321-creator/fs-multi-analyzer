@@ -18,7 +18,7 @@
 
 | 디렉토리                                       | 건수   | 사유                                                                                  | 대표 표본 다룬 장                    |
 | ---------------------------------------------- | ------ | ------------------------------------------------------------------------------------- | ------------------------------------ |
-| `companies` (`data/companies`)                 | 43,197 | 회사/연도별 균일 생성 데이터(OpenDART 원본 JSON·주석 HTML/TXT). 회사당 동일 구조 반복 | 3장(수집·정규화 메커니즘), 실증 예시 |
+| `companies` (`data/companies`)                 | 43,197 | 회사/연도별 균일 생성 데이터(OpenDART 원본 JSON·주석 XBRL(TSV)). 회사당 동일 구조 반복 | 3장(수집·정규화 메커니즘), 실증 예시 |
 | `_backup_corrected` (`data/_backup_corrected`) | 746    | 정정 전 백업 코퍼스(위와 동일 구조)                                                   | 3장                                  |
 
 두 코퍼스는 분석 대상 원자료로, 파일마다 회사·연도만 다른 균일 데이터다. 구조·대표 표본은 3장(정규화)과 2·5장(실증 예시)에서 실제 ID·값으로 다뤘다.
@@ -30,7 +30,7 @@
 `src/report/**` · L4 리포트/카드 파이프라인 → 5·6장
 `src/agents/**` · PydanticAI 관점 에이전트·retry·가드레일 → 5·6장
 `src/schemas/**` · Pydantic 스키마(IssueType·SuspicionItem·AccountFinding) → 5장
-`src/notes/**` · 주석 인덱서(L1.5)·사업보고서 PART 추출 → 3·5장
+`src/notes/**` · 사업보고서 PART 추출 → 3·5장
 `src/orchestrate/**` · 오케스트레이션 자리표시자 → 2장
 `src/collect/**` · L0 OpenDART 수집 → 3장
 `src/normalize/**` · L1 정규화·온보딩 게이트(검문 모듈 `gate_identities`·`gate_quality`·`gate_yoy` 포함)·SCE·라벨 감사 → 3장

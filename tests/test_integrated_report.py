@@ -157,27 +157,6 @@ def test_numeric_material_full_series_no_queue() -> None:
     assert "후보 목록은 제공하지 않는다" in material["judgment_role"]
 
 
-def test_note_excerpt_anchors_on_amount_block_not_header() -> None:
-    """G6: 발췌가 머리말이 아니라 금액 블록에서 시작해야 한다(원본 금액이 LLM에 도달)."""
-
-    from src.report.materials import _amount_anchored_excerpt, _has_amounts
-
-    # 머리말이 앞 350자를 잠식하고 금액은 뒤에 있는 케이스
-    header = "재무제표 주요 주석 조회\n차입금에 대한 세부 정보 공시 [문장영역]\n" + ("설명 " * 120)
-    text = header + "단기차입금\n13,172,504,000,000\n원화차입금\n5,000,000,000"
-    assert _has_amounts(text) is True
-    excerpt = _amount_anchored_excerpt(text)
-    assert "13,172,504,000,000" in excerpt  # 실질 금액이 발췌에 포함
-
-    # 금액 없는 머리말뿐 섹션 = 앞부분 그대로(빈 노트 무날조)
-    boiler = "재무제표 주요 주석 조회"
-    assert _has_amounts(boiler) is False
-    assert _amount_anchored_excerpt(boiler) == boiler
-
-    # 날짜·코드(천단위 1그룹)는 금액으로 오인하지 않음
-    assert _has_amounts("2024-01-01 D82240 코드 1,234") is False
-
-
 def test_unmapped_material_excludes_sce_keeps_real_accounts() -> None:
     """SCE(자본변동표) 합계행은 '기타 중요 계정'에서 제외, 진짜 미매핑 BS계정은 유지.
 

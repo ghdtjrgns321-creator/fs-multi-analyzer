@@ -12,7 +12,6 @@ from pathlib import Path
 from config.settings import settings
 from src.collect.correction import collect_corrections
 from src.collect.events import collect_events, collect_reports
-from src.collect.notes import TOCS, NoteCollector, write_note_detail
 from src.collect.opendart import DartCollector
 from src.collect.storage import write_frame, write_json, year_dir
 
@@ -26,7 +25,6 @@ def collect_company_years(
     years: tuple[int, ...] = DEFAULT_YEARS,
     data_dir: Path | None = None,
     include_xbrl: bool = True,
-    include_notes: bool = True,
     include_corrections: bool = True,
     include_events: bool = True,
 ) -> dict[str, object]:
@@ -36,8 +34,6 @@ def collect_company_years(
         return {"status": "skipped", "reason": "DART_API_KEY is not configured"}
 
     collector = DartCollector()
-    note_collector = NoteCollector() if include_notes else None
-    note_categories = note_collector.categories() if note_collector else []
     root = data_dir or settings.data_dir
     summary: dict[str, object] = {"status": "ok", "corp_code": corp_code, "years": {}}
     years_payload: dict[str, object] = {}
@@ -49,7 +45,6 @@ def collect_company_years(
             "financial_statements": {},
             "xbrl_zip": None,
             "absence": {"fs": "ok", "xbrl_zip": "ok"},
-            "notes": {"categories": len(note_categories), "details": {}},
         }
 
         fs_rows = 0
@@ -79,25 +74,6 @@ def collect_company_years(
                 }
             else:
                 year_summary["absence"]["xbrl_zip"] = "dart_no_xbrl"  # type: ignore[index]
-
-        if note_collector:
-            note_dir = raw_dir / "notes"
-            write_json(
-                {"categories": [category.__dict__ for category in note_categories]},
-                note_dir / "note_categories.json",
-            )
-            detail_summary: dict[str, object] = {}
-            for fs_div, toc in TOCS.items():
-                fs_summary: dict[str, object] = {}
-                for category in note_categories:
-                    html = note_collector.detail_html(corp_code, year, toc, category.code)
-                    stats = write_note_detail(
-                        html,
-                        note_dir / fs_div / category.code,
-                    )
-                    fs_summary[category.code] = {"name": category.name, **stats}
-                detail_summary[fs_div] = fs_summary
-            year_summary["notes"]["details"] = detail_summary
 
         write_json(year_summary, raw_dir / "collection_summary.json")
         years_payload[str(year)] = year_summary

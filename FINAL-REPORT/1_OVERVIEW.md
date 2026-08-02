@@ -40,7 +40,7 @@
 ```
 L0   수집        OpenDART: 재무제표 JSON + 주석 XBRL(TSV) + 사업보고서 원문 XML
 L1   정규화      XBRL 계정 → canonical account tree (약 2,017종) + mapping confidence
-L1.5 주석 인덱서  주석 → 섹션 분류 + 전기/당기 정렬 + note diff + 계정↔섹션 매핑
+L1.5 주석 인덱서  XBRL 주석 → 개념 4분류 + 주제 카테고리 28종 부여 + 차원 보존
      [온보딩 게이트]  G1~G9·통화 결정론 검문(+G6 dump) — L1→L2 관문, UI [분석 실행]이 자동 실행
      [LLM 전처리]  별칭 자동 보정(코드 후보→LLM 선택→신뢰도≥0.7만 자동 등록) + 본문 읽기 서술추출 — 카드 단계 진입 조건
 L2   신호엔진    결정론: materiality + 관계사슬 + QoE + 변화 + 변동분해 + 커버리지 원장

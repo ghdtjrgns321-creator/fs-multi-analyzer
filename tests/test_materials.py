@@ -80,7 +80,6 @@ def test_note_disclosures_indexes_report_extracts(tmp_path) -> None:
     from src.report.card_pipeline import _note_disclosures
 
     note_mat = {
-        "note_sections": [],
         "report_extracts": [
             {
                 "part": "XI",
