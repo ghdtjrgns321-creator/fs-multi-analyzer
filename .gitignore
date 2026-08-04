@@ -36,5 +36,10 @@ data/_backup_corrected/
 dev/active/
 _workspace/
 
+# 개발용 문서 일체(agent 작업문서·user 상세문서·면접 준비). 로컬엔 유지, 공개 저장소 제외.
+# README가 본문에 박아 쓰는 화면 이미지만 추적한다.
+docs/*
+!docs/images/
+
 # 브라우저 자동화 산출물(로그·스냅샷, 재생성 가능)
 .playwright-cli/
