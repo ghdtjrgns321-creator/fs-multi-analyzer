@@ -41,5 +41,9 @@ _workspace/
 docs/*
 !docs/images/
 
+# 에이전트 작업 지침(개발용, docs/ 링크에 의존). 로컬엔 유지, 공개 저장소 제외.
+CLAUDE.md
+AGENTS.md
+
 # 브라우저 자동화 산출물(로그·스냅샷, 재생성 가능)
 .playwright-cli/
