@@ -211,7 +211,7 @@ def _run_analysis(corp_code: str, corp_name: str, year: int, window: list[int], 
         # 카드 차트·근거 표가 참조할 계정 시계열 컨텍스트(분석 시점 스냅샷) 저장.
         st.session_state["rv_series"] = report.get("account_level_series") or []
         st.session_state["rv_target_year"] = report.get("target_year")
-        with busy("멀티 에이전트 교차검증 중 (수 분 소요)..."):
+        with busy("병렬 분석 에이전트 실행 중 (수 분 소요)..."):
             st.session_state["rv_cards"] = asyncio.run(
                 build_suspicion_cards(report, on_progress=_on_progress)
             )
@@ -252,7 +252,9 @@ def _do_read(corp_code: str, year: int, key: str, steps: list[dict]) -> bool:
         elapsed = int(time.perf_counter() - started)
         board.html(
             _steps_html(
-                steps, running=INSPECT, running_meta=f"{p['done']}/{p['total']} 파트 · 경과 {elapsed}s"
+                steps,
+                running=INSPECT,
+                running_meta=f"{p['done']}/{p['total']} 파트 · 경과 {elapsed}s",
             )
         )
 
@@ -353,7 +355,7 @@ def _render_run_block(corp_code: str, corp_name: str, year: int, window: list[in
     finished = all_done(steps)
     if not finished:
         st.html(
-            '<div class="drv-note">원본 수집, 사업보고서 본문 읽기, 멀티 에이전트 교차검증이 '
+            '<div class="drv-note">원본 수집, 사업보고서 본문 읽기, 병렬 분석 에이전트 실행이 '
             "함께 실행됩니다. (LLM 호출 및 수 분 소요)</div>"
         )
     if st.button("다시 실행" if finished else "분석 실행", type="primary"):
@@ -369,7 +371,7 @@ def render() -> None:
     """
 
     inject_css()
-    st.title("FS Multi-agents analyzer")
+    st.title("연간 사업보고서 분석")
 
     corp_code = render_company_search()
     if not corp_code:

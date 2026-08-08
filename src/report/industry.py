@@ -1,4 +1,4 @@
-"""Industry peer perspective for L4 multi-agent review."""
+"""Industry peer perspective for L4 parallel perspective review."""
 
 from __future__ import annotations
 

@@ -1,4 +1,4 @@
-"""External context perspective for L4 multi-agent review."""
+"""External context perspective for L4 parallel perspective review."""
 
 from __future__ import annotations
 
