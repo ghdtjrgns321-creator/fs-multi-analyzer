@@ -59,9 +59,10 @@ def test_tie_break_by_materiality() -> None:
     assert [c.account for c in cards] == ["B", "A"]
 
 
-def test_normal_dominant_sinks() -> None:
-    cards = order_account_cards([_card("A", 4, 0.9, verdict="normal_dominant"), _card("B", 1, 0.1)])
-    assert cards[-1].account == "A"
+def test_rebuttal_verdict_does_not_reorder() -> None:
+    # 반박 판정은 순서에 관여하지 않는다 — 표수 4가 1보다 위.
+    cards = order_account_cards([_card("B", 1, 0.1), _card("A", 4, 0.9, verdict="normal_dominant")])
+    assert [c.account for c in cards] == ["A", "B"]
 
 
 def test_company_cards_separate() -> None:

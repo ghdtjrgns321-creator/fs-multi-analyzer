@@ -239,11 +239,11 @@ def _two_card_runner():
     return _canned_runner(canned)
 
 
-def test_rebuttal_normal_dominant_sinks_after_pipeline() -> None:
+def test_rebuttal_verdict_does_not_reorder_after_pipeline() -> None:
     from src.schemas.suspicion import RebuttalEntry
 
     async def fake_rebuttal(cards, context, decompositions=None):
-        # 큰 금액(재고자산)을 정상우세로 강등 → 정렬에서 하단으로 가야 함
+        # 큰 금액(재고자산)을 정상우세로 판정해도 순서는 그대로여야 한다
         return RebuttalOutput(
             entries=[
                 RebuttalEntry(cluster_key="acct:BS:재고자산", verdict="normal_dominant"),
@@ -262,8 +262,8 @@ def test_rebuttal_normal_dominant_sinks_after_pipeline() -> None:
         )
     )
     accounts = [c.account for c in result["account_cards"]]
-    assert accounts[-1] == "재고자산"  # normal_dominant 하단 강등
-    assert result["account_cards"][0].rebuttal_verdict == "suspicion_dominant"
+    assert accounts[0] == "재고자산"  # 금액 큰 쪽이 위 — 정상우세 판정과 무관
+    assert result["account_cards"][0].rebuttal_verdict == "normal_dominant"
     assert "반박 미수행" not in result["rendered"]  # 둘 다 반박됨
 
 

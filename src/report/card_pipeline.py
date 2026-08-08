@@ -146,7 +146,7 @@ async def build_suspicion_cards(
     _emit("cards")
     cards = build_cards(grounded, report)
 
-    # 반박: 정렬 전에 적용해야 normal_dominant 카드가 하단으로 강등된다(S4 정렬).
+    # 반박: 카드에 반대 의견을 주입한다. 정렬(card_order)에는 관여하지 않는다.
     all_cards = cards["account_cards"] + cards["company_cards"] + cards["relationship_cards"]
     _emit("rebuttal")
     # 변동 분해(PLAN §6.5)를 카드별로 계산해 반박 입력에 공급 — 숫자 없는 추측 반박 방지.

@@ -345,16 +345,16 @@ def test_sort_cards_votes_then_amount():
     assert sort_cards([tie_small, tie_big])[0] is tie_big
 
 
-def test_sort_cards_normal_dominant_sinks():
-    """반박이 정상우세로 본 카드는 표수가 높아도 하단 — 삭제가 아니라 강등(§9)."""
+def test_sort_cards_ignores_rebuttal_verdict():
+    """반박 판정은 순서에 관여하지 않는다 — 표수·금액만 본다."""
 
     from dashboard.card_data import sort_cards
 
     normal = {"vote_count": 4, "materiality_score": 1.0, "rebuttal_verdict": "normal_dominant"}
     plain = {"vote_count": 1, "materiality_score": 0.1}
-    ordered = sort_cards([normal, plain])
-    assert ordered[0] is plain and ordered[-1] is normal
-    assert len(ordered) == 2  # 강등이지 제거가 아니다
+    ordered = sort_cards([plain, normal])
+    assert ordered[0] is normal and ordered[-1] is plain  # 표수 4 > 1
+    assert len(ordered) == 2
 
 
 def test_render_cards_section_expander_apptest():
