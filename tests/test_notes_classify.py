@@ -60,6 +60,52 @@ def test_main_statement_concept_absorbed_after_full_registration():
     assert classify_concept("BorrowingsInterestRate", tax) == ("detail", "차입금조건")
 
 
+def test_udf_body_tags_are_absorbed_not_notes():
+    # 표준 택소노미 미사용사의 본표 커스텀 태그(udf_BS·CF·IS·CE)는 주석이 아니라 본표 행이다.
+    # canonical stem에 안 걸려 '기타주석'으로 새던 것을 접두로 흡수 판정(80 회사연도 대조 97.7% 중복).
+    tax = _taxonomy()
+    assert classify_concept("udf_BS_2017101822109437_CurrentAssets", tax) == ("흡수", None)
+    assert (
+        classify_concept("udf_CF_2023313172615558_CashFlowsFromUsedInInvestingActivities", tax)[0]
+        == "흡수"
+    )
+    assert classify_concept("udf_IS_202415164420285OfComprehensiveIncome", tax)[0] == "흡수"
+    assert (
+        classify_concept(
+            "udf_CE_20241120131154413OfIncreaseDecreaseThroughTransactionsWithOwner", tax
+        )[0]
+        == "흡수"
+    )
+
+
+def test_udf_note_tags_stay_notes():
+    # 주석 소속 udf 접두(NOTE·TableRoot)는 본표가 아니므로 흡수시키지 않는다.
+    tax = _taxonomy()
+    assert classify_concept("udf_NOTE_202611911456719", tax)[0] != "흡수"
+    assert classify_concept("udf_TableRoot_202362920649462TextBlock", tax)[0] != "흡수"
+
+
+def test_udf_body_tag_with_segment_axis_survives_load():
+    # 본표 태그라도 부문 등 추가 축이 붙으면 분해 정보 → 기존 유차원 흡수 규칙대로 적재된다.
+    tax = _taxonomy()
+    facts = pd.DataFrame(
+        {
+            "concept": ["udf_BS_20171018222617796_CurrentLiabilities"] * 2,
+            "label_ko": ["매입채무", "부문 매입채무"],
+            "label_en": ["", ""],
+            "period": ["2024-01-01"] * 2,
+            "unit": ["KRW", "KRW"],
+            "value": ["100", "40"],
+            "dimensions": [
+                "ConsolidatedAndSeparateFinancialStatementsAxis=ConsolidatedMember",
+                "SegmentsAxis=PaintMember",
+            ],
+        }
+    )
+    loaded = select_for_load(classify_note_facts(facts, tax))
+    assert list(loaded["label_ko"]) == ["부문 매입채무"]
+
+
 def test_unmatched_detail_falls_to_etc():
     tax = _taxonomy()
     bucket, category = classify_concept("SomeCompanySpecificXyzConcept", tax)

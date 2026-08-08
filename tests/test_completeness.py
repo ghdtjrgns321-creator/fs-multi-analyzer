@@ -35,11 +35,15 @@ def test_covered_part_no_warning():
     assert warns == []
 
 
-def test_financial_and_excluded_parts_out_of_scope():
-    # III(재무결정론)·XII(제외)는 앵커 대상 아님 — 0추출이어도 경고 없음
-    parts = [
-        ReportPart("III", "III. 재무", "1. 요약재무\n매출 5,000억원"),
-        ReportPart("XII", "XII. 상세표", "종속회사 상세 10,000억원"),
-    ]
+def test_excluded_part_out_of_scope():
+    # XII(구조화 API 중복)는 앵커 대상 아님 — 0추출이어도 경고 없음
+    parts = [ReportPart("XII", "XII. 상세표", "종속회사 상세 10,000억원")]
     warns = completeness_warnings(parts, items=[])
     assert warns == []
+
+
+def test_notes_part_is_in_scope():
+    # III은 리더 대상이 됐으므로(2026-08) 통째 0추출이면 누락 의심 경고를 받아야 한다.
+    parts = [ReportPart("III", "III. 재무", "3. 연결재무제표 주석\n특수관계자 거래 5,000억원")]
+    warns = completeness_warnings(parts, items=[])
+    assert [w["part"] for w in warns] == ["III"]

@@ -4,7 +4,7 @@
 
 ```mermaid
 flowchart TD
-    A[회사명 검색<br/>OpenDart ~12만사] --> B[L0 수집<br/>finstate JSON + 주석 XBRL + 사업보고서 XML]
+    A[회사명 검색<br/>OpenDart ~12만사] --> B[L0 수집<br/>finstate JSON + 주석 XBRL 2023년 이후 + 사업보고서 XML]
     B --> C[L1 정규화<br/>XBRL→canonical 2,017종<br/>회사·연도 격리 DuckDB]
     C --> G{온보딩 게이트<br/>G1~G9·통화 +G6 dump<br/>분석 실행이 자동 수행}
     G -->|FAIL| Q[별칭 보정·quirk 등록<br/>코드 후보→LLM 선택→고신뢰 자동 등록<br/>보류분만 사람 · 재게이트]
@@ -31,10 +31,10 @@ flowchart TD
 
 | 단계               | 입력            | 처리                                                                                                                       | 출력                                | 상세 장                          |
 | ------------------ | --------------- | -------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- | -------------------------------- |
-| L0 수집            | 회사·연도       | OpenDART 재무제표 JSON·주석 XBRL·원문 XML을 raw로 저장(부재≠오류)                                                          | `data/companies/{corp}/{year}/raw/` | [3장](3_COLLECT-NORMALIZE.md)    |
+| L0 수집            | 회사·연도       | OpenDART 재무제표 JSON·주석 XBRL(2023년 이후만 존재)·원문 XML을 raw로 저장(부재≠오류)                                      | `data/companies/{corp}/{year}/raw/` | [3장](3_COLLECT-NORMALIZE.md)    |
 | L1 정규화          | raw CSV         | id-first 매핑·충돌 중재·dedup·SCE 2D·자본분해                                                                              | 회사/연도 격리 DuckDB               | [3장](3_COLLECT-NORMALIZE.md)    |
 | 온보딩 게이트      | 정규화 DB       | 이관 원장(원본 전량 = 적재+사유제외+미설명 0)·BS 항등식·G3 산술·G5 무결성·G7 소계/표간대사·G8 품질·G9 연도간대사·통화 점검 | gate_passed 여부                    | [3장](3_COLLECT-NORMALIZE.md)    |
-| LLM 전처리         | 게이트 통과 DB  | 본문 읽기 서술추출 → 게이트 재점검 → 별칭 제안·고신뢰(≥0.7) 자동 등록+5개년 재정규화                                       | report_extracts·quirk·완료 마커     | [3장](3_COLLECT-NORMALIZE.md)    |
+| LLM 전처리         | 게이트 통과 DB  | 본문 서술 11파트 읽기(III 주석은 글자수 청킹) → 게이트 재점검 → 별칭 제안·고신뢰(≥0.7) 자동 등록+5개년 재정규화            | report_extracts·quirk·완료 마커     | [3장](3_COLLECT-NORMALIZE.md)    |
 | L2 신호엔진        | 정규화 frame    | 전수 스캔·다축 프로파일러·관계사슬·비율·변동분해·커버리지 원장                                                             | 계정 패널·시계열·큐·원장            | [4장](4_SIGNAL-ENGINE.md)        |
 | L3 5관점           | 관점별 material | 병렬 발견(내부 4 + 동종 1), 각 관점 LLM 1회                                                                                | SuspicionItem 목록                  | [5장](5_PERSPECTIVES-CARDS.md)   |
 | grounding          | 의심건          | 인용 수치를 원 단위로 복원해 실데이터와 대조, 환각 탈락                                                                    | grounded 의심건                     | [6장](6_GROUNDING-GUARDRAILS.md) |
@@ -52,7 +52,7 @@ flowchart TD
 
 **L1 정규화** — `finstate_all_CFS.csv`의 XBRL 행이 canonical로 매핑된다. `재고자산`은 `ifrs-full_Inventories` id로 `EXACT` 매핑. 정규화 DB에 `CFS:재고자산` 시계열이 저장된다: **2016년 45,985,571,411원(459.9억) → 2019년 152,615,809,899원(1,526.2억) → 2020년 168,532,992,835원(1,685.3억)** — 5년간 약 3.7배 단조 증가(수치 출처: 연도별 `analysis.duckdb`의 `normalized_financials`, 2020년 값은 `golden/numeric/_report_00409681_2020.md`에서 DART 원값 대조 match).
 
-**온보딩 게이트** — 이관 원장이 원본 387행(적재 359 + 표 재분류 28)·주석 953건(적재 137 + 메타 207 + 본표 중복 609)을 전량 설명해 미설명 0, BS 항등식 잔차 100만원 이내, 통화 KRW → `gate_passed=True`. 아스트는 L2로 진입한다.
+**온보딩 게이트** — 이관 원장이 원본 387행(적재 359 + 표 재분류 28)·주석 953건(적재 170 + 메타 137 + 본표 중복 646)을 전량 설명해 미설명 0, BS 항등식 잔차 100만원 이내, 통화 KRW → `gate_passed=True`. 아스트는 L2로 진입한다. 주석 953건에 **XBRL 주석 fact는 없다** — 2020년은 주석 태깅 의무화 이전이라 전량이 본표 태그와 메타이며, 이 회사연도의 주석 서술은 사업보고서 III장 경로가 담당한다(3장 §3.3).
 
 **L2 신호엔진** — `universal.scan_universal_signals`가 `CFS:재고자산`의 YoY를 스캔한다. `profiler`의 trend 축(단조성 1.0 × 누적변화/자산)이 5년 단조 증가로 높은 분위를 받고, `ratios`가 `financial_ratios.yaml`의 정의로 재고회전율·DIO를 계산한다(2020년 실측: 재고회전율 0.38·DIO 952.35일). 관계사슬 `[재고, 매출원가, 재고평가손실]`도 활성화 — 2020년 매출은 544.9억원으로 전년 대비 −62.32%, 매출원가는 615.4억원으로 −44.4% 급감했는데 재고자산만 +10.43% 늘었다.
 

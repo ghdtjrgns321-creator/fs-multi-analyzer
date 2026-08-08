@@ -19,6 +19,11 @@ class ExtractedItem(BaseModel):
     """
 
     part: str = Field(description="출처 PART 로마숫자(예: XI)")
+    # 연결/별도 축. III(재무·주석)은 같은 주제가 연결·별도 두 번 실려 이름이 겹치므로, 축이 없으면
+    # 서로 다른 사실이 중복으로 오인된다(삼성 2024 재고자산: 연결 56.7조 vs 별도 32.3조).
+    # 판정 근거는 원문에 있다 — 주석 표제("연결재무제표 주석")와 본문 주어("연결회사는"/"회사는").
+    # 서술 파트(I·II·IV~XI)는 구분이 없으므로 빈 문자열이 정상이다.
+    fs_div: str = Field(default="", description="CFS(연결)/OFS(별도)/빈값(구분없음)")
     label: str = Field(min_length=1, description="항목명(짧게)")
     statement: str = Field(
         description="핵심 서술 — 원문 수치는 그대로 인용만, 계산·비율·증감률 산정 금지(옮겨적기+요약)"

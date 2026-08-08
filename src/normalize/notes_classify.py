@@ -2,6 +2,7 @@
 
 note_facts.tsv의 concept(namespace 없는 local name)을 3분류한다(계산·해석 없음, 분류만):
   흡수    = 본문 canonical_accounts account_id의 stem과 일치 → 본문 중복(분석은 본문이 담당)
+            + 회사 자체정의(udf) 본표 접두(body_tag_prefixes) — 표준 택소노미 미사용사의 본표 행
   메타    = meta_tokens 포함 → 표지·감사·연락처 노이즈
   detail  = note_categories 토큰(우선순위 순) → IFRS 주석 카테고리, 미매칭은 기타주석
 카테고리·토큰은 config/playbooks/note_mappings.yaml에 외부화(코드 하드코딩 금지).
@@ -39,6 +40,7 @@ class NoteTaxonomy:
     categories: tuple[tuple[str, tuple[str, ...]], ...]  # 우선순위 순서 보존
     high_priority: frozenset[str]
     canon_stems: frozenset[str]
+    body_tag_prefixes: tuple[str, ...] = ()  # udf 본표 접두(주석 아님 → 흡수)
 
 
 def _stem(account_id: str) -> str:
@@ -64,18 +66,25 @@ def load_note_taxonomy(
         for name, tokens in (payload.get("note_categories") or {}).items()
     )
     high = frozenset(str(x) for x in payload.get("note_high_priority", []))
+    body_prefixes = tuple(str(p).lower() for p in payload.get("body_tag_prefixes", []))
     stems = {
         _stem(account_id)
         for account in load_canonical_accounts(canonical_path)
         for account_id in account.account_ids
     }
-    return NoteTaxonomy(meta, categories, high, frozenset(stems))
+    return NoteTaxonomy(meta, categories, high, frozenset(stems), body_prefixes)
 
 
 def classify_concept(concept: str, taxonomy: NoteTaxonomy) -> tuple[str, str | None]:
-    """concept → (bucket, category). 우선순위: 메타 → 흡수 → detail 카테고리 → 기타주석."""
+    """concept → (bucket, category). 우선순위: udf 본표 → 메타 → 흡수 → detail 카테고리 → 기타주석.
 
-    lowered = concept.lower()
+    udf 본표 판정이 메타보다 앞선다: 메타 토큰이 우연히 부분일치하면(entity·numberof 등) 부문
+    분해가 붙은 본표 셀까지 비fact로 버려진다. 흡수로 보내면 유차원 셀은 select_for_load가 살린다.
+    """
+
+    lowered = concept.lower().replace("-", "_")
+    if any(lowered.startswith(prefix) for prefix in taxonomy.body_tag_prefixes):
+        return ("흡수", None)
     if any(token in lowered for token in taxonomy.meta_tokens):
         return ("메타", None)
     if _stem(concept) in taxonomy.canon_stems:

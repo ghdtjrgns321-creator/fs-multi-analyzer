@@ -7,6 +7,13 @@
 # 표본 116 회사연도(fact 230,803) 재측정: 흡수 58.2%·detail 21.4%·메타 14.7%·기타주석 5.7%.
 # detail+기타주석 중 79.1%가 아래 카테고리에 적중. 토큰은 부분일치라 단어 경계를 안 본다 —
 # 신규 토큰 추가 시 다른 카테고리 토큰과의 중복·부분문자열 충돌을 반드시 확인할 것.
+# 회사 자체정의(udf) 태그 중 본표 소속 접두. 표준 택소노미를 안 쓴 회사가 재무상태표·손익·
+# 현금흐름·자본변동 행에 붙이는 태그로, 주석이 아니라 본표다. canonical stem에 안 걸려 전량
+# '기타주석'으로 새던 것을 접두로 흡수 판정한다(주석 접두 udf_NOTE·udf_TableRoot는 제외).
+# 근거: 80 회사연도 대조 — 당기·무추가차원 1,413건 중 97.7%가 본문 normalized_financials와
+# 라벨+금액 완전일치. 유차원(부문 등)은 기존 select_for_load 규칙대로 적재된다.
+body_tag_prefixes: [udf_bs, udf_is, udf_cf, udf_ce]
+
 meta_tokens: [auditor, audit, identif, indentif, opinion, reportdate, author,
   contact, entity, document, exchange, homepage, address, currency, industry,
   unitinfo, amendment, title, centralindexkey, fiscalmonth, restatement,

@@ -33,7 +33,7 @@ def completeness_warnings(parts: list[ReportPart], items) -> list[dict]:
     covered_parts = {it.part for it in items}
 
     for part in parts:
-        if reader_focus(part.numeral) is None:  # III(재무결정론)·XII(제외)는 대상 아님
+        if reader_focus(part.numeral) is None:  # XII(구조화 API 중복) 등 리더 미배정 파트
             continue
         subs = split_subsections(part)
         substantive = [s for s in subs if not is_empty_section(s.text)]

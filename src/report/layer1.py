@@ -13,6 +13,7 @@ from pathlib import Path
 
 from src.agents.cost import estimate_krw  # 재수출(비용 추정 단일 출처)
 from src.notes.report_parts import ReportPart
+from src.report.chunking import chunk_part, dedupe_items
 from src.report.completeness import completeness_warnings
 from src.report.reader import run_reader
 from src.report.reader_assign import reader_focus
@@ -66,28 +67,44 @@ def run_layer1(
                 "message": message,
             }
 
-    narrative = [p for p in parts if reader_focus(p.numeral) is not None]
-    total = len(narrative)
+    narrative = [(p, reader_focus(p.numeral)) for p in parts]
+    # 긴 파트(III=재무·주석은 최대 66만 자)는 한 번에 못 던진다 — 글자 수로 잘라 순차 투입한다.
+    # 짧은 파트는 chunk_part가 원본 1개를 돌려주므로 기존 경로와 동일하다.
+    units = [
+        (p.numeral, focus, piece)
+        for p, focus in narrative
+        if focus is not None
+        for piece in chunk_part(p)
+    ]
+    total = len(units)
     items = []
     per_part: list[dict] = []
     in_tok = out_tok = 0
     done = 0
     started = time.perf_counter()
-    for part in narrative:
-        focus = reader_focus(part.numeral)
-        result = run_reader(part, focus, model_name=model_name)
+    for numeral, focus, unit in units:
+        result = run_reader(unit, focus, model_name=model_name)
         status = result["status"]
         if status == "ok" and result["output"] is not None:
             items.extend(result["output"].items)
             usage = result.get("usage", {})
             in_tok += usage.get("input_tokens", 0)
             out_tok += usage.get("output_tokens", 0)
+        # part=로마숫자(집계·경고 키), unit=청크 제목(어느 조각에서 실패했는지 진단용).
         per_part.append(
-            {"part": part.numeral, "status": status, "message": result.get("message", "")}
+            {
+                "part": numeral,
+                "unit": unit.title,
+                "status": status,
+                "message": result.get("message", ""),
+            }
         )
         done += 1
         if on_progress:
-            on_progress({"done": done, "total": total, "numeral": part.numeral, "status": status})
+            on_progress({"done": done, "total": total, "numeral": numeral, "status": status})
+
+    # 청크 경계가 만든 진짜 중복만 제거(같은 축·같은 금액). 연결/별도는 서로 다른 사실이라 남긴다.
+    items = dedupe_items(items)
 
     elapsed_s = round(time.perf_counter() - started, 1)
 
@@ -95,9 +112,9 @@ def run_layer1(
     # 저장도 하지 않는다: 빈 replace가 이전 정상 추출분을 덮어쓰는 것을 막는다.
     # (셀트리온 2019가 이 위장 때문에 몇 주간 "0건"으로 오진됐다 — 실제로는 저장 미도달.)
     ok_parts = [p for p in per_part if p["status"] == "ok"]
-    if narrative and not ok_parts:
+    if units and not ok_parts:
         any_error = any(p["status"] == "error" for p in per_part)
-        reasons = "; ".join(f"[{p['part']}] {p['message']}" for p in per_part[:3])
+        reasons = "; ".join(f"[{p['unit']}] {p['message']}" for p in per_part[:3])
         head = "전부 실패 — 추출 0건이 아니라 실행 실패" if any_error else "전부 미실행(키 없음)"
         return {
             "status": "error" if any_error else "skipped",
