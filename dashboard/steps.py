@@ -18,7 +18,7 @@ STEP_ORDER = (PREPARE, INSPECT, ANALYZE, OUTPUT)
 STEP_LABELS = {
     PREPARE: "준비 — 원본 수집, 표준 계정 변환, 주석 인덱싱, 본문 추출(LLM)",
     INSPECT: "점검 — 정합성 검증, 계정명 연결(LLM)",
-    ANALYZE: "분석 — 신호 연산, 멀티 에이전트 교차검증(LLM)",
+    ANALYZE: "분석 — 신호 연산, 병렬 분석 에이전트 실행(LLM)",
     OUTPUT: "산출 — 인용 수치 대조, 검토 카드 생성",
 }
 SKIP = "건너뜀 — 이미 있음"

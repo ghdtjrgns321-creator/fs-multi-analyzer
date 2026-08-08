@@ -1,7 +1,7 @@
 [project]
 name = "disclosure-review-agent"
 version = "0.1.0"
-description = "멀티에이전트 교차검증 기반 공시 재무제표·주석 변화 리뷰 도구"
+description = "다관점 병렬 에이전트 기반 공시 재무제표·주석 변화 리뷰 도구"
 requires-python = ">=3.11"
 readme = "README.md"
 dependencies = [
