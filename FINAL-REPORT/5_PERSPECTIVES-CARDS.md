@@ -21,19 +21,19 @@ card_builder  →  계정/관계/회사 클러스터 + 표수 N/4 + 사전식 �
    ▼
 decompose_change 부착  →  investigator (도구 루프)  →  rebuttal ∥ external_verify (Gemini 뉴스검색 — 카드 확정 후 타깃 검증)
    ▼
-card_report  →  정렬(표수→금액, 정상우세 하단) + markdown 렌더
+card_report  →  정렬(표수→금액) + markdown 렌더
 ```
 
 ## 5.2 구조
 
-| 구성요소               | 개수                                                     | 출처                                       |
-| ---------------------- | -------------------------------------------------------- | ------------------------------------------ |
-| 검증 관점              | 6 (내부 4 + 외부·동종 2)                                 | `PerspectiveName`, `suspicion.py:17`       |
-| 표수 카운트 대상(내부) | 4 (numeric·note·flow·trend)                              | `INTERNAL_PERSPECTIVES`, `suspicion.py:18` |
-| 카드 scope             | 3 (account·relationship·company)                         | `SuspicionScope`                           |
-| 조사원 도구            | 4 (get_series·get_decomposition·find_notes·top_changes)  | `investigation_tools.py`                   |
-| 반박 verdict           | 3 (normal_dominant·mixed·suspicion_dominant)             | `RebuttalVerdict`                          |
-| 정렬 기준              | 사전식 — 반박 정상우세 하단 → 표수 내림 → 금액 내림      | `src/report/card_order.py`                 |
+| 구성요소               | 개수                                                    | 출처                                       |
+| ---------------------- | ------------------------------------------------------- | ------------------------------------------ |
+| 검증 관점              | 6 (내부 4 + 외부·동종 2)                                | `PerspectiveName`, `suspicion.py:17`       |
+| 표수 카운트 대상(내부) | 4 (numeric·note·flow·trend)                             | `INTERNAL_PERSPECTIVES`, `suspicion.py:18` |
+| 카드 scope             | 3 (account·relationship·company)                        | `SuspicionScope`                           |
+| 조사원 도구            | 4 (get_series·get_decomposition·find_notes·top_changes) | `investigation_tools.py`                   |
+| 반박 verdict           | 3 (normal_dominant·mixed·suspicion_dominant)            | `RebuttalVerdict`                          |
+| 정렬 기준              | 사전식 — 표수 내림 → 금액 내림 (반박 판정 미개입)       | `src/report/card_order.py`                 |
 
 ## 5.3 왜 6개 독립 관점인가
 
@@ -65,7 +65,7 @@ card_report  →  정렬(표수→금액, 정상우세 하단) + markdown 렌더
 
 `card_builder.build_cards`는 grounded=True 의심건만 scope별 버킷으로 클러스터링한다. **표수(votes)**는 `INTERNAL_PERSPECTIVES` 관점 고유 개수만 카운트하고(외부·동종은 참고 배지, 미가산), 카드에 "지적 4관점 중 N"으로 표시된다. `merge_bridge_cards`는 부모-자식 계정(GP→OP→세전 다단)을 한 카드로 흡수한다 — 같은 사건이기 때문이다.
 
-정렬은 **사전식 비교**다(`card_order.py`) — ①반박 정상우세는 하단(강등이지 제거 아님) ②표수 내림 ③금액 내림. High/Medium/Low 라벨이 먼저 폐지됐고(PLAN §5, 문제⑤ "분식은 기준선 아래 숨는다"와 충돌), 그 대체였던 **가중합 우선순위 점수(0.35·0.30·0.15·0.20)도 폐지**했다 — 성분별 가중치의 근거를 댈 수 없고("왜 금액이 표수보다 0.05 무거운가") 단위가 다른 값을 한 축에 합쳐 "왜 이 카드가 위인가"에 답하지 못하기 때문이다. 사전식은 각 단계가 그대로 설명이 된다("관점 3곳이 겹쳤고, 같은 표수 안에서 금액이 가장 크다"). **임계로 자르지 않는 것**은 그대로다. 폐지 과정에서 화면(가중합)과 마크다운 리포트(사전식)가 서로 다른 순서를 내던 불일치도 해소됐다 — 이제 화면·리포트·외부검증 대상 선정이 같은 함수를 쓴다. LLM이 매긴 위험도는 입력에서 제외한다(risk_level은 LLM 감 라벨이라 원칙 §3.1 위반 유일 지점이었다).
+정렬은 **사전식 비교**다(`card_order.py`) — ①표수 내림 ②금액 내림. 반박 판정은 정렬에 쓰지 않는다 — 병렬 관점이 독립적으로 합의한 표수를 후속 단일 에이전트의 판정이 뒤집는 통로였고, '정상우세' 하단 강등은 목록에서 사실상 안 보이게 만들어 silent drop과 구분이 어려웠다. High/Medium/Low 라벨이 먼저 폐지됐고(PLAN §5, 문제⑤ "분식은 기준선 아래 숨는다"와 충돌), 그 대체였던 **가중합 우선순위 점수(0.35·0.30·0.15·0.20)도 폐지**했다 — 성분별 가중치의 근거를 댈 수 없고("왜 금액이 표수보다 0.05 무거운가") 단위가 다른 값을 한 축에 합쳐 "왜 이 카드가 위인가"에 답하지 못하기 때문이다. 사전식은 각 단계가 그대로 설명이 된다("관점 3곳이 겹쳤고, 같은 표수 안에서 금액이 가장 크다"). **임계로 자르지 않는 것**은 그대로다. 폐지 과정에서 화면(가중합)과 마크다운 리포트(사전식)가 서로 다른 순서를 내던 불일치도 해소됐다 — 이제 화면·리포트·외부검증 대상 선정이 같은 함수를 쓴다. LLM이 매긴 위험도는 입력에서 제외한다(risk_level은 LLM 감 라벨이라 원칙 §3.1 위반 유일 지점이었다).
 
 ## 5.6 조사원 — 꼬리무는 도구 루프
 
@@ -81,7 +81,7 @@ needs_tool_loop = 분해없음 OR 잔차>20% OR 최대 leaf 기여<60%
 
 ## 5.7 반박·외부검증 — 카드는 삭제하지 않는다
 
-**반박**(`rebuttal.py`)은 카드+의심근거+분해+조사 결론을 받아 반대근거·정상설명·확인질문·다음절차·verdict를 채운다. 철칙 두 가지: **위험도 숫자 불변**(verdict 플래그만) · **카드 절대 제거 0**. 반박 없는 카드는 verdict=None("반박 미수행")으로 남긴다(§9 silent drop 금지). 정상우세(normal_dominant)로 판정돼도 삭제가 아니라 하단 강등만 한다(`card_report.order_account_cards`의 정렬 키에 `rebuttal_verdict==normal_dominant`가 최상위).
+**반박**(`rebuttal.py`)은 카드+의심근거+분해+조사 결론을 받아 반대근거·정상설명·확인질문·다음절차·verdict를 채운다. 철칙 두 가지: **위험도 숫자 불변**(verdict 플래그만) · **카드 절대 제거 0**. 반박 없는 카드는 verdict=None("반박 미수행")으로 남긴다(§9 silent drop 금지). 정상우세(normal_dominant)로 판정돼도 카드는 삭제되지 않고 순서도 바뀌지 않는다 — 판정은 카드 표시로만 남고 정렬 키에는 들어가지 않는다.
 
 **외부검증**(`external_verify.py`)은 카드 확정 후 상위 카드를 분해 결론 기반으로 타깃 검색한다. 대상 = 조사 미해결 카드 전부다(조사 실패·미수행도 미확인이라 포함). 조사로 원인이 설명된 카드는 순위와 무관하게 제외하며, `EXTERNAL_HARD_CAP=30`은 선정 기준이 아니라 폭주 방지 안전핀이다. 순서는 화면과 같은 사전식 정렬(`card_order`)을 쓴다. 외부 인용 금액을 내부 공시값과 대조(`check_figures`)해 match/mismatch(삭제 아니라 "공시와 상이" 마킹)/uncheckable로 판정하고, 못 찾아도 checked=True로 기록한다(빈손 은폐 금지).
 
