@@ -10,12 +10,14 @@ from src.schemas.extract import ExtractedItem, ReaderOutput
 def _parts():
     return [
         ReportPart("II", "II. 사업의 내용", "2. 주요 제품\n제품 매출 서술"),
-        ReportPart("III", "III. 재무", "1. 요약재무\n매출 5,000억원"),  # 재무결정론 — 스킵돼야
+        # III은 재무 수치가 아니라 주석 서술 때문에 리더 대상이다(2026-08 편입).
+        ReportPart("III", "III. 재무", "3. 연결재무제표 주석\n특수관계자 거래 5,000억원"),
+        ReportPart("XII", "XII. 상세표", "종속회사 상세"),  # 구조화 API 중복 — 스킵돼야
         ReportPart("XI", "XI. 투자자 보호", "제재현황 과징금 1,012억원 부과"),
     ]
 
 
-def test_run_layer1_skips_financial_part_and_persists(monkeypatch, tmp_path):
+def test_run_layer1_reads_notes_part_and_skips_excluded(monkeypatch, tmp_path):
     called_parts = []
 
     def fake_run_reader(part, focus, model_name=None):
@@ -37,17 +39,17 @@ def test_run_layer1_skips_financial_part_and_persists(monkeypatch, tmp_path):
 
     result = layer1.run_layer1("00126380", 2024, parts=_parts(), data_dir=tmp_path)
 
-    # III(재무결정론)은 run_reader 호출 안 됨, 서술 II·XI만
-    assert called_parts == ["II", "XI"]
+    # III(주석)은 호출됨, XII(구조화 API 중복)만 스킵
+    assert called_parts == ["II", "III", "XI"]
     assert result["status"] == "ok"
-    assert len(result["extracts"]) == 2
-    # usage 합산(2회 × 100/20)
-    assert result["usage"]["input_tokens"] == 200
-    assert result["usage"]["output_tokens"] == 40
+    assert len(result["extracts"]) == 3
+    # usage 합산(3회 × 100/20)
+    assert result["usage"]["input_tokens"] == 300
+    assert result["usage"]["output_tokens"] == 60
     assert "elapsed_s" in result  # 경과시간 반환
     # report_extracts 저장 왕복
     rows = read_report_extracts("00126380", 2024, data_dir=tmp_path)
-    assert {r["part"] for r in rows} == {"II", "XI"}
+    assert {r["part"] for r in rows} == {"II", "III", "XI"}
 
 
 def test_run_layer1_on_progress_called_per_narrative_part(monkeypatch, tmp_path):
@@ -64,10 +66,26 @@ def test_run_layer1_on_progress_called_per_narrative_part(monkeypatch, tmp_path)
         data_dir=tmp_path,
         on_progress=lambda p: events.append(p),
     )
-    # 서술 파트 2개(II·XI)만큼 호출, III은 제외
-    assert [e["numeral"] for e in events] == ["II", "XI"]
-    assert [e["done"] for e in events] == [1, 2]
-    assert all(e["total"] == 2 for e in events)
+    # 서술 파트 3개(II·III·XI)만큼 호출, XII는 제외
+    assert [e["numeral"] for e in events] == ["II", "III", "XI"]
+    assert [e["done"] for e in events] == [1, 2, 3]
+    assert all(e["total"] == 3 for e in events)
+
+
+def test_run_layer1_chunks_long_part_into_multiple_reader_calls(monkeypatch, tmp_path):
+    # III이 길면(실측 최대 66만 자) 한 파트가 여러 번 호출된다 — 청킹 배선 확인.
+    seen = []
+
+    def fake_run_reader(part, focus, model_name=None):
+        seen.append(part.title)
+        return {"status": "ok", "output": ReaderOutput(items=[]), "usage": {}}
+
+    monkeypatch.setattr(layer1, "run_reader", fake_run_reader)
+    long_part = [ReportPart("III", "III. 재무", "주석 본문\n" * 30_000)]  # 18만 자
+    layer1.run_layer1("00126380", 2024, parts=long_part, data_dir=tmp_path)
+
+    assert len(seen) > 1
+    assert all("III. 재무 (" in t for t in seen)
 
 
 def test_estimate_krw_matches_assumed_pricing():
@@ -88,7 +106,7 @@ def test_run_layer1_all_skipped_is_not_ok(monkeypatch, tmp_path):
     assert result["status"] == "skipped"
     assert result["extracts"] == []
     statuses = {p["part"]: p["status"] for p in result["per_part"]}
-    assert statuses == {"II": "skipped", "XI": "skipped"}
+    assert statuses == {"II": "skipped", "III": "skipped", "XI": "skipped"}
     # 미실행은 저장하지 않는다 — 빈 테이블이 "실행됐고 0건"으로 위장하는 것 차단
     assert read_report_extracts("00126380", 2024, data_dir=tmp_path) == []
 
@@ -115,7 +133,7 @@ def test_run_layer1_all_errors_is_error_and_preserves_prior_extracts(monkeypatch
 
     monkeypatch.setattr(layer1, "run_reader", ok_reader)
     layer1.run_layer1("00126380", 2024, parts=_parts(), data_dir=tmp_path)
-    assert len(read_report_extracts("00126380", 2024, data_dir=tmp_path)) == 2
+    assert len(read_report_extracts("00126380", 2024, data_dir=tmp_path)) == 3
 
     def error_reader(part, focus, model_name=None):
         return {"status": "error", "output": None, "message": "TimeoutError: ..."}
@@ -125,8 +143,8 @@ def test_run_layer1_all_errors_is_error_and_preserves_prior_extracts(monkeypatch
 
     assert result["status"] == "error"
     assert "실행 실패" in result["message"]
-    # 이전 정상 추출 2건이 빈 테이블로 덮이지 않았다
-    assert len(read_report_extracts("00126380", 2024, data_dir=tmp_path)) == 2
+    # 이전 정상 추출 3건이 빈 테이블로 덮이지 않았다
+    assert len(read_report_extracts("00126380", 2024, data_dir=tmp_path)) == 3
 
 
 def test_run_layer1_completed_zero_items_is_empty(monkeypatch, tmp_path):
